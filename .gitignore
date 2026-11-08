@@ -1,0 +1,25 @@
+# .gitignore — ce qui ne part PAS sur Internet (étape ML8, 08/11/2026)
+# Le dossier Code est envoyé sur GitHub Pages ; tout ce qui est listé ici reste seulement sur le PC.
+
+# Travail et archives
+Archives/
+old/
+Outils/
+Programme_24-10/
+Programme/*_ancien.*
+jeu_24-10.html
+*_prototype.html
+historique.md
+commandes_console.txt
+lancer_serveur.bat
+resultat_test.json
+test_jeu.py
+
+# Originaux des photos et des sons (lourds, gardés sur le PC)
+Images/* - Originaux/
+Sons/Originaux/
+Sons/Lot 2/
+
+# Fichiers de Windows
+Thumbs.db
+desktop.ini

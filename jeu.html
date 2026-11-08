@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     MYRIADE – L'ENCYCLOPÉDIE DU VIVANT — la page du jeu (ouvrir ce fichier dans le navigateur)
+     Étape 219 (20/10/2026) : nouveau nom, logo spirale et direction artistique « Herbier ».
+       L'ancienne apparence reste jouable : jeu_ancien.html (avec programme/style_ancien.css).
+     Depuis l'étape 218 (20/10/2026), le jeu est rangé en plusieurs fichiers :
+       • jeu.html : la page elle-même (le squelette des écrans) ;
+       • programme/style.css : l'apparence ;
+       • programme/01_… à 13_… .js : le programme, une partie par fichier, chargées dans l'ordre ;
+       • especes.js, credits.js, familles.js, territoires.js : les données, générées depuis Excel
+         (ne pas les modifier à la main : Code\Outils\gen_*.py).
+     Les photos sont dans « Images », les cris dans « Sons ». Si une photo manque, « photo à venir » s'affiche.
+     L'ancien journal des étapes est dans historique.md ; les décisions en vigueur dans « etat_du_jeu.md » (Projet).
+     ============================================================ -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <!-- Étape M1 (01/11/2026, version mobile) : sur téléphone, la page prend la largeur de l'écran
+       (active les règles « petit écran » de style.css) ; ignorée par les navigateurs d'ordinateur. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Myriade – L'Encyclopédie du vivant</title>
+  <!-- Étape 219 : l'icône de l'onglet (la spirale simplifiée).
+       Étape ML2 : les polices Myriade (Literata pour les titres, Work Sans pour le texte) sont rangées
+       dans le dossier Polices et déclarées en tête de style.css : plus aucun appel à Google Fonts. -->
+  <link rel="icon" type="image/svg+xml" href="Images/myriade_icone.svg">
+  <!-- Étape ML7 : l'application installable (manifest.webmanifest + service-worker.js, 19_application.js) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1F3A2E">
+  <link rel="apple-touch-icon" href="Images/icones/myriade_apple_180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Myriade">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- L'apparence du jeu -->
+  <link rel="stylesheet" href="Programme/style.css?v=1.0.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
+</head>
+
+<body>
+  <!-- ===================== HTML ===================== -->
+
+  <!-- Barre du haut -->
+  <nav class="barre" id="barre">
+    <!-- Étape 219 : la marque Myriade (logo spirale) ; un clic ramène à l'accueil -->
+    <button class="marque" id="marque" title="Accueil" onclick="document.getElementById('onglet-accueil').click()"><img src="Images/myriade_icone.svg" alt=""><span>Myriade</span></button>
+    <button class="onglet actif" id="onglet-accueil">Accueil</button>
+    <!-- Étape 72 : un seul onglet "Jouer" remplace "Rencontre" et "Défis" -->
+    <!-- Étape 196 : plus d'onglet Jouer, on joue depuis l'accueil (bouton gardé caché : il sert encore au code) -->
+    <!-- Étape 253 : l'onglet revient sous le nom « Plus de jeux » : tous les jeux, sur un choix libre de territoires et de familles -->
+    <button class="onglet" id="onglet-encyclopedie">Encyclopédie</button>
+    <!-- Étape 274 (« Revoir 4 ») : « Plus de jeux » passe après « Encyclopédie » -->
+    <button class="onglet" id="onglet-jouer">Plus de jeux</button>
+    <!-- Étape 106 : la page Progression (bilan, familles, jeux et records, badges) ; étape 108 : renommée « Profil » -->
+    <button class="onglet" id="onglet-progression">Profil</button>
+    <div class="stats" id="stats"></div>
+    <!-- Étape 102 : la page « À propos » (crédits), un lien discret à côté de « Recommencer » -->
+    <button class="recommencer lien-apropos" id="onglet-apropos">À propos</button>
+    <!-- Étape PR4 : « Recommencer » est dans la page À propos -->
+  </nav>
+
+  <!-- La première visite (étapes 52 et 60) : trois écrans. Tout est rempli par le JavaScript (partie 11 sexies) -->
+  <section id="vue-bienvenue" class="cache">
+    <div class="accueil">
+      <!-- Étape 219 : le logo Myriade en tête de la première visite -->
+      <img class="logo-bienvenue" src="Images/myriade_logo.svg" alt="Myriade">
+      <p class="compteur" id="etape-bienvenue"></p>
+      <h1 id="titre-bienvenue"></h1>
+      <p class="intro-jeu" id="texte-bienvenue"></p>
+      <div id="corps-bienvenue"></div>
+      <div class="boutons-accueil">
+        <button class="bouton-accueil principal" id="suite-bienvenue">Continuer</button>
+        <button class="bouton-accueil secondaire" id="retour-bienvenue">Retour</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vue 0 : l'Accueil (le menu du jeu) -->
+  <!-- Vue 0 : l'Accueil (étape 107 — maquette A1 validée le 11/10) :
+       le bandeau photo avec le titre, la fiche du naturaliste, le carnet du territoire et les boutons,
+       la carte, les anneaux des familles, puis les dernières espèces découvertes qui défilent.
+       Tout ce qui bouge est rempli par le JavaScript (partie 9). -->
+  <!-- Étape 255 (24/10) : la page d'accueil générale — le bandeau Myriade, la carte des territoires (un clic = partir dans ce
+       territoire), la nature connue (France, ou le territoire survolé), les familles et les dernières découvertes.
+       « Partir ailleurs » ramène ici. Remplie par afficherPageCarte (15_territoire.js) et les fonctions de la partie 9. -->
+  <section id="vue-maison" class="cache"></section>   <!-- étape M9 : la page d'accueil du téléphone (bonjour, carnet, reprendre, défis, espèce du jour) -->
+  <section id="vue-carte" class="cache">
+    <div class="ac-bandeau">
+      <img src="Images/bandeau_etourneaux.jpg" alt="" onerror="this.remove()">
+      <p class="legende-bandeau" id="legende-bandeau"></p>
+      <h1>Myriade <small>L'Encyclopédie du vivant</small></h1>
+      <!-- Étape 198 : le jeu en une phrase -->
+      <p class="accroche-bandeau">Reconnaissez les animaux qui vivent autour de vous.</p>
+    </div>
+    <!-- Étape 262 : le dernier territoire joué, mis en avant, avec un bouton clair pour y retourner -->
+    <div class="carte-reprendre cache" id="carte-reprendre"></div>
+    <!-- Étape 266 : « Vos territoires » en cartes postales (maquettes B + C) : les territoires ouverts, puis le prochain
+         (plus grand, avec ses points) et celui d'après. Rempli par dessinerTerritoiresAccueil (15_territoire.js). -->
+    <!-- Étape 268 : version retenue (maquette A de la série 3) — sur un fond beige : la carte de France à gauche
+         (la même qu'avant : clic = y partir, bulle au survol), un bandeau de cartes postales qui défile à droite, avec une flèche -->
+    <section class="ac-terr">
+      <div class="terr-tete" id="terr-tete"></div>
+      <div class="terr-grille">
+        <div class="ac-carte terr-carte">
+          <!-- La carte des territoires (dessinée par le JavaScript, partie 9) -->
+          <svg class="carte-territoires" id="carte-territoires" role="img" aria-label="Carte des territoires"></svg>
+        </div>
+        <div class="terr-car" id="terr-car"></div>
+      </div>
+    </section>
+    <!-- Étape 266 : l'ancien bloc (nature connue, liste, grande carte) est caché ; le code le remplit encore -->
+    <h2 class="titre-carte-france cache" id="titre-carte-france">Où partir ?</h2>
+    <div class="ac-grille cache">
+      <div>
+        <!-- La fiche du naturaliste : cachée depuis l'étape 139 (le rang est en haut de chaque écran) -->
+        <!-- Le carnet du territoire survolé (ou de toute la France quand plusieurs territoires sont ouverts) -->
+        <div class="ac-zone" id="pourcentage-accueil"></div>
+        <!-- Étape 257 : la liste des territoires ouverts et leur pourcentage, à gauche sous la nature connue -->
+        <div class="liste-territoires" id="liste-territoires-accueil"></div>
+      </div>
+    </div>
+    <!-- Étape 265 : l'espèce du jour, seulement ici (page d'accueil générale), tirée parmi les territoires ouverts -->
+    <article class="ac-jour" id="ac-jour"></article>
+    <!-- Un anneau par famille (fabriqués par le JavaScript, partie 9) -->
+    <div class="familles" id="familles-accueil"></div>
+    <!-- Les dernières espèces découvertes, qui défilent (étape 107) -->
+    <div class="defile cache" id="defile-accueil"></div>
+  </section>
+
+  <section id="vue-accueil">
+    <!-- Étape 252 (24/10) : la carte d'identité du territoire — couverture (photo, nom, phrase) et ses chiffres.
+         Remplie par dessinerCouverture (15_territoire.js) ; le bandeau d'étourneaux ci-dessous est alors caché. -->
+    <div class="ac-couverture cache" id="ac-couverture"></div>
+    <!-- Étape 262 : la progression dans le territoire, mise en avant (deux jauges : espèces rencontrées / médailles) -->
+    <section class="ac-progression cache" id="ac-progression"></section>
+    <!-- Étape 263 : les deux façons de jouer, côte à côte. À gauche la Sortie nature (le jeu choisit : ex-« Jouer ») ;
+         à droite la Rencontre (le joueur choisit l'espèce à découvrir parmi 3, floutées, avec un indice). 15_territoire.js -->
+    <!-- Étape 282 : « Vos expéditions » (17_expeditions.js, dessinerExpeditions) -->
+    <section class="ac-expeditions cache" id="ac-expeditions"></section>
+    <!-- Étape 282 : la Rencontre de l'accueil est fondue dans les expéditions : gardée cachée -->
+    <section class="ac-duo cache" id="ac-duo">
+      <button class="duo-sortie cache" id="bouton-jouer-accueil">   <!-- étape 281 : le bouton est sur la photo (couv-go) ; gardé caché -->
+        <!-- Étape 274 (« Revoir 4 ») : le bouton passe en haut à droite (visible sans faire défiler) ; « Partir » devient « Commencer » -->
+        <span class="duo-haut"><span><span class="duo-et">Le jeu choisit pour vous</span>
+          <span class="duo-titre">Sortie nature</span></span>
+          <span class="duo-go">Commencer <span aria-hidden="true">▶</span></span></span>
+        <span class="duo-texte" id="sous-jouer">10 questions : quelques espèces nouvelles croisées en chemin, et des révisions de celles que vous connaissez.</span>
+        <span class="cache" id="picto-jouer-accueil"></span>
+      </button>
+      <div class="ac-terrain cache" id="ac-terrain"></div>
+    </section>
+    <!-- Étape 179 : le bandeau d'origine revient en haut de l'accueil -->
+    <!-- Le bandeau photo (étape 18). alt="" : image de décor, sans nom affiché, pour ne pas
+         donner la réponse à un joueur qui n'a pas encore reconnu l'espèce.
+         onerror : si le fichier manque, le bandeau garde un fond uni (le titre reste lisible). -->
+    <!-- Étape 139 : deux gros boutons sous la photo (le rang est désormais en haut de chaque écran) -->
+    <!-- Étape 196 (maquette B v2 du 17/10) : un seul gros bouton « Jouer » ; à côté, le terrain (territoires et familles) ;
+         puis « Plus de jeux » (4 tuiles) et « Vos familles ». Tout est rempli par dessinerAccueilJouer (partie 9 ter). -->
+    <!-- Étape 252 : les emblèmes du territoire, puis son enjeu « À la une » (15_territoire.js) -->
+    <!-- Étape 281 : défis du jour et prochaines récompenses, côte à côte (15_territoire.js, dessinerDefis) -->
+    <section class="ac-defis cache" id="ac-defis"></section>
+    <section class="ac-emblemes cache" id="ac-emblemes"></section>
+    <section class="ac-enjeu cache" id="ac-enjeu"></section>
+    <!-- Étape 253 : « Plus de jeux » a son onglet, « Vos familles » est dans le Profil : gardés cachés (le code les remplit encore) -->
+    <div class="cache">
+    <div class="ac-encart">
+      <h3>Plus de jeux</h3>
+      <div class="ac-jeux" id="ac-jeux"></div>
+    </div>
+    <div class="ac-encart">
+      <h3>Vos familles</h3>
+      <div class="ac-familles" id="ac-familles"></div>
+    </div>
+    </div>
+    <!-- gardés cachés : le code les remplit encore -->
+    <div class="cache"><button id="bouton-encyclopedie-accueil"><span id="picto-encyclopedie-accueil"></span><small id="sous-encyclopedie"></small></button></div>
+    <!-- Étape 178 (13/10, maquette « entre-deux 2 ») : l'accueil ne répète plus le Profil.
+         Trois rubriques fabriquées par le JavaScript (partie 9 bis), sans contenu à écrire :
+         l'espèce du jour, « En ce moment » (la saison réelle, tirée du tableur) et « Prochains pas ». -->
+    <p class="titre-sobre" id="titre-saison"></p>
+    <div class="ac-saison" id="ac-saison"></div>
+    <!-- Étape 244 (22/10) : « Vos objectifs » (3 objectifs par famille) remplace « Prochains pas » -->
+    <p class="titre-sobre" id="titre-objectifs">Vos objectifs</p>
+    <div class="ac-pas ac-objectifs" id="ac-pas"></div>
+  </section>
+
+  <!-- Vue 1 : la Rencontre -->
+  <section id="vue-rencontre" class="cache">
+
+    <!-- Choix de la longueur, avant de démarrer -->
+    <div class="accueil" id="choix-longueur">
+      <!-- L'écran "Jouer" (étape 72) : un seul écran pour tous les jeux.
+           Le jeu, les territoires, les familles, puis le bouton et l'interrupteur du chronomètre.
+           Tout est fabriqué par le JavaScript (partie 11 bis). -->
+      <!-- Étape 91 : l'écran Jouer devient un carnet ouvert (maquette A validée le 10/10).
+           Page de gauche : 1 Quel jeu ? puis 2 Où chercher ? (la carte des territoires).
+           Page de droite : 3 Qui chercher ? (les familles), puis « Votre partie » (la note du jeu choisi,
+           ses réglages) et, toujours en bas de la page, le lieu et le bouton « Jouer ».
+           Tout est rempli par le JavaScript (afficherChoixDefi, partie 11 bis). -->
+      <div id="choix-defi" class="carnet">
+        <div class="page-carnet gauche">
+          <h2 class="titre-carnet" id="titre-jeu"><span class="num">1</span>Quel jeu ?</h2>
+          <div class="choix-jeux-principaux" id="choix-jeux-principaux"></div>
+          <!-- Étape 139 : les modes de jeu alternatifs, en petites étiquettes -->
+          <div class="modes-alt"><div class="titre-alt">Modes de jeu alternatifs</div>
+            <div class="choix-jeux" id="choix-jeux"></div></div>
+          <h2 class="titre-carnet" id="titre-ou"><span class="num">2</span>Où chercher ?</h2>
+          <div class="zone-carte">
+            <svg class="carte-choix" id="carte-choix" role="img" aria-label="Carte des territoires"></svg>
+            <p class="resume-carte" id="resume-carte"></p>
+            <div class="legende-carte">
+              <p class="consigne">Sélectionnez un territoire en couleur pour le choisir ou le retirer.</p>
+              <div class="territoires-choisis" id="territoires-defi"></div>
+              <ul class="cles-carte" id="cles-carte"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="page-carnet droite">
+          <!-- Étape 224 : l'aquarelle est retirée (et son crédit dans « À propos ») -->
+          <!-- Étape 224 : « Qui chercher ? » passe sur la page de droite, au-dessus du résumé et du bouton -->
+          <div class="qui-carnet">
+            <div class="ligne-titre">
+              <h2 class="titre-carnet" id="titre-qui"><span class="num">3</span>Qui chercher ?</h2>
+              <button class="lien-tout" id="tout-defi"></button>
+            </div>
+            <div class="tuiles-defi" id="tuiles-familles-defi"></div>
+          </div>
+          <div class="defile-carnet">
+            <div class="titre-partie">Votre partie</div>
+            <div class="note-jeu">
+              <div class="titre-note"><span class="medaillon" id="picto-note"></span><span><span id="nom-note"></span><small id="detail-note"></small></span></div>
+              <p id="aide-defi"></p>
+              <div class="stats-jeu" id="stats-jeu"></div>
+            </div>
+            <!-- Les réglages du Classique (étapes 86-87), cachés pour les autres jeux -->
+            <!-- Étape 139 : les réglages du Carnet sont repliés derrière ce bouton -->
+            <button class="bouton-options cache" id="bouton-options"></button>
+            <div id="options-classique" class="reglages-carnet cache">
+              <div class="reglage" id="choix-nombre">
+                <span class="picto-reglage" id="picto-questions"></span><span class="libelle">Nombre de questions</span>
+                <span class="segments" id="segments-nombre"></span>
+              </div>
+              <label class="interrupteur-chrono reglage" id="interrupteur-chrono">
+                <span class="picto-reglage" id="picto-chrono"></span>
+                <span id="texte-chrono">Chronomètre</span>
+                <input type="checkbox" id="case-chrono">
+                <span class="glissiere" aria-hidden="true"></span>
+              </label>
+              <label class="interrupteur-chrono reglage" id="interrupteur-revision">
+                <span class="picto-reglage" id="picto-revision"></span>
+                <span id="texte-revision">Révisions uniquement</span>
+                <input type="checkbox" id="case-revision">
+                <span class="glissiere" aria-hidden="true"></span>
+              </label>
+              <!-- Étape 100 (J1) : les « Types de question » du Carnet de terrain. Les anciens petits jeux
+                   (Portrait-robot, Rangement, Duel, Espèce mystère) deviennent des options, comme les cris.
+                   Les interrupteurs des quatre jeux sont fabriqués par le JavaScript (afficherChoixDefi). -->
+              <div class="sous-titre-reglages">Types de question</div>
+              <!-- Étape 133 : « Photos uniquement ». Coché, la partie ne pose que des photos à reconnaître
+                   (« Quelle est cette espèce ? ») : les autres types de question sont alors grisés. -->
+              <label class="interrupteur-chrono reglage" id="interrupteur-photos">
+                <span class="picto-reglage" id="picto-photos"></span>
+                <span class="nom-type" id="texte-photos">Photos uniquement</span>
+                <input type="checkbox" id="case-photos">
+                <span class="glissiere" aria-hidden="true"></span>
+              </label>
+              <!-- Étape 132 : les questions classiques (photo, choix multiple, vrai ou faux…). Décochées, la partie
+                   n'est faite que des types cochés plus bas : on peut ainsi jouer un seul type de question. -->
+              <label class="interrupteur-chrono reglage" id="interrupteur-simples">
+                <span class="picto-reglage" id="picto-simples"></span>
+                <span class="nom-type" id="texte-simples">Questions classiques</span>
+                <input type="checkbox" id="case-simples">
+                <span class="glissiere" aria-hidden="true"></span>
+              </label>
+              <!-- Étape 94 : les cris dans le Classique. Activés sans chronomètre, désactivés avec (réglable à la main) -->
+              <label class="interrupteur-chrono reglage" id="interrupteur-cris">
+                <span class="picto-reglage" id="picto-cris"></span>
+                <span class="nom-type" id="texte-cris">Cris des animaux</span>
+                <input type="checkbox" id="case-cris">
+                <span class="glissiere" aria-hidden="true"></span>
+              </label>
+              <div id="types-carnet" class="types-carnet"></div>
+            </div>
+          </div>
+          <!-- Étape 196 : en mode « terrain », la page de droite dit à quoi sert ce choix ;
+               étape 225 : ce texte passe juste au-dessus du résumé et du bouton « Valider ce terrain » -->
+          <div class="note-terrain" id="note-terrain"><div class="titre-partie">Partir ailleurs</div>
+            <p>Choisissez sur la carte le territoire où partir. L'accueil et « Jouer » ne montreront que lui. Pour mélanger plusieurs territoires ou choisir des familles, il y a l'onglet « Plus de jeux ».</p></div>
+          <div class="depart-carnet">
+            <p class="resume-lieu" id="resume-defi"></p>
+            <button class="bouton-accueil principal bouton-jouer" id="lancer-defi">Jouer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <article class="carte-rencontre cache" id="carte-rencontre">
+      <!-- Le tableau de bord du défi (étape 33) : jauge de temps, série, score. Caché hors défi. -->
+      <div class="hud-defi cache" id="hud-defi">
+        <div class="jauge-defi"><div id="jauge-defi"></div></div>
+        <div class="ligne-hud">
+          <span id="temps-defi"></span>
+          <span id="serie-defi"></span>
+          <span class="score-defi"><strong id="score-defi">0</strong> <span id="unite-score">pts</span></span>
+        </div>
+      </div>
+      <!-- Étape 151 : la photo et, dans la Rencontre, la fiche « post-it » à sa droite -->
+      <div class="haut-rencontre">
+        <div class="photo" id="photo-rencontre">photo à venir</div>
+        <aside class="postit-rencontre" id="postit-rencontre">
+          <!-- Étape R138 : la fiche (remplie par dessinerPostit), puis, sur ordinateur, l'explication et le bouton « Question suivante » -->
+          <div class="postit-fiche" id="postit-fiche"></div>
+          <div class="postit-suite" id="postit-suite"></div>
+        </aside>
+      </div>
+      <!-- Étape 111 : l'aide « silhouette », quand la photo est cachée et que la silhouette ne donne pas la réponse -->
+      <div class="zone-silhouette cache" id="zone-silhouette">
+        <button class="bouton-silhouette" id="bouton-silhouette">Voir la silhouette</button>
+        <div class="silhouette-aide cache" id="silhouette-aide"></div>
+      </div>
+      <div class="contenu">
+        <div class="compteur" id="compteur-rencontre"></div>
+        <span class="famille" id="famille"></span>
+        <h1 id="nom"></h1>
+        <div class="revision" id="revision"></div>
+        <p class="question" id="question"></p>
+        <p class="affirmation cache" id="affirmation"></p>
+        <div id="reponses"></div>
+        <!-- "Je ne sais pas" (étape 76) : plutôt que répondre au hasard, on demande la réponse. Rencontre seulement. -->
+        <button class="je-ne-sais-pas cache" id="je-ne-sais-pas">Je ne sais pas</button>
+        <p class="retour" id="retour"></p>
+        <button class="suivant cache" id="suivant">Rencontre suivante →</button>
+        <!-- Étape 247 : revoir les questions précédentes de la Rencontre (sans pouvoir changer sa réponse) -->
+        <div class="bas-rencontre">
+          <button class="revoir-precedente cache" id="revoir-precedente">← Question précédente</button>
+          <!-- Quitter la partie et revenir à l'accueil (étape 73) -->
+          <button class="quitter" data-quitter>Quitter</button>
+        </div>
+      </div>
+      <!-- Étape R158 (téléphone) : la bande du bas « Ce que vous savez d'elle » ; la fiche est sur un 2e écran, plus bas -->
+      <button class="vers-fiche" id="vers-fiche" type="button"></button>
+    </article>
+
+    <!-- Écran de fin de défi (étape 33) -->
+    <div class="accueil cache" id="fin-defi">
+      <p class="texte-progres" id="nom-fin-defi"></p>
+      <!-- Étape 97 : le carnet de fin (rempli par afficherCarnetFin) -->
+      <div class="carnet-fin" id="carnet-fin-defi"></div>
+      <!-- (étape 97) anciennes lignes score / étoiles / XP : gardées mais cachées, le code les remplit toujours -->
+      <div class="cache">
+        <p class="score-final" id="score-fin-defi"></p>
+        <p class="texte-progres" id="record-fin-defi"></p>
+        <p class="etoiles grandes" id="etoiles-fin-defi"></p>
+        <p class="texte-progres" id="detail-fin-defi"></p>
+      </div>
+      <!-- L'espèce à choisir (étape 54) : trois cartes fabriquées par le JavaScript (partie 11 bis) -->
+      <div id="recompense-defi">
+        <p class="titre-defis" id="titre-recompense"></p>
+        <div class="choix-recompense" id="choix-recompense"></div>
+        <p class="texte-progres" id="texte-recompense"></p>
+      </div>
+      <!-- Le bilan du défi (étape 55) : découvert / appris / confirmé, comme à la fin d'une Rencontre -->
+      <div class="bilan cache" id="bilan-defi"></div>
+      <div class="a-revoir cache" id="rates-fin-defi"></div>
+      <!-- Étape 263 : après une Sortie nature, rencontrer pour de bon une espèce croisée pour la première fois -->
+      <div class="passerelle cache" id="passerelle-fin-defi"></div>
+      <div class="boutons-accueil" id="boutons-fin-defi">
+        <!-- Étape 274 (« Revoir 4 ») : « Retour au territoire » entre « Rejouer » et « Accueil » (pour l'Arcade : « Retour aux jeux ») -->
+        <button class="bouton-accueil principal" id="bouton-rejouer-defi">Rejouer</button>
+        <button class="bouton-accueil secondaire" id="bouton-territoire-defi">Retour au territoire</button>
+        <button class="bouton-accueil secondaire" id="bouton-autre-defi">Accueil</button>
+      </div>
+    </div>
+
+    <!-- Écran de fin de session (étape 8) -->
+    <div class="accueil cache" id="fin-session">
+      <h1 id="titre-fin-session">Rencontre terminée</h1>
+      <!-- Étape R101 (Revoir 10) : le score en haut, juste sous le titre (rempli par afficherCarnetFin) -->
+      <p class="score-fin3 score-haut" id="score-session"></p>
+      <p class="texte-progres cache" id="recap-session"></p>
+      <!-- Les jauges : ce que la Rencontre a fait avancer (étape 38, rempli par le JavaScript) -->
+      <!-- La fiche de l'espèce de la Rencontre et ce qu'elle a gagné (étape 74, rempli par le JavaScript) -->
+      <div class="fiche-session" id="fiche-session"></div>
+      <!-- Étape 288 : en expédition (étape 1), le bloc de l'expédition et la suite (sous la fiche de l'espèce depuis R101) -->
+      <div class="passerelle cache" id="exp-fin-session"></div>
+      <div class="progres-session cache" id="progres-session"></div>
+      <div class="bilan cache" id="bilan-session"></div>
+      <!-- Étape 97 : le carnet de fin (rempli par afficherCarnetFin) -->
+      <div class="carnet-fin" id="carnet-fin-session"></div>
+      <div class="boutons-accueil">
+        <!-- Étape 263 : en fin de Rencontre, on enchaîne sur une Sortie nature, ou on choisit une autre espèce -->
+        <!-- Étape 274 (« Revoir 4 ») : plus de Sortie nature ici ; une autre Rencontre au hasard, ou le retour -->
+        <button class="bouton-accueil principal" id="bouton-rejouer">Autre rencontre aléatoire</button>
+        <button class="bouton-accueil secondaire" id="bouton-fin-territoire">Retour au territoire</button>
+        <button class="bouton-accueil secondaire" id="bouton-fin-accueil">Retour à l'accueil</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vue 2 : l'Encyclopédie (remplie par le JavaScript) -->
+  <section id="vue-encyclopedie" class="cache">
+    <!-- Étape 223 : les filtres en colonne à gauche, les cartes à droite -->
+    <div class="ency-mise">
+      <aside class="filtres" id="filtres"></aside>
+      <main class="grille" id="grille"></main>
+    </div>
+  </section>
+
+  <!-- Vue 5 : la page Progression (étape 106, maquette B validée le 11/10). Remplie par le JavaScript (partie 11 nonies). -->
+  <section id="vue-progression" class="cache"></section>
+
+  <!-- Vue 4 : la page d'une espèce (étape 103, J4 — maquette B validée le 11/10).
+       Ouverte d'un clic sur une espèce identifiée de l'encyclopédie. Remplie par le JavaScript (partie 10 ter). -->
+  <section id="vue-espece" class="cache"></section>
+  <!-- Étape 282 : l'écran d'une expédition (17_expeditions.js, dessinerEcranExpedition) -->
+  <section id="vue-expedition" class="cache"></section>
+  <section id="vue-lieu" class="cache"></section>   <!-- étape 290 : la page d'un lieu -->
+
+  <!-- Vue 3 : À propos (étape 102). Les textes sont ici ; les tableaux de crédits sont remplis
+       par le JavaScript (partie 10 bis) à partir du fichier credits.js. -->
+  <!-- Étape 262 (« Revoir 3 ») : l'Arcade — l'onglet « Plus de jeux » devient un espace à part, avec les seuls jeux
+       alternatifs (Duel, Espèce mystère, Portrait-robot). Rempli par afficherArcade (16_arcade.js). -->
+  <section id="vue-arcade" class="cache">
+    <div class="arcade">
+      <header class="arc-tete">
+        <h1>Plus de jeux</h1>
+        <p>De petits jeux pour s'amuser avec toutes les espèces de vos territoires, même celles pas encore découvertes.</p>
+      </header>
+      <div class="arc-jeux" id="arc-jeux"></div>
+      <details class="arc-terrain" id="arc-terrain"></details>
+      <p class="arc-bientot">D'autres jeux viendront s'ajouter ici.</p>
+    </div>
+  </section>
+
+  <section id="vue-apropos" class="cache">
+    <article class="apropos">
+      <h1>À propos</h1>
+      <!-- Étape ML5 : nouveau texte d'introduction (choix de l'utilisateur, 03/11) -->
+      <p class="chapeau">On protège mieux ce que l'on connaît. Myriade vous invite à découvrir les animaux de votre territoire,
+        l'un après l'autre&nbsp;: leur allure, leur façon de vivre, les liens qui les unissent aux autres espèces et à leur milieu.
+        Au fil des expéditions, dans des lieux bien réels, vous apprenez à les reconnaître et votre carnet se remplit
+        de ce que vous avez vraiment appris. Sans pression ni punition, juste le plaisir de découvrir, à votre rythme.</p>
+
+      <!-- Étape ML3 : rendre le jeu participatif (remplace « Nous écrire » de l'étape ML1).
+           Chaque bouton ouvre un message déjà préparé vers l'adresse du jeu ; la liste des espèces
+           sans photo est remplie par afficherAPropos (06_encyclopedie.js). -->
+      <section class="participer" id="apropos-participer">
+        <h2>Participer à Myriade</h2>
+        <p>Myriade se construit pas à pas, et vous pouvez y prendre part. Chaque message est lu ;
+          tout ce qui entre dans le jeu est d'abord vérifié.</p>
+        <div class="participer-cartes">
+          <div class="participer-carte">
+            <h3>Proposer vos photos</h3>
+            <p>Vous avez photographié un animal du jeu&nbsp;? Une photo nette d'un animal entier, vivant, dans son milieu.
+              Vous restez l'auteur&nbsp;: votre nom apparaît dans les crédits.</p>
+            <a class="bouton-apropos" href="mailto:myriade.encyclopedie@gmail.com?subject=Myriade%20%C2%B7%20Proposer%20une%20photo&amp;body=Esp%C3%A8ce%20%3A%0ALieu%20et%20date%20de%20la%20photo%20%3A%0ANom%20%C3%A0%20afficher%20dans%20les%20cr%C3%A9dits%20%3A%0AJ%27accepte%20que%20cette%20photo%20soit%20utilis%C3%A9e%20dans%20Myriade%2C%20avec%20mon%20nom%20dans%20les%20cr%C3%A9dits%20%3A%20oui%20/%20non%0A%0A%28Joignez%20la%20photo%20%C3%A0%20ce%20message%2C%20dans%20sa%20taille%20d%27origine.%29%0A">Proposer une photo</a>
+          </div>
+          <div class="participer-carte">
+            <h3>Corriger ou compléter une fiche</h3>
+            <p>Une taille, une alimentation, un territoire qui vous semble faux ou incomplet&nbsp;?
+              Indiquez si possible votre source.</p>
+            <a class="bouton-apropos" href="mailto:myriade.encyclopedie@gmail.com?subject=Myriade%20%C2%B7%20Corriger%20ou%20compl%C3%A9ter%20une%20fiche&amp;body=Esp%C3%A8ce%20%3A%0ACe%20qui%20est%20%C3%A9crit%20dans%20le%20jeu%20%3A%0ACe%20qui%20serait%20juste%20%3A%0AVotre%20source%20%28atlas%2C%20article%2C%20livre%2C%20site%29%20%3A%0A">Signaler une correction</a>
+          </div>
+          <div class="participer-carte">
+            <h3>Partager une idée</h3>
+            <p>Une question ambiguë, un écran peu clair, un jeu que vous aimeriez voir&nbsp;:
+              vos remarques font avancer Myriade.</p>
+            <a class="bouton-apropos" href="mailto:myriade.encyclopedie@gmail.com?subject=Myriade%20%C2%B7%20Une%20id%C3%A9e%20pour%20le%20jeu&amp;body=Votre%20id%C3%A9e%20ou%20remarque%20%3A%0AO%C3%B9%20dans%20le%20jeu%20%28%C3%A9cran%2C%20esp%C3%A8ce%2C%20lieu%29%20%3A%0A">Envoyer une idée</a>
+          </div>
+        </div>
+        <details class="credits-famille participer-attente" id="photos-attendues"></details>
+        <p class="participer-adresse">Pour tout le reste&nbsp;: <a href="mailto:myriade.encyclopedie@gmail.com">myriade.encyclopedie@gmail.com</a></p>
+      </section>
+
+      <!-- Étape ML6 : la liste des sources mise à jour (relevée dans les journaux de vérification et les faits insolites) -->
+      <h2>Les données des espèces</h2>
+      <p>Chaque caractéristique d'une fiche est cherchée plusieurs fois, de façon indépendante, puis recoupée entre
+        plusieurs sources. Une valeur qui n'est pas confirmée n'est jamais utilisée dans les questions. Les principales sources&nbsp;:</p>
+      <h3>Encyclopédies et guides</h3>
+      <ul class="sources">
+          <li><a href="https://fr.wikipedia.org" target="_blank" rel="noopener">Wikipédia</a> <small>— en français, anglais, allemand, espagnol et italien</small></li>
+          <li><a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> <small>— données structurées</small></li>
+          <li><a href="https://www.oiseaux.net" target="_blank" rel="noopener">Oiseaux.net</a> <small>— fiches des oiseaux</small></li>
+      </ul>
+      <h3>Bases scientifiques</h3>
+      <ul class="sources">
+          <li><a href="https://inpn.mnhn.fr" target="_blank" rel="noopener">INPN</a> <small>— Muséum national d'Histoire naturelle : espèces de France, noms, statuts officiels</small></li>
+          <li><a href="https://animaldiversity.org" target="_blank" rel="noopener">Animal Diversity Web</a> <small>— Université du Michigan</small></li>
+          <li><a href="https://genomics.senescence.info/species/" target="_blank" rel="noopener">AnAge</a> <small>— longévité, gestation, poids</small></li>
+          <li><a href="https://www.fishbase.se" target="_blank" rel="noopener">FishBase</a> <small>— poissons</small></li>
+          <li><a href="https://doris.ffessm.fr" target="_blank" rel="noopener">DORIS</a> <small>— faune aquatique de France</small></li>
+          <li><a href="https://amphibiaweb.org" target="_blank" rel="noopener">AmphibiaWeb</a> <small>— amphibiens</small></li>
+          <li><a href="https://www.marlin.ac.uk" target="_blank" rel="noopener">MarLIN</a> <small>— vie marine des côtes européennes</small></li>
+          <li><a href="https://uicn.fr" target="_blank" rel="noopener">Comité français de l'UICN</a> <small>— listes rouges de France</small></li>
+          <li><a href="https://www.iucnredlist.org" target="_blank" rel="noopener">Liste rouge de l'UICN</a> <small>— statuts de conservation en Europe et dans le monde</small></li>
+          <li><a href="https://euring.org" target="_blank" rel="noopener">EURING</a> <small>— records de longévité des oiseaux bagués en Europe</small></li>
+          <li><a href="https://www.bto.org" target="_blank" rel="noopener">British Trust for Ornithology</a> <small>— oiseaux</small></li>
+      </ul>
+      <h3>Associations et atlas naturalistes</h3>
+      <ul class="sources">
+          <li><a href="https://www.lpo.fr" target="_blank" rel="noopener">LPO</a> <small>— ligue pour la protection des oiseaux, et ses atlas régionaux</small></li>
+          <li><a href="https://www.faune-france.org" target="_blank" rel="noopener">Faune-France</a> <small>— atlas et synthèses régionales</small></li>
+          <li><a href="https://www.insectes.org" target="_blank" rel="noopener">OPIE</a> <small>— insectes</small></li>
+          <li><a href="https://www.salamandre.org" target="_blank" rel="noopener">La Salamandre</a> <small>— revue nature</small></li>
+          <li><a href="https://www.info-fauna.ch" target="_blank" rel="noopener">info fauna – karch</a> <small>— amphibiens et reptiles de Suisse</small></li>
+          <li><a href="https://araneae.nmbe.ch" target="_blank" rel="noopener">Araignées d'Europe</a> <small>— Musée d'histoire naturelle de Berne</small></li>
+          <li><a href="https://www.mammal.org.uk" target="_blank" rel="noopener">The Mammal Society</a> <small>— mammifères</small></li>
+      </ul>
+      <h3>Observations</h3>
+      <ul class="sources">
+          <li><a href="https://www.gbif.org" target="_blank" rel="noopener">GBIF</a> <small>— observations naturalistes : présence de chaque espèce dans les territoires et autour des lieux</small></li>
+      </ul>
+      <p>S'y ajoutent de nombreuses sources ponctuelles (universités, muséums, associations, parcs nationaux).
+        Le détail de chaque valeur (source et phrase citée) est tenu dans les tableurs du jeu.</p>
+
+      <h2>La carte des territoires</h2>
+      <p>Les territoires suivent les grandes régions écologiques (GRECO) définies par l'IGN. Contours tirés de la couche
+        des sylvoécorégions, © <a href="https://inventaire-forestier.ign.fr" target="_blank" rel="noopener">IGN – Inventaire forestier national</a>,
+        licence ouverte Etalab.</p>
+      <p>Les textes des lieux s'appuient sur les parcs nationaux et régionaux, l'Office français de la biodiversité,
+        les services de l'État en région et la convention de Ramsar, avec deux sources pour chaque affirmation.</p>
+
+      <h2>Les dessins et les silhouettes</h2>
+      <p>Les empreintes et les pictogrammes sont des dessins originaux, tracés pour le jeu.</p>
+      <p>Les silhouettes des espèces viennent de <a href="https://www.phylopic.org" target="_blank" rel="noopener">PhyloPic</a>,
+        une banque de silhouettes libres ; elles ont été retracées d'une seule couleur. Quand il n'existe pas de dessin de l'espèce,
+        celui d'une espèce proche est utilisé (indiqué « d'après … »).</p>
+      <div id="credits-silhouettes"></div>
+
+      <h2>Les photos</h2>
+      <p>Les photos des espèces viennent de <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>
+        et d'<a href="https://www.inaturalist.org" target="_blank" rel="noopener">iNaturalist</a>, sous licence libre ; la photo de Strasbourg est une photo personnelle de l'auteur du jeu.
+        Elles restent la propriété de leurs auteurs et sont utilisées selon leur licence ; certaines ont été recadrées ou réduites.
+        Le nom de l'auteur renvoie à la photo d'origine. Quelques auteurs restent à identifier : si l'une de ces photos
+        est la vôtre, elle sera créditée ou retirée sur simple demande à <a href="mailto:myriade.encyclopedie@gmail.com">myriade.encyclopedie@gmail.com</a>.</p>
+      <div id="credits-photos"></div>
+
+      <h2>Les sons</h2>
+      <p>Les cris viennent de <a href="https://xeno-canto.org" target="_blank" rel="noopener">xeno-canto</a>,
+        de <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> et
+        d'<a href="https://www.inaturalist.org" target="_blank" rel="noopener">iNaturalist</a>.
+        Ils restent la propriété de leurs auteurs ; ils ont été raccourcis à quelques secondes.</p>
+      <div id="credits-sons"></div>
+
+      <h2>Les polices</h2>
+      <p>Les titres sont en <a href="https://github.com/googlefonts/literata" target="_blank" rel="noopener">Literata</a>
+        (The Literata Project Authors) et le texte en <a href="https://github.com/weiweihuanghuang/Work-Sans" target="_blank" rel="noopener">Work Sans</a>
+        (The Work Sans Project Authors), deux polices libres sous
+        <a href="https://openfontlicense.org" target="_blank" rel="noopener">licence SIL Open Font License 1.1</a>, intégrées au jeu.</p>
+
+      <!-- Étape ML4 : le crédit de la photo d'accueil passe en fin de page -->
+      <h2>La photo de l'accueil</h2>
+      <p>La nuée d'étourneaux du bandeau : « Dance of the Starlings », par Conni Nielsen,
+        <a href="https://commons.wikimedia.org/wiki/File:Dance_Of_The_Starlings_(201781509).jpeg" target="_blank" rel="noopener">Wikimedia Commons</a>,
+        licence <a href="https://creativecommons.org/licenses/by/3.0" target="_blank" rel="noopener">CC BY 3.0</a> (recadrée).</p>
+
+      <p class="pied-apropos" id="pied-apropos"></p>
+    </article>
+  </section>
+
+  <!-- La petite fenêtre de fiche détaillée (encyclopédie) -->
+  <div class="fenetre" id="fenetre"></div>
+
+  <!-- La bulle de récompense -->
+  <div class="bulle" id="bulle"></div>
+  <!-- La carte des moments rares (étape 40), remplie par le JavaScript -->
+  <div class="carte-pop" id="carte-pop"></div>
+  <!-- Étape 142 : la fête des grands moments -->
+  <div class="voile-fete" id="voile-fete"></div>
+  <div class="carte-fete" id="carte-fete" role="dialog" aria-live="polite"></div>
+  <div class="presentation-famille" id="presentation-famille" role="dialog" aria-modal="true"></div>   <!-- étape 127 -->
+
+
+  <!-- ===================== JS ===================== -->
+  <!-- Étape ML7 : le numéro de version (à changer à chaque livraison : Outils\changer_version.py) -->
+  <script src="version.js?v=1.0.0"></script>
+  <script src="especes.js?v=1.0.0"></script>
+  <script src="cadrage.js?v=1.0.0"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
+  <script src="territoires.js?v=1.0.0"></script>
+  <script src="credits.js?v=1.0.0"></script>
+  <script src="credits_silhouettes.js?v=1.0.0"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
+  <script src="identite.js?v=1.0.0"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
+  <script src="lieux_identite.js?v=1.0.0"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
+  <script src="lieux_carte.js?v=1.0.0"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
+  <script src="expeditions.js?v=1.0.0"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
+  <script src="familles.js?v=1.0.0"></script>   <!-- étape 127 : cartes d'identité des familles -->
+  <!-- Le programme du jeu, en plusieurs fichiers (dossier « programme »), chargés dans l'ordre -->
+  <script src="Programme/01_questions.js?v=1.0.0"></script>
+  <script src="Programme/02_progression.js?v=1.0.0"></script>
+  <script src="Programme/03_questions_reponses.js?v=1.0.0"></script>
+  <script src="Programme/04_fetes.js?v=1.0.0"></script>
+  <script src="Programme/05_accueil.js?v=1.0.0"></script>
+  <script src="Programme/06_encyclopedie.js?v=1.0.0"></script>
+  <script src="Programme/07_parties.js?v=1.0.0"></script>
+  <script src="Programme/08_petits_jeux.js?v=1.0.0"></script>
+  <script src="Programme/09_rencontre.js?v=1.0.0"></script>
+  <script src="Programme/10_premiere_visite.js?v=1.0.0"></script>
+  <script src="Programme/11_commandes_test.js?v=1.0.0"></script>
+  <script src="Programme/12_profil_badges.js?v=1.0.0"></script>
+  <script src="Programme/15_territoire.js?v=1.0.0"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
+  <script src="Programme/16_arcade.js?v=1.0.0"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
+  <script src="Programme/17_expeditions.js?v=1.0.0"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
+  <script src="Programme/19_application.js?v=1.0.0"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
+  <script src="Programme/13_demarrage.js?v=1.0.0"></script>
+  <script src="Programme/14_clavier_menus.js?v=1.0.0"></script>   <!-- étape 229 : le clavier en fin de partie -->
+  <script src="Programme/18_cadrage.js?v=1.0.0"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
+</body>
+</html>
