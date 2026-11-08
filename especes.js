@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V77.xlsx, especes_bassin_aquitain_V26.xlsx, especes_bassin_parisien_V36.xlsx, especes_corse_V30.xlsx, especes_grand_est_V27.xlsx, especes_jura_V27.xlsx, especes_massif_armoricain_V37.xlsx, especes_massif_central_V27.xlsx, especes_mediterranee_V34.xlsx, especes_pyrenees_V31.xlsx, especes_vosges_V25.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V78.xlsx, especes_bassin_aquitain_V27.xlsx, especes_bassin_parisien_V37.xlsx, especes_corse_V31.xlsx, especes_grand_est_V28.xlsx, especes_jura_V28.xlsx, especes_massif_armoricain_V38.xlsx, especes_massif_central_V28.xlsx, especes_mediterranee_V35.xlsx, especes_pyrenees_V32.xlsx, especes_vosges_V26.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -214,9 +214,9 @@ const ESPECES = [
     proies_items: "Herbes ; Fleurs",
     predateurs_items: "Lynx ; Loup ; Aigle royal",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/chamois_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/314101101",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -319,9 +319,9 @@ const ESPECES = [
     proies_items: "Herbes ; Graines ; Insectes",
     predateurs_items: "Aigle royal ; Renard",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/marmotte_des_alpes_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/88503671",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -949,9 +949,9 @@ const ESPECES = [
     proies_items: "Lièvres ; Chevreuils ; Chamois ; Moutons",
     predateurs_items: "Loup gris ; Ours brun",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/lynx_boreal_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Lynx_kitten.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire", "couleur_dominante", "pupille_forme"]
   },
   {
@@ -1054,9 +1054,9 @@ const ESPECES = [
     proies_items: "Chevreuils ; Chamois ; Cerfs",
     predateurs_items: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/loup_gris_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:European_Wolf_Cub_and_Stick_(9339320873).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -1159,9 +1159,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Insectes ; Vers de terre ; Grenouilles ; Petits mammifères ; Campagnols et mulots",
     predateurs_items: "Lynx ; Loup ; Renard ; Grand-duc ; Aigle",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/blaireau_europeen_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Baby_Badger_on_Colliers_Green_Road_-_geograph.org.uk_-_1952748.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -2419,9 +2419,9 @@ const ESPECES = [
     proies_items: "Chenilles ; Coléoptères ; Vers de terre ; Limaces ; Escargots",
     predateurs_items: "Renard ; Blaireau ; Martre ; Grand-duc ; Aigle royal",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/herisson_d_europe_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/81450219",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -8296,9 +8296,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/apollon_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/359930633",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire", "ailes_repos"]
   },
   {
@@ -8854,9 +8854,9 @@ const ESPECES = [
     proies_items: "Insectes ; Têtards",
     predateurs_items: "Oiseaux insectivores ; Araignées",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/aeschne_bleue_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/223306407",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {
@@ -9505,9 +9505,9 @@ const ESPECES = [
     proies_items: "Aiguilles de pin",
     predateurs_items: "NA",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/isabelle_de_france_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Graellsia_isabellae_5th_instar_sjh.jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -9784,9 +9784,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Abeilles et guêpes",
     predateurs_items: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/cordulegastre_annele_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/238562854",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {
@@ -15682,9 +15682,9 @@ const ESPECES = [
     proies_items: "Fourmis",
     predateurs_items: "Petites guêpes parasites",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/fourmilion_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Ruhland,_Grenzstr._gegen%C3%BCber_Hausnr._2,_Ameisenl%C3%B6we,_Sommer,_03.jpg",
+    photo_2_sujet: "larve",
     a_confirmer: ["territoire"]
   },
   {
@@ -22532,9 +22532,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "Oiseaux insectivores ; Petits mammifères",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/flambe_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/121412643",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -22997,9 +22997,9 @@ const ESPECES = [
     proies_items: "Graines ; Insectes",
     predateurs_items: "Oiseaux",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/gendarme_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/282746844",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {
@@ -29446,9 +29446,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/calopteryx_hemorroidal_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/162489602",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -32431,9 +32431,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Sève ; Fruits",
     predateurs_items: "Oiseaux",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/grande_tortue_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/216259421",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -32989,9 +32989,9 @@ const ESPECES = [
     proies_items: "Pucerons ; Cochenilles",
     predateurs_items: "Oiseaux ; Punaises ; Fourmis ; Autres coccinelles",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/coccinelle_asiatique_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/118287698",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {
@@ -36787,9 +36787,9 @@ const ESPECES = [
     proies_items: "Orties ; Fruits et baies ; Nectar",
     predateurs_items: "Mésanges bleues ; Autres oiseaux",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/robert_le_diable_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/118771966",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -37066,9 +37066,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "Autres libellules ; Coléoptères ; Punaises ; Poissons",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/leucorrhine_a_gros_thorax_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/266037347",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -38922,9 +38922,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "Orque ; Grand requin blanc",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/phoque_veau_marin_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:A_common_seal_pup_at_Sandstell_Point_-_geograph.org.uk_-_7855522.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -47198,9 +47198,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Mouches ; Larves d'insectes",
     predateurs_items: "Oiseaux ; Araignées ; Libellules ; Grenouilles ; Lézards",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/agrion_de_mercure_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/397181440",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -53702,9 +53702,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mouches",
     predateurs_items: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/sympetrum_noir_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/181919072",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -53888,9 +53888,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/calopteryx_eclatant_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/241534683",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -58100,9 +58100,9 @@ const ESPECES = [
     proies_items: "Coléoptères ; Araignées ; Escargots",
     predateurs_items: "Couleuvres ; Rapaces ; Chats ; Chiens",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/lezard_ocelle_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/83546451",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -58737,9 +58737,9 @@ const ESPECES = [
     proies_items: "Sauterelles et criquets ; Lézards ; Oisillons ; Campagnols et mulots ; Musaraignes ; Lapins",
     predateurs_items: "Circaète Jean-le-Blanc ; Couleuvres",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/couleuvre_a_echelons_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/198993819",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -62317,9 +62317,9 @@ const ESPECES = [
     proies_items: "Herbes ; Fruits et baies ; Insectes ; Moutons ; Charognes",
     predateurs_items: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/ours_brun_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_brown_bear_(Ursus_arctos_arctos)_cub_14_months.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -62422,9 +62422,9 @@ const ESPECES = [
     proies_items: "Herbes ; Jeunes pousses ; Fleurs ; Lichens ; Mousses",
     predateurs_items: "Aigle royal ; Renard",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/isard_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/393437724",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -66693,9 +66693,9 @@ const ESPECES = [
     proies_items: "Trèfles ; Nectar",
     predateurs_items: "NA",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/zygene_de_la_filipendule_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/199218102",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire"]
   },
   {
@@ -68292,9 +68292,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Sève",
     predateurs_items: "Oiseaux ; Mantes ; Réduves ; Libellules ; Reptiles ; Mammifères",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/morio_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/49757455",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire"]
   },
   {
@@ -68664,9 +68664,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "Guêpes parasites",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/pieride_du_chou_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/352512743",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -68943,9 +68943,9 @@ const ESPECES = [
     proies_items: "Mouches ; Moustiques ; Têtards",
     predateurs_items: "Anax empereur ; Cicindèle champêtre",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/libellule_a_quatre_taches_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Libellula_quadrimaculata_Larve.jpg",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {

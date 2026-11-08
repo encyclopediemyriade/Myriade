@@ -4304,6 +4304,156 @@ const CREDITS_PHOTOS = {
   "auteur": "Kathrin Jäckel",
   "licence": "CC BY 4.0",
   "source": "https://www.inaturalist.org/observations/410136651"
+ },
+ "aeschne_bleue_2": {
+  "auteur": "Diego González Dopico",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/223306407"
+ },
+ "cordulegastre_annele_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/238562854"
+ },
+ "libellule_a_quatre_taches_2": {
+  "auteur": "Siga",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Libellula_quadrimaculata_Larve.jpg"
+ },
+ "calopteryx_eclatant_2": {
+  "auteur": "J. H.",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/241534683"
+ },
+ "calopteryx_hemorroidal_2": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/162489602"
+ },
+ "sympetrum_noir_2": {
+  "auteur": "uusijani",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/181919072"
+ },
+ "leucorrhine_a_gros_thorax_2": {
+  "auteur": "Maciej Boenisch",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/266037347"
+ },
+ "agrion_de_mercure_2": {
+  "auteur": "Demian Hiß",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/397181440"
+ },
+ "pieride_du_chou_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/352512743"
+ },
+ "flambe_2": {
+  "auteur": "Vincent Plat",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/121412643"
+ },
+ "apollon_2": {
+  "auteur": "Giorgio Zavattoni",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/359930633"
+ },
+ "morio_2": {
+  "auteur": "Federico Del Barba",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/49757455"
+ },
+ "robert_le_diable_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/118771966"
+ },
+ "isabelle_de_france_2": {
+  "auteur": "Shawn Hanrahan",
+  "licence": "CC BY-SA 2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Graellsia_isabellae_5th_instar_sjh.jpg"
+ },
+ "zygene_de_la_filipendule_2": {
+  "auteur": "Joey Bom",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/199218102"
+ },
+ "grande_tortue_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/216259421"
+ },
+ "fourmilion_2": {
+  "auteur": "Wilhelm Zimmerling PAR",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Ruhland,_Grenzstr._gegen%C3%BCber_Hausnr._2,_Ameisenl%C3%B6we,_Sommer,_03.jpg"
+ },
+ "coccinelle_asiatique_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/118287698"
+ },
+ "gendarme_2": {
+  "auteur": "Matthieu Le Goïc",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/282746844"
+ },
+ "chamois_2": {
+  "auteur": "Marco Mussita",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/314101101"
+ },
+ "isard_2": {
+  "auteur": "Jan Vršovský",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/393437724"
+ },
+ "ours_brun_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_brown_bear_(Ursus_arctos_arctos)_cub_14_months.jpg"
+ },
+ "loup_gris_2": {
+  "auteur": "louise.helen",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:European_Wolf_Cub_and_Stick_(9339320873).jpg"
+ },
+ "phoque_veau_marin_2": {
+  "auteur": "Walter Baxter",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:A_common_seal_pup_at_Sandstell_Point_-_geograph.org.uk_-_7855522.jpg"
+ },
+ "herisson_d_europe_2": {
+  "auteur": "Vincent Plat",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/81450219"
+ },
+ "blaireau_europeen_2": {
+  "auteur": "Oast House Archive",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Baby_Badger_on_Colliers_Green_Road_-_geograph.org.uk_-_1952748.jpg"
+ },
+ "lynx_boreal_2": {
+  "auteur": "Bernard Landgraf",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lynx_kitten.jpg"
+ },
+ "marmotte_des_alpes_2": {
+  "auteur": "Etienne BONINO",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/88503671"
+ },
+ "lezard_ocelle_2": {
+  "auteur": "franciscodocampo",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/83546451"
+ },
+ "couleuvre_a_echelons_2": {
+  "auteur": "Adrien Cozannet",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/198993819"
  }
 };
 
