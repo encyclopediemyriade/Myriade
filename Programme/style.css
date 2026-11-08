@@ -4406,3 +4406,99 @@ button.pastille-carnet:hover { background: #fff; }
 .bienvenue-reprendre { margin: 26px 0 0; font-size: 14px; color: var(--texte-doux); text-align: center; }
 .bienvenue-reprendre .lien-reprendre { color: #8A4F1C; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; margin-left: 4px; }
 .bienvenue-reprendre .apropos-erreur { display: block; margin-top: 6px; color: #8A4F1C; font-weight: 600; }
+
+/* ==========================================================================
+   Étapes R169-R172 (08/11/2026) : les formes d'expédition (20_formes.js)
+   Ton sobre : pas de décor, les couleurs de l'herbier.
+   ========================================================================== */
+.chemin-info small.chemin-formes { gap: 6px; margin-top: 3px; }
+.forme-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; padding: 2px 7px; border-radius: 4px;
+  background: rgba(233, 201, 160, 0.18); color: inherit; }
+.forme-chip svg { width: 12px; height: 12px; flex: none; }
+/* R169 · Par le cri */
+#reponses.forme-ecoute { display: flex; flex-direction: column; gap: 10px; }
+.fe-scene { position: relative; height: 210px; background: var(--territoire); border-radius: 6px; }
+.fe-scene .anneau-ecoute { width: 110px; height: 110px; margin: -55px 0 0 -55px; }
+.fe-aide { margin: 4px 0 0; font-size: 14px; color: var(--texte-doux); }
+.fe-petit { margin: 0; font-size: 12.5px; color: var(--texte-doux); text-align: center; }
+.fe-go { width: 100%; min-height: 48px; }
+.fe-reecouter { position: absolute; left: 10px; bottom: 10px; z-index: 3; display: inline-flex; align-items: center; gap: 6px; min-height: 36px;
+  padding: 0 12px; border: none; border-radius: 18px; background: rgba(31, 58, 46, 0.85); color: #fbf8f1; font: 600 13px "Work Sans", sans-serif; cursor: pointer; }
+.fe-reecouter svg { width: 14px; height: 14px; }
+#photo-rencontre { position: relative; }
+/* R170 · Par les indices */
+#reponses.forme-indices { display: flex; flex-direction: column; gap: 10px; }
+.fe-indices { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.fe-indice { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; }
+.fe-etiq { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--texte-doux); }
+.fe-texte { font-size: 15px; }
+.fe-silhouette { width: 150px; height: 90px; object-fit: contain; object-position: left center; opacity: .85; }
+.fe-plus { min-height: 44px; border: 1px dashed var(--ocre); border-radius: 6px; background: none; color: var(--ocre-texte);
+  font: 600 14px "Work Sans", sans-serif; cursor: pointer; }
+#question .fe-rappel { display: inline-block; margin: 0 6px 6px 0; padding: 3px 9px; font-size: 12.5px; border: 1px solid var(--trait);
+  border-radius: 12px; background: var(--carte); }
+.fe-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.fe-photo { padding: 0; border: 1px solid var(--trait); border-radius: 6px; overflow: hidden; background: var(--carte); cursor: pointer; aspect-ratio: 4 / 3; }
+.fe-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fe-photo.juste { outline: 3px solid var(--bon); outline-offset: -3px; }
+.fe-photo.fausse { opacity: .55; }
+#reponses.forme-choix { display: flex; flex-direction: column; gap: 12px; }
+/* R171 · La planche ; R172 · Un lien du lieu */
+#forme-ecran { max-width: 760px; margin: 0 auto 32px; padding: 0 16px; box-sizing: border-box; }
+.fp-carte { background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; padding: 20px 20px 16px; }
+.fp-tete { position: relative; margin-bottom: 14px; }
+.fp-lib { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ocre-texte); }
+.fp-lib svg { width: 14px; height: 14px; }
+.fp-tete h2 { font-family: "Literata", Georgia, serif; font-size: 22px; margin: 4px 0; color: var(--texte); }
+.fp-tete p { margin: 0; font-size: 13.5px; color: var(--texte-doux); }
+.fp-compte { position: absolute; right: 0; top: 0; font-size: 13px; color: var(--texte-doux); }
+.fp-especes { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.fp-espece { display: flex; flex-direction: column; padding: 0; border: 1px solid var(--trait); border-radius: 6px; overflow: hidden; background: #fff;
+  text-align: left; cursor: pointer; font-family: "Work Sans", sans-serif; color: var(--texte); }
+.fp-espece img { width: 100%; height: 92px; object-fit: cover; display: block; }
+.fp-nom { font-size: 12.5px; font-weight: 600; padding: 6px 7px; line-height: 1.25; }
+.fp-phrase-posee { font-size: 11.5px; line-height: 1.3; padding: 5px 7px; color: #fbf8f1; background: var(--bon); }
+.fp-espece.revue .fp-phrase-posee { background: var(--texte-doux); }
+.fp-espece.placee { border-color: var(--bon); }
+.fp-phrases { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.fp-phrase { min-height: 44px; padding: 8px 12px; border: 1px solid var(--trait); border-radius: 6px; background: #fff; text-align: left;
+  font: 14px "Work Sans", sans-serif; color: var(--texte); cursor: pointer; }
+.fp-phrase.choisie { border: 2px solid var(--ocre); background: #f3e6d3; }
+.fp-retour { min-height: 1.4em; margin: 12px 0 0; font-size: 14px; line-height: 1.45; }
+.fp-retour small { color: var(--texte-doux); }
+.fp-pied { margin-top: 12px; display: flex; justify-content: center; text-align: center; }
+.fp-aide { font-size: 12.5px; color: var(--texte-doux); }
+.fl-duo { display: flex; align-items: center; justify-content: center; gap: 0; margin: 6px 0 4px; }
+.fl-duo figure { margin: 0; width: 140px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.fl-duo img { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; }
+.fl-duo figcaption { font-size: 13px; font-weight: 600; text-align: center; }
+.fl-trait { width: 48px; border-top: 2px dashed var(--ocre); margin-bottom: 26px; }
+.fl-question { font-family: "Literata", Georgia, serif; font-size: 18px; margin: 14px 0 10px; }
+.fl-choix { display: flex; flex-direction: column; gap: 8px; }
+.fl-rep { min-height: 50px; padding: 10px 14px; border: 1px solid var(--trait); border-radius: 6px; background: #fff; text-align: left;
+  font: 14px/1.35 "Work Sans", sans-serif; color: var(--texte); cursor: pointer; }
+.fl-rep.juste { border: 2px solid var(--bon); background: #eaf2ec; }
+.fl-rep.fausse { opacity: .6; }
+@media (max-width: 760px) {
+  #forme-ecran { padding: 0 10px; }
+  .fp-carte { padding: 14px 12px 12px; }
+  .fp-tete h2 { font-size: 19px; }
+  .fp-especes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .fp-espece img { height: 72px; }
+  .fp-nom { font-size: 11.5px; padding: 4px 5px; }
+  .fe-scene { height: 170px; }
+}
+@media (max-width: 760px) {
+  /* R171-R172 : comme pendant les autres questions (M3), les onglets du bas se retirent pendant la planche et le lien du lieu */
+  body:has(#forme-ecran) nav.barre .onglet { display: none; }
+  body:has(#forme-ecran) { padding-bottom: 0; }
+}
+/* R169-R170 : les écrans des formes prennent toute la largeur de la zone de réponses (sur ordinateur, elle est en 2 colonnes) */
+#carte-rencontre #reponses.forme-ecoute, #carte-rencontre #reponses.forme-indices, #carte-rencontre #reponses.forme-choix {
+  display: flex; flex-direction: column; gap: 10px; grid-template-columns: none; }
+.carte-rencontre #reponses.forme-choix .fe-photos { width: 100%; }
+.fe-photos { max-width: 520px; }
+/* R169b : le cri décrit en mots, sous la photo floue */
+.fe-cri { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 10px 12px; background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; font-size: 15px; }
+/* R169b : pour « Par le cri », un flou plus léger : on devine la silhouette et les couleurs, pas l'espèce */
+#carte-rencontre:has(#reponses.forme-ecoute) .photo.cadre-son img { filter: blur(9px) saturate(.9); transform: scale(1.06); }

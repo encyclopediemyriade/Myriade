@@ -220,7 +220,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
     format = auHasard(f.length ? f : ["picto", "cases"]);
   }
   else if (q.format)                 format = q.format;         // format imposé (empreintes)
-  else if (q.type === "nombre")      format = "estimation";
+  else if (q.type === "nombre")      format = (typeof formatComparaison === "function" && formatComparaison(espece, q)) || "estimation";   // étape R174 : ou une comparaison
   else {
     let formats = ["qcm"];
     if (autresValeurs(q, bonne, espece).length >= 1)   formats.push("vraifaux");
@@ -258,6 +258,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   if (format === "son-nom")         poserSonNom(espece, bonne);
   if (format === "picto")           poserPicto(espece, q, bonne);
   if (format === "duo")             poserDuo(espece, q, bonne);          // étape R102
+  if (format === "compare")         poserComparaison(espece, q);         // étape R174
   if (format === "cases")           poserCases(espece, q);               // étape R103
   if (deuxChoix) garderDeuxChoix();                                      // étape R146
   accorderTextes(espece, format);                                        // étape R148 : il / elle selon l'espèce
@@ -283,7 +284,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
 function accorderTextes(espece, format) {
   if (typeof accordGenre !== "function") return;
   if (enCours && enCours.explication) enCours.explication = accordGenre(enCours.explication, espece);
-  if (format === "photos" || format === "duo") return;
+  if (format === "photos" || format === "duo" || format === "compare") return;   // R174 : la comparaison parle de deux espèces
   const question = document.getElementById("question"), affirmation = document.getElementById("affirmation");
   if (question.children.length) question.innerHTML = accordGenre(question.innerHTML, espece);
   else question.textContent = accordGenre(question.textContent, espece);

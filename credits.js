@@ -3554,6 +3554,756 @@ const CREDITS_PHOTOS = {
   "auteur": "Ryan Hodnett",
   "licence": "CC BY-SA 4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Atlantic_Blue_Crab_(Callinectes_sapidus)_-_Alc%C3%BAdia,_Spain_2022-04-20_(03).jpg"
+ },
+ "canard_colvert_2": {
+  "auteur": "Commonists",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_(Female)_in_Locarno.jpg"
+ },
+ "merle_noir_2": {
+  "auteur": "Darkone",
+  "licence": "CC BY-SA 2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Turdus_merula_female_(d1).jpg"
+ },
+ "pinson_des_arbres_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_chaffinch_(Fringilla_coelebs)_female_Drenthe_2.jpg"
+ },
+ "rougequeue_noir_2": {
+  "auteur": "Krzysztof Golik",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Phoenicurus_ochruros_male_in_Aveyron_(5).jpg"
+ },
+ "moineau_domestique_2": {
+  "auteur": "John Haslam",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Passer_domesticus_-John_o'_Groats,_Scotland.jpg"
+ },
+ "fauvette_a_tete_noire_2": {
+  "auteur": "caroline legg",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Female_Blackcap_-_Sylvia_atricapilla_(49979484338).jpg"
+ },
+ "faucon_crecerelle_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Falco_tinnunculus_2022_04_17.jpg"
+ },
+ "bouvreuil_pivoine_2": {
+  "auteur": "Francis C. Franklin",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pyrrhula_pyrrhula_female_2.jpg"
+ },
+ "tarier_patre_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:European_Stonechat_2025_12_25_01.jpg"
+ },
+ "chevreuil_2": {
+  "auteur": "Bengt Nyman",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Capreolus_capreolus_SNY01143_(51301994882)_(cropped).jpg"
+ },
+ "cerf_elaphe_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Red_deer_(Cervus_elaphus)_hind.jpg"
+ },
+ "mouflon_mediterraneen_2": {
+  "auteur": "Samuele Papeschi",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/259369422"
+ },
+ "fuligule_milouin_2": {
+  "auteur": "Mourad Harzallah",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Female_common_pochard_(Aythya_ferina)_in_Algeria.jpg"
+ },
+ "busard_des_roseaux_2": {
+  "auteur": "Martien Brand",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Circus_aeruginosus_female-crop.jpg"
+ },
+ "calopteryx_vierge_2": {
+  "auteur": "Thomas Bresson",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Thomas_Bresson_-_Calopteryx_virgo-1_(by).jpg"
+ },
+ "crocothemis_ecarlate_2": {
+  "auteur": "Skander Zarrad",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Crocothemis_erythraea_femelle.jpg"
+ },
+ "citron_2": {
+  "auteur": "gailhampshire",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Brimstone._Gonepteryx_rhamni_._female_-_Flickr_-_gailhampshire.jpg"
+ },
+ "aurore_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Orange_tip_(Anthocharis_cardamines)_female_2.jpg"
+ },
+ "triton_alpestre_2": {
+  "auteur": "Andrea Massagli",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Alpine_newt's_on_a_rock_(Ichthyosaura_alpestris).JPG"
+ },
+ "sanglier_2": {
+  "auteur": "Frank Sengpiel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/201933657"
+ },
+ "goeland_argente_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:European_herring_gull_(Larus_argentatus)_juvenile.jpg"
+ },
+ "cygne_tubercule_2": {
+  "auteur": "Thermos",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:CygnusOlorJuvenile.jpg"
+ },
+ "coccinelle_a_sept_points_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Coccinella_septempunctata_larva.jpg"
+ },
+ "paon_du_jour_2": {
+  "auteur": "Quartl",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Inachis_io_qtl4.jpg"
+ },
+ "machaon_2": {
+  "auteur": "Holger Krisp",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Schwalbenschwanz_Papilio_machaon.JPG"
+ },
+ "processionnaire_du_pin_2": {
+  "auteur": "Ben Sale",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Thaumetopoea_pityocampa_(28087926266).jpg"
+ },
+ "mouette_rieuse_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Black-headed_gull_(Chroicocephalus_ridibundus)_winter_plumage_Ethiopia.jpg"
+ },
+ "bruant_jaune_2": {
+  "auteur": "Sergueï Nekloudov",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/166976336"
+ },
+ "linotte_melodieuse_2": {
+  "auteur": "Zambog",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Female-linnet.jpg"
+ },
+ "salamandre_tachetee_2": {
+  "auteur": "Piet Spaans",
+  "licence": "CC BY-SA 2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Salamandra_salamandra_larva,_Netherlands_DSCN5060_edited.jpg"
+ },
+ "barge_a_queue_noire_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Black-tailed_godwit_(Limosa_limosa)_non_breeding.jpg"
+ },
+ "moineau_cisalpin_2": {
+  "auteur": "Claudio Gennari",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Passer_italiae_female.jpg"
+ },
+ "bruant_des_roseaux_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_reed_bunting_(emberiza_schoeniclus)_f.jpg"
+ },
+ "becasseau_variable_2": {
+  "auteur": "Ken Billington",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Dunlin_(Calidris_alpina)_(19).jpg"
+ },
+ "chardonneret_elegant_2": {
+  "auteur": "caroline legg",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Goldfinches_-_Carduelis_carduelis_-_Juvenile_(55495736048).jpg"
+ },
+ "fauvette_melanocephale_2": {
+  "auteur": "Luiz Lapa",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Toutinegra-dos-valados,_fêmea,_Sardinian_Warbler,_female_(52663035468).jpg"
+ },
+ "bruant_zizi_2": {
+  "auteur": "Paco Gómez",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Emberiza_cirlus_-Valencian_Community,_Spain_-female-8_(1).jpg"
+ },
+ "tarin_des_aulnes_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_siskin_(Spinus_spinus)_male_Biebrzanski.jpg"
+ },
+ "verdier_d_europe_2": {
+  "auteur": "caroline legg",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Greenfinch_-_Chloris_chloris_-_Female1.jpg"
+ },
+ "serin_cini_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:European_serin_(Serinus_serinus)_female.jpg"
+ },
+ "bouquetin_des_alpes_2": {
+  "auteur": "Giles Laurent",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:094_Wild_female_Alpine_Ibex_at_Creux_du_Van_Photo_by_Giles_Laurent.jpg"
+ },
+ "bec_croise_des_sapins_2": {
+  "auteur": "Andrey Gulivanov",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Red_crossbill,_female_(53642471688).jpg"
+ },
+ "busard_cendre_2": {
+  "auteur": "Tisha Mukherjee",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Montagu's_Harrier_in_Tal_Chhapar_Sanctuary_November_2025_by_Tisha_Mukherjee_06.jpg"
+ },
+ "busard_saint_martin_2": {
+  "auteur": "caroline legg",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Hen_Harrier_-_Male.jpg"
+ },
+ "loriot_d_europe_2": {
+  "auteur": "Jonathan Tollin",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/7058833"
+ },
+ "pie_grieche_ecorcheur_2": {
+  "auteur": "Sandra (France)",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lanius_collurio_-Ariege,_Midi-Pyrenee,_France_-female-8_(1).jpg"
+ },
+ "nette_rousse_2": {
+  "auteur": "Diliff",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Netta_rufina_(female),_London_Wetland_Centre,_UK_-_Diliff.jpg"
+ },
+ "gobemouche_noir_2": {
+  "auteur": "Luiz Lapa",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Papa-moscas-preto,_fêmea,_Pied_Flycatcher,_female_(50587344027).jpg"
+ },
+ "harle_bievre_2": {
+  "auteur": "Tony Hisgett",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mergus_merganser_-Sandwell_-England_-male-8.jpg"
+ },
+ "traquet_motteux_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Northern_wheatear_(Oenanthe_oenanthe)_female.jpg"
+ },
+ "rougequeue_a_front_blanc_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/283782530"
+ },
+ "monticole_de_roche_2": {
+  "auteur": "Imran Shah",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rufous-tailed_Rock-thrush_(Monticola_saxitilis)_(52597813726).jpg"
+ },
+ "gorgebleue_a_miroir_2": {
+  "auteur": "Jörg Hempel",
+  "licence": "CC BY-SA 3.0 de",
+  "source": "https://commons.wikimedia.org/wiki/File:Luscinia_svecica_LC0301.jpg"
+ },
+ "lucane_cerf_volant_2": {
+  "auteur": "Stu's Images",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lucanus_cervus,_Stag_Beetle_female,_UK.jpg"
+ },
+ "anax_empereur_2": {
+  "auteur": "Cecile Roux",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Anax_imperator_female_-_Cecile_Roux_-_Riebeeck_West,_South_Africa.jpeg"
+ },
+ "libellule_deprimee_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Broad-bodied_chaser_(Libellula_depressa)_female.jpg"
+ },
+ "azure_de_la_bugrane_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_blue_(Polyommatus_icarus)_male_Turna.jpg"
+ },
+ "triton_palme_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lissotriton_helveticus_(18501796441).jpg"
+ },
+ "tournepierre_a_collier_2": {
+  "auteur": "Hans Hillewaert",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Arenaria_interpres_(habitus).jpg"
+ },
+ "gobemouche_a_collier_2": {
+  "auteur": "Frank Vassen",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Female_Collared_Flycatcher_(Ficedula_torquata),_Park_Pałacowy,_Białowieża,_Poland.jpg"
+ },
+ "tetras_lyre_2": {
+  "auteur": "uusijani",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/95385091"
+ },
+ "grand_tetras_2": {
+  "auteur": "Motopark",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Naarasmetso_(cropped).jpg"
+ },
+ "gelinotte_des_bois_2": {
+  "auteur": "Scosse",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Francolino_di_monte.jpg"
+ },
+ "monticole_bleu_2": {
+  "auteur": "Gary L. Clark",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Blue_Rock_Thrush_(female),_Boulmane_de_Dades,_Morocco.jpg"
+ },
+ "blongios_nain_2": {
+  "auteur": "Biser Todorov",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Little_bittern_(Ixobrychus_minutus).JPG"
+ },
+ "outarde_canepetiere_2": {
+  "auteur": "Francesco Veronesi",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tetrax_tetrax,_Castuera,_Estremadura,_Spain_1.jpg"
+ },
+ "faucon_crecerellette_2": {
+  "auteur": "Roberto Strafella",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Femmina_Falco_Grillaio_5555.jpg"
+ },
+ "traquet_oreillard_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Oenanthe_hispanica,_Fitou,_France_2.jpg"
+ },
+ "bouquetin_iberique_2": {
+  "auteur": "JM Ligero Loarte",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Capra_p_vic_female_Laguna.jpg"
+ },
+ "merle_a_plastron_2": {
+  "auteur": "gwynmwilliams",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/274002685"
+ },
+ "bruant_ortolan_2": {
+  "auteur": "Сергей Неклюдов",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/101321013"
+ },
+ "pie_grieche_a_tete_rousse_2": {
+  "auteur": "U-95",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lanius_Senator_juvenile.JPG"
+ },
+ "tarier_des_pres_2": {
+  "auteur": "caroline legg",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Whinchat_-_Saxicola_rubetra_-_Female.jpg"
+ },
+ "bruant_fou_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/33193287"
+ },
+ "sizerin_cabaret_2": {
+  "auteur": "Dave",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/263062899"
+ },
+ "venturon_montagnard_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/194204349"
+ },
+ "venturon_corse_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/342980738"
+ },
+ "fauvette_sarde_2": {
+  "auteur": "Francesco Veronesi",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Marmora's_Warbler_-_Sardinia_-_Italy_S4E1036.jpg"
+ },
+ "fauvette_de_moltoni_2": {
+  "auteur": "Paolo Zucca",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Curruca_subalpina_74746110.png"
+ },
+ "fauvette_pitchou_2": {
+  "auteur": "Vcebollada",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sylvia_undata_female.jpg"
+ },
+ "fauvette_grisette_2": {
+  "auteur": "Marie-Lan Taÿ Pamart",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sylvia_communis_male_ENS_des_Olivettes_20190525.jpg"
+ },
+ "remiz_penduline_2": {
+  "auteur": "Kassiboy262",
+  "licence": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Buidelmees_mannetje.jpg"
+ },
+ "grosbec_casse_noyaux_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Hawfinch_(Coccothraustes_coccothraustes)_female_Drenthe.jpg"
+ },
+ "coucou_gris_2": {
+  "auteur": "Andrey Gulivanov",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Juvenile_cuckoo_(54019304589).jpg"
+ },
+ "pic_noir_2": {
+  "auteur": "Andrey Gulivanov",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Female_black_woodpecker_(48861795971).jpg"
+ },
+ "pic_epeiche_2": {
+  "auteur": "caroline legg",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Juvenile_Dendrocopos_major_(50131010357).jpg"
+ },
+ "bergeronnette_grise_2": {
+  "auteur": "Yathin S Krishnappa",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Motacilla_alba_juvenile_(Kirkenes,_2012).jpg"
+ },
+ "bergeronnette_des_ruisseaux_2": {
+  "auteur": "Nikola Veljković",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Motacilla_cinerea,_male.jpg"
+ },
+ "caille_des_bles_2": {
+  "auteur": "Mnolf",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Weibliche_Wachtel_(Coturnix_coturnix).jpg"
+ },
+ "tichodrome_echelette_2": {
+  "auteur": "Pierre-Marie Epiney",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tichodrome_échelette_Tichodroma_muraria_aDSC_1009_(50997238804).jpg"
+ },
+ "pic_epeichette_2": {
+  "auteur": "Andrey Gulivanov",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Female_lesser_spotted_woodpecker_(49591370581).jpg"
+ },
+ "pic_cendre_2": {
+  "auteur": "Сергей Неклюдов",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/390486745"
+ },
+ "pic_tridactyle_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/226703621"
+ },
+ "pic_a_dos_blanc_2": {
+  "auteur": "Andrey Gulivanov",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Female_white-backed_woodpecker_(51094808239).jpg"
+ },
+ "mesange_bleue_2": {
+  "auteur": "Hic et nunc",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cyanistes_caeruleus_(juvenile).jpg"
+ },
+ "mesange_charbonniere_2": {
+  "auteur": "gailhampshire",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Juvenile_Great_Tit._Parus_major_(46276943842).jpg"
+ },
+ "sittelle_torchepot_2": {
+  "auteur": "Stephan Sprinz",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Kleiber_(Sitta_europaea)_im_Garten.jpg"
+ },
+ "sittelle_corse_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sitta_whiteheadi_-_Christoph_Moning_-_2.jpeg"
+ },
+ "roitelet_huppe_2": {
+  "auteur": "Stephan Sprinz",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Wintergoldhähnchen_(Regulus_regulus)_03.jpg"
+ },
+ "roitelet_a_triple_bandeau_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_firecrest_Franconville_05.jpg"
+ },
+ "echasse_blanche_2": {
+  "auteur": "Kostas Zontanos",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/10520950"
+ },
+ "gravelot_a_collier_interrompu_2": {
+  "auteur": "Kostas Zontanos",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/13557281"
+ },
+ "grand_gravelot_2": {
+  "auteur": "Zeynel Cebeci",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Charadrius_hiaticula_juvenile,_Giresun,_Turkey_01-22.jpg"
+ },
+ "vanneau_huppe_2": {
+  "auteur": "Micha Baum",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/220080501"
+ },
+ "perdrix_grise_2": {
+  "auteur": "Сергей Неклюдов",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/104342199"
+ },
+ "tadorne_de_belon_2": {
+  "auteur": "gailhampshire",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Juvenile_Shelduck._Tadorna_tadorna_(45904170024).jpg"
+ },
+ "engoulevent_d_europe_2": {
+  "auteur": "mourad-harzallah",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_nightjar_(Caprimulgus_europaeus)_in_Algeria.jpg"
+ },
+ "bondree_apivore_2": {
+  "auteur": "Peter Alfrey",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/304555133"
+ },
+ "pic_vert_2": {
+  "auteur": "gailhampshire",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Juvenile_Green_Woodpecker_digging_for_ants._Picus_viridis_-_Flickr_-_gailhampshire.jpg"
+ },
+ "grand_paon_de_nuit_2": {
+  "auteur": "Mountainoflight",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Saturnia_pyri_caterpillar.jpg"
+ },
+ "pyrale_du_buis_2": {
+  "auteur": "böhringer friedrich",
+  "licence": "CC BY-SA 2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Raupe_des_Buchsbaumzünsler,_Cydalima_perspectalis_24.JPG"
+ },
+ "sphinx_du_pin_2": {
+  "auteur": "Dumi",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Caterpillar,_Sphinx_pinastri.JPG"
+ },
+ "moro_sphinx_2": {
+  "auteur": "A. M. Liosi",
+  "licence": "CC BY-SA 2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Macroglossum.stellatarum.caterpillar.3088.Liosi.jpg"
+ },
+ "petit_paon_de_nuit_2": {
+  "auteur": "Tiia Monto",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Saturnia_pavonia_-_Emperor_caterpillar_2.jpg"
+ },
+ "carte_geographique_2": {
+  "auteur": "Jörg Hempel",
+  "licence": "CC BY-SA 3.0 de",
+  "source": "https://commons.wikimedia.org/wiki/File:Araschnia_levana_LC0263.jpg"
+ },
+ "petit_mars_changeant_2": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/30990180"
+ },
+ "triton_crete_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/241266433"
+ },
+ "triton_marbre_2": {
+  "auteur": "Bernard DUPONT",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Marbled_Newt_(Triturus_marmoratus)_male_(14143352479).jpg"
+ },
+ "vulcain_2": {
+  "auteur": "Holger Krisp",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Admiral_Vanessa_atalanta_Raupe.jpg"
+ },
+ "grand_mars_changeant_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Purple_emperor_(Apatura_iris)_female.jpg"
+ },
+ "flamant_rose_2": {
+  "auteur": "Hobbyfotowiki",
+  "licence": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:The_juvenile_greater_flamingo.jpg"
+ },
+ "grebe_huppe_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Great_crested_grebe_(Podiceps_cristatus)_juvenile_France.jpg"
+ },
+ "goeland_leucophee_2": {
+  "auteur": "Benjamin Janecke (Rectifier99)",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Larus_michaelis_juvenile_Corfu_2010.jpg"
+ },
+ "heron_cendre_2": {
+  "auteur": "Ralf Hüsges",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Ardea_cinerea_juvenile_v2.jpg"
+ },
+ "grand_cormoran_2": {
+  "auteur": "Francisco Restivo",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Great_Cormorant,_juvenile,_Porto,_Portugal_(31096584347).jpg"
+ },
+ "rougegorge_familier_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:European_robin_(Erithacus_rubecula)_juvenile.jpg"
+ },
+ "etourneau_sansonnet_2": {
+  "auteur": "Orangeaurochs",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Juvenile_starling_(Sturnus_vulgaris),_Prudhoe,_Northumberland_(9486342357).jpg"
+ },
+ "foulque_macroule_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_coot_(Fulica_atra)_juvenile.jpg"
+ },
+ "gallinule_poule_d_eau_2": {
+  "auteur": "Romain mgn",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Gallinula_chloropus_juvénile.jpg"
+ },
+ "fou_de_bassan_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Northern_gannet_(Morus_bassanus)_juvenile_Sagres.jpg"
+ },
+ "lagopede_alpin_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lagopus_muta_muta,_male_in_winter_plumage,_Vadsø,_Norway_1.jpg"
+ },
+ "renard_roux_2": {
+  "auteur": "Caroline Legg",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Red_Fox_cub_-_Vulpes_vulpes_-_East_Cumbria1.jpg"
+ },
+ "hermine_2": {
+  "auteur": "Giles Laurent",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:035_Stoat_in_winter_coat_in_Parc_naturel_régional_Jura_vaudois_Photo_by_Giles_Laurent.jpg"
+ },
+ "lievre_variable_2": {
+  "auteur": "Nigel Voaden",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/2585372"
+ },
+ "phoque_gris_2": {
+  "auteur": "Andreas Trepte",
+  "licence": "CC BY-SA 2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Grey_seal_Halichoerus_grypus_young2.jpg"
+ },
+ "saumon_atlantique_2": {
+  "auteur": "Lorenz Seebauer",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Salmo_salar_juvenile.jpg"
+ },
+ "anguille_europeenne_2": {
+  "auteur": "Lamiot",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Civelle_dans_le_Ruisseau_du_loc'h_à_Morgat_(Finistère)_partie_aval_saumâtre_grandes_marées_11.jpg"
+ },
+ "grenouille_rousse_2": {
+  "auteur": "Viridiflavus",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:RanaTemporariaLarva2.jpg"
+ },
+ "crapaud_commun_2": {
+  "auteur": "Christian Fischer",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:BufoBufoTadpoles.jpg"
+ },
+ "alyte_accoucheur_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/241080230"
+ },
+ "sonneur_a_ventre_jaune_2": {
+  "auteur": "Anna N Chapman",
+  "licence": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:289_Bombina_variegata.jpg"
+ },
+ "rainette_verte_2": {
+  "auteur": "Christian Fischer",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:HylaArboreaCallingMale2.jpg"
+ },
+ "petite_tortue_2": {
+  "auteur": "Bj.schoenmakers",
+  "licence": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Aglais_urticae_(Small_Tortoiseshell)_caterpillar,_Arnhem,_the_Netherlands.jpg"
+ },
+ "belle_dame_2": {
+  "auteur": "Harald Süpfle",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Vanessa_cardui_-_caterpillar_07_(HS).jpg"
+ },
+ "ecaille_chinee_2": {
+  "auteur": "DidierFy",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Euplagia_quadripunctaria_05.2025_(1).jpg"
+ },
+ "hanneton_commun_2": {
+  "auteur": "AfroBrazilian",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Melolontha_melolontha_09.JPG"
+ },
+ "cetoine_doree_2": {
+  "auteur": "DidierFy",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cetonia_aurata_05.2025_(3).jpg"
+ },
+ "ver_luisant_2": {
+  "auteur": "AfroBrazilian",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lampyris_noctiluca_01.JPG"
+ },
+ "tabac_d_espagne_2": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Silver-washed_fritillary_(Argynnis_paphia)_female_Hungary.jpg"
+ },
+ "mante_religieuse_2": {
+  "auteur": "Kathrin Jäckel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/410136651"
  }
 };
 

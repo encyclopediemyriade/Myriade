@@ -465,6 +465,8 @@ const OUVERTURE = "ouverture";
 const TRAITS_PRESENTES = 6;                   // combien de traits visibles sont montrés dans la présentation, au plus (étape 161 : 6 au lieu de 3)
 
 function poserOuverture(espece) {
+  // Étapes R169-R170 (formes d'expédition, 20_formes.js) : « Par le cri » ou « Par les indices » passent d'abord
+  if (typeof formeAvantOuverture === "function" && formeAvantOuverture(espece)) return;
   // Étape R155 (08/11, choix d'Aubin) : plus d'écran « Connaissez-vous cette espèce ? » (Oui / Pas encore).
   // On pose tout de suite « Quelle est cette espèce ? » (les 4 noms), avec, sous les réponses,
   // « Je ne la connais pas encore » : l'espèce est alors présentée, sans pénalité, et la photo revient à la fin.

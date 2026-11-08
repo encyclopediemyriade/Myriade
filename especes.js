@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V73.xlsx, especes_bassin_aquitain_V21.xlsx, especes_bassin_parisien_V31.xlsx, especes_corse_V25.xlsx, especes_grand_est_V23.xlsx, especes_jura_V23.xlsx, especes_massif_armoricain_V32.xlsx, especes_massif_central_V22.xlsx, especes_mediterranee_V30.xlsx, especes_pyrenees_V27.xlsx, especes_vosges_V22.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V77.xlsx, especes_bassin_aquitain_V26.xlsx, especes_bassin_parisien_V36.xlsx, especes_corse_V30.xlsx, especes_grand_est_V27.xlsx, especes_jura_V27.xlsx, especes_massif_armoricain_V37.xlsx, especes_massif_central_V27.xlsx, especes_mediterranee_V34.xlsx, especes_pyrenees_V31.xlsx, especes_vosges_V25.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -109,6 +109,9 @@ const ESPECES = [
     proies_items: "Herbes ; Lichens ; Mousses",
     predateurs_items: "Aigle royal",
     genre_nom: "masculin",
+    photo_2: "Images/bouquetin_des_alpes_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:094_Wild_female_Alpine_Ibex_at_Creux_du_Van_Photo_by_Giles_Laurent.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -211,6 +214,9 @@ const ESPECES = [
     proies_items: "Herbes ; Fleurs",
     predateurs_items: "Lynx ; Loup ; Aigle royal",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -313,6 +319,9 @@ const ESPECES = [
     proies_items: "Herbes ; Graines ; Insectes",
     predateurs_items: "Aigle royal ; Renard",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -415,6 +424,9 @@ const ESPECES = [
     proies_items: "Herbes ; Feuilles",
     predateurs_items: "Loup ; Lynx",
     genre_nom: "masculin",
+    photo_2: "Images/cerf_elaphe_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Red_deer_(Cervus_elaphus)_hind.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -517,6 +529,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Ronces ; Glands",
     predateurs_items: "Loup ; Lynx ; Renard",
     genre_nom: "masculin",
+    photo_2: "Images/chevreuil_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Capreolus_capreolus_SNY01143_(51301994882)_(cropped).jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -619,6 +634,9 @@ const ESPECES = [
     proies_items: "Campagnols et mulots",
     predateurs_items: "Rapaces ; Renard",
     genre_nom: "féminin",
+    photo_2: "Images/hermine_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:035_Stoat_in_winter_coat_in_Parc_naturel_régional_Jura_vaudois_Photo_by_Giles_Laurent.jpg",
+    photo_2_sujet: "pelage d'hiver",
     a_confirmer: ["territoire", "pupille_forme"]
   },
   {
@@ -721,6 +739,9 @@ const ESPECES = [
     proies_items: "Graines ; Noisettes ; Champignons ; Œufs d'oiseaux",
     predateurs_items: "Martre des pins ; Autour ; Pies ; Chats domestiques",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -823,6 +844,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Insectes ; Vers de terre ; Oiseaux ; Campagnols et mulots ; Lapins",
     predateurs_items: "Loup ; Lynx ; Aigle royal ; Hibou grand-duc",
     genre_nom: "masculin",
+    photo_2: "Images/renard_roux_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Red_Fox_cub_-_Vulpes_vulpes_-_East_Cumbria1.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -925,6 +949,9 @@ const ESPECES = [
     proies_items: "Lièvres ; Chevreuils ; Chamois ; Moutons",
     predateurs_items: "Loup gris ; Ours brun",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "couleur_dominante", "pupille_forme"]
   },
   {
@@ -1027,6 +1054,9 @@ const ESPECES = [
     proies_items: "Chevreuils ; Chamois ; Cerfs",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1129,6 +1159,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Insectes ; Vers de terre ; Grenouilles ; Petits mammifères ; Campagnols et mulots",
     predateurs_items: "Lynx ; Loup ; Renard ; Grand-duc ; Aigle",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1231,6 +1264,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Insectes ; Oiseaux ; Œufs d'oiseaux ; Campagnols et mulots ; Charognes",
     predateurs_items: "Lynx ; Loup ; Renard roux ; Aigle royal",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1333,6 +1369,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères ; Abeilles et guêpes",
     predateurs_items: "Chouette hulotte ; Effraie des clochers ; Chat domestique",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1435,6 +1474,9 @@ const ESPECES = [
     proies_items: "Écrevisses ; Poissons ; Grenouilles",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1537,6 +1579,9 @@ const ESPECES = [
     proies_items: "Herbes ; Jeunes pousses ; Lichens ; Mousses ; Écorce",
     predateurs_items: "Aigle royal ; Renard ; Hermine ; Martre ; Grand-duc",
     genre_nom: "masculin",
+    photo_2: "Images/lievre_variable_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/2585372",
+    photo_2_sujet: "pelage d'hiver",
     a_confirmer: []
   },
   {
@@ -1639,6 +1684,9 @@ const ESPECES = [
     proies_items: "Racines ; Glands ; Champignons ; Insectes ; Vers",
     predateurs_items: "Loup ; Lynx",
     genre_nom: "masculin",
+    photo_2: "Images/sanglier_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/201933657",
+    photo_2_sujet: "jeune",
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1741,6 +1789,9 @@ const ESPECES = [
     proies_items: "Herbes ; Feuilles ; Écorce",
     predateurs_items: "Loup ; Lynx",
     genre_nom: "masculin",
+    photo_2: "Images/mouflon_mediterraneen_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/259369422",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire", "difference_male_femelle"]
   },
   {
@@ -1843,6 +1894,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Oiseaux ; Œufs d'oiseaux ; Petits mammifères",
     predateurs_items: "Renard ; Lynx ; Aigle royal ; Grand-duc",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1945,6 +1999,9 @@ const ESPECES = [
     proies_items: "Grenouilles ; Oiseaux ; Œufs d'oiseaux ; Petits mammifères ; Campagnols et mulots ; Lapins",
     predateurs_items: "Renard ; Hermine ; Grand-duc ; Buses ; Chouettes",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "pupille_forme"]
   },
   {
@@ -2047,6 +2104,9 @@ const ESPECES = [
     proies_items: "Herbes ; Bourgeons ; Jeunes pousses ; Racines ; Fruits et baies ; Graines",
     predateurs_items: "Hermine ; Belette ; Renard ; Rapaces",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["poil_longueur"]
   },
   {
@@ -2149,6 +2209,9 @@ const ESPECES = [
     proies_items: "Bourgeons ; Fruits et baies ; Graines ; Champignons ; Insectes",
     predateurs_items: "Grand-duc ; Chouette hulotte ; Martre ; Chat forestier ; Fouine",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -2251,6 +2314,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Graines ; Insectes",
     predateurs_items: "Fouine ; Chouettes ; Hiboux ; Chats",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "couleur_dominante"]
   },
   {
@@ -2353,6 +2419,9 @@ const ESPECES = [
     proies_items: "Chenilles ; Coléoptères ; Vers de terre ; Limaces ; Escargots",
     predateurs_items: "Renard ; Blaireau ; Martre ; Grand-duc ; Aigle royal",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -2455,6 +2524,9 @@ const ESPECES = [
     proies_items: "Herbes ; Écorce",
     predateurs_items: "Renard ; Loutre ; Lynx ; Loup",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["poil_longueur"]
   },
   {
@@ -2557,6 +2629,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères",
     predateurs_items: "Effraie des clochers",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -2659,6 +2734,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -2761,6 +2839,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Orange",
     couleurs_plumage_absentes: "Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -2863,6 +2944,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/lagopede_alpin_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Lagopus_muta_muta,_male_in_winter_plumage,_Vadsø,_Norway_1.jpg",
+    photo_2_sujet: "plumage d'hiver",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -2965,6 +3049,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -3067,6 +3154,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -3169,6 +3259,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3271,6 +3364,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -3373,6 +3469,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -3475,6 +3574,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Rouge",
     couleurs_plumage_absentes: "Beige ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pic_noir_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_black_woodpecker_(48861795971).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -3577,6 +3679,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Rouge",
     couleurs_plumage_absentes: "Vert ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/tichodrome_echelette_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Tichodrome_échelette_Tichodroma_muraria_aDSC_1009_(50997238804).jpg",
+    photo_2_sujet: "plumage d'été",
     a_confirmer: []
   },
   {
@@ -3679,6 +3784,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/tetras_lyre_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/95385091",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -3781,6 +3889,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3883,6 +3994,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/gelinotte_des_bois_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Francolino_di_monte.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -3985,6 +4099,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc ; Gris ; Brun",
     couleurs_plumage_absentes: "Rouge ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["aspect_robe", "queue_vol"]
   },
   {
@@ -4087,6 +4204,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris ; Roux",
     couleurs_plumage_absentes: "Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["bec_couleur", "pattes_aspect", "queue_vol"]
   },
   {
@@ -4189,6 +4309,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Brun ; Roux",
     couleurs_plumage_absentes: "Jaune ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4291,6 +4414,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4393,6 +4519,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -4495,6 +4624,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -4597,6 +4729,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4699,6 +4834,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["motif_robe"]
   },
   {
@@ -4801,6 +4939,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Roux ; Beige",
     couleurs_plumage_absentes: "Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/faucon_crecerelle_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Falco_tinnunculus_2022_04_17.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -4903,6 +5044,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["bec_couleur", "difference_male_femelle"]
   },
   {
@@ -5005,6 +5149,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/merle_a_plastron_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/274002685",
+    photo_2_sujet: "femelle",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -5107,6 +5254,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/bec_croise_des_sapins_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Red_crossbill,_female_(53642471688).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -5209,6 +5359,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc ; Rouge",
     couleurs_plumage_absentes: "Jaune ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pic_epeiche_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Dendrocopos_major_(50131010357).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -5311,6 +5464,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Rose",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -5400,6 +5556,9 @@ const ESPECES = [
     proies_items: "Coléoptères ; Araignées ; Mille-pattes ; Mollusques",
     predateurs_items: "Jeune vipère ; Oiseaux ; Rongeurs",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -5489,6 +5648,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Mollusques ; Vers de terre ; Amphibiens",
     predateurs_items: "Héron cendré ; Couleuvre helvétique ; Loutre ; Rapaces ; Poissons",
     genre_nom: "féminin",
+    photo_2: "Images/grenouille_rousse_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:RanaTemporariaLarva2.jpg",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {
@@ -5578,6 +5740,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Crustacés ; Amphibiens ; Têtards",
     predateurs_items: "Poissons ; Oiseaux d'eau ; Couleuvres ; Larves de dytiques",
     genre_nom: "masculin",
+    photo_2: "Images/triton_alpestre_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Alpine_newt's_on_a_rock_(Ichthyosaura_alpestris).JPG",
+    photo_2_sujet: "mâle",
     a_confirmer: ["peau_texture"]
   },
   {
@@ -5667,6 +5832,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Limaces ; Escargots ; Crustacés",
     predateurs_items: "Couleuvres ; Tritons ; Poissons ; Hérons ; Blaireaux",
     genre_nom: "masculin",
+    photo_2: "Images/sonneur_a_ventre_jaune_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:289_Bombina_variegata.jpg",
+    photo_2_sujet: "autre vue",
     a_confirmer: ["territoire"]
   },
   {
@@ -5756,6 +5924,9 @@ const ESPECES = [
     proies_items: "Insectes ; Cloportes ; Mille-pattes ; Vers de terre ; Limaces",
     predateurs_items: "Couleuvre helvétique ; Héron ; Hérisson ; Putois ; Corneille",
     genre_nom: "masculin",
+    photo_2: "Images/crapaud_commun_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:BufoBufoTadpoles.jpg",
+    photo_2_sujet: "larve",
     a_confirmer: ["pattes_arriere"]
   },
   {
@@ -5845,6 +6016,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Mille-pattes ; Vers de terre ; Limaces",
     predateurs_items: "Truites",
     genre_nom: "féminin",
+    photo_2: "Images/salamandre_tachetee_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Salamandra_salamandra_larva,_Netherlands_DSCN5060_edited.jpg",
+    photo_2_sujet: "larve",
     a_confirmer: ["ventre_couleur"]
   },
   {
@@ -5934,6 +6108,9 @@ const ESPECES = [
     proies_items: "Moustiques ; Coléoptères ; Araignées ; Cloportes ; Vers ; Limaces",
     predateurs_items: "Poissons",
     genre_nom: "masculin",
+    photo_2: "Images/alyte_accoucheur_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/241080230",
+    photo_2_sujet: "mâle",
     a_confirmer: ["aspect_robe"]
   },
   {
@@ -6023,6 +6200,9 @@ const ESPECES = [
     proies_items: "Fourmis ; Coléoptères ; Cloportes ; Mollusques ; Vers de terre",
     predateurs_items: "Renard ; Loutre ; Hérons ; Hérisson ; Goélands",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -6112,6 +6292,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Crustacés ; Têtards",
     predateurs_items: "Larves de libellules ; Dytiques ; Truites ; Perches ; Rapaces",
     genre_nom: "masculin",
+    photo_2: "Images/triton_palme_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Lissotriton_helveticus_(18501796441).jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -6200,6 +6383,9 @@ const ESPECES = [
     proies_items: "Lézards ; Campagnols et mulots ; Musaraignes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["motif_robe"]
   },
   {
@@ -6288,6 +6474,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers ; Limaces",
     predateurs_items: "Rapaces ; Pies-grièches ; Renard ; Hermine",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -6376,6 +6565,9 @@ const ESPECES = [
     proies_items: "Araignées ; Vers de terre ; Limaces ; Escargots",
     predateurs_items: "Coronelle lisse ; Couleuvres ; Rapaces ; Renards ; Chats",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -6464,6 +6656,9 @@ const ESPECES = [
     proies_items: "Grenouilles ; Lézards ; Serpents ; Oisillons ; Petits mammifères ; Campagnols et mulots",
     predateurs_items: "Rapaces ; Corneilles et corbeaux ; Belette ; Volailles",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -6552,6 +6747,9 @@ const ESPECES = [
     proies_items: "Amphibiens ; Lézards ; Oisillons ; Campagnols et mulots ; Musaraignes",
     predateurs_items: "Sanglier ; Buse ; Faisan ; Belette",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -6640,6 +6838,9 @@ const ESPECES = [
     proies_items: "Lézards ; Serpents ; Orvets ; Petits mammifères",
     predateurs_items: "Rapaces ; Belettes et martres ; Chats",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -6728,6 +6929,9 @@ const ESPECES = [
     proies_items: "Chenilles ; Fourmis ; Mouches ; Coléoptères ; Araignées",
     predateurs_items: "Coronelle lisse ; Vipère péliade ; Rapaces ; Corneilles et corbeaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["silhouette", "ecailles_corps"]
   },
   {
@@ -6816,6 +7020,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Cloportes",
     predateurs_items: "Couleuvres ; Rapaces ; Chats",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["silhouette", "ecailles_corps"]
   },
   {
@@ -6904,6 +7111,9 @@ const ESPECES = [
     proies_items: "Poissons ; Grenouilles ; Crapauds ; Petits mammifères",
     predateurs_items: "Rapaces ; Corneilles et corbeaux ; Cigognes ; Chouettes ; Renard ; Chat",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "couleur_dominante", "silhouette"]
   },
   {
@@ -6992,6 +7202,9 @@ const ESPECES = [
     proies_items: "Lézards ; Œufs d'oiseaux ; Oisillons ; Campagnols et mulots",
     predateurs_items: "Rapaces ; Belettes et martres",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -7080,6 +7293,9 @@ const ESPECES = [
     proies_items: "Sauterelles et criquets ; Lézards",
     predateurs_items: "Rapaces",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["museau_forme", "tete_ecailles"]
   },
   {
@@ -7168,6 +7384,9 @@ const ESPECES = [
     proies_items: "Poissons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["queue_forme"]
   },
   {
@@ -7256,6 +7475,9 @@ const ESPECES = [
     proies_items: "Plancton ; Mouches ; Larves d'insectes ; Crustacés ; Poissons",
     predateurs_items: "Brochet ; Truites ; Oiseaux pêcheurs",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -7344,6 +7566,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Crustacés",
     predateurs_items: "Truite fario ; Brochet ; Anguille ; Perche ; Chevaine ; Lote",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["bouche_position"]
   },
   {
@@ -7432,6 +7657,9 @@ const ESPECES = [
     proies_items: "Algues ; Insectes ; Larves d'insectes ; Mollusques ; Vers ; Crustacés",
     predateurs_items: "Truite fario ; Brochet ; Perche ; Sandre ; Martin-pêcheur ; Couleuvre vipérine",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -7520,6 +7748,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mollusques ; Vers ; Crustacés",
     predateurs_items: "Truite fario ; Huchon",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "aspect_robe", "bouche_position"]
   },
   {
@@ -7608,6 +7839,9 @@ const ESPECES = [
     proies_items: "Écrevisses ; Poissons ; Grenouilles",
     predateurs_items: "Loutre d'Europe",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -7696,6 +7930,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Crustacés ; Poissons",
     predateurs_items: "Brochet ; Sandre ; Héron ; Cormoran",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["ecailles_taille"]
   },
   {
@@ -7784,6 +8021,9 @@ const ESPECES = [
     proies_items: "Poissons ; Grenouilles",
     predateurs_items: "Brochet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "bouche_position"]
   },
   {
@@ -7872,6 +8112,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes",
     predateurs_items: "Brochet ; Lote ; Grand cormoran",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -7960,6 +8203,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Vers ; Crustacés",
     predateurs_items: "Truite fario",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -8050,6 +8296,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "ailes_repos"]
   },
   {
@@ -8140,6 +8389,9 @@ const ESPECES = [
     proies_items: "Herbes ; Lichens ; Mousses",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["ailes_repos"]
   },
   {
@@ -8230,6 +8482,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "Oiseaux ; Lézards ; Petites guêpes parasites ; Fourmis",
     genre_nom: "masculin",
+    photo_2: "Images/machaon_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Schwalbenschwanz_Papilio_machaon.JPG",
+    photo_2_sujet: "chenille",
     a_confirmer: ["ailes_repos"]
   },
   {
@@ -8320,6 +8575,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "Blaireaux ; Guêpiers ; Pies-grièches ; Araignées-crabes",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -8410,6 +8668,9 @@ const ESPECES = [
     proies_items: "Insectes ; Chenilles ; Coléoptères",
     predateurs_items: "Pic vert ; Pic noir ; Pic cendré ; Tétras",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -8500,6 +8761,9 @@ const ESPECES = [
     proies_items: "Pucerons",
     predateurs_items: "Oiseaux ; Araignées ; Petites guêpes parasites ; Autres coccinelles",
     genre_nom: "féminin",
+    photo_2: "Images/coccinelle_a_sept_points_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Coccinella_septempunctata_larva.jpg",
+    photo_2_sujet: "larve",
     a_confirmer: ["antennes_forme"]
   },
   {
@@ -8590,6 +8854,9 @@ const ESPECES = [
     proies_items: "Insectes ; Têtards",
     predateurs_items: "Oiseaux insectivores ; Araignées",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -8680,6 +8947,9 @@ const ESPECES = [
     proies_items: "Vers de terre ; Limaces ; Escargots",
     predateurs_items: "Crapauds ; Hérissons ; Musaraignes ; Chouettes",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -8770,6 +9040,9 @@ const ESPECES = [
     proies_items: "Bois mort",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -8860,6 +9133,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Bois mort ; Sève",
     predateurs_items: "Pies ; Geais",
     genre_nom: "masculin",
+    photo_2: "Images/lucane_cerf_volant_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Lucanus_cervus,_Stag_Beetle_female,_UK.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -8950,6 +9226,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Nectar ; Pollen",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/cetoine_doree_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Cetonia_aurata_05.2025_(3).jpg",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {
@@ -9040,6 +9319,9 @@ const ESPECES = [
     proies_items: "Limaces ; Escargots",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/ver_luisant_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Lampyris_noctiluca_01.JPG",
+    photo_2_sujet: "mâle",
     a_confirmer: ["territoire", "aspect_robe", "antennes_forme"]
   },
   {
@@ -9130,6 +9412,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Orties ; Nectar",
     predateurs_items: "Oiseaux ; Araignées ; Guêpes",
     genre_nom: "féminin",
+    photo_2: "Images/petite_tortue_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Aglais_urticae_(Small_Tortoiseshell)_caterpillar,_Arnhem,_the_Netherlands.jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -9220,6 +9505,9 @@ const ESPECES = [
     proies_items: "Aiguilles de pin",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -9310,6 +9598,9 @@ const ESPECES = [
     proies_items: "Insectes ; Chenilles",
     predateurs_items: "Oiseaux ; Mammifères ; Amphibiens",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -9400,6 +9691,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -9490,6 +9784,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Abeilles et guêpes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -9580,6 +9877,9 @@ const ESPECES = [
     proies_items: "Nectar ; Pollen",
     predateurs_items: "Guêpes ; Frelons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -9663,6 +9963,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mouches",
     predateurs_items: "Guêpes parasites",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "defense_principale"]
   },
   {
@@ -9746,6 +10049,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Sauterelles et criquets ; Abeilles et guêpes",
     predateurs_items: "Guêpes parasites",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["defense_principale"]
   },
   {
@@ -9829,6 +10135,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Abeilles et guêpes",
     predateurs_items: "Guêpes ; Fourmis ; Araignées ; Oiseaux ; Lézards ; Musaraignes",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -9912,6 +10221,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mouches",
     predateurs_items: "Oiseaux ; Lézards ; Rainettes ; Crapauds ; Musaraignes ; Chauves-souris",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -9995,6 +10307,9 @@ const ESPECES = [
     proies_items: "Insectes ; Cloportes",
     predateurs_items: "Pholque ; Araignées à toile irrégulière",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["taille_max_cm", "altitude_max_m", "rarete_observation", "territoire", "nb_petits_min", "nb_petits_max", "revetement", "motif_robe", "saison_reproduction"]
   },
   {
@@ -10078,6 +10393,9 @@ const ESPECES = [
     proies_items: "Chenilles ; Pucerons ; Charognes",
     predateurs_items: "Araignées ; Amphibiens ; Petits mammifères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10161,6 +10479,9 @@ const ESPECES = [
     proies_items: "Reptiles ; Oiseaux ; Sang",
     predateurs_items: "Oiseaux ; Reptiles ; Petits mammifères",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["longevite_max_annees", "territoire", "nb_petits_max"]
   },
   {
@@ -10244,6 +10565,9 @@ const ESPECES = [
     proies_items: "Fourmis ; Mouches ; Araignées",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["milieu_principal", "altitude_min_m", "altitude_max_m", "territoire", "nb_petits_min", "nb_petits_max"]
   },
   {
@@ -10327,6 +10651,9 @@ const ESPECES = [
     proies_items: "Mouches ; Araignées ; Cloportes ; Mille-pattes ; Vers ; Limaces",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10410,6 +10737,9 @@ const ESPECES = [
     proies_items: "Mousses ; Bois mort ; Débris végétaux",
     predateurs_items: "Étourneaux ; Crapauds communs ; Araignées dysdères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["altitude_min_m", "altitude_max_m", "territoire", "saison_observation"]
   },
   {
@@ -10492,6 +10822,9 @@ const ESPECES = [
     proies_items: "Poissons",
     predateurs_items: "Anguille ; Brochet ; Perche ; Oiseaux ; Loutre",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10574,6 +10907,9 @@ const ESPECES = [
     proies_items: "Écrevisses",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["longevite_max_annees", "rarete_observation", "territoire"]
   },
   {
@@ -10656,6 +10992,9 @@ const ESPECES = [
     proies_items: "Débris végétaux",
     predateurs_items: "Chabot ; Poissons ; Oiseaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "danger_homme"]
   },
   {
@@ -10738,6 +11077,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Champignons ; Algues ; Débris végétaux",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "danger_homme", "pinces"]
   },
   {
@@ -10820,6 +11162,9 @@ const ESPECES = [
     proies_items: "Bois mort ; Charognes ; Débris végétaux",
     predateurs_items: "Crapauds ; Tritons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "danger_homme", "pinces"]
   },
   {
@@ -10902,6 +11247,9 @@ const ESPECES = [
     proies_items: "Lichens ; Champignons ; Algues ; Débris végétaux ; Bouses et crottins",
     predateurs_items: "Musaraignes ; Hérissons ; Oiseaux ; Crapauds ; Araignée dysdère",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "nb_petits_max", "danger_homme", "pinces"]
   },
   {
@@ -10985,6 +11333,9 @@ const ESPECES = [
     proies_items: "Débris végétaux",
     predateurs_items: "Hérisson ; Blaireau ; Rat ; Oiseaux ; Coléoptères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["longevite_max_annees"]
   },
   {
@@ -11068,6 +11419,9 @@ const ESPECES = [
     proies_items: "Fleurs ; Fruits et baies ; Débris végétaux",
     predateurs_items: "Petits mammifères ; Oiseaux ; Lézards ; Grenouilles ; Vers luisants",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -11151,6 +11505,9 @@ const ESPECES = [
     proies_items: "Débris végétaux",
     predateurs_items: "Grive musicienne ; Corbeau freux ; Hérisson ; Mulot ; Taupe",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["altitude_max_m", "territoire"]
   },
   {
@@ -11234,6 +11591,9 @@ const ESPECES = [
     proies_items: "Champignons ; Bois mort ; Limaces ; Débris végétaux",
     predateurs_items: "Musaraigne ; Hérisson",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "nb_petits_min", "nb_petits_max"]
   },
   {
@@ -11317,6 +11677,9 @@ const ESPECES = [
     proies_items: "Champignons ; Charognes ; Bouses et crottins",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["rarete_observation", "territoire", "saison_reproduction"]
   },
   {
@@ -11400,6 +11763,9 @@ const ESPECES = [
     proies_items: "Algues ; Charognes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -11483,6 +11849,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "Canards plongeurs ; Poissons ; Écrevisses ; Rat musqué",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["longevite_max_annees", "territoire"]
   },
   {
@@ -11565,6 +11934,9 @@ const ESPECES = [
     proies_items: "Débris végétaux",
     predateurs_items: "Taupe ; Blaireau ; Renard ; Oiseaux ; Crapauds ; Couleuvres",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "nb_petits_min", "nb_petits_max", "regeneration"]
   },
   {
@@ -11647,6 +12019,9 @@ const ESPECES = [
     proies_items: "Grenouilles ; Sang",
     predateurs_items: "Poissons ; Oiseaux ; Invertébrés",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -11729,6 +12104,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -11811,6 +12189,9 @@ const ESPECES = [
     proies_items: "Débris végétaux ; Bouses et crottins",
     predateurs_items: "Merles ; Bécasses ; Mouettes ; Taupes ; Blaireaux ; Sangliers",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["taille_max_cm", "milieu_principal", "rarete_observation", "territoire", "comportement_social", "defenses_secondaires", "saison_observation"]
   },
   {
@@ -11913,6 +12294,9 @@ const ESPECES = [
     proies_items: "Écrevisses ; Poissons ; Grenouilles ; Oiseaux ; Campagnols et mulots",
     predateurs_items: "Putois ; Vison d'Amérique ; Aigle royal ; Grands hiboux ; Renard roux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -12015,6 +12399,9 @@ const ESPECES = [
     proies_items: "Écrevisses ; Poissons ; Grenouilles ; Oiseaux ; Campagnols et mulots",
     predateurs_items: "Grands rapaces",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12117,6 +12504,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Moules et coquillages",
     predateurs_items: "Vison d'Amérique ; Loutre ; Renard ; Grand-duc",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12219,6 +12609,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Poissons",
     predateurs_items: "Requins ; Orques",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -12321,6 +12714,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc ; Noir",
     couleurs_plumage_absentes: "Jaune ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12423,6 +12819,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -12525,6 +12924,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -12627,6 +13029,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Bleu",
     genre_nom: "féminin",
+    photo_2: "Images/echasse_blanche_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/10520950",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -12729,6 +13134,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "féminin",
+    photo_2: "Images/barge_a_queue_noire_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Black-tailed_godwit_(Limosa_limosa)_non_breeding.jpg",
+    photo_2_sujet: "plumage d'hiver",
     a_confirmer: []
   },
   {
@@ -12831,6 +13239,9 @@ const ESPECES = [
     couleurs_plumage: "Jaune ; Brun",
     couleurs_plumage_absentes: "Rouge ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/bruant_ortolan_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/101321013",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -12933,6 +13344,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13035,6 +13449,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/goeland_leucophee_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Larus_michaelis_juvenile_Corfu_2010.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -13137,6 +13554,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13239,6 +13659,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13341,6 +13764,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13443,6 +13869,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13545,6 +13974,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13647,6 +14079,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13749,6 +14184,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/gravelot_a_collier_interrompu_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/13557281",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -13851,6 +14289,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Gris",
     couleurs_plumage_absentes: "Jaune ; Vert ; Violet ; Rose",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -13953,6 +14394,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc ; Roux",
     couleurs_plumage_absentes: "Jaune ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/pie_grieche_a_tete_rousse_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Lanius_Senator_juvenile.JPG",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -14041,6 +14485,9 @@ const ESPECES = [
     proies_items: "Méduses ; Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "Orques ; Grands requins ; Crabes ; Oiseaux",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -14129,6 +14576,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques",
     predateurs_items: "Corneilles ; Loutres ; Serpents ; Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -14217,6 +14667,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Mollusques ; Vers ; Crustacés ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -14305,6 +14758,9 @@ const ESPECES = [
     proies_items: "Algues ; Plancton",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -14393,6 +14849,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crevettes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -14481,6 +14940,9 @@ const ESPECES = [
     proies_items: "Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -14569,6 +15031,9 @@ const ESPECES = [
     proies_items: "Moustiques ; Crustacés ; Têtards",
     predateurs_items: "Poissons carnassiers",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -14659,6 +15124,9 @@ const ESPECES = [
     proies_items: "Herbes ; Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -14749,6 +15217,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "Oiseaux ; Insectes prédateurs ; Petites guêpes parasites",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -14839,6 +15310,9 @@ const ESPECES = [
     proies_items: "Aiguilles de pin",
     predateurs_items: "Mésanges ; Huppe fasciée ; Coucou gris ; Chauves-souris ; Petites guêpes parasites",
     genre_nom: "féminin",
+    photo_2: "Images/processionnaire_du_pin_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Thaumetopoea_pityocampa_(28087926266).jpg",
+    photo_2_sujet: "adulte",
     a_confirmer: []
   },
   {
@@ -14929,6 +15403,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15019,6 +15496,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15109,6 +15589,9 @@ const ESPECES = [
     proies_items: "Sève",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15199,6 +15682,9 @@ const ESPECES = [
     proies_items: "Fourmis",
     predateurs_items: "Petites guêpes parasites",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15289,6 +15775,9 @@ const ESPECES = [
     proies_items: "Racines ; Aiguilles de pin",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15379,6 +15868,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -15461,6 +15953,9 @@ const ESPECES = [
     proies_items: "Algues ; Mollusques ; Vers ; Crustacés",
     predateurs_items: "Merlan ; Poissons ; Oiseaux ; Phoques",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -15543,6 +16038,9 @@ const ESPECES = [
     proies_items: "Mollusques ; Crabes ; Charognes",
     predateurs_items: "Poulpe ; Bar ; Goélands ; Cormorans",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15625,6 +16123,9 @@ const ESPECES = [
     proies_items: "Vers ; Escargots de mer ; Moules et coquillages ; Crustacés",
     predateurs_items: "Poulpes",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -15707,6 +16208,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Oiseaux de rivage",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15790,6 +16294,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "Étoiles de mer ; Bigorneau perceur ; Crabes",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -15873,6 +16380,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "Étoiles de mer ; Bigorneau perceur ; Crabes ; Huîtrier pie",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -15956,6 +16466,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Étoiles de mer ; Pourpres ; Crabes ; Poissons plats ; Goélands",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -16039,6 +16552,9 @@ const ESPECES = [
     proies_items: "Algues ; Plancton",
     predateurs_items: "Huîtrier pie ; Crabe vert ; Crevette grise ; Flet ; Étoiles de mer",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16122,6 +16638,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -16205,6 +16724,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Crabes ; Petits poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16288,6 +16810,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -16370,6 +16895,9 @@ const ESPECES = [
     proies_items: "Poissons",
     predateurs_items: "Tortue caouanne ; Poisson-lune ; Limaces de mer ; Escargots violets",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -16452,6 +16980,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "Limaces de mer ; Escargots violets",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16534,6 +17065,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Huîtrier pie ; Bécasseaux",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -16636,6 +17170,9 @@ const ESPECES = [
     proies_items: "Herbes ; Graines",
     predateurs_items: "Buse ; Crécerelle ; Chouettes ; Belette ; Hermine ; Renard ; Vipère",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16738,6 +17275,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Graines ; Champignons ; Insectes ; Escargots",
     predateurs_items: "Renard ; Belette ; Chats ; Chouettes ; Rapaces ; Serpents",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16840,6 +17380,9 @@ const ESPECES = [
     proies_items: "Céréales ; Fruits et baies ; Graines ; Nectar ; Insectes",
     predateurs_items: "Chats ; Chouette effraie ; Chouette hulotte ; Chevêche ; Crécerelle",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16942,6 +17485,9 @@ const ESPECES = [
     proies_items: "Oiseaux ; Campagnols et mulots ; Musaraignes ; Lapins",
     predateurs_items: "Renard ; Loup ; Rapaces",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -17044,6 +17590,9 @@ const ESPECES = [
     proies_items: "Fourmis ; Papillons ; Coléoptères",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -17146,6 +17695,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches",
     predateurs_items: "Chats ; Fouine ; Chouettes ; Buse",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -17248,6 +17800,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Racines ; Céréales",
     predateurs_items: "Fouine ; Renard ; Buse",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -17350,6 +17905,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -17452,6 +18010,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/busard_cendre_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Montagu's_Harrier_in_Tal_Chhapar_Sanctuary_November_2025_by_Tisha_Mukherjee_06.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -17554,6 +18115,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Brun",
     couleurs_plumage_absentes: "Jaune ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/perdrix_grise_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/104342199",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -17656,6 +18220,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Beige",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -17758,6 +18325,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/caille_des_bles_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Weibliche_Wachtel_(Coturnix_coturnix).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -17860,6 +18430,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Rouge",
     genre_nom: "masculin",
+    photo_2: "Images/vanneau_huppe_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/220080501",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -17962,6 +18535,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Rouge ; Orange ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -18064,6 +18640,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -18166,6 +18745,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -18268,6 +18850,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -18370,6 +18955,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc ; Noir",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -18472,6 +19060,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -18574,6 +19165,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris ; Blanc",
     couleurs_plumage_absentes: "Orange ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -18676,6 +19270,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -18778,6 +19375,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris",
     couleurs_plumage_absentes: "Jaune ; Orange ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -18880,6 +19480,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir",
     couleurs_plumage_absentes: "Jaune ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/grebe_huppe_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Great_crested_grebe_(Podiceps_cristatus)_juvenile_France.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -18982,6 +19585,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -19084,6 +19690,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -19186,6 +19795,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/foulque_macroule_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_coot_(Fulica_atra)_juvenile.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -19288,6 +19900,9 @@ const ESPECES = [
     couleurs_plumage: "Rouge ; Noir ; Blanc",
     couleurs_plumage_absentes: "Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -19390,6 +20005,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/loriot_d_europe_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/7058833",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -19492,6 +20110,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Orange",
     couleurs_plumage_absentes: "Vert ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/sittelle_torchepot_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Kleiber_(Sitta_europaea)_im_Garten.jpg",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -19594,6 +20215,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Roux",
     couleurs_plumage_absentes: "Jaune ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -19696,6 +20320,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Roux ; Brun",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -19798,6 +20425,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -19900,6 +20530,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/moineau_domestique_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Passer_domesticus_-John_o'_Groats,_Scotland.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -20002,6 +20635,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc ; Jaune",
     couleurs_plumage_absentes: "Rouge ; Roux ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/mesange_charbonniere_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Great_Tit._Parus_major_(46276943842).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -20104,6 +20740,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Orange ; Roux",
     genre_nom: "masculin",
+    photo_2: "Images/etourneau_sansonnet_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_starling_(Sturnus_vulgaris),_Prudhoe,_Northumberland_(9486342357).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -20206,6 +20845,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Beige",
     couleurs_plumage_absentes: "Orange ; Vert",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -20308,6 +20950,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -20410,6 +21055,9 @@ const ESPECES = [
     couleurs_plumage: "Orange ; Noir ; Blanc",
     couleurs_plumage_absentes: "Bleu ; Vert ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -20512,6 +21160,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/pie_grieche_ecorcheur_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Lanius_collurio_-Ariege,_Midi-Pyrenee,_France_-female-8_(1).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -20601,6 +21252,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers ; Escargots ; Crustacés ; Têtards",
     predateurs_items: "Oiseaux d'eau ; Blaireau ; Couleuvres ; Poissons ; Triton crêté",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -20689,6 +21343,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mollusques ; Crustacés ; Poissons ; Têtards ; Charognes",
     predateurs_items: "Renard ; Blaireau ; Hérons ; Corneilles ; Rats",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -20777,6 +21434,9 @@ const ESPECES = [
     proies_items: "Poissons ; Grenouilles ; Têtards ; Tritons et salamandres",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -20865,6 +21525,9 @@ const ESPECES = [
     proies_items: "Coléoptères ; Sauterelles et criquets ; Araignées ; Vers de terre",
     predateurs_items: "Coronelle lisse ; Rapaces ; Renard ; Blaireau ; Belettes et martres ; Chats",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -20953,6 +21616,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Plancton ; Insectes ; Larves d'insectes ; Vers",
     predateurs_items: "Brochet ; Sandre ; Perche ; Silure ; Anguille",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21041,6 +21707,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Larves d'insectes ; Mollusques ; Vers",
     predateurs_items: "Brochet ; Silure ; Perche",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21129,6 +21798,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Mollusques ; Débris végétaux",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21217,6 +21889,9 @@ const ESPECES = [
     proies_items: "Poissons",
     predateurs_items: "Autres sandres ; Brochet ; Silure ; Anguille",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21305,6 +21980,9 @@ const ESPECES = [
     proies_items: "Poissons ; Oiseaux ; Oiseaux d'eau ; Pigeons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -21393,6 +22071,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Mollusques ; Crustacés ; Poissons",
     predateurs_items: "Loutre",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -21481,6 +22162,9 @@ const ESPECES = [
     proies_items: "Algues ; Vers ; Crustacés",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21569,6 +22253,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -21659,6 +22346,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Bois mort ; Sève",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21749,6 +22439,9 @@ const ESPECES = [
     proies_items: "Insectes ; Sauterelles et criquets",
     predateurs_items: "Oiseaux ; Reptiles",
     genre_nom: "féminin",
+    photo_2: "Images/mante_religieuse_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/410136651",
+    photo_2_sujet: "larve",
     a_confirmer: []
   },
   {
@@ -21839,6 +22532,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "Oiseaux insectivores ; Petits mammifères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -21929,6 +22625,9 @@ const ESPECES = [
     proies_items: "Herbes ; Nectar",
     predateurs_items: "Oiseaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -22019,6 +22718,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "Araignées",
     genre_nom: "féminin",
+    photo_2: "Images/aurore_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Orange_tip_(Anthocharis_cardamines)_female_2.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -22109,6 +22811,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Sève ; Mouches ; Coléoptères ; Libellules ; Abeilles et guêpes",
     predateurs_items: "Bondrée apivore ; Guêpier d'Europe ; Mouches asilides",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -22199,6 +22904,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Nectar ; Mouches ; Libellules ; Abeilles et guêpes",
     predateurs_items: "Bondrée apivore ; Guêpier d'Europe ; Poules",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22289,6 +22997,9 @@ const ESPECES = [
     proies_items: "Graines ; Insectes",
     predateurs_items: "Oiseaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -22379,6 +23090,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Libellules ; Têtards",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/anax_empereur_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Anax_imperator_female_-_Cecile_Roux_-_Riebeeck_West,_South_Africa.jpeg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -22469,6 +23183,9 @@ const ESPECES = [
     proies_items: "Racines",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22551,6 +23268,9 @@ const ESPECES = [
     proies_items: "Insectes ; Escargots ; Écrevisses ; Têtards ; Débris végétaux",
     predateurs_items: "Hérons ; Ibis falcinelle ; Spatule blanche ; Anguille",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22634,6 +23354,9 @@ const ESPECES = [
     proies_items: "Algues ; Plancton",
     predateurs_items: "Rat musqué",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22736,6 +23459,9 @@ const ESPECES = [
     proies_items: "Mouches ; Papillons ; Coléoptères ; Éphémères ; Phryganes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -22838,6 +23564,9 @@ const ESPECES = [
     proies_items: "Moucherons aquatiques ; Petits diptères",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22940,6 +23669,9 @@ const ESPECES = [
     proies_items: "Mouches ; Papillons ; Araignées ; Coléoptères ; Névroptères",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -23042,6 +23774,9 @@ const ESPECES = [
     proies_items: "Papillons de nuit",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23144,6 +23879,9 @@ const ESPECES = [
     proies_items: "Criquets ; Sauterelles ; Grillons ; Coléoptères ; Papillons de nuit ; Mouches ; Araignées ; Scorpions",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -23246,6 +23984,9 @@ const ESPECES = [
     proies_items: "Herbes ; Fruits et baies",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -23348,6 +24089,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Rose",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -23450,6 +24194,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/moineau_cisalpin_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Passer_italiae_female.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -23552,6 +24299,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -23654,6 +24404,9 @@ const ESPECES = [
     couleurs_plumage: "Jaune ; Brun ; Gris",
     couleurs_plumage_absentes: "Rouge ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/venturon_corse_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/342980738",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -23756,6 +24509,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/sittelle_corse_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Sitta_whiteheadi_-_Christoph_Moning_-_2.jpeg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -23858,6 +24614,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -23960,6 +24719,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/serin_cini_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:European_serin_(Serinus_serinus)_female.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -24062,6 +24824,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -24164,6 +24929,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -24266,6 +25034,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -24368,6 +25139,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/roitelet_a_triple_bandeau_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_firecrest_Franconville_05.jpg",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -24470,6 +25244,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/fauvette_sarde_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Marmora's_Warbler_-_Sardinia_-_Italy_S4E1036.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -24572,6 +25349,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Brun",
     couleurs_plumage_absentes: "Orange ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/gallinule_poule_d_eau_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Gallinula_chloropus_juvénile.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -24674,6 +25454,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -24776,6 +25559,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/fauvette_de_moltoni_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Curruca_subalpina_74746110.png",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -24878,6 +25664,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -24980,6 +25769,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25082,6 +25874,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Gris",
     couleurs_plumage_absentes: "Roux ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25184,6 +25979,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25286,6 +26084,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/monticole_bleu_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Blue_Rock_Thrush_(female),_Boulmane_de_Dades,_Morocco.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -25388,6 +26189,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25490,6 +26294,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25592,6 +26399,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25694,6 +26504,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25783,6 +26596,9 @@ const ESPECES = [
     proies_items: "Cloportes ; Coléoptères ; Limaces ; Vers de terre ; Araignées ; Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25872,6 +26688,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -25961,6 +26780,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Crustacés ; Vers",
     predateurs_items: "Truites",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26050,6 +26872,9 @@ const ESPECES = [
     proies_items: "Cloportes ; Larves d'insectes ; Araignées ; Mille-pattes ; Mollusques",
     predateurs_items: "Couleuvres ; Truites ; Poissons ; Euprocte de Corse ; Sanglier ; Insectes aquatiques",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -26139,6 +26964,9 @@ const ESPECES = [
     proies_items: "Invertébrés",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26228,6 +27056,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26316,6 +27147,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Myriapodes",
     predateurs_items: "Mammifères ; Oiseaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26404,6 +27238,9 @@ const ESPECES = [
     proies_items: "Arthropodes ; Petits vertébrés ; Végétaux",
     predateurs_items: "Serpents ; Oiseaux ; Chats",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26492,6 +27329,9 @@ const ESPECES = [
     proies_items: "Invertébrés ; Insectes ; Fruits mûrs",
     predateurs_items: "Mammifères ; Oiseaux ; Serpents",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26580,6 +27420,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers",
     predateurs_items: "Oiseaux ; Mammifères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26668,6 +27511,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "Oiseaux ; Serpents",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26756,6 +27602,9 @@ const ESPECES = [
     proies_items: "Larves d'insectes ; Crustacés ; Poissons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26844,6 +27693,9 @@ const ESPECES = [
     proies_items: "Crustacés ; Vers marins ; Mollusques ; Œufs de poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -26932,6 +27784,9 @@ const ESPECES = [
     proies_items: "Mollusques ; Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27020,6 +27875,9 @@ const ESPECES = [
     proies_items: "Crustacés ; Mollusques",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27108,6 +27966,9 @@ const ESPECES = [
     proies_items: "Crevettes ; Crabes ; Moules et coquillages",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27196,6 +28057,9 @@ const ESPECES = [
     proies_items: "Crustacés ; Poissons ; Vers marins ; Plancton ; Œufs de poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27284,6 +28148,9 @@ const ESPECES = [
     proies_items: "Crustacés",
     predateurs_items: "Mérou brun ; Rascasse noire ; Raie bouclée",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27372,6 +28239,9 @@ const ESPECES = [
     proies_items: "Crustacés ; Poissons ; Vers marins ; Calmars et poulpes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27460,6 +28330,9 @@ const ESPECES = [
     proies_items: "Crustacés",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27550,6 +28423,9 @@ const ESPECES = [
     proies_items: "Brachypode de Phénicie ; Fétuque ovine",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27640,6 +28516,9 @@ const ESPECES = [
     proies_items: "Graminées",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27730,6 +28609,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "Guêpes ; Araignées ; Fourmis ; Oiseaux",
     genre_nom: "féminin",
+    photo_2: "Images/belle_dame_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Vanessa_cardui_-_caterpillar_07_(HS).jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -27820,6 +28702,9 @@ const ESPECES = [
     proies_items: "Nectar ; Luzerne",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -27910,6 +28795,9 @@ const ESPECES = [
     proies_items: "Oseilles sauvages",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28000,6 +28888,9 @@ const ESPECES = [
     proies_items: "Chiendent rampant",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28090,6 +28981,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/azure_de_la_bugrane_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_blue_(Polyommatus_icarus)_male_Turna.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -28180,6 +29074,9 @@ const ESPECES = [
     proies_items: "Férule commune",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28270,6 +29167,9 @@ const ESPECES = [
     proies_items: "Nerprun alaterne",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28360,6 +29260,9 @@ const ESPECES = [
     proies_items: "Nectar ; Violettes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28450,6 +29353,9 @@ const ESPECES = [
     proies_items: "Chèvrefeuille",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28540,6 +29446,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28630,6 +29539,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/crocothemis_ecarlate_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Crocothemis_erythraea_femelle.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -28720,6 +29632,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -28803,6 +29718,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -28886,6 +29804,9 @@ const ESPECES = [
     proies_items: "Sauterelles et criquets ; Mouches ; Araignées",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -28968,6 +29889,9 @@ const ESPECES = [
     proies_items: "Algues ; Vers ; Mollusques ; Crustacés ; Charognes",
     predateurs_items: "Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29050,6 +29974,9 @@ const ESPECES = [
     proies_items: "Moules et coquillages ; Escargots de mer ; Crustacés ; Vers",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -29132,6 +30059,9 @@ const ESPECES = [
     proies_items: "Moules et coquillages ; Crustacés ; Poissons ; Vers ; Algues ; Charognes",
     predateurs_items: "Anguille ; Goéland ; Hérons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29215,6 +30145,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29298,6 +30231,9 @@ const ESPECES = [
     proies_items: "Plantes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29381,6 +30317,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29464,6 +30403,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Humain",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29546,6 +30488,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Langouste ; Étoile de mer ; Sars ; NOUVELLE: Girelle-paon",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29628,6 +30573,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29710,6 +30658,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "Poissons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -29812,6 +30763,9 @@ const ESPECES = [
     proies_items: "Grenouilles ; Campagnols ; Graines ; Fruits ; Racines ; Insectes",
     predateurs_items: "Renard ; Blaireau ; Belette ; Buse ; Milan noir ; Hermine ; Grand-duc ; Putois ; Milan royal",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -29914,6 +30868,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/cygne_tubercule_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:CygnusOlorJuvenile.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -30016,6 +30973,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/nette_rousse_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Netta_rufina_(female),_London_Wetland_Centre,_UK_-_Diliff.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -30118,6 +31078,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/fuligule_milouin_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_common_pochard_(Aythya_ferina)_in_Algeria.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -30220,6 +31183,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -30322,6 +31288,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/blongios_nain_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Little_bittern_(Ixobrychus_minutus).JPG",
+    photo_2_sujet: "mâle",
     a_confirmer: ["territoire"]
   },
   {
@@ -30424,6 +31393,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Beige",
     couleurs_plumage_absentes: "Rouge ; Vert ; Bleu ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -30526,6 +31498,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/bruant_des_roseaux_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_reed_bunting_(emberiza_schoeniclus)_f.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -30628,6 +31603,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/gobemouche_a_collier_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_Collared_Flycatcher_(Ficedula_torquata),_Park_Pałacowy,_Białowieża,_Poland.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -30717,6 +31695,9 @@ const ESPECES = [
     proies_items: "Fourmis ; Vers de terre ; Cloportes ; Mille-pattes ; Araignées ; Escargots ; Coléoptères",
     predateurs_items: "Putois ; Larves de libellules ; Insectes aquatiques ; Poissons ; Corneilles et corbeaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -30805,6 +31786,9 @@ const ESPECES = [
     proies_items: "Vers ; Plancton ; Crustacés ; Œufs de poissons ; Larves d'insectes ; Poissons",
     predateurs_items: "Brochet ; Héron cendré ; Anguille ; Truite ; Grand cormoran",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -30893,6 +31877,9 @@ const ESPECES = [
     proies_items: "Larves d'insectes ; Vers",
     predateurs_items: "Sandre ; Silure glane",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -30981,6 +31968,9 @@ const ESPECES = [
     proies_items: "Crustacés ; Larves d'insectes ; Plancton",
     predateurs_items: "Hérons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31069,6 +32059,9 @@ const ESPECES = [
     proies_items: "Mollusques ; Plancton ; Crustacés ; Œufs de poissons ; Larves d'insectes",
     predateurs_items: "Perche ; Sandre ; Brochet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31159,6 +32152,9 @@ const ESPECES = [
     proies_items: "Graminées ; Nectar",
     predateurs_items: "Oiseaux",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -31249,6 +32245,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "Chardonneret élégant ; Moineau domestique ; Guêpes parasites ; Alouette des champs",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -31339,6 +32338,9 @@ const ESPECES = [
     proies_items: "Chèvrefeuille ; Miellat ; Nectar",
     predateurs_items: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31429,6 +32431,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Sève ; Fruits",
     predateurs_items: "Oiseaux",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -31519,6 +32524,9 @@ const ESPECES = [
     proies_items: "Petits crustacés ; Demoiselles ; Pucerons ; Insectes",
     predateurs_items: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -31609,6 +32617,9 @@ const ESPECES = [
     proies_items: "Moustiques ; Mouches ; Larves d'insectes ; Crustacés",
     predateurs_items: "Araignées ; Grenouilles ; Poissons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -31699,6 +32710,9 @@ const ESPECES = [
     proies_items: "Insectes ; Graminées",
     predateurs_items: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -31789,6 +32803,9 @@ const ESPECES = [
     proies_items: "Vers de terre ; Racines ; Tubercules",
     predateurs_items: "Oiseaux ; Renards ; Chats ; Musaraigne ; Taupe",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31879,6 +32896,9 @@ const ESPECES = [
     proies_items: "Sève ; Fruits et baies ; Bois mort",
     predateurs_items: "Pics",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31969,6 +32989,9 @@ const ESPECES = [
     proies_items: "Pucerons ; Cochenilles",
     predateurs_items: "Oiseaux ; Punaises ; Fourmis ; Autres coccinelles",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -32059,6 +33082,9 @@ const ESPECES = [
     proies_items: "Feuilles de buis",
     predateurs_items: "Moineau domestique ; Frelon asiatique ; Guêpes ; Chauves-souris ; Mésanges",
     genre_nom: "féminin",
+    photo_2: "Images/pyrale_du_buis_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Raupe_des_Buchsbaumzünsler,_Cydalima_perspectalis_24.JPG",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire"]
   },
   {
@@ -32142,6 +33168,9 @@ const ESPECES = [
     proies_items: "Araignées ; Papillons ; Mouches",
     predateurs_items: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32225,6 +33254,9 @@ const ESPECES = [
     proies_items: "Moustiques ; Mouches",
     predateurs_items: null,
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32307,6 +33339,9 @@ const ESPECES = [
     proies_items: "Débris végétaux",
     predateurs_items: null,
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32390,6 +33425,9 @@ const ESPECES = [
     proies_items: "Algues ; Plancton",
     predateurs_items: "Rat musqué",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32473,6 +33511,9 @@ const ESPECES = [
     proies_items: "Plancton ; Algues",
     predateurs_items: "Rat musqué ; Canards plongeurs ; Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32575,6 +33616,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères ; Araignées",
     predateurs_items: "Chats domestiques",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -32677,6 +33721,9 @@ const ESPECES = [
     proies_items: "Mouches ; Papillons ; Coléoptères",
     predateurs_items: "Chat domestique",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32779,6 +33826,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Moustiques ; Araignées",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32881,6 +33931,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32983,6 +34036,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers de terre ; Limaces ; Escargots",
     predateurs_items: "Rapaces nocturnes ; Chat ; Belette ; Hermine ; Renard roux ; Reptiles",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33085,6 +34141,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers de terre ; Escargots",
     predateurs_items: "Renard ; Belette ; Chat domestique ; Chouette hulotte",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -33187,6 +34246,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -33289,6 +34351,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pic_tridactyle_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/226703621",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -33391,6 +34456,9 @@ const ESPECES = [
     couleurs_plumage: "Vert ; Gris",
     couleurs_plumage_absentes: "Roux ; Orange ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pic_cendre_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/390486745",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -33493,6 +34561,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/sizerin_cabaret_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/263062899",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -33595,6 +34666,9 @@ const ESPECES = [
     couleurs_plumage: "Vert ; Jaune ; Blanc",
     couleurs_plumage_absentes: "Roux ; Rouge ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -33697,6 +34771,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/gobemouche_noir_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Papa-moscas-preto,_fêmea,_Pied_Flycatcher,_female_(50587344027).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -33799,6 +34876,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/harle_bievre_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Mergus_merganser_-Sandwell_-England_-male-8.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -33901,6 +34981,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Noir ; Gris",
     couleurs_plumage_absentes: "Rouge ; Vert",
     genre_nom: "masculin",
+    photo_2: "Images/grosbec_casse_noyaux_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Hawfinch_(Coccothraustes_coccothraustes)_female_Drenthe.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -34003,6 +35086,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -34105,6 +35191,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/tarin_des_aulnes_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_siskin_(Spinus_spinus)_male_Biebrzanski.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -34207,6 +35296,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -34309,6 +35401,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -34398,6 +35493,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers ; Poissons ; Grenouilles ; Lézards ; Petits mammifères ; Campagnols et mulots",
     predateurs_items: "Poissons ; Couleuvres ; Vison d'Amérique ; Loutre",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -34486,6 +35584,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Mollusques ; Vers ; Crustacés",
     predateurs_items: "Loutre ; Martin-pêcheur",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -34574,6 +35675,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Algues ; Plancton ; Insectes ; Larves d'insectes",
     predateurs_items: "Brochet ; Sandre ; Silure",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -34662,6 +35766,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Escargots ; Crustacés ; Poissons ; Œufs de poissons",
     predateurs_items: "Brochet ; Poissons prédateurs ; Oiseaux piscivores",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -34750,6 +35857,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -34840,6 +35950,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -34930,6 +36043,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35020,6 +36136,9 @@ const ESPECES = [
     proies_items: "Herbes ; Sève",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35110,6 +36229,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35200,6 +36322,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35290,6 +36415,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Sève ; Bouses et crottins",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -35380,6 +36508,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Bouses et crottins",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/petit_mars_changeant_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/30990180",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -35470,6 +36601,9 @@ const ESPECES = [
     proies_items: "Feuilles",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -35560,6 +36694,9 @@ const ESPECES = [
     proies_items: "Nectar ; Feuilles",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35650,6 +36787,9 @@ const ESPECES = [
     proies_items: "Orties ; Fruits et baies ; Nectar",
     predateurs_items: "Mésanges bleues ; Autres oiseaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35740,6 +36880,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35830,6 +36973,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -35920,6 +37066,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "Autres libellules ; Coléoptères ; Punaises ; Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -36010,6 +37159,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -36100,6 +37252,9 @@ const ESPECES = [
     proies_items: "Insectes ; Plantes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -36183,6 +37338,9 @@ const ESPECES = [
     proies_items: "Mille-pattes ; Limaces",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36266,6 +37424,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36348,6 +37509,9 @@ const ESPECES = [
     proies_items: "Débris végétaux ; Œufs de poissons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -36431,6 +37595,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36514,6 +37681,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Grive musicienne",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36597,6 +37767,9 @@ const ESPECES = [
     proies_items: "Lichens",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36699,6 +37872,9 @@ const ESPECES = [
     proies_items: "Herbes ; Jeunes pousses ; Racines ; Fruits et baies ; Graines",
     predateurs_items: "Renard ; Chats ; Belettes et martres ; Rapaces ; Serpents",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -36801,6 +37977,9 @@ const ESPECES = [
     proies_items: "Herbes ; Bourgeons ; Racines ; Écorce",
     predateurs_items: "Renard ; Fouine ; Belette ; Chat forestier ; Chien ; Rapaces",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -36903,6 +38082,9 @@ const ESPECES = [
     proies_items: "Poissons ; Grenouilles ; Crapauds ; Oiseaux ; Campagnols et mulots ; Lapins",
     predateurs_items: "Renard roux ; Rapaces ; Chien",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37005,6 +38187,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Insectes ; Lézards ; Oiseaux ; Petits mammifères ; Campagnols et mulots",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37107,6 +38292,9 @@ const ESPECES = [
     proies_items: "Herbes ; Plantes aquatiques",
     predateurs_items: "Vison d'Amérique ; Effraie des clochers ; Surmulot",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37209,6 +38397,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Escargots ; Crevettes ; Poissons ; Grenouilles",
     predateurs_items: "Effraie ; Chouette hulotte ; Renard ; Brochet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37311,6 +38502,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Mille-pattes ; Vers de terre",
     predateurs_items: "Rapaces ; Hérons ; Renard ; Fouine ; Putois ; Serpents",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -37413,6 +38607,9 @@ const ESPECES = [
     proies_items: "Bourgeons ; Fleurs ; Fruits et baies ; Noisettes ; Chenilles ; Pucerons",
     predateurs_items: "Renard ; Sanglier ; Belette ; Chouettes ; Chats",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37515,6 +38712,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Moustiques",
     predateurs_items: "Chat domestique ; Fouine ; Rapaces",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -37617,6 +38817,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "Orque ; Grands requins",
     genre_nom: "masculin",
+    photo_2: "Images/phoque_gris_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Grey_seal_Halichoerus_grypus_young2.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -37719,6 +38922,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "Orque ; Grand requin blanc",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -37821,6 +39027,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crevettes ; Poissons",
     predateurs_items: "Grands requins ; Orques",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -37923,6 +39132,9 @@ const ESPECES = [
     proies_items: "Vers ; Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "Orques ; Grands requins ; Phoque gris ; Grand dauphin",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38025,6 +39237,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38127,6 +39342,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir",
     couleurs_plumage_absentes: "Roux ; Rouge ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/fou_de_bassan_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Northern_gannet_(Morus_bassanus)_juvenile_Sagres.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -38229,6 +39447,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38331,6 +39552,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38433,6 +39657,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Roux ; Orange ; Rouge ; Vert ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38535,6 +39762,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38637,6 +39867,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38739,6 +39972,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Gris ; Noir",
     couleurs_plumage_absentes: "Roux ; Orange ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -38841,6 +40077,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Roux ; Vert ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/goeland_argente_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:European_herring_gull_(Larus_argentatus)_juvenile.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -38943,6 +40182,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir",
     couleurs_plumage_absentes: "Roux ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -39045,6 +40287,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Gris",
     couleurs_plumage_absentes: "Roux ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -39147,6 +40392,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Vert ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/mouette_rieuse_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Black-headed_gull_(Chroicocephalus_ridibundus)_winter_plumage_Ethiopia.jpg",
+    photo_2_sujet: "plumage d'hiver",
     a_confirmer: []
   },
   {
@@ -39249,6 +40497,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir",
     couleurs_plumage_absentes: "Roux ; Orange ; Rouge ; Vert ; Bleu ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -39351,6 +40602,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Gris ; Noir",
     couleurs_plumage_absentes: "Roux ; Jaune ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -39453,6 +40707,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/grand_cormoran_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Great_Cormorant,_juvenile,_Porto,_Portugal_(31096584347).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -39555,6 +40812,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -39657,6 +40917,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -39759,6 +41022,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -39861,6 +41127,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/becasseau_variable_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Dunlin_(Calidris_alpina)_(19).jpg",
+    photo_2_sujet: "plumage d'hiver",
     a_confirmer: []
   },
   {
@@ -39963,6 +41232,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/grand_gravelot_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Charadrius_hiaticula_juvenile,_Giresun,_Turkey_01-22.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -40065,6 +41337,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/tournepierre_a_collier_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Arenaria_interpres_(habitus).jpg",
+    photo_2_sujet: "plumage d'été",
     a_confirmer: ["territoire"]
   },
   {
@@ -40167,6 +41442,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -40269,6 +41547,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc ; Noir",
     couleurs_plumage_absentes: "Roux ; Vert ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/heron_cendre_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Ardea_cinerea_juvenile_v2.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -40371,6 +41652,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -40473,6 +41757,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -40575,6 +41862,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir ; Roux",
     couleurs_plumage_absentes: "Jaune ; Bleu",
     genre_nom: "masculin",
+    photo_2: "Images/tadorne_de_belon_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Shelduck._Tadorna_tadorna_(45904170024).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -40677,6 +41967,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -40779,6 +42072,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Vert ; Violet ; Rose",
     genre_nom: "féminin",
+    photo_2: "Images/gorgebleue_a_miroir_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Luscinia_svecica_LC0301.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -40881,6 +42177,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/busard_des_roseaux_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Circus_aeruginosus_female-crop.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -40983,6 +42282,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -41085,6 +42387,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/canard_colvert_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_(Female)_in_Locarno.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -41187,6 +42492,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/busard_saint_martin_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Hen_Harrier_-_Male.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -41289,6 +42597,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Gris",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/engoulevent_d_europe_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_nightjar_(Caprimulgus_europaeus)_in_Algeria.jpg",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -41391,6 +42702,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/fauvette_pitchou_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Sylvia_undata_female.jpg",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -41493,6 +42807,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/tarier_patre_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:European_Stonechat_2025_12_25_01.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -41595,6 +42912,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Brun",
     couleurs_plumage_absentes: "Jaune ; Orange ; Vert ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/linotte_melodieuse_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Female-linnet.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -41697,6 +43017,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -41799,6 +43122,9 @@ const ESPECES = [
     couleurs_plumage: "Vert ; Rouge",
     couleurs_plumage_absentes: "Brun ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pic_vert_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Green_Woodpecker_digging_for_ants._Picus_viridis_-_Flickr_-_gailhampshire.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -41901,6 +43227,9 @@ const ESPECES = [
     couleurs_plumage: "Bleu ; Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -42003,6 +43332,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Rose",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -42105,6 +43437,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/rougegorge_familier_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:European_robin_(Erithacus_rubecula)_juvenile.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -42207,6 +43542,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/merle_noir_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Turdus_merula_female_(d1).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -42309,6 +43647,9 @@ const ESPECES = [
     couleurs_plumage: "Bleu ; Blanc ; Jaune",
     couleurs_plumage_absentes: "Roux ; Rouge ; Rose",
     genre_nom: "féminin",
+    photo_2: "Images/mesange_bleue_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Cyanistes_caeruleus_(juvenile).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["bec_forme"]
   },
   {
@@ -42411,6 +43752,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Brun",
     couleurs_plumage_absentes: "Jaune ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pinson_des_arbres_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_chaffinch_(Fringilla_coelebs)_female_Drenthe_2.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -42513,6 +43857,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -42615,6 +43962,9 @@ const ESPECES = [
     couleurs_plumage: "Roux ; Jaune",
     couleurs_plumage_absentes: "Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/bruant_zizi_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Emberiza_cirlus_-Valencian_Community,_Spain_-female-8_(1).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -42717,6 +44067,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Rouge ; Orange ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/coucou_gris_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_cuckoo_(54019304589).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -42819,6 +44172,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Beige",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -42908,6 +44264,9 @@ const ESPECES = [
     proies_items: "Insectes ; Chenilles ; Araignées ; Mille-pattes",
     predateurs_items: "Putois ; Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -42997,6 +44356,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Escargots ; Crustacés ; Amphibiens",
     predateurs_items: "Couleuvre à collier ; Héron ; Cigogne ; Renard ; Martre ; Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -43086,6 +44448,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Limaces",
     predateurs_items: "Héron ; Cigogne ; Corneilles et corbeaux ; Chouettes ; Poissons ; Larves de libellules",
     genre_nom: "féminin",
+    photo_2: "Images/rainette_verte_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:HylaArboreaCallingMale2.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -43175,6 +44540,9 @@ const ESPECES = [
     proies_items: "Fourmis ; Coléoptères ; Araignées ; Cloportes ; Vers de terre",
     predateurs_items: "Loutre ; Belettes et martres ; Couleuvre à collier ; Cigognes ; Rapaces",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -43264,6 +44632,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Mollusques ; Vers",
     predateurs_items: "Chouette effraie ; Poissons ; Écrevisses ; Larves de libellules",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -43353,6 +44724,9 @@ const ESPECES = [
     proies_items: "Tritons et salamandres",
     predateurs_items: "Couleuvre vipérine ; Insectes aquatiques ; Poissons ; Écrevisse de Louisiane",
     genre_nom: "masculin",
+    photo_2: "Images/triton_marbre_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Marbled_Newt_(Triturus_marmoratus)_male_(14143352479).jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -43442,6 +44816,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers de terre ; Crustacés ; Têtards",
     predateurs_items: "Hérons ; Couleuvre à collier ; Blaireau ; Hérisson ; Poissons",
     genre_nom: "masculin",
+    photo_2: "Images/triton_crete_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/241266433",
+    photo_2_sujet: "mâle",
     a_confirmer: ["territoire"]
   },
   {
@@ -43530,6 +44907,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Larves d'insectes ; Vers ; Crevettes ; Poissons",
     predateurs_items: "Phoques ; Orques ; Requins",
     genre_nom: "masculin",
+    photo_2: "Images/saumon_atlantique_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Salmo_salar_juvenile.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -43618,6 +44998,9 @@ const ESPECES = [
     proies_items: "Mollusques ; Vers ; Crustacés ; Poissons",
     predateurs_items: "Brochets ; Hérons ; Cormorans ; Grosses anguilles",
     genre_nom: "féminin",
+    photo_2: "Images/anguille_europeenne_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Civelle_dans_le_Ruisseau_du_loc'h_à_Morgat_(Finistère)_partie_aval_saumâtre_grandes_marées_11.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: ["territoire"]
   },
   {
@@ -43706,6 +45089,9 @@ const ESPECES = [
     proies_items: "Algues ; Poissons ; Sang",
     predateurs_items: "Silures",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -43794,6 +45180,9 @@ const ESPECES = [
     proies_items: "Plancton ; Crustacés ; Poissons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -43882,6 +45271,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Vers ; Crustacés",
     predateurs_items: "Brochets ; Truites ; Oiseaux pêcheurs",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -43970,6 +45362,9 @@ const ESPECES = [
     proies_items: "Vers ; Calmars et poulpes ; Crevettes ; Crabes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44058,6 +45453,9 @@ const ESPECES = [
     proies_items: "Plancton ; Crustacés ; Poissons",
     predateurs_items: "Thons ; Requins ; Dauphins ; Phoques ; Oiseaux marins",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44146,6 +45544,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crevettes ; Crabes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44234,6 +45635,9 @@ const ESPECES = [
     proies_items: "Vers ; Escargots de mer ; Moules et coquillages ; Crabes",
     predateurs_items: "Congres",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44322,6 +45726,9 @@ const ESPECES = [
     proies_items: "Mollusques ; Vers ; Calmars et poulpes ; Crevettes ; Crabes ; Poissons",
     predateurs_items: "Morues",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44410,6 +45817,9 @@ const ESPECES = [
     proies_items: "Vers ; Calmars et poulpes ; Crevettes ; Crabes ; Poissons",
     predateurs_items: "Grondins gris",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44498,6 +45908,9 @@ const ESPECES = [
     proies_items: "Vers marins ; Moules et coquillages ; Crustacés",
     predateurs_items: "Raies ; Phoques",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44586,6 +45999,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crabes ; Poissons ; Charognes",
     predateurs_items: "Phoques ; Dauphins ; Autres congres",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44674,6 +46090,9 @@ const ESPECES = [
     proies_items: "Plancton ; Crustacés ; Œufs de poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44762,6 +46181,9 @@ const ESPECES = [
     proies_items: "Plancton ; Vers ; Crustacés",
     predateurs_items: "Macareux ; Sternes ; Cormorans ; Morues",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44850,6 +46272,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crabes ; Poissons ; Oiseaux ; Oiseaux marins",
     predateurs_items: "Congres ; Morues",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -44938,6 +46363,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "Requins ; Gros poissons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -45026,6 +46454,9 @@ const ESPECES = [
     proies_items: "Plancton ; Crustacés",
     predateurs_items: "Orques",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -45116,6 +46547,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Racines",
     predateurs_items: "Taupes ; Hérissons ; Chauves-souris ; Corneilles ; Étourneaux ; Couleuvres",
     genre_nom: "masculin",
+    photo_2: "Images/hanneton_commun_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Melolontha_melolontha_09.JPG",
+    photo_2_sujet: "larve",
     a_confirmer: ["territoire"]
   },
   {
@@ -45206,6 +46640,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "Coucous ; Grenouilles ; Crapauds ; Carabes ; Petites guêpes parasites",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -45296,6 +46733,9 @@ const ESPECES = [
     proies_items: "Orties ; Fruits et baies ; Nectar ; Sève",
     predateurs_items: "Mésanges ; Gobemouches ; Petits oiseaux ; Petites souris",
     genre_nom: "masculin",
+    photo_2: "Images/paon_du_jour_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Inachis_io_qtl4.jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -45386,6 +46826,9 @@ const ESPECES = [
     proies_items: "Orties ; Fruits et baies ; Nectar ; Sève",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/vulcain_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Admiral_Vanessa_atalanta_Raupe.jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -45476,6 +46919,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "Oiseaux ; Guêpes ; Petites guêpes parasites",
     genre_nom: "masculin",
+    photo_2: "Images/citron_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Brimstone._Gonepteryx_rhamni_._female_-_Flickr_-_gailhampshire.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -45566,6 +47012,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "Insectes parasites",
     genre_nom: "masculin",
+    photo_2: "Images/moro_sphinx_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Macroglossum.stellatarum.caterpillar.3088.Liosi.jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: []
   },
   {
@@ -45656,6 +47105,9 @@ const ESPECES = [
     proies_items: "Orties ; Nectar",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/ecaille_chinee_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Euplagia_quadripunctaria_05.2025_(1).jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire"]
   },
   {
@@ -45746,6 +47198,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Mouches ; Larves d'insectes",
     predateurs_items: "Oiseaux ; Araignées ; Libellules ; Grenouilles ; Lézards",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -45836,6 +47291,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/calopteryx_vierge_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Thomas_Bresson_-_Calopteryx_virgo-1_(by).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -45926,6 +47384,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -46016,6 +47477,9 @@ const ESPECES = [
     proies_items: "Nectar ; Pollen",
     predateurs_items: "Bondrée apivore ; Oiseaux ; Mouches asilides ; Frelon asiatique ; Campagnols",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -46118,6 +47582,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères ; Araignées",
     predateurs_items: "Chat domestique ; Martre des pins ; Chouettes ; Faucons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -46220,6 +47687,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères",
     predateurs_items: "Chouette effraie ; Chouette hulotte ; Faucon crécerelle",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -46322,6 +47792,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46424,6 +47897,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères ; Araignées",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46526,6 +48002,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Poissons ; Amphibiens",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46628,6 +48107,9 @@ const ESPECES = [
     proies_items: "Racines",
     predateurs_items: "Renard ; Hermine ; Putois ; Buse ; Chouette hulotte ; Effraie",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46730,6 +48212,9 @@ const ESPECES = [
     proies_items: "Herbes ; Racines ; Écorce",
     predateurs_items: "Belettes et martres ; Chat sauvage ; Rapaces",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46832,6 +48317,9 @@ const ESPECES = [
     proies_items: "Racines",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46934,6 +48422,9 @@ const ESPECES = [
     proies_items: "Insectes ; Lézards ; Amphibiens",
     predateurs_items: "Chouette effraie ; Hiboux ; Serpents ; Chats ; Belettes ; Genettes",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47036,6 +48527,9 @@ const ESPECES = [
     proies_items: "Insectes ; Coléoptères ; Araignées",
     predateurs_items: "Hermine ; Belette ; Renard ; Chouettes ; Chat domestique",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47138,6 +48632,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers de terre ; Escargots ; Poissons ; Grenouilles",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -47240,6 +48737,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers",
     predateurs_items: "Chouettes ; Serpents",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47342,6 +48842,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Racines ; Graines ; Insectes ; Charognes",
     predateurs_items: "Chats ; Renards ; Belettes ; Serpents ; Rapaces ; Chouettes",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47444,6 +48947,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Graines ; Insectes",
     predateurs_items: "Chat ; Chien ; Hermine ; Martre ; Chouettes ; Hiboux ; Rat surmulot",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47546,6 +49052,9 @@ const ESPECES = [
     proies_items: "Céréales ; Fruits et baies ; Mollusques ; Amphibiens ; Oiseaux ; Œufs d'oiseaux ; Campagnols et mulots",
     predateurs_items: "Rapaces ; Grand-duc ; Belettes et martres ; Chiens ; Chats ; Serpents",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47648,6 +49157,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -47750,6 +49262,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Roux ; Rose",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47852,6 +49367,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47954,6 +49472,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -48056,6 +49577,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Gris",
     couleurs_plumage_absentes: "Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -48158,6 +49682,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -48260,6 +49787,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Roux",
     couleurs_plumage_absentes: "Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48362,6 +49892,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Rouge ; Orange ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -48464,6 +49997,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc ; Noir",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Vert ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48566,6 +50102,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/tarier_des_pres_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Whinchat_-_Saxicola_rubetra_-_Female.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -48668,6 +50207,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/traquet_motteux_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Northern_wheatear_(Oenanthe_oenanthe)_female.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -48770,6 +50312,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -48872,6 +50417,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Beige",
     couleurs_plumage_absentes: "Rouge ; Orange ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -48974,6 +50522,9 @@ const ESPECES = [
     couleurs_plumage: "Jaune ; Brun",
     couleurs_plumage_absentes: "Rouge ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/bruant_jaune_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/166976336",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -49076,6 +50627,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Roux",
     couleurs_plumage_absentes: "Jaune ; Vert ; Violet ; Rose",
     genre_nom: "masculin",
+    photo_2: "Images/bruant_fou_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/33193287",
+    photo_2_sujet: "autre vue",
     a_confirmer: ["territoire"]
   },
   {
@@ -49178,6 +50732,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Jaune",
     couleurs_plumage_absentes: "Roux ; Rouge ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/bergeronnette_des_ruisseaux_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Motacilla_cinerea,_male.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -49280,6 +50837,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/bergeronnette_grise_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Motacilla_alba_juvenile_(Kirkenes,_2012).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -49382,6 +50942,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -49484,6 +51047,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pic_epeichette_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_lesser_spotted_woodpecker_(49591370581).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -49586,6 +51152,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Beige",
     couleurs_plumage_absentes: "Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -49688,6 +51257,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "masculin",
+    photo_2: "Images/rougequeue_a_front_blanc_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/283782530",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -49790,6 +51362,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -49892,6 +51467,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -49994,6 +51572,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire", "bec_forme"]
   },
   {
@@ -50096,6 +51677,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -50198,6 +51782,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -50300,6 +51887,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Gris",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Violet ; Rose",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -50402,6 +51992,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/fauvette_a_tete_noire_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_Blackcap_-_Sylvia_atricapilla_(49979484338).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -50504,6 +52097,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -50606,6 +52202,9 @@ const ESPECES = [
     couleurs_plumage: "Rouge ; Blanc ; Noir ; Brun ; Jaune",
     couleurs_plumage_absentes: "Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/chardonneret_elegant_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Goldfinches_-_Carduelis_carduelis_-_Juvenile_(55495736048).jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -50708,6 +52307,9 @@ const ESPECES = [
     couleurs_plumage: "Vert ; Jaune",
     couleurs_plumage_absentes: "Rouge ; Roux ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/verdier_d_europe_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Greenfinch_-_Chloris_chloris_-_Female1.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -50810,6 +52412,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Rouge ; Orange ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -50898,6 +52503,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Escargots",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -50986,6 +52594,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51074,6 +52685,9 @@ const ESPECES = [
     proies_items: "Algues ; Insectes ; Larves d'insectes ; Crustacés",
     predateurs_items: "Truite fario ; Chevaine ; Perche ; Silure",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51162,6 +52776,9 @@ const ESPECES = [
     proies_items: "Algues ; Plancton ; Insectes ; Larves d'insectes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51250,6 +52867,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Larves d'insectes ; Mollusques ; Vers ; Crustacés",
     predateurs_items: "Sandre ; Brochet ; Perche",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51338,6 +52958,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Plancton ; Insectes ; Larves d'insectes ; Mollusques ; Vers",
     predateurs_items: "Brochet ; Perche",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51428,6 +53051,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51518,6 +53144,9 @@ const ESPECES = [
     proies_items: "Fleurs de gentiane ; Larves de fourmis",
     predateurs_items: "Petites guêpes parasites",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51608,6 +53237,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51698,6 +53330,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/tabac_d_espagne_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Silver-washed_fritillary_(Argynnis_paphia)_female_Hungary.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -51788,6 +53423,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Sève ; Bouses et crottins",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/grand_mars_changeant_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Purple_emperor_(Apatura_iris)_female.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -51878,6 +53516,9 @@ const ESPECES = [
     proies_items: "Feuilles",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/petit_paon_de_nuit_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Saturnia_pavonia_-_Emperor_caterpillar_2.jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire"]
   },
   {
@@ -51968,6 +53609,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -52058,6 +53702,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mouches",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -52148,6 +53795,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/libellule_deprimee_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Broad-bodied_chaser_(Libellula_depressa)_female.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -52238,6 +53888,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -52328,6 +53981,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mouches",
     predateurs_items: "Libellules ; Oiseaux ; Lézards ; Araignées",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -52418,6 +54074,9 @@ const ESPECES = [
     proies_items: "Plantes ; Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -52508,6 +54167,9 @@ const ESPECES = [
     proies_items: "Charognes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -52598,6 +54260,9 @@ const ESPECES = [
     proies_items: "Trèfles ; Nectar ; Pollen",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -52688,6 +54353,9 @@ const ESPECES = [
     proies_items: "Graines ; Sève",
     predateurs_items: "Oiseaux",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -52771,6 +54439,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Larves d'insectes ; Crevettes ; Poissons",
     predateurs_items: "Grenouilles ; Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -52854,6 +54525,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -52937,6 +54611,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "Rat musqué ; Raton laveur",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53039,6 +54716,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers ; Escargots",
     predateurs_items: "Chouettes ; Hiboux ; Petits carnivores ; Serpents",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -53141,6 +54821,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Vers ; Escargots",
     predateurs_items: "Chouettes ; Hiboux ; Chats domestiques ; Martre",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -53243,6 +54926,9 @@ const ESPECES = [
     proies_items: "Herbes ; Racines ; Trèfles ; Fruits et baies",
     predateurs_items: "Renard ; Belette ; Fouine ; Rapaces ; Serpents ; Héron cendré",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -53345,6 +55031,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères",
     predateurs_items: "Rapaces ; Lérot",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53447,6 +55136,9 @@ const ESPECES = [
     proies_items: "Chenilles ; Papillons ; Mouches ; Araignées",
     predateurs_items: "Chouette effraie ; Lérot ; Genette",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -53549,6 +55241,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -53651,6 +55346,9 @@ const ESPECES = [
     proies_items: "Insectes ; Papillons ; Mouches ; Abeilles et guêpes",
     predateurs_items: "Chouettes",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53753,6 +55451,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -53855,6 +55556,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crevettes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -53957,6 +55661,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -54059,6 +55766,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -54161,6 +55871,9 @@ const ESPECES = [
     proies_items: "Plancton ; Crevettes ; Poissons",
     predateurs_items: "Orque",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -54263,6 +55976,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Poissons",
     predateurs_items: "Orque",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -54365,6 +56081,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Rose",
     couleurs_plumage_absentes: "Brun ; Jaune ; Roux ; Vert ; Bleu",
     genre_nom: "masculin",
+    photo_2: "Images/flamant_rose_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:The_juvenile_greater_flamingo.jpg",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -54467,6 +56186,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -54569,6 +56291,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -54671,6 +56396,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/outarde_canepetiere_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Tetrax_tetrax,_Castuera,_Estremadura,_Spain_1.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -54773,6 +56501,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "masculin",
+    photo_2: "Images/faucon_crecerellette_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Femmina_Falco_Grillaio_5555.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -54875,6 +56606,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -54977,6 +56711,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Noir",
     couleurs_plumage_absentes: "Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -55079,6 +56816,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Brun",
     couleurs_plumage_absentes: "Rouge ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -55181,6 +56921,9 @@ const ESPECES = [
     couleurs_plumage: "Bleu ; Roux",
     couleurs_plumage_absentes: "Jaune ; Rose",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -55283,6 +57026,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Beige",
     couleurs_plumage_absentes: "Rouge ; Vert ; Violet ; Rose",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -55385,6 +57131,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -55487,6 +57236,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/fauvette_melanocephale_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Toutinegra-dos-valados,_fêmea,_Sardinian_Warbler,_female_(52663035468).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -55589,6 +57341,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/traquet_oreillard_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Oenanthe_hispanica,_Fitou,_France_2.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -55691,6 +57446,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Roux",
     couleurs_plumage_absentes: "Jaune ; Vert ; Violet",
     genre_nom: "féminin",
+    photo_2: "Images/remiz_penduline_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Buidelmees_mannetje.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -55793,6 +57551,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc ; Noir ; Gris",
     couleurs_plumage_absentes: "Jaune ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -55882,6 +57643,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -55971,6 +57735,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56060,6 +57827,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Escargots",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56148,6 +57918,9 @@ const ESPECES = [
     proies_items: "Herbes ; Fleurs",
     predateurs_items: "Sangliers ; Renards ; Fouines ; Chiens ; Pies ; Rats",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56236,6 +58009,9 @@ const ESPECES = [
     proies_items: "Plancton",
     predateurs_items: "Grands requins ; Crabes ; Poissons ; Renards ; Chiens",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56324,6 +58100,9 @@ const ESPECES = [
     proies_items: "Coléoptères ; Araignées ; Escargots",
     predateurs_items: "Couleuvres ; Rapaces ; Chats ; Chiens",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56412,6 +58191,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées",
     predateurs_items: "Rapaces ; Serpents",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56500,6 +58282,9 @@ const ESPECES = [
     proies_items: "Fourmis ; Coléoptères ; Sauterelles et criquets ; Araignées",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56588,6 +58373,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Cloportes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56676,6 +58464,9 @@ const ESPECES = [
     proies_items: "Insectes ; Papillons ; Araignées ; Lézards",
     predateurs_items: "Chouette effraie ; Couleuvres ; Chats ; Hérisson ; Belette ; Rats",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56764,6 +58555,9 @@ const ESPECES = [
     proies_items: "Papillons ; Sauterelles et criquets ; Araignées ; Escargots",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56852,6 +58646,9 @@ const ESPECES = [
     proies_items: "Lézards ; Serpents ; Oiseaux ; Campagnols et mulots ; Lapins",
     predateurs_items: "Circaète Jean-le-Blanc ; Rapaces ; Mammifères",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -56940,6 +58737,9 @@ const ESPECES = [
     proies_items: "Sauterelles et criquets ; Lézards ; Oisillons ; Campagnols et mulots ; Musaraignes ; Lapins",
     predateurs_items: "Circaète Jean-le-Blanc ; Couleuvres",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57028,6 +58828,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Limaces",
     predateurs_items: "Couleuvres ; Lézards ; Oiseaux ; Mammifères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57116,6 +58919,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crabes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57204,6 +59010,9 @@ const ESPECES = [
     proies_items: "Vers ; Escargots de mer ; Crevettes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57292,6 +59101,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Algues ; Crustacés",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57380,6 +59192,9 @@ const ESPECES = [
     proies_items: "Plancton ; Crustacés ; Œufs de poissons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57468,6 +59283,9 @@ const ESPECES = [
     proies_items: "Crustacés ; Crevettes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -57556,6 +59374,9 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Crabes ; Poissons ; Charognes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57644,6 +59465,9 @@ const ESPECES = [
     proies_items: "Vers marins ; Calmars et poulpes ; Crustacés ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57732,6 +59556,9 @@ const ESPECES = [
     proies_items: "Algues ; Vers ; Escargots de mer ; Moules et coquillages",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57820,6 +59647,9 @@ const ESPECES = [
     proies_items: "Algues ; Mollusques ; Vers marins ; Crustacés ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57908,6 +59738,9 @@ const ESPECES = [
     proies_items: "Moules et coquillages ; Crustacés",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -57996,6 +59829,9 @@ const ESPECES = [
     proies_items: "Algues ; Insectes ; Larves d'insectes ; Mollusques ; Vers ; Crustacés",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58086,6 +59922,9 @@ const ESPECES = [
     proies_items: "Sève",
     predateurs_items: "Oiseaux ; Chauves-souris ; Guêpes ; Mantes ; Araignées ; Asiles",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58176,6 +60015,9 @@ const ESPECES = [
     proies_items: "Sève",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58266,6 +60108,9 @@ const ESPECES = [
     proies_items: "Mouches ; Sauterelles et criquets ; Araignées",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -58356,6 +60201,9 @@ const ESPECES = [
     proies_items: "Sauterelles et criquets",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58446,6 +60294,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Fruits et baies",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58536,6 +60387,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Fleurs",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58626,6 +60480,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58716,6 +60573,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58806,6 +60666,9 @@ const ESPECES = [
     proies_items: "Feuilles",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -58896,6 +60759,9 @@ const ESPECES = [
     proies_items: "Graines",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -58979,6 +60845,9 @@ const ESPECES = [
     proies_items: "Coléoptères ; Sauterelles et criquets ; Araignées ; Mille-pattes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59062,6 +60931,9 @@ const ESPECES = [
     proies_items: "Cloportes ; Vers",
     predateurs_items: "Oiseaux ; Lézards ; Mammifères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -59145,6 +61017,9 @@ const ESPECES = [
     proies_items: "Sauterelles et criquets ; Abeilles et guêpes ; Cloportes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59228,6 +61103,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "Guêpes chasseuses d'araignées",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -59311,6 +61189,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Escargots ; Lézards",
     predateurs_items: "Lézards des murailles",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59393,6 +61274,9 @@ const ESPECES = [
     proies_items: "Algues ; Escargots de mer ; Moules et coquillages ; Crabes",
     predateurs_items: "Poulpe musqué ; Rat ; Loutre ; Goéland ; Hérons ; Rascasse",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -59475,6 +61359,9 @@ const ESPECES = [
     proies_items: "Algues ; Charognes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59557,6 +61444,9 @@ const ESPECES = [
     proies_items: "Mollusques ; Escargots de mer ; Charognes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59640,6 +61530,9 @@ const ESPECES = [
     proies_items: "Moules et coquillages ; Calmars et poulpes ; Crustacés ; Crabes ; Poissons",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -59723,6 +61616,9 @@ const ESPECES = [
     proies_items: "Moules et coquillages ; Crevettes ; Crabes ; Poissons",
     predateurs_items: "Requins ; Dauphins ; Phoques ; Gros poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59806,6 +61702,9 @@ const ESPECES = [
     proies_items: "Algues ; Plancton",
     predateurs_items: "Poulpes ; Coquillages perceurs ; Étoile de mer épineuse",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59888,6 +61787,9 @@ const ESPECES = [
     proies_items: "Plantes aquatiques ; Algues",
     predateurs_items: "Sars ; Labres ; Araignée de mer ; Étoile de mer ; Langouste",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -59970,6 +61872,9 @@ const ESPECES = [
     proies_items: "Mollusques ; Vers",
     predateurs_items: "Grand triton",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60052,6 +61957,9 @@ const ESPECES = [
     proies_items: "Algues ; Plancton",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60134,6 +62042,9 @@ const ESPECES = [
     proies_items: "Escargots de mer ; Crustacés ; Crevettes ; Poissons",
     predateurs_items: "Limace de mer éolidie ; Poulpes ; Crabes ; Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60216,6 +62127,9 @@ const ESPECES = [
     proies_items: "Crustacés ; Œufs de poissons",
     predateurs_items: "Poissons",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60298,6 +62212,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60400,6 +62317,9 @@ const ESPECES = [
     proies_items: "Herbes ; Fruits et baies ; Insectes ; Moutons ; Charognes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60502,6 +62422,9 @@ const ESPECES = [
     proies_items: "Herbes ; Jeunes pousses ; Fleurs ; Lichens ; Mousses",
     predateurs_items: "Aigle royal ; Renard",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60604,6 +62527,9 @@ const ESPECES = [
     proies_items: "Herbes ; Feuilles",
     predateurs_items: "Aigle royal ; Renard ; Loup ; Ours",
     genre_nom: "masculin",
+    photo_2: "Images/bouquetin_iberique_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Capra_p_vic_female_Laguna.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -60706,6 +62632,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Araignées ; Vers de terre ; Crevettes",
     predateurs_items: "Loutre ; Buse ; Brochet ; Hermine ; Hulotte ; Hérons ; Vison d'Amérique",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -60808,6 +62737,9 @@ const ESPECES = [
     proies_items: "Herbes ; Feuilles",
     predateurs_items: "Petits carnivores forestiers ; Effraie des clochers",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -60910,6 +62842,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Bourgeons ; Fruits et baies ; Graines ; Champignons ; Écorce",
     predateurs_items: "Renard ; Hermine ; Belette ; Crécerelle ; Chouette hulotte",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -61012,6 +62947,9 @@ const ESPECES = [
     proies_items: "Bourgeons ; Fruits et baies ; Graines ; Noisettes",
     predateurs_items: "Petits carnivores ; Rapaces",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -61114,6 +63052,9 @@ const ESPECES = [
     proies_items: "Papillons ; Coléoptères ; Sauterelles et criquets ; Araignées",
     predateurs_items: "Effraie des clochers ; Chouette hulotte",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -61216,6 +63157,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Araignées",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -61318,6 +63262,9 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères ; Araignées",
     predateurs_items: "Chouette hulotte ; Effraie ; Hibou moyen-duc ; Chat domestique",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -61420,6 +63367,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers de terre ; Escargots",
     predateurs_items: "Chouettes ; Hiboux ; Hermine ; Putois",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -61522,6 +63472,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/grand_tetras_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Naarasmetso_(cropped).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: ["territoire"]
   },
   {
@@ -61624,6 +63577,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/pic_a_dos_blanc_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_white-backed_woodpecker_(51094808239).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -61726,6 +63682,9 @@ const ESPECES = [
     couleurs_plumage: "Roux ; Noir",
     couleurs_plumage_absentes: "Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -61828,6 +63787,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: "Images/bondree_apivore_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/304555133",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -61930,6 +63892,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -62032,6 +63997,9 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Roux",
     couleurs_plumage_absentes: "Jaune ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/rougequeue_noir_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Phoenicurus_ochruros_male_in_Aveyron_(5).jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -62134,6 +64102,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/monticole_de_roche_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Rufous-tailed_Rock-thrush_(Monticola_saxitilis)_(52597813726).jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -62236,6 +64207,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -62338,6 +64312,9 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Brun",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -62440,6 +64417,9 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Vert ; Bleu ; Violet",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -62542,6 +64522,9 @@ const ESPECES = [
     couleurs_plumage: "Vert ; Jaune ; Gris",
     couleurs_plumage_absentes: "Rouge ; Roux ; Rose ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/venturon_montagnard_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/194204349",
+    photo_2_sujet: "jeune",
     a_confirmer: []
   },
   {
@@ -62644,6 +64627,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris",
     couleurs_plumage_absentes: "Jaune ; Vert ; Violet",
     genre_nom: "masculin",
+    photo_2: "Images/bouvreuil_pivoine_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Pyrrhula_pyrrhula_female_2.jpg",
+    photo_2_sujet: "femelle",
     a_confirmer: []
   },
   {
@@ -62746,6 +64732,9 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc ; Gris",
     couleurs_plumage_absentes: "Rouge ; Orange ; Violet",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -62848,6 +64837,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: "Images/roitelet_huppe_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Wintergoldhähnchen_(Regulus_regulus)_03.jpg",
+    photo_2_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -62950,6 +64942,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -63039,6 +65034,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Vers ; Crevettes ; Amphibiens",
     predateurs_items: "Truites ; Poissons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63128,6 +65126,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "Truites ; Écrevisse signal",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63216,6 +65217,9 @@ const ESPECES = [
     proies_items: "Fourmis ; Papillons ; Mouches ; Coléoptères ; Araignées",
     predateurs_items: "Vipère aspic",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63304,6 +65308,9 @@ const ESPECES = [
     proies_items: "Tritons et salamandres ; Lézards ; Orvets ; Oiseaux ; Petits oiseaux ; Petits mammifères",
     predateurs_items: "Circaète ; Buse ; Renard ; Loutre ; Genette ; Chat sauvage",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63392,6 +65399,9 @@ const ESPECES = [
     proies_items: "Lézards ; Oisillons ; Petits mammifères",
     predateurs_items: "Serpents ; Oiseaux ; Scorpions",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63480,6 +65490,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63568,6 +65581,9 @@ const ESPECES = [
     proies_items: "Insectes ; Mollusques ; Crustacés ; Poissons ; Grenouilles",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63656,6 +65672,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Autres poissons ; Oiseaux d'eau",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -63744,6 +65763,9 @@ const ESPECES = [
     proies_items: "Insectes ; Larves d'insectes ; Mollusques ; Crustacés",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63834,6 +65856,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -63924,6 +65949,9 @@ const ESPECES = [
     proies_items: "Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -64014,6 +66042,9 @@ const ESPECES = [
     proies_items: "Nectar ; Fourmis",
     predateurs_items: "Fourmis",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -64104,6 +66135,9 @@ const ESPECES = [
     proies_items: "Chenilles ; Limaces ; Escargots",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -64194,6 +66228,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -64284,6 +66321,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -64374,6 +66414,9 @@ const ESPECES = [
     proies_items: "NA",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -64464,6 +66507,9 @@ const ESPECES = [
     proies_items: "Orties ; Insectes ; Sauterelles et criquets",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -64554,6 +66600,9 @@ const ESPECES = [
     proies_items: "Feuilles",
     predateurs_items: "Oiseaux",
     genre_nom: "masculin",
+    photo_2: "Images/grand_paon_de_nuit_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Saturnia_pyri_caterpillar.jpg",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire"]
   },
   {
@@ -64644,6 +66693,9 @@ const ESPECES = [
     proies_items: "Trèfles ; Nectar",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -64734,6 +66786,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "Araignées ; Guêpes ; Mouches parasites",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -64824,6 +66879,9 @@ const ESPECES = [
     proies_items: "Nectar ; Pollen",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -64914,6 +66972,9 @@ const ESPECES = [
     proies_items: "Insectes ; Chenilles ; Fourmis",
     predateurs_items: "Petites guêpes parasites",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65004,6 +67065,9 @@ const ESPECES = [
     proies_items: "Champignons ; Bouses et crottins",
     predateurs_items: "Chouettes ; Corneilles ; Pies ; Blaireaux ; Sangliers",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65087,6 +67151,9 @@ const ESPECES = [
     proies_items: "Mouches ; Moustiques ; Araignées",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65170,6 +67237,9 @@ const ESPECES = [
     proies_items: "Insectes ; Poissons ; Grenouilles ; Têtards",
     predateurs_items: "Oiseaux",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65253,6 +67323,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Algues ; Débris végétaux",
     predateurs_items: "Lithobies (mille-pattes) ; Hérissons",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65336,6 +67409,9 @@ const ESPECES = [
     proies_items: "Mousses ; Algues",
     predateurs_items: "Poissons ; Sangsues",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65419,6 +67495,9 @@ const ESPECES = [
     proies_items: "Herbes ; Charognes ; Bouses et crottins",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65502,6 +67581,9 @@ const ESPECES = [
     proies_items: "Algues",
     predateurs_items: "Larves de mouches ; Escargots carnivores",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65604,6 +67686,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -65706,6 +67791,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -65808,6 +67896,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -65910,6 +68001,9 @@ const ESPECES = [
     couleurs_plumage: null,
     couleurs_plumage_absentes: null,
     genre_nom: "féminin",
+    photo_2: "Images/fauvette_grisette_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Sylvia_communis_male_ENS_des_Olivettes_20190525.jpg",
+    photo_2_sujet: "mâle",
     a_confirmer: []
   },
   {
@@ -66012,6 +68106,9 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -66102,6 +68199,9 @@ const ESPECES = [
     proies_items: "Herbes ; Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -66192,6 +68292,9 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Sève",
     predateurs_items: "Oiseaux ; Mantes ; Réduves ; Libellules ; Reptiles ; Mammifères",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -66282,6 +68385,9 @@ const ESPECES = [
     proies_items: "Orties ; Nectar",
     predateurs_items: "Oiseaux ; Araignées-crabes ; Punaises ; Mouches parasites",
     genre_nom: "féminin",
+    photo_2: "Images/carte_geographique_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Araschnia_levana_LC0263.jpg",
+    photo_2_sujet: "forme de printemps",
     a_confirmer: []
   },
   {
@@ -66372,6 +68478,9 @@ const ESPECES = [
     proies_items: "Herbes ; Nectar",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -66462,6 +68571,9 @@ const ESPECES = [
     proies_items: "Herbes ; Nectar",
     predateurs_items: "Guêpes parasites",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -66552,6 +68664,9 @@ const ESPECES = [
     proies_items: "Feuilles ; Nectar",
     predateurs_items: "Guêpes parasites",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -66642,6 +68757,9 @@ const ESPECES = [
     proies_items: "Aiguilles de pin",
     predateurs_items: "Guêpes ; Mouches parasites",
     genre_nom: "masculin",
+    photo_2: "Images/sphinx_du_pin_2.jpg",
+    photo_2_source: "https://commons.wikimedia.org/wiki/File:Caterpillar,_Sphinx_pinastri.JPG",
+    photo_2_sujet: "chenille",
     a_confirmer: ["territoire"]
   },
   {
@@ -66732,6 +68850,9 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -66822,6 +68943,9 @@ const ESPECES = [
     proies_items: "Mouches ; Moustiques ; Têtards",
     predateurs_items: "Anax empereur ; Cicindèle champêtre",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -66912,6 +69036,9 @@ const ESPECES = [
     proies_items: "Plancton ; Insectes ; Larves d'insectes ; Crustacés",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -67002,6 +69129,9 @@ const ESPECES = [
     proies_items: "Champignons ; Débris végétaux",
     predateurs_items: "Araignées-loups",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -67092,6 +69222,9 @@ const ESPECES = [
     proies_items: "Orties ; Chenilles ; Pucerons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67182,6 +69315,9 @@ const ESPECES = [
     proies_items: "Herbes",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   },
   {
@@ -67272,6 +69408,9 @@ const ESPECES = [
     proies_items: "Insectes ; Vers ; Escargots",
     predateurs_items: "Oiseaux ; Petits mammifères ; Sangliers",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67362,6 +69501,9 @@ const ESPECES = [
     proies_items: "Bois mort",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67452,6 +69594,9 @@ const ESPECES = [
     proies_items: "Feuilles",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67542,6 +69687,9 @@ const ESPECES = [
     proies_items: "Champignons ; Bouses et crottins",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67632,6 +69780,9 @@ const ESPECES = [
     proies_items: "Écorce",
     predateurs_items: "Pics ; Insectes prédateurs",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67722,6 +69873,9 @@ const ESPECES = [
     proies_items: "Nectar ; Pollen",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67805,6 +69959,9 @@ const ESPECES = [
     proies_items: "Insectes ; Araignées ; Cloportes",
     predateurs_items: "Araignées sauteuses",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67888,6 +70045,9 @@ const ESPECES = [
     proies_items: "Insectes ; Papillons",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67970,6 +70130,9 @@ const ESPECES = [
     proies_items: "Champignons ; Bois mort ; Charognes ; Débris végétaux",
     predateurs_items: "Mille-pattes ; Araignées ; Oiseaux",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -68053,6 +70216,9 @@ const ESPECES = [
     proies_items: "Lichens ; Champignons ; Algues",
     predateurs_items: "NA",
     genre_nom: "féminin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -68136,6 +70302,9 @@ const ESPECES = [
     proies_items: "Champignons ; Algues ; Débris végétaux",
     predateurs_items: "NA",
     genre_nom: "masculin",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     a_confirmer: []
   }
 ];

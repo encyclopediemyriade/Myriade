@@ -685,7 +685,9 @@ function majFilExpedition(x, k) {
   const vue = document.getElementById("vue-rencontre");
   if (!vue) return;
   const bandeAvant = document.getElementById("bande-expedition");
-  if (!x) { if (fil) fil.remove(); if (bandeAvant) bandeAvant.remove(); fermerIntermede(); return; }
+  if (!x) { if (fil) fil.remove(); if (bandeAvant) bandeAvant.remove(); fermerIntermede();
+    if (typeof fermerEcranForme === "function") { fermerEcranForme(); arreterFormeAudio(); }   // étapes R169-R172
+    return; }
   if (!fil) { fil = document.createElement("div"); fil.id = "fil-expedition"; vue.prepend(fil); }
   const couleur = (TERRITOIRES[x.territoire] || {}).couleur || "#1F3A2E";
   const etape = k === 4 ? "Étape 3 · Approfondir" : `Étape ${k} · ${ETAPES[k].titre}`;
@@ -822,6 +824,7 @@ function lancerExpedition(x, k) {
   sauvegarder();
   depuisArcade = false; modeLibre = false;
   if (k === 1) { lancerRencontreExpedition(x); return; }   // étape 288 : une Rencontre physique, une espèce
+  if (k === 2 && typeof planchePrete === "function" && planchePrete(x)) { ouvrirPlancheExp(x); return; }   // étape R171 : « La planche » d'abord
   document.getElementById("bouton-territoire-defi").textContent = "Retour au territoire";
   territoiresDefi = [x.territoire];
   territoiresChoisis = [x.territoire];
@@ -937,6 +940,7 @@ function lancerRencontreExpedition(x) {
 }
 // Étape 316 : la courte révision des espèces déjà connues ailleurs — une photo à reconnaître par espèce
 function lancerRevueExpedition(x) {
+  if (typeof revueGroupeePossible === "function" && revueGroupeePossible(x)) { ouvrirRevueGroupee(x); return; }   // étape R173 : la révision groupée
   const liste = especesARevoirIci(x);
   if (!liste.length) { lancerExpedition(x, etapeEnCours(x) || 2); return; }
   document.getElementById("bouton-territoire-defi").textContent = "Retour au territoire";
@@ -1025,7 +1029,7 @@ function ouvrirIntermede(x, libelleSuite) {
   const choisies = [...nouvelles.slice(-INTERMEDE_PHOTOS), ...anciennes].slice(0, INTERMEDE_PHOTOS);
   for (const e of trouvees) if (!vus.includes(e.nom_courant)) vus.push(e.nom_courant);
   const avecCri = melanger(choisies.filter(e => fichierSon(e) !== "NA"));
-  intermede = { x, suite: libelleSuite, especes: choisies, cri: avecCri[0] || null, choix: null, reste: choisies.length, erreurs: 0 };
+  intermede = { x, suite: libelleSuite, especes: choisies, cri: (typeof formeEtape1 === "function" && formeEtape1(x) === "cri") ? null : (avecCri[0] || null), choix: null, reste: choisies.length, erreurs: 0 };   // R169 : pas de cri en double dans « Par le cri »
   document.getElementById("fin-session").classList.add("cache");
   let z = document.getElementById("intermede-exp");
   if (!z) { z = document.createElement("div"); z.id = "intermede-exp"; document.getElementById("vue-rencontre").appendChild(z); }
@@ -1279,6 +1283,7 @@ function finExpedition(d) {
     } else if (k === 1 && nouvellesOuvertes.length) setTimeout(() => afficherBulle("Une nouvelle expédition s'ouvre sur votre chemin"), 1400);
   }
   if (gagnees) verifierOuverture();
+  if (typeof proposerLienDuLieu === "function") proposerLienDuLieu(x, k, info, apres);   // étape R172 : « Un lien du lieu » d'abord
   resumeFinTelephone({ x, d, k, gagnees, avantEmp: info.avant, apres });   // étape M15 : sur téléphone, la fin tient sur un écran
 }
 
@@ -1726,7 +1731,7 @@ function cheminDuLieu(t, c, liste, ouvertes, x0) {
         <span class="chemin-num">${etat === "finie" ? "✓" : i + 1}</span>
         <span class="chemin-rond${estRenseigne(v.photo) ? "" : " silh"}">${imgMini(x.photo || photoEsp(v), v.nom_courant)}</span>
         <span class="chemin-info"><b>${echapper(x.titre)}</b>
-          <small>${pastilleMilieu(x.milieu)}<span>${x.liste.length} espèces</span></small></span>
+          <small>${pastilleMilieu(x.milieu)}<span>${x.liste.length} espèces</span></small>${typeof libelleForme === "function" ? `<small class="chemin-formes">${libelleForme(x)}</small>` : ""}</span>
         <span class="chemin-droite">${dessinGain(x)}<span class="exp-tag ${prochaine ? "cours" : ({ finie: "fin", encours: "cours", nouvelle: "nouv", fermee: "ferm" })[etat]}">${prochaine && etat === "nouvelle" ? "À suivre" : lib}</span></span></button>`;   // étape R92 (choix C2) : le bouton reste seulement sur la photo
   }).join("");
   const fini = chapitreFini(t, c), dispo = finaleDisponible(t, c), ouverte = finaleOuverte(t, c), faite = finaleFaite(t, c.nom);
