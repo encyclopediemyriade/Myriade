@@ -715,7 +715,7 @@ function majBandeExpedition(x, fil, k) {
   k = k || Number(b.dataset.etape) || 1;
   b.dataset.etape = k;
   if (k !== 1) {
-    const ici = defi && defi.expedition && enCours ? enCours.espece : null;
+    const ici = defi && defi.expedition && enCours && !enCours.cacherEspece ? enCours.espece : null;   // étape QI3 : « Lequel de ces animaux… ? » ne montre pas la réponse
     const faites = x.liste.filter(e => especeFaite(e, k)).length;
     b.innerHTML = `<span class="be-lib">${k === 4 ? "Approfondir" : "Leur vie"}</span><span class="be-ronds">${x.liste.map(e => {
         const but = butEspece(e, k), part = but ? Math.min(100, Math.round(100 * trouvesEspece(e, k) / but)) : 100;
@@ -1176,6 +1176,8 @@ function choisirQuestionExpedition() {
   // une espèce pas encore reconnue (rare : on a pu la manquer) : sa photo d'abord
   const inconnue = defi.especes.find(e => !estIdentifiee(e) && !dejaPosee(e, IDENTIFICATION));
   if (inconnue) return garder(inconnue, IDENTIFICATION);
+  // Étape QI3 (09/11, choix d'Aubin) : de temps en temps, une question insolite à la place d'une question ordinaire (21_insolites.js)
+  if (typeof choisirInsolite === "function") { const qi = choisirInsolite(k); if (qi) return qi; }
   const cases = [];
   for (const e of defi.especes) {
     if (!estIdentifiee(e)) continue;

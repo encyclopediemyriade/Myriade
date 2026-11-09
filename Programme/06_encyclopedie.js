@@ -522,7 +522,8 @@ function dessinerActionsAPropos(attente) {
          <button class="bouton-apropos" type="button" data-action="prenom">${prenom ? "Modifier" : "Choisir"}</button>`}</div>`;
   // Étape ML7 : sauvegarder / reprendre la partie dans un fichier, installer l'application (19_application.js)
   const blocApplication = typeof htmlReglagesApplication === "function" ? htmlReglagesApplication(attente) : "";
-  bloc.innerHTML = `<h2>Réglages de la partie</h2>` + blocPrenomReglage + blocApplication + actions.map(x => `<div class="apropos-action" data-cle="${x.cle}">
+  const blocEssai = typeof htmlEssaiInsolites === "function" ? htmlEssaiInsolites() : "";   // étape QI3b : essai des questions insolites (21)
+  bloc.innerHTML = `<h2>Réglages de la partie</h2>` + blocPrenomReglage + blocApplication + blocEssai + actions.map(x => `<div class="apropos-action" data-cle="${x.cle}">
       <p>${attente === x.cle ? `<b>${x.question}</b>` : x.texte}</p>
       ${attente === x.cle
         ? `<span class="apropos-boutons"><button class="bouton-apropos confirmer" type="button" data-oui="${x.cle}">Oui, ${x.titre.charAt(0).toLowerCase() + x.titre.slice(1)}</button><button class="bouton-apropos annuler" type="button" data-non="1">Annuler</button></span>`
@@ -530,6 +531,7 @@ function dessinerActionsAPropos(attente) {
     </div>`).join("");
   bloc.querySelectorAll("[data-action]").forEach(bt => bt.onclick = () => dessinerActionsAPropos(bt.dataset.action));
   bloc.querySelectorAll("[data-non]").forEach(bt => bt.onclick = () => dessinerActionsAPropos());
+  if (typeof brancherEssaiInsolites === "function") brancherEssaiInsolites();   // étape QI3b
   const formPrenom = document.getElementById("reglage-prenom");
   if (formPrenom) {
     const champ = formPrenom.querySelector("input"); champ.focus();

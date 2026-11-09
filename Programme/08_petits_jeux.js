@@ -346,6 +346,7 @@ function especesADecouvrir(especes, combien) {
 
 // Que vient-il après une manche ? La fin, une découverte si c'est son tour, ou la manche suivante.
 function suiteDuJeu() {
+  if (defi.essaiInsolites) { suiteEssaiInsolites(); return; }   // étape QI3b : l'essai des questions insolites (21)
   if (defi.faites >= defi.total) { terminerDefi(); return; }
   if (defi.aDecouvrir && defi.aDecouvrir.length && defi.faites >= defi.prochaineDecouverte) { poserDecouverte(); return; }
   if (defi.jeu === "plus") nouveauDuel();
@@ -699,6 +700,7 @@ function repondrePlus(espece, boutonClique) {
 const XP_REVISION = 10;
 function repondreRevision(boutonClique, estJuste, jeNeSaisPas) {
   const { espece, champ, explication } = enCours;
+  if (typeof INSOLITE !== "undefined" && champ === INSOLITE) { repondreInsolite(boutonClique, estJuste); return; }   // étape QI3 (21)
   for (const b of document.querySelectorAll(".reponse")) {
     b.disabled = true;
     if (b.dataset.juste === "oui") b.classList.add("juste");

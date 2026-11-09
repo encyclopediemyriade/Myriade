@@ -209,6 +209,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   zone.innerHTML = "";
   zone.className = "";
   if (champ === SOSIE) { poserSosie(espece); return; }   // étapes 243 et 245 : l'encart « À ne pas confondre » (pas une question)
+  if (typeof INSOLITE !== "undefined" && champ === INSOLITE) { poserInsolite(espece); return; }   // étape QI3 : une question insolite (21)
 
   // Quel format ?
   let format;

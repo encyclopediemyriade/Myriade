@@ -33,7 +33,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <!-- L'apparence du jeu -->
-  <link rel="stylesheet" href="Programme/style.css?v=1.2.1">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
+  <link rel="stylesheet" href="Programme/style.css?v=1.3.1">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
 </head>
 
 <body>
@@ -573,37 +573,39 @@
 
   <!-- ===================== JS ===================== -->
   <!-- Étape ML7 : le numéro de version (à changer à chaque livraison : Outils\changer_version.py) -->
-  <script src="version.js?v=1.2.1"></script>
-  <script src="especes.js?v=1.2.1"></script>
-  <script src="cadrage.js?v=1.2.1"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
-  <script src="territoires.js?v=1.2.1"></script>
-  <script src="credits.js?v=1.2.1"></script>
-  <script src="credits_silhouettes.js?v=1.2.1"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
-  <script src="identite.js?v=1.2.1"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
-  <script src="lieux_identite.js?v=1.2.1"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
-  <script src="lieux_carte.js?v=1.2.1"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
-  <script src="expeditions.js?v=1.2.1"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
-  <script src="familles.js?v=1.2.1"></script>   <!-- étape 127 : cartes d'identité des familles -->
+  <script src="version.js?v=1.3.1"></script>
+  <script src="especes.js?v=1.3.1"></script>
+  <script src="cadrage.js?v=1.3.1"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
+  <script src="territoires.js?v=1.3.1"></script>
+  <script src="credits.js?v=1.3.1"></script>
+  <script src="credits_silhouettes.js?v=1.3.1"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
+  <script src="identite.js?v=1.3.1"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
+  <script src="lieux_identite.js?v=1.3.1"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
+  <script src="lieux_carte.js?v=1.3.1"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
+  <script src="expeditions.js?v=1.3.1"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
+  <script src="familles.js?v=1.3.1"></script>   <!-- étape 127 : cartes d'identité des familles -->
+  <script src="faits_questions.js?v=1.3.1"></script>   <!-- étape QI2 : les questions insolites (Données\faits_questions.xlsx → Outils\gen_faits_questions.py) -->
   <!-- Le programme du jeu, en plusieurs fichiers (dossier « programme »), chargés dans l'ordre -->
-  <script src="Programme/01_questions.js?v=1.2.1"></script>
-  <script src="Programme/02_progression.js?v=1.2.1"></script>
-  <script src="Programme/03_questions_reponses.js?v=1.2.1"></script>
-  <script src="Programme/04_fetes.js?v=1.2.1"></script>
-  <script src="Programme/05_accueil.js?v=1.2.1"></script>
-  <script src="Programme/06_encyclopedie.js?v=1.2.1"></script>
-  <script src="Programme/07_parties.js?v=1.2.1"></script>
-  <script src="Programme/08_petits_jeux.js?v=1.2.1"></script>
-  <script src="Programme/09_rencontre.js?v=1.2.1"></script>
-  <script src="Programme/10_premiere_visite.js?v=1.2.1"></script>
-  <script src="Programme/11_commandes_test.js?v=1.2.1"></script>
-  <script src="Programme/12_profil_badges.js?v=1.2.1"></script>
-  <script src="Programme/15_territoire.js?v=1.2.1"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
-  <script src="Programme/16_arcade.js?v=1.2.1"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
-  <script src="Programme/17_expeditions.js?v=1.2.1"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
-  <script src="Programme/20_formes.js?v=1.2.1"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
-  <script src="Programme/19_application.js?v=1.2.1"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
-  <script src="Programme/13_demarrage.js?v=1.2.1"></script>
-  <script src="Programme/14_clavier_menus.js?v=1.2.1"></script>   <!-- étape 229 : le clavier en fin de partie -->
-  <script src="Programme/18_cadrage.js?v=1.2.1"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
+  <script src="Programme/01_questions.js?v=1.3.1"></script>
+  <script src="Programme/02_progression.js?v=1.3.1"></script>
+  <script src="Programme/03_questions_reponses.js?v=1.3.1"></script>
+  <script src="Programme/04_fetes.js?v=1.3.1"></script>
+  <script src="Programme/05_accueil.js?v=1.3.1"></script>
+  <script src="Programme/06_encyclopedie.js?v=1.3.1"></script>
+  <script src="Programme/07_parties.js?v=1.3.1"></script>
+  <script src="Programme/08_petits_jeux.js?v=1.3.1"></script>
+  <script src="Programme/09_rencontre.js?v=1.3.1"></script>
+  <script src="Programme/10_premiere_visite.js?v=1.3.1"></script>
+  <script src="Programme/11_commandes_test.js?v=1.3.1"></script>
+  <script src="Programme/12_profil_badges.js?v=1.3.1"></script>
+  <script src="Programme/15_territoire.js?v=1.3.1"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
+  <script src="Programme/16_arcade.js?v=1.3.1"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
+  <script src="Programme/17_expeditions.js?v=1.3.1"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
+  <script src="Programme/20_formes.js?v=1.3.1"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
+  <script src="Programme/21_insolites.js?v=1.3.1"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
+  <script src="Programme/19_application.js?v=1.3.1"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
+  <script src="Programme/13_demarrage.js?v=1.3.1"></script>
+  <script src="Programme/14_clavier_menus.js?v=1.3.1"></script>   <!-- étape 229 : le clavier en fin de partie -->
+  <script src="Programme/18_cadrage.js?v=1.3.1"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
 </body>
 </html>

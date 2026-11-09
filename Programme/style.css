@@ -4502,3 +4502,9 @@ button.pastille-carnet:hover { background: #fff; }
 .fe-cri { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 10px 12px; background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; font-size: 15px; }
 /* R169b : pour « Par le cri », un flou plus léger : on devine la silhouette et les couleurs, pas l'espèce */
 #carte-rencontre:has(#reponses.forme-ecoute) .photo.cadre-son img { filter: blur(9px) saturate(.9); transform: scale(1.06); }
+
+/* ===== Étape QI3 (09/11/2026) : les questions insolites (21_insolites.js) ===== */
+/* « L'intrus » : quatre phrases alignées à gauche (plus longues qu'une réponse habituelle), dans la grille habituelle */
+#reponses.reponses-phrases button.reponse { text-align: left; }
+/* Étape QI3b : la fin de l'essai des questions insolites (deux boutons espacés) */
+#reponses.fin-essai { display: flex; flex-wrap: wrap; gap: 10px; }
