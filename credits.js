@@ -4626,12 +4626,6 @@ const CREDITS_SONS = {
   "source": "https://xeno-canto.org/641968",
   "origine": "xeno-canto"
  },
- "herisson_d_europe": {
-  "auteur": "Stanislas Wroza",
-  "licence": "CC BY-NC-SA 4.0",
-  "source": "https://xeno-canto.org/558033",
-  "origine": "xeno-canto"
- },
  "lagopede_alpin": {
   "auteur": "British Library (Wildlife Sounds)",
   "licence": "CC BY-SA 4.0",

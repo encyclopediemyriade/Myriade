@@ -266,7 +266,7 @@ const SONS = {
   blaireau_europeen:      { ext: "mp3", texte: "ses grognements" },
   sanglier:               { ext: "mp3", texte: "ses grognements" },
   loir_gris:              { ext: "mp3", texte: "ses cris" },
-  herisson_d_europe:      { ext: "mp3", texte: "son souffle" },
+  // herisson_d_europe : plus de cri (R181, choix d'Aubin du 09/11 : on n'entendait que son souffle ; xeno-canto n'a que des souffles et des cris de détresse)
   grande_sauterelle_verte:{ ext: "mp3", texte: "sa stridulation" },
   oedipode_stridulante:   { ext: "mp3", texte: "son crépitement en vol" },
   // Massif armoricain (14/10, étape 186) : premier lot de 10 cris, xeno-canto (crédits dans credits_photos_sons.xlsx)
@@ -722,6 +722,7 @@ function direRobe(espece, valeur) {
   const feminin = NOM_ROBE[espece.onglet].startsWith("sa ");
   const ou = barresOuSontElles(espece, valeur);
   if (ou) return `avec des barres ${ou}`;
+  if (valeur === "Bicolore" && espece.onglet === "Mammiferes") return "ventre plus clair que le dos";   // étape R178
   return valeur === "Uni" && feminin ? "unie" : (PHRASE_ROBE[valeur] || minuscule(valeur));
 }
 const ROBES_PROCHES = { Taches: ["Points", "Marbrures"], Points: ["Taches"], Marbrures: ["Taches"],
@@ -1140,7 +1141,7 @@ function piegesSexes(espece) {
 // Pas pour les couleurs, l'aspect de la robe, la peau, le poil, les yeux… (la silhouette est d'une seule couleur).
 // Pas non plus quand elle donnerait la réponse toute faite (« Quelle est sa silhouette ? », forme du corps d'un poisson).
 const SILHOUETTE_UTILE = new Set([
-  "cornes_bois_forme", "pattes_type", "queue_forme", "oreilles_forme",          // mammifères
+  "cornes_bois_forme", "pattes_type", "queue_forme", "oreilles_forme", "oreilles_taille",   // mammifères (R181 : + la taille des oreilles)
   "poil_longueur",                // étape 274 (« Revoir 4 ») : la silhouette situe l'animal, sans donner la longueur du poil
   "bec_forme", "ornement_tete", "pattes_aspect",                                // oiseaux
   "queue_adulte",                                                               // amphibiens
@@ -1181,9 +1182,12 @@ const YEUX_PROCHES = { Jaune: ["Orange", "Blanc"], Orange: ["Jaune", "Rouge"], R
 
 const QUESTIONS_PORTRAIT = [
   // -- Toutes les familles --
+  // Étape R178 (retour d'Aubin du 09/11, en attendant la décision sur l'aspect des mammifères) : un pelage « bicolore »
+  // (ventre plus clair que le dos : lapin, souris grise…) ne se voit pas sur la photo, où l'animal paraît uni.
+  // Pour les mammifères, la question n'est plus posée quand la réponse est « Bicolore », et « Bicolore » n'est plus un piège.
   questionPortrait({ champ: "robe", colonne: "motif_robe", libelle: "Aspect",
-    lire: lireRobe, valeur: valeurRobe, proches: ROBES_PROCHES,
-    pieges: e => piegesPortrait(e, lireRobe(e), lireRobe, ROBES_PROCHES).filter(v => !robesAussiVraies(e).includes(v)),
+    lire: lireRobe, valeur: e => (e.onglet === "Mammiferes" && valeurRobe(e) === "Bicolore") ? "NA" : valeurRobe(e), proches: ROBES_PROCHES,
+    pieges: e => piegesPortrait(e, lireRobe(e), lireRobe, ROBES_PROCHES).filter(v => !robesAussiVraies(e).includes(v) && !(e.onglet === "Mammiferes" && v === "Bicolore")),
     question: e => `Quel est l'aspect de ${NOM_ROBE[e.onglet]} ?`,
     affichageFiche: (e, v) => majuscule(direRobe(e, v)),
     explication: (e, v) => `${majuscule(NOM_ROBE[e.onglet])} : ${direRobe(e, v)}.` }),
@@ -1205,12 +1209,22 @@ const QUESTIONS_PORTRAIT = [
     question: "Comment se terminent ses pattes ?",
     explication: (e, v) => ({ "Sabots": "Ses pattes se terminent par des sabots.", "Griffes": "Ses pattes se terminent par des griffes.",
                               "Pattes palmées": "Ses pattes sont palmées.", "Ailes de peau": "Ses pattes avant sont des ailes de peau." })[v] || `Ses pattes : ${minuscule(v)}.` }),
+  // Étape R178 (retour d'Aubin du 09/11) : la queue et les oreilles se jugent toujours « par rapport à son corps »
+  // (une queue « longue » de souris n'est pas celle d'un écureuil) : la question et l'explication le disent.
   questionPortrait({ champ: "queue_forme", onglets: ["Mammiferes"], libelle: "Queue",
-    question: "Comment est sa queue ?",
-    explication: (e, v) => `Sa queue : ${minuscule(v)}.` }),
+    question: "Comment est sa queue, par rapport à son corps ?",
+    explication: (e, v) => `Sa queue : ${minuscule(v)}${/^(Courte|Longue)$/.test(v) ? ", par rapport à son corps" : ""}.` }),
+  // Étape R181 (retour d'Aubin du 09/11 : « séparer la forme et la taille des oreilles ») : deux questions.
+  // La forme : pointues, rondes, à pinceaux, absentes. La taille, toujours « par rapport à son corps » : petites, moyennes,
+  // grandes — deux tailles voisines ne sont jamais proposées ensemble (« moyennes » n'a donc jamais de piège : pas posée).
   questionPortrait({ champ: "oreilles_forme", onglets: ["Mammiferes"], libelle: "Oreilles",
-    question: "Comment sont ses oreilles ?",
+    question: "Quelle forme ont ses oreilles ?",
     explication: (e, v) => `Ses oreilles : ${minuscule(v)}.` }),
+  questionPortrait({ champ: "oreilles_taille", onglets: ["Mammiferes"], libelle: "Taille des oreilles",
+    proches: { Petites: ["Moyennes"], Moyennes: ["Petites", "Grandes"], Grandes: ["Moyennes"] },
+    question: "Comment sont ses oreilles, par rapport à son corps ?",
+    affichageFiche: (e, v) => `${majuscule(v)}, par rapport à son corps`,
+    explication: (e, v) => `Ses oreilles : ${minuscule(v)}, par rapport à son corps.` }),
 
   // -- Oiseaux --
   questionPortrait({ champ: "bec_forme", onglets: ["Oiseaux"], libelle: "Bec",   // étape 311 : « Fin et droit » fusionné dans « Droit et pointu » (décision de l'utilisateur, 27/10)

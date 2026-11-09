@@ -224,7 +224,7 @@ function champsAvecCri(e) {
 const memoAllure = new Map();
 // Le poids d'un trait : ce qui se voit d'abord sur le terrain (1), puis les détails (0,7), puis les petits détails (0,4)
 const POIDS_TRAITS = {
-  couleur_dominante: 1, robe: 1, bec_forme: 1, ornement_tete: 1, oreilles_forme: 1, queue_forme: 1, cornes_bois_forme: 1,
+  couleur_dominante: 1, robe: 1, bec_forme: 1, ornement_tete: 1, oreilles_forme: 1, oreilles_taille: 1, queue_forme: 1, cornes_bois_forme: 1,
   poil_longueur: 1, silhouette: 1, corps_forme: 1, antennes_forme: 1, ailes_repos: 1, bec_couleur: 1, coquille: 1,
   ventre_couleur: 0.7, pattes_type: 0.7, museau_forme: 0.7, queue_poisson: 0.7, nageoires_dos: 0.7, barbillons: 0.7,
   queue_adulte: 0.7, peau_texture: 0.7, pattes_arriere: 0.7, ailes_visibles: 0.7, pupille_forme: 0.7, ecailles_corps: 0.7,
@@ -232,7 +232,7 @@ const POIDS_TRAITS = {
   difference_male_femelle: 0.4, tete_ecailles: 0.4, ecailles_taille: 0.4, pattes_nombre: 0.4,
 };
 // Deux traits sur la même partie du corps : on n'en garde qu'un à l'étape 1 (le plus parlant)
-const PARTIES_DU_CORPS = { ailes_visibles: "ailes", ailes_repos: "ailes", queue_forme: "queue", queue_adulte: "queue", queue_poisson: "queue",
+const PARTIES_DU_CORPS = { oreilles_forme: "oreilles", oreilles_taille: "oreilles", ailes_visibles: "ailes", ailes_repos: "ailes", queue_forme: "queue", queue_adulte: "queue", queue_poisson: "queue",
   bouche_type: "bouche", bouche_position: "bouche", ecailles_corps: "ecailles", ecailles_taille: "ecailles", tete_ecailles: "ecailles" };
 function lireTrait(q, e) {
   const v = q.lecture ? q.lecture(e) : e[q.champ];
@@ -685,7 +685,7 @@ function majFilExpedition(x, k) {
   const vue = document.getElementById("vue-rencontre");
   if (!vue) return;
   const bandeAvant = document.getElementById("bande-expedition");
-  if (!x) { if (fil) fil.remove(); if (bandeAvant) bandeAvant.remove(); fermerIntermede();
+  if (!x) { if (fil) fil.remove(); if (bandeAvant) bandeAvant.remove(); fermerIntermede(); arreterCri();   // R176 : aucun son ne survit
     if (typeof fermerEcranForme === "function") { fermerEcranForme(); arreterFormeAudio(); }   // étapes R169-R172
     return; }
   if (!fil) { fil = document.createElement("div"); fil.id = "fil-expedition"; vue.prepend(fil); }
@@ -769,9 +769,15 @@ function apresReponseExpedition(espece) {
   }
 }
 // ---- Étape R102 (Revoir 10, choix A4) : « Laquelle des deux ? » — deux espèces de l'expédition, une seule a ce trait ----
+// Étape R178 (retour d'Aubin du 09/11 : rat des moissons et campagnol des champs « ont la même défense ») : la défense et la
+// chasse ne servent plus à « Laquelle des deux ? » ni à la planche. Les fiches n'en gardent qu'une « principale », alors que
+// beaucoup d'espèces se cachent, fuient ou se camouflent tour à tour : l'autre espèce pouvait avoir, en vrai, la même réponse.
+// (Les questions à 4 réponses sur la défense et la chasse restent.)
+const CHAMPS_SANS_DUO = ["defense_principale", "chasse_principale"];
 function piegesDuo(espece, q, bonne) {
   // seulement le mode de vie (une valeur par case) : pas les listes de proies ou de prédateurs, souvent incomplètes
   if (!defi || !defi.expedition || !q || q.format || q.type === "nombre" || !estRenseigne(bonne) || !CHAMPS_MODE_DE_VIE.includes(q.champ)) return [];
+  if (CHAMPS_SANS_DUO.includes(q.champ)) return [];   // étape R178
   // Étape R151 : deux espèces de la même famille (deux oiseaux, deux insectes…), et une paire une seule fois par partie
   const deja = defi.duos || [];
   const ici = defi.especes.filter(e => e !== espece && e.onglet === espece.onglet && estIdentifiee(e) && estRenseigne(e.photo)
@@ -1226,7 +1232,9 @@ function choisirQuestionExpedition() {
     const proches = [...new Set(choix.map(c => c.espece))].sort((a, b) => reste(a) - reste(b)).slice(0, 2);
     choix = varier(choix.filter(c => proches.includes(c.espece)));
     const espece = auHasard([...new Set(choix.map(c => c.espece))]);
-    const c = auHasard(choix.filter(x => x.espece === espece));
+    let duChoix = choix.filter(x => x.espece === espece);
+    if (typeof preferenceSaison === "function") duChoix = preferenceSaison(duChoix);   // étape QI6 : l'hiver d'abord, d'octobre à mars
+    const c = auHasard(duChoix);
     return garder(c.espece, c.champ);
   }
   return null;
@@ -1285,6 +1293,7 @@ function finExpedition(d) {
     } else if (k === 1 && nouvellesOuvertes.length) setTimeout(() => afficherBulle("Une nouvelle expédition s'ouvre sur votre chemin"), 1400);
   }
   if (gagnees) verifierOuverture();
+  if (typeof proposerFinInsolite === "function") proposerFinInsolite(x, k, info, apres);   // étape QI5 : « Reliez » puis « Et si… ? », après le lien du lieu
   if (typeof proposerLienDuLieu === "function") proposerLienDuLieu(x, k, info, apres);   // étape R172 : « Un lien du lieu » d'abord
   resumeFinTelephone({ x, d, k, gagnees, avantEmp: info.avant, apres });   // étape M15 : sur téléphone, la fin tient sur un écran
 }

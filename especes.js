@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V78.xlsx, especes_bassin_aquitain_V27.xlsx, especes_bassin_parisien_V37.xlsx, especes_corse_V31.xlsx, especes_grand_est_V28.xlsx, especes_jura_V28.xlsx, especes_massif_armoricain_V38.xlsx, especes_massif_central_V28.xlsx, especes_mediterranee_V35.xlsx, especes_pyrenees_V32.xlsx, especes_vosges_V26.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V81.xlsx, especes_bassin_aquitain_V29.xlsx, especes_bassin_parisien_V40.xlsx, especes_corse_V34.xlsx, especes_grand_est_V29.xlsx, especes_jura_V31.xlsx, especes_massif_armoricain_V41.xlsx, especes_massif_central_V31.xlsx, especes_mediterranee_V38.xlsx, especes_pyrenees_V35.xlsx, especes_vosges_V27.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -112,6 +112,8 @@ const ESPECES = [
     photo_2: "Images/bouquetin_des_alpes_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:094_Wild_female_Alpine_Ibex_at_Creux_du_Van_Photo_by_Giles_Laurent.jpg",
     photo_2_sujet: "femelle",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -217,6 +219,8 @@ const ESPECES = [
     photo_2: "Images/chamois_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/314101101",
     photo_2_sujet: "jeune",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -322,6 +326,8 @@ const ESPECES = [
     photo_2: "Images/marmotte_des_alpes_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/88503671",
     photo_2_sujet: "jeune",
+    oreilles_taille: "Petites",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -406,7 +412,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Sabots",
     queue_forme: "Courte",
-    oreilles_forme: "Grandes",
+    oreilles_forme: "Pointues",
     pupille_forme: "Rectangle horizontal",
     difference_male_femelle: "Bois chez le mâle",
     nb_dents: 34,
@@ -427,6 +433,8 @@ const ESPECES = [
     photo_2: "Images/cerf_elaphe_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Red_deer_(Cervus_elaphus)_hind.jpg",
     photo_2_sujet: "femelle",
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -511,7 +519,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Sabots",
     queue_forme: "Courte",
-    oreilles_forme: "Grandes",
+    oreilles_forme: "NA",
     pupille_forme: "Rectangle horizontal",
     difference_male_femelle: "Bois chez le mâle",
     nb_dents: 32,
@@ -532,6 +540,8 @@ const ESPECES = [
     photo_2: "Images/chevreuil_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Capreolus_capreolus_SNY01143_(51301994882)_(cropped).jpg",
     photo_2_sujet: "mâle",
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -637,6 +647,8 @@ const ESPECES = [
     photo_2: "Images/hermine_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:035_Stoat_in_winter_coat_in_Parc_naturel_régional_Jura_vaudois_Photo_by_Giles_Laurent.jpg",
     photo_2_sujet: "pelage d'hiver",
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire", "pupille_forme"]
   },
   {
@@ -742,6 +754,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "NA",
     a_confirmer: []
   },
   {
@@ -847,6 +861,8 @@ const ESPECES = [
     photo_2: "Images/renard_roux_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Red_Fox_cub_-_Vulpes_vulpes_-_East_Cumbria1.jpg",
     photo_2_sujet: "jeune",
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -952,6 +968,8 @@ const ESPECES = [
     photo_2: "Images/lynx_boreal_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Lynx_kitten.jpg",
     photo_2_sujet: "jeune",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: ["territoire", "couleur_dominante", "pupille_forme"]
   },
   {
@@ -1057,6 +1075,8 @@ const ESPECES = [
     photo_2: "Images/loup_gris_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:European_Wolf_Cub_and_Stick_(9339320873).jpg",
     photo_2_sujet: "jeune",
+    oreilles_taille: "Moyennes",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1162,6 +1182,8 @@ const ESPECES = [
     photo_2: "Images/blaireau_europeen_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Baby_Badger_on_Colliers_Green_Road_-_geograph.org.uk_-_1952748.jpg",
     photo_2_sujet: "jeune",
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1267,6 +1289,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1372,6 +1396,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1477,6 +1503,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1561,7 +1589,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Griffes",
     queue_forme: "Courte",
-    oreilles_forme: "Longues",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: 28,
@@ -1582,6 +1610,8 @@ const ESPECES = [
     photo_2: "Images/lievre_variable_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/2585372",
     photo_2_sujet: "pelage d'hiver",
+    oreilles_taille: "Grandes",
+    museau_forme: "NA",
     a_confirmer: []
   },
   {
@@ -1687,6 +1717,8 @@ const ESPECES = [
     photo_2: "Images/sanglier_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/201933657",
     photo_2_sujet: "jeune",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1792,6 +1824,8 @@ const ESPECES = [
     photo_2: "Images/mouflon_mediterraneen_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/259369422",
     photo_2_sujet: "femelle",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: ["territoire", "difference_male_femelle"]
   },
   {
@@ -1897,6 +1931,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -2002,6 +2038,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire", "pupille_forme"]
   },
   {
@@ -2107,6 +2145,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: "Arrondi",
     a_confirmer: ["poil_longueur"]
   },
   {
@@ -2212,6 +2252,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -2296,7 +2338,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Griffes",
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: null,
     pupille_forme: "Ronde",
     difference_male_femelle: "Aucune visible",
     nb_dents: 20,
@@ -2317,6 +2359,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "NA",
     a_confirmer: ["territoire", "couleur_dominante"]
   },
   {
@@ -2422,6 +2466,8 @@ const ESPECES = [
     photo_2: "Images/herisson_d_europe_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/81450219",
     photo_2_sujet: "jeune",
+    oreilles_taille: "NA",
+    museau_forme: "Pointu",
     a_confirmer: []
   },
   {
@@ -2527,6 +2573,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["poil_longueur"]
   },
   {
@@ -2611,7 +2659,7 @@ const ESPECES = [
     poil_longueur: "NA",
     pattes_type: "Ailes de peau",
     queue_forme: null,
-    oreilles_forme: "Longues",
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: 36,
@@ -2632,6 +2680,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12276,7 +12326,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Pattes palmées",
     queue_forme: "Courte",
-    oreilles_forme: null,
+    oreilles_forme: "Rondes",
     pupille_forme: null,
     difference_male_femelle: "Mâle plus grand",
     nb_dents: 34,
@@ -12297,6 +12347,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -12402,6 +12454,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12507,6 +12561,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -12612,6 +12668,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -17173,6 +17231,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -17257,7 +17317,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: "Griffes",
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Taille",
     nb_dents: 16,
@@ -17278,6 +17338,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -17383,6 +17445,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -17467,7 +17531,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Griffes",
     queue_forme: "Touffue",
-    oreilles_forme: null,
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: "Taille",
     nb_dents: 30,
@@ -17488,6 +17552,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -17593,6 +17659,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -17677,7 +17745,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Ailes de peau",
     queue_forme: null,
-    oreilles_forme: null,
+    oreilles_forme: "Rondes",
     pupille_forme: null,
     difference_male_femelle: "Femelle plus grande",
     nb_dents: 38,
@@ -17698,6 +17766,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -17803,6 +17873,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "NA",
     a_confirmer: []
   },
   {
@@ -23462,6 +23534,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -23567,6 +23641,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23651,7 +23727,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: null,
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: "Femelle plus grande",
     nb_dents: 38,
@@ -23672,6 +23748,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -23756,7 +23834,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Longues",
+    oreilles_forme: "Rondes",
     pupille_forme: null,
     difference_male_femelle: "Femelle plus grande",
     nb_dents: 36,
@@ -23777,6 +23855,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23861,7 +23941,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Longues",
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: null,
     nb_dents: null,
@@ -23882,6 +23962,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -23966,7 +24048,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: null,
     queue_forme: null,
-    oreilles_forme: "Longues",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: null,
@@ -23987,6 +24069,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "NA",
     a_confirmer: []
   },
   {
@@ -30766,6 +30850,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -33598,7 +33684,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Longues",
+    oreilles_forme: "Pointues",
     pupille_forme: null,
     difference_male_femelle: null,
     nb_dents: 38,
@@ -33619,6 +33705,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -33724,6 +33812,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33808,7 +33898,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Longues",
+    oreilles_forme: "Pointues",
     pupille_forme: null,
     difference_male_femelle: null,
     nb_dents: 38,
@@ -33829,6 +33919,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33934,6 +34026,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -34039,6 +34133,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {
@@ -34144,6 +34240,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Pointu",
     a_confirmer: []
   },
   {
@@ -37851,10 +37949,10 @@ const ESPECES = [
     motif_robe: "NA",
     couleur_dominante: "Brun",
     cornes_bois_forme: "NA",
-    poil_longueur: "Mi-long",
+    poil_longueur: "NA",
     pattes_type: "Griffes",
     queue_forme: "Courte",
-    oreilles_forme: "Longues",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: 28,
@@ -37875,6 +37973,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "NA",
     a_confirmer: []
   },
   {
@@ -37959,7 +38059,7 @@ const ESPECES = [
     poil_longueur: "NA",
     pattes_type: "Griffes",
     queue_forme: "Courte",
-    oreilles_forme: "Longues",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: 28,
@@ -37980,6 +38080,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "NA",
     a_confirmer: []
   },
   {
@@ -38085,6 +38187,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -38169,7 +38273,7 @@ const ESPECES = [
     poil_longueur: "NA",
     pattes_type: "Griffes",
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: "Rondes",
     pupille_forme: "Fente verticale",
     difference_male_femelle: "Aucune visible",
     nb_dents: 40,
@@ -38190,6 +38294,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -38295,6 +38401,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -38400,6 +38508,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {
@@ -38484,7 +38594,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Griffes",
     queue_forme: "Courte",
-    oreilles_forme: "NA",
+    oreilles_forme: "Absentes",
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: 44,
@@ -38505,6 +38615,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "Pointu",
     a_confirmer: []
   },
   {
@@ -38610,6 +38722,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -38715,6 +38829,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -38820,6 +38936,8 @@ const ESPECES = [
     photo_2: "Images/phoque_gris_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Grey_seal_Halichoerus_grypus_young2.jpg",
     photo_2_sujet: "jeune",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -38925,6 +39043,8 @@ const ESPECES = [
     photo_2: "Images/phoque_veau_marin_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:A_common_seal_pup_at_Sandstell_Point_-_geograph.org.uk_-_7855522.jpg",
     photo_2_sujet: "jeune",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -39030,6 +39150,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -39135,6 +39257,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -47585,6 +47709,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -47669,7 +47795,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Ailes de peau",
     queue_forme: null,
-    oreilles_forme: "NA",
+    oreilles_forme: "Rondes",
     pupille_forme: null,
     difference_male_femelle: "Femelle plus grande",
     nb_dents: null,
@@ -47690,6 +47816,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -47795,6 +47923,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47879,7 +48009,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: "Ailes de peau",
     queue_forme: null,
-    oreilles_forme: "Longues",
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: null,
     nb_dents: 38,
@@ -47900,6 +48030,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48005,6 +48137,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48110,6 +48244,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -48215,6 +48351,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -48320,6 +48458,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -48404,7 +48544,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: null,
     queue_forme: null,
-    oreilles_forme: "Grandes",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: null,
@@ -48425,6 +48565,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {
@@ -48530,6 +48672,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {
@@ -48635,6 +48779,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "Pointu",
     a_confirmer: []
   },
   {
@@ -48740,6 +48886,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {
@@ -48845,6 +48993,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {
@@ -48929,7 +49079,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: null,
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Mâle plus grand",
     nb_dents: null,
@@ -48950,6 +49100,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {
@@ -49055,6 +49207,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -54698,7 +54852,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: null,
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: 30,
@@ -54719,6 +54873,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "Pointu",
     a_confirmer: []
   },
   {
@@ -54803,7 +54959,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: null,
     queue_forme: null,
-    oreilles_forme: "Grandes",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: null,
     nb_dents: 28,
@@ -54824,6 +54980,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Moyennes",
+    museau_forme: "Pointu",
     a_confirmer: []
   },
   {
@@ -54929,6 +55087,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: []
   },
   {
@@ -55013,7 +55173,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: "Rondes",
     pupille_forme: null,
     difference_male_femelle: "Aucune visible",
     nb_dents: 32,
@@ -55034,6 +55194,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -55139,6 +55301,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -55244,6 +55408,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -55349,6 +55515,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -55433,7 +55601,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: null,
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: "Mâle plus grand",
     nb_dents: 34,
@@ -55454,6 +55622,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -55559,6 +55729,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -55664,6 +55836,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -55769,6 +55943,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -55874,6 +56050,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -55979,6 +56157,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -62320,6 +62500,8 @@ const ESPECES = [
     photo_2: "Images/ours_brun_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_brown_bear_(Ursus_arctos_arctos)_cub_14_months.jpg",
     photo_2_sujet: "jeune",
+    oreilles_taille: "Petites",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -62404,7 +62586,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Sabots",
     queue_forme: "Courte",
-    oreilles_forme: null,
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: "Mâle plus grand",
     nb_dents: 32,
@@ -62425,6 +62607,8 @@ const ESPECES = [
     photo_2: "Images/isard_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/393437724",
     photo_2_sujet: "jeune",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -62530,6 +62714,8 @@ const ESPECES = [
     photo_2: "Images/bouquetin_iberique_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Capra_p_vic_female_Laguna.jpg",
     photo_2_sujet: "femelle",
+    oreilles_taille: "NA",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -62635,6 +62821,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "NA",
+    museau_forme: "En trompe",
     a_confirmer: []
   },
   {
@@ -62740,6 +62928,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -62845,6 +63035,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Arrondi",
     a_confirmer: ["territoire"]
   },
   {
@@ -62929,7 +63121,7 @@ const ESPECES = [
     poil_longueur: null,
     pattes_type: null,
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: null,
     pupille_forme: null,
     difference_male_femelle: null,
     nb_dents: 16,
@@ -62950,6 +63142,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -63034,7 +63228,7 @@ const ESPECES = [
     poil_longueur: "Court",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Longues",
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: "Femelle plus grande",
     nb_dents: 38,
@@ -63055,6 +63249,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -63139,7 +63335,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Grandes",
+    oreilles_forme: "NA",
     pupille_forme: null,
     difference_male_femelle: "Femelle plus grande",
     nb_dents: 34,
@@ -63160,6 +63356,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -63244,7 +63442,7 @@ const ESPECES = [
     poil_longueur: "Mi-long",
     pattes_type: "Ailes de peau",
     queue_forme: "Longue",
-    oreilles_forme: "Longues",
+    oreilles_forme: "Rondes",
     pupille_forme: null,
     difference_male_femelle: "Femelle plus grande",
     nb_dents: 36,
@@ -63265,6 +63463,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Grandes",
+    museau_forme: null,
     a_confirmer: []
   },
   {
@@ -63370,6 +63570,8 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    oreilles_taille: "Petites",
+    museau_forme: "Pointu",
     a_confirmer: ["territoire"]
   },
   {

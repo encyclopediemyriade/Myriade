@@ -118,6 +118,7 @@ function bonusCandidats() {
 // Plus aucun trait possible : pas de bonus, la place prévue est rendue (une seule fois)
 function bonusSansCandidat() {
   if (!session.bonusPrevu || session.bonusFait || bonusCandidats().length) return false;
+  if (typeof insoliteBonus === "function" && insoliteBonus(session.focus)) return false;   // étape QI4 : un fait physique insolite peut servir de bonus
   session.bonusFait = true; session.total -= 1; if (session.postit) dessinerPostit();
   return true;
 }
@@ -172,6 +173,9 @@ function choisirQuestionFocus() {
   //     de préférence un qui n'est pas encore dans la fiche
   if ((!phaseNormale || restants.length === 0) && session.bonusPrevu && !session.bonusFait && !bonusSansCandidat()) {
     session.bonusFait = true;
+    // Étape QI4 (choix d'Aubin du 09/11) : si l'espèce a un fait physique insolite pas encore trouvé, il remplace le bonus (« Vrai ou faux ? »)
+    const fait = typeof insoliteBonus === "function" ? insoliteBonus(espece) : null;
+    if (fait) { session.insoliteEnCours = { espece, type: "vrai_faux", item: fait, bonus: true }; return { espece, champ: INSOLITE, estRevision: false, rejeu: true, bonus: true }; }
     // Étape R150 : jamais un trait déjà posé dans cette Rencontre (avant : la même question revenait une minute après) ;
     // s'il n'en reste aucun, pas de bonus (la place prévue est rendue)
     const presentes = bonusCandidats();
@@ -226,7 +230,7 @@ function poserSosie(espece) {
   document.getElementById("nom").textContent = "À ne pas confondre";
   document.getElementById("compteur-rencontre").textContent = "Pour bien les distinguer";
   document.getElementById("revision").textContent = "";
-  document.getElementById("question").textContent = `${majuscule(nomAvecArticle(espece))} ressemble beaucoup à ${nomAvecArticle(autre)}.`;
+  document.getElementById("question").textContent = `${majuscule(nomAvecArticle(espece))} ressemble beaucoup ${aNomAvecArticle(autre)}.`;
   const zone = document.getElementById("reponses");
   zone.className = "grille-photos deux-photos parallele";
   zone.innerHTML = [espece, autre].map(e => `<div class="choix-photo${e === espece ? " vedette" : ""}">`
@@ -347,13 +351,10 @@ function placerFicheEcran2() {
   const carte = document.getElementById("carte-rencontre"), fiche = document.getElementById("postit-rencontre");
   if (!fiche) return;
   if (!(typeof surTelephone === "function" && surTelephone()) || !carte.classList.contains("avec-postit") || carte.classList.contains("cache")) { fiche.style.marginTop = ""; return; }
-  if (window.scrollY > fiche.getBoundingClientRect().top + window.scrollY - 40) return;   // le joueur lit la fiche : on ne bouge rien
-  fiche.style.marginTop = "0px";
-  const haut = carte.getBoundingClientRect().top + window.scrollY;
-  const debut = fiche.getBoundingClientRect().top + window.scrollY;
-  const rep = document.getElementById("reponses"), basRep = rep.getBoundingClientRect().bottom + window.scrollY;
-  const cible = Math.max(haut + window.innerHeight, window.scrollY + window.innerHeight, basRep + 120);   // sous le bas de l'écran, jamais collée aux réponses
-  fiche.style.marginTop = Math.max(0, Math.round(cible - debut)) + "px";
+  // Étape R177 (retour d'Aubin du 09/11 : « il reste souvent un grand espace vide entre la question et la fiche ») :
+  // la fiche suit directement la question, avec un simple écart ; elle n'est plus poussée sous le bas de l'écran.
+  // La bande « Ce que vous savez d'elle · Voir ↓ » reste tant que la fiche n'est pas à l'écran.
+  fiche.style.marginTop = "";
 }
 function revenirQuestion() {
   const c = document.getElementById("carte-rencontre");
@@ -523,6 +524,8 @@ function nomAvecArticle(espece) {
   const n = espece.nom_courant;
   return articleDe(espece) + n.charAt(0).toLowerCase() + n.slice(1);
 }
+// Étape R176 : « à » + le nom (« au pigeon biset », « à la fouine », « à l'hermine » ; avant : « à le pigeon biset »)
+function aNomAvecArticle(espece) { const t = nomAvecArticle(espece); return /^le /.test(t) ? "au " + t.slice(3) : /^les /.test(t) ? "aux " + t.slice(4) : "à " + t; }
 
 // ==================================================================
 // Étape 310 (27/10/2026, retour de l'utilisateur) : la TAILLE, toujours dite dans la Rencontre — dans la présentation,
@@ -535,8 +538,8 @@ function tailleRencontre(e) {
   const v = q.valeur(e);
   if (typeof v !== "number") return null;
   const f = q.fourchette ? q.fourchette(e) : null, mesure = mesureTaille(e).fiche;
-  if (f && f[0] < f[1]) return { chiffres: `${nombre(f[0])}–${nombre(f[1])}`, texte: `${nombre(f[0])} à ${nombre(f[1])} cm ${mesure}` };
-  return { chiffres: nombre(v), texte: `jusqu'à ${nombre(v)} cm ${mesure}` };
+  if (f && f[0] < f[1]) return { chiffres: `${nombre(f[0])}–${nombre(f[1])}`, texte: `${nombre(f[0])} à ${nombre(f[1])} cm ${mesure}`, mesure };
+  return { chiffres: nombre(v), texte: `jusqu'à ${nombre(v)} cm ${mesure}`, mesure: `au plus, ${mesure}` };
 }
 // Le picto chiffré : les chiffres au-dessus d'une toise (flèche double avec ses deux butées)
 function pictoTaille(t) {
@@ -555,8 +558,8 @@ function poidsRencontre(e) {
   const f = q.fourchette ? q.fourchette(e) : null;
   const enG = (f && f[0] < f[1] ? f[1] : v) < 1;
   const dire = x => enG ? nombre(Math.round(x * 10000) / 10) : nombre(x), unite = enG ? "g" : "kg";
-  if (f && f[0] < f[1]) return { chiffres: `${dire(f[0])}–${dire(f[1])}`, unite, texte: `${dire(f[0])} à ${dire(f[1])} ${unite}` };
-  return { chiffres: dire(v), unite, texte: `jusqu'à ${dire(v)} ${unite}` };
+  if (f && f[0] < f[1]) return { chiffres: `${dire(f[0])}–${dire(f[1])}`, unite, texte: `${dire(f[0])} à ${dire(f[1])} ${unite}`, mesure: "" };
+  return { chiffres: dire(v), unite, texte: `jusqu'à ${dire(v)} ${unite}`, mesure: "au plus" };
 }
 function pictoPoids(p) {
   return `<svg class="toise" viewBox="0 0 120 48" aria-hidden="true">
@@ -564,16 +567,19 @@ function pictoPoids(p) {
     <path d="M51 44H69L66 33H54Z M57 33V30.5A3 3 0 0 1 63 30.5V33" fill="none" stroke="#2b2a26" stroke-width="2" stroke-linejoin="round"/></svg>`;
 }
 // La ligne « Taille » d'une liste de traits (présentation, fiche de fin) — étape R168 : suivie de la ligne « Poids »
+// Étape R177 (retour d'Aubin du 09/11 : « la valeur est écrite deux fois ») : le chiffre n'est plus écrit qu'avec le dessin ;
+// le texte à côté dit seulement ce qui est mesuré (« de long, sans la queue », « du bec au bout de la queue »…).
 function ligneTaille(e, attributs = "") {
   const t = tailleRencontre(e), p = poidsRencontre(e);
-  return (t ? `<li class="trait-taille"${attributs}><span class="picto picto-taille">${pictoTaille(t)}</span><span><small>Taille</small>${majuscule(t.texte)}</span></li>` : "")
-       + (p ? `<li class="trait-taille trait-poids"${attributs}><span class="picto picto-taille">${pictoPoids(p)}</span><span><small>Poids</small>${majuscule(p.texte)}</span></li>` : "");
+  const lib = (nom, m) => m ? `<span><small>${nom}</small>${majuscule(m)}</span>` : `<span class="seul"><small>${nom}</small></span>`;
+  return (t ? `<li class="trait-taille"${attributs} aria-label="Taille : ${echapper(t.texte)}"><span class="picto picto-taille">${pictoTaille(t)}</span>${lib("Taille", t.mesure)}</li>` : "")
+       + (p ? `<li class="trait-taille trait-poids"${attributs} aria-label="Poids : ${echapper(p.texte)}"><span class="picto picto-taille">${pictoPoids(p)}</span>${lib("Poids", p.mesure)}</li>` : "");
 }
 // La photo reconnue (03) : taille et poids côte à côte
 function retourMesures(e) {
   const t = tailleRencontre(e), p = poidsRencontre(e);
-  const bloc = (picto, lib, texte) => `<span class="retour-taille"><span class="picto-taille">${picto}</span><span><small>${lib}</small>${majuscule(texte)}</span></span>`;
-  const l = (t ? bloc(pictoTaille(t), "Taille", t.texte) : "") + (p ? bloc(pictoPoids(p), "Poids", p.texte) : "");
+  const bloc = (picto, lib, m, texte) => `<span class="retour-taille" aria-label="${lib} : ${echapper(texte)}"><span class="picto-taille">${picto}</span><span${m ? "" : ` class="seul"`}><small>${lib}</small>${m ? majuscule(m) : ""}</span></span>`;   // R177
+  const l = (t ? bloc(pictoTaille(t), "Taille", t.mesure, t.texte) : "") + (p ? bloc(pictoPoids(p), "Poids", p.mesure, p.texte) : "");
   return l ? `<span class="retour-mesures">${l}</span>` : "";
 }
 

@@ -417,6 +417,7 @@ function casesRencontre(s) {
 // Fin de session : écran dédié, puis Rejouer / Encyclopédie (étape 8)
 let rencontreDuJour = null;                               // étape 212 : la Rencontre lancée depuis « Espèce du jour »
 function terminerSession() {
+  arreterCri();                                          // étape R176 : l'écran de fin ne garde pas le cri de la dernière question
   const s = session;
   session = null;
   if (rencontreDuJour) {
@@ -1650,7 +1651,8 @@ function noterPastille(type) {
 }
 function dessinPastilles() {
   let h = "";
-  for (let i = 0; i < defi.total; i++) h += `<i class="${defi.pastilles[i] || ""}${i === defi.faites ? " ici" : ""}"></i>`;
+  const p = defi.pastilles || [];                        // étape R176 : une reprise n'a pas de pastilles notées
+  for (let i = 0; i < defi.total; i++) h += `<i class="${p[i] || ""}${i === defi.faites ? " ici" : ""}"></i>`;
   return `<span class="pastilles-jouer">${h}<small>${Math.min(defi.faites + 1, defi.total)} / ${defi.total}</small></span>`;
 }
 
@@ -1671,8 +1673,11 @@ function afficherHud() {
     return;
   }
   // Étape 196 : « Jouer » sans chronomètre — 10 pastilles, ni jauge ni points
-  document.getElementById("hud-defi").classList.toggle("hud-jouer", !!defi.jouer);
-  if (defi.jouer) {
+  // Étape R176 (retour d'Aubin du 09/11, souris grise : « Question 1 / 1 », « 0 pts », un écran d'une autre allure) :
+  // la reprise des questions manquées prend l'allure d'une partie (pastilles, ni jauge ni points).
+  const avecPastilles = !!(defi.jouer || defi.reprise);
+  document.getElementById("hud-defi").classList.toggle("hud-jouer", avecPastilles);
+  if (avecPastilles) {
     const t = document.getElementById("temps-defi"), h = dessinPastilles();
     if (t.dataset.h !== h) { t.innerHTML = h; t.dataset.h = h; }
     document.getElementById("serie-defi").textContent = "";
@@ -1791,6 +1796,7 @@ function rareteDe(espece) {
 
 // Fin du temps : étoiles, record, XP des nouvelles étoiles, puis l'écran de fin
 function terminerDefi() {
+  arreterCri();                                          // étape R176
   arreterDefi();
   setTimeout(presenterFamillesEnAttente, 900);              // étape 127 : une famille découverte pendant le chrono attendait la fin
   if (!defi.reprise) statsDe(defi.carnet ? "carnet" : defi.jeu).parties++;   // étape R167 : « Compléter le carnet » compte à part          // étape 92 : une partie de plus pour ce jeu (pas pour une reprise)
@@ -1908,9 +1914,12 @@ function finDeReprise(d) {
   document.getElementById("choix-longueur").classList.add("cache");
   if (o.ecran === "session") {
     afficherFicheSession(o.s);                           // la fiche de l'espèce, avec ce qui vient d'être rattrapé
-    if (typeof resumeSessionTelephone === "function") resumeSessionTelephone(o.s);   // étape M16 : le résumé suit la reprise
+    // Étape R176 (retour d'Aubin du 09/11, chevêche d'Athéna : « Fait ! » sans bouton pour l'espèce suivante) : l'écran de fin
+    // doit être visible AVANT le résumé du téléphone, qui ne recopie que les boutons visibles (avant : après « Revoir la question
+    // manquée », le bouton « Espèce suivante » était encore caché et le résumé n'avait que « ← Expédition »).
     document.getElementById("fin-defi").classList.add("cache");
     document.getElementById("fin-session").classList.remove("cache");
+    if (typeof resumeSessionTelephone === "function") resumeSessionTelephone(o.s);   // étape M16 : le résumé suit la reprise
   } else {
     document.getElementById("nom-fin-defi").textContent = o.nomFin;
     document.getElementById("bouton-rejouer-defi").onclick = o.rejouer;

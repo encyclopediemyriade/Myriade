@@ -39,7 +39,7 @@ function formeEtape1(x) {
   let prec = null;
   groupeDeLExpedition(x).forEach((y, i) => {
     const ok = { classique: true, cri: y.liste.filter(aUnCri).length >= MIN_ESPECES_FORME,
-                 indices: y.liste.filter(aDesIndices).length >= MIN_ESPECES_FORME };
+                 indices: y.liste.filter(e => aDesIndices(e) && !indicesAmbigus(e, y)).length >= MIN_ESPECES_FORME };   // R179
     const voulu = ["classique", "indices", "cri"][i % 3];   // la 1re expédition d'un lieu reste classique
     const f = ok[voulu] && voulu !== prec ? voulu : ["cri", "indices", "classique"].find(k => ok[k] && k !== prec) || "classique";
     memoFormes.set(y.id, f); prec = f;
@@ -72,7 +72,7 @@ function formeAvantOuverture(espece) {
   if (!x) return false;
   const f = formeEtape1(x);
   if (f === "cri" && aUnCri(espece) && !(sonDemande && !sonActif)) { poserEcoute(espece); return true; }
-  if (f === "indices" && aDesIndices(espece)) {
+  if (f === "indices" && aDesIndices(espece) && !indicesAmbigus(espece, x)) {   // R179 : jamais deux espèces de l'expédition pour les mêmes indices
     const pieges = piegesIndices(espece, x);
     if (pieges.length >= 3) { poserIndices(espece, x, pieges); return true; }
   }
@@ -153,27 +153,61 @@ function indicesDe(e) {
   if (milieu) l.push({ etiq: "Où", texte: majuscule(milieu) });
   if (trace) l.push({ etiq: "Indice de présence", texte: majuscule(trace) });
   if (t) l.push({ etiq: "Taille", texte: majuscule(t.texte) });
-  l.push({ etiq: "Silhouette", image: fichierSilhouette(e) });
-  return l;
+  return l;   // étape R179 : la silhouette n'est plus montrée d'office (c'est le dernier « Un autre indice »)
 }
-function indiceEnPlus(e) {
-  const bec = becDe(e), act = lireCase(e, "activite");
-  if (bec) return { etiq: "Forme du bec", texte: majuscule(bec), bouton: "la forme du bec" };
-  if (act && /^(surtout|à|de jour)/i.test(act)) return { etiq: "Activité", texte: majuscule(act), bouton: "le moment où elle est active" };
-  return null;
+// QI7 : les indices en plus, révélés un par un par « + Un autre indice » (sans dire lequel) :
+// forme du bec (oiseaux), moment d'activité, puis une scène observée sur le terrain (questions insolites) quand elle existe.
+function scenePourIndice(e) {
+  if (typeof QUESTIONS_INSOLITES === "undefined" || !QUESTIONS_INSOLITES.scenes) return null;
+  const c = QUESTIONS_INSOLITES.scenes.find(x => x.type === "qui" && x.espece === e.nom_courant);
+  return c ? { etiq: "Scène observée", texte: c.scene, scene: true } : null;
+}
+// Étape R179 (retour d'Aubin du 09/11 : « un simple Un autre indice, jusqu'à 2 ou 3, toujours sans rien perdre ») :
+// au plus 3 indices en plus — 2 parmi forme du bec / du museau, activité, scène, puis toujours la silhouette en dernier.
+const INDICES_EN_PLUS_MAX = 3;
+// La forme du museau des petits mammifères (colonne museau_forme, liste fermée ; à remplir dans les classeurs) :
+// tant que la colonne est vide, pas d'indice.
+function museauDe(e) {
+  if (e.onglet !== "Mammiferes") return null;
+  const v = lireCase(e, "museau_forme");
+  return v ? { etiq: "Forme du museau", texte: majuscule(v) } : null;
+}
+function indicesEnPlus(e) {
+  const l = [], bec = becDe(e), act = lireCase(e, "activite"), sc = scenePourIndice(e);
+  const museau = typeof museauDe === "function" ? museauDe(e) : null;
+  if (bec) l.push({ etiq: "Forme du bec", texte: majuscule(bec) });
+  if (museau) l.push(museau);
+  if (act && /^(surtout|à|de jour)/i.test(act)) l.push({ etiq: "Activité", texte: majuscule(act) });
+  if (sc) l.push(sc);
+  const sil = fichierSilhouette(e);
+  const autres = l.slice(0, INDICES_EN_PLUS_MAX - (sil ? 1 : 0));
+  return sil ? [...autres, { etiq: "Silhouette", image: sil }] : autres;
 }
 // Les 3 autres photos : d'abord des espèces de l'expédition, puis du lieu, puis du territoire (même famille d'abord).
 // Chacune doit se distinguer de la bonne par un indice MONTRÉ (milieu, taille nettement différente, indice de présence),
 // et ne jamais être un sosie : sinon la question serait injuste.
+// Deux espèces se distinguent par un indice MONTRÉ d'office : milieu, taille nettement différente, indice de présence
+function seDistingueParIndices(e, o) {
+  const milieu = lireCase(e, "milieu_principal"), trace = traceDe(e), taille = tailleNombre(e);
+  const mo = lireCase(o, "milieu_principal"), to = tailleNombre(o), tr = traceDe(o);
+  if (milieu && mo && mo !== milieu) return true;
+  if (taille && to && Math.max(taille, to) / Math.min(taille, to) >= 1.6) return true;
+  if (trace && tr && simplifier(tr) !== simplifier(trace)) return true;
+  return false;
+}
+// Étape R179 (retour d'Aubin du 09/11 : « aucune autre espèce de l'expédition ne doit correspondre aux indices », ex. les deux
+// musaraignes des « Mammifères du jardin ») : si une autre espèce de l'expédition a les mêmes indices (ou est un sosie),
+// la description ne désigne plus une seule espèce : cette espèce-là se découvre de la façon classique.
+// « Mêmes indices » = un sosie (groupe « À ne pas confondre ») qu'aucun indice montré d'office ne sépare (même milieu,
+// taille voisine, même indice de présence) : deux musaraignes, le mulot et la souris… Une taupe et un hérisson, eux,
+// se séparent par la silhouette : pas d'ambiguïté.
+function indicesAmbigus(e, x) {
+  const sosies = sosiesDe(e);
+  return x.liste.some(o => o !== e && sosies.includes(o) && !seDistingueParIndices(e, o));
+}
 function piegesIndices(e, x) {
-  const milieu = lireCase(e, "milieu_principal"), trace = traceDe(e), taille = tailleNombre(e), sosies = sosiesDe(e);
-  const differe = o => {
-    const mo = lireCase(o, "milieu_principal"), to = tailleNombre(o), tr = traceDe(o);
-    if (milieu && mo && mo !== milieu) return true;
-    if (taille && to && Math.max(taille, to) / Math.min(taille, to) >= 1.6) return true;
-    if (trace && tr && simplifier(tr) !== simplifier(trace)) return true;
-    return false;
-  };
+  const sosies = sosiesDe(e);
+  const differe = o => seDistingueParIndices(e, o);
   const ok = o => o !== e && estRenseigne(o.photo) && !sosies.includes(o) && differe(o);
   const lieu = groupeDeLExpedition(x).flatMap(y => y.liste);
   const terr = ESPECES.filter(o => String(o.territoire || "").split(" ; ").includes(x.territoire));
@@ -191,22 +225,24 @@ function htmlIndice(i) {
     ? `<img class="fe-silhouette" src="${i.image}" alt="Silhouette de l'espèce">` : `<span class="fe-texte">${echapper(i.texte)}</span>`}</li>`;
 }
 function poserIndices(espece, x, pieges) {
-  const indices = indicesDe(espece), plus = indiceEnPlus(espece);
+  const indices = indicesDe(espece), enPlus = indicesEnPlus(espece);
   const zone = carteForme(espece, "Indices relevés", "Une espèce de l'expédition, décrite par ce qu'on en observe :", "forme-indices");
   zone.innerHTML = `<ul class="fe-indices" id="fe-indices">${indices.map(htmlIndice).join("")}</ul>
-    ${plus ? `<button type="button" class="fe-plus" id="fe-plus">+ Autre indice : ${echapper(plus.bouton)}</button>` : ""}
+    ${enPlus.length ? `<button type="button" class="fe-plus" id="fe-plus">+ Un autre indice</button>` : ""}
     <button type="button" class="suivant bouton-annonce fe-go" id="fe-go">Identifier l'espèce ▶</button>
-    ${plus ? `<p class="fe-petit">Un indice de plus ne retire rien.</p>` : ""}`;
+    ${enPlus.length ? `<p class="fe-petit">Un indice de plus ne retire rien.</p>` : ""}`;
   const montres = indices.slice();
-  if (plus) document.getElementById("fe-plus").onclick = ev => {
-    document.getElementById("fe-indices").insertAdjacentHTML("beforeend", htmlIndice(plus));
-    montres.push(plus); ev.currentTarget.remove();
+  if (enPlus.length) document.getElementById("fe-plus").onclick = ev => {
+    const i = enPlus.shift();
+    document.getElementById("fe-indices").insertAdjacentHTML("beforeend", htmlIndice(i));
+    montres.push(i);
+    if (!enPlus.length) ev.currentTarget.remove();
   };
   document.getElementById("fe-go").onclick = () => poserChoixIndices(espece, montres, pieges);
 }
 function poserChoixIndices(espece, montres, pieges) {
   const zone = carteForme(espece, "À quelle espèce correspondent ces indices ?", "", "forme-choix");
-  document.getElementById("question").innerHTML = montres.filter(i => i.texte).map(i => `<span class="fe-rappel">${echapper(i.texte)}</span>`).join("");
+  document.getElementById("question").innerHTML = montres.filter(i => i.texte).map(i => `<span class="fe-rappel${i.scene ? " fe-rappel-scene" : ""}">${echapper(i.texte)}</span>`).join("");
   const especes = melanger([espece, ...pieges.slice(0, 3)]);
   zone.innerHTML = `<div class="fe-photos">${especes.map((e, i) => `<button type="button" class="fe-photo" data-i="${i}" aria-label="Photo ${i + 1}">${celluleImage(e, true)}</button>`).join("")}</div>`;
   zone.querySelectorAll(".fe-photo").forEach(b => b.onclick = () => {
@@ -217,14 +253,16 @@ function poserChoixIndices(espece, montres, pieges) {
     if (!juste) b.classList.add("fausse");
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     const nom = typeof nomAvecArticle === "function" ? nomAvecArticle(espece) : espece.nom_courant;
-    const raisons = montres.filter(i => i.texte && i.etiq !== "Où").map(i => minuscule(i.texte));
+    const raisons = montres.filter(i => i.texte && i.etiq !== "Où" && !i.scene).map(i => minuscule(i.texte));
     document.getElementById("retour").textContent = juste
       ? `C'est ${nom}.${raisons.length ? ` ${majuscule(raisons.join(" · "))}.` : ""}`
       : `C'était cette photo-ci : ${nom}.${raisons.length ? ` Les indices : ${raisons.join(" · ")}.` : ""}`;
     document.getElementById("nom").textContent = espece.nom_courant;
     const suite = document.createElement("button");
     suite.type = "button"; suite.className = "suivant bouton-annonce fe-go"; suite.textContent = "La découvrir →";
-    suite.onclick = () => { suite.remove(); enCours = { espece, champ: OUVERTURE, explication: "", q: null, bonne: null }; pasEncoreConnue(); };
+    // Étape R179 (retour d'Aubin du 09/11) : l'ouverture est faite ; la photo (« La reconnaîtriez-vous maintenant ? ») revient
+    // à la FIN de la Rencontre, pas juste après (avant : on devinait l'espèce deux fois de suite).
+    suite.onclick = () => { suite.remove(); if (session) session.ouvertureFaite = true; enCours = { espece, champ: OUVERTURE, explication: "", q: null, bonne: null }; pasEncoreConnue(); };
     document.getElementById("retour").after(suite);
   });
 }
@@ -263,7 +301,7 @@ function phrasesPlanche(x, neuves) {
   for (const e of toutes) {
     if (neuves && (!estIdentifiee(e) || faiteDans(x, e, 2))) continue;
     const possibles = new Set(questionsPossibles(e).map(q => q.champ));
-    for (const c of champsEtape(e, 2).filter(c => CHAMPS_MODE_DE_VIE.includes(c) && (!neuves || nbBonnes(e, c) === 0))) {
+    for (const c of champsEtape(e, 2).filter(c => CHAMPS_MODE_DE_VIE.includes(c) && !CHAMPS_SANS_DUO.includes(c) && (!neuves || nbBonnes(e, c) === 0))) {   // R178 : ni défense ni chasse
       const q = QUESTIONS.find(k => k.champ === c);
       if (!q || q.format || q.type === "nombre" || q.tirer || !possibles.has(c)) continue;
       const bonne = valeurDe(e, q);

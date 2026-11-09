@@ -94,6 +94,7 @@ if (surTelephone() && window.history && history.pushState) {
     history.replaceState({ myriade: "base" }, "");
     history.pushState({ myriade: "garde" }, "");
     window.addEventListener("popstate", () => {
+      if (typeof arreterCri === "function") arreterCri();   // étape R176 : le retour du téléphone coupe le son
       if (!surTelephone()) return;
       if (retourTelephone()) history.pushState({ myriade: "garde" }, "");
       else history.back();                       // depuis l'accueil : on quitte vraiment le jeu

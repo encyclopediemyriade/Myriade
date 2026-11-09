@@ -4261,7 +4261,7 @@ button.pastille-carnet:hover { background: #fff; }
   .vers-fiche .vf-voir { display: inline-flex; align-items: center; gap: 4px; flex: none; padding: 7px 12px; border-radius: 18px;
     background: var(--ocre-texte); color: #fff; font-size: 14px; font-weight: 600; }
   /* la fiche : un écran à elle */
-  .carte-rencontre.avec-postit .postit-rencontre { min-height: 100svh; scroll-margin-top: 8px; }
+  .carte-rencontre.avec-postit .postit-rencontre { min-height: 0; margin-top: 22px; scroll-margin-top: 8px; padding-bottom: 76px; }   /* R177 : plus d'écran vide (avant : 100svh) ; le bas laisse la place de la bande fixe */
   .postit .retour-question { display: inline-flex; align-items: center; justify-content: center; align-self: center; margin: 18px auto 4px; min-height: 44px;
     padding: 0 18px; font: inherit; font-size: 15px; color: var(--texte); background: none; border: 1px solid var(--trait); border-radius: 22px; cursor: pointer; }
   .postit:has(.retour-question) { display: flex; flex-direction: column; }
@@ -4508,3 +4508,24 @@ button.pastille-carnet:hover { background: #fff; }
 #reponses.reponses-phrases button.reponse { text-align: left; }
 /* Étape QI3b : la fin de l'essai des questions insolites (deux boutons espacés) */
 #reponses.fin-essai { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Étape QI7 : la scène observée, indice en plus de « Par les indices » */
+#question .fe-rappel.fe-rappel-scene { display: block; font-style: italic; font-size: 13.5px; line-height: 1.4; margin-right: 0; }
+.fe-indice .fe-texte { line-height: 1.4; }
+
+/* ==================================================================
+   Étape R176-R177 (09/11/2026, retour d'Aubin en jouant) — taille et poids : le chiffre seulement avec le dessin
+   (le texte dit ce qui est mesuré) ; le poids sans précision garde son nom à taille normale.
+   ================================================================== */
+.trait-taille .seul small, .retour-taille .seul small { font-size: inherit; color: var(--texte); letter-spacing: 0; text-transform: none; }
+/* Étape R180 : encyclopédie — plus de « ? ? ? » ; bouton « Seulement mes espèces découvertes » (album du téléphone) */
+.alb-mes-especes { display: none; }
+@media (max-width: 760px) {
+  .alb-mes-especes { display: inline-flex; align-items: center; min-height: 34px; margin: 8px 0 6px; padding: 0 12px; border: 1px solid var(--trait);
+    border-radius: 17px; background: var(--carte); font: inherit; font-size: 13px; color: var(--texte); cursor: pointer; }
+  .alb-mes-especes[aria-pressed="true"] { background: #1F3A2E; border-color: #1F3A2E; color: #FBF8F1; }
+  .alb-vide > .alb-sil { padding: 0; }
+  .alb-rien { grid-column: 1 / -1; color: var(--texte-doux); font-size: 14px; margin: 8px 0; }
+}
+.fiche.verrouillee .photo-silhouette { display: flex; align-items: center; justify-content: center; }
+.fiche.verrouillee .photo-silhouette img { width: 70%; height: 70%; object-fit: contain; opacity: .3; }

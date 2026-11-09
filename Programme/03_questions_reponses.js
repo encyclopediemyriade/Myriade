@@ -150,6 +150,10 @@ function annoncerReprises(tirage) {
 }
 function annoncerBonus(tirage) {
   const espece = session.focus;
+  if (typeof INSOLITE !== "undefined" && tirage.champ === INSOLITE) {   // étape QI4 : le bonus est un fait insolite
+    carteAnnonce(espece, "Question bonus", `Pour finir, un fait étonnant sur ${nomAvecArticle(espece)} : vrai ou faux ?`, "", "Tenter le bonus →", tirage, false);
+    return;
+  }
   carteAnnonce(espece, "Question bonus",
     "Au début, vous avez observé ses traits. Sans la photo, vous en souvenez-vous ?",
     "", "Tenter le bonus →", tirage, true);
@@ -776,6 +780,42 @@ function arreterCri() {
   if (cri) { cri.pause(); cri = null; }
   for (const a of crisDuo) a.pause();                   // étape 173 : les deux cris de la Rencontre
   crisDuo = [];
+  arreterTousLesSons();                                  // étape R176 : et tous les autres sons (intermède, « Par le cri », fiches)
+}
+// ---- Étape R176 (retour d'Aubin du 09/11 : « un cri continue de jouer quand on change de page ; le son s'arrête
+// parfois puis reprend ») ----
+// Chaque lecteur de son créé par le jeu (new Audio) est noté dans SONS_JEU. Deux règles :
+//   1) un seul son à la fois : quand un son démarre, tous les autres s'arrêtent (avant, deux cris pouvaient se chevaucher) ;
+//   2) arreterTousLesSons() coupe tout (lecteurs du jeu et lecteurs des fiches) : appelée à chaque changement d'écran
+//      (arreterCri, montrer, nouvelle question, bandeau d'expédition, retour du téléphone, application mise en arrière-plan).
+const SONS_JEU = new Set();
+(function () {
+  const AudioNatif = window.Audio;
+  if (!AudioNatif || AudioNatif.estSuivi) return;
+  function AudioSuivi(src) {
+    const a = src === undefined ? new AudioNatif() : new AudioNatif(src);
+    SONS_JEU.add(a);
+    a.addEventListener("play", () => unSeulSon(a));
+    return a;
+  }
+  AudioSuivi.prototype = AudioNatif.prototype;
+  AudioSuivi.estSuivi = true;
+  window.Audio = AudioSuivi;
+  // Un son démarre (lecteur du jeu ou lecteur d'une fiche) : les autres se taisent
+  document.addEventListener("play", ev => unSeulSon(ev.target), true);   // les lecteurs des fiches (dans la page)
+  document.addEventListener("visibilitychange", () => { if (document.hidden) arreterTousLesSons(); });
+  window.addEventListener("pagehide", () => arreterTousLesSons());
+})();
+function unSeulSon(lui) {
+  for (const a of SONS_JEU) if (a !== lui && !a.paused) a.pause();
+  document.querySelectorAll("audio").forEach(a => { if (a !== lui && !a.paused) a.pause(); });
+}
+function arreterTousLesSons() {
+  for (const a of SONS_JEU) { try { a.pause(); } catch (e) { /* rien */ } }
+  SONS_JEU.clear();
+  document.querySelectorAll("audio").forEach(a => { if (!a.paused) a.pause(); });
+  document.querySelectorAll(".anneau-ecoute.en-lecture").forEach(b => b.classList.remove("en-lecture"));
+  if (typeof formeAudio !== "undefined" && formeAudio) { formeAudio = null; }
 }
 let crisDuo = [];                                       // étape 173 : les deux enregistrements du « lequel des deux ? »
 
@@ -889,8 +929,11 @@ function poserSonDuo(espece, fichier) {
     crisDuo[i].onended = () => b.classList.remove("en-lecture");
   });
   lesDeux.forEach((e, i) => ajouterBouton(`Le cri ${"AB"[i]}`, e === espece));
-  const lettre = "AB"[lesDeux.indexOf(espece)];
-  enCours.explication = `Son cri était le ${lettre}. L'autre était celui de : ${autre.nom_courant}. ` + enCours.explication;
+  const lettre = "AB"[lesDeux.indexOf(espece)], autreLettre = "AB"[lesDeux.indexOf(autre)];
+  // Étape R176 (retour d'Aubin du 09/11 : le « tiou » flûté du petit-duc semblait être celui de la cisticole) :
+  // la description du cri vient tout de suite après le bon cri, et l'autre espèce est nommée en dernier.
+  const son = SONS[cleEmpreinte(espece)];
+  enCours.explication = `Le cri ${lettre} était bien le sien${son && son.texte ? ` : on entendait ${son.texte}` : ""}. Le cri ${autreLettre} était celui de : ${autre.nom_courant}.`;
 }
 
 // La barre d'espace lance (ou arrête) le cri, pour jouer sans la souris.
@@ -1030,6 +1073,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
   if (defi && defi.decouverte) { repondreDecouverte(boutonClique, estJuste); return; }   // une découverte (étape 73)
   if (defi && defi.jeu === "revision") { repondreRevision(boutonClique, estJuste, jeNeSaisPas); return; }   // étape 79
   if (defi) { repondreDefi(boutonClique, estJuste); return; }
+  if (typeof INSOLITE !== "undefined" && enCours.champ === INSOLITE) { repondreInsoliteRencontre(boutonClique, estJuste); return; }   // étape QI4 (21)
   const { espece, champ, explication } = enCours;
   const nom = espece.nom_courant;
   // Étape 136 : « Presque » = une valeur vraie pour l'animal, mais pas son maximum (questions chiffrées)

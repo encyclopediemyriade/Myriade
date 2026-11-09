@@ -73,16 +73,14 @@ function carteEncyclopedie(espece, details) {
   // sinon, la carte dit combien de caractéristiques sont trouvées, et le survol les liste.
   if (s === "inconnue") {
     if (trouvees.length) details[espece.nom_courant] = `
-      <h3>? ? ?</h3>
       <p class="statut">Pas encore identifiée · ${texteTrouvees}</p>
       ${ligneRarete(espece)}
       ${lignesTrouvees}
       <p class="carac inconnu">À identifier pour ouvrir sa fiche.</p>`;
     return `
       <article class="fiche verrouillee" ${debut}${trouvees.length ? ` data-nom="${espece.nom_courant}"` : ""}>
-        <div class="photo">?${dessinRarete(espece)}</div>
+        <div class="photo photo-silhouette"><img src="${fichierSilhouette(espece)}" alt="" loading="lazy" onerror="this.remove()">${dessinRarete(espece)}</div>
         <div class="contenu">
-          <h2>? ? ?</h2>
           <div class="ludique">${espece.nom_affichage_groupe}</div>
           <div class="scientifique">${trouvees.length ? texteTrouvees : "Pas encore rencontrée"}</div>
         </div>
@@ -277,7 +275,7 @@ function afficherPlanches(grille) {
 //    Une rubrique sans aucune donnée pour l'espèce n'apparaît pas. Pas encore trouvé = « ? ».
 // ==================================================================
 const RUBRIQUES_ESPECE = [
-  { cle: "portrait", nom: "Portrait", champs: ["robe","couleur_dominante","taille_max_cm","poids_max_kg","envergure_max_cm","pattes_type","pattes_aspect","pattes_arriere","queue_forme","queue_adulte","oreilles_forme","cornes_ou_bois","cornes_bois_forme","poil_longueur","bec_forme","bec_couleur","yeux_couleur","doigts_disposition","peau_texture","ventre_couleur","pupille_forme","difference_male_femelle","nb_dents","nombre_pattes","pinces","coquille","famille_animale"] },
+  { cle: "portrait", nom: "Portrait", champs: ["robe","couleur_dominante","taille_max_cm","poids_max_kg","envergure_max_cm","pattes_type","pattes_aspect","pattes_arriere","queue_forme","queue_adulte","oreilles_forme","oreilles_taille","cornes_ou_bois","cornes_bois_forme","poil_longueur","bec_forme","bec_couleur","yeux_couleur","doigts_disposition","peau_texture","ventre_couleur","pupille_forme","difference_male_femelle","nb_dents","nombre_pattes","pinces","coquille","famille_animale"] },
   { cle: "vie", nom: "Mode de vie", champs: ["milieu_principal","niveau_estran","activite","saison_observation","deplacement_saisonnier","regime_alimentaire_type","proies","emplacement_nid","altitude_max_m","vitesse_max_kmh","longevite_max_annees","pelage_hiver","toile","regeneration"] },
   { cle: "famille", nom: "Naissance et famille", champs: ["saison_reproduction","naissance","gestation_jours","incubation_jours","nb_petits_max","nb_oeufs_ordre","vie_larve","metamorphose","nom_petit","nom_femelle","nom_groupe","sexes","soin_des_petits"] },
   { cle: "liens", nom: "Liens et protection", champs: ["plantes_liees","predateurs","defense_principale","danger_homme","statut_conservation"] },
@@ -360,6 +358,7 @@ function blocTerritoires(espece) {
 }
 
 function ouvrirPageEspece(espece) {
+  if (typeof arreterCri === "function") arreterCri();   // étape R176 : une autre fiche, un autre écran : le son s'arrête
   if (!espece) return;
   if (especeOuverte !== espece) ongletEspece = "portrait";
   especeOuverte = espece;
@@ -761,18 +760,25 @@ function sommaireCollection() {
   }
   return html ? `<div class="som-collection">${html}</div>` : `<p class="grille-vide">Aucune espèce ici pour l'instant.</p>`;
 }
+// Étape R180 (retour d'Aubin du 09/11) : plus de « ? ? ? » sous les silhouettes (la silhouette seule suffit) ;
+// un petit bouton « Seulement mes espèces découvertes » cache les cases vides (réglage gardé dans le navigateur).
+let albumMesEspeces = false;
+try { albumMesEspeces = localStorage.getItem("myriade-album-mes-especes") === "oui"; } catch (e) { /* rien */ }
 function albumFamille(cle) {
   const especes = especesDuFiltre().filter(e => e.onglet === cle);
   const vues = especes.filter(estRencontree).length;
-  const cases = especes.map(e => estRencontree(e)
+  const montrees = albumMesEspeces ? especes.filter(estRencontree) : especes;
+  const cases = montrees.map(e => estRencontree(e)
     ? `<button type="button" class="alb-case alb-vue" data-nom="${echapper(e.nom_courant)}">${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}</span></button>`
-    : `<button type="button" class="alb-case alb-vide" data-piste="${echapper(e.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(e, "alb-sil")}<span>? ? ?</span></button>`).join("");
+    : `<button type="button" class="alb-case alb-vide" data-piste="${echapper(e.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(e, "alb-sil")}</button>`).join("")
+    || `<p class="alb-rien">Aucune espèce découverte ici pour l'instant.</p>`;
+  const bouton = `<button type="button" class="alb-mes-especes" aria-pressed="${albumMesEspeces}">${albumMesEspeces ? "✓ " : ""}Seulement mes espèces découvertes</button>`;
   return `<section class="groupe-famille album-famille" style="--couleur-classe:${CLASSES[cle].couleur}">
       <button type="button" class="alb-retour">← Toutes les familles</button>
       <h2 class="titre-famille">${CLASSES[cle].nom}<small>${vues} / ${especes.length}</small></h2>
       <div class="alb-jauge"><i style="width:${especes.length ? Math.round(100 * vues / especes.length) : 0}%"></i></div>
       ${FAMILLES_INFO[cle] ? `<details class="bandeau-famille"${bandeauAlbumOuvert ? " open" : ""}><summary>${FAMILLES_INFO[cle].accroche}</summary>${htmlSignesFamille(cle)}</details>` : ""}
-      <div class="alb-grille">${cases}</div></section>`;
+      ${bouton}<div class="alb-grille">${cases}</div></section>`;
 }
 // Où rencontrer une espèce : les lieux (et l'expédition) qui la contiennent, les lieux ouverts d'abord.
 function pistesEspece(e) {
@@ -833,6 +839,8 @@ function afficherCollectionTelephone(grille) {
   if (retour) retour.onclick = () => { filtreClasse = "Toutes"; afficherEncyclopedie(); window.scrollTo(0, 0); };
   for (const b of grille.querySelectorAll(".alb-vue")) b.onclick = () => ouvrirPageEspece(ESPECES.find(e => e.nom_courant === b.dataset.nom));
   for (const b of grille.querySelectorAll(".alb-vide")) b.onclick = () => ouvrirPiste(ESPECES.find(e => e.nom_courant === b.dataset.piste));
+  const mes = grille.querySelector(".alb-mes-especes");   // étape R180
+  if (mes) mes.onclick = () => { albumMesEspeces = !albumMesEspeces; try { localStorage.setItem("myriade-album-mes-especes", albumMesEspeces ? "oui" : "non"); } catch (e) { /* rien */ } afficherEncyclopedie(); };
   const bandeau = grille.querySelector(".bandeau-famille");
   if (bandeau) bandeau.ontoggle = () => { bandeauAlbumOuvert = bandeau.open; };
   // Étape R161 (08/11, choix d'Aubin : sommaire en cartes + album B) : dans l'album, la bande des familles sert de titre
