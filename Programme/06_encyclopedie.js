@@ -680,7 +680,7 @@ function afficherFiltres() {
   const menu = blocT.querySelector("select");
   for (const t of ["Tous", ...tousLesTerritoires()]) {
     const o = document.createElement("option");
-    o.value = t; o.textContent = t === "Tous" ? "Toute la France" : t;
+    o.value = t; o.textContent = t === "Tous" ? "Tous les territoires" : t;   // étape R182 (demande d'Aubin)
     if (filtreTerritoire === t) o.selected = true;
     menu.appendChild(o);
   }

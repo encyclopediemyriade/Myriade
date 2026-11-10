@@ -270,6 +270,8 @@ function noterPartie() {
   if (!suivi.jours.includes(jour)) suivi.jours.push(jour);
   if (heure < 7) suivi.leveTot = true;
   if (heure >= 23) suivi.nuit = true;
+  suivi.heures = suivi.heures || {};                   // étape R183 : « votre heure » dans le Profil
+  suivi.heures[momentDe(heure)] = (suivi.heures[momentDe(heure)] || 0) + 1;
   verifierBadgesBientot();
 }
 // Un type de question du Carnet joué pour la première fois (et les cris)
@@ -417,7 +419,7 @@ function afficherPageProgression() {
         <div class="pg-grand">${carnet.pctTexte}<small> %</small></div>
         <p style="margin:6px 0 12px">de la nature ${t ? deTerritoire(t) : "de France"} connue</p>
         <div class="pg-carte"><svg id="carte-progression" role="img" aria-label="Carte des territoires"></svg></div>
-        <p class="pg-carte-aide">${t ? `<button class="pg-lien" id="pg-toute-france">← Toute la France</button>` : "Sélectionnez un territoire pour voir sa part."}</p>
+        <p class="pg-carte-aide">${t ? `<button class="pg-lien" id="pg-toute-france">← Tous les territoires</button>` : "Sélectionnez un territoire pour voir sa part."}</p>
       </div>
       <div>
         <div class="pg-chiffres">
@@ -493,12 +495,16 @@ function afficherPageProgression() {
       <details class="pg-encart pg-a-pli"${ongletProfil === "familles" ? " open" : ""}><summary>Vos familles</summary><div class="pg-tuiles" id="tuiles-progression"></div></details>
       <details class="pg-encart pg-a-pli"><summary>Jeux et records</summary>${panneauJeux}</details>
     </div>`;
-  const corpsProfil = telA && ongletProfil !== "badges" ? profilA()
+  // Étape R183 (maquette G) : la vitrine remplace la carte de naturaliste et l'ancien profil A ; familles et records restent repliés en bas
+  const plisBas = `<div class="pg-a pgv-plis"><details class="pg-encart pg-a-pli"${ongletProfil === "familles" ? " open" : ""}><summary>Vos familles</summary><div class="pg-tuiles" id="tuiles-progression"></div></details>
+      <details class="pg-encart pg-a-pli"><summary>Jeux et records</summary>${panneauJeux}</details></div>`;
+  const corpsProfil = telA && ongletProfil !== "badges" ? profilVitrine(rc) + plisBas
     : telA ? `<button type="button" class="pg-lien pg-a-retour" data-onglet-profil="ensemble">← Votre profil</button><div class="pg-panneau">${panneauBadges}</div>`
     : barreOnglets + `<div class="pg-panneau">${panneau}</div>`;
-  document.getElementById("vue-progression").innerHTML = enTeteProfil + corpsProfil
+  document.getElementById("vue-progression").innerHTML = (telA ? "" : enTeteProfil) + corpsProfil
     + `<button class="pg-apropos-mobile" id="pg-apropos" type="button">Réglages et à propos <span aria-hidden="true">›</span></button>`;   // étape M6 (téléphone)
   brancherPrenom();   // étape M6
+  brancherVitrine();  // étape R183
 
   // Les tuiles des familles : anneau, rang, espèces identifiées, médailles d'espèces
   const zone = document.getElementById("tuiles-progression");
@@ -674,4 +680,141 @@ function carteNaturaliste(rc) {
       ${coeur ? `<div class="pg-cn-coeur">Famille de cœur : <b>${CLASSES[coeur.cle].nom.toLowerCase()}</b></div>`
               : `<div class="pg-cn-coeur">${e ? "" : "Votre photo : votre espèce favorite, à choisir sur la page d'une espèce découverte."}</div>`}
     </section>`;
+}
+
+// ==================================================================
+// Étape R183 (10/11/2026, maquette G « La vitrine et vos chiffres », choix d'Aubin) : le nouveau Profil.
+// En tête : l'espèce favorite, sinon la DERNIÈRE ESPÈCE RENCONTRÉE (plus de « ? ») ; puis la vitrine des badges
+// (médaillons avec une photo liée au badge), « Presque à vous », « Vos chiffres » (jamais de pourcentage : séries,
+// parties, photos reconnues du premier coup, expéditions finies ; une case à zéro ne s'affiche pas), « Ce que disent
+// vos chiffres » (territoire de cœur, famille de cœur, votre coriace, votre heure), « Vos contributions » (0 pour
+// l'instant : la fonction viendra), les dernières rencontres, et en bas les familles et les records, repliés.
+// ==================================================================
+const decouverte = e => (progression[e.nom_courant] && progression[e.nom_courant].decouverteLe) || 0;
+function especesRencontrees() {           // les espèces du carnet avec une photo, de la plus récente à la plus ancienne
+  return ESPECES.filter(e => estReconnue(e) && estRenseigne(e.photo)).sort((a, b) => decouverte(b) - decouverte(a));
+}
+function derniereRencontree() { const l = especesRencontrees(); return l.length && decouverte(l[0]) ? l[0] : (l[0] || null); }
+// L'espèce qui a le plus résisté : le plus d'erreurs, toutes questions confondues (suivi.echecs, depuis l'étape 106)
+function especeCoriace() {
+  const parEspece = {};
+  for (const [cle, n] of Object.entries(suivi.echecs || {})) { const nom = cle.split("|")[0]; parEspece[nom] = (parEspece[nom] || 0) + n; }
+  let meilleure = null, max = 1;   // au moins 2 erreurs pour en parler
+  for (const e of ESPECES) if (estReconnue(e) && estRenseigne(e.photo) && (parEspece[e.nom_courant] || 0) > max) { max = parEspece[e.nom_courant]; meilleure = e; }
+  return meilleure ? { e: meilleure, n: max } : null;
+}
+// Le territoire de cœur : celui qui a le plus d'empreintes ; et son lieu le plus joué (le plus d'empreintes d'expédition)
+function territoireDeCoeur() {
+  let t = null, max = 0;
+  for (const x of tousLesTerritoires()) { const n = empreintesTerritoire(x); if (n > max) { max = n; t = x; } }
+  if (!t) return null;
+  let lieu = null, mieux = 0;
+  for (const c of lieuxDe(t)) { const n = expeditionsDe(t).filter(x => x.chapitre === c.nom).reduce((s, x) => s + gainExp(x), 0); if (n > mieux) { mieux = n; lieu = c; } }
+  return { t, n: max, lieu };
+}
+// L'heure de jeu : compteur par moment de la journée (suivi.heures, rempli par noterPartie depuis R183)
+const MOMENTS = [["matin", "le matin"], ["apresmidi", "l'après-midi"], ["soir", "le soir"], ["nuit", "la nuit"]];
+function momentDe(h) { return h >= 5 && h < 12 ? "matin" : h >= 12 && h < 18 ? "apresmidi" : h >= 18 && h < 23 ? "soir" : "nuit"; }
+function votreHeure() {
+  const c = suivi.heures || {}, total = Object.values(c).reduce((s, n) => s + n, 0);
+  if (total < 5) return null;   // trop tôt pour en dire quelque chose
+  const [cle, texte] = MOMENTS.reduce((a, m) => (c[m[0]] || 0) > (c[a[0]] || 0) ? m : a);
+  return { cle, texte };
+}
+// La photo d'un badge : une espèce de VOTRE carnet (ou un lieu joué) liée à ce qu'il récompense ; sinon son dessin
+function photoBadge(b) {
+  const l = especesRencontrees(), par = f => l.find(f) || null;
+  const nommee = nom => par(e => e.nom_courant === nom);
+  const derniere = derniereRencontree();
+  const lieu = () => { const t = territoireActif(), c = t && lieuDernierJoue(t); return c && estRenseigne(c.photo) ? c.photo : null; };
+  const esp = {
+    "carnet": () => favorite() || derniere, "toutes-familles": () => derniere, "specialiste": () => familleDeCoeur() && par(e => e.onglet === familleDeCoeur().cle),
+    "or": () => par(e => niveauTermine(e) === NB_NIVEAUX), "raretes": () => par(e => e.rarete_observation === "Rare"),
+    "proteger": () => par(e => ["Vulnérable", "En danger", "En danger critique"].includes(e.statut_conservation_france)),
+    "oreille-fine": () => par(e => nbBonnes(e, "cri_son") >= 1), "lecteur-traces": () => par(e => nbBonnes(e, "empreinte_nom") >= 1 || nbBonnes(e, "empreinte_choix") >= 1),
+    "oeil-lynx": () => derniere, "tenacite": () => (especeCoriace() || {}).e,
+    "fidele": () => nommee("Merle noir") || derniere, "quatre-saisons": () => nommee("Hérisson d'Europe") || derniere,
+    "leve-tot": () => nommee("Rougegorge familier") || par(e => /jour/i.test(e.activite || "")) || derniere,
+    "oiseau-de-nuit": () => nommee("Effraie des clochers") || par(e => /nuit/i.test(e.activite || "")) || derniere,
+    "duel": () => derniere,
+  }[b.cle];
+  if (esp) { const e = esp(); return e ? photoMini(e.photo) : null; }
+  const p = lieu(); return p ? photoMini(p) : (derniere ? photoMini(derniere.photo) : null);   // badges des expéditions et des lieux
+}
+const COULEURS_PALIER = ["", "bronze", "argent", "or"];
+function medaillonBadge(b, petit) {
+  const palier = palierDe(b), src = photoBadge(b);
+  const metal = b.paliers ? COULEURS_PALIER[palier] || "or" : "or";
+  return `<span class="pgv-med ${metal}${petit ? " petit" : ""}">${src ? `<img src="${src}" alt="" onerror="this.onerror=null;this.src='${src.replace("/mini/", "/")}'">` : `<span class="pgv-ico">${dessinBadge(b)}</span>`}</span>`;
+}
+// Le badge le plus proche : la plus grande part du chemin déjà faite vers son prochain seuil
+function badgePresque() {
+  let meilleur = null;
+  for (const b of tousLesBadges()) {
+    const seuil = prochainSeuil(b); if (seuil == null) continue;
+    const m = b.mesure(), palier = palierDe(b), depart = b.paliers && palier ? b.paliers[palier - 1] : 0;
+    const part = Math.max(0, Math.min(0.99, (m - depart) / Math.max(1, seuil - depart)));
+    if (m > depart && (!meilleur || part > meilleur.part)) meilleur = { b, part, reste: seuil - m, palier: palier + 1 };
+  }
+  return meilleur;
+}
+function profilVitrine(rc) {
+  const fav = favorite(), derniere = derniereRencontree(), portrait = fav || derniere;
+  const t = territoireActif(), rangT = t && typeof rangTerritoire === "function" ? rangTerritoire(t) : null;
+  const p = prenomJoueur();
+  const badges = tousLesBadges(), obtenus = badges.filter(b => palierDe(b) > 0);
+  const recents = (suivi.derniersBadges || []).slice().reverse();
+  obtenus.sort((a, b) => { const ia = recents.indexOf(a.cle), ib = recents.indexOf(b.cle); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+  const presque = badgePresque();
+  // Les chiffres (une case à zéro n'est pas montrée)
+  const chiffres = [
+    [suivi.meilleureSerie || 0, "bonne" + ((suivi.meilleureSerie || 0) > 1 ? "s" : "") + " réponse" + ((suivi.meilleureSerie || 0) > 1 ? "s" : "") + " de suite", "votre plus belle série"],
+    [suivi.parties || 0, "partie" + ((suivi.parties || 0) > 1 ? "s" : "") + " jouée" + ((suivi.parties || 0) > 1 ? "s" : ""), `en ${suivi.jours.length} jour${suivi.jours.length > 1 ? "s" : ""} sur le terrain`],
+    [suivi.coupsDoeil || 0, "photo" + ((suivi.coupsDoeil || 0) > 1 ? "s" : "") + " reconnue" + ((suivi.coupsDoeil || 0) > 1 ? "s" : ""), "du premier coup"],
+    [nbFinies(), "expédition" + (nbFinies() > 1 ? "s" : "") + " finie" + (nbFinies() > 1 ? "s" : ""), "ses deux étapes"],
+  ].filter(c => c[0] > 0);
+  const coeurT = territoireDeCoeur(), coeurF = familleDeCoeur(), coriace = especeCoriace(), heure = votreHeure();
+  const meilleureDe = cle => especesRencontrees().filter(e => e.onglet === cle).sort((a, b) => niveauTermine(b) - niveauTermine(a))[0];
+  const ligneDit = (img, titre, detail, attr = "") => `<li${attr}>${img}<span><b>${titre}</b>${detail ? `<small>${detail}</small>` : ""}</span></li>`;
+  const vignette = src => src ? `<img class="pgv-vign" src="${src}" alt="">` : `<span class="pgv-vign"></span>`;
+  const dits = [
+    coeurT ? ligneDit(vignette(coeurT.lieu && estRenseigne(coeurT.lieu.photo) ? photoMini(coeurT.lieu.photo) : null), `Territoire de cœur · ${echapper(coeurT.t)}`, coeurT.lieu ? `${echapper(coeurT.lieu.nom)}, votre lieu le plus joué` : "") : "",
+    coeurF ? ligneDit(vignette(meilleureDe(coeurF.cle) ? photoMini(meilleureDe(coeurF.cle).photo) : null), `Famille de cœur · ${CLASSES[coeurF.cle].nom.toLowerCase()}`, `${coeurF.n} espèce${coeurF.n > 1 ? "s" : ""} au carnet, plus que toute autre famille`) : "",
+    coriace ? ligneDit(vignette(photoMini(coriace.e.photo)), `Votre coriace · ${echapper(minuscule(coriace.e.nom_courant))}`, `elle vous a résisté ${coriace.n} fois`, ` data-espece="${echapper(coriace.e.nom_courant)}"`) : "",
+    heure ? ligneDit(`<span class="pgv-vign pgv-heure ${heure.cle}" aria-hidden="true"></span>`, `Votre heure · ${heure.texte}`, "") : "",
+  ].filter(Boolean);
+  const rencontres = especesRencontrees().filter(e => decouverte(e)).slice(0, 5);
+  return `<div class="pgv">
+    <section class="pgv-tete">
+      <button type="button" class="pgv-portrait" id="pg-avatar" title="${portrait ? `Ouvrir la page : ${echapper(portrait.nom_courant)}` : "Ouvrir l'encyclopédie"}">${portrait ? `<img src="${photoMini(portrait.photo)}" alt="${echapper(portrait.nom_courant)}">` : `<svg viewBox="0 0 26 26" aria-hidden="true" class="pgv-logo"><circle cx="6" cy="6" r="3.4"/><circle cx="15" cy="4.5" r="2.6"/><circle cx="22" cy="10" r="2.4"/><circle cx="11" cy="13" r="2.2" class="o"/><circle cx="5" cy="19" r="3.4"/><circle cx="15" cy="21" r="3"/></svg>`}</button>
+      <div class="pgv-qui">
+        ${prenomEnEdition ? blocPrenom("pg-cn-prenom") : `<span class="pgv-nom">${p ? echapper(p) : "Naturaliste"}</span>`}
+        <span class="pgv-rang">${rc.nom}${rangT ? ` · ${rangT.nom} ${deTerritoire(t)}` : ""}</span>
+        ${fav ? `<span class="pgv-sous">Espèce favorite : ${echapper(minuscule(fav.nom_courant))}</span>` : derniere ? `<span class="pgv-sous">Dernière rencontre : ${echapper(minuscule(derniere.nom_courant))}</span>` : ""}
+      </div>
+    </section>
+    <section class="pgv-vitrine">
+      <div class="pgv-ligne"><h2>Vos badges</h2><button type="button" class="pgv-lien" data-onglet-profil="badges">${obtenus.length ? `${obtenus.length} sur ${badges.length}` : `Les ${badges.length} badges`} →</button></div>
+      ${obtenus.length ? `<div class="pgv-grille">${obtenus.slice(0, 6).map(b => `<button type="button" class="pgv-badge" data-badge-vitrine="${b.cle}">${medaillonBadge(b)}<span>${nomBadge(b)}</span></button>`).join("")}</div>`
+        : `<p class="pgv-vide">Le premier badge arrive vite : une expédition terminée suffit.</p>`}
+      ${presque ? `<button type="button" class="pgv-presque" data-badge-vitrine="${presque.b.cle}">
+          <span class="pgv-anneau" style="--part:${Math.round(presque.part * 100)}%">${medaillonBadge(presque.b, true)}</span>
+          <span class="pgv-presque-t"><small>Presque à vous</small><b>${nomBadge(presque.b, presque.palier)}</b> · encore ${nombre(presque.reste)}</span>
+          <span class="pgv-voir" aria-hidden="true">Voir</span></button>` : ""}
+    </section>
+    ${chiffres.length ? `<section class="pgv-bloc"><h2>Vos chiffres</h2><div class="pgv-chiffres">${chiffres.map(c => `<div class="pgv-chiffre"><b>${nombre(c[0])}</b><span>${c[1]}<small>${c[2]}</small></span></div>`).join("")}</div></section>` : ""}
+    ${dits.length ? `<section class="pgv-bloc"><div class="pgv-encart"><p class="pgv-etiq">Ce que disent vos chiffres</p><ul class="pgv-dits">${dits.join("")}</ul></div></section>` : ""}
+    <section class="pgv-bloc"><div class="pgv-contrib"><b>0</b><span><strong>Vos contributions</strong><small>Bientôt : proposer une photo, une observation, une correction pour enrichir Myriade.</small></span></div></section>
+    ${rencontres.length ? `<section class="pgv-bloc"><h2>Vos dernières rencontres</h2><div class="pgv-rencontres">${rencontres.map(e => `<button type="button" data-espece="${echapper(e.nom_courant)}" title="${echapper(e.nom_courant)}"><img src="${photoMini(e.photo)}" alt="${echapper(e.nom_courant)}"></button>`).join("")}</div></section>` : ""}
+  </div>`;
+}
+function brancherVitrine() {
+  const vue = document.getElementById("vue-progression");
+  if (!vue) return;
+  vue.querySelectorAll("[data-badge-vitrine]").forEach(b => b.onclick = () => {
+    badgeOuvert = b.dataset.badgeVitrine; ongletProfil = "badges"; filtreBadges = "tous"; afficherPageProgression(); window.scrollTo(0, 0);
+  });
+  vue.querySelectorAll(".pgv [data-espece]").forEach(b => b.onclick = () => { const e = ESPECES.find(x => x.nom_courant === b.dataset.espece); if (e) ouvrirPageEspece(e); });
+  const av = document.getElementById("pg-avatar");
+  if (av) av.onclick = () => { const e = favorite() || derniereRencontree(); if (e) ouvrirPageEspece(e); else montrer("encyclopedie"); };
 }

@@ -453,7 +453,7 @@ function dessinerPostit() {
     + `<p class="sci-postit${nomCache ? " floute" : ""}">${connu ? espece.nom_scientifique || "" : ""}</p><ul>${lignes.join("")}</ul>`
     + `<div class="legende-postit">${trouvees} / ${prevues} trouvée${trouvees > 1 ? "s" : ""}${aRevoirIci ? ` · ${aRevoirIci} à revoir` : ""}${reste ? ` · encore ${reste} à découvrir` : ""}`
     + `<div class="points-postit">${points}</div></div>`
-    + `<button type="button" class="retour-question" onclick="revenirQuestion()">↑ Revenir à la question</button></div>`;
+    + `<button type="button" class="retour-question" onclick="revenirQuestion()">↑ Remonter en haut</button></div>`;
   for (const l of session.postit) l.ecrit = false;              // l'animation d'écriture ne joue qu'une fois
 }
 
@@ -576,10 +576,13 @@ function ligneTaille(e, attributs = "") {
        + (p ? `<li class="trait-taille trait-poids"${attributs} aria-label="Poids : ${echapper(p.texte)}"><span class="picto picto-taille">${pictoPoids(p)}</span>${lib("Poids", p.mesure)}</li>` : "");
 }
 // La photo reconnue (03) : taille et poids côte à côte
+// Étape R182 (10/11, demande d'Aubin : « juste les pictos avec la mesure, l'un à côté de l'autre, on gagne de la place ») :
+// plus de libellé « Taille » / « Poids » ; sous la toise, en petit, ce qui est mesuré (règle « la taille précise toujours
+// ce qui est mesuré ») ; le poids n'a pas de sous-titre.
 function retourMesures(e) {
   const t = tailleRencontre(e), p = poidsRencontre(e);
-  const bloc = (picto, lib, m, texte) => `<span class="retour-taille" aria-label="${lib} : ${echapper(texte)}"><span class="picto-taille">${picto}</span><span${m ? "" : ` class="seul"`}><small>${lib}</small>${m ? majuscule(m) : ""}</span></span>`;   // R177
-  const l = (t ? bloc(pictoTaille(t), "Taille", t.mesure, t.texte) : "") + (p ? bloc(pictoPoids(p), "Poids", p.mesure, p.texte) : "");
+  const bloc = (picto, lib, m, texte) => `<span class="retour-taille compact" role="img" aria-label="${lib} : ${echapper(texte)}" title="${lib} : ${echapper(texte)}"><span class="picto-taille">${picto}</span>${m ? `<small class="rt-mesure">${echapper(m)}</small>` : ""}</span>`;
+  const l = (t ? bloc(pictoTaille(t), "Taille", t.mesure, t.texte) : "") + (p ? bloc(pictoPoids(p), "Poids", "", p.texte) : "");
   return l ? `<span class="retour-mesures">${l}</span>` : "";
 }
 

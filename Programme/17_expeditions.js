@@ -996,9 +996,15 @@ function finRencontreExpedition(s) {
       <button class="ac-bouton" id="exp-fin-ecran-r">Voir l'expédition</button></div>${blocFinLieu(x, gagnees)}`;
   document.getElementById("exp-fin-ecran-r").onclick = () => { session = null; ouvrirExpedition(x); };
   const principal = document.getElementById("bouton-rejouer");
+  if (etapeFinie(x, 1)) {                              // étape R182 (10/11, demande d'Aubin) : une étape finie ramène à l'expédition,
+    principal.textContent = "Voir l'expédition";       // sans proposer l'étape suivante
+    principal.onclick = () => { session = null; ouvrirExpedition(x); };
+    document.getElementById("exp-fin-ecran-r").classList.add("cache");
+  } else {
   principal.textContent = etapeFinie(x, 1) ? "Étape 2 ▶" : suite && suite !== e ? (especeFaite(suite, 1) ? "Revoir les espèces déjà rencontrées ▶" : estIdentifiee(suite) ? `Espèce suivante : ${suite.nom_courant} ▶` : "Espèce suivante ▶")
     : aRattraper(x).length ? `Revoir ${texteARevoir(x)} ▶` : `Reprendre ${e.nom_courant} ▶`;   // étape R132
   principal.onclick = () => { if (!etapeFinie(x, 1) && intermedePret(x)) ouvrirIntermede(x, principal.textContent); else lancerExpedition(x, etapeFinie(x, 1) ? 2 : 1); };   // étape ET1
+  }
   document.getElementById("bouton-fin-accueil").classList.add("cache");
   if (etapeGagnee) {                                   // étape PR1 : la fête pour l'étape ; une simple bulle pour chaque espèce
     feter({ etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
@@ -1267,7 +1273,11 @@ function finExpedition(d) {
       <button class="ac-bouton" id="exp-fin-ecran">Voir l'expédition</button></div>${blocFinLieu(x, gagnees, etapeGagnee && apres >= NB_ETAPES)}`;   // R153
   document.getElementById("exp-fin-ecran").onclick = () => ouvrirExpedition(x);
   const rejouer = document.getElementById("bouton-rejouer-defi");
-  if (k === 4) {                                        // étape 288 : Approfondir
+  if (k === 4 ? approfondie(x) : finie && suite !== k) {   // étape R182 (10/11, demande d'Aubin) : une étape finie ramène à
+    rejouer.textContent = "Voir l'expédition";               // l'expédition, sans proposer l'étape suivante
+    rejouer.onclick = () => ouvrirExpedition(x);
+    document.getElementById("exp-fin-ecran").classList.add("cache");
+  } else if (k === 4) {                                 // étape 288 : Approfondir
     rejouer.textContent = approfondie(x) ? "Rejouer l'expédition" : "Continuer à approfondir";
     rejouer.onclick = () => lancerExpedition(x, approfondie(x) ? NB_ETAPES : 4);
   } else {

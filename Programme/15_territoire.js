@@ -720,6 +720,17 @@ function miniCarteTerritoire(t) {
   return `<svg class="acm-minicarte" viewBox="${CARTE_CADRE}" aria-hidden="true">` + CARTE_TERRITOIRES.map(c =>
     `<path d="${c.contour}" fill="${c.nom === t ? "#FBF8F1" : "rgba(255,255,255,.22)"}" stroke="rgba(0,0,0,.12)" stroke-width="3"/>`).join("") + `</svg>`;
 }
+// Étape R183b (R183d : plus claire, demande d'Aubin) : la France claire pour la carte « Reprendre » sur fond vert : les autres territoires en crème transparent,
+// le territoire à sa couleur avec un contour clair, et un point doré à la vraie place du lieu en cours (LIEUX_CARTE)
+function miniCarteLieu(t, lieu) {
+  if (typeof CARTE_TERRITOIRES === "undefined" || typeof CARTE_CADRE === "undefined") return "";
+  const couleur = (TERRITOIRES[t] || {}).couleur || "#8b3a4a";
+  const pt = lieu && typeof LIEUX_CARTE !== "undefined" && LIEUX_CARTE.points ? LIEUX_CARTE.points[`${t}|${lieu.nom}`] : null;
+  return `<svg viewBox="${CARTE_CADRE}" role="img" aria-label="${echapper(t)} en France">`
+    + CARTE_TERRITOIRES.filter(c => c.nom !== t).map(c => `<path d="${c.contour}" fill="rgba(251,248,241,.74)" stroke="rgba(31,58,46,.28)" stroke-width="4"/>`).join("")
+    + CARTE_TERRITOIRES.filter(c => c.nom === t).map(c => `<path d="${c.contour}" fill="${couleur}" stroke="#FBF8F1" stroke-width="9"/>`).join("")
+    + (pt ? `<circle cx="${pt[0]}" cy="${pt[1]}" r="38" fill="#E9C9A0" stroke="#1F3A2E" stroke-width="10"/>` : "") + `</svg>`;
+}
 // La pastille « remonter d'un niveau » (vers le territoire ou vers le lieu)
 function pastilleNiveau(k, texte, id, couleur) {
   return `<button class="rep-pastille ${k}" id="${id}" type="button"${couleur ? ` style="--couleur-territoire:${couleur}"` : ""} title="Revenir ${k === "territoire" ? "au territoire" : "au lieu"}">`
@@ -739,20 +750,6 @@ function dessinerMaison() {
   const t = territoireActif();
   const p = typeof prenomJoueur === "function" ? prenomJoueur() : "";
   const date = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
-  const rc = infoRangCarnet();
-  const jours = (suivi && suivi.jours || []).slice().sort();
-  const debut = jours.length ? new Date(jours[0] + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" }) : "";
-  const recentes = ESPECES.filter(e => progression[e.nom_courant] && progression[e.nom_courant].decouverteLe && estReconnue(e))
-    .sort((a, b) => progression[b.nom_courant].decouverteLe - progression[a.nom_courant].decouverteLe).slice(0, 6);
-  const reste = rc.suivant ? Math.max(0, rc.suivant.seuil - rc.n) : 0;
-  const carnet = `<section class="mai-carnet">
-      <div class="mai-c-haut"><span>${p ? `Le carnet ${/^[aeiouyàâäéèêëîïôöùûüœ]/i.test(p) ? "d'" : "de "}${echapper(p)}` : "Votre carnet"}</span>${debut ? `<small>depuis le ${debut}</small>` : ""}</div>
-      <div class="mai-c-nombre"><b>${nombre(rc.n)}</b><span>espèce${rc.n > 1 ? "s" : ""} rencontrée${rc.n > 1 ? "s" : ""}<small>${rc.nom}${rc.suivant ? ` · encore ${reste} pour «\u00a0${rc.suivant.nom}\u00a0»` : ""}</small></span></div>
-      <i class="mai-jauge"><b style="width:${Math.round(100 * rc.part)}%"></b></i>
-      ${recentes.length ? `<div class="mai-c-recentes"><small>Vos dernières découvertes</small><div>${recentes.map(e =>
-        `<button type="button" class="mai-rond" data-nom="${echapper(e.nom_courant)}" title="${echapper(e.nom_courant)}"><img src="${photoMini(photoEsp(e))}" alt="${echapper(e.nom_courant)}" loading="lazy" onerror="this.onerror=null;this.src='${photoEsp(e)}'"></button>`).join("")}</div></div>`
-        : `<p class="mai-c-vide">Vos premières découvertes apparaîtront ici.</p>`}
-    </section>`;
   // Étape M23 (07/11, idée d'Aubin : « reprendre le territoire plutôt que le lieu, on passe trop rarement sur la page du territoire ») :
   //   la carte mène à la page du territoire (rang, lieux, récompenses) ; le lieu en cours y est rappelé en petit.
   const x = typeof expeditionAReprendre === "function" ? expeditionAReprendre(t) : null;
@@ -769,19 +766,27 @@ function dessinerMaison() {
       : `${unFini ? "Nouveau lieu" : "Premier lieu"} : ${echapper(lieu.nom)}`;
     commence = commence || unFini;
   }
-  const reprendre = `<button type="button" class="mai-reprendre mai-rep-terr" id="mai-reprendre" style="--couleur-territoire:${couleurT}">
-        <span class="mai-r-carte">${miniCarteTerritoire(t)}</span>
-        <span class="mai-r-texte"><small>${iconeNiveau("territoire")}${commence ? "Reprendre le territoire" : "Votre territoire"}</small><b>${echapper(t)}</b>
-          ${ligneLieu ? `<em>${ligneLieu}</em>` : ""}</span>
-        <span class="mai-r-go" aria-hidden="true">▶</span></button>`;
-  const couleur = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
+  // Étape R183b (10/11, choix d'Aubin : maquette E « la carte et la photo côte à côte », sur fond vert ; la carte de France reste
+  //   pour que le joueur se situe) : à gauche la France (le territoire à sa couleur, un point au lieu en cours), à droite la photo du lieu.
+  const photoLieu = lieu && estRenseigne(lieu.photo) ? lieu.photo : "";
+  const finiesL = lieu ? expeditionsDuChapitre(t, lieu.nom).filter(y => empreintesExp(y) >= NB_ETAPES).length : 0;
+  const totalL = lieu ? expeditionsDuChapitre(t, lieu.nom).length : 0;
+  const reprendre = `<button type="button" class="mai-reprendre mai-rep-e" id="mai-reprendre" style="--couleur-territoire:${couleurT}">
+        <span class="mai-e-haut"><span class="mai-e-carte">${miniCarteLieu(t, lieu)}</span>
+          <span class="mai-e-photo">${photoLieu ? `<img src="${photoMini(photoLieu)}" alt="" onerror="this.onerror=null;this.src='${photoLieu}'">` : ""}</span></span>
+        <span class="mai-e-bas"><span class="mai-e-texte"><small>${commence ? "Reprendre" : "Votre territoire"} · ${echapper(t)}</small>
+          <b>${lieu ? echapper(lieu.nom) : echapper(t)}</b>${lieu ? `<em>${finaleAJouer(t, lieu) ? "La finale vous attend" : finiesL || expeditionsDuChapitre(t, lieu.nom).some(y => expeditionCommencee(y)) ? `${finiesL} expédition${finiesL > 1 ? "s" : ""} sur ${totalL}` : lieuxDe(t).some(c => etatLieu(t, c) === "fini") ? "Nouveau lieu" : "Premier lieu"}</em>` : ""}
+          ${lieu && totalL ? `<i class="mai-e-jauge"><b style="width:${Math.round(100 * finiesL / totalL)}%"></b></i>` : ""}</span>
+          <span class="mai-r-go" aria-hidden="true">▶</span></span></button>`;
+  // Étape R183b (choix d'Aubin) : plus de carnet sur l'accueil (il est dans le Profil et l'Encyclopédie) ; l'espèce du jour
+  //   et les défis du jour remontent juste sous la carte, pour ancrer le jeu dans le quotidien.
   zone.innerHTML = `<div class="mai-page">
       <div class="mai-bonjour"><h1>Bonjour${p ? ` ${echapper(p)}` : ""}</h1><p>${date.charAt(0).toUpperCase() + date.slice(1)}</p></div>
-      ${carnet}${reprendre}
-      <section class="mai-defis" id="mai-defis"></section>
+      ${reprendre}
       <div class="ac-jour" id="mai-jour"></div>
+      <section class="mai-defis" id="mai-defis"></section>
       <div class="mai-liens">
-        <button type="button" class="mai-lien" id="mai-carte">${iconeNiveau("territoire")}<span>Toute la France<b>La carte des territoires</b></span><span aria-hidden="true">→</span></button>
+        <button type="button" class="mai-lien" id="mai-carte">${iconeNiveau("territoire")}<span>Tous les territoires<b>La carte des territoires</b></span><span aria-hidden="true">→</span></button>
       </div></div>`;
   zone.querySelectorAll(".mai-rond").forEach(b => b.onclick = () => { const e = especeParNom(b.dataset.nom); if (e) ouvrirPageEspece(e); });
   document.getElementById("mai-reprendre").onclick = () => { montrer("accueil"); if (typeof dessinerCouverture === "function") dessinerCouverture(); window.scrollTo(0, 0); };   // étape M23 : vers la page du territoire

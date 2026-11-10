@@ -422,7 +422,20 @@ function terminerSession() {
   session = null;
   if (rencontreDuJour) {
     if (!suivi.duJour || suivi.duJour.date !== aujourdhui()) suivi.duJour = { date: aujourdhui(), faites: [] };
-    if (!suivi.duJour.faites.includes(rencontreDuJour)) suivi.duJour.faites.push(rencontreDuJour);
+    if (!suivi.duJour.faites.includes(rencontreDuJour)) {
+      suivi.duJour.faites.push(rencontreDuJour);
+      // Étape R183c : la première Rencontre du jour avec l'espèce du jour rapporte 2 empreintes, dans le territoire actif
+      //   s'il l'abrite, sinon dans le premier territoire ouvert où elle vit (aucun défi ne la compte : pas de double gain)
+      const e = typeof especeParNom === "function" ? especeParNom(rencontreDuJour) : null;
+      const ouverts = typeof territoiresOuverts === "function" ? territoiresOuverts() : [];
+      const ici = e ? territoiresJeu(e) : [], ta = territoireActif();
+      const t = ici.includes(ta) ? ta : ici.find(x => ouverts.includes(x)) || ta;
+      if (t && typeof ajouterEmpreinteBonus === "function" && typeof GAIN_ESPECE_DU_JOUR !== "undefined") {
+        ajouterEmpreinteBonus(t, GAIN_ESPECE_DU_JOUR);
+        setTimeout(() => afficherBulle(`✓ Espèce du jour rencontrée · +${GAIN_ESPECE_DU_JOUR} empreintes`), 900);
+        if (typeof verifierOuverture === "function") setTimeout(verifierOuverture, 1600);
+      }
+    }
     rencontreDuJour = null;
   }
   statsDe("rencontre").parties++;                          // étape 92 : une Rencontre de plus

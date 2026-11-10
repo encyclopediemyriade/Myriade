@@ -4529,3 +4529,91 @@ button.pastille-carnet:hover { background: #fff; }
 }
 .fiche.verrouillee .photo-silhouette { display: flex; align-items: center; justify-content: center; }
 .fiche.verrouillee .photo-silhouette img { width: 70%; height: 70%; object-fit: contain; opacity: .3; }
+
+/* Étape R182 (10/11) : taille et poids après une bonne réponse, côte à côte, le dessin chiffré seul (+ ce qui est mesuré, en petit) */
+.retour-mesures { flex-wrap: nowrap; gap: 8px; }
+.retour-taille.compact { flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 6px 10px; flex: 1 1 0; min-width: 0; max-width: 200px; }
+.retour-taille.compact .picto-taille { width: 92px; height: 38px; }
+.retour-taille.compact .rt-mesure { font-size: 12px; line-height: 1.25; color: var(--texte-doux); text-align: center; }
+
+/* ---------- Étape R183 (10/11) : le Profil « La vitrine et vos chiffres » (maquette G) ---------- */
+.pgv { display: flex; flex-direction: column; gap: 18px; max-width: 640px; margin: 0 auto 14px; }
+.pgv h2 { margin: 0; font-family: Literata, Georgia, serif; font-size: 20px; font-weight: 600; }
+.pgv-tete { display: flex; gap: 14px; align-items: center; }
+.pgv-portrait { width: 76px; height: 76px; flex: none; padding: 0; border-radius: 50%; overflow: hidden; border: 3px solid #e8c9a0; background: var(--verrou); cursor: pointer; }
+.pgv-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pgv-qui { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pgv-nom, .pgv-qui .pg-prenom-nom { font-family: Literata, Georgia, serif; font-weight: 700; font-size: 24px; line-height: 1.15; }
+.pgv-rang { font-size: 14px; }
+.pgv-sous { font-size: 13px; color: var(--texte-doux); }
+.pgv-vitrine { background: var(--territoire); color: var(--carte); border-radius: 16px; padding: 18px 14px 16px; display: flex; flex-direction: column; gap: 16px; }
+.pgv-ligne { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.pgv-lien { font: inherit; font-size: 13px; background: none; border: 0; color: #e8c9a0; cursor: pointer; padding: 8px 0; min-height: 36px; }
+.pgv-grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 8px; }
+.pgv-badge { font: inherit; background: none; border: 0; color: inherit; cursor: pointer; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 7px; text-align: center; }
+.pgv-badge > span:last-child { font-size: 13px; font-weight: 600; line-height: 1.2; }
+.pgv-med { width: 84px; height: 84px; border-radius: 50%; padding: 4px; box-sizing: border-box; display: block; flex: none;
+  background: conic-gradient(#d9b46a, #f3e1b0, #b8893a, #f3e1b0, #d9b46a); }
+.pgv-med.argent { background: conic-gradient(#b9c0c4, #eef1f2, #8f989d, #eef1f2, #b9c0c4); }
+.pgv-med.bronze { background: conic-gradient(#b07a4a, #e9c3a0, #8a5a32, #e9c3a0, #b07a4a); }
+.pgv-med img, .pgv-med .pgv-ico { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--territoire); box-sizing: border-box; object-fit: cover; display: block; }
+.pgv-med .pgv-ico { background: var(--carte); display: flex; align-items: center; justify-content: center; padding: 12px; }
+.pgv-med .pgv-ico svg { width: 100%; height: 100%; }
+.pgv-med.petit { width: 48px; height: 48px; padding: 0; background: none; }
+.pgv-med.petit img { filter: grayscale(1); opacity: .55; }
+.pgv-vide { margin: 0; font-size: 14px; color: #d9e2da; }
+.pgv-presque { font: inherit; color: inherit; background: none; border: 0; border-top: 1px solid rgba(251,248,241,.18); padding: 14px 0 0; display: flex; gap: 12px; align-items: center; text-align: left; cursor: pointer; width: 100%; }
+.pgv-anneau { width: 58px; height: 58px; flex: none; border-radius: 50%; padding: 5px; box-sizing: border-box; display: block;
+  background: conic-gradient(#e8c9a0 0 var(--part), rgba(251,248,241,.15) var(--part) 100%); }
+.pgv-presque-t { flex: 1; font-size: 14px; line-height: 1.35; }
+.pgv-presque-t small { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #e8c9a0; }
+.pgv-voir { color: #e8c9a0; font-size: 13px; font-weight: 600; }
+.pgv-bloc { display: flex; flex-direction: column; gap: 10px; }
+.pgv-chiffres { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.pgv-chiffre, .pgv-encart, .pgv-contrib { background: var(--carte); border: 1px solid var(--trait); border-radius: 12px; padding: 12px; }
+.pgv-chiffre { display: flex; flex-direction: column; gap: 4px; }
+.pgv-chiffre b { font-family: Literata, Georgia, serif; font-size: 30px; line-height: 1; }
+.pgv-chiffre span { font-size: 13px; line-height: 1.35; }
+.pgv-chiffre small { display: block; color: var(--texte-doux); font-size: 13px; }
+.pgv-etiq { margin: 0 0 10px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ocre-texte); }
+.pgv-dits { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pgv-dits li { display: flex; gap: 12px; align-items: center; font-size: 14px; line-height: 1.35; }
+.pgv-dits li[data-espece] { cursor: pointer; }
+.pgv-dits small { display: block; color: var(--texte-doux); font-size: 13px; }
+.pgv-vign { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; flex: none; background: var(--verrou); display: block; }
+.pgv-heure { background: var(--territoire) center / 26px no-repeat; }
+.pgv-heure.matin, .pgv-heure.apresmidi { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cg fill='none' stroke='%23e8c9a0' stroke-width='1.7' stroke-linecap='round'%3E%3Ccircle cx='13' cy='13' r='5'/%3E%3Cpath d='M13 2v3M13 21v3M2 13h3M21 13h3M5 5l2 2M19 19l2 2M5 21l2-2M19 7l2-2'/%3E%3C/g%3E%3C/svg%3E"); }
+.pgv-heure.soir, .pgv-heure.nuit { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath d='M19 4a9 9 0 1 0 4 15 7 7 0 0 1-4-15Z' fill='none' stroke='%23e8c9a0' stroke-width='1.7'/%3E%3C/svg%3E"); }
+.pgv-contrib { display: flex; gap: 14px; align-items: center; border-style: dashed; border-color: #b9ad92; }
+.pgv-contrib b { font-family: Literata, Georgia, serif; font-size: 30px; line-height: 1; color: var(--ocre-texte); flex: none; }
+.pgv-contrib span { font-size: 14px; line-height: 1.35; }
+.pgv-contrib strong { display: block; }
+.pgv-contrib small { display: block; color: var(--texte-doux); font-size: 13px; }
+.pgv-rencontres { display: flex; gap: 8px; }
+.pgv-rencontres button { width: 66px; height: 66px; padding: 0; border: 0; border-radius: 10px; overflow: hidden; cursor: pointer; flex: none; background: var(--verrou); }
+.pgv-rencontres img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pgv-plis { max-width: 640px; margin: 0 auto; }
+.pgv-plis, .pgv-plis > details { box-sizing: border-box; max-width: 640px; width: 100%; margin-left: auto; margin-right: auto; }
+.pgv-logo { width: 46px; height: 46px; margin: 12px; fill: var(--territoire); }
+.pgv-logo .o { fill: var(--ocre); }
+
+/* ---------- Étape R183b (10/11) : accueil du téléphone — la carte « Reprendre » (maquette E sur fond vert), sans carnet ---------- */
+.mai-reprendre.mai-rep-e { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; overflow: hidden; border: 0; border-radius: 14px;
+  background: var(--territoire, #1F3A2E); color: #FBF8F1; text-align: left; cursor: pointer; font: inherit; width: 100%; }
+.mai-e-haut { display: flex; height: 150px; }
+.mai-e-carte { width: 44%; flex: none; padding: 12px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; }
+.mai-e-carte svg { width: 100%; height: 100%; display: block; }
+.mai-e-photo { flex: 1; min-width: 0; background: #2a4a3b; }
+.mai-e-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mai-e-bas { display: flex; align-items: center; gap: 12px; padding: 12px 14px 14px; border-top: 4px solid var(--couleur-territoire, #8b3a4a); }
+.mai-e-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.mai-e-texte small { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #E9C9A0; }
+.mai-e-texte b { font-family: "Literata", Georgia, serif; font-size: 18px; font-weight: 600; line-height: 1.2; color: #FBF8F1; }
+.mai-e-texte em { font-style: normal; font-size: 13px; color: #DCD5C4; }
+.mai-e-jauge { display: block; height: 5px; border-radius: 3px; background: rgba(251,248,241,.22); overflow: hidden; margin-top: 4px; }
+.mai-e-jauge b { display: block; height: 100%; background: #E9C9A0; }
+/* Étape R183c : l'espèce du jour, une seule par jour, « Rencontrée » une fois faite (+2 empreintes) */
+.ac-rencontree { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 10px; background: var(--bon); color: #fff; letter-spacing: .04em; text-transform: none; font-weight: 600; }
+.ac-gain-jour { display: inline-flex; align-items: center; gap: 3px; margin-left: 6px; color: var(--ocre-texte); letter-spacing: 0; text-transform: none; font-weight: 600; }
+.ac-gain-jour svg { width: 13px; height: 13px; fill: currentColor; }
+.ac-jour-fait { margin: 4px 0 8px; font-size: 14px; color: var(--texte-doux); }

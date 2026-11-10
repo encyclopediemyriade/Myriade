@@ -563,13 +563,13 @@ function finirRevueGroupee() {
   sauvegarder();
   majBandeExpedition(x);
   const gagnees = Math.max(0, gainExp(x) - rv.avantGain), n = rv.ratees.size;
-  const suite = !etapeFinie(x, 1) ? "Continuer ▶" : "Étape 2 ▶";
+  const suite = !etapeFinie(x, 1) ? "Continuer ▶" : "Voir l'expédition";   // étape R182 : une étape finie ramène à l'expédition
   z.innerHTML = `<div class="im-carte"><div class="im-tete"><span class="im-lib">Révision</span>
       <h2>${justes.length === rv.especes.length ? "Toutes retrouvées" : `${justes.length} sur ${rv.especes.length} retrouvée${justes.length > 1 ? "s" : ""}`}</h2>
       <p>${n ? `${n === 1 ? "L'espèce confondue reviendra" : `Les ${n} espèces confondues reviendront`}, rien n'est perdu.` : "Elles comptent pour cette expédition."}${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}</p></div>
     <div class="im-photos petit">${rv.especes.map(e => `<span class="im-photo${rv.ratees.has(e) ? "" : " juste"}"><img src="${photoMini(e.photo)}" alt=""><span class="im-etiquette">${echapper(e.nom_courant)}</span></span>`).join("")}</div>
     <div class="im-pied"><button class="bouton-accueil principal" id="im-suite">${suite}</button></div></div>`;
-  document.getElementById("im-suite").onclick = () => { revue = null; fermerIntermede(); lancerExpedition(x, etapeFinie(x, 1) ? 2 : 1); };
+  document.getElementById("im-suite").onclick = () => { revue = null; fermerIntermede(); if (etapeFinie(x, 1)) { session = null; ouvrirExpedition(x); } else lancerExpedition(x, 1); };
   if (etapeFinie(x, 1) && !rv.avantFinie) {
     feter({ etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });

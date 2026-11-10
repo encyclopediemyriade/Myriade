@@ -464,11 +464,12 @@ function especeDuJour() {
   const ouverts = territoiresOuverts(), toutes = especesJouables(), ici = toutes.filter(e => territoiresJeu(e).some(x => ouverts.includes(x)));
   const liste = ici.length ? ici : toutes;
   if (!liste.length) return null;
-  // Étape 212 : une fois rencontrée (Rencontre finie), l'espèce du jour laisse la place à une autre
-  const faites = (suivi.duJour && suivi.duJour.date === aujourdhui()) ? suivi.duJour.faites : [];
-  const ordre = melangerFixe(liste, graineDuJour());
-  return ordre.find(e => !faites.includes(e.nom_courant)) || ordre[0];
+  // Étape R183c (10/11, choix d'Aubin) : UNE seule espèce du jour, qui reste toute la journée ; une fois rencontrée, elle est
+  //   marquée « Rencontrée » (avant, étape 212 : une autre prenait sa place). Une autre demain.
+  return melangerFixe(liste, graineDuJour())[0];
 }
+const GAIN_ESPECE_DU_JOUR = 2;   // étape R183c : 2 empreintes la première fois qu'on la rencontre dans la journée (comme un défi)
+function especeDuJourFaite(e) { return !!(e && suivi.duJour && suivi.duJour.date === aujourdhui() && suivi.duJour.faites.includes(e.nom_courant)); }
 function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans l'accueil du téléphone (ac-jour-mobile)
   const zone = document.getElementById(idZone), e = especeDuJour();
   const idR = idZone === "ac-jour" ? "ac-rencontrer" : idZone + "-rencontrer", idF = idZone === "ac-jour" ? "ac-fiche" : idZone + "-fiche";
@@ -479,13 +480,15 @@ function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans 
   const anecdote = connue && typeof anecdotesGagnees === "function" ? anecdotesGagnees(e)[0] : null;
   const statut = estRenseigne(e.statut_conservation_france) && !/mineure|non évalué|insuffisantes/i.test(e.statut_conservation_france)
     ? `<span class="ac-statut">${e.statut_conservation_france} en France</span>` : "";
-  zone.className = "ac-jour" + (connue ? "" : " inconnue");
+  const faite = especeDuJourFaite(e);
+  zone.className = "ac-jour" + (connue ? "" : " inconnue") + (faite ? " rencontree" : "");
   const image = connue ? celluleImage(e) : celluleImage(e).replace(`alt="${e.nom_courant}"`, 'alt=""');   // inconnue : son nom ne doit pas apparaître
   zone.innerHTML = `<div class="ph">${image}</div><div class="corps">
-      <div class="ac-etiquette">Espèce du jour · ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</div>
+      <div class="ac-etiquette">Espèce du jour · ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}${faite ? ` <span class="ac-rencontree">✓ Rencontrée</span>` : ` <span class="ac-gain-jour">+${GAIN_ESPECE_DU_JOUR} ${typeof PAS_SVG !== "undefined" ? PAS_SVG : "empreintes"}</span>`}</div>
       <h2>${connue ? e.nom_courant : "Une espèce à découvrir"}</h2>${statut}
       ${anecdote ? `<p class="ac-anecdote"><b>Le saviez-vous ?</b> ${anecdote.texte}</p>` : `<p>${phraseDuJour(e) || (connue ? "" : "Elle n'est pas encore dans votre carnet.")}</p>`}
-      <div class="ac-boutons"><button class="ac-bouton plein" id="${idR}">${connue ? "La retrouver en Rencontre" : "La rencontrer"}</button>
+      ${faite ? `<p class="ac-jour-fait">Rencontrée aujourd'hui. Une autre espèce vous attend demain.</p>` : ""}
+      <div class="ac-boutons"><button class="ac-bouton${faite ? "" : " plein"}" id="${idR}">${faite ? "La revoir" : connue ? "La retrouver en Rencontre" : "La rencontrer"}</button>
       ${connue ? `<button class="ac-bouton" id="${idF}">Sa fiche</button>` : ""}</div></div>`;
   document.getElementById(idR).onclick = () => { lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };
   if (connue) document.getElementById(idF).onclick = () => ouvrirPageEspece(e);
