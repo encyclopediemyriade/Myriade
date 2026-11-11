@@ -2443,8 +2443,8 @@ const CREDITS_SILHOUETTES = [
   "dessin_de": "Corallium rubrum"
  },
  {
-  "fichier": "goujon.svg",
-  "nom": "Goujon",
+  "fichier": "goujon_commun.svg",
+  "nom": "Goujon commun",
   "auteur": "Carlos Cano-Barbacil",
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
@@ -2452,8 +2452,8 @@ const CREDITS_SILHOUETTES = [
   "dessin_de": "Gobio"
  },
  {
-  "fichier": "goujon_commun.svg",
-  "nom": "Goujon commun",
+  "fichier": "goujon.svg",
+  "nom": "Goujon occitan",
   "auteur": "Carlos Cano-Barbacil",
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",

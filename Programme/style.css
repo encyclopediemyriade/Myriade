@@ -4621,3 +4621,96 @@ button.pastille-carnet:hover { background: #fff; }
 /* Étape R187 : fin de la Rencontre du jour — la phrase sous le bouton « Retour à l'accueil » */
 #fin-session .fin-du-jour { grid-column: 1 / -1; flex: 0 0 100%; width: 100%; margin: 10px 2px 0; font-size: 0.95rem; color: var(--texte-doux, #5b5648); }
 #fin-session.fin-courte .fin-du-jour { display: none; }   /* téléphone : le résumé l'affiche déjà */
+
+/* ==================================================================
+   Étape R188 (11/11/2026, note n° 16 d'Aubin) — téléphone, Rencontre avec fiche : « Quitter » tout en bas, sous la fiche
+   (placé par placerQuitterTelephone, 09_rencontre.js). La fiche garde un petit bas ; c'est le pied qui laisse la place de la bande fixe.
+   ================================================================== */
+.pied-rencontre { display: none; }
+@media (max-width: 760px) {
+  .carte-rencontre.avec-postit .pied-rencontre { display: flex; justify-content: center; grid-column: 1; grid-row: 6; padding: 6px 16px 84px; border-top: 1px dashed #d8cfbf; }
+  .carte-rencontre.avec-postit .pied-rencontre .quitter { margin: 8px auto 0; }
+  .carte-rencontre.avec-postit:has(.pied-rencontre) .postit-rencontre { padding-bottom: 14px; }
+}
+
+/* Étape R188 (11/11, n° 18b) — la petite carte des lieux de la page du territoire (téléphone) : la carte tient dans son cadre
+   (avant : le dessin, plus haut que le cadre, était coupé en bas ; les points grossissaient d'autant). */
+@media (max-width: 760px) {
+  .tm-carte .carte-lieux { position: absolute; inset: 6px; width: auto; height: auto; }
+  .tm-carte .carte-lieux svg { width: 100%; height: 100%; max-height: none; }
+}
+
+/* Étape R188c (11/11) — le raccourci de test (11_commandes_test.js), caché aux joueurs */
+.acces-test { position: fixed; inset: 0; z-index: 200; background: rgba(23,40,31,.55); display: flex; align-items: center; justify-content: center; padding: 12px; }
+.at-boite { background: var(--carte, #FBF8F1); border-radius: 10px; width: min(520px, 100%); max-height: 88vh; overflow: auto; padding: 14px 16px; box-shadow: 0 8px 30px rgba(0,0,0,.25); font-size: 14px; }
+.at-tete { display: flex; justify-content: space-between; align-items: center; font-size: 16px; }
+.at-fermer { border: 0; background: none; font-size: 18px; cursor: pointer; min-width: 40px; min-height: 40px; }
+.at-aide { color: var(--texte-doux, #5b5b52); font-size: 12.5px; margin: 6px 0 10px; }
+.at-terr { width: 100%; font: inherit; padding: 8px; margin-bottom: 8px; }
+.at-lieu { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid var(--trait, #e2dacb); }
+.at-lieu span { flex: 1; min-width: 0; }
+.at-lieu button { font: inherit; font-size: 13px; padding: 6px 10px; min-height: 36px; border: 1px solid var(--trait, #d8cfbf); border-radius: 6px; background: #fff; cursor: pointer; }
+.at-lieu small { color: var(--texte-doux, #5b5b52); font-size: 12px; }
+
+/* ===== Étape RF1 : « Qui rencontrer ensuite ? » (fin d'une Rencontre d'expédition) ===== */
+.qui-ensuite { margin: 18px 0 6px; }
+.qui-ensuite h3 { font-family: Literata, Georgia, serif; font-size: 1.15rem; margin: 0 0 10px; color: var(--texte, #1f3a2e); }
+.qui-ensuite-liste { display: flex; flex-direction: column; gap: 8px; }
+.qui-ensuite-carte { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 8px 14px; text-align: left;
+  background: var(--carte, #fbf8f1); border: 1px solid var(--trait, #cfc5ae); border-radius: 14px; cursor: pointer; font: inherit; color: inherit; }
+.qui-ensuite-carte:hover { border-color: var(--ocre, #a8652a); }
+.qui-ensuite-silh { width: 64px; height: 48px; flex: none; display: flex; align-items: center; justify-content: center; background: #ebe4d3; border-radius: 9px; }
+.qui-ensuite-silh img { max-width: 52px; max-height: 40px; opacity: .6; }
+.qui-ensuite-texte { display: flex; flex-direction: column; gap: 1px; }
+.qui-ensuite-texte b { font-family: Literata, Georgia, serif; font-size: 1.02rem; }
+.qui-ensuite-texte small { color: var(--texte-doux, #5a6a60); font-size: .85rem; }
+
+/* ===== Étape RF2 : la rafale « Sa vie · vrai ou faux », « Et aussi », la fin de Rencontre (maquette 7B) ===== */
+.rafale-bilan { display: block; margin-top: 4px; }
+.rafale-bilan .rafale-titre { display: block; font-weight: 600; color: var(--texte, #1f3a2e); margin-bottom: 6px; }
+.rafale-bilan ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rafale-bilan li { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 10px; background: var(--carte, #fbf8f1); border: 1px solid var(--trait, #cfc5ae); }
+.rafale-bilan li.ok { border-color: #8fbf9c; background: #eef5ef; }
+.rafale-bilan li.ko { border-color: #d9b48f; background: #fbf1e6; }
+.rafale-bilan .rafale-marque { flex: none; width: 20px; font-weight: 700; color: var(--bon, #3e7b55); }
+.rafale-bilan li.ko .rafale-marque { color: var(--ocre, #a8652a); }
+.rafale-bilan .rafale-affirm { display: block; font-style: italic; color: var(--texte-doux, #5a6a60); font-size: .92em; margin-bottom: 2px; }
+.retour .et-aussi { display: block; margin-top: 6px; }
+.retour .et-aussi b { color: var(--ocre-texte, #8a4f1c); font-weight: 600; }
+.resume-fin-tel .rft-grande { position: relative; border-radius: 12px; overflow: hidden; height: 210px; margin: 2px 0 2px; }
+.resume-fin-tel .rft-grande img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.resume-fin-tel .rft-grande-bas { position: absolute; left: 0; right: 0; bottom: 0; padding: 34px 14px 12px; display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;
+  background: linear-gradient(rgba(31,58,46,0), rgba(31,58,46,.88)); }
+.resume-fin-tel .rft-grande .rft-titre { color: #fff; margin: 0; font-size: 24px; line-height: 1.15; }
+.resume-fin-tel .rft-acquis { flex: none; font-size: 12.5px; color: #fff; padding: 4px 10px; border-radius: 12px; background: rgba(255,255,255,.18); }
+.resume-fin-tel .rft-rond.arrive img { box-shadow: 0 0 0 3px var(--ocre, #a8652a); animation: rondArrive .7s ease-out .25s both; }
+@keyframes rondArrive { from { transform: translateY(-26px) scale(1.5); opacity: .2; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .resume-fin-tel .rft-rond.arrive img { animation: none; } }
+
+/* ===== Étape RF3 : « Leurs liens » (étape 2) ===== */
+.fl-carte .fp-tete { display: flex; justify-content: space-between; align-items: center; }
+.fl-duo figure .fl-vide { display: block; width: 100%; aspect-ratio: 4 / 3; background: #ebe4d3; border-radius: 8px; }
+
+/* ===== Étape RF4 : entrée « aux jumelles » (sobre) et « elle ou son sosie » ===== */
+#photo-rencontre.jumelles { position: relative; overflow: hidden; }
+#photo-rencontre.jumelles img { transform: scale(var(--zoom, 3)); transform-origin: var(--ox, 50%) var(--oy, 50%); transition: transform .5s ease; }
+#photo-rencontre.jumelles.devoile img { transform: none; }
+#photo-rencontre .fe-plus-large { position: absolute; right: 10px; bottom: 10px; min-height: 40px; padding: 0 14px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.7); background: rgba(31,58,46,.72); color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.fe-photo { position: relative; }
+.fe-photo .fe-legende { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 8px; font-size: 13px; color: #fff; background: rgba(31,58,46,.72); text-align: left; }
+@media (prefers-reduced-motion: reduce) { #photo-rencontre.jumelles img { transition: none; } }
+
+/* ===== Étape RF6 : l'ensemble en pictogrammes quand la photo est reconnue ===== */
+.retour .pe-ensemble { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.retour .pe-ensemble-item { display: flex; align-items: center; gap: 8px; padding: 5px 10px; border: 1px solid var(--trait); border-radius: 6px; background: var(--carte, #fbf8f1); font-size: .92em; }
+.retour .pe-ensemble-item .picto { width: 34px; height: 34px; flex: none; display: flex; align-items: center; justify-content: center; }
+.retour .pe-ensemble-item .picto svg, .retour .pe-ensemble-item .picto img { max-width: 34px; max-height: 34px; }
+.retour .pe-ensemble-item small { display: block; color: var(--texte-doux, #5a6a60); font-size: .8em; line-height: 1.1; }
+
+/* ===== Étape RF7 : tous les indices restent visibles au moment de choisir la photo (note n° 15) ===== */
+#question .fe-rappels { list-style: none; margin: 10px 0 2px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; font-family: inherit; }
+#question .fe-rappels .fe-rappel { display: flex; flex-direction: column; gap: 1px; margin: 0; padding: 4px 10px; border-radius: 10px; font-size: 13.5px; line-height: 1.3; }
+#question .fe-rappels .fe-rappel small { font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--texte-doux); }
+#question .fe-rappels .fe-rappel img { height: 34px; width: auto; max-width: 90px; object-fit: contain; opacity: .8; }
+#question .fe-rappels .fe-rappel.fe-rappel-scene { flex-basis: 100%; }

@@ -10,6 +10,7 @@
 //   • Un chemin : les expéditions s'ouvrent dans l'ordre, 3 nouvelles à la fois (finir l'étape 1 en ouvre une autre).
 //   Rien n'est enregistré pour les étapes : tout se recalcule à partir du carnet (progression).
 // ==================================================================
+const RENCONTRE_COMPLETE = true;          // étape RF1 (voir plus bas) ; false = le jeu d'avant la refonte
 const CHAMPS_MODE_DE_VIE = ["milieu_principal", "regime_alimentaire_type", "activite", "hibernation", "deplacement_saisonnier",
   "saison_observation", "saison_reproduction", "emplacement_nid", "chasse_principale", "defense_principale",
   "metamorphose", "naissance", "indice_presence", "toile", "pelage_hiver", "niveau_estran"];
@@ -34,8 +35,10 @@ const CHAMPS_APPROFONDIR_PLUS = ["vitesse_max_kmh", "altitude_max_m", "pinces", 
 //   Après les empreintes de l'expédition (2 depuis l'étape 298) : « Approfondir » (facultatif, sans empreinte) — le reste des traits pertinents.
 const ETAPES = [
   null,
-  { titre: "Faire connaissance", texte: "Une espèce à la fois : sa photo, son allure, son cri, son empreinte" },
-  { titre: "Leur vie", texte: "Où vivent-elles, que mangent-elles, quand les voir, comment naissent leurs petits ?" },   // étape R128
+  RENCONTRE_COMPLETE ? { titre: "Rencontres", texte: "Une espèce à la fois : la reconnaître, son allure, sa vie, un fait étonnant" }   // étape RF1
+    : { titre: "Faire connaissance", texte: "Une espèce à la fois : sa photo, son allure, son cri, son empreinte" },
+  RENCONTRE_COMPLETE ? { titre: "Leurs liens", texte: "Qui mange qui, qui vit avec qui : quelques questions, puis ce qui reste de leur vie" }   // étape RF3
+    : { titre: "Leur vie", texte: "Où vivent-elles, que mangent-elles, quand les voir, comment naissent leurs petits ?" },   // étape R128
   { titre: "Leurs liens", texte: "Qui mange qui, quelles plantes, quels prédateurs" },   // étape 298 : plus jouée (les liens passent à la finale du lieu)
   { titre: "Approfondir", texte: "Ce qui ne se voit pas : leurs mesures, ce qu'elles mangent, qui les mange, leurs noms, leur statut… En plusieurs parties de 10 questions, à votre rythme (facultatif)" },   // étape R167 (choix d'Aubin, option 1 : des étapes par thème) ; R166 ; R124 : « en plusieurs parties » ; R128 : tirés au hasard ; R130 : sans médaille
 ];
@@ -44,7 +47,14 @@ const ETAPES = [
 // « Tout est lié » du lieu, et ce qu'une espèce mange ou qui la mange passe dans « Approfondir ».
 const NB_ETAPES = 2;
 const ETAPES_JOUEES = [1, 2];
-const NB_TRAITS_ALLURE = 2;            // étape 1 : les traits d'allure les plus parlants de chaque espèce (étape ET1 : 2 au lieu de 4)
+// ---- Étape RF1 (11/11/2026, refonte des étapes, choix d'Aubin : « une vraie rencontre par espèce ») ----
+//   La Rencontre de l'étape 1 devient complète : la photo, UN trait d'allure (le plus parlant ; Aubin : « le bec est évident
+//   et n'apporte rien »), le cri et l'empreinte s'il y en a, puis SA VIE en vrai ou faux (2 choses, sujets qui tournent d'une
+//   espèce à l'autre), puis un fait ÉTONNANT (deux affirmations, une vraie). L'étape 2 ne garde que ce qui reste
+//   (une chose de vie manquée) ; elle deviendra « Leurs liens » (étape RF3).
+//   false = le jeu d'avant (étape 1 = l'allure, étape 2 = la vie). Copie complète du jeu d'avant : jeu_1.6.5.html.
+const VIE_PAR_RENCONTRE = 3;           // étape RF1 : les choses de sa vie posées dans la Rencontre (RF2 : 3 cartes « vrai ou faux » ; 2 restent exigées)
+const NB_TRAITS_ALLURE = RENCONTRE_COMPLETE ? 1 : 2;   // étape 1 : les traits d'allure les plus parlants (ET1 : 2 au lieu de 4 ; RF1 : 1)
 const NB_TRAITS_ALLURE_AVANT = 4;      // étape ET1 : les traits 3 et 4 passent dans Approfondir, posés mais pas exigés (rien ne recule)
 const SEUIL_PERTINENCE = 0.3;          // note minimale d'un trait d'allure parlant (voir traitsAllure)
 const TRAITS_PEU_PARLANTS = ["nb_dents", "paupieres"];   // jamais en expédition (difficiles à voir sur le terrain)
@@ -275,11 +285,23 @@ function traitsAllure(e, limite = NB_TRAITS_ALLURE) {   // étape ET1 : limite =
   memoAllure.set(cle, pris);
   return pris.slice();
 }
+// ---- Étape RF6 (11/11, choix d'Aubin « A · Seulement un détail ») : la question d'allure de la Rencontre complète porte
+//   sur UN DÉTAIL (œil, pattes, couleur du bec, queue, oreilles, ornement de tête, antennes, cornes…), jamais sur l'ensemble
+//   qu'on voit d'un coup d'œil sur la photo (couleur dominante, aspect de la robe, forme du corps, forme du bec, silhouette).
+//   L'ensemble est MONTRÉ en pictogrammes quand la photo est reconnue (choix « a », note d'Aubin : « on reprend l'ensemble
+//   des pictos à ce moment-là »). Une espèce sans détail à poser n'a pas de question d'allure (choix « a »).
+const TRAITS_ENSEMBLE = ["couleur_dominante", "robe", "corps_forme", "bec_forme", "silhouette"];
+function traitDetail(e) { return traitsAllure(e).find(c => !TRAITS_ENSEMBLE.includes(c) && c !== "museau_forme") || null; }   // museau : un indice, pas une question (R181)
+function traitsEtape1(e) {
+  if (!RENCONTRE_COMPLETE) return traitsAllure(e).slice(0, NB_TRAITS_ALLURE);
+  const d = traitDetail(e);
+  return d ? [d] : [];
+}
 function champsEtape(e, k) {
   if (k === 1) {                                    // étape 288 : la Rencontre physique
     const possibles = champsAvecCri(e);
     const sens = ["cri_son", "empreinte_nom"].filter(c => possibles.includes(c));
-    return [IDENTIFICATION, ...traitsAllure(e).slice(0, NB_TRAITS_ALLURE), ...sens];
+    return [IDENTIFICATION, ...traitsEtape1(e), ...sens];   // RF6 : un détail, pas l'ensemble
   }
   const possibles = champsPossibles(e);
   const vie = possibles.filter(c => CHAMPS_MODE_DE_VIE.includes(c));
@@ -353,7 +375,24 @@ function butEspece(e, k) {
   return CHAMPS_LIENS.some(c => champs.includes(c)) ? champs.length : Math.min(champs.length, 5);   // sans liens : 5 traits de vie
 }
 function trouvesEspece(e, k) { return champsRequis(e, k).filter(c => c === IDENTIFICATION ? estIdentifiee(e) : nbBonnes(e, c) >= 1).length; }
+// Étape RF6 : rien ne recule — les espèces dont l'étape 1 était faite avec l'ancien trait (l'ensemble) le restent
+function etape1AvantRF6() {
+  if (!suivi) return new Set();
+  if (!suivi.etape1RF6) {
+    suivi.etape1RF6 = ESPECES.filter(e => estIdentifiee(e)).filter(e => {
+      const possibles = champsAvecCri(e);
+      const ancien = [...traitsAllure(e).slice(0, NB_TRAITS_ALLURE), ...["empreinte_nom"].filter(c => possibles.includes(c))];
+      return ancien.every(c => nbBonnes(e, c) >= 1);
+    }).map(e => e.nom_courant);
+    sauvegarder();
+  }
+  if (!etape1AvantRF6.cache || etape1AvantRF6.cache.src !== suivi.etape1RF6) {
+    etape1AvantRF6.cache = new Set(suivi.etape1RF6); etape1AvantRF6.cache.src = suivi.etape1RF6;
+  }
+  return etape1AvantRF6.cache;
+}
 function especeFaite(e, k) {
+  if (k === 1 && RENCONTRE_COMPLETE && estIdentifiee(e) && etape1AvantRF6().has(e.nom_courant)) return true;   // étape RF6 : rien ne recule
   if (k === 1 && estIdentifiee(e) && etape1Acquises().has(e.nom_courant)) return true;   // étape R132 : rien ne recule
   if (k === 4 && approfondiesAvantR167().has(e.nom_courant)) return true;                // étape R167 : rien ne recule
   if (k === 1 && estIdentifiee(e) && suivi && suivi.etape1Passees && suivi.etape1Passees.includes(e.nom_courant)) return true;   // étape R146
@@ -443,7 +482,13 @@ function marquerRevue(id, e) {
 function faiteDans(x, e, k) { return especeFaite(e, k) && (k !== 1 || estRevue(x, e)); }
 function especesARevoirIci(x) { return x.liste.filter(e => especeFaite(e, 1) && !estRevue(x, e)); }
 function avanceeEtape(x, k) { const faites = x.liste.filter(e => faiteDans(x, e, k)).length; return { faites, total: x.liste.length }; }
-function etapeFinie(x, k) { return k >= 1 && k <= NB_ETAPES && (k === 1 || etapeFinie(x, k - 1)) && x.liste.every(e => faiteDans(x, e, k)); }
+function etapeFinieSansLiens(x, k) { return k >= 1 && k <= NB_ETAPES && (k === 1 || etapeFinieSansLiens(x, k - 1)) && x.liste.every(e => faiteDans(x, e, k)); }
+// Étape RF3 : avec la Rencontre complète, l'étape 2 « Leurs liens » est finie quand leur vie est connue ET que leurs liens ont été vus
+//   (une expédition sans lien à poser : comme avant). Rien ne recule : une expédition finie avant RF3 le reste (liensOk).
+function etapeFinie(x, k) {
+  if (k === 2 && RENCONTRE_COMPLETE && typeof migrerLiensRF3 === "function") migrerLiensRF3();   // avant tout calcul (sinon une expédition finie ensuite serait prise pour ancienne)
+  return etapeFinieSansLiens(x, k) && (k !== 2 || !RENCONTRE_COMPLETE || typeof liensOk !== "function" || liensOk(x));
+}
 function approfondie(x) { return x.liste.every(e => especeFaite(e, 4)); }   // étape 288
 // Étape R131 (05/11, choix de l'utilisateur, option 1) : « Terminée » dit aussi ce qu'il reste dans Approfondir (facultatif),
 // « Terminée · Approfondir 2/7 », puis « Terminée » tout court quand Approfondir est fini.
@@ -695,12 +740,18 @@ function majFilExpedition(x, k) {
   // Étape R91 (Revoir 9) : pendant le jeu, la bannière de l'expédition reste en haut, en réduit (même photo, même mise en page)
   const ph = photoExp(x);
   fil.className = "fil-banniere";
+  fil.dataset.exp = x.id;   // étape R188 : « Quitter » et le retour du téléphone savent à quel lieu revenir
   fil.innerHTML = `<img class="fil-fond" src="${ph}" alt=""><img class="fil-photo" src="${ph}" alt="">
     <div class="fil-corps"><button type="button" class="fil-retour">← Expédition</button>
       <div class="fil-texte"><small>${echapper(x.chapitre ? `${x.chapitre} · ${x.territoire}` : x.territoire)}</small>
         <b>${echapper(x.titre)}</b><span>${etape}</span></div></div>`;
   majBandeExpedition(x, fil, k);
   fil.querySelector(".fil-retour").onclick = () => { session = null; majFilExpedition(null); ouvrirExpedition(x); };
+}
+// Étape R188 : l'expédition de la partie en cours (celle du bandeau), ou null hors expédition
+function expeditionDuFil() {
+  const fil = document.getElementById("fil-expedition");
+  return fil && fil.dataset.exp ? expeditionParId(fil.dataset.exp) || null : null;
 }
 // Étape R94 (01/11, choix de l'utilisateur : photo nette, M1, E1) : sous la bannière, une bande discrète avec les espèces
 //   de l'expédition : trouvées (✓ + nom au survol), celle en cours (cerclée d'ocre), celles qui restent (photo nette, JAMAIS le nom).
@@ -736,7 +787,10 @@ function majBandeExpedition(x, fil, k) {
   b.innerHTML = `<span class="be-lib">L'expédition</span><span class="be-ronds">${x.liste.map(e => {
       const st = faiteDans(x, e, 1) ? "trouve" : e === enCours1 ? "ici" : "reste";
       const titre = st === "trouve" ? e.nom_courant : st === "ici" ? "En cours" : "À découvrir";
-      return `<span class="be-rond ${st}${estRenseigne(e.photo) ? "" : " silh"}" title="${echapper(titre)}"><img src="${photoEsp(e)}" alt=""></span>`; }).join("")}</span>
+      // Étape RF4 : l'espèce en cours, tant qu'elle n'est pas reconnue, garde sa silhouette (sa photo donnerait la réponse
+      //   aux jumelles, au sosie et aux indices)
+      const cachee = RENCONTRE_COMPLETE && st === "ici" && !estIdentifiee(e) && !(session && session.presentee);
+      return `<span class="be-rond ${st}${estRenseigne(e.photo) && !cachee ? "" : " silh"}" title="${echapper(titre)}"><img src="${cachee ? fichierSilhouette(e) : photoEsp(e)}" alt=""></span>`; }).join("")}</span>
     <span class="be-texte">${reste ? `${trouvees} trouvée${trouvees > 1 ? "s" : ""} · encore ${reste} à découvrir` : "Toutes trouvées"}</span>`;
 }
 // Étape M19 (07/11, choix B « Une seule ligne ») : sur téléphone, aux étapes 2 et 3, un seul repère au-dessus de la question :
@@ -834,7 +888,9 @@ function lancerExpedition(x, k) {
   sauvegarder();
   depuisArcade = false; modeLibre = false;
   if (k === 1) { lancerRencontreExpedition(x); return; }   // étape 288 : une Rencontre physique, une espèce
-  if (k === 2 && typeof planchePrete === "function" && planchePrete(x)) { ouvrirPlancheExp(x); return; }   // étape R171 : « La planche » d'abord
+  if (k === 2 && RENCONTRE_COMPLETE && typeof liensOk === "function" && !liensOk(x)) { ouvrirLiensExp(x); return; }   // étape RF3 : « Leurs liens »
+  if (k === 2 && typeof planchePrete === "function" && planchePrete(x)) { ouvrirPlancheExp(x); return; }   // étape R171 : « La planche » (RF3 : après leurs liens)
+  if (k === 2 && RENCONTRE_COMPLETE && etapeFinie(x, 2)) { ouvrirExpedition(x); return; }   // étape RF3 : plus rien à jouer dans l'étape 2
   document.getElementById("bouton-territoire-defi").textContent = "Retour au territoire";
   territoiresDefi = [x.territoire];
   territoiresChoisis = [x.territoire];
@@ -931,7 +987,85 @@ function bilanEtape(x, info, gagnees, k) {
 // L'espèce : la première de la liste dont la fiche physique n'est pas encore faite (photo + traits d'allure + cri + empreinte).
 // Étape R132 : une espèce déjà rencontrée ici, à qui il manque un trait, ne repasse pas en Rencontre : ses traits manqués
 // reviennent seuls, à la fin de l'étape (lancerRattrapage).
-function especeAConnaitre(x) { return x.liste.find(e => !faiteDans(x, e, 1) && !(estTentee(x, e) && manquesEtape1(e).length)) || null; }
+// ---- Étape RF1 : sa vie dans la Rencontre (vrai ou faux), sujets qui tournent d'une espèce à l'autre ----
+const sujetsVusExp = {};               // en mémoire : les sujets de vie de l'espèce précédente, par expédition (règle S1)
+function vieEnVraiFaux(e, c) {
+  const q = QUESTIONS.find(x => x.champ === c);
+  if (!q || !q.affirmation || q.type === "nombre" || q.format || (q.formats && !q.formats.includes("vraifaux"))) return false;
+  const v = q.tirer ? q.tirer(e) : valeurDe(e, q);
+  return estRenseigne(v) && autresValeurs(q, v, e).length >= 1;
+}
+function vieRencontre(x, e) {
+  if (!RENCONTRE_COMPLETE || !x || especeFaite(e, 2)) return [];
+  const deja = champsEtape(e, 2).filter(c => nbBonnes(e, c) >= 1).length;   // ce qu'on sait déjà de sa vie compte (RF2 : 3 cartes au plus)
+  const n = Math.max(0, VIE_PAR_RENCONTRE - deja);
+  if (!n) return [];
+  const vus = sujetsVusExp[x.id] || [];
+  const possibles = melanger(champsEtape(e, 2).filter(c => nbBonnes(e, c) === 0 && vieEnVraiFaux(e, c)
+    && !(c === "milieu_principal" && x.milieu && e.milieu_principal === x.milieu)));   // « Au bord du lac » : « vit dans les lacs » se devine
+  const choix = [...possibles.filter(c => !vus.includes(c)), ...possibles.filter(c => vus.includes(c))].slice(0, n);
+  sujetsVusExp[x.id] = choix;
+  return choix;
+}
+// Étape RF6 : quand la photo est reconnue, l'ensemble en pictogrammes (ce qu'on ne demande plus : couleur, robe, corps, bec)
+function pictosEnsemble(e) {
+  const lignes = TRAITS_ENSEMBLE.map(c => QUESTIONS.find(q => q.champ === c)).filter(q => q && (!q.pour || q.pour(e))).map(q => {
+    let v; try { v = valeurDe(e, q); } catch (err) { return ""; }
+    if (!estRenseigne(v) || v === "NA" || String(v).startsWith("NA")) return "";
+    const texte = q.affichageFiche ? q.affichageFiche(e, v) : majuscule(String(v));
+    const dessin = q.sansImage || q.format !== "picto" ? "" : dessinReponse(q.colonnePicto, v);
+    return `<span class="pe-ensemble-item">${dessin ? `<span class="picto">${dessin}</span>` : ""}<span><small>${echapper(q.libelle || "")}</small>${texte}</span></span>`;
+  }).filter(Boolean).slice(0, 3);
+  return lignes.length ? `<span class="pe-ensemble">${lignes.join("")}</span>` : "";
+}
+// ---- Étape RF2 (choix d'Aubin : « apprendre à chaque question ») : « Bravo ! … Et aussi : … » ----
+//   Après un trait d'allure trouvé, un détail physique de sa fiche (colonne adaptations_physiques) : de préférence
+//   sur la même partie du corps, sinon un autre détail pas encore montré dans cette Rencontre.
+const PARTIES_ADAPTATIONS = { bec_forme: /bec/, bec_couleur: /bec/, ornement_tete: /huppe|crête|crete|tête|tete|corne|bois/,
+  queue_forme: /queue/, queue_vol: /queue/, queue_poisson: /queue|nageoire/, queue_adulte: /queue/, oreilles_forme: /oreille/, oreilles_taille: /oreille/,
+  pattes_aspect: /patte|doigt|serre/, pattes_type: /patte|doigt|serre/, doigts_disposition: /doigt|patte/, corps_forme: /corps|forme/,
+  nageoires_dos: /nageoire|épine|epine/, barbillons: /barbillon/, antennes_forme: /antenne/, ailes_repos: /aile/, ailes_visibles: /aile/,
+  couleur_dominante: /plumage|pelage|robe|couleur|tache|bande|miroir|rayure/, robe: /plumage|pelage|robe|tache|bande|rayure|point/,
+  coquille: /coquille/, peau_texture: /peau|pustule|glande/, pupille_forme: /pupille|œil|oeil|yeux/, yeux_couleur: /œil|oeil|yeux/ };
+function detailPhysique(e, champ) {
+  if (!estRenseigne(e.adaptations_physiques) || String(e.adaptations_physiques).startsWith("NA")) return "";
+  const clauses = String(e.adaptations_physiques).split(";").map(t => t.trim()).filter(Boolean);
+  const vus = (session && session.detailsVus) || [];
+  const libres = clauses.filter(c => !vus.includes(c));
+  if (!libres.length) return "";
+  const motif = PARTIES_ADAPTATIONS[champ];
+  const c = (motif && libres.find(t => motif.test(t.toLowerCase()))) || libres[0];
+  if (session) session.detailsVus = [...vus, c];
+  return c.charAt(0).toUpperCase() + c.slice(1);
+}
+// Étape RF1 : « Qui rencontrer ensuite ? » — le joueur choisit ; chaque silhouette a un mot de terrain (jamais le nom)
+const MOTS_TERRAIN = {
+  "Falaises et rochers": "Sur les rochers", "Alpages et pelouses d'altitude": "Dans l'alpage", "Forêt": "Sous les arbres",
+  "Campagne, haies et jardins": "Le long de la haie", "Rivières et torrents": "Au bord de la rivière", "Landes et coteaux secs": "Sur le coteau sec",
+  "Mares et étangs": "Au bord de l'étang", "Lacs": "Dans le lac", "Marais": "Dans le marais", "Mer et océan": "Près de la mer",
+  "Estuaires et lagunes": "Dans la lagune", "Dunes et plages": "Sur la dune", "Garrigue et maquis": "Dans la garrigue" };
+function motTerrain(e) { return MOTS_TERRAIN[e.milieu_principal] || "Quelque part ici"; }
+const prochaineChoisie = {};           // en mémoire : l'espèce choisie pour la rencontre suivante, par expédition
+function blocQuiEnsuite(x) {
+  const restent = x.liste.filter(e => !faiteDans(x, e, 1) && !(estTentee(x, e) && manquesEtape1(e).length) && !especeFaite(e, 1));
+  if (restent.length < 2) return "";
+  const cartes = restent.map(e => `<button class="qui-ensuite-carte" data-nom="${echapper(e.nom_courant)}">
+      <span class="qui-ensuite-silh">${imgMini(fichierSilhouette(e), "")}</span>
+      <span class="qui-ensuite-texte"><b>${motTerrain(e)}</b><small>${echapper(e.nom_affichage_groupe || "")}</small></span></button>`).join("");
+  return `<div class="qui-ensuite"><h3>Qui rencontrer ensuite ?</h3><div class="qui-ensuite-liste">${cartes}</div></div>`;
+}
+function brancherQuiEnsuite(x, zone) {
+  for (const b of zone.querySelectorAll(".qui-ensuite-carte")) b.onclick = () => {
+    prochaineChoisie[x.id] = b.dataset.nom;
+    if (intermedePret(x)) ouvrirIntermede(x, "Continuer ▶"); else lancerExpedition(x, 1);
+  };
+}
+function especeAConnaitre(x) {
+  const ok = e => !faiteDans(x, e, 1) && !(estTentee(x, e) && manquesEtape1(e).length);
+  const choisie = prochaineChoisie[x.id] && x.liste.find(e => e.nom_courant === prochaineChoisie[x.id]);   // étape RF1
+  if (choisie && ok(choisie) && !especeFaite(choisie, 1)) return choisie;
+  return x.liste.find(ok) || null;
+}
 function lancerRencontreExpedition(x) {
   const e = especeAConnaitre(x);
   if (!e) { if (aRattraper(x).length) lancerRattrapage(x); else lancerExpedition(x, 2); return; }
@@ -1010,19 +1144,24 @@ function finRencontreExpedition(s) {
   const info = s.expedition, x = expeditionParId(info.id);
   const zone = document.getElementById("exp-fin-session");
   if (!x || !zone) return;
+  if (prochaineChoisie[x.id] === s.focus.nom_courant) delete prochaineChoisie[x.id];   // étape RF1
   if (especeFaite(s.focus, 1)) marquerRevue(x.id, s.focus);   // étape 316 : rencontrée ici, elle compte pour cette expédition
   else marquerTentee(x, s.focus);                             // étape R132 : ses traits manqués reviendront à la fin de l'étape
   majBandeExpedition(x);                                      // étape R94 : la bande des espèces se met à jour
   const e = s.focus, apres = empreintesExp(x), av = avanceeEtape(x, 1), faite = especeFaite(e, 1);
   const gagnees = Math.max(0, gainExp(x) - (info.avantGain || 0)), etapeGagnee = apres > info.avant, suite = especeAConnaitre(x);   // étape PR1
-  document.getElementById("titre-fin-session").textContent = `${x.titre} · faire connaissance`;
+  document.getElementById("titre-fin-session").textContent = `${x.titre} · ${RENCONTRE_COMPLETE ? "rencontre" : "faire connaissance"}`;
   zone.classList.remove("cache");
+  // Étape RF1 : la Rencontre complète peut finir toute l'expédition (sa vie était dans la Rencontre)
+  if (RENCONTRE_COMPLETE && etapeFinie(x, 2) && info.avant < NB_ETAPES) { finExpeditionParRencontre(x, s, gagnees, zone); return; }
+  const quiEnsuite = RENCONTRE_COMPLETE && !etapeFinie(x, 1) && faite ? blocQuiEnsuite(x) : "";
   zone.innerHTML = `<div class="exp-fin">
       <div class="exp-fin-pas">${dessinGain(x)}</div>
       <div class="exp-fin-texte">${etapeFinie(x, 1) ? `<b>Étape 1 réussie !</b> Vous avez fait connaissance avec les ${av.total} espèces.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`
         : `<b>${faite ? `${e.nom_courant} : fait !` : `${e.nom_courant} : ${manquesEtape1(e).length} ${manquesEtape1(e).length > 1 ? "choses" : "chose"} à revoir`}</b>${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""} · ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}.${faite ? "" : " Seul ce qui manque reviendra, à la fin de l'étape."}`}</div>
-      <button class="ac-bouton" id="exp-fin-ecran-r">Voir l'expédition</button></div>${blocFinLieu(x, gagnees)}`;
+      <button class="ac-bouton" id="exp-fin-ecran-r">Voir l'expédition</button></div>${quiEnsuite}${blocFinLieu(x, gagnees)}`;
   document.getElementById("exp-fin-ecran-r").onclick = () => { session = null; ouvrirExpedition(x); };
+  if (quiEnsuite) brancherQuiEnsuite(x, zone);
   const principal = document.getElementById("bouton-rejouer");
   if (etapeFinie(x, 1)) {                              // étape R182 (10/11, demande d'Aubin) : une étape finie ramène à l'expédition,
     principal.textContent = "Voir l'expédition";       // sans proposer l'étape suivante
@@ -1035,9 +1174,21 @@ function finRencontreExpedition(s) {
   }
   document.getElementById("bouton-fin-accueil").classList.add("cache");
   if (etapeGagnee) {                                   // étape PR1 : la fête pour l'étape ; une simple bulle pour chaque espèce
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
+    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : ${RENCONTRE_COMPLETE ? "leurs liens" : "leur vie"} (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (gagnees) setTimeout(() => afficherBulle(`+${gagnees} empreinte${gagnees > 1 ? "s" : ""} · ${e.nom_courant}`), 600);
+  if (gagnees) verifierOuverture();
+}
+// Étape RF1 : la dernière Rencontre finit toute l'expédition (sa vie était posée dans la Rencontre) : la fête de fin
+function finExpeditionParRencontre(x, s, gagnees, zone) {
+  zone.innerHTML = `<div class="exp-fin"><div class="exp-fin-pas">${dessinGain(x)}</div>
+      <div class="exp-fin-texte"><b>Expédition terminée !</b> Vous avez rencontré les ${x.liste.length} espèces.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}</div></div>${blocFinLieu(x, gagnees, true)}`;
+  const principal = document.getElementById("bouton-rejouer");
+  principal.textContent = "Voir l'expédition";
+  principal.onclick = () => { session = null; ouvrirExpedition(x); };
+  document.getElementById("bouton-fin-accueil").classList.add("cache");
+  feter({ etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !", detail: gagnees ? `+${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : "",
+          son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   if (gagnees) verifierOuverture();
 }
 // ---- Étape ET1 (03/11, choix de l'utilisateur : idées 1 et 2) : un intermède pendant l'étape 1 ----
@@ -1731,11 +1882,30 @@ function carteDesLieux(t, o = {}) {
       ? `<path d="M${x} ${y - 13 * echelle} l${3.9 * echelle} ${8.6 * echelle} ${9.3 * echelle} ${0.8 * echelle} -${7 * echelle} ${6.1 * echelle} ${2.1 * echelle} ${9.2 * echelle} -${8.3 * echelle} -${4.9 * echelle} -${8.3 * echelle} ${4.9 * echelle} ${2.1 * echelle} -${9.2 * echelle} -${7 * echelle} -${6.1 * echelle} ${9.3 * echelle} -${0.8 * echelle}z" class="cl-site ${etat}"/>`
       : `<circle cx="${x}" cy="${y}" r="${r}" class="cl-pt ${etat}"/>${etat === "fini" ? `<path d="M${x - 4 * echelle} ${y} l${3 * echelle} ${3.2 * echelle} ${5.5 * echelle} -${6.5 * echelle}" class="cl-coche" style="stroke-width:${2.2 * echelle}"/>` : ""}`;
     const nomVisible = etat === "cours";
-    const nom = `<text x="${x + 14 * echelle}" y="${y + 4.5 * echelle}" class="cl-nom${nomVisible ? "" : " survol"}" style="font-size:${14 * echelle}px;stroke-width:${4 * echelle}px">${echapper(c.nom)}</text>`;
+    // Étape R188 : le nom reste dans le cadre (avant, il sortait à droite, coupé). À droite du point s'il tient, sinon à gauche ;
+    //   s'il ne tient d'aucun côté, centré sous le point (au-dessus en bas de carte), décalé pour rester dans le cadre,
+    //   et raccourci par « … » s'il est plus large que la carte. Largeur estimée : 0,58 × la taille de la lettre par caractère.
+    const fs = 14 * echelle, parCar = fs * 0.58, gauche = cadre[0], droite = cadre[0] + cadre[2];
+    let texte = c.nom, largeurNom = texte.length * parCar;
+    let tx, ty = y + 4.5 * echelle, ancre = "start";
+    if (x + 14 * echelle + largeurNom <= droite) tx = x + 14 * echelle;
+    else if (x - 14 * echelle - largeurNom >= gauche) { tx = x - 14 * echelle; ancre = "end"; }
+    else {
+      const maxCar = Math.max(4, Math.floor(cadre[2] / parCar));
+      if (texte.length > maxCar) { texte = texte.slice(0, maxCar - 1).trim() + "…"; largeurNom = texte.length * parCar; }
+      ancre = "middle";
+      tx = Math.min(Math.max(x, gauche + largeurNom / 2), droite - largeurNom / 2);
+      ty = y > cadre[1] + cadre[3] * 0.75 ? y - 16 * echelle : y + 24 * echelle;
+    }
+    const nom = `<text x="${tx}" y="${ty}"${ancre !== "start" ? ` text-anchor="${ancre}"` : ""} class="cl-nom${nomVisible ? "" : " survol"}" style="font-size:${fs}px;stroke-width:${4 * echelle}px">${echapper(texte)}</text>`;
     return `<g class="cl-lieu" data-lieu="${echapper(c.nom)}" tabindex="0" role="button" aria-label="${echapper(c.nom)}"><title>${echapper(c.nom)}</title>${dessin}${nom}</g>`;
-  }).join("");
+  }).sort((a, b) => (a.includes('class="cl-nom"') ? 1 : 0) - (b.includes('class="cl-nom"') ? 1 : 0)).join("");   // étape R188 : le lieu dont le nom est écrit passe par-dessus les autres points
+  // Étape R188 (11/11, demande d'Aubin, n° 18b) : le cadre est élargi de la taille d'un point (grossi 1,6 fois quand il est
+  //   sélectionné, + le trait) : plus aucun point coupé au bord, même le lieu en cours ou un lieu tout au bord du territoire.
+  const pad = 12 * echelle * 1.6 + 3 * echelle;
+  const vue = [cadre[0] - pad, cadre[1] - pad, cadre[2] + 2 * pad, cadre[3] + 2 * pad].map(v => Math.round(v * 10) / 10);
   return `<div class="carte-lieux${o.sombre ? " sombre" : ""}" style="--couleur-t:${couleur}">
-      <svg viewBox="${cadre.join(" ")}" role="img" aria-label="Les lieux du territoire sur la carte">${voisins}<path d="${forme.contour}" class="cl-terr-trait"/><path d="${forme.contour}" class="cl-terr"/>${pts}</svg>
+      <svg viewBox="${vue.join(" ")}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Les lieux du territoire sur la carte">${voisins}<path d="${forme.contour}" class="cl-terr-trait"/><path d="${forme.contour}" class="cl-terr"/>${pts}</svg>
       ${o.sombre ? "" : `<div class="cl-legende"><span><i class="fini"></i>terminé</span><span><i class="cours"></i>en cours</span><span><i class="ouvert"></i>ouvert</span><span><i class="ferme"></i>plus tard</span><span><i class="site"></i>site remarquable</span></div>`}</div>`;
 }
 // Étape 335 (choix D1) : la petite France de la couverture, le territoire en couleur
@@ -2533,10 +2703,10 @@ function nbManqueesAffichees(carnetId) {   // les questions à revoir, d'après 
   return spans.reduce((n, sp) => { const m = sp.textContent.match(/^… et (\d+)/); return n + (m ? Number(m[1]) : 1); }, 0);
 }
 // Les ronds des espèces d'une expédition (✓ = fait à l'étape k ; jamais le nom d'une espèce pas encore trouvée)
-function rondsResume(x, k) {
+function rondsResume(x, k, arrive) {   // étape RF2 : arrive = l'espèce qui vient d'être rencontrée (sa photo rejoint la bande)
   return `<div class="rft-ronds">${x.liste.map(e => {
     const fait = faiteDans(x, e, k), connu = estIdentifiee(e);
-    return `<span class="rft-rond${fait ? " fait" : ""}"><img src="${photoMini(photoEsp(e))}" alt="${connu ? echapper(e.nom_courant) : ""}" onerror="this.onerror=null;this.src='${photoEsp(e)}'">${fait ? `<i aria-hidden="true">✓</i>` : ""}</span>`;
+    return `<span class="rft-rond${fait ? " fait" : ""}${e === arrive && fait ? " arrive" : ""}"><img src="${photoMini(photoEsp(e))}" alt="${connu ? echapper(e.nom_courant) : ""}" onerror="this.onerror=null;this.src='${photoEsp(e)}'">${fait ? `<i aria-hidden="true">✓</i>` : ""}</span>`;
   }).join("")}</div>`;
 }
 function empreintesResume(x, gagnees) {
@@ -2587,6 +2757,15 @@ function construireResume(o) {
     const ouvert = fin.classList.toggle("detail-ouvert");
     ev.currentTarget.textContent = ouvert ? "Replier le détail ▴" : "Voir le détail ▾";
     ev.currentTarget.setAttribute("aria-expanded", ouvert ? "true" : "false");
+    // Étape R188 (11/11, note n° 17 d'Aubin) : le détail s'ouvre plus bas, hors de l'écran ; la page y descend toute seule
+    if (ouvert) requestAnimationFrame(() => {
+      let cible = z.nextElementSibling;
+      while (cible && !(cible.getClientRects().length && cible.offsetHeight > 0)) cible = cible.nextElementSibling;
+      if (!cible) return;
+      const haut = cible.getBoundingClientRect().top + window.scrollY - 12;
+      const doux = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+      window.scrollTo({ top: Math.max(0, haut), behavior: doux ? "smooth" : "auto" });
+    });
   };
   window.scrollTo(0, 0);
 }
@@ -2626,10 +2805,11 @@ function resumeSessionTelephone(s) {
   if (x) {
     const faite = especeFaite(e, 1), manques = faite ? 0 : manquesEtape1(e).length, av = avanceeEtape(x, 1);
     const gagnees = Math.max(0, gainExp(x) - (s.expedition.avantGain || 0));
-    etat = etapeFinie(x, 1) ? "Étape 1 réussie !" : faite ? "Fait !" : `${manques} chose${manques > 1 ? "s" : ""} à revoir`;
+    etat = RENCONTRE_COMPLETE && etapeFinie(x, 2) ? "Expédition terminée !" : etapeFinie(x, 1) ? "Étape 1 réussie !" : faite ? "Fait !" : `${manques} chose${manques > 1 ? "s" : ""} à revoir`;   // RF1
     corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">${manques > 1 ? "Elles reviendront" : "Elle reviendra"} à la fin de l'étape, rien n'est perdu.</div>` : "")
-      + rondsResume(x, 1) + empreintesResume(x, gagnees);
+      + rondsResume(x, 1, RENCONTRE_COMPLETE ? e : null) + empreintesResume(x, gagnees);
     retour = { texte: "← Expédition", action: () => { session = null; ouvrirExpedition(x); } };
+    var quiEnsuiteTel = RENCONTRE_COMPLETE && faite && !etapeFinie(x, 1) ? blocQuiEnsuite(x) : "";   // étape RF1
   } else if (s.duJour) {
     corps = `<div class="rft-phrase">${PHRASE_FIN_DU_JOUR}</div>`;   // étape R187 : le bouton principal ramène déjà à l'accueil
   } else {
@@ -2639,10 +2819,23 @@ function resumeSessionTelephone(s) {
   if (fait) corps += `<div class="rft-fait">${fait.innerHTML}</div>`;
   // En tête, sur une ligne : la photo de l'espèce, son nom, ce qui est fait et le score
   const score = document.getElementById("score-session");
-  const tete = `<div class="rft-espece">${e ? `<img src="${photoMini(photoEsp(e))}" alt="" onerror="this.onerror=null;this.src='${photoEsp(e)}'">` : ""}
+  let tete = `<div class="rft-espece">${e ? `<img src="${photoMini(photoEsp(e))}" alt="" onerror="this.onerror=null;this.src='${photoEsp(e)}'">` : ""}
       <div><h2 class="rft-titre">${titre}</h2>${etat ? `<b class="rft-etat">${etat}</b>` : ""}${score && score.textContent.trim() ? `<div class="rft-score">${score.innerHTML}</div>` : ""}</div></div>`;
+  // Étape RF2 (maquette 7B, choix d'Aubin) : fin d'une Rencontre d'expédition — sa grande photo, son nom, ce qui est acquis ;
+  //   dessous, la bande des espèces où sa photo vient de prendre sa place (sobre : un léger mouvement, pas de fête)
+  if (x && e && RENCONTRE_COMPLETE && estRenseigne(e.photo)) {
+    const acquis = especeFaite(e, 1) ? (especeFaite(e, 2) ? "Croisée · Comprise" : "Croisée") : etat;
+    tete = `<div class="rft-grande"><img src="${e.photo}" alt="${echapper(e.nom_courant)}"><div class="rft-grande-bas">
+        <h2 class="rft-titre">${titre}</h2><span class="rft-acquis">${echapper(acquis)}</span></div></div>
+        ${score && score.textContent.trim() ? `<div class="rft-score">${score.innerHTML}</div>` : ""}`;
+  }
   construireResume({ fin: "fin-session", carnet: "carnet-fin-session",
-    etiq: x ? `${x.titre} · faire connaissance` : "Rencontre terminée", tete, titre: "", corps, principal: "bouton-rejouer", retour });
+    etiq: x ? `${x.titre} · ${RENCONTRE_COMPLETE ? "rencontre" : "faire connaissance"}` : "Rencontre terminée", tete, titre: "", corps, principal: "bouton-rejouer", retour });
+  if (x && quiEnsuiteTel) {                            // étape RF1 : « Qui rencontrer ensuite ? », sous le bouton de la suite
+    const z = document.querySelector("#fin-session > .resume-fin-tel .rft-actions");
+    if (z) { z.insertAdjacentHTML("afterbegin", quiEnsuiteTel); brancherQuiEnsuite(x, z);
+             const p = z.querySelector(".rft-principal"); if (p) p.remove(); }   // le choix remplace « Espèce suivante »
+  }
 }
 // 3) La fin d'un petit jeu ou d'une halte du site remarquable (M16)
 function resumeJeuTelephone(d) {

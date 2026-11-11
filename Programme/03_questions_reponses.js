@@ -150,6 +150,7 @@ function annoncerReprises(tirage) {
 }
 function annoncerBonus(tirage) {
   const espece = session.focus;
+  if (session.etonnant && tirage.champ === INSOLITE) { lancerTirage(tirage); return; }   // étape RF1 : « Étonnant » arrive directement (rythme)
   if (typeof INSOLITE !== "undefined" && tirage.champ === INSOLITE) {   // étape QI4 : le bonus est un fait insolite
     carteAnnonce(espece, "Question bonus", `Pour finir, un fait étonnant sur ${nomAvecArticle(espece)} : vrai ou faux ?`, "", "Tenter le bonus →", tirage, false);
     return;
@@ -163,7 +164,7 @@ function annoncerBonus(tirage) {
 // les questions ratées reprises à la fin de l'autre (« À revoir · 1 / 2 »).
 function texteCompteur(champ) {
   if (!session) return "";
-  if (session.focus && session.enBonus) return "Bonus";
+  if (session.focus && session.enBonus) return session.etonnant ? "Étonnant" : "Bonus";   // étape RF1
   if (session.focus && session.enRejeu) return `À revoir · ${session.faites - session.normalesFaites + 1} / ${session.dejaRejouees.length}`;
   if (session.focus) {
     // Le total annoncé : les questions prévues, ou moins s'il ne reste plus assez de choses à demander
@@ -245,6 +246,9 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
     const autresFormats = formats.filter(f => f !== dernierFormat);
     if (autresFormats.length) formats = autresFormats;
     format = auHasard(formats);
+    // Étape RF1 : sa vie, dans la Rencontre complète, toujours en vrai ou faux (même si la question d'avant l'était)
+    if (session && session.vie && session.vie.includes(champ) && autresValeurs(q, bonne, espece).length >= 1
+        && (!q.formats || q.formats.includes("vraifaux"))) format = "vraifaux";
   }
   dernierChamp = champ;
   dernierFormat = format;
@@ -256,6 +260,8 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   if (format === "identification") poserIdentification(espece);
   if (format === "qcm")            poserQcm(espece, q, bonne);
   if (format === "vraifaux")       poserVraiFaux(espece, q, bonne);
+  if (session && session.vie && session.vie.includes(champ))   // étape RF1 ; RF2 : la rafale, « 2 / 3 »
+    document.getElementById("revision").textContent = session.enRejeu ? "Sa vie · à revoir" : `Sa vie · vrai ou faux · ${session.vie.indexOf(champ) + 1} / ${session.vie.length}`;
   if (format === "photos")         poserPhotos(espece, q, bonne);
   if (format === "estimation")     poserEstimation(espece, q);
   if (format === "empreinte-nom")   poserEmpreinteNom(espece, bonne);
@@ -313,7 +319,8 @@ function enTete(espece, montrerPhoto, montrerNom, titre) {
   photo.classList.toggle("cache", !montrerPhoto);
   photo.classList.toggle("grande", !montrerNom);        // photo plus haute quand il faut reconnaître
   photo.classList.remove("cadre-empreinte");            // (remis seulement par la question sur l'empreinte)
-  photo.classList.remove("cadre-son", "devoile", "floutee");   // (remis seulement par la question sur le cri, ou le bonus : étape 162)
+  photo.classList.remove("cadre-son", "devoile", "floutee", "jumelles");   // RF4 : « jumelles »
+  photo.querySelectorAll(".fe-plus-large").forEach(b => b.remove());   // (remis seulement par la question sur le cri, ou le bonus : étape 162)
   photo.innerHTML = celluleImage(espece);
   const famille = document.getElementById("famille");
   famille.textContent = espece.nom_affichage_groupe;
@@ -995,6 +1002,8 @@ function repondreSon(aLeSon, tirage) {
   // Étape 140 : dans le Carnet, plus aucun cri dans cette partie, et une autre question est tirée à la place
   if (defi) { defi.cris = false; poserQuestion(choisirQuestionDefi()); return; }
   // La question de cri est remplacée par une autre, sur la même espèce
+  // Étape RF1 : dans la Rencontre d'une expédition, la remplaçante est une question prévue (pas une question déjà posée)
+  if (session && session.physique && champsFocusRestants().length) { const t = choisirQuestionFocus(); if (t && t.champ) { poserQuestion(t); return; } }
   poserQuestion({ espece: tirage.espece, champ: choisirChamp(tirage.espece), estRevision: false });
 }
 
@@ -1098,6 +1107,10 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
   // Question sur le cri : la photo floue redevient nette
   if (champ === "cri_son") document.getElementById("photo-rencontre").classList.add("devoile");
   if (document.getElementById("photo-rencontre").classList.contains("floutee")) document.getElementById("photo-rencontre").classList.add("devoile");   // étape 162
+  if (document.getElementById("photo-rencontre").classList.contains("jumelles")) {   // étape RF4 : la photo entière à la réponse
+    document.getElementById("photo-rencontre").classList.add("devoile");
+    document.querySelectorAll("#photo-rencontre .fe-plus-large").forEach(b => b.remove());
+  }
   // Quand le nom était caché (photo ou empreinte à reconnaître), on le dévoile
   if (champ === IDENTIFICATION || champ === "empreinte_nom" || champ === "cri_son") document.getElementById("nom").textContent = nom;
   document.getElementById("famille").classList.remove("cache");     // l'étiquette de groupe se dévoile
@@ -1116,6 +1129,11 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     noterRevue(espece, champ);                   // étape 150
     xp = xp + 10;
     retour.textContent = (session && session.enBonus ? "Bravo, vous vous en souveniez ! " : "Bravo ! ") + explication;   // étape 161
+    // Étape RF2 : après un trait d'allure trouvé dans une Rencontre d'expédition, un détail de plus (« apprendre à chaque question »)
+    if (session && session.physique && typeof detailPhysique === "function" && enCours.q && enCours.q.format === "picto") {
+      const d = detailPhysique(espece, champ);
+      if (d) retour.insertAdjacentHTML("beforeend", `<span class="et-aussi"><b>Et aussi :</b> ${echapper(d)}.</span>`);
+    }
     jouerSon();
   } else {
     if (presque) {
@@ -1165,8 +1183,12 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
   // Étape R168 : et le poids, à côté
   if (session && session.focus && champ === IDENTIFICATION && typeof retourMesures === "function") {
     retour.insertAdjacentHTML("beforeend", retourMesures(espece));
+    if (session.physique && typeof pictosEnsemble === "function" && RENCONTRE_COMPLETE) retour.insertAdjacentHTML("beforeend", pictosEnsemble(espece));   // étape RF6
   }
   postitReponse(champ, estJuste ? "trouve" : presque ? "presque" : "rate");   // étape 151 : la ligne s'écrit
+  // Étape RF4 : la photo reconnue, la bande de l'expédition montre enfin sa photo (silhouette avant)
+  if (session && session.physique && champ === IDENTIFICATION && typeof majBandeExpedition === "function" && session.expedition)
+    majBandeExpedition(expeditionParId(session.expedition.id));
 
   // Le statut a-t-il changé ? → une annonce, et une seule.
   // Les moments rares ont droit à la carte illustrée (étape 40), le reste à la bulle.
@@ -1223,9 +1245,37 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     boutonSuivant.textContent = (session.faites >= session.total) ? "Voir le résultat →"
                               : session.focus ? "Question suivante →" : "Rencontre suivante →";
   }
+  // Étape RF2 (choix d'Aubin : « explications après la 3e carte ») : la rafale « Sa vie · vrai ou faux »
+  if (session && session.focus && session.vie && session.vie.includes(champ) && !session.enRejeu) {
+    session.rafale = session.rafale || [];
+    const verite = (document.querySelector('#reponses button[data-juste="oui"]') || {}).textContent || "";
+    session.rafale.push({ texte: document.getElementById("affirmation").textContent, juste: !!estJuste, expl: explication, verite: verite.trim() });
+    const restent = session.vie.filter(c => !session.posees.includes(c));
+    if (restent.length) { retour.textContent = estJuste ? "Juste." : "Pas tout à fait : vous le retrouverez dans le bilan."; boutonSuivant.textContent = "Carte suivante →"; }
+    else retour.innerHTML = bilanRafale(session.rafale);
+  }
+  if (session) session.dernierJuste = !!estJuste;      // étape RF2 : « avancer d'un toucher » après une bonne réponse
   boutonSuivant.classList.remove("cache");
   noterDansHistorique();                           // étape 247 : pour pouvoir la revoir avec « ← Question précédente »
 }
+// Étape RF2 : le bilan de la rafale — chaque affirmation, juste ou non, et la phrase à retenir
+function bilanRafale(cartes) {
+  const n = cartes.filter(c => c.juste).length;
+  return `<div class="rafale-bilan"><div class="rafale-titre">Sa vie · ${n} sur ${cartes.length}</div><ul>${cartes.map(c =>
+    `<li class="${c.juste ? "ok" : "ko"}"><span class="rafale-marque" aria-hidden="true">${c.juste ? "✓" : "✗"}</span><span><span class="rafale-affirm">${c.verite ? `<b>${echapper(c.verite)}</b> · ` : ""}${echapper(c.texte)}</span>${echapper(c.expl || "")}</span></li>`).join("")}</ul></div>`;
+}
+// Étape RF2 (choix d'Aubin : « avancer d'un toucher ») : dans une Rencontre, après une bonne réponse (ou une carte de la rafale),
+//   toucher la photo ou la question passe à la suite, sans viser le bouton.
+document.addEventListener("click", ev => {
+  const suivant = document.getElementById("suivant");
+  if (!session || !session.focus || !suivant || suivant.classList.contains("cache")) return;
+  const t = ev.target;
+  if (t.closest("button, a, input, label, .fiche-session, #fiche-session, .bande-fiche")) return;
+  if (!t.closest("#photo-rencontre, #question, #nom, #retour, #affirmation, #reponses")) return;
+  const enRafale = /Carte suivante/.test(suivant.textContent);
+  if (!session.dernierJuste && !enRafale) return;
+  suivant.click();
+});
 
 
 // ==================================================================

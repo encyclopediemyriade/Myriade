@@ -80,12 +80,20 @@ function sauvegarder() {
   } catch (e) { /* tiroir indisponible (navigation privée…) : le jeu continue sans sauver */ }
 }
 
+// Étape R188e : les espèces renommées (ancien nom → nouveau) ; leur carnet est repris sous le nouveau nom au chargement
+const NOMS_CHANGES = { "Goujon": "Goujon occitan" };
 function charger() {
   try {
     const texte = localStorage.getItem(CLE_SAUVEGARDE);
     if (!texte) { suivi.familleOfferte = true; suivi.reglagesRemis129 = true; suivi.famillesRemises131 = true; suivi.medaillesGardees227 = true; return; }   // rien de sauvegardé : première partie (étape 127 : rien à offrir)
     const donnees = JSON.parse(texte);
     Object.assign(progression, donnees.progression);   // on recopie le carnet
+    // Étape R188e (11/11) : « Goujon » s'appelle maintenant « Goujon occitan » : son carnet suit le nouveau nom
+    for (const [ancien, nouveau] of Object.entries(NOMS_CHANGES)) {
+      if (progression[ancien] && !(donnees.progression || {})[nouveau]) progression[nouveau] = progression[ancien];
+      if (ancien in progression && !ESPECES.some(e => e.nom_courant === ancien)) delete progression[ancien];
+      if (donnees.especeFavorite === ancien) donnees.especeFavorite = nouveau;
+    }
     xp = donnees.xp || 0;
     profil = donnees.profil || null;             // une ancienne sauvegarde n'en a pas : la première visite s'ouvrira
     // La dernière réponse sur le son. "!== false" : une ancienne sauvegarde, qui ne

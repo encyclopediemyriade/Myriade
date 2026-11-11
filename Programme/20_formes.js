@@ -70,7 +70,10 @@ function formeAvantOuverture(espece) {
   if (estIdentifiee(espece) || session.expedition.revue || session.expedition.rattrapage) return false;
   const x = expeditionParId(session.expedition.id);
   if (!x) return false;
-  const f = formeEtape1(x);
+  // Étape RF4 : avec la Rencontre complète, la façon d'entrer se choisit espèce par espèce (jamais deux fois de suite la même)
+  const f = typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE ? entreeEspece(x, espece) : formeEtape1(x);
+  if (f === "jumelles") { poserJumelles(espece); return true; }
+  if (f === "sosie") { const autre = sosiePourEntree(espece); if (autre) { poserSosieEntree(espece, autre); return true; } }
   if (f === "cri" && aUnCri(espece) && !(sonDemande && !sonActif)) { poserEcoute(espece); return true; }
   if (f === "indices" && aDesIndices(espece) && !indicesAmbigus(espece, x)) {   // R179 : jamais deux espèces de l'expédition pour les mêmes indices
     const pieges = piegesIndices(espece, x);
@@ -183,6 +186,43 @@ function indicesEnPlus(e) {
   const autres = l.slice(0, INDICES_EN_PLUS_MAX - (sil ? 1 : 0));
   return sil ? [...autres, { etiq: "Silhouette", image: sil }] : autres;
 }
+// ---- Étape RF7 (notes n° 13 et 15 ; consigne d'Aubin du 11/11 : « il faut simplement qu'il y ait quelques signes
+//   distinctifs par rapport aux autres espèces de l'expédition, et la silhouette doit en faire partie ») ----
+//   Les indices montrés d'office : la SILHOUETTE toujours, plus les 3 indices écrits qui la distinguent le mieux des autres
+//   espèces de l'expédition (milieu, indice de présence, taille, forme du bec ou du museau, moment d'activité) ;
+//   un indice que toutes les autres partagent n'est pas montré d'office. Les autres restent dans « + Un autre indice ».
+const INDICES_ECRITS_OFFICE = 3;
+function candidatsIndices(e) {
+  const l = [], milieu = lireCase(e, "milieu_principal"), trace = traceDe(e), t = typeof tailleRencontre === "function" ? tailleRencontre(e) : null;
+  const bec = becDe(e), museau = typeof museauDe === "function" ? museauDe(e) : null, act = lireCase(e, "activite");
+  if (milieu) l.push({ etiq: "Où", texte: majuscule(milieu), cle: o => lireCase(o, "milieu_principal") });
+  if (trace) l.push({ etiq: "Indice de présence", texte: majuscule(trace), cle: o => simplifier(traceDe(o) || "") });
+  if (t) l.push({ etiq: "Taille", texte: majuscule(t.texte), taille: true });
+  if (bec) l.push({ etiq: "Forme du bec", texte: majuscule(bec), cle: o => becDe(o) });
+  if (museau) l.push({ ...museau, cle: o => { const m = museauDe(o); return m && m.texte; } });
+  if (act && /^(surtout|à|de jour)/i.test(act)) l.push({ etiq: "Activité", texte: majuscule(act), cle: o => lireCase(o, "activite") });
+  return l;
+}
+// Combien d'autres espèces de l'expédition cet indice écarte-t-il ?
+function forceIndice(e, i, x) {
+  const autres = x.liste.filter(o => o !== e);
+  if (i.taille) { const a = tailleNombre(e); return a ? autres.filter(o => { const b = tailleNombre(o); return b && Math.max(a, b) / Math.min(a, b) >= 1.6; }).length : 0; }
+  const v = i.cle(e);
+  return autres.filter(o => { const w = i.cle(o); return w && w !== v; }).length;
+}
+function indicesDistinctifs(e, x) {
+  const notes = candidatsIndices(e).map((i, rang) => ({ i, f: forceIndice(e, i, x), rang }));
+  const choisis = notes.filter(n => n.f > 0).sort((a, b) => b.f - a.f || a.rang - b.rang).slice(0, INDICES_ECRITS_OFFICE)
+    .sort((a, b) => a.rang - b.rang).map(n => n.i);
+  const sil = fichierSilhouette(e);
+  return [...(sil ? [{ etiq: "Silhouette", image: sil }] : []), ...choisis];
+}
+function indicesEnPlusRF7(e, x) {
+  const montres = new Set(indicesDistinctifs(e, x).map(i => i.etiq));
+  const reste = candidatsIndices(e).filter(i => !montres.has(i.etiq));
+  const sc = scenePourIndice(e);
+  return [...reste, ...(sc ? [sc] : [])].slice(0, INDICES_EN_PLUS_MAX);
+}
 // Les 3 autres photos : d'abord des espèces de l'expédition, puis du lieu, puis du territoire (même famille d'abord).
 // Chacune doit se distinguer de la bonne par un indice MONTRÉ (milieu, taille nettement différente, indice de présence),
 // et ne jamais être un sosie : sinon la question serait injuste.
@@ -208,7 +248,12 @@ function indicesAmbigus(e, x) {
 function piegesIndices(e, x) {
   const sosies = sosiesDe(e);
   const differe = o => seDistingueParIndices(e, o);
-  const ok = o => o !== e && estRenseigne(o.photo) && !sosies.includes(o) && differe(o);
+  // Étape RF7 (note n° 13 d'Aubin : « les écrevisses ont toutes la même silhouette, impossible à trouver ») : on choisit
+  //   parmi des PHOTOS ; une fausse photo doit donc se distinguer À L'ŒIL, pas seulement par un indice écrit (le milieu ou
+  //   la taille ne se voient pas sur une photo). Jamais une espèce du même ordre (rongeur / rongeur, écrevisse / écrevisse,
+  //   passereau / passereau…) ni du même groupe du jeu (« Rongeurs des rivières »…).
+  const visible = o => !(e.ordre && o.ordre && o.ordre === e.ordre) && !(e.nom_affichage_groupe && o.nom_affichage_groupe === e.nom_affichage_groupe);
+  const ok = o => o !== e && estRenseigne(o.photo) && !sosies.includes(o) && differe(o) && visible(o);
   const lieu = groupeDeLExpedition(x).flatMap(y => y.liste);
   const terr = ESPECES.filter(o => String(o.territoire || "").split(" ; ").includes(x.territoire));
   // D'abord la même famille (expédition, puis lieu, puis territoire) ; une autre famille seulement si elle est dans l'expédition
@@ -225,8 +270,9 @@ function htmlIndice(i) {
     ? `<img class="fe-silhouette" src="${i.image}" alt="Silhouette de l'espèce">` : `<span class="fe-texte">${echapper(i.texte)}</span>`}</li>`;
 }
 function poserIndices(espece, x, pieges) {
-  const indices = indicesDe(espece), enPlus = indicesEnPlus(espece);
-  const zone = carteForme(espece, "Indices relevés", "Une espèce de l'expédition, décrite par ce qu'on en observe :", "forme-indices");
+  const indices = typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE ? indicesDistinctifs(espece, x) : indicesDe(espece);   // RF7
+  const enPlus = typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE ? indicesEnPlusRF7(espece, x) : indicesEnPlus(espece);
+  const zone = carteForme(espece, "Indices relevés", "Une espèce de l'expédition a laissé ces indices. Lisez-les, puis retrouvez-la parmi 4 photos.", "forme-indices");
   zone.innerHTML = `<ul class="fe-indices" id="fe-indices">${indices.map(htmlIndice).join("")}</ul>
     ${enPlus.length ? `<button type="button" class="fe-plus" id="fe-plus">+ Un autre indice</button>` : ""}
     <button type="button" class="suivant bouton-annonce fe-go" id="fe-go">Identifier l'espèce ▶</button>
@@ -242,7 +288,10 @@ function poserIndices(espece, x, pieges) {
 }
 function poserChoixIndices(espece, montres, pieges) {
   const zone = carteForme(espece, "À quelle espèce correspondent ces indices ?", "", "forme-choix");
-  document.getElementById("question").innerHTML = montres.filter(i => i.texte).map(i => `<span class="fe-rappel${i.scene ? " fe-rappel-scene" : ""}">${echapper(i.texte)}</span>`).join("");
+  // Étape RF7 (note n° 15 d'Aubin : « pouvoir revoir tous les indices ») : TOUS les indices relevés restent sous la question,
+  //   chacun avec son étiquette, la silhouette comprise
+  document.getElementById("question").innerHTML = `<ul class="fe-rappels">${montres.map(i => `<li class="fe-rappel${i.scene ? " fe-rappel-scene" : ""}">`
+    + `<small>${echapper(i.etiq)}</small>${i.image ? `<img src="${i.image}" alt="Silhouette de l'espèce">` : `<span>${echapper(i.texte)}</span>`}</li>`).join("")}</ul>`;
   const especes = melanger([espece, ...pieges.slice(0, 3)]);
   zone.innerHTML = `<div class="fe-photos">${especes.map((e, i) => `<button type="button" class="fe-photo" data-i="${i}" aria-label="Photo ${i + 1}">${celluleImage(e, true)}</button>`).join("")}</div>`;
   zone.querySelectorAll(".fe-photo").forEach(b => b.onclick = () => {
@@ -262,6 +311,83 @@ function poserChoixIndices(espece, montres, pieges) {
     suite.type = "button"; suite.className = "suivant bouton-annonce fe-go"; suite.textContent = "La découvrir →";
     // Étape R179 (retour d'Aubin du 09/11) : l'ouverture est faite ; la photo (« La reconnaîtriez-vous maintenant ? ») revient
     // à la FIN de la Rencontre, pas juste après (avant : on devinait l'espèce deux fois de suite).
+    suite.onclick = () => { suite.remove(); if (session) session.ouvertureFaite = true; enCours = { espece, champ: OUVERTURE, explication: "", q: null, bonne: null }; pasEncoreConnue(); };
+    document.getElementById("retour").after(suite);
+  });
+}
+
+// ==================================================================
+// RF4 · LES ENTRÉES, ESPÈCE PAR ESPÈCE (11/11, choix d'Aubin : jumelles et sosie ; critère C1 : deux espèces de suite
+//   ne se découvrent pas de la même façon). Entrées possibles : classique, aux jumelles (la photo commence sur sa tête),
+//   elle ou son sosie, par le cri, par les indices. La forme de l'expédition reste la préférée quand elle n'a pas servi
+//   à l'espèce d'avant ; sinon la moins jouée dans l'expédition. Mémoire de la partie seulement (entreesVues).
+// ==================================================================
+const entreesVues = {};
+function fichierPhoto(e) { return String(e.photo || "").split("/").pop(); }
+function sosiePourEntree(e) {
+  if (typeof sosiesDe !== "function") return null;
+  const c = sosiesDe(e).filter(o => estRenseigne(o.photo) && typeof critereSosie === "function" && critereSosie(e, o));
+  return c.find(estIdentifiee) || c[0] || null;
+}
+function entreesPossibles(e, x) {
+  const p = ["classique"];
+  if (estRenseigne(e.photo) && typeof CADRAGE !== "undefined" && CADRAGE[fichierPhoto(e)]) p.push("jumelles");
+  if (sosiePourEntree(e)) p.push("sosie");
+  if (aUnCri(e) && !(sonDemande && !sonActif)) p.push("cri");
+  if (aDesIndices(e) && !indicesAmbigus(e, x) && piegesIndices(e, x).length >= 3) p.push("indices");
+  return p;
+}
+function entreeEspece(x, e) {
+  const vues = entreesVues[x.id] = entreesVues[x.id] || [];
+  const possibles = entreesPossibles(e, x), derniere = vues[vues.length - 1];
+  const ok = possibles.filter(f => f !== derniere);
+  let f;
+  if (!ok.length) f = possibles[0];
+  else if (ok.includes(formeEtape1(x))) f = formeEtape1(x);
+  else {
+    const compte = k => vues.filter(v => v === k).length, min = Math.min(...ok.map(compte));
+    f = auHasard(ok.filter(k => compte(k) === min));
+  }
+  vues.push(f);
+  return f;
+}
+// Aux jumelles (sobre, sans effet de longue-vue) : la question habituelle, la photo d'abord resserrée sur la tête ;
+//   « Voir plus large » élargit en deux fois ; la réponse montre la photo entière.
+const ZOOMS_JUMELLES = [3, 1.8, 1];
+function poserJumelles(espece) {
+  session.formeFaite = true;
+  poserOuverture(espece);
+  const cadre = document.getElementById("photo-rencontre"), c = CADRAGE[fichierPhoto(espece)];
+  if (!cadre || !c) return;
+  let i = 0;
+  cadre.classList.add("jumelles");
+  cadre.style.setProperty("--ox", c[0] + "%"); cadre.style.setProperty("--oy", c[1] + "%"); cadre.style.setProperty("--zoom", ZOOMS_JUMELLES[0]);
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "fe-plus-large"; b.textContent = "Voir plus large";
+  b.onclick = ev => { ev.stopPropagation(); i = Math.min(i + 1, ZOOMS_JUMELLES.length - 1); cadre.style.setProperty("--zoom", ZOOMS_JUMELLES[i]); if (i === ZOOMS_JUMELLES.length - 1) b.remove(); };
+  cadre.appendChild(b);
+}
+// Elle ou son sosie : « Laquelle est la mésange nonnette ? » entre elle et son sosie, puis le repère qui les sépare
+function poserSosieEntree(espece, autre) {
+  const nom = nomAvecArticle(espece);
+  const zone = carteForme(espece, "Elle ou son sosie", `Laquelle est ${nom} ?`, "forme-choix");
+  session.sosieFait = true;                          // l'encart « À ne pas confondre » ne revient pas plus tard
+  const especes = melanger([espece, autre]);
+  zone.innerHTML = `<div class="fe-photos">${especes.map((e, i) => `<button type="button" class="fe-photo" data-i="${i}" aria-label="Photo ${i + 1}">${celluleImage(e, true)}</button>`).join("")}</div>`;
+  zone.querySelectorAll(".fe-photo").forEach(b => b.onclick = () => {
+    if (zone.dataset.repondu) return;
+    zone.dataset.repondu = "oui";
+    const juste = especes[Number(b.dataset.i)] === espece;
+    zone.querySelectorAll(".fe-photo").forEach(o => { o.disabled = true; const e = especes[Number(o.dataset.i)];
+      if (e === espece) o.classList.add("juste");
+      o.insertAdjacentHTML("beforeend", `<span class="fe-legende">${echapper(e.nom_courant)}</span>`); });
+    if (!juste) b.classList.add("fausse");
+    try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
+    const critere = critereSosie(espece, autre);
+    document.getElementById("retour").textContent = `${juste ? "Bien vu. " : ""}C'est ${juste ? "elle" : "l'autre photo"} : ${nom}.${critere ? ` Le repère : ${critere}.` : ""}`;
+    document.getElementById("nom").textContent = espece.nom_courant;
+    const suite = document.createElement("button");
+    suite.type = "button"; suite.className = "suivant bouton-annonce fe-go"; suite.textContent = "La découvrir →";
     suite.onclick = () => { suite.remove(); if (session) session.ouvertureFaite = true; enCours = { espece, champ: OUVERTURE, explication: "", q: null, bonne: null }; pasEncoreConnue(); };
     document.getElementById("retour").after(suite);
   });
@@ -434,6 +560,7 @@ function lienPourExpedition(x) {
 // Appelée par finExpedition (17), juste avant le résumé du téléphone : quand l'expédition vient d'être terminée,
 // le bouton principal propose d'abord le lien ; après, il reprend son texte et son action.
 function proposerLienDuLieu(x, k, info, apres) {
+  if (typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE) return;   // étape RF3 : les liens sont dans l'étape 2 « Leurs liens »
   if (k !== 2 || !(apres >= NB_ETAPES && info.avant < NB_ETAPES)) return;
   const lien = lienPourExpedition(x);
   if (!lien) return;
@@ -488,6 +615,129 @@ function ouvrirLienDuLieu(x, lien, apres) {
     const s = document.getElementById("fl-suite"); s.classList.remove("cache"); s.onclick = fini; s.focus();
   });
   window.scrollTo(0, 0);
+}
+
+// ==================================================================
+// RF3 · « LEURS LIENS » (11/11, choix d'Aubin : l'expédition = Rencontres, puis Leurs liens, puis Approfondir)
+//   Après les Rencontres, 3 questions au plus sur les liens entre les espèces de l'expédition :
+//   1) les liens de la finale du lieu (deux de ses espèces, ou une de ses espèces et un élément du lieu) ;
+//   2) « qui mange qui ? » tiré des fiches (prédateurs et proies), quand un nom désigne une seule espèce de
+//      l'expédition et que l'inverse n'est pas vrai aussi.
+//   Jamais d'échec : une erreur est expliquée. Ces liens NE COMPTENT PAS pour la finale : elle les reposera
+//   (une révision, plus tard), et elle garde ainsi toutes ses questions.
+// ==================================================================
+const LIENS_ETAPE2_MAX = 3;
+function sansAccent(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/s\b/g, "").trim(); }
+function itemsListe(e, c) { return String(e[c + "_items"] || "").split(";").map(t => t.trim()).filter(t => t && !t.startsWith("NA")); }
+function especesDuNom(item, liste) {
+  const i = sansAccent(item);
+  if (i.length < 4) return [];
+  return liste.filter(b => { const n = sansAccent(b.nom_courant); return n === i || n.startsWith(i + " "); });
+}
+function mangeDans(a, b, liste) {   // a mange b, d'après la fiche de b (prédateurs) ou de a (proies)
+  const autres = liste.filter(o => o !== a && o !== b);
+  const parPred = itemsListe(b, "predateurs").some(it => { const m = especesDuNom(it, [a, ...autres]); return m.length === 1 && m[0] === a; });
+  const parProie = itemsListe(a, "proies").some(it => { const m = especesDuNom(it, [b, ...autres]); return m.length === 1 && m[0] === b; });
+  return parPred || parProie;
+}
+const memoLiensExp = new Map();
+function candidatsLiens(x) {
+  if (memoLiensExp.has(x.id)) return memoLiensExp.get(x.id);
+  const liste = x.liste, noms = new Set(liste.map(e => e.nom_courant)), res = [];
+  const c = x.chapitre && chapitreParNom(x.territoire, x.chapitre);
+  if (c && typeof liensDuLieu === "function")
+    for (const k of liensDuLieu(x.territoire, c.nom))
+      if (noms.has(k.a) && (k.nature_b !== "espece" || noms.has(k.b)) && k.pieges && k.pieges.length) res.push({ type: "lien", lien: k });
+  const deja = new Set(res.filter(r => r.lien.nature_b === "espece").map(r => [r.lien.a, r.lien.b].sort().join("|")));
+  for (const a of liste) for (const b of liste) {
+    if (a === b || deja.has([a.nom_courant, b.nom_courant].sort().join("|"))) continue;
+    if (mangeDans(a, b, liste) && !mangeDans(b, a, liste)) { res.push({ type: "mange", a, b }); deja.add([a.nom_courant, b.nom_courant].sort().join("|")); }
+  }
+  memoLiensExp.set(x.id, res);
+  return res;
+}
+function liensExpVus(x) { return !!(suivi && suivi.liensExp && suivi.liensExp[x.id]); }
+// Rien ne recule : la première fois, les expéditions déjà finies (règle d'avant RF3) sont notées « liens vus »
+function migrerLiensRF3() {
+  if (!suivi || suivi.liensExpRF3) return;
+  suivi.liensExp = suivi.liensExp || {};
+  for (const y of EXPEDITIONS) { const x = expeditionParId(y.id); if (x && etapeFinieSansLiens(x, 2)) suivi.liensExp[x.id] = true; }
+  suivi.liensExpRF3 = true;
+  sauvegarder();
+}
+function liensOk(x) { migrerLiensRF3(); return liensExpVus(x) || candidatsLiens(x).length === 0; }
+let liensExp = null;
+function ouvrirLiensExp(x) {
+  // les liens de la finale d'abord, puis « qui mange qui » ; on varie les espèces (pas trois fois le brochet)
+  const tous = [...melanger(candidatsLiens(x).filter(r => r.type === "lien")), ...melanger(candidatsLiens(x).filter(r => r.type === "mange"))];
+  const nomsDe = r => r.type === "lien" ? [r.lien.a, r.lien.nature_b === "espece" ? r.lien.b : null].filter(Boolean) : [r.a.nom_courant, r.b.nom_courant];
+  const items = [], vus = new Set();
+  for (const passe of [0, 1]) for (const r of tous) {
+    if (items.length >= LIENS_ETAPE2_MAX || items.includes(r)) continue;
+    if (passe === 0 && nomsDe(r).some(n => vus.has(n))) continue;
+    items.push(r); nomsDe(r).forEach(n => vus.add(n));
+  }
+  if (!items.length) { marquerLiensExp(x); lancerExpedition(x, 2); return; }
+  ecranForme(x, 2);
+  liensExp = { x, items: melanger(items), i: 0, justes: 0, avantGain: gainExp(x), avant: empreintesExp(x) };
+  dessinerLienExp();
+}
+function marquerLiensExp(x) { suivi.liensExp = suivi.liensExp || {}; suivi.liensExp[x.id] = true; sauvegarder(); }
+function deLEspece(e) { const t = nomAvecArticle(e); return /^le /.test(t) ? "du " + t.slice(3) : /^les /.test(t) ? "des " + t.slice(4) : "de " + t; }
+function figureLien(e) { return `<figure><img src="${photoMini(photoEsp(e))}" alt=""><figcaption>${echapper(e.nom_courant)}</figcaption></figure>`; }
+function figureElement(nom) { const p = photoElement(nom); return `<figure>${p ? `<img src="${p}" alt="">` : `<span class="fl-vide"></span>`}<figcaption>${echapper(nom)}</figcaption></figure>`; }
+function dessinerLienExp() {
+  const z = document.getElementById("forme-ecran"), L = liensExp;
+  if (!z || !L) return;
+  const it = L.items[L.i];
+  let duo, question, bonne, choix, explication;
+  if (it.type === "lien") {
+    const k = it.lien, a = especeParNom(k.a);
+    duo = k.nature_b === "espece" ? [figureLien(a), figureLien(especeParNom(k.b))] : [figureLien(a), figureElement(k.b)];
+    question = k.question || "Quel est leur lien ?";
+    bonne = k.nature_b === "espece" ? k.phrase : k.b;
+    choix = melanger([bonne, ...k.pieges.slice(0, 2)]);
+    explication = k.phrase;
+  } else {
+    const a = it.a, b = it.b, A = nomAvecArticle(a), B = nomAvecArticle(b);
+    duo = [figureLien(a), figureLien(b)];
+    question = "Lequel des deux mange l'autre ?";
+    bonne = `${majuscule(A)} mange parfois ${B}.`;
+    choix = melanger([bonne, `${majuscule(B)} mange parfois ${A}.`]);
+    explication = `${majuscule(A)} compte parmi les prédateurs ${deLEspece(b)}.`;
+  }
+  z.innerHTML = `<div class="fp-carte fl-carte">
+    <div class="fp-tete"><span class="fp-lib">${PICTO_LIENS}Leurs liens</span><span class="fp-compte">${L.i + 1} / ${L.items.length}</span></div>
+    <div class="fl-duo">${duo.join('<span class="fl-trait" aria-hidden="true"></span>')}</div>
+    <h3 class="fl-question">${echapper(question)}</h3>
+    <div class="fl-choix">${choix.map((v, i) => `<button type="button" class="fl-rep" data-i="${i}">${echapper(v)}</button>`).join("")}</div>
+    <p class="fp-retour" id="fl-retour"></p>
+    <div class="fp-pied"><button type="button" class="bouton-accueil principal cache" id="fl-suite">${L.i + 1 < L.items.length ? "Lien suivant" : "Continuer"}</button></div></div>`;
+  z.querySelectorAll(".fl-rep").forEach(btn => btn.onclick = () => {
+    const juste = choix[Number(btn.dataset.i)] === bonne;
+    z.querySelectorAll(".fl-rep").forEach(o => { o.disabled = true; if (choix[Number(o.dataset.i)] === bonne) o.classList.add("juste"); });
+    if (!juste) btn.classList.add("fausse");
+    try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
+    if (juste) L.justes++;
+    document.getElementById("fl-retour").innerHTML = `${juste ? "Bravo ! " : ""}${echapper(explication)}`;
+    const s = document.getElementById("fl-suite"); s.classList.remove("cache"); s.focus();
+    s.onclick = () => { if (L.i + 1 < L.items.length) { L.i++; dessinerLienExp(); window.scrollTo(0, 0); } else finirLiensExp(); };
+  });
+  window.scrollTo(0, 0);
+}
+function finirLiensExp() {
+  const L = liensExp, x = L.x;
+  marquerLiensExp(x);
+  fermerEcranForme(); liensExp = null;
+  if (!etapeFinie(x, 2)) { lancerExpedition(x, 2); return; }   // il reste un peu de leur vie : la partie habituelle
+  const gagnees = Math.max(0, gainExp(x) - L.avantGain);
+  session = null;
+  ouvrirExpedition(x);
+  if (L.avant < NB_ETAPES) {
+    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !", detail: `${L.justes} lien${L.justes > 1 ? "s" : ""} sur ${L.items.length} trouvé${L.justes > 1 ? "s" : ""}${gagnees ? ` · +${gagnees} empreintes` : ""}`,
+            son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
+    if (gagnees) verifierOuverture();
+  }
 }
 
 // ==================================================================
