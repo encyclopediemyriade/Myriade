@@ -721,7 +721,7 @@ function repondreRevision(boutonClique, estJuste, jeNeSaisPas) {
     defi.bonnes = defi.bonnes + 1;
     defi.score = defi.score + 1;
     defi.xpBase = defi.xpBase + XP_REVISION;
-    retour.textContent = (defi.reprise ? "Rattrapée ! " : "Bravo ! ") + explication;   // étape 144
+    retour.textContent = (defi.reprise || defi.questionReprise ? "Rattrapée ! " : "Bravo ! ") + explication;   // étape 144 (R184 : la reprise de la révision)
     jouerSon();
   } else if (boutonClique && boutonClique.dataset.presque === "oui") {
     // Étape 136 : « Presque » (voir repondre) — Découvert si jamais trouvée, et la question revient plus tard
@@ -736,6 +736,11 @@ function repondreRevision(boutonClique, estJuste, jeNeSaisPas) {
     const texte = explication.replace(`C'est : ${espece.nom_courant}. `, "");
     if (!defi.rates.some(r => r.nom === espece.nom_courant && r.explication === texte)) defi.rates.push({ nom: espece.nom_courant, explication: texte });
     retour.textContent = explication;
+    // Étape R184 : dans la révision d'une expédition, la photo ratée revient à la fin ; ratée à la reprise, elle compte quand même ici
+    if (champ === IDENTIFICATION && typeof revueARepreendre === "function") {
+      if (revueARepreendre(espece)) retour.textContent = `${explication} Elle reviendra à la fin de cette révision.`;
+      else if (revuePassee(espece)) retour.textContent = `${explication} Elle compte quand même pour cette expédition ; sa photo reviendra dans vos prochaines parties.`;
+    }
   }
   defi.faites = defi.faites + 1;
   if (typeof apresReponseExpedition === "function") apresReponseExpedition(espece);   // étape R102 : bande + bulle « c'est fait »

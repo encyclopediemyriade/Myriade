@@ -4617,3 +4617,7 @@ button.pastille-carnet:hover { background: #fff; }
 .ac-gain-jour { display: inline-flex; align-items: center; gap: 3px; margin-left: 6px; color: var(--ocre-texte); letter-spacing: 0; text-transform: none; font-weight: 600; }
 .ac-gain-jour svg { width: 13px; height: 13px; fill: currentColor; }
 .ac-jour-fait { margin: 4px 0 8px; font-size: 14px; color: var(--texte-doux); }
+
+/* Étape R187 : fin de la Rencontre du jour — la phrase sous le bouton « Retour à l'accueil » */
+#fin-session .fin-du-jour { grid-column: 1 / -1; flex: 0 0 100%; width: 100%; margin: 10px 2px 0; font-size: 0.95rem; color: var(--texte-doux, #5b5648); }
+#fin-session.fin-courte .fin-du-jour { display: none; }   /* téléphone : le résumé l'affiche déjà */

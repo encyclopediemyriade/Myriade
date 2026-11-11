@@ -393,7 +393,7 @@ function poserQcm(espece, q, bonne) {
   enTete(espece, !(q.format === "picto" && !q.avecPhoto), true);
   if (q.format === "picto" && !q.avecPhoto && silhouetteUtile(q, espece)) proposerSilhouette(espece);   // étapes 111 et 241 : seulement si elle aide
   document.getElementById("question").textContent = typeof q.question === "function" ? q.question(espece) : q.question;
-  let autres = q.piegesQcm ? melanger(q.piegesQcm(espece)) : autresValeurs(q, bonne, espece);   // étape R166 : pièges propres au QCM
+  let autres = q.piegesQcm ? melanger(piegesDuQcm(q, espece, bonne)) : autresValeurs(q, bonne, espece);   // étape R166 : pièges propres au QCM (R187 : sans pièges interdits ni doublons)
   const pieges = autres.slice(0, 3);
   // Étape 246 : « Où vit-il le plus souvent ? » en photos de paysages (une photo par réponse, tirée parmi celles
   // du milieu pour le territoire de l'espèce ; le nom du milieu reste écrit dessous). Si une réponse n'a pas de
@@ -614,7 +614,7 @@ function poserVraiFaux(espece, q, bonne) {
   const estVraie = Math.random() < 0.5;                  // une fois sur deux, l'affirmation est vraie
   const valeur = estVraie ? bonne : autresValeurs(q, bonne, espece)[0];
   const affirmation = document.getElementById("affirmation");
-  affirmation.textContent = "« " + q.affirmation(valeur) + " »";
+  affirmation.textContent = "« " + q.affirmation(valeur, espece) + " »";   // étape R184 : l'espèce (« s'accouple » chez les mammifères)
   affirmation.classList.remove("cache");
   ajouterBouton("Vrai", estVraie);
   ajouterBouton("Faux", !estVraie);
@@ -632,7 +632,7 @@ function especesPieges(espece, q, bonne) {
     // le pigeon ramier a « NA » pour le nom du groupe, mais il vit en troupe). NA n'est sûr que pour les champs de NA_SURS.
     if (String(v).startsWith("NA")) return NA_SURS.includes(q.champ) || (q.champ === "nom_groupe" && groupeSurementAutre(e, bonne));
     if (!piegeReciproque(q, e, bonne)) return false;                 // étape R166 : la règle de la réciprocité
-    if (piegeInterdit(q, bonne, v) && !(JAMAIS_PIEGES[q.champ] || []).includes(v)) return false;   // étape 135 : à moitié vrai pour elle aussi
+    if (piegeInterdit(q, bonne, v, espece) && !(JAMAIS_PIEGES[q.champ] || []).includes(v)) return false;   // étape 135 : à moitié vrai pour elle aussi
     if (aussiVraiPour(q, e, bonne)) return false;                    // étape 137 : la réponse vaut aussi pour elle
     return !valeursDe(e, q).some(x => seRessemblent(x, bonne));      // aucune de ses valeurs ne ressemble à la bonne
   });

@@ -1351,14 +1351,14 @@ const CREDITS_PHOTOS = {
   "source": "https://commons.wikimedia.org/wiki/File:Silurus_glanis_02.jpg"
  },
  "barbeau_fluviatile": {
-  "auteur": "Linie29",
-  "licence": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Barbe_Tiergarten_Schoenbrunn.jpg"
+  "auteur": "Hyppolyte de Saint-Rambert",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Marnay_Barbeau_commun_hdsr_7D_2016_08_15_9999_304.jpg"
  },
  "bouviere": {
   "auteur": "Viridiflavus",
   "licence": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:RhodeusAmarusBitterlingMale1.JPG"
+  "source": "https://commons.wikimedia.org/wiki/File:BittervoornRhodeusAmarusVrouwtje.JPG"
  },
  "chevesne": {
   "auteur": "harry beaman",
@@ -2546,9 +2546,9 @@ const CREDITS_PHOTOS = {
   "source": "https://www.inaturalist.org/observations/15446553"
  },
  "spirlin": {
-  "auteur": "Sylvain Montagner",
+  "auteur": "Donald Davesne",
   "licence": "CC BY 4.0",
-  "source": "https://www.inaturalist.org/observations/374086858"
+  "source": "https://www.inaturalist.org/observations/230523473"
  },
  "blageon": {
   "auteur": "Donald Davesne",

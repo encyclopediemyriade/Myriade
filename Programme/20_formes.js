@@ -279,15 +279,15 @@ const PHRASES_PLANCHE = {
   pelage_hiver: v => /change/i.test(v) ? "Change de couleur en hiver" : null,
   milieu_principal: v => `Vit surtout : ${minuscule(v)}`,
   emplacement_nid: v => `Nid : ${minuscule(v)}`,
-  saison_reproduction: v => `Se reproduit ${saisonEnPhrase(v)}`,
+  saison_reproduction: (v, e) => `${accouplementSeul(e) ? "S'accouple" : "Se reproduit"} ${saisonEnPhrase(v)}`,   // étape R184
   saison_observation: v => `Se croise ${saisonEnPhrase(v)}`,
   defense_principale: v => `Pour se défendre : ${minuscule(v)}`,
   indice_presence: v => `Indice de présence : ${minuscule(v)}`,
   niveau_estran: v => `Sur l'estran : ${minuscule(v)}`,
 };
-function phrasePlanche(q, v) {
+function phrasePlanche(q, v, e) {
   const f = PHRASES_PLANCHE[q.champ];
-  if (f) return f(v);
+  if (f) return f(v, e);
   if (!q.libelle) return null;
   return `${String(q.libelle).replace(/\s*\?$/, "")} : ${minuscule(v).replace(" : ", ", ")}`;
 }
@@ -306,10 +306,10 @@ function phrasesPlanche(x, neuves) {
       if (!q || q.format || q.type === "nombre" || q.tirer || !possibles.has(c)) continue;
       const bonne = valeurDe(e, q);
       if (!estRenseigne(bonne) || typeof bonne !== "string") continue;
-      const texte = phrasePlanche(q, bonne);
+      const texte = phrasePlanche(q, bonne, e);
       if (!texte) continue;
       const surs = new Set(especesPieges(e, q, bonne));
-      cands.push({ e, champ: c, q, bonne, texte, conflits: toutes.filter(o => o !== e && !surs.has(o)), hasard: Math.random() });
+      cands.push({ e, champ: c, q, bonne, texte, conflits: toutes.filter(o => o !== e && (!surs.has(o) || conflitPlanche(c, e, o))), hasard: Math.random() });
     }
   }
   cands.sort((a, b) => a.conflits.length - b.conflits.length || a.hasard - b.hasard);
@@ -323,6 +323,14 @@ function phrasesPlanche(x, neuves) {
     for (const o of p.conflits) exclues.add(o);
   }
   return { phrases, montrees: toutes.filter(o => !exclues.has(o)) };
+}
+// Étape R184 (10/11, demande d'Aubin : « chaque phrase ne doit convenir qu'à une seule espèce de la planche ») :
+// « Se reproduit au printemps » (un oiseau) se lirait aussi vrai pour un mammifère qui met bas au printemps (la fouine :
+// accouplement en été, petits au printemps). La saison de reproduction ne se compare qu'entre espèces de la même famille ;
+// une espèce d'une autre famille rend la phrase douteuse et n'est pas montrée.
+function conflitPlanche(champ, e, o) {
+  if (champ === "saison_reproduction") return o.onglet !== e.onglet && (accouplementSeul(e) || accouplementSeul(o));
+  return false;
 }
 const memoPlanche = new Map();
 function formePlanche(x) {
@@ -563,13 +571,19 @@ function finirRevueGroupee() {
   sauvegarder();
   majBandeExpedition(x);
   const gagnees = Math.max(0, gainExp(x) - rv.avantGain), n = rv.ratees.size;
-  const suite = !etapeFinie(x, 1) ? "Continuer ▶" : "Voir l'expédition";   // étape R182 : une étape finie ramène à l'expédition
+  // Étape R184 (demande d'Aubin) : les espèces confondues sont reposées tout de suite, une par une (« Vous arrivez à la
+  // reconnaître maintenant ? ») ; ratées encore, elles comptent quand même ici (leur photo reviendra dans les prochaines parties).
+  const confondues = rv.especes.filter(e => rv.ratees.has(e) && especesARevoirIci(x).includes(e));
+  const suite = confondues.length ? (confondues.length > 1 ? "Les reconnaître maintenant ▶" : "La reconnaître maintenant ▶")
+              : !etapeFinie(x, 1) ? "Continuer ▶" : "Voir l'expédition";   // étape R182 : une étape finie ramène à l'expédition
   z.innerHTML = `<div class="im-carte"><div class="im-tete"><span class="im-lib">Révision</span>
       <h2>${justes.length === rv.especes.length ? "Toutes retrouvées" : `${justes.length} sur ${rv.especes.length} retrouvée${justes.length > 1 ? "s" : ""}`}</h2>
-      <p>${n ? `${n === 1 ? "L'espèce confondue reviendra" : `Les ${n} espèces confondues reviendront`}, rien n'est perdu.` : "Elles comptent pour cette expédition."}${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}</p></div>
+      <p>${n ? `${n === 1 ? "L'espèce confondue revient tout de suite" : `Les ${n} espèces confondues reviennent tout de suite`}, une par une.` : "Elles comptent pour cette expédition."}${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}</p></div>
     <div class="im-photos petit">${rv.especes.map(e => `<span class="im-photo${rv.ratees.has(e) ? "" : " juste"}"><img src="${photoMini(e.photo)}" alt=""><span class="im-etiquette">${echapper(e.nom_courant)}</span></span>`).join("")}</div>
     <div class="im-pied"><button class="bouton-accueil principal" id="im-suite">${suite}</button></div></div>`;
-  document.getElementById("im-suite").onclick = () => { revue = null; fermerIntermede(); if (etapeFinie(x, 1)) { session = null; ouvrirExpedition(x); } else lancerExpedition(x, 1); };
+  document.getElementById("im-suite").onclick = () => { revue = null; fermerIntermede();
+    if (confondues.length) { session = null; lancerRevueExpedition(x, confondues); return; }   // étape R184
+    if (etapeFinie(x, 1)) { session = null; ouvrirExpedition(x); } else lancerExpedition(x, 1); };
   if (etapeFinie(x, 1) && !rv.avantFinie) {
     feter({ etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });

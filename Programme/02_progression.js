@@ -308,11 +308,17 @@ function calculerQuestionsPossibles(espece) {
     if (q.champ === "couleur_dominante" && q.pieges(espece).length === 0) return false;   // et pour la couleur (étape 135)
     // Étape R166 : toute question qui fournit ses pièges n'est posée que s'il en reste au moins un (avant : un QCM à une seule
     // réponse était possible, par exemple la saison de reproduction de 13 espèces)
+    // Étape R185 : une question d'allure que la photo de l'espèce ne montre pas (ou contredit) n'est pas posée (VERIF_PHOTOS)
+    if (verdictPhoto(espece, q.champ) === "pas_posee") return false;
     if (q.pieges && !q.format && q.type !== "nombre" && autresValeurs(q, v, espece).length === 0
-        && !(q.piegesQcm && q.piegesQcm(espece).length)) return false;
+        && !(q.piegesQcm && piegesDuQcm(q, espece, v).length)) return false;   // étape R187 : sans les pièges interdits
+    // Étape R184 (10/11, retour d'Aubin : « Comment sont ses oreilles ? » de la fouine, une seule réponse, « Moyennes ») :
+    // la même règle pour les questions en dessins (format « picto »), qui y échappaient
+    if (q.format === "picto" && autresValeurs(q, v, espece).length === 0) return false;
     // Étape R102 (Revoir 10, choix E2) : le bec des mésanges est trop petit et trop sombre pour juger sa couleur sur une photo
     if (q.champ === "bec_couleur" && /^Mésange/.test(espece.nom_courant)) return false;
     if (q.pasDansLeNom && seDevineDuNom(espece, v)) return false;     // réponse soufflée par le nom de l'espèce
+    if (q.champ === "milieu_principal" && MILIEU_DANS_LE_NOM.includes(espece.nom_courant)) return false;   // étape R187
     // Particularités : pas de question si TOUTES se devinent dans le nom
     if (q.champ === "adaptations_physiques" && String(v).split(q.separateur).every(p => seDevineDuNom(espece, p))) return false;
     return !(q.ignorer || []).includes(v);
@@ -527,6 +533,13 @@ function seRessemblent(a, b) {
 // "Fourmilière" / "Fourmi rousse des bois", "Bourdonne" / "Bourdon des Alpes".
 // On ignore les mots trop courants ("grand", "petit", "commun"), qui ne soufflent rien.
 const MOTS_BANALS = ["grand", "petit", "commu"];
+// Étape R187 (11/11, choix d'Aubin, n° 9 : « enlever uniquement pour les milieux ») : le nom donne le milieu → la question
+// « Où vit-il le plus souvent ? » n'est pas posée. Liste écrite à la main : la règle des débuts de mots (seDevineDuNom)
+// écarterait aussi les campagnols (« Campa… » → « Campagne, haies et jardins »), à tort. Le reste (couleur « cendré »,
+// plantes des papillons…) est gardé : le nom aide aussi à retenir.
+const MILIEU_DANS_LE_NOM = ["Ancyle des rivières", "Loche de rivière", "Bécassine des marais", "Cuivré des marais", "Dolomède des marais",
+  "Escargot des haies", "Escargot des jardins", "Musaraigne des jardins", "Hirondelle de rochers",
+  "Monticole de roche"];   // le monticole : même cas, repéré en R187 (le contrôleur ne l'avait pas vu, « roche » au singulier)
 function seDevineDuNom(espece, valeur) {
   const motsDuNom = debutsDeMots(espece.nom_courant).filter(mot => !MOTS_BANALS.includes(mot));
   return debutsDeMots(valeur).some(mot => motsDuNom.includes(mot));
@@ -548,8 +561,44 @@ const PIEGES_A_EVITER = {
 // (« troupe » et « bande » se disent de beaucoup d'animaux ; « non évalué » ne s'apprend pas).
 const JAMAIS_PIEGES = { nom_groupe: ["Troupe", "Bande"], statut_conservation: ["Non évalué", "Données insuffisantes", "Non applicable"],   // étape 193
                        verbe_cri: ["Crie", "Siffle"] };   // étape 275 : verbes qui se disent de presque tous les oiseaux
-function piegeInterdit(q, bonne, valeur) {
+// ---- Étape R185 (10/11, demande d'Aubin : « hyper frustrant de voir la photo et voir le contraire de ce qui est proposé ») ----
+// Les questions d'allure (aspect, couleurs, forme du corps, ailes) : deux valeurs VOISINES ne sont jamais proposées ensemble,
+// car une photo ne permet pas de les départager (brun / orange, uni / points, rayures / marbrures, allongé / fuselé…).
+// Échantillon du 10/11 (`reprise_pictos_aspect.md`) : 45 % de ces questions posaient problème, surtout à cause de pièges voisins.
+// Exception : quand la photo de l'espèce tranche franchement, la voisine est rouverte (VERIF_PHOTOS, rempli par la vérification
+// sur photo, point 3), pour que la question ne devienne pas trop facile.
+const COULEURS_VOISINES = [["Brun", "Beige"], ["Brun", "Roux"], ["Brun", "Orange"], ["Brun", "Gris"], ["Brun", "Noir"],
+  ["Beige", "Blanc"], ["Beige", "Jaune"], ["Beige", "Gris"], ["Beige", "Ivoire"], ["Roux", "Orange"], ["Roux", "Rouge"],
+  ["Orange", "Jaune"], ["Orange", "Rouge"], ["Rouge", "Rose"], ["Rose", "Violet"], ["Rose", "Orange"], ["Gris", "Noir"],
+  ["Gris", "Blanc"], ["Gris", "Argenté"], ["Blanc", "Argenté"], ["Blanc", "Ivoire"], ["Ivoire", "Jaune"], ["Bleu", "Violet"],
+  ["Bleu", "Vert"], ["Vert", "Jaune"], ["Noir", "Bleu"], ["Gris clair", "Blanc"], ["Gris clair", "Gris"]];
+const VOISINES = {
+  couleur_dominante: COULEURS_VOISINES, bec_couleur: COULEURS_VOISINES, yeux_couleur: COULEURS_VOISINES,
+  robe: [["Uni", "Points"], ["Uni", "Marbrures"], ["Uni", "Bicolore"], ["Taches", "Points"], ["Taches", "Ocelles (faux yeux)"],
+         ["Taches", "Marbrures"], ["Taches", "Damier"], ["Points", "Ocelles (faux yeux)"], ["Rayures", "Barres"], ["Rayures", "Zigzag"],
+         ["Rayures", "Marbrures"], ["Rayures", "Nervures"], ["Barres", "Zigzag"], ["Masque", "Bavette"], ["Masque", "Plastron"],
+         ["Bavette", "Plastron"]],
+  corps_forme: [["Fuselé", "Allongé"], ["Allongé", "Très allongé"], ["Fuselé", "Très allongé"], ["Fuselé", "Trapu"],
+                ["Trapu", "Bossu"], ["Trapu", "Haut et plat"], ["Bossu", "Haut et plat"], ["Trapu", "Allongé"]],
+  ailes_repos: [["Repliées", "En toit"]],
+};
+function sontVoisines(champ, a, b) { return (VOISINES[champ] || []).some(([x, y]) => (x === a && y === b) || (x === b && y === a)); }
+// VERIF_PHOTOS (fichier facultatif verif_photos.js) : { "spirlin.jpg": { robe: { voisines: ["Uni"] } } } — la photo tranche
+function lignePhoto(espece, champ) {
+  if (!espece || typeof VERIF_PHOTOS === "undefined") return null;
+  return (VERIF_PHOTOS[String(espece.photo || "").split("/").pop()] || {})[champ] || null;
+}
+function verdictPhoto(espece, champ) { const v = lignePhoto(espece, champ); return v ? v.verdict : null; }   // « ok », « voisines », « pas_posee »
+function voisinePermise(espece, champ, valeur) {
+  const v = lignePhoto(espece, champ);
+  return !!(v && v.verdict === "voisines" && (v.voisines || []).includes(valeur));
+}
+function piegeInterdit(q, bonne, valeur, espece) {
   if ((JAMAIS_PIEGES[q.champ] || []).includes(valeur)) return true;
+  if (VOISINES[q.champ]) {                                     // étape R185
+    const bonnes = espece ? [bonne, ...valeursDe(espece, q)] : [bonne];
+    if (bonnes.some(b => sontVoisines(q.champ, b, valeur)) && !voisinePermise(espece, q.champ, valeur)) return true;
+  }
   return ((PIEGES_A_EVITER[q.champ] || {})[bonne] || []).includes(valeur);
 }
 
@@ -812,18 +861,31 @@ function estItem(espece, q, valeur) { return listeItems(espece, q.champ).include
 // Les autres valeurs possibles d'une caractéristique, pour fabriquer des pièges :
 // prises chez les autres espèces, sans doublon, et assez différentes de la bonne.
 // "espece" = l'espèce sur laquelle porte la question.
-function autresValeurs(q, bonne, espece) {
+// Étape R187 (11/11, contrôleur des questions du jeu) : jamais deux réponses au même texte à l'écran (« Zinzinule » et
+// « zinzinule » ; « Aristoloches » pour la proserpine ET pour la diane). On compare le texte affiché, sans majuscules ni espaces en trop.
+function texteReponse(v) { return String(v == null ? "" : v).normalize("NFC").replace(/\s+/g, " ").trim().toLowerCase(); }
+function sansDoublonsDeTexte(liste, bonne) {
+  const vus = new Set([texteReponse(bonne)]);
+  return liste.filter(v => { const k = texteReponse(v); if (vus.has(k)) return false; vus.add(k); return true; });
+}
+// Étape R187 : les pièges propres au QCM (piegesQcm, la saison par exemple) passent eux aussi par l'onglet Pieges_interdits
+// (avant : « Du printemps à l'automne » proposé comme faux pour l'agrion de Mercure, « Toute l'année » pour l'hippocampe moucheté)
+function piegesDuQcm(q, espece, bonne) {
+  return sansDoublonsDeTexte(q.piegesQcm(espece).filter(v => !aussiVraiPour(q, espece, v)), bonne);
+}
+function autresValeurs(q, bonne, espece) { return sansDoublonsDeTexte(autresValeursBrutes(q, bonne, espece), bonne); }   // étape R187
+function autresValeursBrutes(q, bonne, espece) {
   // Étape 227 : un aliment ou un prédateur seul → ses propres mauvaises réponses
   if ((q.champ === "proies" || q.champ === "predateurs") && espece && estItem(espece, q, bonne))
     return q.champ === "proies" ? piegesAliment(espece) : piegesPredateur(espece);
   // Certaines questions fournissent elles-mêmes leurs pièges (voir "pieges", partie 1)
-  if (q.pieges) return melanger(q.pieges(espece).filter(v => !piegeInterdit(q, bonne, v) && !aussiVraiPour(q, espece, v)));   // (étapes 135 et 137)
+  if (q.pieges) return melanger(q.pieges(espece).filter(v => !piegeInterdit(q, bonne, v, espece) && !aussiVraiPour(q, espece, v)));   // (étapes 135 et 137 ; R185 : l'espèce)
   const valeurs = ESPECES
     .map(autre => valeurDe(autre, q))
     .filter(v => estRenseigne(v))
     .filter(v => !q.accepter || q.accepter(v))          // pas de valeur générique parmi les pièges
     .filter(v => !seRessemblent(v, bonne))
-    .filter(v => !piegeInterdit(q, bonne, v))           // étape 135 : rien d'à moitié vrai
+    .filter(v => !piegeInterdit(q, bonne, v, espece))   // étape 135 : rien d'à moitié vrai (R185 : ni voisin)
     .filter(v => !aussiVraiPour(q, espece, v));          // étape 137 : groupes d'aliments, de prédateurs, pièges interdits
   const pieges = melanger([...new Set(valeurs)]);
   // Étape 137 : aliments et prédateurs — d'abord les listes d'espèces de la MÊME famille (plus crédibles :

@@ -773,7 +773,10 @@ function apresReponseExpedition(espece) {
 // chasse ne servent plus à « Laquelle des deux ? » ni à la planche. Les fiches n'en gardent qu'une « principale », alors que
 // beaucoup d'espèces se cachent, fuient ou se camouflent tour à tour : l'autre espèce pouvait avoir, en vrai, la même réponse.
 // (Les questions à 4 réponses sur la défense et la chasse restent.)
-const CHAMPS_SANS_DUO = ["defense_principale", "chasse_principale"];
+// Étape R184 (10/11, retour d'Aubin : « pelotes de réjection » vraies pour la chevêche ET le petit-duc) : même chose pour
+// l'indice de présence — la fiche n'en garde qu'un (le principal), alors qu'une espèce en laisse souvent plusieurs
+// (le petit-duc : des cris la nuit, mais aussi des pelotes). La question « Quel indice trahit sa présence ? » reste.
+const CHAMPS_SANS_DUO = ["defense_principale", "chasse_principale", "indice_presence"];
 function piegesDuo(espece, q, bonne) {
   // seulement le mode de vie (une valeur par case) : pas les listes de proies ou de prédateurs, souvent incomplètes
   if (!defi || !defi.expedition || !q || q.format || q.type === "nombre" || !estRenseigne(bonne) || !CHAMPS_MODE_DE_VIE.includes(q.champ)) return [];
@@ -795,7 +798,8 @@ const QUESTIONS_DUO = {
   pelage_hiver: v => `Laquelle ${minuscule(v)} en hiver ?`,
   milieu_principal: v => `Laquelle vit surtout ici : ${minuscule(v)} ?`,
 };
-function questionDuo(q, v) {
+function questionDuo(q, v, e) {
+  if (q.champ === "saison_reproduction") return `Laquelle ${accouplementSeul(e) ? "s'accouple" : "se reproduit"} ${saisonEnPhrase(v)} ?`;   // étape R184
   const f = QUESTIONS_DUO[q.champ], t = f ? f(v) : null;
   return t || `${q.libelle} : ${minuscule(v).replace(" : ", ", ")}. Laquelle des deux ?`;   // étape R149 : « sans chrysalide, la larve… »
 }
@@ -803,7 +807,7 @@ function poserDuo(espece, q, bonne) {
   const autre = auHasard(piegesDuo(espece, q, bonne));
   if (defi) { defi.duos = defi.duos || []; defi.duos.push([espece.nom_courant, autre.nom_courant].sort().join("|")); }   // étape R151
   enTete(espece, false, false, "Laquelle des deux ?");
-  document.getElementById("question").textContent = questionDuo(q, bonne);
+  document.getElementById("question").textContent = questionDuo(q, bonne, espece);
   const zone = document.getElementById("reponses");
   zone.className = "grille-photos duo-exp";
   for (const e of melanger([espece, autre])) {
@@ -945,9 +949,13 @@ function lancerRencontreExpedition(x) {
   window.scrollTo(0, 0);
 }
 // Étape 316 : la courte révision des espèces déjà connues ailleurs — une photo à reconnaître par espèce
-function lancerRevueExpedition(x) {
-  if (typeof revueGroupeePossible === "function" && revueGroupeePossible(x)) { ouvrirRevueGroupee(x); return; }   // étape R173 : la révision groupée
-  const liste = especesARevoirIci(x);
+// Étape R184 (10/11, demande d'Aubin) : une espèce ratée revient À LA FIN de la même révision, avec « Vous arrivez à la
+// reconnaître maintenant ? ». Ratée une 2e fois, elle compte quand même ici (comme le rattrapage, R146) et sa photo
+// revient dans les prochaines parties (« Déjà croisée… ») : la même question ne tourne plus en boucle à chaque ouverture.
+// reprise : les espèces confondues dans la révision groupée, reposées tout de suite (toutes leurs questions sont des reprises).
+function lancerRevueExpedition(x, reprise) {
+  if (!reprise && typeof revueGroupeePossible === "function" && revueGroupeePossible(x)) { ouvrirRevueGroupee(x); return; }   // étape R173 : la révision groupée
+  const liste = reprise ? reprise.filter(e => especesARevoirIci(x).includes(e)) : especesARevoirIci(x);
   if (!liste.length) { lancerExpedition(x, etapeEnCours(x) || 2); return; }
   document.getElementById("bouton-territoire-defi").textContent = "Retour au territoire";
   territoiresDefi = [x.territoire];
@@ -957,9 +965,29 @@ function lancerRevueExpedition(x) {
   lancementDirect = true;
   montrer("jouer");
   lancementDirect = false;
-  demarrerDefi(d, { jouer: true, expedition: { id: x.id, etape: 1, revue: true, avant: empreintesExp(x), avantGain: gainExp(x), avantTerr: empreintesTerritoire(x.territoire) } });
+  demarrerDefi(d, { jouer: true, expedition: { id: x.id, etape: 1, revue: true, toutEnReprise: !!reprise, especesRevue: liste.map(e => e.nom_courant),
+                                               avant: empreintesExp(x), avantGain: gainExp(x), avantTerr: empreintesTerritoire(x.territoire) } });
   questionsClassique = QUESTIONS_REVISION;
   majFilExpedition(x, 1);
+}
+// Étape R184 : la photo ratée dans la révision revient une fois, à la fin (une question de plus)
+function revueARepreendre(e) {
+  const info = defi && defi.expedition;
+  if (!info || !info.revue || info.toutEnReprise || defi.questionReprise) return false;
+  defi.reprisesFin = defi.reprisesFin || [];
+  if (defi.reprisesFin.includes(e.nom_courant)) return false;
+  defi.reprisesFin.push(e.nom_courant);
+  defi.total = defi.total + 1;
+  return true;
+}
+// Étape R184 : ratée à la reprise → elle compte ici quand même ; elle reviendra dans les prochaines parties
+function revuePassee(e) {
+  const info = defi && defi.expedition;
+  if (!info || !info.revue || !defi.questionReprise) return false;
+  marquerRevue(info.id, e);
+  defi.revuesPassees = (defi.revuesPassees || 0) + 1;
+  if (defi.manquees) defi.manquees = defi.manquees.filter(m => m.espece !== e);   // déjà reposée : pas de « Essayer à nouveau » en plus
+  return true;
 }
 // Étape R132 : les traits manqués à l'étape 1, reposés seuls (une question par trait manqué)
 function lancerRattrapage(x) {
@@ -1155,14 +1183,25 @@ function dessinerBravoIntermede() {
 }
 
 // Une Rencontre ordinaire : la fin de Rencontre retrouve ses boutons
-function finRencontreOrdinaire() {
+// Étape R187 (11/11, choix d'Aubin, n° 6 et 8) : après la Rencontre de l'espèce du jour, on s'arrête là (une seule espèce par jour) :
+// la phrase « Rencontrée aujourd'hui… » et un seul bouton, « Retour à l'accueil » (plus d'« Autre rencontre aléatoire »).
+const PHRASE_FIN_DU_JOUR = "Rencontrée aujourd'hui. Une autre espèce vous attend demain.";
+function finRencontreOrdinaire(s) {
   const zone = document.getElementById("exp-fin-session");
   if (zone) { zone.classList.add("cache"); zone.innerHTML = ""; }
   const t = document.getElementById("titre-fin-session"); if (t) t.textContent = "Rencontre terminée";
-  const principal = document.getElementById("bouton-rejouer");
+  const principal = document.getElementById("bouton-rejouer"), accueil = document.getElementById("bouton-fin-accueil");
+  document.querySelectorAll("#fin-session .fin-du-jour").forEach(p => p.remove());
+  if (s && s.duJour) {
+    principal.insertAdjacentHTML("afterend", `<p class="fin-du-jour">${PHRASE_FIN_DU_JOUR}</p>`);   // juste sous le bouton
+    principal.textContent = "Retour à l'accueil";
+    principal.onclick = () => accueil.click();
+    accueil.classList.add("cache");
+    return;
+  }
   principal.textContent = "Autre rencontre aléatoire";
   principal.onclick = () => rencontreAleatoire();
-  document.getElementById("bouton-fin-accueil").classList.remove("cache");
+  accueil.classList.remove("cache");
 }
 
 // ---- Les questions d'une étape (appelé par choisirQuestionDefi) ----
@@ -1177,8 +1216,16 @@ function choisirQuestionExpedition() {
   }
   if (defi.expedition.revue) {                       // étape 316 : une photo par espèce déjà connue ailleurs
     const x = expeditionParId(defi.expedition.id);
-    const e = x && especesARevoirIci(x).find(e => !dejaPosee(e, IDENTIFICATION));
-    return e ? garder(e, IDENTIFICATION) : null;
+    const prevues = defi.expedition.especesRevue || [];  // étape R184 : seulement les espèces prévues au départ (le compte reste juste)
+    defi.questionReprise = !!defi.expedition.toutEnReprise;
+    const e = x && especesARevoirIci(x).find(e => prevues.includes(e.nom_courant) && !dejaPosee(e, IDENTIFICATION));
+    if (e) return garder(e, IDENTIFICATION);
+    // étape R184 : puis, à la fin, les photos ratées (une fois chacune)
+    defi.reprisesFaites = defi.reprisesFaites || [];
+    const r = x && especesARevoirIci(x).find(e => (defi.reprisesFin || []).includes(e.nom_courant) && !defi.reprisesFaites.includes(e.nom_courant));
+    if (!r) return null;
+    defi.reprisesFaites.push(r.nom_courant); defi.questionReprise = true;
+    return { espece: r, champ: IDENTIFICATION, estRevision: false };
   }
   if (k === 1) {
     // les espèces pas encore reconnues d'abord (toutes avant la fin), puis des révisions des photos
@@ -1267,7 +1314,7 @@ function finExpedition(d) {
         : info.rattrapage ? (nbTraitsARevoir(x) ? `<b>Encore ${nbTraitsARevoir(x)} chose${nbTraitsARevoir(x) > 1 ? "s" : ""} à revoir</b> · ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}. Rien n'est perdu : la prochaine fois, 2 réponses seulement.`
           : resteApprofondir ? `<b>Étape 1 terminée !</b> ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}. ${resteApprofondir === 1 ? "La chose qui vous a échappé reviendra" : `Les ${resteApprofondir} choses qui vous ont échappé reviendront`} dans Approfondir.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`   // étape R146
           : `<b>Tout est rattrapé !</b> ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`)   // étape R132
-        : info.revue ? `<b>Révision</b> : vous connaissiez déjà ces espèces ailleurs. ${av.faites} sur ${av.total} reconnues ici.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}.` : ""}${especesARevoirIci(x).length ? " Celles qui ont échappé reviendront, rien n'est perdu." : ""}`
+        : info.revue ? `<b>Révision</b> : vous connaissiez déjà ${(info.especesRevue || []).length > 1 ? "ces espèces" : "cette espèce"} ailleurs. ${av.faites} sur ${av.total} reconnue${av.faites > 1 ? "s" : ""} ici.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}.` : ""}${d.revuesPassees ? ` ${d.revuesPassees > 1 ? "Celles qui vous ont échappé comptent quand même ici ; leur photo reviendra" : "Celle qui vous a échappé compte quand même ici ; sa photo reviendra"} dans vos prochaines parties.` : ""}`   // étape R184
         : k === 2 ? bilanEtape(x, info, gagnees, 2)   // étape R126
         : `<b>Étape ${k} · ${ETAPES[k].titre}</b> : ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total}. Continuez, rien n'est perdu.`}</div>
       <button class="ac-bouton" id="exp-fin-ecran">Voir l'expédition</button></div>${blocFinLieu(x, gagnees, etapeGagnee && apres >= NB_ETAPES)}`;   // R153
@@ -2583,6 +2630,8 @@ function resumeSessionTelephone(s) {
     corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">${manques > 1 ? "Elles reviendront" : "Elle reviendra"} à la fin de l'étape, rien n'est perdu.</div>` : "")
       + rondsResume(x, 1) + empreintesResume(x, gagnees);
     retour = { texte: "← Expédition", action: () => { session = null; ouvrirExpedition(x); } };
+  } else if (s.duJour) {
+    corps = `<div class="rft-phrase">${PHRASE_FIN_DU_JOUR}</div>`;   // étape R187 : le bouton principal ramène déjà à l'accueil
   } else {
     retour = { texte: "← Accueil", action: () => document.getElementById("bouton-fin-accueil").click() };
   }

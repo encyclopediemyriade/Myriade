@@ -1391,6 +1391,8 @@ function sansSaisonCommune(e, colonne) {
   return autresDeLaListe(e, colonne).filter(v => v !== "NA" && !saisonsCouvertes(v).some(x => siennes.includes(x)));
 }
 // « Printemps et été » → « au printemps et en été » ; « Fin d'hiver et printemps » → « à la fin de l'hiver et au printemps »
+// Étape R184 : chez les mammifères, la saison de reproduction de la fiche est celle des accouplements
+function accouplementSeul(e) { return !!e && e.onglet === "Mammiferes"; }
 function saisonEnPhrase(v) {
   const t = minuscule(v);
   if (/^(toute|du |de |en |au )/.test(t)) return t;
@@ -1855,12 +1857,15 @@ const QUESTIONS = [
   // Mauvaises réponses : seulement celles qui n'ont AUCUNE saison en commun avec la bonne
   // ("Printemps" n'est pas proposé quand la réponse est "Printemps et été").
   // Les poissons ont "NA" : leur saison est déjà demandée par la question sur le frai.
+  // Étape R184 (10/11, retour d'Aubin : « se reproduit en automne », pipistrelle) : pour les mammifères, la colonne donne la
+  // saison des ACCOUPLEMENTS (chauves-souris en automne, petits au début de l'été ; fouine en été, petits au printemps) :
+  // le texte dit « s'accouple » (seMultiplie). Les autres familles gardent « se reproduit » (ponte, nid, frai).
   { champ: "saison_reproduction", pictos: true, niveau: 2, libelle: "Saison de reproduction", formats: ["qcm", "vraifaux"],
-    question: "À quelle saison se reproduit-il ?",
-    affirmation: v => `Il se reproduit ${saisonEnPhrase(v)}.`,                         // étape R166 (avant : « à cette saison : … »)
+    question: e => accouplementSeul(e) ? "À quelle saison s'accouple-t-il ?" : "À quelle saison se reproduit-il ?",
+    affirmation: (v, e) => `Il ${accouplementSeul(e) ? "s'accouple" : "se reproduit"} ${saisonEnPhrase(v)}.`,   // étape R166 (avant : « à cette saison : … »)
     // Étape R149 : « Toute l'année » et « Du printemps à l'automne » couvrent plusieurs saisons ; R166 : règle commune (sansSaisonCommune)
     pieges: e => sansSaisonCommune(e, "saison_reproduction"),
-    explication: (e, v) => `Sa saison de reproduction : ${minuscule(v)}.` },
+    explication: (e, v) => accouplementSeul(e) ? `Il s'accouple ${saisonEnPhrase(v)}.` : `Sa saison de reproduction : ${minuscule(v)}.` },
 
   // ---- Ajoutées à l'étape 28 : les empreintes -------------------------
   // "format" impose un format de question à part (partie 6f) :

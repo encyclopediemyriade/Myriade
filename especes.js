@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V81.xlsx, especes_bassin_aquitain_V29.xlsx, especes_bassin_parisien_V40.xlsx, especes_corse_V34.xlsx, especes_grand_est_V29.xlsx, especes_jura_V31.xlsx, especes_massif_armoricain_V41.xlsx, especes_massif_central_V31.xlsx, especes_mediterranee_V38.xlsx, especes_pyrenees_V35.xlsx, especes_vosges_V27.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V81.xlsx, especes_bassin_aquitain_V29.xlsx, especes_bassin_parisien_V40.xlsx, especes_corse_V34.xlsx, especes_grand_est_V29.xlsx, especes_jura_V31.xlsx, especes_massif_armoricain_V41.xlsx, especes_massif_central_V31.xlsx, especes_mediterranee_V38.xlsx, especes_pyrenees_V36.xlsx, especes_vosges_V27.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -64872,7 +64872,7 @@ const ESPECES = [
     nom_groupe: "Bande",
     regime_alimentaire_type: "omnivore",
     proies: "Insectes, araignées ; graines de conifères en hiver",
-    predateurs: "Prédateurs des nids au sol",
+    predateurs: "Épervier, chat ; pic épeiche (nichées)",
     liens_autres_especes: "Se mêle aux bandes de mésanges en hiver",
     moyen_communication: "Sonore (chant bisyllabique, cris fins)",
     verbe_cri: "NA",
@@ -64924,11 +64924,11 @@ const ESPECES = [
     distance_par_jour_km: null,
     motif_robe_secondaire: "Barres",
     proies_groupes: "Insectes ; Araignées et petites bêtes ; Fruits et graines",
-    predateurs_groupes: "Mammifères carnivores ; Rapaces",
+    predateurs_groupes: "Rapaces ; Autres oiseaux ; Mammifères carnivores",
     origine: "Indigène",
     introduction_date: "NA",
     proies_items: "Graines ; Insectes ; Araignées",
-    predateurs_items: "NA",
+    predateurs_items: "Épervier ; Chat ; Pic épeiche",
     motif_robe_autres: null,
     motif_robe_absents: null,
     couleurs_plumage: "Noir ; Blanc ; Gris",

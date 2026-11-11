@@ -420,6 +420,7 @@ function terminerSession() {
   arreterCri();                                          // étape R176 : l'écran de fin ne garde pas le cri de la dernière question
   const s = session;
   session = null;
+  if (s) s.duJour = !!rencontreDuJour;                     // étape R187 : la fin de la Rencontre du jour a sa propre suite
   if (rencontreDuJour) {
     if (!suivi.duJour || suivi.duJour.date !== aujourdhui()) suivi.duJour = { date: aujourdhui(), faites: [] };
     if (!suivi.duJour.faites.includes(rencontreDuJour)) {
@@ -453,7 +454,7 @@ function terminerSession() {
   document.getElementById("choix-longueur").classList.add("cache");
   document.getElementById("carte-rencontre").classList.add("cache");
   document.getElementById("fin-session").classList.remove("cache");
-  if (s.expedition) finRencontreExpedition(s); else finRencontreOrdinaire();   // étape 288
+  if (s.expedition) finRencontreExpedition(s); else finRencontreOrdinaire(s);   // étape 288 (R187 : avec la partie)
   if (typeof finRencontreOrdinateur === "function") finRencontreOrdinateur(s);   // étape R162 : sur ordinateur, la fin tient dans l'écran
   if (typeof resumeSessionTelephone === "function") resumeSessionTelephone(s);   // étape M16 : sur téléphone, la fin d'une Rencontre tient sur un écran
 }
@@ -1652,7 +1653,8 @@ function demarrerDefi(d, options = {}) {
 // Étape 196 : l'étiquette d'une question de « Jouer », et sa couleur de pastille
 function etiquetteJouer(espece, champ, estRevision) {
   if (champ === IDENTIFICATION && !estIdentifiee(espece)) return { texte: "Nouvelle espèce", type: "nouv" };
-  if (defi && defi.expedition && defi.expedition.revue) return { texte: "Déjà rencontrée ailleurs · reconnaissez-la", type: "rev" };   // étape 317
+  if (defi && defi.expedition && defi.expedition.revue && defi.questionReprise) return { texte: "Vous arrivez à la reconnaître maintenant ?", type: "rev" };   // étape R184
+  if (defi && defi.expedition && defi.expedition.revue) return { texte: "Déjà rencontrée ailleurs · reconnaissez-la pour qu'elle compte ici", type: "rev" };   // étape 317 (R184 : dit pourquoi)
   if (estRevision) return { texte: "Déjà croisée…", type: "rev" };
   if (nbBonnes(espece, champ) === 0) return { texte: "À découvrir", type: "trait" };
   return { texte: "Révision", type: "rev" };
