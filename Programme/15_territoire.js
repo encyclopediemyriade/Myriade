@@ -503,6 +503,10 @@ function verifierDefis(t) {
   }
   return reussis;
 }
+// Étape R188 : la règle des empreintes, écrite une seule fois (À propos, 06_encyclopedie.js)
+function texteReglesEmpreintes() {
+  return `1 empreinte par espèce découverte en expédition, +${GAIN_FIN_EXPEDITION} à la fin de l'expédition, +${EMPREINTES_FINALE} par finale, +${POINTS_DEFI} par défi du jour (et +${typeof GAIN_ESPECE_DU_JOUR === "number" ? GAIN_ESPECE_DU_JOUR : 2} pour l'espèce du jour). Elles remplissent la médaille du lieu : l'argent ouvre le lieu suivant. Un nouveau territoire s'ouvre dès le premier lieu terminé, puis tous les ${LIEUX_PAR_TERRITOIRE} lieux.`;
+}
 function texteDefi(d) { return SORTES_DEFI[d.sorte].texte(d); }
 function dessinerDefis(t) {
   const zone = document.getElementById("ac-defis");
@@ -519,10 +523,7 @@ function dessinerDefis(t) {
           <span class="defi-texte">${texteDefi(d)}${d.but > 1 && !ok ? `<small>${fait} sur ${d.but}</small>` : ""}</span>
           <span class="defi-gain">${ok ? "réussi" : "+" + POINTS_DEFI} ${PAS_SVG}</span></div>`;
       }).join("")}</div>` : `<p class="jeu-sous">Tout est déjà découvert ici : bravo !</p>`}
-    </div>
-    <details class="jeu-encart regles-empreintes"><summary>Comment gagner des empreintes ?</summary>
-      <p class="jeu-sous petit">1 empreinte par espèce découverte en expédition, +${GAIN_FIN_EXPEDITION} à la fin de l'expédition, +${EMPREINTES_FINALE} par finale, +${POINTS_DEFI} par défi. Elles remplissent la médaille du lieu : l'argent ouvre le lieu suivant. Un nouveau territoire dès le premier lieu terminé, puis tous les ${LIEUX_PAR_TERRITOIRE} lieux.</p>
-    </details>`;
+    </div>`;   // étape R188 (11/11, note n° 18 d'Aubin) : « Comment gagner des empreintes ? » n'alourdit plus la page ; il est dans À propos (texteReglesEmpreintes)
   zone.querySelectorAll(".defi.cliquable").forEach(b => b.onclick = () => {
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167 (avant, R129 : la Rencontre d'une seule espèce)

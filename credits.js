@@ -4454,6 +4454,216 @@ const CREDITS_PHOTOS = {
   "auteur": "Adrien Cozannet",
   "licence": "CC BY 4.0",
   "source": "https://www.inaturalist.org/observations/198993819"
+ },
+ "ecureuil_roux_2": {
+  "auteur": "Aitor",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/135499371"
+ },
+ "ecureuil_roux_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/194745105"
+ },
+ "martre_des_pins_2": {
+  "auteur": "Piotr Lukasik",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/378174643"
+ },
+ "martre_des_pins_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/334642487"
+ },
+ "grand_rhinolophe_2": {
+  "auteur": "Pierre Tellier",
+  "licence": "CC BY 4.0",
+  "source": "http://naturewatch.org.nz/observations/1283017"
+ },
+ "grand_rhinolophe_3": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/345303031"
+ },
+ "fouine_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/369073004"
+ },
+ "campagnol_des_neiges_2": {
+  "auteur": "Dr. Sven Gippner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/217191799"
+ },
+ "campagnol_des_neiges_3": {
+  "auteur": "Jakob Horz",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/217544927"
+ },
+ "lerot_2": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/158151116"
+ },
+ "lerot_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/64471987"
+ },
+ "aigle_royal_2": {
+  "auteur": "Nils",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/205121160"
+ },
+ "aigle_royal_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/333660597"
+ },
+ "gypaete_barbu_2": {
+  "auteur": "thibautv",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/319083319"
+ },
+ "gypaete_barbu_3": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/204239326"
+ },
+ "chouette_hulotte_2": {
+  "auteur": "Murielle Desrois",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/164409115"
+ },
+ "chouette_hulotte_3": {
+  "auteur": "Thibaud Aronson",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/92491701"
+ },
+ "chocard_a_bec_jaune_2": {
+  "auteur": "Léo Souillard",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/234012497"
+ },
+ "chocard_a_bec_jaune_3": {
+  "auteur": "Bob",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/151111181"
+ },
+ "faucon_pelerin_2": {
+  "auteur": "Marie-Lan Taÿ Pamart",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/250159379"
+ },
+ "vautour_fauve_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/352263342"
+ },
+ "vautour_fauve_3": {
+  "auteur": "Jean Meunier",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/250348544"
+ },
+ "grand_corbeau_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125660799"
+ },
+ "perdrix_bartavelle_2": {
+  "auteur": "Šimun Aščić",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/363951815"
+ },
+ "perdrix_bartavelle_3": {
+  "auteur": "Emanuele Santarelli",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/300673478"
+ },
+ "niverolle_alpine_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/400772363"
+ },
+ "niverolle_alpine_3": {
+  "auteur": "Ben Costamagna",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/85598793"
+ },
+ "accenteur_alpin_2": {
+  "auteur": "Thomas Koffel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/5163592"
+ },
+ "accenteur_alpin_3": {
+  "auteur": "Jacob Littlejohn",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/237251968"
+ },
+ "cincle_plongeur_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/376618792"
+ },
+ "cincle_plongeur_3": {
+  "auteur": "Diego González Dopico",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/393287277"
+ },
+ "cassenoix_mouchete_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/141216871"
+ },
+ "crave_a_bec_rouge_2": {
+  "auteur": "Jan Ebr &amp; Ivana Ebrová",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/140077426"
+ },
+ "crave_a_bec_rouge_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/70339855"
+ },
+ "chevechette_d_europe_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/324523780"
+ },
+ "chevechette_d_europe_3": {
+  "auteur": "Tomas Broucek",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154238821"
+ },
+ "buse_variable_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/70778125"
+ },
+ "circaete_jean_le_blanc_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125765078"
+ },
+ "circaete_jean_le_blanc_3": {
+  "auteur": "Franck Cabot",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/182821309"
+ },
+ "choucas_des_tours_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/283455257"
+ },
+ "choucas_des_tours_3": {
+  "auteur": "Vincent Plat",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/302960338"
+ },
+ "salamandre_alpestre_2": {
+  "auteur": "Philipp Pavelka",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/87623982"
  }
 };
 

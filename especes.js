@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V81.xlsx, especes_bassin_aquitain_V29.xlsx, especes_bassin_parisien_V40.xlsx, especes_corse_V34.xlsx, especes_grand_est_V29.xlsx, especes_jura_V31.xlsx, especes_massif_armoricain_V41.xlsx, especes_massif_central_V31.xlsx, especes_mediterranee_V38.xlsx, especes_pyrenees_V36.xlsx, especes_vosges_V27.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V83.xlsx, especes_bassin_aquitain_V30.xlsx, especes_bassin_parisien_V42.xlsx, especes_corse_V35.xlsx, especes_grand_est_V31.xlsx, especes_jura_V33.xlsx, especes_massif_armoricain_V42.xlsx, especes_massif_central_V33.xlsx, especes_mediterranee_V39.xlsx, especes_pyrenees_V38.xlsx, especes_vosges_V29.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -114,6 +114,9 @@ const ESPECES = [
     photo_2_sujet: "femelle",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -221,6 +224,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -328,6 +334,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "Petites",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -435,6 +444,9 @@ const ESPECES = [
     photo_2_sujet: "femelle",
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -542,6 +554,9 @@ const ESPECES = [
     photo_2_sujet: "mâle",
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -649,6 +664,9 @@ const ESPECES = [
     photo_2_sujet: "pelage d'hiver",
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "pupille_forme"]
   },
   {
@@ -751,11 +769,14 @@ const ESPECES = [
     proies_items: "Graines ; Noisettes ; Champignons ; Œufs d'oiseaux",
     predateurs_items: "Martre des pins ; Autour ; Pies ; Chats domestiques",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/ecureuil_roux_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/135499371",
+    photo_2_sujet: "autre vue",
     oreilles_taille: "NA",
     museau_forme: "NA",
+    photo_3: "Images/ecureuil_roux_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/194745105",
+    photo_3_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -863,6 +884,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -970,6 +994,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "couleur_dominante", "pupille_forme"]
   },
   {
@@ -1077,6 +1104,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "Moyennes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1184,6 +1214,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1286,11 +1319,14 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Insectes ; Oiseaux ; Œufs d'oiseaux ; Campagnols et mulots ; Charognes",
     predateurs_items: "Lynx ; Loup ; Renard roux ; Aigle royal",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/martre_des_pins_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/378174643",
+    photo_2_sujet: "autre vue",
     oreilles_taille: "Moyennes",
     museau_forme: null,
+    photo_3: "Images/martre_des_pins_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/334642487",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1393,11 +1429,14 @@ const ESPECES = [
     proies_items: "Papillons ; Mouches ; Coléoptères ; Abeilles et guêpes",
     predateurs_items: "Chouette hulotte ; Effraie des clochers ; Chat domestique",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/grand_rhinolophe_2.jpg",
+    photo_2_source: "http://naturewatch.org.nz/observations/1283017",
+    photo_2_sujet: "autre vue",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: "Images/grand_rhinolophe_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/345303031",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["territoire"]
   },
   {
@@ -1505,6 +1544,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -1612,6 +1654,9 @@ const ESPECES = [
     photo_2_sujet: "pelage d'hiver",
     oreilles_taille: "Grandes",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -1719,6 +1764,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -1826,6 +1874,9 @@ const ESPECES = [
     photo_2_sujet: "femelle",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "difference_male_femelle"]
   },
   {
@@ -1928,11 +1979,14 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Oiseaux ; Œufs d'oiseaux ; Petits mammifères",
     predateurs_items: "Renard ; Lynx ; Aigle royal ; Grand-duc",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/fouine_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/369073004",
+    photo_2_sujet: "jeune",
     oreilles_taille: "Moyennes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["pupille_forme"]
   },
   {
@@ -2040,6 +2094,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "pupille_forme"]
   },
   {
@@ -2142,11 +2199,14 @@ const ESPECES = [
     proies_items: "Herbes ; Bourgeons ; Jeunes pousses ; Racines ; Fruits et baies ; Graines",
     predateurs_items: "Hermine ; Belette ; Renard ; Rapaces",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/campagnol_des_neiges_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/217191799",
+    photo_2_sujet: "autre vue",
     oreilles_taille: "Moyennes",
     museau_forme: "Arrondi",
+    photo_3: "Images/campagnol_des_neiges_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/217544927",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["poil_longueur"]
   },
   {
@@ -2254,6 +2314,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -2356,11 +2419,14 @@ const ESPECES = [
     proies_items: "Fruits et baies ; Graines ; Insectes",
     predateurs_items: "Fouine ; Chouettes ; Hiboux ; Chats",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/lerot_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/158151116",
+    photo_2_sujet: "autre vue",
     oreilles_taille: "Grandes",
     museau_forme: "NA",
+    photo_3: "Images/lerot_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/64471987",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["territoire", "couleur_dominante"]
   },
   {
@@ -2468,6 +2534,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "NA",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -2575,6 +2644,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["poil_longueur"]
   },
   {
@@ -2682,6 +2754,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -2784,9 +2859,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/aigle_royal_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/205121160",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/aigle_royal_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/333660597",
+    photo_3_sujet: "jeune",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -2889,9 +2967,12 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Orange",
     couleurs_plumage_absentes: "Vert ; Bleu ; Violet",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/gypaete_barbu_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/319083319",
+    photo_2_sujet: "jeune",
+    photo_3: "Images/gypaete_barbu_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/204239326",
+    photo_3_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -2997,6 +3078,9 @@ const ESPECES = [
     photo_2: "Images/lagopede_alpin_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Lagopus_muta_muta,_male_in_winter_plumage,_Vadsø,_Norway_1.jpg",
     photo_2_sujet: "plumage d'hiver",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3099,9 +3183,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/chouette_hulotte_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/164409115",
+    photo_2_sujet: "jeune",
+    photo_3: "Images/chouette_hulotte_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/92491701",
+    photo_3_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -3204,9 +3291,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/chocard_a_bec_jaune_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/234012497",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/chocard_a_bec_jaune_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/151111181",
+    photo_3_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -3309,9 +3399,12 @@ const ESPECES = [
     couleurs_plumage: "Gris ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Rose ; Violet",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/faucon_pelerin_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/250159379",
+    photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3414,9 +3507,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/vautour_fauve_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/352263342",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/vautour_fauve_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/250348544",
+    photo_3_sujet: "autre vue",
     a_confirmer: []
   },
   {
@@ -3519,9 +3615,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/grand_corbeau_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/125660799",
+    photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -3627,6 +3726,9 @@ const ESPECES = [
     photo_2: "Images/pic_noir_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_black_woodpecker_(48861795971).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -3732,6 +3834,9 @@ const ESPECES = [
     photo_2: "Images/tichodrome_echelette_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Tichodrome_échelette_Tichodroma_muraria_aDSC_1009_(50997238804).jpg",
     photo_2_sujet: "plumage d'été",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -3837,6 +3942,9 @@ const ESPECES = [
     photo_2: "Images/tetras_lyre_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/95385091",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -3939,9 +4047,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/perdrix_bartavelle_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/363951815",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/perdrix_bartavelle_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/300673478",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -4047,6 +4158,9 @@ const ESPECES = [
     photo_2: "Images/gelinotte_des_bois_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Francolino_di_monte.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -4149,9 +4263,12 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Blanc ; Gris ; Brun",
     couleurs_plumage_absentes: "Rouge ; Vert ; Rose ; Violet",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/niverolle_alpine_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/400772363",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/niverolle_alpine_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/85598793",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["aspect_robe", "queue_vol"]
   },
   {
@@ -4254,9 +4371,12 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris ; Roux",
     couleurs_plumage_absentes: "Vert ; Rose ; Violet",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/accenteur_alpin_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/5163592",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/accenteur_alpin_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/237251968",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["bec_couleur", "pattes_aspect", "queue_vol"]
   },
   {
@@ -4359,9 +4479,12 @@ const ESPECES = [
     couleurs_plumage: "Blanc ; Brun ; Roux",
     couleurs_plumage_absentes: "Jaune ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/cincle_plongeur_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/376618792",
+    photo_2_sujet: "jeune",
+    photo_3: "Images/cincle_plongeur_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/393287277",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4464,9 +4587,12 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Jaune ; Orange ; Rouge ; Rose ; Violet",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/cassenoix_mouchete_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/141216871",
+    photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4569,9 +4695,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/crave_a_bec_rouge_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/140077426",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/crave_a_bec_rouge_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/70339855",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["territoire"]
   },
   {
@@ -4677,6 +4806,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -4779,9 +4911,12 @@ const ESPECES = [
     couleurs_plumage: "Brun ; Blanc",
     couleurs_plumage_absentes: "Orange ; Rouge ; Vert ; Bleu ; Rose ; Violet",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/chevechette_d_europe_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/324523780",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/chevechette_d_europe_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/154238821",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4884,9 +5019,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/buse_variable_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/70778125",
+    photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["motif_robe"]
   },
   {
@@ -4992,6 +5130,9 @@ const ESPECES = [
     photo_2: "Images/faucon_crecerelle_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Falco_tinnunculus_2022_04_17.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -5094,9 +5235,12 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/circaete_jean_le_blanc_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/125765078",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/circaete_jean_le_blanc_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/182821309",
+    photo_3_sujet: "autre vue",
     a_confirmer: ["bec_couleur", "difference_male_femelle"]
   },
   {
@@ -5202,6 +5346,9 @@ const ESPECES = [
     photo_2: "Images/merle_a_plastron_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/274002685",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -5307,6 +5454,9 @@ const ESPECES = [
     photo_2: "Images/bec_croise_des_sapins_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Red_crossbill,_female_(53642471688).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -5412,6 +5562,9 @@ const ESPECES = [
     photo_2: "Images/pic_epeiche_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Dendrocopos_major_(50131010357).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -5514,9 +5667,12 @@ const ESPECES = [
     couleurs_plumage: "Noir ; Gris",
     couleurs_plumage_absentes: "Roux ; Jaune ; Orange ; Rouge ; Rose",
     genre_nom: "masculin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/choucas_des_tours_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/283455257",
+    photo_2_sujet: "autre vue",
+    photo_3: "Images/choucas_des_tours_3.jpg",
+    photo_3_source: "https://www.inaturalist.org/observations/302960338",
+    photo_3_sujet: "jeune",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -5606,9 +5762,12 @@ const ESPECES = [
     proies_items: "Coléoptères ; Araignées ; Mille-pattes ; Mollusques",
     predateurs_items: "Jeune vipère ; Oiseaux ; Rongeurs",
     genre_nom: "féminin",
-    photo_2: null,
-    photo_2_source: null,
-    photo_2_sujet: null,
+    photo_2: "Images/salamandre_alpestre_2.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/87623982",
+    photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -5701,6 +5860,9 @@ const ESPECES = [
     photo_2: "Images/grenouille_rousse_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:RanaTemporariaLarva2.jpg",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -5793,7 +5955,10 @@ const ESPECES = [
     photo_2: "Images/triton_alpestre_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Alpine_newt's_on_a_rock_(Ichthyosaura_alpestris).JPG",
     photo_2_sujet: "mâle",
-    a_confirmer: ["peau_texture"]
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
+    a_confirmer: ["longevite_max_annees", "peau_texture"]
   },
   {
     onglet: "Amphibiens",
@@ -5885,6 +6050,9 @@ const ESPECES = [
     photo_2: "Images/sonneur_a_ventre_jaune_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:289_Bombina_variegata.jpg",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -5977,6 +6145,9 @@ const ESPECES = [
     photo_2: "Images/crapaud_commun_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:BufoBufoTadpoles.jpg",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["pattes_arriere"]
   },
   {
@@ -6069,6 +6240,9 @@ const ESPECES = [
     photo_2: "Images/salamandre_tachetee_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Salamandra_salamandra_larva,_Netherlands_DSCN5060_edited.jpg",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["ventre_couleur"]
   },
   {
@@ -6161,6 +6335,9 @@ const ESPECES = [
     photo_2: "Images/alyte_accoucheur_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/241080230",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["aspect_robe"]
   },
   {
@@ -6253,6 +6430,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -6345,6 +6525,9 @@ const ESPECES = [
     photo_2: "Images/triton_palme_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Lissotriton_helveticus_(18501796441).jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -6436,6 +6619,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["motif_robe"]
   },
   {
@@ -6527,6 +6713,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -6618,6 +6807,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -6709,6 +6901,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -6800,6 +6995,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -6891,6 +7089,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -6982,6 +7183,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["silhouette", "ecailles_corps"]
   },
   {
@@ -7073,6 +7277,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["silhouette", "ecailles_corps"]
   },
   {
@@ -7164,6 +7371,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "couleur_dominante", "silhouette"]
   },
   {
@@ -7255,6 +7465,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -7346,6 +7559,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["museau_forme", "tete_ecailles"]
   },
   {
@@ -7437,6 +7653,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["queue_forme"]
   },
   {
@@ -7528,6 +7747,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -7619,6 +7841,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["bouche_position"]
   },
   {
@@ -7710,6 +7935,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -7801,6 +8029,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "aspect_robe", "bouche_position"]
   },
   {
@@ -7845,7 +8076,7 @@ const ESPECES = [
     nom_trace_indice: "NA",
     nom_periode_reproduction: "Frai",
     type_revetement: "Écailles",
-    adaptations_physiques: "un museau plat en bec de canard ; environ 500 dents",
+    adaptations_physiques: "un museau plat en bec de canard ; des centaines de dents",
     defense_principale: "Camouflage",
     defenses_secondaires: "Fuite",
     chasse_principale: "NA",
@@ -7892,6 +8123,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -7983,6 +8217,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["ecailles_taille"]
   },
   {
@@ -8074,6 +8311,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "bouche_position"]
   },
   {
@@ -8165,6 +8405,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -8256,6 +8499,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -8349,6 +8595,9 @@ const ESPECES = [
     photo_2: "Images/apollon_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/359930633",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "ailes_repos"]
   },
   {
@@ -8442,6 +8691,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["ailes_repos"]
   },
   {
@@ -8535,6 +8787,9 @@ const ESPECES = [
     photo_2: "Images/machaon_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Schwalbenschwanz_Papilio_machaon.JPG",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["ailes_repos"]
   },
   {
@@ -8628,6 +8883,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -8721,6 +8979,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -8814,6 +9075,9 @@ const ESPECES = [
     photo_2: "Images/coccinelle_a_sept_points_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Coccinella_septempunctata_larva.jpg",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["antennes_forme"]
   },
   {
@@ -8907,6 +9171,9 @@ const ESPECES = [
     photo_2: "Images/aeschne_bleue_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/223306407",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9000,6 +9267,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -9093,6 +9363,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9186,6 +9459,9 @@ const ESPECES = [
     photo_2: "Images/lucane_cerf_volant_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Lucanus_cervus,_Stag_Beetle_female,_UK.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9279,6 +9555,9 @@ const ESPECES = [
     photo_2: "Images/cetoine_doree_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Cetonia_aurata_05.2025_(3).jpg",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9372,6 +9651,9 @@ const ESPECES = [
     photo_2: "Images/ver_luisant_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Lampyris_noctiluca_01.JPG",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "aspect_robe", "antennes_forme"]
   },
   {
@@ -9465,6 +9747,9 @@ const ESPECES = [
     photo_2: "Images/petite_tortue_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Aglais_urticae_(Small_Tortoiseshell)_caterpillar,_Arnhem,_the_Netherlands.jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9558,6 +9843,9 @@ const ESPECES = [
     photo_2: "Images/isabelle_de_france_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Graellsia_isabellae_5th_instar_sjh.jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9651,6 +9939,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9744,6 +10035,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9837,6 +10131,9 @@ const ESPECES = [
     photo_2: "Images/cordulegastre_annele_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/238562854",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -9930,6 +10227,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -10016,6 +10316,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "defense_principale"]
   },
   {
@@ -10102,6 +10405,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["defense_principale"]
   },
   {
@@ -10188,6 +10494,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10274,6 +10583,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10360,6 +10672,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["taille_max_cm", "altitude_max_m", "rarete_observation", "territoire", "nb_petits_min", "nb_petits_max", "revetement", "motif_robe", "saison_reproduction"]
   },
   {
@@ -10446,6 +10761,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10532,6 +10850,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["longevite_max_annees", "territoire", "nb_petits_max"]
   },
   {
@@ -10618,6 +10939,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["milieu_principal", "altitude_min_m", "altitude_max_m", "territoire", "nb_petits_min", "nb_petits_max"]
   },
   {
@@ -10704,6 +11028,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10790,6 +11117,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["altitude_min_m", "altitude_max_m", "territoire", "saison_observation"]
   },
   {
@@ -10875,6 +11205,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -10960,6 +11293,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["longevite_max_annees", "rarete_observation", "territoire"]
   },
   {
@@ -11045,6 +11381,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "danger_homme"]
   },
   {
@@ -11130,6 +11469,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "danger_homme", "pinces"]
   },
   {
@@ -11215,6 +11557,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "danger_homme", "pinces"]
   },
   {
@@ -11300,6 +11645,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["statut_conservation", "territoire", "nb_petits_max", "danger_homme", "pinces"]
   },
   {
@@ -11386,6 +11734,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["longevite_max_annees"]
   },
   {
@@ -11472,6 +11823,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -11558,6 +11912,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["altitude_max_m", "territoire"]
   },
   {
@@ -11644,6 +12001,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "nb_petits_min", "nb_petits_max"]
   },
   {
@@ -11730,6 +12090,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["rarete_observation", "territoire", "saison_reproduction"]
   },
   {
@@ -11816,6 +12179,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -11902,6 +12268,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["longevite_max_annees", "territoire"]
   },
   {
@@ -11987,6 +12356,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "nb_petits_min", "nb_petits_max", "regeneration"]
   },
   {
@@ -12072,6 +12444,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -12157,6 +12532,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12242,6 +12620,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["taille_max_cm", "milieu_principal", "rarete_observation", "territoire", "comportement_social", "defenses_secondaires", "saison_observation"]
   },
   {
@@ -12349,6 +12730,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -12456,6 +12840,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12563,6 +12950,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12670,6 +13060,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -12775,6 +13168,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -12880,6 +13276,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -12985,6 +13384,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -13090,6 +13492,9 @@ const ESPECES = [
     photo_2: "Images/echasse_blanche_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/10520950",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -13195,6 +13600,9 @@ const ESPECES = [
     photo_2: "Images/barge_a_queue_noire_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Black-tailed_godwit_(Limosa_limosa)_non_breeding.jpg",
     photo_2_sujet: "plumage d'hiver",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -13300,6 +13708,9 @@ const ESPECES = [
     photo_2: "Images/bruant_ortolan_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/101321013",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -13405,6 +13816,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -13510,6 +13924,9 @@ const ESPECES = [
     photo_2: "Images/goeland_leucophee_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Larus_michaelis_juvenile_Corfu_2010.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -13615,6 +14032,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -13720,6 +14140,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -13825,6 +14248,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -13930,6 +14356,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -14035,6 +14464,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -14140,6 +14572,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -14245,6 +14680,9 @@ const ESPECES = [
     photo_2: "Images/gravelot_a_collier_interrompu_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/13557281",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -14350,6 +14788,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -14455,6 +14896,9 @@ const ESPECES = [
     photo_2: "Images/pie_grieche_a_tete_rousse_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Lanius_Senator_juvenile.JPG",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -14546,6 +14990,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -14637,6 +15084,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -14728,6 +15178,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -14819,6 +15272,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -14910,6 +15366,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -15001,6 +15460,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -15092,6 +15554,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15185,6 +15650,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -15278,6 +15746,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -15371,6 +15842,9 @@ const ESPECES = [
     photo_2: "Images/processionnaire_du_pin_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Thaumetopoea_pityocampa_(28087926266).jpg",
     photo_2_sujet: "adulte",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -15464,6 +15938,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15557,6 +16034,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15650,6 +16130,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15743,6 +16226,9 @@ const ESPECES = [
     photo_2: "Images/fourmilion_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Ruhland,_Grenzstr._gegen%C3%BCber_Hausnr._2,_Ameisenl%C3%B6we,_Sommer,_03.jpg",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15836,6 +16322,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -15929,6 +16418,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16014,6 +16506,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16099,6 +16594,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16184,6 +16682,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16269,6 +16770,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16355,6 +16859,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16441,6 +16948,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16527,6 +17037,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16613,6 +17126,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16699,6 +17215,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16785,6 +17304,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -16871,6 +17393,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -16956,6 +17481,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -17041,6 +17569,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -17126,6 +17657,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -17233,6 +17767,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -17340,6 +17877,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -17447,6 +17987,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -17554,6 +18097,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -17661,6 +18207,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -17768,6 +18317,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -17875,6 +18427,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -17980,6 +18535,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18085,6 +18643,9 @@ const ESPECES = [
     photo_2: "Images/busard_cendre_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Montagu's_Harrier_in_Tal_Chhapar_Sanctuary_November_2025_by_Tisha_Mukherjee_06.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18190,6 +18751,9 @@ const ESPECES = [
     photo_2: "Images/perdrix_grise_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/104342199",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18295,6 +18859,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18400,6 +18967,9 @@ const ESPECES = [
     photo_2: "Images/caille_des_bles_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Weibliche_Wachtel_(Coturnix_coturnix).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18505,6 +19075,9 @@ const ESPECES = [
     photo_2: "Images/vanneau_huppe_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/220080501",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18610,6 +19183,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18715,6 +19291,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18820,6 +19399,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -18925,6 +19507,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -19030,6 +19615,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -19135,6 +19723,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -19240,6 +19831,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -19345,6 +19939,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -19450,6 +20047,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -19555,6 +20155,9 @@ const ESPECES = [
     photo_2: "Images/grebe_huppe_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Great_crested_grebe_(Podiceps_cristatus)_juvenile_France.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -19660,6 +20263,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -19765,6 +20371,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -19870,6 +20479,9 @@ const ESPECES = [
     photo_2: "Images/foulque_macroule_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_coot_(Fulica_atra)_juvenile.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -19975,6 +20587,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20080,6 +20695,9 @@ const ESPECES = [
     photo_2: "Images/loriot_d_europe_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/7058833",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20185,6 +20803,9 @@ const ESPECES = [
     photo_2: "Images/sittelle_torchepot_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Kleiber_(Sitta_europaea)_im_Garten.jpg",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20290,6 +20911,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20395,6 +21019,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20500,6 +21127,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20605,6 +21235,9 @@ const ESPECES = [
     photo_2: "Images/moineau_domestique_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Passer_domesticus_-John_o'_Groats,_Scotland.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20710,6 +21343,9 @@ const ESPECES = [
     photo_2: "Images/mesange_charbonniere_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Great_Tit._Parus_major_(46276943842).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20815,6 +21451,9 @@ const ESPECES = [
     photo_2: "Images/etourneau_sansonnet_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_starling_(Sturnus_vulgaris),_Prudhoe,_Northumberland_(9486342357).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -20920,6 +21559,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -21025,6 +21667,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -21130,6 +21775,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -21235,6 +21883,9 @@ const ESPECES = [
     photo_2: "Images/pie_grieche_ecorcheur_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Lanius_collurio_-Ariege,_Midi-Pyrenee,_France_-female-8_(1).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -21327,6 +21978,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21418,6 +22072,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21509,6 +22166,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21600,6 +22260,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21691,6 +22354,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21782,6 +22448,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21873,6 +22542,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -21964,6 +22636,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22055,6 +22730,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -22146,6 +22824,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -22237,6 +22918,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22328,6 +23012,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -22421,6 +23108,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22514,6 +23204,9 @@ const ESPECES = [
     photo_2: "Images/mante_religieuse_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/410136651",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -22607,6 +23300,9 @@ const ESPECES = [
     photo_2: "Images/flambe_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/121412643",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -22700,6 +23396,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -22793,6 +23492,9 @@ const ESPECES = [
     photo_2: "Images/aurore_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Orange_tip_(Anthocharis_cardamines)_female_2.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -22886,6 +23588,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -22979,6 +23684,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23072,6 +23780,9 @@ const ESPECES = [
     photo_2: "Images/gendarme_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/282746844",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -23165,6 +23876,9 @@ const ESPECES = [
     photo_2: "Images/anax_empereur_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Anax_imperator_female_-_Cecile_Roux_-_Riebeeck_West,_South_Africa.jpeg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -23258,6 +23972,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23343,6 +24060,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23429,6 +24149,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23536,6 +24259,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -23643,6 +24369,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23750,6 +24479,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Moyennes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -23857,6 +24589,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -23964,6 +24699,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24071,6 +24809,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24176,6 +24917,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24281,6 +25025,9 @@ const ESPECES = [
     photo_2: "Images/moineau_cisalpin_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Passer_italiae_female.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24386,6 +25133,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24491,6 +25241,9 @@ const ESPECES = [
     photo_2: "Images/venturon_corse_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/342980738",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24596,6 +25349,9 @@ const ESPECES = [
     photo_2: "Images/sittelle_corse_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Sitta_whiteheadi_-_Christoph_Moning_-_2.jpeg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24701,6 +25457,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24806,6 +25565,9 @@ const ESPECES = [
     photo_2: "Images/serin_cini_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:European_serin_(Serinus_serinus)_female.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -24911,6 +25673,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25016,6 +25781,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25121,6 +25889,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25226,6 +25997,9 @@ const ESPECES = [
     photo_2: "Images/roitelet_a_triple_bandeau_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_firecrest_Franconville_05.jpg",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25331,6 +26105,9 @@ const ESPECES = [
     photo_2: "Images/fauvette_sarde_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Marmora's_Warbler_-_Sardinia_-_Italy_S4E1036.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25436,6 +26213,9 @@ const ESPECES = [
     photo_2: "Images/gallinule_poule_d_eau_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Gallinula_chloropus_juvénile.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25541,6 +26321,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25646,6 +26429,9 @@ const ESPECES = [
     photo_2: "Images/fauvette_de_moltoni_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Curruca_subalpina_74746110.png",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25751,6 +26537,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25856,6 +26645,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -25961,6 +26753,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26066,6 +26861,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26171,6 +26969,9 @@ const ESPECES = [
     photo_2: "Images/monticole_bleu_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Blue_Rock_Thrush_(female),_Boulmane_de_Dades,_Morocco.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26276,6 +27077,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26381,6 +27185,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26486,6 +27293,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26591,6 +27401,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26683,6 +27496,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26775,6 +27591,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26867,6 +27686,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -26959,6 +27781,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -27051,6 +27876,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27143,6 +27971,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27234,6 +28065,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27325,6 +28159,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27416,6 +28253,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27507,6 +28347,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27598,6 +28441,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27689,6 +28535,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27780,6 +28629,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27871,6 +28723,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -27962,6 +28817,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28053,6 +28911,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28144,6 +29005,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28235,6 +29099,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28326,6 +29193,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28417,6 +29287,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28510,6 +29383,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28603,6 +29479,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28696,6 +29575,9 @@ const ESPECES = [
     photo_2: "Images/belle_dame_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Vanessa_cardui_-_caterpillar_07_(HS).jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28789,6 +29671,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28882,6 +29767,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -28975,6 +29863,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29068,6 +29959,9 @@ const ESPECES = [
     photo_2: "Images/azure_de_la_bugrane_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_blue_(Polyommatus_icarus)_male_Turna.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29161,6 +30055,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29254,6 +30151,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29347,6 +30247,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29440,6 +30343,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29533,6 +30439,9 @@ const ESPECES = [
     photo_2: "Images/calopteryx_hemorroidal_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/162489602",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29626,6 +30535,9 @@ const ESPECES = [
     photo_2: "Images/crocothemis_ecarlate_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Crocothemis_erythraea_femelle.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29719,6 +30631,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -29805,6 +30720,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -29891,6 +30809,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -29976,6 +30897,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30061,6 +30985,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -30146,6 +31073,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30232,6 +31162,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30318,6 +31251,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30404,6 +31340,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30490,6 +31429,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30575,6 +31517,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30660,6 +31605,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30745,6 +31693,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -30852,6 +31803,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -30957,6 +31911,9 @@ const ESPECES = [
     photo_2: "Images/cygne_tubercule_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:CygnusOlorJuvenile.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31062,6 +32019,9 @@ const ESPECES = [
     photo_2: "Images/nette_rousse_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Netta_rufina_(female),_London_Wetland_Centre,_UK_-_Diliff.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31167,6 +32127,9 @@ const ESPECES = [
     photo_2: "Images/fuligule_milouin_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_common_pochard_(Aythya_ferina)_in_Algeria.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31272,6 +32235,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31377,6 +32343,9 @@ const ESPECES = [
     photo_2: "Images/blongios_nain_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Little_bittern_(Ixobrychus_minutus).JPG",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31482,6 +32451,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31587,6 +32559,9 @@ const ESPECES = [
     photo_2: "Images/bruant_des_roseaux_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_reed_bunting_(emberiza_schoeniclus)_f.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -31692,6 +32667,9 @@ const ESPECES = [
     photo_2: "Images/gobemouche_a_collier_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_Collared_Flycatcher_(Ficedula_torquata),_Park_Pałacowy,_Białowieża,_Poland.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31784,6 +32762,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31875,6 +32856,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -31966,6 +32950,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32057,6 +33044,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32148,6 +33138,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32241,6 +33234,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -32334,6 +33330,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -32427,6 +33426,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32520,6 +33522,9 @@ const ESPECES = [
     photo_2: "Images/grande_tortue_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/216259421",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -32613,6 +33618,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -32706,6 +33714,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -32799,6 +33810,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -32892,6 +33906,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -32985,7 +34002,10 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
-    a_confirmer: ["territoire"]
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
+    a_confirmer: ["territoire", "activite"]
   },
   {
     onglet: "Insectes",
@@ -33078,6 +34098,9 @@ const ESPECES = [
     photo_2: "Images/coccinelle_asiatique_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/118287698",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -33171,6 +34194,9 @@ const ESPECES = [
     photo_2: "Images/pyrale_du_buis_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Raupe_des_Buchsbaumzünsler,_Cydalima_perspectalis_24.JPG",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33257,6 +34283,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33343,6 +34372,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33428,6 +34460,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33514,6 +34549,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33600,6 +34638,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33707,6 +34748,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Moyennes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -33814,6 +34858,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -33921,6 +34968,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -34028,6 +35078,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -34135,6 +35188,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -34242,6 +35298,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -34347,6 +35406,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -34452,6 +35514,9 @@ const ESPECES = [
     photo_2: "Images/pic_tridactyle_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/226703621",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -34557,7 +35622,10 @@ const ESPECES = [
     photo_2: "Images/pic_cendre_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/390486745",
     photo_2_sujet: "femelle",
-    a_confirmer: []
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
+    a_confirmer: ["ornement_tete"]
   },
   {
     onglet: "Oiseaux",
@@ -34662,6 +35730,9 @@ const ESPECES = [
     photo_2: "Images/sizerin_cabaret_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/263062899",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -34767,6 +35838,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -34872,6 +35946,9 @@ const ESPECES = [
     photo_2: "Images/gobemouche_noir_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Papa-moscas-preto,_fêmea,_Pied_Flycatcher,_female_(50587344027).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -34977,6 +36054,9 @@ const ESPECES = [
     photo_2: "Images/harle_bievre_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Mergus_merganser_-Sandwell_-England_-male-8.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35056,7 +36136,7 @@ const ESPECES = [
     motif_robe: "Masque",
     couleur_dominante: "Brun",
     bec_forme: "Conique",
-    bec_couleur: "Noir",
+    bec_couleur: "Gris",
     ornement_tete: "Masque noir",
     pattes_aspect: "Roses",
     queue_vol: "Échancrée",
@@ -35082,7 +36162,10 @@ const ESPECES = [
     photo_2: "Images/grosbec_casse_noyaux_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Hawfinch_(Coccothraustes_coccothraustes)_female_Drenthe.jpg",
     photo_2_sujet: "femelle",
-    a_confirmer: []
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
+    a_confirmer: ["bec_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -35187,6 +36270,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35292,6 +36378,9 @@ const ESPECES = [
     photo_2: "Images/tarin_des_aulnes_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_siskin_(Spinus_spinus)_male_Biebrzanski.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35350,7 +36439,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: "À l'aube et au crépuscule",
+    activite: "Surtout la nuit",
     revetement: null,
     emplacement_nid: "Au sol",
     naissance: "NA",
@@ -35397,6 +36486,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -35502,6 +36594,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35594,6 +36689,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35621,7 +36719,7 @@ const ESPECES = [
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Commun",
     repartition_geographique: null,
-    territoire: "Jura ; Alpes ; Massif armoricain ; Bassin parisien et Val de Loire ; Méditerranée ; Pyrénées ; Bassin aquitain ; Massif central ; Corse ; Vosges ; Plaines de l'Est et val de Saône",
+    territoire: "Jura ; Alpes ; Massif armoricain ; Bassin parisien et Val de Loire ; Méditerranée ; Massif central ; Corse ; Vosges ; Plaines de l'Est et val de Saône",
     nb_petits_min: 2000,
     nb_petits_max: 7000,
     mode_deplacement: null,
@@ -35685,6 +36783,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35776,6 +36877,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35867,6 +36971,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -35958,6 +37065,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36051,6 +37161,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36144,6 +37257,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36237,6 +37353,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36330,6 +37449,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36423,6 +37545,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36516,6 +37641,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36609,6 +37737,9 @@ const ESPECES = [
     photo_2: "Images/petit_mars_changeant_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/30990180",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36702,6 +37833,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -36795,6 +37929,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36888,6 +38025,9 @@ const ESPECES = [
     photo_2: "Images/robert_le_diable_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/118771966",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -36981,6 +38121,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -37074,6 +38217,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -37167,6 +38313,9 @@ const ESPECES = [
     photo_2: "Images/leucorrhine_a_gros_thorax_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/266037347",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -37260,6 +38409,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -37353,6 +38505,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -37439,6 +38594,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37525,6 +38683,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37610,6 +38771,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -37696,6 +38860,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37782,6 +38949,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37868,6 +39038,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -37975,6 +39148,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -38082,6 +39258,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -38189,6 +39368,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -38296,6 +39478,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -38403,6 +39588,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -38510,6 +39698,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -38617,6 +39808,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -38724,6 +39918,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -38831,6 +40028,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -38938,6 +40138,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39045,6 +40248,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39152,6 +40358,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39259,6 +40468,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39364,6 +40576,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39469,6 +40684,9 @@ const ESPECES = [
     photo_2: "Images/fou_de_bassan_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Northern_gannet_(Morus_bassanus)_juvenile_Sagres.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -39574,6 +40792,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39679,6 +40900,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39784,6 +41008,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39889,6 +41116,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -39994,6 +41224,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40099,6 +41332,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40204,6 +41440,9 @@ const ESPECES = [
     photo_2: "Images/goeland_argente_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:European_herring_gull_(Larus_argentatus)_juvenile.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40309,6 +41548,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40414,6 +41656,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40519,6 +41764,9 @@ const ESPECES = [
     photo_2: "Images/mouette_rieuse_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Black-headed_gull_(Chroicocephalus_ridibundus)_winter_plumage_Ethiopia.jpg",
     photo_2_sujet: "plumage d'hiver",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40624,6 +41872,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40729,6 +41980,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40834,6 +42088,9 @@ const ESPECES = [
     photo_2: "Images/grand_cormoran_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Great_Cormorant,_juvenile,_Porto,_Portugal_(31096584347).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -40939,6 +42196,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41044,6 +42304,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41149,6 +42412,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41254,6 +42520,9 @@ const ESPECES = [
     photo_2: "Images/becasseau_variable_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Dunlin_(Calidris_alpina)_(19).jpg",
     photo_2_sujet: "plumage d'hiver",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41359,6 +42628,9 @@ const ESPECES = [
     photo_2: "Images/grand_gravelot_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Charadrius_hiaticula_juvenile,_Giresun,_Turkey_01-22.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41464,6 +42736,9 @@ const ESPECES = [
     photo_2: "Images/tournepierre_a_collier_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Arenaria_interpres_(habitus).jpg",
     photo_2_sujet: "plumage d'été",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -41569,6 +42844,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41674,6 +42952,9 @@ const ESPECES = [
     photo_2: "Images/heron_cendre_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Ardea_cinerea_juvenile_v2.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41779,6 +43060,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41884,6 +43168,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -41989,6 +43276,9 @@ const ESPECES = [
     photo_2: "Images/tadorne_de_belon_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Shelduck._Tadorna_tadorna_(45904170024).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42094,6 +43384,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42199,6 +43492,9 @@ const ESPECES = [
     photo_2: "Images/gorgebleue_a_miroir_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Luscinia_svecica_LC0301.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42304,6 +43600,9 @@ const ESPECES = [
     photo_2: "Images/busard_des_roseaux_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Circus_aeruginosus_female-crop.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42409,6 +43708,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42514,6 +43816,9 @@ const ESPECES = [
     photo_2: "Images/canard_colvert_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_(Female)_in_Locarno.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42619,6 +43924,9 @@ const ESPECES = [
     photo_2: "Images/busard_saint_martin_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Hen_Harrier_-_Male.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42724,6 +44032,9 @@ const ESPECES = [
     photo_2: "Images/engoulevent_d_europe_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Eurasian_nightjar_(Caprimulgus_europaeus)_in_Algeria.jpg",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42829,6 +44140,9 @@ const ESPECES = [
     photo_2: "Images/fauvette_pitchou_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Sylvia_undata_female.jpg",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -42934,6 +44248,9 @@ const ESPECES = [
     photo_2: "Images/tarier_patre_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:European_Stonechat_2025_12_25_01.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43039,6 +44356,9 @@ const ESPECES = [
     photo_2: "Images/linotte_melodieuse_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Female-linnet.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43144,6 +44464,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43249,6 +44572,9 @@ const ESPECES = [
     photo_2: "Images/pic_vert_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_Green_Woodpecker_digging_for_ants._Picus_viridis_-_Flickr_-_gailhampshire.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43354,6 +44680,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43459,6 +44788,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43564,6 +44896,9 @@ const ESPECES = [
     photo_2: "Images/rougegorge_familier_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:European_robin_(Erithacus_rubecula)_juvenile.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43669,6 +45004,9 @@ const ESPECES = [
     photo_2: "Images/merle_noir_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Turdus_merula_female_(d1).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43774,6 +45112,9 @@ const ESPECES = [
     photo_2: "Images/mesange_bleue_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Cyanistes_caeruleus_(juvenile).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["bec_forme"]
   },
   {
@@ -43879,6 +45220,9 @@ const ESPECES = [
     photo_2: "Images/pinson_des_arbres_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Common_chaffinch_(Fringilla_coelebs)_female_Drenthe_2.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -43984,6 +45328,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44089,6 +45436,9 @@ const ESPECES = [
     photo_2: "Images/bruant_zizi_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Emberiza_cirlus_-Valencian_Community,_Spain_-female-8_(1).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44194,6 +45544,9 @@ const ESPECES = [
     photo_2: "Images/coucou_gris_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Juvenile_cuckoo_(54019304589).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44299,6 +45652,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44391,6 +45747,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44483,6 +45842,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -44575,6 +45937,9 @@ const ESPECES = [
     photo_2: "Images/rainette_verte_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:HylaArboreaCallingMale2.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44667,6 +46032,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44759,6 +46127,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44851,6 +46222,9 @@ const ESPECES = [
     photo_2: "Images/triton_marbre_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Marbled_Newt_(Triturus_marmoratus)_male_(14143352479).jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -44943,6 +46317,9 @@ const ESPECES = [
     photo_2: "Images/triton_crete_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/241266433",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -45034,6 +46411,9 @@ const ESPECES = [
     photo_2: "Images/saumon_atlantique_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Salmo_salar_juvenile.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -45125,6 +46505,9 @@ const ESPECES = [
     photo_2: "Images/anguille_europeenne_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Civelle_dans_le_Ruisseau_du_loc'h_à_Morgat_(Finistère)_partie_aval_saumâtre_grandes_marées_11.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -45216,6 +46599,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -45307,6 +46693,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -45398,6 +46787,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -45489,6 +46881,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -45580,6 +46975,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -45671,6 +47069,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -45762,6 +47163,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -45853,6 +47257,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -45944,6 +47351,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46035,6 +47445,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46126,6 +47539,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46217,6 +47633,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46308,6 +47727,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46399,6 +47821,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46490,6 +47915,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46581,6 +48009,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46674,6 +48105,9 @@ const ESPECES = [
     photo_2: "Images/hanneton_commun_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Melolontha_melolontha_09.JPG",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46767,6 +48201,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -46860,6 +48297,9 @@ const ESPECES = [
     photo_2: "Images/paon_du_jour_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Inachis_io_qtl4.jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -46953,6 +48393,9 @@ const ESPECES = [
     photo_2: "Images/vulcain_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Admiral_Vanessa_atalanta_Raupe.jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47046,6 +48489,9 @@ const ESPECES = [
     photo_2: "Images/citron_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Brimstone._Gonepteryx_rhamni_._female_-_Flickr_-_gailhampshire.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47139,6 +48585,9 @@ const ESPECES = [
     photo_2: "Images/moro_sphinx_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Macroglossum.stellatarum.caterpillar.3088.Liosi.jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47232,6 +48681,9 @@ const ESPECES = [
     photo_2: "Images/ecaille_chinee_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Euplagia_quadripunctaria_05.2025_(1).jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47325,6 +48777,9 @@ const ESPECES = [
     photo_2: "Images/agrion_de_mercure_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/397181440",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -47418,6 +48873,9 @@ const ESPECES = [
     photo_2: "Images/calopteryx_vierge_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Thomas_Bresson_-_Calopteryx_virgo-1_(by).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47511,6 +48969,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47604,6 +49065,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47711,6 +49175,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Moyennes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47818,6 +49285,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Moyennes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -47925,6 +49395,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48032,6 +49505,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48139,6 +49615,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48246,6 +49725,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48353,6 +49835,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48460,6 +49945,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48567,6 +50055,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Moyennes",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48674,6 +50165,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48781,6 +50275,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -48888,6 +50385,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Moyennes",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -48995,6 +50495,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -49102,6 +50605,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -49209,6 +50715,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -49314,6 +50823,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -49419,6 +50931,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -49524,6 +51039,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -49629,6 +51147,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -49734,6 +51255,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -49839,6 +51363,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -49944,6 +51471,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -50049,6 +51579,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -50154,6 +51687,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -50259,6 +51795,9 @@ const ESPECES = [
     photo_2: "Images/tarier_des_pres_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Whinchat_-_Saxicola_rubetra_-_Female.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -50364,6 +51903,9 @@ const ESPECES = [
     photo_2: "Images/traquet_motteux_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Northern_wheatear_(Oenanthe_oenanthe)_female.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -50469,6 +52011,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -50574,6 +52119,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -50679,6 +52227,9 @@ const ESPECES = [
     photo_2: "Images/bruant_jaune_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/166976336",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -50784,6 +52335,9 @@ const ESPECES = [
     photo_2: "Images/bruant_fou_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/33193287",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -50889,6 +52443,9 @@ const ESPECES = [
     photo_2: "Images/bergeronnette_des_ruisseaux_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Motacilla_cinerea,_male.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -50994,6 +52551,9 @@ const ESPECES = [
     photo_2: "Images/bergeronnette_grise_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Motacilla_alba_juvenile_(Kirkenes,_2012).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -51099,6 +52659,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -51204,6 +52767,9 @@ const ESPECES = [
     photo_2: "Images/pic_epeichette_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_lesser_spotted_woodpecker_(49591370581).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -51309,6 +52875,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -51414,6 +52983,9 @@ const ESPECES = [
     photo_2: "Images/rougequeue_a_front_blanc_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/283782530",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -51497,7 +53069,7 @@ const ESPECES = [
     ornement_tete: "Huppe",
     pattes_aspect: "Grises",
     queue_vol: null,
-    yeux_couleur: "Noir",
+    yeux_couleur: "Brun",
     difference_male_femelle: "Aucune visible",
     doigts_disposition: null,
     saison_reproduction: "Printemps",
@@ -51519,7 +53091,10 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
-    a_confirmer: []
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
+    a_confirmer: ["yeux_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -51624,6 +53199,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -51729,6 +53307,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire", "bec_forme"]
   },
   {
@@ -51834,6 +53415,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -51939,6 +53523,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52044,6 +53631,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52149,6 +53739,9 @@ const ESPECES = [
     photo_2: "Images/fauvette_a_tete_noire_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_Blackcap_-_Sylvia_atricapilla_(49979484338).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52254,6 +53847,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52359,6 +53955,9 @@ const ESPECES = [
     photo_2: "Images/chardonneret_elegant_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Goldfinches_-_Carduelis_carduelis_-_Juvenile_(55495736048).jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52464,6 +54063,9 @@ const ESPECES = [
     photo_2: "Images/verdier_d_europe_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Greenfinch_-_Chloris_chloris_-_Female1.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52569,6 +54171,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52660,6 +54265,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -52751,6 +54359,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -52842,6 +54453,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -52933,6 +54547,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53024,6 +54641,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53115,6 +54735,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53208,6 +54831,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53301,6 +54927,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53394,6 +55023,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53487,6 +55119,9 @@ const ESPECES = [
     photo_2: "Images/tabac_d_espagne_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Silver-washed_fritillary_(Argynnis_paphia)_female_Hungary.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -53580,6 +55215,9 @@ const ESPECES = [
     photo_2: "Images/grand_mars_changeant_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Purple_emperor_(Apatura_iris)_female.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53673,6 +55311,9 @@ const ESPECES = [
     photo_2: "Images/petit_paon_de_nuit_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Saturnia_pavonia_-_Emperor_caterpillar_2.jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -53766,6 +55407,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -53859,6 +55503,9 @@ const ESPECES = [
     photo_2: "Images/sympetrum_noir_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/181919072",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -53952,6 +55599,9 @@ const ESPECES = [
     photo_2: "Images/libellule_deprimee_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Broad-bodied_chaser_(Libellula_depressa)_female.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -54045,6 +55695,9 @@ const ESPECES = [
     photo_2: "Images/calopteryx_eclatant_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/241534683",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -54138,6 +55791,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -54231,6 +55887,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -54324,6 +55983,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -54417,6 +56079,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -54510,6 +56175,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -54596,6 +56264,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -54682,6 +56353,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -54768,6 +56442,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -54875,6 +56552,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -54982,6 +56662,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Moyennes",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -55089,6 +56772,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -55196,6 +56882,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -55303,6 +56992,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -55410,6 +57102,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -55517,6 +57212,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -55624,6 +57322,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -55731,6 +57432,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -55838,6 +57542,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -55945,6 +57652,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56052,6 +57762,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56159,6 +57872,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56264,6 +57980,9 @@ const ESPECES = [
     photo_2: "Images/flamant_rose_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:The_juvenile_greater_flamingo.jpg",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56369,6 +58088,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56474,6 +58196,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56579,6 +58304,9 @@ const ESPECES = [
     photo_2: "Images/outarde_canepetiere_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Tetrax_tetrax,_Castuera,_Estremadura,_Spain_1.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56684,6 +58412,9 @@ const ESPECES = [
     photo_2: "Images/faucon_crecerellette_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Femmina_Falco_Grillaio_5555.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56789,6 +58520,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -56894,6 +58628,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -56999,6 +58736,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -57104,6 +58844,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -57209,6 +58952,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -57314,6 +59060,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -57419,6 +59168,9 @@ const ESPECES = [
     photo_2: "Images/fauvette_melanocephale_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Toutinegra-dos-valados,_fêmea,_Sardinian_Warbler,_female_(52663035468).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -57524,6 +59276,9 @@ const ESPECES = [
     photo_2: "Images/traquet_oreillard_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Oenanthe_hispanica,_Fitou,_France_2.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -57629,6 +59384,9 @@ const ESPECES = [
     photo_2: "Images/remiz_penduline_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Buidelmees_mannetje.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -57734,6 +59492,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -57826,6 +59587,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -57918,6 +59682,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58010,6 +59777,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58101,6 +59871,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58192,6 +59965,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58283,6 +60059,9 @@ const ESPECES = [
     photo_2: "Images/lezard_ocelle_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/83546451",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58374,6 +60153,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58465,6 +60247,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58556,6 +60341,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58647,6 +60435,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58738,6 +60529,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58829,6 +60623,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -58920,6 +60717,9 @@ const ESPECES = [
     photo_2: "Images/couleuvre_a_echelons_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/198993819",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59011,6 +60811,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59102,6 +60905,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59193,6 +60999,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59284,6 +61093,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59375,6 +61187,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59466,6 +61281,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -59557,6 +61375,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59648,6 +61469,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59739,6 +61563,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59830,6 +61657,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -59921,6 +61751,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60012,6 +61845,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60105,6 +61941,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60198,6 +62037,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60291,6 +62133,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -60384,6 +62229,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60477,6 +62325,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60570,6 +62421,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60663,6 +62517,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60756,6 +62613,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -60849,6 +62709,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -60942,6 +62805,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61028,6 +62894,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61114,6 +62983,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -61200,6 +63072,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61286,6 +63161,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -61372,6 +63250,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61457,6 +63338,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -61542,6 +63426,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61627,6 +63514,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61713,6 +63603,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -61799,6 +63692,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61885,6 +63781,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -61970,6 +63869,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62055,6 +63957,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62140,6 +64045,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62225,6 +64133,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62310,6 +64221,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62395,6 +64309,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62502,6 +64419,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "Petites",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62609,6 +64529,9 @@ const ESPECES = [
     photo_2_sujet: "jeune",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62716,6 +64639,9 @@ const ESPECES = [
     photo_2_sujet: "femelle",
     oreilles_taille: "NA",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62823,6 +64749,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "NA",
     museau_forme: "En trompe",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -62930,6 +64859,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -63037,6 +64969,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Arrondi",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -63144,6 +65079,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: "NA",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -63251,6 +65189,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -63358,6 +65299,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -63465,6 +65409,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Grandes",
     museau_forme: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -63572,6 +65519,9 @@ const ESPECES = [
     photo_2_sujet: null,
     oreilles_taille: "Petites",
     museau_forme: "Pointu",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -63677,6 +65627,9 @@ const ESPECES = [
     photo_2: "Images/grand_tetras_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Naarasmetso_(cropped).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -63782,6 +65735,9 @@ const ESPECES = [
     photo_2: "Images/pic_a_dos_blanc_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Female_white-backed_woodpecker_(51094808239).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -63887,6 +65843,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -63992,6 +65951,9 @@ const ESPECES = [
     photo_2: "Images/bondree_apivore_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/304555133",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64097,6 +66059,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64202,6 +66167,9 @@ const ESPECES = [
     photo_2: "Images/rougequeue_noir_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Phoenicurus_ochruros_male_in_Aveyron_(5).jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64307,6 +66275,9 @@ const ESPECES = [
     photo_2: "Images/monticole_de_roche_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Rufous-tailed_Rock-thrush_(Monticola_saxitilis)_(52597813726).jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64412,6 +66383,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64517,6 +66491,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64622,6 +66599,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64727,6 +66707,9 @@ const ESPECES = [
     photo_2: "Images/venturon_montagnard_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/194204349",
     photo_2_sujet: "jeune",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64832,6 +66815,9 @@ const ESPECES = [
     photo_2: "Images/bouvreuil_pivoine_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Pyrrhula_pyrrhula_female_2.jpg",
     photo_2_sujet: "femelle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -64937,6 +66923,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65042,6 +67031,9 @@ const ESPECES = [
     photo_2: "Images/roitelet_huppe_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Wintergoldhähnchen_(Regulus_regulus)_03.jpg",
     photo_2_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65147,6 +67139,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -65239,6 +67234,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65331,6 +67329,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65422,6 +67423,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65513,6 +67517,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65604,6 +67611,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65695,6 +67705,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65786,6 +67799,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -65877,11 +67893,14 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
     onglet: "Poissons",
-    nom_courant: "Goujon",
+    nom_courant: "Goujon occitan",
     nom_affichage_groupe: "Poissons des rivières",
     nom_scientifique: "Gobio occitaniae",
     classe: "Poisson",
@@ -65968,6 +67987,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -66061,6 +68083,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -66154,6 +68179,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -66247,6 +68275,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -66340,6 +68371,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -66433,6 +68467,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -66526,6 +68563,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -66619,6 +68659,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -66712,7 +68755,10 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
-    a_confirmer: ["territoire"]
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
+    a_confirmer: ["territoire", "technique_defense"]
   },
   {
     onglet: "Insectes",
@@ -66805,6 +68851,9 @@ const ESPECES = [
     photo_2: "Images/grand_paon_de_nuit_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Saturnia_pyri_caterpillar.jpg",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -66898,6 +68947,9 @@ const ESPECES = [
     photo_2: "Images/zygene_de_la_filipendule_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/199218102",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -66991,6 +69043,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -67084,6 +69139,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67177,6 +69235,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67270,6 +69331,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67356,6 +69420,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67442,6 +69509,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67528,6 +69598,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67614,6 +69687,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67700,6 +69776,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67786,6 +69865,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -67891,6 +69973,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -67972,7 +70057,7 @@ const ESPECES = [
     bec_forme: null,
     bec_couleur: null,
     ornement_tete: "Sourcil jaune",
-    pattes_aspect: "Brunes",
+    pattes_aspect: "Roses",
     queue_vol: null,
     yeux_couleur: null,
     difference_male_femelle: "Aucune visible",
@@ -67996,6 +70081,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -68101,6 +70189,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -68206,6 +70297,9 @@ const ESPECES = [
     photo_2: "Images/fauvette_grisette_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Sylvia_communis_male_ENS_des_Olivettes_20190525.jpg",
     photo_2_sujet: "mâle",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -68311,6 +70405,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -68404,6 +70501,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -68497,6 +70597,9 @@ const ESPECES = [
     photo_2: "Images/morio_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/49757455",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -68590,6 +70693,9 @@ const ESPECES = [
     photo_2: "Images/carte_geographique_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Araschnia_levana_LC0263.jpg",
     photo_2_sujet: "forme de printemps",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -68683,6 +70789,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -68776,6 +70885,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -68869,6 +70981,9 @@ const ESPECES = [
     photo_2: "Images/pieride_du_chou_2.jpg",
     photo_2_source: "https://www.inaturalist.org/observations/352512743",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -68962,6 +71077,9 @@ const ESPECES = [
     photo_2: "Images/sphinx_du_pin_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Caterpillar,_Sphinx_pinastri.JPG",
     photo_2_sujet: "chenille",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -69055,6 +71173,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -69148,6 +71269,9 @@ const ESPECES = [
     photo_2: "Images/libellule_a_quatre_taches_2.jpg",
     photo_2_source: "https://commons.wikimedia.org/wiki/File:Libellula_quadrimaculata_Larve.jpg",
     photo_2_sujet: "larve",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -69241,6 +71365,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -69334,6 +71461,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -69427,6 +71557,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -69520,6 +71653,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   },
   {
@@ -69613,6 +71749,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -69696,7 +71835,7 @@ const ESPECES = [
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: null,
     nombre_pattes: "Six",
-    proies_groupes: "Bois et écorce ; Nectar, pollen et sève",
+    proies_groupes: "Bois et écorce",
     predateurs_groupes: null,
     origine: "Indigène",
     introduction_date: "NA",
@@ -69706,6 +71845,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -69799,6 +71941,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -69892,6 +72037,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -69985,6 +72133,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -70078,6 +72229,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -70164,6 +72318,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -70250,6 +72407,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -70335,6 +72495,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -70421,6 +72584,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: ["territoire"]
   },
   {
@@ -70507,6 +72673,9 @@ const ESPECES = [
     photo_2: null,
     photo_2_source: null,
     photo_2_sujet: null,
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
     a_confirmer: []
   }
 ];
@@ -70542,6 +72711,11 @@ const PIEGES_INTERDITS = [
     "nom_courant": "Mésange charbonnière",
     "colonne": "motif_robe",
     "reponse_interdite": "Plastron"
+  },
+  {
+    "nom_courant": "Héron pourpré",
+    "colonne": "comportement_social",
+    "reponse_interdite": "Colonie"
   },
   {
     "nom_courant": "Putois d'Europe",
@@ -71657,6 +73831,11 @@ const PIEGES_INTERDITS = [
     "nom_courant": "Mésange noire",
     "colonne": "motif_robe",
     "reponse_interdite": "Plastron"
+  },
+  {
+    "nom_courant": "Pouillot fitis",
+    "colonne": "pattes_aspect",
+    "reponse_interdite": "Brunes"
   }
 ];
 
@@ -73148,8 +75327,9 @@ const ANECDOTES = {
  "Rat noir": {
   "bronze": "Sa queue fine est plus longue que son corps : un bon indice pour le reconnaître."
  },
- "Goujon": {
-  "bronze": "Très proche du goujon commun, il n'a été reconnu comme une espèce à part qu'en 2005."
+ "Goujon occitan": {
+  "bronze": "Très proche du goujon commun, il n'a été reconnu comme une espèce à part qu'en 2005.",
+  "argent": "Dans le bassin de l'Adour vit un cousin presque identique, le goujon de l'Adour : en France, on ne le trouve nulle part ailleurs."
  },
  "Barbeau méridional": {
   "bronze": "Dans quelques rivières du Midi, il se croise avec son cousin le barbeau fluviatile, et des hybrides des deux espèces y vivent."

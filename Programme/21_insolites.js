@@ -18,6 +18,14 @@ const INSOLITE_AU_PLUS_TARD = 6;          // …et au plus tard à la 7e questio
 
 function donneesInsolites() { return typeof QUESTIONS_INSOLITES !== "undefined" ? QUESTIONS_INSOLITES : null; }
 function insoliteTrouve(id) { return !!(suivi && suivi.insolites && suivi.insolites[id]); }
+// Étape RF5 (versement des lots QIR, règle du 09/11) : un fait tiré d'une anecdote « Le saviez-vous ? » n'est posé
+//   qu'une fois cette anecdote gagnée (médaille de l'espèce) ; les faits neufs se posent toujours.
+const NIVEAU_MEDAILLE = { bronze: 1, argent: 2, or: 3 };
+function faitDisponible(f) {
+  if (!f || !f.apresAnecdote) return true;
+  const e = typeof especeParNom === "function" ? especeParNom(f.espece) : ESPECES.find(x => x.nom_courant === f.espece);
+  return !!e && typeof medailleGagnee === "function" && medailleGagnee(e) >= (NIVEAU_MEDAILLE[f.medaille] || 1);
+}
 
 // Les questions insolites d'une espèce pour une étape (k = 4 : Approfondir)
 function insolitesDe(espece, k) {
@@ -25,7 +33,7 @@ function insolitesDe(espece, k) {
   if (!d || !espece) return [];
   const nom = espece.nom_courant, liste = [];
   if (k === 4) {
-    for (const f of d.faits) if (f.espece === nom && f.etape === "3") liste.push({ type: f.format, item: f });
+    for (const f of d.faits) if (f.espece === nom && f.etape === "3" && faitDisponible(f)) liste.push({ type: f.format, item: f });
     for (const i of d.intrus) if (i.espece === nom) liste.push({ type: "intrus", item: i });
   }
   if (k === 2) for (const c of d.scenes) if (c.espece === nom && c.type === "quoi") liste.push({ type: "scene", item: c });   // QI6 : scène « Que fait-il ? »
@@ -64,7 +72,7 @@ function poserInsolite(espece) {
   if (!c || c.espece !== espece) { enTete(espece, true, true); document.getElementById("question").textContent = ""; return; }
   const it = c.item;
   // l'étiquette sous le nom dit ce qu'est la question (et non « À découvrir », qui parle des cases de la fiche)
-  document.getElementById("revision").textContent = c.bonus ? "Question bonus · fait insolite" : c.type === "intrus" ? "L'intrus" : c.type === "vrai_faux" ? "Fait insolite" : c.type === "si" ? "Et si… ?" : c.type === "scene" ? "Sur le terrain" : "";
+  document.getElementById("revision").textContent = c.etonnant ? "" : c.bonus ? "Question bonus · fait insolite" : c.type === "intrus" ? "L'intrus" : c.type === "vrai_faux" ? "Fait insolite" : c.type === "si" ? "Et si… ?" : c.type === "scene" ? "Sur le terrain" : "";
   if (c.type === "lequel") {
     enTete(espece, false, false, "Fait insolite");
     document.getElementById("question").textContent = it.question;
@@ -93,6 +101,12 @@ function poserInsolite(espece) {
     ajouterBouton("Faux", !vraie);
     enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null,
                 explication: (vraie ? it.fait : "C'est faux : " + minusculeDebut(it.fait)) + (it.explication ? " " + it.explication : "") };
+  } else if (c.type === "deux") {                      // étape RF1 : « Étonnant » — deux affirmations, une seule vraie
+    enTete(espece, true, true);
+    document.getElementById("question").textContent = "À votre avis, lequel est vrai ?";
+    zone.classList.add("reponses-phrases");
+    for (const t of melanger([it.fait, it.faux])) ajouterBouton(t, t === it.fait);
+    enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null, explication: it.fait + (it.explication ? " " + it.explication : "") };
   } else if (c.type === "intrus") {
     enTete(espece, true, true);
     document.getElementById("question").textContent = "Une de ces phrases est fausse. Laquelle ?";
@@ -251,8 +265,17 @@ function suiteEssaiInsolites() {
 function insoliteBonus(espece) {
   const d = donneesInsolites();
   if (!INSOLITES_ACTIFS || !d || !espece) return null;
-  const faits = d.faits.filter(f => f.espece === espece.nom_courant && f.etape === "1" && f.faux && !insoliteTrouve(f.id));
+  const faits = d.faits.filter(f => f.espece === espece.nom_courant && f.etape === "1" && f.faux && !insoliteTrouve(f.id) && faitDisponible(f));
   return faits.length ? auHasard(faits) : null;
+}
+// Étape RF1 : le fait « Étonnant » de la Rencontre complète — n'importe quel fait de l'espèce qui a sa fausse
+//   affirmation (étape 1, 2 ou 3 du classeur), pas encore trouvé ; posé en « deux affirmations, une vraie ».
+function insoliteEtonnant(espece) {
+  const d = donneesInsolites();
+  if (!INSOLITES_ACTIFS || !d || !espece) return null;
+  const faits = d.faits.filter(f => f.espece === espece.nom_courant && f.fait && f.faux && !insoliteTrouve(f.id) && faitDisponible(f));
+  const neufs = faits.filter(f => !f.apresAnecdote);   // RF5 : de préférence un fait neuf (pas une anecdote déjà lue)
+  return neufs.length ? auHasard(neufs) : faits.length ? auHasard(faits) : null;
 }
 function repondreInsoliteRencontre(boutonClique, estJuste) {
   const { espece, explication, insolite } = enCours;

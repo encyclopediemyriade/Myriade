@@ -119,3 +119,49 @@ function mesurerProfil() {
   }, 0));
   return "Mesure en cours : le tableau s'affiche juste en dessous.";
 }
+
+// ==================================================================
+// Étape R188c (11/11/2026, accord d'Aubin) — LE RACCOURCI DE TEST
+//   Invisible pour les joueurs : dans À propos, toucher 5 fois de suite la dernière ligne (« Un projet personnel… Version… »),
+//   ou ouvrir le jeu avec « ?test » à la fin de l'adresse. Une fenêtre permet d'ouvrir directement, pour chaque territoire :
+//   la page d'un lieu (même fermé), la finale d'un lieu EN ESSAI (rien n'est enregistré) et le site remarquable.
+//   Attention : les haltes du site remarquable jouées ainsi comptent dans la partie (le site n'a pas de mode essai).
+//   Sert à tester la fin du parcours pendant la refonte de l'étape 1. À retirer (ou garder caché) avant d'ouvrir le jeu à tous.
+// ==================================================================
+function ouvrirAccesTest(t) {
+  if (typeof chapitresDe !== "function") return;
+  const terrs = Object.keys(TERRITOIRES).filter(x => chapitresDe(x).length);
+  t = terrs.includes(t) ? t : (typeof territoireActif === "function" && terrs.includes(territoireActif()) ? territoireActif() : terrs[0]);
+  let z = document.getElementById("acces-test");
+  if (!z) { z = document.createElement("div"); z.id = "acces-test"; z.className = "acces-test"; document.body.append(z); }
+  const lieux = lieuxDe(t), site = siteRemarquable(t);
+  z.innerHTML = `<div class="at-boite" role="dialog" aria-label="Raccourci de test">
+      <div class="at-tete"><b>Raccourci de test</b><button type="button" class="at-fermer" aria-label="Fermer">✕</button></div>
+      <p class="at-aide">Pour tester la fin du parcours. Les finales se jouent <b>en essai</b> : rien n'est enregistré.</p>
+      <select class="at-terr">${terrs.map(x => `<option${x === t ? " selected" : ""}>${echapper(x)}</option>`).join("")}</select>
+      <div class="at-liste">${lieux.map((c, i) => `<div class="at-lieu"><span>${echapper(c.nom)}</span>
+          <button type="button" data-lieu="${i}">Page</button>
+          ${finaleDisponible(t, c) ? `<button type="button" data-finale="${i}">Finale</button>` : `<small>pas de finale</small>`}</div>`).join("")}
+        ${site ? `<div class="at-lieu at-site"><span>${echapper(site.nom)} <small>(site remarquable)</small></span><button type="button" data-site="1">Ouvrir</button></div>
+          <p class="at-aide">Les haltes du site jouées ici comptent dans votre partie (pensez à « Sauvegarder ma partie » avant).</p>` : ""}</div>
+    </div>`;
+  const fermer = () => z.remove();
+  z.querySelector(".at-fermer").onclick = fermer;
+  z.onclick = ev => { if (ev.target === z) fermer(); };
+  z.querySelector(".at-terr").onchange = ev => ouvrirAccesTest(ev.target.value);
+  z.querySelectorAll("[data-lieu]").forEach(b => b.onclick = () => { fermer(); ouvrirLieu(t, lieux[Number(b.dataset.lieu)].nom); window.scrollTo(0, 0); });
+  z.querySelectorAll("[data-finale]").forEach(b => b.onclick = () => { fermer(); lancerFinale(t, lieux[Number(b.dataset.finale)].nom, true); });
+  const bs = z.querySelector("[data-site]");
+  if (bs) bs.onclick = () => { fermer(); ouvrirSite(t); };
+}
+(function brancherAccesTest() {
+  const pied = document.getElementById("pied-apropos");
+  if (pied) {
+    let n = 0, dernier = 0;
+    pied.addEventListener("click", () => {
+      const ici = Date.now(); n = ici - dernier < 1500 ? n + 1 : 1; dernier = ici;
+      if (n >= 5) { n = 0; ouvrirAccesTest(); }
+    });
+  }
+  if (/[?&]test\b/.test(location.search)) window.addEventListener("load", () => setTimeout(() => ouvrirAccesTest(), 600));
+})();

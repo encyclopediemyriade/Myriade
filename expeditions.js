@@ -1512,11 +1512,10 @@ const EXPEDITIONS = [
   "especes": [
    "Chevesne",
    "Spirlin",
-   "Goujon",
+   "Goujon occitan",
    "Barbeau fluviatile",
    "Ablette",
-   "Bouvière",
-   "Goujon commun"
+   "Bouvière"
   ],
   "chapitre": "Moissac, entre Tarn et Garonne",
   "carrefour": 0,
@@ -8144,7 +8143,7 @@ const EXPEDITIONS = [
    "Spirlin",
    "Lamproie de Planer",
    "Anguille européenne",
-   "Goujon commun"
+   "Ombre commun"
   ],
   "chapitre": "Brioude et le val d'Allier",
   "carrefour": 1,
@@ -10047,7 +10046,7 @@ const EXPEDITIONS = [
    "Anodonte des cygnes",
    "Anguille européenne",
    "Couleuvre vipérine",
-   "Goujon commun",
+   "Goujon occitan",
    "Écrevisse américaine"
   ],
   "chapitre": "Lac du Salagou",
@@ -10200,7 +10199,7 @@ const EXPEDITIONS = [
    "Vandoise",
    "Spirlin",
    "Barbeau méridional",
-   "Goujon"
+   "Goujon occitan"
   ],
   "chapitre": "Pic Saint-Loup",
   "carrefour": 6,
@@ -13003,9 +13002,8 @@ const EXPEDITIONS = [
    "Vandoise",
    "Spirlin",
    "Ablette",
-   "Goujon",
-   "Barbeau méridional",
-   "Goujon commun"
+   "Goujon occitan",
+   "Barbeau méridional"
   ],
   "chapitre": "Villefranche-de-Conflent",
   "carrefour": 3,
@@ -18911,11 +18909,11 @@ const LIENS = [
  {
   "territoire": "Pyrénées",
   "lieu": "Villefranche-de-Conflent",
-  "a": "Goujon commun",
+  "a": "Goujon occitan",
   "b": "Les fonds de sable",
   "nature_b": "element",
   "role": "Sa maison",
-  "question": "Où le goujon commun cherche-t-il sa nourriture ?",
+  "question": "Où le goujon occitan cherche-t-il sa nourriture ?",
   "phrase": "Il fouille les fonds de sable et de graviers.",
   "pieges": [
    "Les plantes flottantes de l'étang",

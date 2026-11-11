@@ -65,8 +65,13 @@ function montrer(vue) {
 // (montrer() arrête aussi un jeu en cours ; on l'écrit ici pour que ce soit clair.)
 function quitterJeu() {
   arreterCri();
+  // Étape R188 (11/11, note n° 16 d'Aubin) : dans une partie lancée depuis une expédition, « Quitter » ramène au LIEU
+  //   (avant : à l'accueil, on perdait l'endroit où l'on était). Le retour du téléphone fait pareil (14_clavier_menus.js).
+  const x = typeof expeditionDuFil === "function" ? expeditionDuFil() : null;
+  const lieu = x && x.chapitre && typeof chapitreParNom === "function" ? chapitreParNom(x.territoire, x.chapitre) : null;
   if (defi) abandonnerDefi();          // les XP déjà gagnés sont gardés
   session = null;                      // la Rencontre en cours ne sera pas reprise
+  if (x && lieu && typeof estLieu === "function" && estLieu(lieu)) { majFilExpedition(null); ouvrirLieu(x.territoire, lieu.nom); window.scrollTo(0, 0); return; }
   montrer("accueil");
 }
 

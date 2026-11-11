@@ -59,12 +59,20 @@ function demarrerFocus(imposee, options = {}) {
   // Étape R150 (07/11, retour en jouant : la question revenait à chaque oiseau) : « Le son est-il disponible ? »
   // n'est plus posée qu'une fois par jour ; la réponse du jour vaut pour toutes les Rencontres.
   sonDemande = !!(suivi && suivi.sonDemandeLe === aujourdhui());
+  // Étape RF1 : la Rencontre complète d'une expédition — sa vie (vrai ou faux) et un fait étonnant
+  session.vie = [];
+  session.etonnant = null;
+  if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE) {
+    session.vie = vieRencontre(expeditionParId(options.expedition.id), espece);
+    session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;
+  }
   // Le nombre de questions : 8 au plus, moins s'il y a peu de choses à demander sur cette espèce
-  const aDemander = session.physique ? champsEtape(espece, 1).filter(c => c !== IDENTIFICATION && nbBonnes(espece, c) === 0).length + 1   // étape 288 ; R132 : seulement ce qui manque, + la photo
+  const aDemander = session.physique ? champsEtape(espece, 1).filter(c => c !== IDENTIFICATION && nbBonnes(espece, c) === 0).length + 1 + session.vie.length   // étape 288 ; R132 : seulement ce qui manque, + la photo ; RF1 : + sa vie
     : (session.revisite ? [...new Set([...champsAInterroger(espece), ...champsReste(espece)])] : champsAInterroger(espece))   // étape R129
         .filter(c => !estApparence(c)).length + (estIdentifiee(espece) ? 0 : 1);   // (étape 138 : sans l'apparence)
   session.total = Math.max(1, Math.min(QUESTIONS_FOCUS, aDemander));
   session.prevues = session.total;                     // étape 156 : les questions prévues (sans les reprises de la fin)
+  if (session.etonnant) { session.bonusPrevu = true; session.total = session.total + 1; }   // étape RF1 : le fait étonnant, à la fin
   session.normalesFaites = 0;                          // et combien ont déjà été posées
   preparerPostit();                                    // étape 151 : la fiche post-it, vide
   document.getElementById("fin-session").classList.add("cache");
@@ -94,7 +102,8 @@ const ORDRE_RENCONTRE = ["famille_animale", "milieu_principal", "regime_alimenta
 function rangRencontre(champ) {
   if (session && session.physique) {                     // étape 288 : du trait le plus parlant au cri et à l'empreinte
     const j = champsEtape(session.focus, 1).indexOf(champ);
-    return j >= 0 ? j : 999;
+    const v = (session.vie || []).indexOf(champ);        // étape RF1 : sa vie après son allure
+    return j >= 0 ? j : v >= 0 ? 100 + v : 999;
   }
   const i = ORDRE_RENCONTRE.indexOf(champ);
   const q = QUESTIONS.find(x => x.champ === champ) || {};
@@ -105,7 +114,7 @@ function champsFocusRestants() {
   const espece = session.focus;
   if (session.physique) {                                // étape 288 : la Rencontre physique de l'étape 1 d'une expédition
     // étape R132 : une espèce déjà en partie connue (ailleurs) ne repasse que ce qui lui manque
-    return champsEtape(espece, 1).filter(c => c !== IDENTIFICATION && !session.posees.includes(c) && nbBonnes(espece, c) === 0);
+    return [...champsEtape(espece, 1), ...(session.vie || [])].filter(c => c !== IDENTIFICATION && !session.posees.includes(c) && nbBonnes(espece, c) === 0);   // RF1 : + sa vie
   }
   const base = session.revisite ? [...new Set([...champsAInterroger(espece), ...champsReste(espece)])] : champsAInterroger(espece);   // étape R129
   return base.filter(c => c !== IDENTIFICATION && !session.posees.includes(c) && !estApparence(c)
@@ -118,6 +127,7 @@ function bonusCandidats() {
 // Plus aucun trait possible : pas de bonus, la place prévue est rendue (une seule fois)
 function bonusSansCandidat() {
   if (!session.bonusPrevu || session.bonusFait || bonusCandidats().length) return false;
+  if (session.etonnant) return false;                                                     // étape RF1 : le fait étonnant attend
   if (typeof insoliteBonus === "function" && insoliteBonus(session.focus)) return false;   // étape QI4 : un fait physique insolite peut servir de bonus
   session.bonusFait = true; session.total -= 1; if (session.postit) dessinerPostit();
   return true;
@@ -174,6 +184,10 @@ function choisirQuestionFocus() {
   if ((!phaseNormale || restants.length === 0) && session.bonusPrevu && !session.bonusFait && !bonusSansCandidat()) {
     session.bonusFait = true;
     // Étape QI4 (choix d'Aubin du 09/11) : si l'espèce a un fait physique insolite pas encore trouvé, il remplace le bonus (« Vrai ou faux ? »)
+    if (session.etonnant) {                              // étape RF1 : « Étonnant » — deux affirmations, une vraie
+      session.insoliteEnCours = { espece, type: "deux", item: session.etonnant, bonus: true, etonnant: true };
+      return { espece, champ: INSOLITE, estRevision: false, rejeu: true, bonus: true };
+    }
     const fait = typeof insoliteBonus === "function" ? insoliteBonus(espece) : null;
     if (fait) { session.insoliteEnCours = { espece, type: "vrai_faux", item: fait, bonus: true }; return { espece, champ: INSOLITE, estRevision: false, rejeu: true, bonus: true }; }
     // Étape R150 : jamais un trait déjà posé dans cette Rencontre (avant : la même question revenait une minute après) ;
@@ -379,6 +393,24 @@ function placerSuiteRencontre() {
   else if (!aDroite && retour.parentNode === suite) {
     const bas = carte.querySelector(".contenu .bas-rencontre");
     bas.before(retour, suivant);
+  }
+  placerQuitterTelephone();
+}
+// Étape R188 (11/11, note n° 16 d'Aubin) : sur téléphone, dans la Rencontre avec fiche, « Quitter » passe tout en bas
+//   de la page, sous la fiche (avant : juste sous « Me la présenter », entre la question et la fiche, on le touchait sans le vouloir).
+//   Sur ordinateur et hors Rencontre, il reste à sa place, à côté de « ← Question précédente ».
+function placerQuitterTelephone() {
+  const carte = document.getElementById("carte-rencontre");
+  const quitter = carte && carte.querySelector("[data-quitter]");
+  if (!quitter) return;
+  const enBas = carte.classList.contains("avec-postit") && innerWidth <= 760;
+  let pied = document.getElementById("pied-rencontre");
+  if (enBas) {
+    if (!pied) { pied = document.createElement("div"); pied.id = "pied-rencontre"; pied.className = "pied-rencontre"; carte.append(pied); }
+    if (quitter.parentNode !== pied) pied.append(quitter);
+  } else if (pied && quitter.parentNode === pied) {
+    carte.querySelector(".contenu .bas-rencontre").append(quitter);
+    pied.remove();
   }
 }
 window.addEventListener("resize", placerSuiteRencontre, { passive: true });

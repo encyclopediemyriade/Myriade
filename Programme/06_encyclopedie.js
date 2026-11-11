@@ -543,6 +543,9 @@ function afficherAPropos() {
   // Étape PR5 (01/11, demande de l'utilisateur) : « Tout débloquer » et « Recommencer » à la fin de la page,
   //   avec le même bouton, et une confirmation dans la page après le clic (Oui / Annuler).
   dessinerActionsAPropos();
+  // Étape R188 (11/11, note n° 18 d'Aubin) : « Comment gagner des empreintes ? » (avant : sur la page de chaque lieu)
+  const regles = document.getElementById("apropos-empreintes");
+  if (regles && typeof texteReglesEmpreintes === "function") regles.innerHTML = `<h2>Comment gagner des empreintes ?</h2><p>${texteReglesEmpreintes()}</p>`;
   const photos = typeof CREDITS_PHOTOS === "object" ? CREDITS_PHOTOS : {};
   const sons = typeof CREDITS_SONS === "object" ? CREDITS_SONS : {};
   // Les photos, famille par famille (repliées : on ouvre celle qu'on veut lire)
