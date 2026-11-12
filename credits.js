@@ -4664,6 +4664,271 @@ const CREDITS_PHOTOS = {
   "auteur": "Philipp Pavelka",
   "licence": "CC BY 4.0",
   "source": "https://www.inaturalist.org/observations/87623982"
+ },
+ "crapaud_calamite_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/153346396"
+ },
+ "crapaud_calamite_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/75355069"
+ },
+ "vipere_aspic_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/137969244"
+ },
+ "vipere_aspic_3": {
+  "auteur": "Adrien Cozannet",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/393570788"
+ },
+ "lezard_des_murailles_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/73133256"
+ },
+ "lezard_des_murailles_3": {
+  "auteur": "Duarte Frade",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/269918492"
+ },
+ "orvet_fragile_2": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/37825554"
+ },
+ "orvet_fragile_3": {
+  "auteur": "Clément Maouche",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/133849797"
+ },
+ "couleuvre_verte_et_jaune_2": {
+  "auteur": "Alix Sanchis",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/236870097"
+ },
+ "couleuvre_verte_et_jaune_3": {
+  "auteur": "Mathieu Sauzay",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/15817762"
+ },
+ "coronelle_lisse_2": {
+  "auteur": "Adrien Cozannet",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/361359155"
+ },
+ "coronelle_lisse_3": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/187946789"
+ },
+ "lezard_vivipare_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/230169557"
+ },
+ "lezard_vivipare_3": {
+  "auteur": "Aurélien Coste",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/214422714"
+ },
+ "lezard_vert_occidental_2": {
+  "auteur": "Arthur BADEL",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/299168917"
+ },
+ "lezard_vert_occidental_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/286882006"
+ },
+ "couleuvre_helvetique_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/200837556"
+ },
+ "couleuvre_helvetique_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/71437232"
+ },
+ "couleuvre_d_esculape_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/279572557"
+ },
+ "couleuvre_d_esculape_3": {
+  "auteur": "Adrien Cozannet",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/349778717"
+ },
+ "vipere_d_orsini_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/93235149"
+ },
+ "vipere_d_orsini_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/333283742"
+ },
+ "truite_fario_2": {
+  "auteur": "Paul Asman",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/100779760"
+ },
+ "truite_fario_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125798078"
+ },
+ "chabot_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/7718641"
+ },
+ "chabot_3": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/230646443"
+ },
+ "vairon_2": {
+  "auteur": "Ewout Knoester",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/371724677"
+ },
+ "vairon_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "http://www.inaturalist.org/observations/3861196"
+ },
+ "ombre_commun_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/288848506"
+ },
+ "brochet_2": {
+  "auteur": "Ewout Knoester",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/394363763"
+ },
+ "brochet_3": {
+  "auteur": "Ewout Knoester",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/394363754"
+ },
+ "perche_commune_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/15129382"
+ },
+ "perche_commune_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/70266274"
+ },
+ "lote_2": {
+  "auteur": "Valentin Moser",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/239843829"
+ },
+ "loche_franche_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/15445835"
+ },
+ "loche_franche_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/231206499"
+ },
+ "miramelle_alpestre_2": {
+  "auteur": "Maxence Fouillade",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/395201833"
+ },
+ "miramelle_alpestre_3": {
+  "auteur": "saydelah",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/176082719"
+ },
+ "bourdon_des_alpes_2": {
+  "auteur": "Arnstein Staverløkk/Norsk institutt for naturforskning",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Alpehumle_(Bombus_alpinus)_p%C3%A5_bl%C3%B8mande_Salix.jpg"
+ },
+ "bourdon_des_alpes_3": {
+  "auteur": "Dag Endresen",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/172909309"
+ },
+ "fourmi_rousse_des_bois_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/271772477"
+ },
+ "fourmi_rousse_des_bois_3": {
+  "auteur": "Jonghyun Park",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/407094376"
+ },
+ "carabe_dore_2": {
+  "auteur": "Matthieu Le Goïc",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/208280293"
+ },
+ "carabe_dore_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/183561121"
+ },
+ "rosalie_des_alpes_2": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/87157651"
+ },
+ "rosalie_des_alpes_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/333190905"
+ },
+ "grande_sauterelle_verte_2": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/325113588"
+ },
+ "grande_sauterelle_verte_3": {
+  "auteur": "Alexis_lsu",
+  "licence": "CC0",
+  "source": "https://www.inaturalist.org/observations/166812088"
+ },
+ "oedipode_stridulante_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/23083865"
+ },
+ "oedipode_stridulante_3": {
+  "auteur": "Patrick Delhalt",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/92474736"
+ },
+ "abeille_mellifere_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/317362677"
+ },
+ "abeille_mellifere_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/215692266"
+ },
+ "grand_duc_d_europe_2": {
+  "auteur": "Ulrich Schaub",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eagle_Owl_(Bubo_Bubo)_Chick_4_Weeks.jpg"
  }
 };
 
