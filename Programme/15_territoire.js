@@ -596,7 +596,7 @@ function dessinerAccueilMobile(t) {
   };
   // Étape M9 : l'espèce du jour est passée dans la page d'accueil (« maison ») ; ici, seulement le lien vers la carte de France
   bas.innerHTML = `<button class="acm-lien-carte" id="acm-carte" type="button">Voir la carte de France <span aria-hidden="true">→</span></button>`;
-  document.getElementById("acm-carte").onclick = () => { montrer("carte"); window.scrollTo(0, 0); };
+  document.getElementById("acm-carte").onclick = () => { if (typeof ouvrirAtlas === "function") ouvrirAtlas(); else { montrer("carte"); window.scrollTo(0, 0); } }   // étape K2 : l'espace Carte;
 }
 
 
@@ -794,7 +794,7 @@ function dessinerMaison() {
       </div></div>`;
   zone.querySelectorAll(".mai-rond").forEach(b => b.onclick = () => { const e = especeParNom(b.dataset.nom); if (e) ouvrirPageEspece(e); });
   document.getElementById("mai-reprendre").onclick = () => { montrer("accueil"); if (typeof dessinerCouverture === "function") dessinerCouverture(); window.scrollTo(0, 0); };   // étape M23 : vers la page du territoire
-  document.getElementById("mai-carte").onclick = () => { montrer("carte"); window.scrollTo(0, 0); };
+  document.getElementById("mai-carte").onclick = () => { if (typeof ouvrirAtlas === "function") ouvrirAtlas(); else { montrer("carte"); window.scrollTo(0, 0); } }   // étape K2 : l'espace Carte;
   dessinerDefisMaison(t);
   if (typeof dessinerEspeceDuJour === "function") dessinerEspeceDuJour("mai-jour");
   if (avantProchainTerritoire() === 0) setTimeout(verifierOuverture, 300);   // étape R152 : palier atteint (par ex. règle du premier voyage) → le territoire s'ouvre, avec sa fête

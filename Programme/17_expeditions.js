@@ -1862,6 +1862,7 @@ function brancherCarteLieux(racine, t) {
     g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ouvrir(); } });
   });
 }
+// Étape K2 : o.relief = l'ombrage du relief (espace Carte, 25_carte.js), posé entre le territoire et les points
 function carteDesLieux(t, o = {}) {
   if (typeof LIEUX_CARTE === "undefined" || typeof CARTE_TERRITOIRES === "undefined") return "";
   const cadre = LIEUX_CARTE.cadres[t], forme = CARTE_TERRITOIRES.find(k => k.nom === t);
@@ -1905,7 +1906,7 @@ function carteDesLieux(t, o = {}) {
   const pad = 12 * echelle * 1.6 + 3 * echelle;
   const vue = [cadre[0] - pad, cadre[1] - pad, cadre[2] + 2 * pad, cadre[3] + 2 * pad].map(v => Math.round(v * 10) / 10);
   return `<div class="carte-lieux${o.sombre ? " sombre" : ""}" style="--couleur-t:${couleur}">
-      <svg viewBox="${vue.join(" ")}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Les lieux du territoire sur la carte">${voisins}<path d="${forme.contour}" class="cl-terr-trait"/><path d="${forme.contour}" class="cl-terr"/>${pts}</svg>
+      <svg viewBox="${vue.join(" ")}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Les lieux du territoire sur la carte">${voisins}<path d="${forme.contour}" class="cl-terr-trait"/><path d="${forme.contour}" class="cl-terr"/>${o.relief || ""}${pts}</svg>
       ${o.sombre ? "" : `<div class="cl-legende"><span><i class="fini"></i>terminé</span><span><i class="cours"></i>en cours</span><span><i class="ouvert"></i>ouvert</span><span><i class="ferme"></i>plus tard</span><span><i class="site"></i>site remarquable</span></div>`}</div>`;
 }
 // Étape 335 (choix D1) : la petite France de la couverture, le territoire en couleur
@@ -2543,6 +2544,7 @@ function repondreFinale(i) {
   finale.choisi = i;
   const n = finale.file[finale.pos];
   if (!finale.choix[i].bon) finale.rates.push(n);   // étape 303 : proposé en reprise à la fin du tour
+  if (finale.choix[i].bon && !finale.essai && typeof noterLienConnu === "function") noterLienConnu(cleLien(finale.liens[n]));   // étape B1 : badge « Leurs liens »
   else if (!finale.essai && suivi && !finaleFaite(finale.t, finale.nom)) {   // étape R149 : gardé, même si l'on sort
     const cle = finale.t + "|" + finale.nom, k = cleLien(finale.liens[n]);
     suivi.finalesTrouves = suivi.finalesTrouves || {};

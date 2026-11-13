@@ -129,6 +129,7 @@ function mesurerProfil() {
 //   Sert à tester la fin du parcours pendant la refonte de l'étape 1. À retirer (ou garder caché) avant d'ouvrir le jeu à tous.
 // ==================================================================
 function ouvrirAccesTest(t) {
+  window.ACCES_TEST_OUVERT = true;   // étape R190 : les repères « exemple » se montrent en mode test
   if (typeof chapitresDe !== "function") return;
   const terrs = Object.keys(TERRITOIRES).filter(x => chapitresDe(x).length);
   t = terrs.includes(t) ? t : (typeof territoireActif === "function" && terrs.includes(territoireActif()) ? territoireActif() : terrs[0]);

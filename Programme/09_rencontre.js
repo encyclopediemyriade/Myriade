@@ -641,7 +641,11 @@ function presenterEspece(espece) {
   // Étape 161 : jusqu'à 6 traits. D'abord ceux de niveau 1, puis de niveau 2 s'il en faut, et seulement
   // ceux qui se VOIENT sur la photo (pas la pupille ni les dents : « avecPhoto » = ne se voit pas)
   const visibles = questionsPossibles(espece).filter(q => q.format === "picto" && !q.avecPhoto && q.niveau <= 2);
-  const traits = [...melanger(visibles.filter(q => q.niveau === 1)), ...melanger(visibles.filter(q => q.niveau === 2))].slice(0, TRAITS_PRESENTES);
+  let traits = [...melanger(visibles.filter(q => q.niveau === 1)), ...melanger(visibles.filter(q => q.niveau === 2))].slice(0, TRAITS_PRESENTES);
+  // Étape R190 (carte d'identité, choix E d'Aubin) : quand l'espèce a ses repères de terrain, la carte garde la taille, le poids
+  //   et l'ensemble (couleur, aspect…), puis les repères ; les autres traits laissent la place (pas de lourdeur à lire).
+  const blocRp = typeof blocReperes === "function" ? blocReperes(espece, { arrivee: 1.3, titre: "Retenez-les : on vous les redemandera" }) : "";
+  if (blocRp && typeof TRAITS_ENSEMBLE !== "undefined") traits = traits.filter(q => TRAITS_ENSEMBLE.includes(q.champ)).slice(0, 2);
   session.presentes = traits.map(q => q.champ);
   const lignes = traits.map(q => {
     const v = valeurDe(espece, q);
@@ -652,13 +656,13 @@ function presenterEspece(espece) {
   const taille = ligneTaille(espece, ` style="animation-delay:.7s"`).replaceAll('class="trait-taille', 'class="trait-arrive trait-taille');   // étape 310 : la taille d'abord ; R168 : et le poids
   const zone = document.getElementById("reponses");
   zone.className = "";
-  zone.innerHTML = `<div class="presentation"><p class="trait-arrive" style="animation-delay:.5s">Pour la reconnaître :</p><ul class="traits-presentation">${taille}${lignes}</ul></div>`;
+  zone.innerHTML = `<div class="presentation"><p class="trait-arrive" style="animation-delay:.5s">Pour la reconnaître :</p><ul class="traits-presentation">${taille}${lignes}</ul>${blocRp}</div>`;
   const suivant = document.getElementById("suivant");
   suivant.textContent = "Observer de plus près →";
   // le bouton n'arrive qu'une fois les traits posés (on ne saute pas la présentation par mégarde)
   suivant.classList.add("cache");
   setTimeout(() => { if (session && session.presentee && enCours && enCours.champ === OUVERTURE) suivant.classList.remove("cache"); },
-             (0.88 + 0.18 * traits.length) * 1000 + 300);
+             (blocRp ? 1.3 + 0.18 * 5 : 0.88 + 0.18 * traits.length) * 1000 + 300);
   // Étape 161 : une question bonus, à la fin de la Rencontre, sur l'un de ces traits (de mémoire, sans la photo)
   if (traits.length && !session.bonusPrevu) { session.bonusPrevu = true; session.total = session.total + 1; }
 }
@@ -715,6 +719,10 @@ function ficheRecap(espece) {
     return `<li><span class="picto">${dessin}</span><span><small>${q.libelle}</small>${texte}</span></li>`;
   }).join("");
   const taille = ligneTaille(espece);
+  // Étape R190 : la même carte qu'au début (taille, poids, repères), plus la ligne « À ne pas confondre » (seulement à la fin)
+  const blocRp = typeof blocReperes === "function" ? blocReperes(espece, { fin: true }) : "";
+  if (blocRp) return `<div class="fiche-recap"><p class="fiche-recap-titre">Pour reconnaître ${nomAvecArticle(espece)}</p>
+    <ul class="traits-presentation recap">${taille}</ul>${blocRp}</div>`;
   if (!taille && !lignes) return "";
   return `<div class="fiche-recap"><p class="fiche-recap-titre">Pour reconnaître ${nomAvecArticle(espece)}</p>
     <ul class="traits-presentation recap">${taille}${lignes}</ul></div>`;

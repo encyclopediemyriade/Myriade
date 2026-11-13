@@ -47,6 +47,7 @@
     <!-- Étape 72 : un seul onglet "Jouer" remplace "Rencontre" et "Défis" -->
     <!-- Étape 196 : plus d'onglet Jouer, on joue depuis l'accueil (bouton gardé caché : il sert encore au code) -->
     <!-- Étape 253 : l'onglet revient sous le nom « Plus de jeux » : tous les jeux, sur un choix libre de territoires et de familles -->
+    <button class="onglet" id="onglet-carte">Carte</button>   <!-- étape K2 : l'espace Carte (téléphone seulement, caché sur ordinateur) -->
     <button class="onglet" id="onglet-encyclopedie">Encyclopédie</button>
     <!-- Étape 274 (« Revoir 4 ») : « Plus de jeux » passe après « Encyclopédie » -->
     <button class="onglet" id="onglet-jouer">Plus de jeux</button>
@@ -82,6 +83,7 @@
   <!-- Étape 255 (24/10) : la page d'accueil générale — le bandeau Myriade, la carte des territoires (un clic = partir dans ce
        territoire), la nature connue (France, ou le territoire survolé), les familles et les dernières découvertes.
        « Partir ailleurs » ramène ici. Remplie par afficherPageCarte (15_territoire.js) et les fonctions de la partie 9. -->
+  <section id="vue-atlas" class="cache"></section>   <!-- étape K2 : l'espace Carte du téléphone (25_carte.js) -->
   <section id="vue-maison" class="cache"></section>   <!-- étape M9 : la page d'accueil du téléphone (bonjour, carnet, reprendre, défis, espèce du jour) -->
   <section id="vue-carte" class="cache">
     <div class="ac-bandeau">
@@ -432,6 +434,8 @@
     </div>
   </section>
 
+  <section id="vue-coupdoeil" class="cache"></section>   <!-- étape R191 : le jeu Coup d'œil (24_coup_doeil.js) -->
+
   <section id="vue-apropos" class="cache">
     <article class="apropos">
       <h1>À propos</h1>
@@ -579,6 +583,7 @@
   <script src="version.js?v=1.7.1"></script>
   <script src="especes.js?v=1.7.1"></script>
   <script src="verif_photos.js?v=1.7.1"></script>   <!-- étape R185 : les questions d'allure vérifiées sur la photo (Données\verif_photos.xlsx → Outils\gen_verif_photos.py) -->
+  <script src="reperes.js?v=1.7.1"></script>   <!-- étape R190 : repères de terrain (Données\reperes_terrain.xlsx → Outils\reperes\gen_reperes.py) -->
   <script src="cadrage.js?v=1.7.1"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
   <script src="territoires.js?v=1.7.1"></script>
   <script src="credits.js?v=1.7.1"></script>
@@ -607,10 +612,14 @@
   <script src="Programme/17_expeditions.js?v=1.7.1"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
   <script src="Programme/20_formes.js?v=1.7.1"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
   <script src="Programme/21_insolites.js?v=1.7.1"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
+  <script src="relief_carte.js?v=1.7.1"></script>   <!-- étape K2 : l'ombrage du relief des territoires (généré par gen_relief.py) -->
+  <script src="Programme/25_carte.js?v=1.7.1"></script>   <!-- étape K2 : l'espace Carte du téléphone -->
   <script src="Programme/19_application.js?v=1.7.1"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
   <script src="Programme/13_demarrage.js?v=1.7.1"></script>
   <script src="Programme/14_clavier_menus.js?v=1.7.1"></script>   <!-- étape 229 : le clavier en fin de partie -->
   <script src="Programme/18_cadrage.js?v=1.7.1"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
+  <script src="Programme/23_reperes.js?v=1.7.1"></script>   <!-- étape R190 : la carte d'identité (repères de terrain) -->
+  <script src="Programme/24_coup_doeil.js?v=1.7.1"></script>   <!-- étape R191 : Coup d'œil, « une photo, 4 noms » -->
   <script src="Programme/22_typographie.js?v=1.7.1"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
 </body>
 </html>

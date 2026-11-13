@@ -14,7 +14,7 @@ function montrer(vue) {
   if (typeof majFilExpedition === "function") majFilExpedition(null);   // étape 332 : le bandeau d'expédition, remis par les lancements d'expédition
   const jeu = vue === "jouer";                           // l'onglet Jouer (étape 72)
   if (!jeu) modeLibre = false;
-  if (!jeu && vue !== "arcade") depuisArcade = false;    // étape 274 : on a quitté « Plus de jeux »
+  if (!jeu && vue !== "arcade" && vue !== "coupdoeil") depuisArcade = false;    // étape 274 : on a quitté « Plus de jeux »
   // Étape 253 : trois usages de cet écran — « Partir ailleurs » (un territoire), « Plus de jeux » (choix libre), lancement direct
   if (jeu) modeTerrain = !lancementDirect && !modeLibre;
   if (jeu && modeTerrain) territoiresDefi = [territoireActif()];   // étape 252 : on part du territoire où l'on est (un seul)
@@ -24,11 +24,18 @@ function montrer(vue) {
   document.getElementById("barre").classList.remove("cache");
   document.getElementById("vue-accueil").classList.toggle("cache", vue !== "accueil");
   document.getElementById("vue-carte").classList.toggle("cache", vue !== "carte");   // étape 255 : la page carte
+  const vueAtlas = document.getElementById("vue-atlas");                                // étape K2 : l'espace Carte du téléphone
+  if (vueAtlas) vueAtlas.classList.toggle("cache", vue !== "atlas");
+  const ongletCarte = document.getElementById("onglet-carte");
+  if (ongletCarte) ongletCarte.classList.toggle("actif", vue === "atlas");
   const vueMaison = document.getElementById("vue-maison");                              // étape M9 : l'accueil du téléphone
   if (vueMaison) vueMaison.classList.toggle("cache", vue !== "maison");
   if (vue === "maison" && typeof dessinerMaison === "function") dessinerMaison();
   if (vue === "maison") window.scrollTo(0, 0);              // étape M14 : l'accueil s'ouvre toujours en haut (après « Comment jouer », il s'ouvrait au milieu)
   document.getElementById("vue-arcade").classList.toggle("cache", vue !== "arcade");   // étape 262 : l'Arcade
+  const vueCoup = document.getElementById("vue-coupdoeil");                            // étape R191 : Coup d'œil
+  if (vueCoup) vueCoup.classList.toggle("cache", vue !== "coupdoeil");
+  if (vue !== "coupdoeil" && typeof coup !== "undefined") coup = null;
   const vueExp = document.getElementById("vue-expedition");                            // étape 282 : l'écran d'une expédition
   if (vueExp) vueExp.classList.toggle("cache", vue !== "expedition");
   const vueLieu = document.getElementById("vue-lieu");                                  // étape 290 : la page d'un lieu
@@ -40,12 +47,13 @@ function montrer(vue) {
   document.getElementById("vue-progression").classList.toggle("cache", vue !== "progression");   // étape 106
   document.getElementById("onglet-progression").classList.toggle("actif", vue === "progression");
   document.getElementById("onglet-accueil").classList.toggle("actif", vue === "accueil" || vue === "maison" || vue === "carte" || vue === "expedition" || vue === "lieu");
-  document.getElementById("onglet-jouer").classList.toggle("actif", vue === "arcade" || (jeu && modeLibre));   // étape 262 : l'Arcade
+  document.getElementById("onglet-jouer").classList.toggle("actif", vue === "arcade" || vue === "coupdoeil" || (jeu && modeLibre));   // étape 262 : l'Arcade
   document.body.classList.toggle("ecran-jouer", jeu);   // étape 91 : la barre du haut s'élargit comme le carnet
   document.getElementById("onglet-encyclopedie").classList.toggle("actif", vue === "encyclopedie" || vue === "espece");
   fermerFenetre();
   if (vue === "accueil") afficherAccueil();       // stats à jour à chaque retour à l'accueil
   if (vue === "carte") afficherPageCarte();       // étape 255
+  if (vue === "atlas" && typeof afficherAtlas === "function") afficherAtlas();   // étape K2
   if (vue === "arcade") { afficherArcade(); window.scrollTo(0, 0); }   // étape 262
   if (jeu) entrerRencontre();
   if (vue === "encyclopedie") afficherEncyclopedie();
@@ -94,12 +102,12 @@ function entrerRencontre() {
 // familles (étape 12). Tout est coché par défaut.
 // Les couleurs des territoires ; un territoire absent de cette liste sera gris.
 const TERRITOIRES = {
-  "Alpes": { couleur: "#4d6a7d" },
-  "Massif armoricain": { couleur: "#4f7a6a" },   // étape 181 : vert d'eau, entre lande et océan
-  "Bassin parisien et Val de Loire": { couleur: "#8a6f3c" },   // étape 190 : ocre doré, comme les blés de Beauce
+  "Alpes": { couleur: "#7a8794" },   // étape K1 : gris de roche, comme les hautes falaises et les glaciers (choix de l'utilisateur, 13/11 ; avant #4d6a7d)
+  "Massif armoricain": { couleur: "#3e5f80" },   // étape K1 : bleu d'océan, comme la mer d'Iroise et les côtes bretonnes (choix de l'utilisateur, 13/11 ; avant #4f7a6a, trop proche du Jura)
+  "Bassin parisien et Val de Loire": { couleur: "#9c7b30" },   // étape K1 : blé mûr, comme les blés de Beauce (choix de l'utilisateur, 13/11 ; avant #8a6f3c)
   "Méditerranée": { couleur: "#b0644a" },   // étape 191 : terre cuite, comme les tuiles et la terre rouge des garrigues
   "Pyrénées": { couleur: "#74587a" },   // étape 192 : violet bruyère, comme les landes de bruyère des estives
-  "Bassin aquitain": { couleur: "#8b3a4a" },   // étape 237 : bordeaux, comme les vignes du Sud-Ouest
+  "Bassin aquitain": { couleur: "#7d3048" },   // étape K1 : vin de Bordeaux, comme les vignes du Sud-Ouest (choix de l'utilisateur, 13/11 ; avant #8b3a4a)
   "Massif central": { couleur: "#64783a" },   // étape 286 : vert d'estive, comme les prairies d'altitude de l'Aubrac et du Cantal (choix de l'utilisateur, 25/10)
   "Corse": { couleur: "#2a7d8e" },   // étape 299 : turquoise profond, comme l'eau des criques et des vasques (choix de l'utilisateur, 26/10)
   "Jura": { couleur: "#3f6b5c" },   // étape 307 : vert sapin bleuté, comme les forêts d'épicéas et les tourbières (choix de l'utilisateur, 26/10 ; à harmoniser plus tard si besoin)
@@ -365,7 +373,7 @@ function afficherCarnetFin(idZone, { journal, avant, cases, manquees: manqueesFi
   if (avant && avant.badges) {
     for (const b of tousLesBadges()) {
       const palier = palierDe(b);
-      if (palier > (avant.badges[b.cle] || 0)) { gagnes.push(b.nom); blocB += `<div class="badge-fin">${dessinBadge(b)}<div>${nomBadge(b, palier)}<small>${b.cond}</small></div></div>`; }
+      if (palier > (avant.badges[b.cle] || 0)) { gagnes.push(b.nom); blocB += `<div class="badge-fin">${dessinBadge(b, palier)}<div>${nomBadge(b, palier)}<small>${b.cond}</small></div></div>`; }
     }
   }
   const proche = badgeProche();
@@ -972,6 +980,7 @@ function possibiliteJeuCalcul(jeu, choisi) {
     const manque = MINIMUM_INDICES - especesPlateau(especes).length;
     return { possible: false, raison: manque > 0 ? `encore ${pluriel(manque, "espèce")} à identifier` : "pas assez d'indices" };
   }
+  if (jeu === "coupdoeil" && typeof possibiliteCoupDoeil === "function") return possibiliteCoupDoeil(especes);   // étape R191
   if (jeu === "plus")  return duelsPossibles(especes, true).length ? { possible: true } : { possible: false, raison: "pas assez d'espèces ici" };
   if (jeu === "carnet") {                                 // étape R167
     if (!especes.some(e => estIdentifiee(e) && estRenseigne(e.photo))) return { possible: false, raison: "aucune espèce rencontrée ici pour l'instant" };

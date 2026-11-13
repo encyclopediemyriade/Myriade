@@ -1184,6 +1184,8 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
   if (session && session.focus && champ === IDENTIFICATION && typeof retourMesures === "function") {
     retour.insertAdjacentHTML("beforeend", retourMesures(espece));
     if (session.physique && typeof pictosEnsemble === "function" && RENCONTRE_COMPLETE) retour.insertAdjacentHTML("beforeend", pictosEnsemble(espece));   // étape RF6
+    // Étape R190 : la photo reconnue, la carte d'identité (repères de terrain) au début de la Rencontre, si elle n'a pas déjà été présentée
+    if (estJuste && !session.presentee && typeof blocReperes === "function") retour.insertAdjacentHTML("beforeend", blocReperes(espece, { titre: "Retenez-les : on vous les redemandera" }));
     // Étape PA1 (12/11, choix A2 d'Aubin) : la photo reconnue, son autre forme s'affiche d'elle-même (« La femelle »…),
     //   en vignette ; toucher l'agrandit. Montrée, jamais demandée. Les « autre vue » ne sont pas montrées ici.
     if (estJuste && typeof blocAutresFormes === "function") retour.insertAdjacentHTML("beforeend", blocAutresFormes(espece));

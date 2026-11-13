@@ -78,11 +78,45 @@ const ICONES_BADGES = {
   medaille: `<circle cx="12" cy="12" r="9"/><path d="M12 5.5c4.5 2.5 4.5 8.5 0 12-4.5-3.5-4.5-9.5 0-12z"/>`,
   chemin:   `<path d="M8 21c0-4 8-5 8-9s-6-4-6-7"/><circle cx="10" cy="4" r="1"/>`,
 };
-function dessinBadge(b) {
-  const svg = SILHOUETTES[b.icone]
-    ? `<svg viewBox="0 0 48 48" class="plein" aria-hidden="true">${SILHOUETTES[b.icone]}</svg>`
-    : `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONES_BADGES[b.icone] || ICONES_BADGES.cible}</svg>`;
-  return `<span class="rond-badge">${svg}</span>`;
+// ---- Étape B1 (13/11/2026, choix d'Aubin : style A4 « couleur du groupe ») ----
+// Un seul dessin par badge, partout (page des badges, fête, vitrine du Profil, fin de partie) : un rond à la couleur
+// du groupe, un disque papier, le dessin à l'encre ; les paliers en 1 à 3 points en bas (plein = gagné).
+// Plus de bronze / argent / or pour les badges : ces mots sont aux médailles des lieux.
+const COULEURS_GROUPES_BADGES = { E: "#2F5A45", C: "#A8652A", S: "#3E5F73", R: "#6E4C68" };
+const MOTIFS_BADGES = {            // dessins à traits, dans un carré de 48
+  expedition: `<path d="M14 43c0-8 20-8 20-16s-14-8-14-16"/><path d="M20 12V3l8 3.5-8 3.5"/>`,
+  lieu: `<path d="M5 13l12-4 14 4 12-4v27l-12 4-14-4-12 4z"/><path d="M17 9v27M31 13v12"/><path d="M31 37s-6-6-6-10a6 6 0 0 1 12 0c0 4-6 10-6 10z"/><circle cx="31" cy="27" r="2"/>`,
+  toile: `<path d="M24 9L10 21M24 9l14 12M10 21l6 17M38 21l-6 17M16 38h16M24 9v16M10 21l14 4M38 21l-14 4M16 38l8-13M32 38l-8-13"/><circle cx="24" cy="9" r="2.6" fill="#1F3A2E"/><circle cx="10" cy="21" r="2.6" fill="#1F3A2E"/><circle cx="38" cy="21" r="2.6" fill="#1F3A2E"/><circle cx="16" cy="38" r="2.6" fill="#1F3A2E"/><circle cx="32" cy="38" r="2.6" fill="#1F3A2E"/><circle cx="24" cy="25" r="2.6" fill="#1F3A2E"/>`,
+  gardien: `<path d="M3 41l14-22 8 12 6-8 14 18z"/><path d="M17 19V7l8 3.5-8 3.5"/>`,
+  voyageur: `<circle cx="24" cy="24" r="17"/><path d="M24 11l5 13-5 13-5-13z"/><path d="M19 24h10"/><path d="M24 4v3M24 41v3M4 24h3M41 24h3"/>`,
+  planches: `<rect x="6" y="14" width="26" height="28" rx="1.5"/><path d="M14 14V7h28v28h-10"/><path d="M13 35c0-8 5-13 12-13 0 8-5 13-12 13zM13 35l6-6"/>`,
+  liens: `<circle cx="12" cy="27" r="7.5"/><circle cx="36" cy="27" r="7.5"/><path d="M15 18c5-6 13-6 18 0"/><path d="M30 15.5l3 2.5-3.5 1.5"/><path d="M9 30c0-4 2-6 6-6 0 4-2 6-6 6z"/><path d="M33 27a3 3 0 1 1 3 3"/><path d="M33 36c-5 5-13 5-18 0"/><path d="M18 38.5l-3-2.5 3.5-1.5"/>`,
+  carnet: `<path d="M6 13c6-3 12-3 18 1 6-4 12-4 18-1v24c-6-3-12-3-18 1-6-4-12-4-18-1z"/><path d="M24 14v24"/><path d="M29 31c0-6 4-10 9-10 0 6-4 10-9 10zM29 31l5-5"/><path d="M10 19h9M10 24h9M10 29h7"/>`,
+  familles: `<circle cx="24" cy="24" r="5"/><circle cx="39.0" cy="24.0" r="2.6"/><circle cx="36.1" cy="32.8" r="2.6"/><circle cx="28.6" cy="38.3" r="2.6"/><circle cx="19.4" cy="38.3" r="2.6"/><circle cx="11.9" cy="32.8" r="2.6"/><circle cx="9.0" cy="24.0" r="2.6"/><circle cx="11.9" cy="15.2" r="2.6"/><circle cx="19.4" cy="9.7" r="2.6"/><circle cx="28.6" cy="9.7" r="2.6"/><circle cx="36.1" cy="15.2" r="2.6"/>`,
+  specialiste: `<circle cx="20" cy="20" r="13"/><path d="M29.5 29.5L42 42"/><path d="M14 27c2-8 6-12 12-13-1 6-5 11-12 13zM14 27l7-7"/>`,
+  familiere: `<path d="M9 40C9 21 21 10 41 8c0 19-11 32-32 32z"/><path d="M9 40L33 16M17 32h8M23 26v-8M28 21h6"/>`,
+  raretes: `<path d="M3 27s7-11 18-11 18 11 18 11-7 11-18 11S3 27 3 27z"/><circle cx="21" cy="27" r="4.5"/><path d="M38 4l1.6 3.6 3.9.4-2.9 2.6.8 3.9-3.4-2-3.4 2 .8-3.9-2.9-2.6 3.9-.4z"/>`,
+  proteger: `<path d="M24 35V22"/><path d="M24 27c-6 0-9-4-9-9 6 0 9 4 9 9zM24 24c0-6 3-10 9-10 0 6-3 10-9 10z"/><path d="M6 30c5 0 9 2 11 5h14c2-3 6-5 11-5"/><path d="M6 30v3c0 5 8 9 18 9s18-4 18-9v-3"/>`,
+  etonnant: `<path d="M22 27a2 2 0 1 1 4 0a5 5 0 1 1-10 0a8 8 0 1 1 16 0a11 11 0 1 1-22 0"/><path d="M37 6v7M33.5 9.5h7M42 17v4M40 19h4"/>`,
+  oreille: `<path d="M12 31c0-7 5-12 12-12 3 0 5 1 6.5 3l5 1-4 3c0 8-6 13-13 13-3 0-6.5-1-6.5-4z"/><circle cx="28" cy="23" r="1" fill="#1F3A2E"/><path d="M8 41h24M19 37v4M24 37v4"/><path d="M37 11a6 6 0 0 1 0 8M40.5 8a11 11 0 0 1 0 14"/>`,
+  traces: `<ellipse cx="16" cy="31" rx="6" ry="8"/><circle cx="9.5" cy="19" r="2.4"/><circle cx="16" cy="15.5" r="2.4"/><circle cx="22.5" cy="19" r="2.4"/><ellipse cx="34" cy="22" rx="5" ry="6.6"/><circle cx="29.5" cy="11.5" r="2"/><circle cx="34.5" cy="9.5" r="2"/><circle cx="39.5" cy="11.5" r="2"/>`,
+  lynx: `<path d="M10 40c-2-10 0-18 4-22l-2-12 8 8h8l8-8-2 12c4 4 6 12 4 22-4 3-9 4-14 4s-10-1-14-4z"/><path d="M12 6V2M36 6V2"/><circle cx="19" cy="26" r="1.8" fill="#1F3A2E"/><circle cx="29" cy="26" r="1.8" fill="#1F3A2E"/><path d="M22 32h4l-2 2.5z"/><path d="M11 35l-5 2M37 35l5 2"/>`,
+  tenacite: `<path d="M3 44L45 20"/><path d="M23 29a2 2 0 1 1 3-1.5a5 5 0 1 1-9 2a8 8 0 1 1 15-3.5"/><path d="M10 40l26-15 3-6M36 25l5-3"/>`,
+  fidele: `<rect x="7" y="10" width="34" height="30" rx="3"/><path d="M7 18h34M16 6v8M32 6v8"/><path d="M17 30l5 4 9-10"/>`,
+  saisons: `<circle cx="24" cy="24" r="17"/><path d="M24 7v34M7 24h34"/><circle cx="15.5" cy="15.5" r="2"/><path d="M15.5 11v2M15.5 18v2M11 15.5h2M18 15.5h2"/><circle cx="32.5" cy="15.5" r="3"/><path d="M32.5 10v1.5M38 15.5h-1.5M28.5 11.5l1 1M36.5 11.5l-1 1"/><path d="M12 35c0-5 3-8 8-8 0 5-3 8-8 8zM12 35l4-4"/><path d="M32.5 28v9M28.5 30.5l8 4M28.5 34.5l8-4"/>`,
+  levetot: `<path d="M4 37h40"/><path d="M12 37a12 12 0 0 1 24 0"/><path d="M24 16v5M11 22l3.5 3.5M37 22l-3.5 3.5"/><path d="M29 9l3 2 3-2M35 13l2.5 1.6L40 13"/>`,
+  nuit: `<path d="M13 41c-3-6-3-18 2-24l-2-8 7 5h6l7-5-2 8c5 6 5 18 2 24-6 3-14 3-20 0z"/><circle cx="19.5" cy="22" r="4"/><circle cx="28.5" cy="22" r="4"/><circle cx="19.5" cy="22" r="1.3" fill="#1F3A2E"/><circle cx="28.5" cy="22" r="1.3" fill="#1F3A2E"/><path d="M24 26l-1.6 3.4h3.2z"/><path d="M45 9a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z"/>`,
+  duel: `<rect x="5" y="12" width="17" height="24" rx="2" transform="rotate(-8 13.5 24)"/><rect x="26" y="12" width="17" height="24" rx="2" transform="rotate(8 34.5 24)"/><circle cx="13.5" cy="21" r="3"/><path d="M8.5 31c1.5-3 8.5-3 10 0"/><circle cx="34.5" cy="21" r="3"/><path d="M29.5 31c1.5-3 8.5-3 10 0"/>`,
+};
+function dessinBadge(b, palier = palierDe(b)) {
+  const coul = COULEURS_GROUPES_BADGES[b.cat] || "#1F3A2E", n = b.paliers ? b.paliers.length : 0;
+  const haut = n ? 57 : 60, ecart = 8;
+  const points = n ? Array.from({ length: n }, (_, i) => `<circle cx="${60 + (i - (n - 1) / 2) * ecart}" cy="110" r="2.8" fill="${i < palier ? "#FBF8F1" : "none"}" stroke="#FBF8F1" stroke-width="1.3"/>`).join("") : "";
+  const motif = MOTIFS_BADGES[b.motif] || MOTIFS_BADGES.carnet;
+  return `<span class="rond-badge mb${palier ? "" : " pas-encore"}"><svg viewBox="0 0 120 120" aria-hidden="true">`
+    + `<circle cx="60" cy="60" r="56" fill="${coul}"/><circle cx="60" cy="60" r="44" fill="#FBF8F1"/>`
+    + `<g transform="translate(32.4 ${haut - 27.6}) scale(1.15)" fill="none" stroke="#1F3A2E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">${motif}</g>`
+    + points + `</svg></span>`;
 }
 
 // ---- Les petits calculs dont les badges ont besoin ----
@@ -121,52 +155,86 @@ function unSpecialiste() {
   }
   return 0;
 }
+// Étape B1 : les liens découverts (étape « Leurs liens » et bonnes réponses des finales), une fois chacun
+function noterLienConnu(cle) {
+  if (!suivi || !cle) return;
+  suivi.liensConnus = suivi.liensConnus || {};
+  if (suivi.liensConnus[cle]) return;
+  suivi.liensConnus[cle] = 1;
+  sauvegarder();
+  if (typeof verifierBadgesBientot === "function") verifierBadgesBientot();
+}
+// Rien ne recule : la première fois, on compte les liens des finales faites ou commencées et ceux des expéditions déjà vues
+function migrerLiensB1() {
+  if (!suivi || suivi.liensB1) return;
+  const l = suivi.liensConnus = suivi.liensConnus || {};
+  try {
+    for (const cle of Object.keys(suivi.finales || {})) {
+      if (!suivi.finales[cle]) continue;
+      const i = cle.indexOf("|"), t = cle.slice(0, i), nom = cle.slice(i + 1);
+      if (typeof liensDuLieu === "function") for (const k of liensDuLieu(t, nom)) l[cleLien(k)] = 1;
+    }
+    for (const liste of Object.values(suivi.finalesTrouves || {})) for (const k of liste) l[k] = 1;
+    for (const id of Object.keys(suivi.liensExp || {})) {
+      const x = suivi.liensExp[id] && typeof expeditionParId === "function" ? expeditionParId(id) : null;
+      if (x && typeof candidatsLiens === "function") for (const r of candidatsLiens(x).slice(0, LIENS_ETAPE2_MAX)) l[cleLienExp(r)] = 1;
+    }
+  } catch (e) {}
+  suivi.liensB1 = true;
+  sauvegarder();
+}
+function cleLienExp(r) { return r.type === "lien" ? cleLien(r.lien) : "mange|" + r.a.nom_courant + "|" + r.b.nom_courant; }
+function nbLiensConnus() { if (!suivi) return 0; migrerLiensB1(); return Object.keys(suivi.liensConnus || {}).length; }
 const BADGES_TOUT_LE_JEU = [
   // En chemin : les expéditions, les lieux, les territoires
-  { cle: "premiere-expedition", cat: "E", nom: "Première expédition", cond: "Terminer une expédition (ses deux étapes)", icone: "chemin", but: 1,
+  { cle: "premiere-expedition", cat: "E", nom: "Première expédition", cond: "Terminer une expédition (ses deux étapes)", icone: "chemin", motif: "expedition", but: 1,
     mesure: nbFinies },
-  { cle: "premier-lieu", cat: "E", nom: "Premier lieu exploré", cond: "Terminer toutes les expéditions d'un lieu", icone: "carte", but: 1,
+  { cle: "premier-lieu", cat: "E", nom: "Premier lieu exploré", cond: "Terminer toutes les expéditions d'un lieu", icone: "carte", motif: "lieu", but: 1,
     mesure: lieuxFinis },
-  { cle: "tout-est-lie", cat: "E", nom: "Finale du lieu", cond: "Réussir la finale d'un lieu", icone: "ensemble", but: 1,
+  { cle: "tout-est-lie", cat: "E", nom: "Tout est lié", cond: "Réussir la finale d'un lieu", icone: "ensemble", motif: "toile", but: 1,   // étape B1 : nom
     mesure: nbFinales },
-  { cle: "gardien", cat: "E", nom: "Gardien", cond: "Terminer un territoire : tous ses lieux, puis le tour du site remarquable", icone: "montagne", but: 1,
+  { cle: "gardien", cat: "E", nom: "Gardien", cond: "Terminer un territoire : tous ses lieux, puis le tour du site remarquable", icone: "montagne", motif: "gardien", but: 1,
     mesure: nbGardien },
-  { cle: "voyageur", cat: "E", nom: "Grand voyageur", cond: "Partir en expédition dans plusieurs territoires", icone: "boussole", paliers: [3, 6, 11],
+  { cle: "voyageur", cat: "E", nom: "Grand voyageur", cond: "Partir en expédition dans plusieurs territoires", icone: "boussole", motif: "voyageur", paliers: [3, 6, 11],
     mesure: territoiresVisites },
-  { cle: "planches", cat: "E", nom: "Planches des lieux", cond: "Réunir les planches des finales des lieux", icone: "cadres", paliers: [10, 30, 110],
+  { cle: "planches", cat: "E", nom: "Planches des lieux", cond: "Réunir les planches des finales des lieux", icone: "cadres", motif: "planches", paliers: [10, 30, 110],
     mesure: nbFinales },
+  { cle: "leurs-liens", cat: "E", nom: "Leurs liens", cond: "Découvrir des liens entre les espèces", icone: "ensemble", motif: "liens", paliers: [10, 50, 150],   // étape B1
+    mesure: nbLiensConnus },
   // Le carnet
-  { cle: "carnet", cat: "C", nom: "Carnet", cond: "Réunir des espèces dans votre carnet", icone: "fiche", paliers: [50, 200, 500],
+  { cle: "carnet", cat: "C", nom: "Carnet", cond: "Réunir des espèces dans votre carnet", icone: "fiche", motif: "carnet", paliers: [50, 200, 500],
     mesure: () => nbEspeces(estReconnue) },
-  { cle: "toutes-familles", cat: "C", nom: "Toutes les familles", cond: "Avoir au carnet une espèce de chacune des 10 familles", icone: "rose", but: Object.keys(CLASSES).length,
+  { cle: "toutes-familles", cat: "C", nom: "Toutes les familles", cond: "Avoir au carnet une espèce de chacune des 10 familles", icone: "rose", motif: "familles", but: Object.keys(CLASSES).length,
     mesure: famillesAuCarnet },
-  { cle: "specialiste", cat: "C", nom: "Spécialiste", cond: "Atteindre le rang Spécialiste dans une famille d'un territoire", icone: "loupe", but: 1,
+  { cle: "specialiste", cat: "C", nom: "Spécialiste", cond: "Atteindre le rang Spécialiste dans une famille d'un territoire", icone: "loupe", motif: "specialiste", but: 1,
     mesure: unSpecialiste },
-  { cle: "or", cat: "C", nom: "Espèces familières", cond: "Rendre des espèces familières (étape « Approfondir »)", icone: "medaille", paliers: [5, 25, 100],   // étape R144
+  { cle: "or", cat: "C", nom: "Espèces familières", cond: "Rendre des espèces familières (étape « Approfondir »)", icone: "medaille", motif: "familiere", paliers: [5, 25, 100],   // étape R144
     mesure: () => nbEspeces(e => niveauTermine(e) === NB_NIVEAUX) },
-  { cle: "raretes", cat: "C", nom: "Raretés", cond: "Découvrir des espèces rares", icone: "oeil", paliers: [5, 15, 30],
+  { cle: "raretes", cat: "C", nom: "Raretés", cond: "Découvrir des espèces rares", icone: "oeil", motif: "raretes", paliers: [5, 15, 30],
     mesure: () => nbEspeces(e => estReconnue(e) && e.rarete_observation === "Rare") },
-  { cle: "proteger", cat: "C", nom: "À protéger", cond: "Connaître 10 espèces menacées en France", icone: "main", but: 10,
+  { cle: "proteger", cat: "C", nom: "À protéger", cond: "Connaître 10 espèces menacées en France", icone: "main", motif: "proteger", but: 10,
     mesure: () => nbEspeces(e => estReconnue(e) && ["Vulnérable", "En danger", "En danger critique"].includes(e.statut_conservation_france)) },
+  { cle: "etonnant", cat: "C", nom: "Étonnant !", cond: "Trouver des faits insolites", icone: "oeil", motif: "etonnant", paliers: [10, 50, 150],   // étape B1
+    mesure: () => Object.keys((suivi && suivi.insolites) || {}).length },
   // L'œil et l'oreille
-  { cle: "oreille-fine", cat: "S", nom: "Oreille fine", cond: "Reconnaître des cris", icone: "son", paliers: [10, 30, 60],
+  { cle: "oreille-fine", cat: "S", nom: "Oreille fine", cond: "Reconnaître des cris", icone: "son", motif: "oreille", paliers: [10, 30, 60],
     mesure: () => nbEspeces(e => nbBonnes(e, "cri_son") >= 1) },
-  { cle: "lecteur-traces", cat: "S", nom: "Lecteur de traces", cond: "Reconnaître des empreintes", icone: "traces", paliers: [10, 25, 50],
+  { cle: "lecteur-traces", cat: "S", nom: "Lecteur de traces", cond: "Reconnaître des empreintes", icone: "traces", motif: "traces", paliers: [10, 25, 50],
     mesure: () => nbEspeces(e => nbBonnes(e, "empreinte_nom") >= 1 || nbBonnes(e, "empreinte_choix") >= 1) },
-  { cle: "oeil-lynx", cat: "S", nom: "Œil de lynx", cond: "Reconnaître 10 espèces dès leur première apparition", icone: "cible", but: 10,
+  { cle: "oeil-lynx", cat: "S", nom: "Œil de lynx", cond: "Reconnaître 10 espèces dès leur première apparition", icone: "cible", motif: "lynx", but: 10,
     mesure: () => suivi.coupsDoeil || 0 },
-  { cle: "tenacite", cat: "S", nom: "Ténacité", cond: "Retrouver une réponse ratée trois fois auparavant", icone: "bouclier", but: 1,
+  { cle: "tenacite", cat: "S", nom: "Ténacité", cond: "Retrouver une réponse ratée trois fois auparavant", icone: "bouclier", motif: "tenacite", but: 1,
     mesure: () => suivi.tenacite ? 1 : 0 },
   // Les rendez-vous (aucune série à tenir)
-  { cle: "fidele", cat: "R", nom: "Fidèle", cond: "Jouer des jours différents (pas besoin de jours d'affilée)", icone: "calendrier", paliers: [7, 30],
+  { cle: "fidele", cat: "R", nom: "Fidèle", cond: "Jouer des jours différents (pas besoin de jours d'affilée)", icone: "calendrier", motif: "fidele", paliers: [7, 30],
     mesure: () => suivi.jours.length },
-  { cle: "quatre-saisons", cat: "R", nom: "Quatre saisons", cond: "Jouer au printemps, en été, en automne et en hiver", icone: "saisons", but: 4,
+  { cle: "quatre-saisons", cat: "R", nom: "Quatre saisons", cond: "Jouer au printemps, en été, en automne et en hiver", icone: "saisons", motif: "saisons", but: 4,
     mesure: () => new Set(suivi.jours.map(saisonDe)).size },
-  { cle: "leve-tot", cat: "R", nom: "Lève-tôt", cond: "Jouer avant 7 h du matin", icone: "soleil", but: 1,
+  { cle: "leve-tot", cat: "R", nom: "Lève-tôt", cond: "Jouer avant 7 h du matin", icone: "soleil", motif: "levetot", but: 1,
     mesure: () => suivi.leveTot ? 1 : 0 },
-  { cle: "oiseau-de-nuit", cat: "R", nom: "Oiseau de nuit", cond: "Jouer après 23 h", icone: "lune", but: 1,
+  { cle: "oiseau-de-nuit", cat: "R", nom: "Oiseau de nuit", cond: "Jouer après 23 h", icone: "lune", motif: "nuit", but: 1,
     mesure: () => suivi.nuit ? 1 : 0 },
-  { cle: "duel", cat: "R", nom: "Champion du Duel", cond: "20 bonnes réponses à la suite au Duel (Plus de jeux)", icone: "portrait", but: 20,
+  { cle: "duel", cat: "R", nom: "Champion du Duel", cond: "20 bonnes réponses à la suite au Duel (Plus de jeux)", icone: "portrait", motif: "duel", but: 20,
     mesure: () => suivi.recordSerieDuel || 0 },
 ];
 const GROUPES_BADGES = [["E", "En chemin"], ["C", "Le carnet"], ["S", "L'œil et l'oreille"], ["R", "Les rendez-vous"]];
@@ -252,10 +320,10 @@ function suiteFileBadges() {
   if (document.getElementById("carte-pop").classList.contains("visible")) { setTimeout(suiteFileBadges, 700); return; }
   const { b, palier } = fileBadges.shift();
   // Étape 142 : la fête (la vignette du coin reste en secours pendant une partie chronométrée)
-  const pop = { couleur: "#1f3a2e", image: dessinBadge(b), etiquette: "Nouveau badge",
+  const pop = { couleur: "#1f3a2e", image: dessinBadge(b, palier), etiquette: "Nouveau badge",
                 titre: nomBadge(b, palier), detail: b.cond };
-  feter({ etiquette: "Nouveau badge", titre: pop.titre, detail: pop.detail, son: "badge", pop, souvenir: { titre: pop.titre, image: dessinBadge(b) },   // R153
-          visuel: `<div class="fete-visuel dessin">${dessinBadge(b)}</div>` });
+  feter({ etiquette: "Nouveau badge", titre: pop.titre, detail: pop.detail, son: "badge", pop, souvenir: { titre: pop.titre, image: dessinBadge(b, palier) },   // R153
+          visuel: `<div class="fete-visuel badge-b1">${dessinBadge(b, palier)}</div>` });   // étape B1
   setTimeout(suiteFileBadges, 600);
 }
 
@@ -742,10 +810,8 @@ function photoBadge(b) {
   const p = lieu(); return p ? photoMini(p) : (derniere ? photoMini(derniere.photo) : null);   // badges des expéditions et des lieux
 }
 const COULEURS_PALIER = ["", "bronze", "argent", "or"];
-function medaillonBadge(b, petit) {
-  const palier = palierDe(b), src = photoBadge(b);
-  const metal = b.paliers ? COULEURS_PALIER[palier] || "or" : "or";
-  return `<span class="pgv-med ${metal}${petit ? " petit" : ""}">${src ? `<img src="${src}" alt="" onerror="this.onerror=null;this.src='${src.replace("/mini/", "/")}'">` : `<span class="pgv-ico">${dessinBadge(b)}</span>`}</span>`;
+function medaillonBadge(b, petit) {           // étape B1 : le dessin du badge, toujours le même (plus de photo du carnet)
+  return `<span class="pgv-med mb-vitrine${petit ? " petit" : ""}">${dessinBadge(b)}</span>`;
 }
 // Le badge le plus proche : la plus grande part du chemin déjà faite vers son prochain seuil
 function badgePresque() {

@@ -719,6 +719,7 @@ function dessinerLienExp() {
     if (!juste) btn.classList.add("fausse");
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     if (juste) L.justes++;
+    if (typeof noterLienConnu === "function") noterLienConnu(cleLienExp(it));   // étape B1 : badge « Leurs liens »
     document.getElementById("fl-retour").innerHTML = `${juste ? "Bravo ! " : ""}${echapper(explication)}`;
     const s = document.getElementById("fl-suite"); s.classList.remove("cache"); s.focus();
     s.onclick = () => { if (L.i + 1 < L.items.length) { L.i++; dessinerLienExp(); window.scrollTo(0, 0); } else finirLiensExp(); };

@@ -4751,3 +4751,167 @@ button.pastille-carnet:hover { background: #fff; }
 /* Étape R189 : l'espèce du jour rencontrée — un petit ✓ vert à côté du nom (remplace l'étiquette « ✓ Rencontrée ») */
 .ac-jour h2 .ac-jour-coche { display: inline-flex; align-items: center; justify-content: center; width: 1.15em; height: 1.15em;
   margin-left: .3em; border-radius: 50%; background: var(--bon); color: #fff; font-size: .62em; vertical-align: .25em; font-family: system-ui, sans-serif; }
+
+/* ===== Étape R190 : la carte d'identité (repères de terrain), présentation E « la partie du corps + sa couleur » ===== */
+.reperes { margin: 10px 0 4px; text-align: left; }
+.reperes .rp-titre { font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: #a8741f; margin: 0 0 4px; font-weight: 600; }
+.reperes .rp-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.reperes .rp-ligne { display: flex; align-items: center; gap: 10px; min-height: 46px; }
+.reperes .rp-image { flex: none; width: 60px; height: 46px; display: inline-flex; align-items: center; justify-content: center; }
+.reperes .rp-image.vide { width: 0; }
+.reperes .rp-dessin { width: 60px; height: 46px; }
+.reperes .rp-dessin .rp-sil { fill: #e6dfcf; stroke: #8a8373; }
+.reperes .rp-dessin .rp-zone { fill: #c8902e; }
+.reperes .rp-texte { font-size: .95rem; line-height: 1.25; }
+.reperes .rp-pastille { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,.28); vertical-align: -1px; margin-left: 4px; }
+.reperes .rp-confusion { margin: 8px 0 0; padding: 6px 8px; border-radius: 6px; background: rgba(0,0,0,.04); font-size: .88rem; }
+.reperes .rp-confusion small { display: block; font-size: .72rem; color: #6b6b6b; }
+.pe main > .reperes { margin: 0 0 12px; padding: 10px 12px; border: 1px solid rgba(0,0,0,.08); border-radius: 10px; background: rgba(255,255,255,.6); }
+
+/* ===== Étape R191 : Coup d'œil (« une photo, 4 noms »), maquette A choisie par Aubin ===== */
+#vue-coupdoeil { padding: 8px 12px 40px; }
+.cdo { max-width: 620px; margin: 0 auto; }
+.cdo-haut { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; color: var(--texte-doux); font-size: .9rem; }
+.cdo-quitter { background: none; border: 1px solid var(--trait); border-radius: 8px; padding: 5px 10px; color: var(--texte); font: inherit; cursor: pointer; }
+.cdo-titre { flex: 1; white-space: nowrap; }
+.cdo-pts { display: flex; gap: 3px; flex-wrap: nowrap; }
+.cdo-pts i { width: 8px; height: 8px; border-radius: 50%; background: var(--trait); display: inline-block; }
+.cdo-pts i.ok { background: var(--bon); }
+.cdo-pts i.ko { background: var(--mauvais); }
+.cdo-pts i.cur { outline: 2px solid var(--territoire); outline-offset: 1px; }
+.cdo-photo { position: relative; border-radius: 12px; overflow: hidden; background: #d9d2c2; aspect-ratio: 4 / 3; cursor: pointer; }
+.cdo-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cdo-forme { position: absolute; left: 10px; bottom: 10px; background: rgba(20, 30, 25, .62); color: #fff; padding: 3px 9px; border-radius: 8px; font-size: .82rem; }
+.cdo-q { font-family: var(--titre, Georgia, serif); font-size: 1.2rem; margin: 12px 0 8px; color: var(--texte); }
+.cdo-noms { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cdo-nom { background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 13px 10px; font: inherit; font-size: .98rem; color: var(--texte); cursor: pointer; min-height: 52px; }
+.cdo-nom:hover:not(:disabled) { border-color: var(--territoire); }
+.cdo-nom.bon { background: #e2efe5; border-color: var(--bon); color: #24563a; font-weight: 600; }
+.cdo-nom.faux { background: #f5e6d6; border-color: var(--mauvais); }
+.cdo-nom:disabled { cursor: default; }
+.cdo-retour { margin-top: 10px; }
+.cdo-bravo { margin: 4px 0 10px; color: var(--bon); font-weight: 600; }
+.cdo-erreur { background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; }
+.cdo-duo { display: flex; gap: 10px; margin-top: 8px; }
+.cdo-duo figure { flex: 1; margin: 0; text-align: center; font-size: .85rem; }
+.cdo-duo figure img, .cdo-duo figure .a-venir { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; display: block; }
+.cdo-duo figcaption small { display: block; color: var(--texte-doux); font-size: .75rem; }
+.cdo-repere { margin: 10px 0 0; font-size: .92rem; }
+.cdo-repere small { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ocre-texte); }
+.cdo-suivant { display: block; width: 100%; background: var(--territoire); color: #fff; border: 0; border-radius: 10px; padding: 13px; font: inherit; font-size: 1rem; cursor: pointer; margin-top: 8px; }
+.cdo-second { display: block; width: 100%; background: none; border: 1px solid var(--trait); color: var(--texte); border-radius: 10px; padding: 11px; font: inherit; cursor: pointer; margin-top: 8px; }
+.cdo-fin h2 { font-family: var(--titre, Georgia, serif); font-size: 2rem; margin: 12px 0 2px; color: var(--texte); }
+.cdo-sous { color: var(--texte-doux); margin: 0 0 12px; }
+.cdo-vign { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 12px; }
+.cdo-vign span { position: relative; border-radius: 7px; overflow: hidden; aspect-ratio: 4 / 3; background: #d9d2c2; }
+.cdo-vign img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cdo-vign span.ko::after { content: ""; position: absolute; inset: 0; border: 3px solid var(--mauvais); border-radius: 7px; }
+.cdo-arevoir { background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 10px 12px; margin-bottom: 6px; }
+.cdo-arevoir ul { margin: 6px 0 0; padding-left: 18px; }
+@media (max-width: 700px) { #vue-coupdoeil { padding: 4px 8px 90px; } .cdo-q { margin: 8px 0 6px; } }
+/* Étape R191b : l'interrupteur « Coup d'œil avec toutes les espèces » (page Jeux) */
+.arc-toutes { display: flex; gap: 10px; align-items: flex-start; margin: 12px 0 4px; padding: 10px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 10px; background: rgba(255,255,255,.06); color: #f3eee2; cursor: pointer; }
+.arc-toutes input { margin-top: 3px; transform: scale(1.25); accent-color: #e8c9a0; }
+.arc-toutes b { color: #fff; }
+.arc-toutes small { display: block; color: rgba(243,238,226,.75); font-size: .82rem; }
+
+/* ===== Étape B1 (13/11/2026) : les badges au style A4 « couleur du groupe » — un seul dessin partout ===== */
+.rond-badge.mb { border: 0; background: none; border-radius: 50%; padding: 0; box-shadow: none; color: inherit; }
+.rond-badge.mb svg { width: 100%; height: 100%; display: block; fill: initial; stroke: none; }
+.rond-badge.mb.pas-encore, .gris .rond-badge.mb { filter: grayscale(1); opacity: .42; background: none; }
+.pg-mini .rond-badge.mb { width: 56px; height: 56px; }
+.pg-mini .rond-badge.mb svg { width: 100%; height: 100%; }
+.pg-detail .rond-badge.mb { width: 72px; height: 72px; }
+.carte-pop .image .rond-badge.mb { width: 56px; height: 56px; margin: 0; }
+.carte-pop .image .rond-badge.mb svg { width: 100%; height: 100%; fill: initial; }
+.badge-fin .rond-badge.mb { width: 52px; height: 52px; }
+.fete-souvenir .fs-dessin .rond-badge.mb, .pg-a-mini .rond-badge.mb { width: 100%; height: 100%; }
+.fete-visuel.badge-b1 { width: 120px; height: 120px; }
+.fete-visuel.badge-b1 .rond-badge.mb { width: 100%; height: 100%; }
+/* Vitrine du Profil : plus de métal ni de photo, le dessin du badge */
+.pgv-med.mb-vitrine, .pgv-med.mb-vitrine.or, .pgv-med.mb-vitrine.argent, .pgv-med.mb-vitrine.bronze { background: none; padding: 0; }
+.pgv-med.mb-vitrine .rond-badge.mb { width: 100%; height: 100%; }
+.pgv-med.mb-vitrine.petit .rond-badge.mb { filter: none; opacity: 1; }
+
+/* ============================================================
+   Étape K2 (13/11/2026, n° 15, choix d'Aubin) — l'espace « Carte » du téléphone (25_carte.js).
+   L'onglet n'existe que sur téléphone : sur ordinateur, rien ne change.
+   ============================================================ */
+#onglet-carte { display: none; }
+#vue-atlas { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 12px; }
+.at-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.at-tete h1 { margin: 0; font-family: Literata, Georgia, serif; font-size: 26px; font-weight: 600; color: var(--texte); }
+.at-tete > small { color: var(--texte-doux); font-size: 13px; }
+.at-tete.terr { align-items: center; }
+.at-tete.terr > div { flex: 1; min-width: 0; }
+.at-tete.terr > div small { display: block; font-size: 12px; color: var(--texte-doux); }
+.at-tete.terr h1 { font-size: 23px; line-height: 1.15; }
+.at-retour { width: 44px; height: 44px; flex: none; border-radius: 50%; border: 1px solid var(--trait); background: var(--carte); color: var(--texte); font: inherit; font-size: 20px; cursor: pointer; }
+.at-emp { display: inline-flex; align-items: center; gap: 4px; color: var(--texte-doux); font-size: 13px; }
+.at-emp svg { width: 16px; height: 16px; }
+.at-carte-france { background: var(--carte); border: 1px solid var(--trait); border-radius: 14px; padding: 6px; }
+.at-carte-france svg { display: block; width: 100%; height: auto; }
+.at-terr { stroke-width: 2.5; stroke-linejoin: round; cursor: pointer; }
+.at-terr.ferme { cursor: default; }
+.at-prochain-trait { fill: none; stroke: #A8652A; stroke-width: 6; stroke-dasharray: 14 10; stroke-linejoin: round; pointer-events: none; }
+.at-nom { font-family: "Work Sans", system-ui, sans-serif; font-weight: 600; fill: #fff; text-anchor: middle; pointer-events: none; stroke-width: 7px; stroke-linejoin: round; paint-order: stroke; }
+.at-nom.ferme { fill: #3F453C; font-weight: 500; }
+.at-ici circle { fill: #FBF8F1; stroke: #1F3A2E; stroke-width: 2; } .at-ici path { fill: none; stroke: #1F3A2E; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.at-ici { pointer-events: none; }
+.at-titre { margin: 6px 0 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--texte-doux); font-family: "Work Sans", system-ui, sans-serif; }
+.at-liste, .at-lieux, .at-plus-tard ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.at-ligne { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--trait); border-radius: 10px; background: var(--carte); font: inherit; color: var(--texte); text-align: left; cursor: pointer; }
+.at-pastille { width: 16px; height: 16px; flex: none; border-radius: 50%; border: 2px solid transparent; box-sizing: border-box; display: inline-block; }
+.at-ligne-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.at-ligne-corps b { font-size: 15px; } .at-ligne-corps b small { font-weight: 400; color: var(--texte-doux); font-size: 13px; }
+.at-ligne-corps > small { font-size: 12.5px; color: var(--texte-doux); }
+.at-jauge { display: block; height: 5px; border-radius: 99px; background: #E6E0D2; overflow: hidden; }
+.at-jauge em { display: block; height: 100%; border-radius: 99px; }
+.at-fleche { font-size: 22px; color: var(--texte-doux); }
+.at-suivant { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px dashed #C9B48F; border-radius: 10px; }
+.at-suivant > span:last-child { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+.at-suivant small { color: var(--texte-doux); font-size: 12.5px; }
+.at-plus-tard summary { min-height: 44px; display: flex; align-items: center; padding: 0 14px; border: 1px solid var(--trait); border-radius: 10px; cursor: pointer; color: var(--texte-doux); font-size: 14px; }
+.at-plus-tard ul { padding: 10px 14px 0; gap: 6px; } .at-plus-tard li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--texte-doux); }
+/* la carte du territoire : plus grande, le relief sous les points */
+.at-carte-terr .carte-lieux { margin: 0; }
+.at-carte-terr .carte-lieux svg { max-height: 360px; }
+.at-carte-terr .cl-voisin { stroke: #ECE5D6; stroke-width: 2; }
+.at-carte-terr .cl-terr { stroke: color-mix(in srgb, var(--couleur-t) 14%, #FBF8F1); stroke-width: 3; stroke-linejoin: round; }   /* bouche les jours entre les morceaux du contour */
+.at-carte-terr .cl-terr-trait { stroke-width: 7; }
+.at-choix .sentier-lieu.court { flex: none; margin: 4px 10px 0; }
+.at-relief { opacity: .9; pointer-events: none; }
+.at-carte-terr .cl-lieu { cursor: pointer; }
+.at-carte-terr .cl-lieu.choisi .cl-pt, .at-carte-terr .cl-lieu.choisi .cl-site { stroke: #1F3A2E; stroke-width: 4; }
+.at-carte-terr .cl-lieu.choisi .cl-nom.survol { opacity: 1; }
+.at-carte-terr .cl-lieu:not(.choisi) .cl-nom:not(.survol) { opacity: 0; }
+.at-carte-terr .cl-lieu.choisi .cl-nom { opacity: 1; }
+/* le lieu choisi */
+.at-choix { background: var(--carte); border: 1px solid var(--trait); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.at-choix:empty { display: none; }
+.at-choix-haut { display: flex; gap: 12px; align-items: center; }
+.at-choix-ph { width: 64px; height: 64px; flex: none; border-radius: 8px; overflow: hidden; background: #E4E0D3; }
+.at-choix-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.at-etiq { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--texte-doux); }
+.at-choix h2 { margin: 2px 0 0; font-family: Literata, Georgia, serif; font-size: 19px; line-height: 1.2; }
+.at-pays { color: var(--texte-doux); font-size: 12.5px; }
+.at-choix p { margin: 0; font-size: 14px; }
+.at-aller { min-height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; border: 0; border-radius: 10px; background: var(--couleur-t, #1F3A2E); color: #fff; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; }
+.at-lieu-ligne { width: 100%; display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 12px; border: 1px solid transparent; border-radius: 10px; background: none; font: inherit; color: var(--texte); text-align: left; cursor: pointer; }
+.at-lieu-ligne.choisi { background: var(--carte); border-color: var(--trait); }
+.at-lieu-ligne > span:last-child { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.at-lieu-ligne b { font-size: 14.5px; font-weight: 600; } .at-lieu-ligne small { font-size: 12.5px; color: var(--texte-doux); }
+.at-lp { width: 22px; height: 22px; flex: none; border-radius: 50%; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; }
+.at-lp.med svg { width: 24px; height: 24px; }
+.at-lp.cours { background: #A8652A; } .at-lp.ouvert { background: #FBF8F1; border: 3px solid #3E7B55; } .at-lp.fini { background: #3E7B55; }
+.at-lp.ferme { border: 1.5px dashed #8E8676; } .at-lp.site { background: #E9C9A0; border-radius: 3px; width: 16px; height: 16px; transform: rotate(45deg); margin: 0 3px; }
+.at-lp.site.ferme { background: none; border: 1.5px dashed #8E8676; }
+.at-page-terr { align-self: flex-start; min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--texte); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+@media (max-width: 760px) {
+  #onglet-carte { display: flex; }
+  nav.barre .onglet { width: 20%; }
+  #onglet-accueil { left: 0; } #onglet-carte { left: 20%; } #onglet-encyclopedie { left: 40%; } #onglet-jouer { left: 60%; } #onglet-progression { left: 80%; }
+  #onglet-carte::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z'/%3E%3Cpath d='M9 4v14M15 6v14'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z'/%3E%3Cpath d='M9 4v14M15 6v14'/%3E%3C/svg%3E"); }
+  body:has(#carte-rencontre:not(.cache)) nav.barre #onglet-carte, body:has(#intermede-exp) nav.barre #onglet-carte,
+  body:has(#vue-lieu:not(.cache) .finale-barre) nav.barre #onglet-carte, body:has(#forme-ecran) nav.barre #onglet-carte { display: none; }
+}

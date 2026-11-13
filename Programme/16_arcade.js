@@ -72,6 +72,7 @@ function afficherArcade() {
     let meta = record ? `Record : <b>${nombre(record.score)}</b> ${dessinEtoiles(record.etoiles)}`
                : st.parties ? `${st.parties} partie${st.parties > 1 ? "s" : ""} jouée${st.parties > 1 ? "s" : ""}` : "Pas encore joué";
     // Étape R167 : pour « Compléter le carnet », ce qu'il reste à découvrir (pas de record)
+    if (cle === "coupdoeil" && typeof metaCoupDoeil === "function") meta = metaCoupDoeil();   // étape R191
     if (cle === "carnet" && etat.possible) { const n = resteCarnet(d.especes); meta = `encore ${nombre(n)} chose${n > 1 ? "s" : ""} à découvrir`; }
     return `<article class="arc-jeu${etat.possible ? "" : " ferme"}">
         <div class="arc-picto">${picto(cle)}</div>
@@ -85,6 +86,13 @@ function afficherArcade() {
   zone.querySelectorAll(".arc-jouer").forEach(b => b.onclick = ev => { ev.stopPropagation(); lancerArcade(b.dataset.jeu); });
   // Étape R163 : sur téléphone, toute la ligne du jeu le lance (un seul geste)
   zone.querySelectorAll(".arc-jeu:not(.ferme)").forEach(a => a.onclick = () => { if (typeof surTelephone === "function" && surTelephone()) lancerArcade(a.querySelector(".arc-jouer").dataset.jeu); });
+
+  // ---- Étape R191b : l'interrupteur « Toutes les espèces » de Coup d'œil ----
+  let inter = document.getElementById("arc-toutes");
+  if (!inter) { inter = document.createElement("label"); inter.id = "arc-toutes"; inter.className = "arc-toutes"; zone.after(inter); }
+  inter.innerHTML = `<input type="checkbox" id="arc-toutes-case"${suivi.coupToutes ? " checked" : ""}>`
+    + `<span><b>Coup d'œil avec toutes les espèces</b><small>Même celles pas encore rencontrées. Elles ne comptent pas comme rencontrées.</small></span>`;
+  document.getElementById("arc-toutes-case").onchange = ev => { suivi.coupToutes = ev.target.checked; sauvegarder(); afficherArcade(); };
 
   // ---- Le volet « Avec quelles espèces ? » (replié) ----
   const volet = document.getElementById("arc-terrain");
@@ -122,6 +130,7 @@ function afficherArcade() {
 
 function lancerArcade(cle) {
   if (cle === "carnet") { lancerCarnet(true); return; }    // étape R167
+  if (cle === "coupdoeil") { lancerCoupDoeil(); return; }   // étape R191
   const T = territoiresArcade(), F = famillesArcade(T);
   const d = construireDefi(T, F);
   if (!d) { afficherBulle("Aucune espèce avec ce choix"); return; }

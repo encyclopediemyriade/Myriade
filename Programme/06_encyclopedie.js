@@ -432,6 +432,7 @@ function afficherPageEspece() {
         ${blocTerritoires(e)}
       </aside>
       <main>
+        ${estReconnue(e) && typeof blocReperes === "function" ? blocReperes(e, { titre: "Pour la reconnaître" }) : ""}${/* étape R190 : la carte d'identité */ ""}
         <div class="pe-onglets">${onglets}</div>
         <div class="pe-page">${par[ongletEspece].map(q => lignePage(e, q)).join("")}</div>
         ${blocAnecdotes(e)}

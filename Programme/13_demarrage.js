@@ -15,6 +15,7 @@ document.getElementById("je-ne-sais-pas").onclick = () => {   // étape 76 ; R15
 document.querySelectorAll("[data-quitter]").forEach(bouton => bouton.onclick = quitterJeu);   // étape 73
 if (document.getElementById("revoir-precedente")) document.getElementById("revoir-precedente").onclick = () => ouvrirHistorique((historiquePartie() || []).length - 1);   // étapes 247-248
 document.getElementById("onglet-encyclopedie").onclick = () => montrer("encyclopedie");
+if (document.getElementById("onglet-carte")) document.getElementById("onglet-carte").onclick = () => { atlasTerritoire = null; atlasLieu = null; montrer("atlas"); };   // étape K2 : l'espace Carte (téléphone)
 document.getElementById("bouton-jouer-accueil").onclick = () => lancerJouer();   // étape 196 : un seul bouton
 document.getElementById("bouton-encyclopedie-accueil").onclick = () => montrer("encyclopedie");
 // Étape 274 (« Revoir 4 ») : fin de Rencontre — une autre Rencontre au hasard, le territoire, ou l'accueil
