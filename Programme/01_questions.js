@@ -1154,7 +1154,27 @@ function poilDeuxLongueurs(v) { return v === "Mi-long" ? "Long" : v; }   // éta
 function silhouetteUtile(q, espece) {
   if (!q || !SILHOUETTE_UTILE.has(q.champ)) return false;
   if (q.champ === "poil_longueur" && espece && espece.poil_longueur === "Piquants") return false;
+  if (espece && silhouetteContredit(q, espece)) return false;   // étape R189
   return true;
+}
+// Étape R189 (note n° 4 d'Aubin, la grémille montrée avec deux nageoires dorsales : c'est un dessin de perche) :
+//   quand la silhouette est le dessin d'une espèce voisine (colonne « dessin_de » des crédits), elle n'aide à une question
+//   de forme que si cette voisine n'a pas une autre réponse dans le jeu ; sinon, pas de « Voir la silhouette ».
+let DESSIN_DE = null;
+function silhouetteContredit(q, espece) {
+  if (typeof CREDITS_SILHOUETTES === "undefined") return false;
+  if (!DESSIN_DE) {
+    DESSIN_DE = {};
+    for (const c of CREDITS_SILHOUETTES) if (c.dessin_de && String(c.dessin_de).trim()) DESSIN_DE[c.nom] = String(c.dessin_de).trim();
+  }
+  const voisin = DESSIN_DE[espece.nom_courant];
+  if (!voisin) return false;
+  const modele = ESPECES.find(e => e.nom_scientifique && String(e.nom_scientifique).trim().toLowerCase() === voisin.toLowerCase());
+  if (!modele || modele === espece) return false;   // voisine absente du jeu : on ne sait pas, l'aide reste (à revoir à l'œil)
+  let a, b;
+  try { a = valeursDe(espece, q); b = valeursDe(modele, q); } catch (err) { return true; }
+  if (!a.length || !b.length) return true;
+  return a.length !== b.length || a.some(v => !b.includes(v));
 }
 
 function questionPortrait({ champ, colonne, onglets, libelle, question, explication, lire, valeur, proches, sansImage, affichageFiche, niveau, avecPhoto, pieges }) {

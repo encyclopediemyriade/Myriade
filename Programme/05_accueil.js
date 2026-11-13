@@ -482,12 +482,18 @@ function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans 
     ? `<span class="ac-statut">${e.statut_conservation_france} en France</span>` : "";
   const faite = especeDuJourFaite(e);
   zone.className = "ac-jour" + (connue ? "" : " inconnue") + (faite ? " rencontree" : "");
-  const image = connue ? celluleImage(e) : celluleImage(e).replace(`alt="${e.nom_courant}"`, 'alt=""');   // inconnue : son nom ne doit pas apparaître
-  zone.innerHTML = `<div class="ph">${image}</div><div class="corps">
-      <div class="ac-etiquette">Espèce du jour · ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}${faite ? ` <span class="ac-rencontree">✓ Rencontrée</span>` : ` <span class="ac-gain-jour">+${GAIN_ESPECE_DU_JOUR} ${typeof PAS_SVG !== "undefined" ? PAS_SVG : "empreintes"}</span>`}</div>
-      <h2>${connue ? e.nom_courant : "Une espèce à découvrir"}</h2>${statut}
+  // Étape R189 (note n° 8 d'Aubin) : une fois rencontrée, plus de phrase « Une autre espèce vous attend demain » ni d'étiquette
+  //   « ✓ Rencontrée » : un petit ✓ à côté du nom ; sur le téléphone, les défis du jour passent au-dessus (dessinerAccueilMaison)
+  // Étape PA1 (12/11, choix A3 d'Aubin) : une espèce déjà reconnue montre une de ses 2-3 photos, une autre selon le jour
+  //   (la même toute la journée) ; une espèce pas encore rencontrée garde sa photo principale (règle : la première rencontre
+  //   se fait sur la photo principale).
+  const duJour = connue ? photoDuJourDe(e) : null, forme = duJour ? etiquetteForme(duJour.sujet) : "";
+  const image = connue ? (duJour && duJour.src !== e.photo ? imagePhoto(duJour.src, e.nom_courant, false) : celluleImage(e))
+                       : celluleImage(e).replace(`alt="${e.nom_courant}"`, 'alt=""');   // inconnue : son nom ne doit pas apparaître
+  zone.innerHTML = `<div class="ph">${image}${forme ? `<span class="ph-forme">${forme}</span>` : ""}</div><div class="corps">
+      <div class="ac-etiquette">Espèce du jour · ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}${faite ? "" : ` <span class="ac-gain-jour">+${GAIN_ESPECE_DU_JOUR} ${typeof PAS_SVG !== "undefined" ? PAS_SVG : "empreintes"}</span>`}</div>
+      <h2>${connue ? e.nom_courant : "Une espèce à découvrir"}${faite ? ` <span class="ac-jour-coche" title="Rencontrée aujourd'hui" aria-label="Rencontrée aujourd'hui">✓</span>` : ""}</h2>${statut}
       ${anecdote ? `<p class="ac-anecdote"><b>Le saviez-vous ?</b> ${anecdote.texte}</p>` : `<p>${phraseDuJour(e) || (connue ? "" : "Elle n'est pas encore dans votre carnet.")}</p>`}
-      ${faite ? `<p class="ac-jour-fait">Rencontrée aujourd'hui. Une autre espèce vous attend demain.</p>` : ""}
       <div class="ac-boutons"><button class="ac-bouton${faite ? "" : " plein"}" id="${idR}">${faite ? "La revoir" : connue ? "La retrouver en Rencontre" : "La rencontrer"}</button>
       ${connue ? `<button class="ac-bouton" id="${idF}">Sa fiche</button>` : ""}</div></div>`;
   document.getElementById(idR).onclick = () => { lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };

@@ -4929,6 +4929,3861 @@ const CREDITS_PHOTOS = {
   "auteur": "Ulrich Schaub",
   "licence": "CC BY-SA 4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Eagle_Owl_(Bubo_Bubo)_Chick_4_Weeks.jpg"
+ },
+ "epeire_diademe_2": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/93154053"
+ },
+ "epeire_diademe_3": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/185352417"
+ },
+ "argiope_frelon_2": {
+  "auteur": "purperlibel",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/4899279"
+ },
+ "argiope_frelon_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/377237556"
+ },
+ "thomise_variable_2": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/165934200"
+ },
+ "thomise_variable_3": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/184568598"
+ },
+ "pisaure_admirable_2": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/71888169"
+ },
+ "pisaure_admirable_3": {
+  "auteur": "Mélina Noël",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/344707379"
+ },
+ "tegenaire_des_maisons_2": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/165958210"
+ },
+ "faucheux_2": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/208458707"
+ },
+ "faucheux_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/388508682"
+ },
+ "tique_du_mouton_2": {
+  "auteur": "elodie8162",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/216314741"
+ },
+ "tique_du_mouton_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/351480351"
+ },
+ "scutigere_veloce_2": {
+  "auteur": "Samuel Paitreault",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/362184325"
+ },
+ "scutigere_veloce_3": {
+  "auteur": "filvad",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/83230544"
+ },
+ "lithobie_a_pinces_2": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/256026066"
+ },
+ "lithobie_a_pinces_3": {
+  "auteur": "Franck Cabot",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/188033720"
+ },
+ "glomeris_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/337433802"
+ },
+ "glomeris_3": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/340795683"
+ },
+ "ecrevisse_a_pattes_blanches_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/230646445"
+ },
+ "ecrevisse_a_pattes_blanches_3": {
+  "auteur": "purperlibel",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/5016928"
+ },
+ "ecrevisse_signal_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/336956237"
+ },
+ "ecrevisse_signal_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/383420496"
+ },
+ "gammare_2": {
+  "auteur": "Tim Johnson",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/332418799"
+ },
+ "aselle_2": {
+  "auteur": "Eric Weissgerber",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/346107203"
+ },
+ "aselle_3": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/152918291"
+ },
+ "cloporte_des_murs_2": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/282955301"
+ },
+ "cloporte_des_murs_3": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/181145357"
+ },
+ "cloporte_commun_2": {
+  "auteur": "Roland Godon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/199131328"
+ },
+ "cloporte_commun_3": {
+  "auteur": "Crebassa Jason",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/280732768"
+ },
+ "escargot_de_bourgogne_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/160179525"
+ },
+ "escargot_de_bourgogne_3": {
+  "auteur": "Eric Verna",
+  "licence": "CC BY-SA 4.0",
+  "source": "http://www.inaturalist.org/observations/3850401"
+ },
+ "petit_gris_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/230391011"
+ },
+ "petit_gris_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/216305902"
+ },
+ "escargot_des_haies_2": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/165723330"
+ },
+ "escargot_des_haies_3": {
+  "auteur": "Lars Willighagen",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/303400311"
+ },
+ "limace_leopard_2": {
+  "auteur": "Florent",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/29234262"
+ },
+ "limace_leopard_3": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/62363671"
+ },
+ "grande_loche_2": {
+  "auteur": "Jerzy Opioła",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Arion_rufus_a1_(2).JPG"
+ },
+ "grande_loche_3": {
+  "auteur": "Hans Hillewaert",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Arion_rufus_(Dourbes).jpg"
+ },
+ "grande_limnee_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/69942833"
+ },
+ "grande_limnee_3": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/156590035"
+ },
+ "lombric_commun_2": {
+  "auteur": "Frank Ashwood",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/221778767"
+ },
+ "lombric_commun_3": {
+  "auteur": "Jonas V.",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/238433686"
+ },
+ "sangsue_medicinale_2": {
+  "auteur": "ajott",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/38344231"
+ },
+ "meduse_d_eau_douce_2": {
+  "auteur": "Павлик Лисицын",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/67973524"
+ },
+ "meduse_d_eau_douce_3": {
+  "auteur": "Ewout Knoester",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/394142780"
+ },
+ "ver_du_fumier_2": {
+  "auteur": "Nikita Gerasin",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/110263436"
+ },
+ "ver_du_fumier_3": {
+  "auteur": "snaily_naily",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/138823177"
+ },
+ "vison_d_europe_2": {
+  "auteur": "Алина Урусова",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/38505995"
+ },
+ "vison_d_europe_3": {
+  "auteur": "Алина Урусова",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/37094309"
+ },
+ "vison_d_amerique_2": {
+  "auteur": "Thor-Rune Hansen",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/162284364"
+ },
+ "rat_musque_2": {
+  "auteur": "Eric Verna",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/6140851"
+ },
+ "rat_musque_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/294880660"
+ },
+ "dauphin_commun_2": {
+  "auteur": "bogsuckers",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/186891897"
+ },
+ "dauphin_commun_3": {
+  "auteur": "franciscodocampo",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/37688109"
+ },
+ "grue_cendree_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/143758471"
+ },
+ "grue_cendree_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/262191857"
+ },
+ "elanion_blanc_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/317719120"
+ },
+ "elanion_blanc_3": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/310080199"
+ },
+ "heron_garde_boeufs_2": {
+  "auteur": "Filo gèn'",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bubulcus_ibis_(_H%C3%A9ron_garde-b%C5%93ufs_).jpg"
+ },
+ "heron_garde_boeufs_3": {
+  "auteur": "Zeynel Cebeci",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bubulcus_ibis_-_Western_Cattle_Egret,_Adana_08.jpg"
+ },
+ "milan_noir_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/73133254"
+ },
+ "milan_noir_3": {
+  "auteur": "Tommy Andriollo",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/118810200"
+ },
+ "bouscarle_de_cetti_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/334390668"
+ },
+ "cisticole_des_joncs_2": {
+  "auteur": "Murielle Desrois",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/298246283"
+ },
+ "cisticole_des_joncs_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/333190882"
+ },
+ "tourterelle_des_bois_2": {
+  "auteur": "Julien Fougeroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/250701446"
+ },
+ "tourterelle_des_bois_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/12408759"
+ },
+ "ibis_falcinelle_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/152413519"
+ },
+ "ibis_falcinelle_3": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/326156688"
+ },
+ "rousserolle_effarvatte_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/92500861"
+ },
+ "rousserolle_effarvatte_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/366639839"
+ },
+ "alouette_lulu_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/142255311"
+ },
+ "alouette_lulu_3": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/126269429"
+ },
+ "becasseau_sanderling_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/316122631"
+ },
+ "becasseau_sanderling_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/60319387"
+ },
+ "tortue_luth_2": {
+  "auteur": "U.S. Fish and Wildlife Service Southeast Region",
+  "licence": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Leatherback_sea_turtle_Tinglar,_USVI_(5839996547).jpg"
+ },
+ "tortue_luth_3": {
+  "auteur": "NOAA (gouvernement des États-Unis)",
+  "licence": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:LeatherbackTurtle.jpg"
+ },
+ "tortue_de_floride_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/332127306"
+ },
+ "tortue_de_floride_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/365682010"
+ },
+ "mulet_porc_2": {
+  "auteur": "Ametsak",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/401180898"
+ },
+ "mulet_porc_3": {
+  "auteur": "Vsevolod Rudyi",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/408585341"
+ },
+ "maigre_2": {
+  "auteur": "C messier",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:%CE%9A%CF%81%CE%B1%CE%BD%CE%B9%CF%8C%CF%82_cretaquarium_1122.jpg"
+ },
+ "gambusie_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "http://www.inaturalist.org/observations/2687480"
+ },
+ "fadet_des_laiches_2": {
+  "auteur": "Flavien Saboureau",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/330240027"
+ },
+ "fadet_des_laiches_3": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/366435586"
+ },
+ "cuivre_des_marais_2": {
+  "auteur": "Julien Fougeroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/288712885"
+ },
+ "cuivre_des_marais_3": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/361773006"
+ },
+ "cordulie_a_corps_fin_2": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/208717878"
+ },
+ "cordulie_a_corps_fin_3": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/215944632"
+ },
+ "gomphe_de_graslin_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/70046247"
+ },
+ "gomphe_de_graslin_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/9755491"
+ },
+ "cigale_rouge_2": {
+  "auteur": "Hélio Suarez",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/293898449"
+ },
+ "cigale_rouge_3": {
+  "auteur": "David Delon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/164263131"
+ },
+ "hanneton_foulon_2": {
+  "auteur": "Leo Cantiran",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/291301029"
+ },
+ "hanneton_foulon_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/333190893"
+ },
+ "oedipode_turquoise_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/399485457"
+ },
+ "oedipode_turquoise_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/133449021"
+ },
+ "crevette_grise_2": {
+  "auteur": "mariaec",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/80374557"
+ },
+ "tourteau_2": {
+  "auteur": "Tommy Andriollo",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/126373974"
+ },
+ "tourteau_3": {
+  "auteur": "Alain Le Magueresse",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/330214075"
+ },
+ "crabe_vert_2": {
+  "auteur": "natomik",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/88731705"
+ },
+ "crabe_vert_3": {
+  "auteur": "Jaro Guzinski",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/9825262"
+ },
+ "talitre_sauteur_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/231860410"
+ },
+ "talitre_sauteur_3": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/170730944"
+ },
+ "huitre_creuse_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/100515455"
+ },
+ "huitre_creuse_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/320428762"
+ },
+ "huitre_plate_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/30910265"
+ },
+ "huitre_plate_3": {
+  "auteur": "Clément Maouche",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/350929158"
+ },
+ "moule_commune_2": {
+  "auteur": "Jean Jacques Godon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/132930259"
+ },
+ "moule_commune_3": {
+  "auteur": "anbalemans",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/39405534"
+ },
+ "coque_commune_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/334239336"
+ },
+ "coque_commune_3": {
+  "auteur": "Duarte Frade",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/37708784"
+ },
+ "bigorneau_2": {
+  "auteur": "Dimitri Brosens",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/56107631"
+ },
+ "bigorneau_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/144884652"
+ },
+ "patelle_commune_2": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/176295709"
+ },
+ "patelle_commune_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/205517671"
+ },
+ "physalie_2": {
+  "auteur": "Gonzalo Colomer Barcia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/390407892"
+ },
+ "physalie_3": {
+  "auteur": "Troy Murphy",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/375814471"
+ },
+ "velelle_2": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/170087466"
+ },
+ "arenicole_2": {
+  "auteur": "Duarte Frade",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/8682158"
+ },
+ "arenicole_3": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/112659410"
+ },
+ "campagnol_des_champs_2": {
+  "auteur": "Tommy Andriollo",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/177126846"
+ },
+ "campagnol_des_champs_3": {
+  "auteur": "Tomas Pocius",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/9381734"
+ },
+ "mulot_sylvestre_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/72442915"
+ },
+ "mulot_sylvestre_3": {
+  "auteur": "Crap Fou",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/129434019"
+ },
+ "chat_forestier_2": {
+  "auteur": "Michael Gäbler",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Die_Wildkatze_in_der_Wildnis.jpg"
+ },
+ "noctule_commune_2": {
+  "auteur": "ognevit",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/112373294"
+ },
+ "noctule_commune_3": {
+  "auteur": "Daniel Benák",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/165095835"
+ },
+ "ragondin_2": {
+  "auteur": "euqirneto",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/113067285"
+ },
+ "ragondin_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/71389686"
+ },
+ "oedicneme_criard_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/144150139"
+ },
+ "oedicneme_criard_3": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/142522644"
+ },
+ "alouette_des_champs_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/332022993"
+ },
+ "alouette_des_champs_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/70526019"
+ },
+ "cheveche_d_athena_2": {
+  "auteur": "Denis RAMAGE",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/316929899"
+ },
+ "cheveche_d_athena_3": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/208244637"
+ },
+ "sterne_naine_2": {
+  "auteur": "Yann Geshors",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/156253801"
+ },
+ "sterne_naine_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/333706406"
+ },
+ "guepier_d_europe_2": {
+  "auteur": "Fabien52851",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/383939757"
+ },
+ "guepier_d_europe_3": {
+  "auteur": "michael_martinez64",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/364382722"
+ },
+ "hirondelle_de_rivage_2": {
+  "auteur": "Manuel Schwarz",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/398374386"
+ },
+ "petit_gravelot_2": {
+  "auteur": "Alpsdake",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Charadrius_dubius_curonicus_s8.JPG"
+ },
+ "petit_gravelot_3": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Little_ringed_plover_(Charadrius_dubius)_in_flight_Malta.jpg"
+ },
+ "balbuzard_pecheur_2": {
+  "auteur": "Thibaud Aronson",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/78553186"
+ },
+ "balbuzard_pecheur_3": {
+  "auteur": "Ben Costamagna",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/63241215"
+ },
+ "bihoreau_gris_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/413883828"
+ },
+ "bihoreau_gris_3": {
+  "auteur": "Алина Урусова",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/37706114"
+ },
+ "butor_etoile_2": {
+  "auteur": "Albert Rainbow",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/411981388"
+ },
+ "butor_etoile_3": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/250143129"
+ },
+ "guifette_moustac_2": {
+  "auteur": "Jacob Littlejohn",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/236876214"
+ },
+ "guifette_moustac_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/413883850"
+ },
+ "heron_pourpre_2": {
+  "auteur": "Flavien Saboureau",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/285569889"
+ },
+ "heron_pourpre_3": {
+  "auteur": "Fabien52851",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/315113082"
+ },
+ "grande_aigrette_2": {
+  "auteur": "Jean Meunier",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/248334927"
+ },
+ "grande_aigrette_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/334230460"
+ },
+ "pic_mar_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/106385997"
+ },
+ "pic_mar_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/74494000"
+ },
+ "rossignol_philomele_2": {
+  "auteur": "Aurélien Coste",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/75031563"
+ },
+ "rossignol_philomele_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/78385613"
+ },
+ "pigeon_ramier_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/208965613"
+ },
+ "pigeon_ramier_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/202258736"
+ },
+ "martinet_noir_2": {
+  "auteur": "Thibaud Aronson",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/78553188"
+ },
+ "tourterelle_turque_2": {
+  "auteur": "Codrin Bucur",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/131460431"
+ },
+ "tourterelle_turque_3": {
+  "auteur": "David Ashcroft",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/380293527"
+ },
+ "cigogne_blanche_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/365466201"
+ },
+ "cigogne_blanche_3": {
+  "auteur": "Joe crutwell",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/153815349"
+ },
+ "huppe_fasciee_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/335093048"
+ },
+ "huppe_fasciee_3": {
+  "auteur": "Dmitry Ivanov",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/299928082"
+ },
+ "triton_ponctue_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/37979629"
+ },
+ "cistude_d_europe_2": {
+  "auteur": "purperlibel",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/6717161"
+ },
+ "cistude_d_europe_3": {
+  "auteur": "Thomas Galewski",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/55534790"
+ },
+ "couleuvre_viperine_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/15433416"
+ },
+ "couleuvre_viperine_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/334390637"
+ },
+ "lezard_des_souches_2": {
+  "auteur": "Martiño Cabana Otero",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/148130336"
+ },
+ "lezard_des_souches_3": {
+  "auteur": "Martiño Cabana Otero",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/30442849"
+ },
+ "gardon_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/7003378"
+ },
+ "carpe_commune_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/108971692"
+ },
+ "carpe_commune_3": {
+  "auteur": "natomik",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/194752390"
+ },
+ "barbeau_fluviatile_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/231509652"
+ },
+ "chevesne_2": {
+  "auteur": "Nino",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/121418558"
+ },
+ "grand_capricorne_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/296138201"
+ },
+ "grand_capricorne_3": {
+  "auteur": "Leo Cantiran",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/285270837"
+ },
+ "demi_deuil_2": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/375457243"
+ },
+ "demi_deuil_3": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/322059393"
+ },
+ "frelon_europeen_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/323689321"
+ },
+ "frelon_europeen_3": {
+  "auteur": "Ellyne Geurts",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/413244269"
+ },
+ "frelon_asiatique_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/318068589"
+ },
+ "frelon_asiatique_3": {
+  "auteur": "Roland Godon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/321655296"
+ },
+ "grillon_champetre_2": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/188585032"
+ },
+ "grillon_champetre_3": {
+  "auteur": "petitcrabe",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/207059495"
+ },
+ "ecrevisse_de_louisiane_2": {
+  "auteur": "Christine",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/135654717"
+ },
+ "ecrevisse_de_louisiane_3": {
+  "auteur": "Jean Jacques Godon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/196122481"
+ },
+ "murin_a_oreilles_echancrees_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/9684287"
+ },
+ "oreillard_gris_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/319777879"
+ },
+ "oreillard_gris_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/16114148"
+ },
+ "murin_du_maghreb_2": {
+  "auteur": "Aissa Djamel Filali (iNaturalist user aissadjamelfilali)",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Myotis_punicus_-_Aissa_Djamel_Filali_(cropped).jpeg"
+ },
+ "lievre_de_corse_2": {
+  "auteur": "Leonardo Rapisarda",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/304560077"
+ },
+ "lievre_de_corse_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/331856299"
+ },
+ "corneille_mantelee_2": {
+  "auteur": "Crap Fou",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/30558821"
+ },
+ "etourneau_unicolore_2": {
+  "auteur": "Kristy Morley",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/166929862"
+ },
+ "hirondelle_de_fenetre_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/115436495"
+ },
+ "mesange_a_longue_queue_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/203509653"
+ },
+ "mesange_a_longue_queue_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/201154215"
+ },
+ "pigeon_biset_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/331856248"
+ },
+ "pigeon_biset_3": {
+  "auteur": "Clément Maouche",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/280861150"
+ },
+ "chevalier_guignette_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/193507864"
+ },
+ "chevalier_guignette_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/208965555"
+ },
+ "grebe_castagneux_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/279730564"
+ },
+ "bruant_proyer_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/142635184"
+ },
+ "bruant_proyer_3": {
+  "auteur": "Gerd Heinen",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/111660214"
+ },
+ "troglodyte_mignon_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_wren_Franconville_04.jpg"
+ },
+ "troglodyte_mignon_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_wren_(Troglodytes_troglodytes).jpg"
+ },
+ "goeland_d_audouin_2": {
+  "auteur": "Thomas Galewski",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/262422604"
+ },
+ "goeland_d_audouin_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/382225632"
+ },
+ "grive_musicienne_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/334875213"
+ },
+ "martinet_pale_2": {
+  "auteur": "Diego González Dopico",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/285638304"
+ },
+ "puffin_yelkouan_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/291931669"
+ },
+ "faucon_d_eleonore_2": {
+  "auteur": "Caroline Quinn",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/226929639"
+ },
+ "faucon_d_eleonore_3": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/81575663"
+ },
+ "pipit_rousseline_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/190056004"
+ },
+ "pipit_rousseline_3": {
+  "auteur": "Yann Geshors",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/220228863"
+ },
+ "salamandre_de_corse_2": {
+  "auteur": "Bob",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/151111244"
+ },
+ "salamandre_de_corse_3": {
+  "auteur": "Fabian Schwarz",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/405012453"
+ },
+ "rainette_sarde_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/74772536"
+ },
+ "rainette_sarde_3": {
+  "auteur": "Thomas Barrès",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/276168397"
+ },
+ "euprocte_de_corse_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/338059098"
+ },
+ "euprocte_de_corse_3": {
+  "auteur": "Simon Tonge",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/9601666"
+ },
+ "discoglosse_sarde_2": {
+  "auteur": "Mark Breaks",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/350917846"
+ },
+ "discoglosse_sarde_3": {
+  "auteur": "Leo Cantiran",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/276083799"
+ },
+ "discoglosse_corse_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/9468879"
+ },
+ "discoglosse_corse_3": {
+  "auteur": "Aurélien Coste",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/366997300"
+ },
+ "crapaud_vert_des_baleares_2": {
+  "auteur": "Richard Bartz",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bufotes_balearicus_female_quadrat.jpg"
+ },
+ "crapaud_vert_des_baleares_3": {
+  "auteur": "Holger Krisp",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bufo-viridis-sardinia.jpg"
+ },
+ "lezard_tyrrhenien_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/16727874"
+ },
+ "lezard_tyrrhenien_3": {
+  "auteur": "Samuel Paitreault",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/326701657"
+ },
+ "lezard_de_bedriaga_2": {
+  "auteur": "Rafael Medina",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/14898029"
+ },
+ "lezard_de_bedriaga_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/331856276"
+ },
+ "algyroide_de_fitzinger_2": {
+  "auteur": "Crebassa Jason",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/280793539"
+ },
+ "algyroide_de_fitzinger_3": {
+  "auteur": "Samuel Paitreault",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/283079144"
+ },
+ "phyllodactyle_d_europe_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/306222747"
+ },
+ "phyllodactyle_d_europe_3": {
+  "auteur": "Léo Souillard",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/358336361"
+ },
+ "blennie_fluviatile_2": {
+  "auteur": "Olivier Croissant",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Blennie_d%27eau_douce-Salaria_fluviatilis.JPG"
+ },
+ "sar_a_tete_noire_2": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/181065224"
+ },
+ "oblade_2": {
+  "auteur": "Anders Finn Jørgensen",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Oblada_melanura_Livorno.jpg"
+ },
+ "oblade_3": {
+  "auteur": "TeWeBs",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Madeira_Saddled_Seabreams.JPG"
+ },
+ "girelle_paon_2": {
+  "auteur": "Ben Costamagna",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/307749117"
+ },
+ "girelle_paon_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/83306266"
+ },
+ "crenilabre_paon_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154460473"
+ },
+ "crenilabre_paon_3": {
+  "auteur": "Ben Costamagna",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/307749120"
+ },
+ "apogon_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/21886319"
+ },
+ "apogon_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/181394774"
+ },
+ "rouget_de_roche_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154402879"
+ },
+ "serran_chevrette_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/80123576"
+ },
+ "serran_chevrette_3": {
+  "auteur": "Andra Waagmeester",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/228015378"
+ },
+ "pastenague_commune_2": {
+  "auteur": "Chris Taklis",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/60670605"
+ },
+ "megere_tyrrhenienne_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/17168176"
+ },
+ "megere_tyrrhenienne_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/331856303"
+ },
+ "fadet_tyrrhenien_2": {
+  "auteur": "Aurélien Coste",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/367012975"
+ },
+ "fadet_tyrrhenien_3": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/128479788"
+ },
+ "souci_2": {
+  "auteur": "El Golli Mohamed",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Clouded_yellow_Colias_croceus_Ichkeul.jpg"
+ },
+ "souci_3": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Clouded_yellow_(Colias_croceus)_male_underside_2.jpg"
+ },
+ "cuivre_commun_2": {
+  "auteur": "purperlibel",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/15283864"
+ },
+ "cuivre_commun_3": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/308700877"
+ },
+ "tircis_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/249516316"
+ },
+ "porte_queue_de_corse_2": {
+  "auteur": "Crebassa Jason",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/279205167"
+ },
+ "porte_queue_de_corse_3": {
+  "auteur": "Julia Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/141373157"
+ },
+ "citron_de_provence_2": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/347603049"
+ },
+ "citron_de_provence_3": {
+  "auteur": "Leo Cantiran",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/339713295"
+ },
+ "cardinal_2": {
+  "auteur": "Rafael Medina",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/14895910"
+ },
+ "cardinal_3": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125597811"
+ },
+ "sylvain_azure_2": {
+  "auteur": "Frank Sengpiel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/15225999"
+ },
+ "sylvain_azure_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/408145751"
+ },
+ "oedipode_corse_2": {
+  "auteur": "Valentin Moser",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/28786786"
+ },
+ "oedipode_corse_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/61339869"
+ },
+ "syneme_globuleux_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/165391390"
+ },
+ "lycose_radiee_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/311118499"
+ },
+ "langouste_rouge_2": {
+  "auteur": "Demian Hiß",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/246747643"
+ },
+ "langouste_rouge_3": {
+  "auteur": "Jérémy Capelle",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/398566072"
+ },
+ "crabe_verruqueux_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/270050415"
+ },
+ "crabe_verruqueux_3": {
+  "auteur": "Clément Maouche",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/296896929"
+ },
+ "crabe_bleu_2": {
+  "auteur": "John Hepburn",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/410517127"
+ },
+ "helice_de_raspail_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/382225716"
+ },
+ "helice_de_raspail_3": {
+  "auteur": "Cardioceras",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tacheocampylaea_raspailii,_a_Corsican_land_snail.jpg"
+ },
+ "mourgette_2": {
+  "auteur": "o2k",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/162743517"
+ },
+ "mourgette_3": {
+  "auteur": "Fabien Piednoir",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/194348540"
+ },
+ "troque_turbine_2": {
+  "auteur": "Rolf A. Engelmann",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/318907613"
+ },
+ "troque_turbine_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/84879240"
+ },
+ "ormeau_2": {
+  "auteur": "Clément Maouche",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/242825964"
+ },
+ "ormeau_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/17863007"
+ },
+ "oursin_noir_2": {
+  "auteur": "Steph Brulot-Sawchyn",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/222444093"
+ },
+ "oursin_noir_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/80123596"
+ },
+ "gorgone_rouge_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154402902"
+ },
+ "gorgone_rouge_3": {
+  "auteur": "Parent Géry",
+  "licence": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Paramuricea_clavata_(Risso,_1826).jpg"
+ },
+ "spirographe_2": {
+  "auteur": "Clément Maouche",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/349357779"
+ },
+ "spirographe_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/15868644"
+ },
+ "grand_hamster_2": {
+  "auteur": "Patrick Hacker",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/100269882"
+ },
+ "grand_hamster_3": {
+  "auteur": "Eva Uzdilova",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/243758545"
+ },
+ "grebe_a_cou_noir_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/351276926"
+ },
+ "grebe_a_cou_noir_3": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/8603342"
+ },
+ "rousserolle_turdoide_2": {
+  "auteur": "eloise kerroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/135684065"
+ },
+ "rousserolle_turdoide_3": {
+  "auteur": "Fred Derks",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/389457445"
+ },
+ "crapaud_vert_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/342752046"
+ },
+ "crapaud_vert_3": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/342754130"
+ },
+ "loche_de_riviere_2": {
+  "auteur": "Ewout Knoester",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/315551426"
+ },
+ "loche_de_riviere_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/85953154"
+ },
+ "amaryllis_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/231647600"
+ },
+ "amaryllis_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/133630074"
+ },
+ "pieride_de_la_rave_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/375599136"
+ },
+ "pieride_de_la_rave_3": {
+  "auteur": "Eric Verna",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/13735086"
+ },
+ "petit_sylvain_2": {
+  "auteur": "Franck Cabot",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/180110133"
+ },
+ "petit_sylvain_3": {
+  "auteur": "Laura Liedtke",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/172429617"
+ },
+ "agrion_elegant_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/189652779"
+ },
+ "agrion_elegant_3": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/222516286"
+ },
+ "pennipatte_bleuatre_2": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/209226821"
+ },
+ "pennipatte_bleuatre_3": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/172365772"
+ },
+ "conocephale_gracieux_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/43698827"
+ },
+ "conocephale_gracieux_3": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/57085992"
+ },
+ "courtiliere_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/183240435"
+ },
+ "petite_biche_2": {
+  "auteur": "petitcrabe",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/215793463"
+ },
+ "petite_biche_3": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/227496616"
+ },
+ "zoropsis_a_pattes_epineuses_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/266373035"
+ },
+ "zoropsis_a_pattes_epineuses_3": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/342401687"
+ },
+ "mangore_petite_bouteille_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/42083849"
+ },
+ "philoscie_des_mousses_2": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/316935929"
+ },
+ "philoscie_des_mousses_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/335258994"
+ },
+ "murin_a_moustaches_2": {
+  "auteur": "Павлик Лисицын",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/64442725"
+ },
+ "serotine_bicolore_2": {
+  "auteur": "ognevit",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/112373293"
+ },
+ "grive_litorne_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/187213994"
+ },
+ "grive_litorne_3": {
+  "auteur": "alanbedfordshaw",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/342116394"
+ },
+ "pouillot_siffleur_2": {
+  "auteur": "Thibaud Aronson",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/77023988"
+ },
+ "pouillot_siffleur_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/333706404"
+ },
+ "fauvette_babillarde_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/34800205"
+ },
+ "fauvette_babillarde_3": {
+  "auteur": "Gabriele Vaudano",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/286751069"
+ },
+ "rale_des_genets_2": {
+  "auteur": "Вячеслав Юсупов",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125077719"
+ },
+ "rale_des_genets_3": {
+  "auteur": "Вячеслав Юсупов",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/45801035"
+ },
+ "pigeon_colombin_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/292185283"
+ },
+ "pigeon_colombin_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/69942824"
+ },
+ "grenouille_rieuse_2": {
+  "auteur": "Lennart Hudel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/16516898"
+ },
+ "grenouille_rieuse_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/12992632"
+ },
+ "rotengle_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/156036801"
+ },
+ "apron_du_rhone_2": {
+  "auteur": "Erimouche",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Apron1.jpg"
+ },
+ "solitaire_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/86059183"
+ },
+ "solitaire_3": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/88881271"
+ },
+ "fadet_des_tourbieres_2": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/214389845"
+ },
+ "fadet_des_tourbieres_3": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/214541401"
+ },
+ "bacchante_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/183503449"
+ },
+ "bacchante_3": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/322023853"
+ },
+ "moire_franconien_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/358770248"
+ },
+ "moire_franconien_3": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/88789742"
+ },
+ "moire_blanc_fascie_2": {
+  "auteur": "davemgriffin",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/413645592"
+ },
+ "moire_blanc_fascie_3": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/296455108"
+ },
+ "grand_sylvain_2": {
+  "auteur": "uusijani",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/125318806"
+ },
+ "nacre_de_la_sanguisorbe_2": {
+  "auteur": "Thomas Koffel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/90730402"
+ },
+ "nacre_de_la_sanguisorbe_3": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/210125395"
+ },
+ "cuivre_de_la_verge_d_or_2": {
+  "auteur": "Bob",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/149922152"
+ },
+ "cuivre_de_la_verge_d_or_3": {
+  "auteur": "Julien Fougeroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/250676834"
+ },
+ "myrtil_2": {
+  "auteur": "gab_1",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/301019058"
+ },
+ "myrtil_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/221353856"
+ },
+ "cordulie_arctique_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/335089928"
+ },
+ "cordulie_arctique_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/335089941"
+ },
+ "agrion_haste_2": {
+  "auteur": "Mikael Nyman",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/123562231"
+ },
+ "agrion_haste_3": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/251195004"
+ },
+ "sauterelle_cymbaliere_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/324162191"
+ },
+ "meta_des_cavernes_2": {
+  "auteur": "Justin Philbois",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/164313721"
+ },
+ "meta_des_cavernes_3": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/127596505"
+ },
+ "micrommate_emeraude_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/56932198"
+ },
+ "micrommate_emeraude_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/300112926"
+ },
+ "ecrevisse_americaine_2": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/137508076"
+ },
+ "soucoupe_commune_2": {
+  "auteur": "Adrien Nouailhane",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/50544473"
+ },
+ "soucoupe_commune_3": {
+  "auteur": "Samuel Paitreault",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/310985019"
+ },
+ "escargot_des_jardins_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/290882171"
+ },
+ "escargot_des_jardins_3": {
+  "auteur": "Basile Petit",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154475028"
+ },
+ "clausilie_commune_2": {
+  "auteur": "Alexis_lsu",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/318200416"
+ },
+ "lievre_d_europe_2": {
+  "auteur": "Matthieu Trotignon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/335282302"
+ },
+ "lievre_d_europe_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/327391958"
+ },
+ "lapin_de_garenne_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/83624539"
+ },
+ "lapin_de_garenne_3": {
+  "auteur": "Ametsak",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/165560106"
+ },
+ "putois_d_europe_2": {
+  "auteur": "Harrison J Elkins",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/351519309"
+ },
+ "putois_d_europe_3": {
+  "auteur": "Manuel Schwarz",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/54911011"
+ },
+ "campagnol_amphibie_2": {
+  "auteur": "Nico Hernandez",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/52924953"
+ },
+ "campagnol_amphibie_3": {
+  "auteur": "José Antonio León Mangado",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/374243504"
+ },
+ "muscardin_2": {
+  "auteur": "Francesco Cecere",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/5443699"
+ },
+ "muscardin_3": {
+  "auteur": "Tommy Andriollo",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/272376110"
+ },
+ "grand_dauphin_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/386260204"
+ },
+ "grand_dauphin_3": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/37955847"
+ },
+ "macareux_moine_2": {
+  "auteur": "Jana Paulsen",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/367543845"
+ },
+ "macareux_moine_3": {
+  "auteur": "Charles J. Sharp",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Puffin_(Fratercula_arctica)_with_lesser_sand_eels_(Ammodytes_tobianus).jpg"
+ },
+ "pingouin_torda_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/337001769"
+ },
+ "pingouin_torda_3": {
+  "auteur": "eloise kerroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/148111077"
+ },
+ "guillemot_de_troil_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/349343804"
+ },
+ "fulmar_boreal_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/81680007"
+ },
+ "fulmar_boreal_3": {
+  "auteur": "Flavien Saboureau",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/366604081"
+ },
+ "puffin_des_anglais_2": {
+  "auteur": "Charlotte Kirchner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/365420839"
+ },
+ "mouette_tridactyle_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/147329729"
+ },
+ "mouette_tridactyle_3": {
+  "auteur": "Thomas Barrès",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/334133843"
+ },
+ "goeland_marin_2": {
+  "auteur": "Tim",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Great_Black-backed_Gull_Juvenile.jpg"
+ },
+ "goeland_marin_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/207638852"
+ },
+ "goeland_brun_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/110183594"
+ },
+ "goeland_brun_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/343207940"
+ },
+ "sterne_caugek_2": {
+  "auteur": "eloise kerroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/389800257"
+ },
+ "sterne_caugek_3": {
+  "auteur": "eloise kerroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/388872893"
+ },
+ "sterne_pierregarin_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/81546690"
+ },
+ "sterne_pierregarin_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/6540013"
+ },
+ "cormoran_huppe_2": {
+  "auteur": "Gabriele Pradelli",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/197619884"
+ },
+ "cormoran_huppe_3": {
+  "auteur": "Manuel Schwarz",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/181531528"
+ },
+ "huitrier_pie_2": {
+  "auteur": "Alain Le Magueresse",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/329895805"
+ },
+ "huitrier_pie_3": {
+  "auteur": "Олеся",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/379538351"
+ },
+ "courlis_cendre_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/325057646"
+ },
+ "courlis_cendre_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/204738726"
+ },
+ "aigrette_garzette_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/66341842"
+ },
+ "aigrette_garzette_3": {
+  "auteur": "patrickc",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/17472779"
+ },
+ "spatule_blanche_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/197421118"
+ },
+ "spatule_blanche_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/351276842"
+ },
+ "bernache_cravant_2": {
+  "auteur": "François Dunoyer",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/333037379"
+ },
+ "bernache_cravant_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/252057860"
+ },
+ "avocette_elegante_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/351287800"
+ },
+ "avocette_elegante_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/351287789"
+ },
+ "martin_pecheur_d_europe_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/98375354"
+ },
+ "martin_pecheur_d_europe_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/313441396"
+ },
+ "effraie_des_clochers_2": {
+  "auteur": "Luc Viatour",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tyto_alba_1_Luc_Viatour.jpg"
+ },
+ "geai_des_chenes_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/109625234"
+ },
+ "geai_des_chenes_3": {
+  "auteur": "Sunny Zhang 张迎新",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/195445442"
+ },
+ "pie_bavarde_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/186415323"
+ },
+ "pie_bavarde_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/111689399"
+ },
+ "hirondelle_rustique_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/45912861"
+ },
+ "becasse_des_bois_2": {
+  "auteur": "Лариса Артемьева",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/238082860"
+ },
+ "becasse_des_bois_3": {
+  "auteur": "Guy Babineau",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/223451195"
+ },
+ "grenouille_agile_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/343637493"
+ },
+ "grenouille_agile_3": {
+  "auteur": "Michael Berardozzi",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/177643005"
+ },
+ "grenouille_verte_2": {
+  "auteur": "Petar Milošević",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Edible_frog_(Pelophylax_esculentus).jpg"
+ },
+ "grenouille_verte_3": {
+  "auteur": "Grand-Duc, Niabot (edit)",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rana_esculenta_on_Nymphaea_edit.JPG"
+ },
+ "crapaud_epineux_2": {
+  "auteur": "Théo Porcheron-Georget",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/179308124"
+ },
+ "pelodyte_ponctue_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/42776397"
+ },
+ "pelodyte_ponctue_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/327660067"
+ },
+ "epinoche_2": {
+  "auteur": "Victor Heng",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/219744028"
+ },
+ "epinoche_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/245944546"
+ },
+ "bar_commun_2": {
+  "auteur": "Victor Heng",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/399247565"
+ },
+ "bar_commun_3": {
+  "auteur": "Fish and Dive",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/378477431"
+ },
+ "lieu_jaune_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/135841734"
+ },
+ "lieu_jaune_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/229791962"
+ },
+ "vieille_commune_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/135841745"
+ },
+ "vieille_commune_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/17863013"
+ },
+ "petite_roussette_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/133389578"
+ },
+ "petite_roussette_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/34802597"
+ },
+ "sole_commune_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/397887055"
+ },
+ "congre_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/100353351"
+ },
+ "congre_3": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/131994343"
+ },
+ "hippocampe_mouchete_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/39723555"
+ },
+ "baudroie_commune_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/155828939"
+ },
+ "baudroie_commune_3": {
+  "auteur": "Libby Keatley",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/210998943"
+ },
+ "saint_pierre_2": {
+  "auteur": "Daniel Benák",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/171063182"
+ },
+ "saint_pierre_3": {
+  "auteur": "Libby Keatley",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/262142217"
+ },
+ "requin_pelerin_2": {
+  "auteur": "Greg Skomal / NOAA Fisheries Service",
+  "licence": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Cetorhinus_maximus_by_greg_skomal.JPG"
+ },
+ "requin_pelerin_3": {
+  "auteur": "Fábio Olmos",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/46483289"
+ },
+ "damier_de_la_succise_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/361555075"
+ },
+ "damier_de_la_succise_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/362541875"
+ },
+ "criquet_ensanglante_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/306271847"
+ },
+ "criquet_ensanglante_3": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/380096386"
+ },
+ "bourdon_terrestre_2": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/237818793"
+ },
+ "bourdon_terrestre_3": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/294901252"
+ },
+ "petit_rhinolophe_2": {
+  "auteur": "Gonzalo Colomer Barcia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/393854052"
+ },
+ "petit_rhinolophe_3": {
+  "auteur": "Fabien Piednoir",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/335369625"
+ },
+ "murin_de_bechstein_2": {
+  "auteur": "bigayon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/38669183"
+ },
+ "raton_laveur_2": {
+  "auteur": "tobijw",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/386510825"
+ },
+ "campagnol_agreste_2": {
+  "auteur": "John Ashburner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/197829163"
+ },
+ "campagnol_souterrain_2": {
+  "auteur": "Lars Stoltze",
+  "licence": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Microtus_subterraneus_I.jpg"
+ },
+ "musaraigne_musette_2": {
+  "auteur": "Julien Lepage",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/318838356"
+ },
+ "musaraigne_musette_3": {
+  "auteur": "frangp",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/271758314"
+ },
+ "souris_grise_2": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/322739607"
+ },
+ "souris_grise_3": {
+  "auteur": "Jean Meunier",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/184742795"
+ },
+ "rat_noir_2": {
+  "auteur": "Emanuele Santarelli",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/30865849"
+ },
+ "surmulot_2": {
+  "auteur": "Nicole Kearney",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/155219510"
+ },
+ "surmulot_3": {
+  "auteur": "bogsuckers",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/127535569"
+ },
+ "vautour_moine_2": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/17412924"
+ },
+ "vautour_moine_3": {
+  "auteur": "anasacuta",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/85785027"
+ },
+ "cigogne_noire_2": {
+  "auteur": "Alain Le Magueresse",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/323804626"
+ },
+ "cigogne_noire_3": {
+  "auteur": "Philippe Hornus",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/360852751"
+ },
+ "autour_des_palombes_2": {
+  "auteur": "Thermos",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:AccipterGentilisJuvenileFlight1.jpg"
+ },
+ "autour_des_palombes_3": {
+  "auteur": "Nigel Wedge from Fife, Scotland",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Accipiter_gentilis_-Fife,_Scotland-8.jpg"
+ },
+ "epervier_d_europe_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/195378721"
+ },
+ "epervier_d_europe_3": {
+  "auteur": "Jean Jacques Godon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/70571437"
+ },
+ "faucon_hobereau_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/317745209"
+ },
+ "faucon_hobereau_3": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/362390886"
+ },
+ "chouette_de_tengmalm_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/57725660"
+ },
+ "hibou_moyen_duc_2": {
+  "auteur": "Yann Geshors",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/119092820"
+ },
+ "hibou_moyen_duc_3": {
+  "auteur": "Thibaud Aronson",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/84684317"
+ },
+ "becassine_des_marais_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/334596446"
+ },
+ "becassine_des_marais_3": {
+  "auteur": "Nigel Voaden",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/63556762"
+ },
+ "pie_grieche_grise_2": {
+  "auteur": "Шальнов Кирилл",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/190076843"
+ },
+ "pie_grieche_grise_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/331905560"
+ },
+ "pipit_farlouse_2": {
+  "auteur": "Daniel Benák",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/159483565"
+ },
+ "pipit_farlouse_3": {
+  "auteur": "Stefan Haag",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/293116463"
+ },
+ "pipit_des_arbres_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/334268158"
+ },
+ "pipit_des_arbres_3": {
+  "auteur": "Adam Jackson",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/193319106"
+ },
+ "grive_draine_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/109666946"
+ },
+ "grive_draine_3": {
+  "auteur": "saydelah",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/119237538"
+ },
+ "torcol_fourmilier_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/270268516"
+ },
+ "torcol_fourmilier_3": {
+  "auteur": "Quentin Benet-Cibois",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/399931674"
+ },
+ "mesange_huppee_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/333470512"
+ },
+ "mesange_boreale_2": {
+  "auteur": "Fabien52851",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/372891206"
+ },
+ "mesange_boreale_3": {
+  "auteur": "Zac Peterson",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/316575388"
+ },
+ "mesange_nonnette_2": {
+  "auteur": "Adam Jackson",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/193317880"
+ },
+ "mesange_nonnette_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/71639853"
+ },
+ "pouillot_de_bonelli_2": {
+  "auteur": "Frank Sengpiel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/364962909"
+ },
+ "pouillot_de_bonelli_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/205417328"
+ },
+ "pouillot_veloce_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/407234148"
+ },
+ "accenteur_mouchet_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/107497605"
+ },
+ "accenteur_mouchet_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/104784238"
+ },
+ "corneille_noire_2": {
+  "auteur": "Y. Liu",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/187019979"
+ },
+ "corneille_noire_3": {
+  "auteur": "walkingfern",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/233732682"
+ },
+ "spirlin_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "http://www.inaturalist.org/observations/3942640"
+ },
+ "spirlin_3": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/378467696"
+ },
+ "blageon_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/7718635"
+ },
+ "blageon_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125798079"
+ },
+ "breme_commune_2": {
+  "auteur": "Michael Grundner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/117171534"
+ },
+ "cuivre_de_la_bistorte_2": {
+  "auteur": "Gilles San Martin from Namur, Belgium",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lycaena_helle_(7181288543).jpg"
+ },
+ "cuivre_de_la_bistorte_3": {
+  "auteur": "Frank Vassen from Brussels, Belgium",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Blauschillernder_Feuerfalter_(Lycaena_helle)_male_(51238032522).jpg"
+ },
+ "azure_des_mouilleres_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/400559598"
+ },
+ "azure_des_mouilleres_3": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/214956577"
+ },
+ "nacre_de_la_canneberge_2": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/214541402"
+ },
+ "nacre_de_la_canneberge_3": {
+  "auteur": "Johan Kjær Prehn",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125914683"
+ },
+ "leucorrhine_douteuse_2": {
+  "auteur": "harry beaman",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/376807797"
+ },
+ "leucorrhine_douteuse_3": {
+  "auteur": "Quentin Benet-Cibois",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/305502660"
+ },
+ "ascalaphe_soufre_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/189692784"
+ },
+ "ascalaphe_soufre_3": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/177698151"
+ },
+ "ephippigere_des_vignes_2": {
+  "auteur": "Demian Hiß",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/246686473"
+ },
+ "ephippigere_des_vignes_3": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/322447708"
+ },
+ "necrophore_fossoyeur_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/143996091"
+ },
+ "necrophore_fossoyeur_3": {
+  "auteur": "Gaëtan Canon",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/404711031"
+ },
+ "bourdon_des_pierres_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/188991187"
+ },
+ "punaise_arlequin_2": {
+  "auteur": "Benjamin ZELVELDER",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/182535334"
+ },
+ "punaise_arlequin_3": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/288410050"
+ },
+ "argyronete_2": {
+  "auteur": "harry beaman",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/378192948"
+ },
+ "mygale_a_chaussette_2": {
+  "auteur": "Clément Laval",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/184367506"
+ },
+ "mygale_a_chaussette_3": {
+  "auteur": "Diego González Dopico",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/330622039"
+ },
+ "mulette_perliere_2": {
+  "auteur": "Joel Berglund",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Margaritifera_margaritifera_Berglund.jpg"
+ },
+ "mulette_perliere_3": {
+  "auteur": "Joel Berglund",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:UV_Margaritifera_margaritifera.jpg"
+ },
+ "minioptere_de_schreibers_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/10623014"
+ },
+ "minioptere_de_schreibers_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/10623018"
+ },
+ "rhinolophe_euryale_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/16114151"
+ },
+ "rhinolophe_euryale_3": {
+  "auteur": "Sylvain Eichhorn",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/349619118"
+ },
+ "vespere_de_savi_2": {
+  "auteur": "Daniel Benák",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/170917168"
+ },
+ "dauphin_bleu_et_blanc_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/386054478"
+ },
+ "dauphin_bleu_et_blanc_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/386082624"
+ },
+ "cachalot_2": {
+  "auteur": "Gabriel Barathieu",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mother_and_baby_sperm_whale.jpg"
+ },
+ "puffin_de_scopoli_2": {
+  "auteur": "Francesco Cecere",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/8432775"
+ },
+ "puffin_de_scopoli_3": {
+  "auteur": "David Dyck",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/236991243"
+ },
+ "crabier_chevelu_2": {
+  "auteur": "Kristy Morley",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/166929712"
+ },
+ "crabier_chevelu_3": {
+  "auteur": "Jonas Kraft",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/32682043"
+ },
+ "aigle_de_bonelli_2": {
+  "auteur": "Thomas Galewski",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/57123001"
+ },
+ "vautour_percnoptere_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/332482717"
+ },
+ "petit_duc_scops_2": {
+  "auteur": "Giorgio Zavattoni",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/400198757"
+ },
+ "rollier_d_europe_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/332207485"
+ },
+ "rollier_d_europe_3": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/310079809"
+ },
+ "coucou_geai_2": {
+  "auteur": "Yann Geshors",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/109386373"
+ },
+ "coucou_geai_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/362515881"
+ },
+ "pie_grieche_meridionale_2": {
+  "auteur": "eloise kerroux",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/297133491"
+ },
+ "perdrix_rouge_2": {
+  "auteur": "Leo Cantiran",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/291449960"
+ },
+ "rainette_meridionale_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/258551088"
+ },
+ "rainette_meridionale_3": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/282986029"
+ },
+ "pelobate_cultripede_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/72488975"
+ },
+ "discoglosse_peint_2": {
+  "auteur": "Duarte Frade",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/7832103"
+ },
+ "tortue_d_hermann_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/16744147"
+ },
+ "tortue_d_hermann_3": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/218183351"
+ },
+ "tortue_caouanne_2": {
+  "auteur": "Abigail Luxford-Noyes",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/228427630"
+ },
+ "psammodrome_d_edwards_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/289793219"
+ },
+ "psammodrome_d_edwards_3": {
+  "auteur": "Thomas Galewski",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/73977816"
+ },
+ "psammodrome_algire_2": {
+  "auteur": "Thomas Koffel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/6027788"
+ },
+ "lezard_catalan_2": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/21560157"
+ },
+ "lezard_catalan_3": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/151746948"
+ },
+ "tarente_de_mauretanie_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154172355"
+ },
+ "tarente_de_mauretanie_3": {
+  "auteur": "Fabien Piednoir",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/161286944"
+ },
+ "seps_strie_2": {
+  "auteur": "Fabien Piednoir",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/203760648"
+ },
+ "seps_strie_3": {
+  "auteur": "Flavien Saboureau",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/349320405"
+ },
+ "merou_brun_2": {
+  "auteur": "Tom Heijnen",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/37304777"
+ },
+ "merou_brun_3": {
+  "auteur": "shahar chaikin",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/387677948"
+ },
+ "girelle_commune_2": {
+  "auteur": "Andra Waagmeester",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/178184744"
+ },
+ "girelle_commune_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "http://www.inaturalist.org/observations/3510403"
+ },
+ "saupe_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/155020772"
+ },
+ "saupe_3": {
+  "auteur": "shahar chaikin",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/388588122"
+ },
+ "castagnole_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/155020802"
+ },
+ "castagnole_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/120497138"
+ },
+ "rascasse_brune_2": {
+  "auteur": "Nicola Crockford",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/206843476"
+ },
+ "rascasse_brune_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/120497102"
+ },
+ "murene_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154402898"
+ },
+ "murene_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/26771588"
+ },
+ "serran_ecriture_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154460468"
+ },
+ "sar_commun_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/90198288"
+ },
+ "sar_commun_3": {
+  "auteur": "Victor Heng",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/399236347"
+ },
+ "corb_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/291247812"
+ },
+ "corb_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/180184406"
+ },
+ "daurade_royale_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/122715321"
+ },
+ "daurade_royale_3": {
+  "auteur": "Victor Heng",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/399244368"
+ },
+ "cigale_plebeienne_2": {
+  "auteur": "Jacqueline Jeanne",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/252480872"
+ },
+ "cigale_plebeienne_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/179248263"
+ },
+ "cigale_grise_2": {
+  "auteur": "Ethan IMBERT",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/305598829"
+ },
+ "cigale_grise_3": {
+  "auteur": "Drew Baxter",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/177231657"
+ },
+ "empuse_pennee_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/125527471"
+ },
+ "empuse_pennee_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/333180831"
+ },
+ "magicienne_dentelee_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/183519220"
+ },
+ "magicienne_dentelee_3": {
+  "auteur": "Leo Cantiran",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/287282177"
+ },
+ "pacha_a_deux_queues_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/368431785"
+ },
+ "pacha_a_deux_queues_3": {
+  "auteur": "Benjamin ZELVELDER",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/261771706"
+ },
+ "diane_2": {
+  "auteur": "Crebassa Jason",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/80512250"
+ },
+ "diane_3": {
+  "auteur": "Yann Geshors",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/110478560"
+ },
+ "proserpine_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/387294256"
+ },
+ "truxale_2": {
+  "auteur": "purperlibel",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/384065313"
+ },
+ "truxale_3": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/23503780"
+ },
+ "criquet_egyptien_2": {
+  "auteur": "Christoph Kramer",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/208910419"
+ },
+ "criquet_egyptien_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/78389176"
+ },
+ "fourmi_moissonneuse_2": {
+  "auteur": "Jacqueline Jeanne",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/110295789"
+ },
+ "scorpion_languedocien_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/60407459"
+ },
+ "scorpion_languedocien_3": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/153326697"
+ },
+ "scorpion_noir_a_queue_jaune_2": {
+  "auteur": "Siga",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Euscorpius_Southern_France1.jpg"
+ },
+ "scorpion_noir_a_queue_jaune_3": {
+  "auteur": "Siga",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Euscorpius_Southern_France2.jpg"
+ },
+ "lycose_de_narbonne_2": {
+  "auteur": "Paul-BNF",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lycose_de_Narbonne_sur_le_bord_de_son_terrier.JPG"
+ },
+ "malmignatte_2": {
+  "auteur": "Paolo Giampaoletti",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/403623935"
+ },
+ "malmignatte_3": {
+  "auteur": "Peter de Lange",
+  "licence": "CC0 1.0",
+  "source": "http://naturewatch.org.nz/observations/2931822"
+ },
+ "scolopendre_ceinturee_2": {
+  "auteur": "GRIMA Laurent",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/340676907"
+ },
+ "scolopendre_ceinturee_3": {
+  "auteur": "Hélio Suarez",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/274202977"
+ },
+ "crabe_marbre_2": {
+  "auteur": "Jordi Casanovas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/185713886"
+ },
+ "bernard_l_ermite_2": {
+  "auteur": "Alain Le Magueresse",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/330091372"
+ },
+ "bernard_l_ermite_3": {
+  "auteur": "Nicola Crockford",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/206329729"
+ },
+ "cigale_de_mer_2": {
+  "auteur": "Victor Micallef",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mediterranean_Slipper_lobster_(cropped).jpg"
+ },
+ "cigale_de_mer_3": {
+  "auteur": "Sarah Faulwetter",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/130788581"
+ },
+ "poulpe_commun_2": {
+  "auteur": "Justin Philbois",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/184933472"
+ },
+ "poulpe_commun_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/232981377"
+ },
+ "seiche_commune_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/277360791"
+ },
+ "grande_nacre_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "http://www.inaturalist.org/observations/3887006"
+ },
+ "grande_nacre_3": {
+  "auteur": "Clément Maouche",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/349091365"
+ },
+ "oursin_violet_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "http://www.inaturalist.org/observations/3583530"
+ },
+ "oursin_violet_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154460459"
+ },
+ "etoile_de_mer_rouge_2": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154601662"
+ },
+ "etoile_de_mer_rouge_3": {
+  "auteur": "Philipp Pavelka",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/129596441"
+ },
+ "concombre_de_mer_2": {
+  "auteur": "Michael Berardozzi",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/384493177"
+ },
+ "concombre_de_mer_3": {
+  "auteur": "Chris Taklis",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/31370685"
+ },
+ "anemone_verte_2": {
+  "auteur": "Andra Waagmeester",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/133806241"
+ },
+ "anemone_verte_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/10182235"
+ },
+ "pelagie_2": {
+  "auteur": "John Hepburn",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/182772915"
+ },
+ "pelagie_3": {
+  "auteur": "Oscar Dove",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/165914502"
+ },
+ "corail_rouge_2": {
+  "auteur": "Bernard Picton",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/71082622"
+ },
+ "corail_rouge_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/154601672"
+ },
+ "campagnol_roussatre_2": {
+  "auteur": "Aurélien Coste",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/80587935"
+ },
+ "campagnol_roussatre_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/71639527"
+ },
+ "mulot_a_collier_2": {
+  "auteur": "Kazimieras Martinaitis",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/65001589"
+ },
+ "mulot_a_collier_3": {
+  "auteur": "Alexis Tinker-Tsavalas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/52800366"
+ },
+ "grand_murin_2": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/9684288"
+ },
+ "barbastelle_d_europe_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/175106521"
+ },
+ "oreillard_roux_2": {
+  "auteur": "Óscar Sampedro",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/306750376"
+ },
+ "milan_royal_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/127647148"
+ },
+ "aigle_botte_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/331730733"
+ },
+ "hirondelle_de_rochers_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/300415674"
+ },
+ "martinet_a_ventre_blanc_2": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/126269428"
+ },
+ "pipit_spioncelle_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/327644123"
+ },
+ "mesange_noire_2": {
+  "auteur": "Adam Jackson",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/193319113"
+ },
+ "mesange_noire_3": {
+  "auteur": "Guillaume Hoffmann",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/103253258"
+ },
+ "grimpereau_des_bois_2": {
+  "auteur": "Thomas Galewski",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/262721180"
+ },
+ "calotriton_des_pyrenees_2": {
+  "auteur": "Dr. Sven Gippner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/218525927"
+ },
+ "calotriton_des_pyrenees_3": {
+  "auteur": "Dr. Sven Gippner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/218525922"
+ },
+ "grenouille_des_pyrenees_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/238405228"
+ },
+ "grenouille_des_pyrenees_3": {
+  "auteur": "Léo Souillard",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/361487560"
+ },
+ "lezard_de_bonnal_2": {
+  "auteur": "Flavien Saboureau",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/330243235"
+ },
+ "vipere_de_seoane_2": {
+  "auteur": "Marco Sommer",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/261971198"
+ },
+ "vipere_de_seoane_3": {
+  "auteur": "Wouter Beukema",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/233758775"
+ },
+ "omble_de_fontaine_2": {
+  "auteur": "Gabriele Vaudano",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/235907351"
+ },
+ "omble_de_fontaine_3": {
+  "auteur": "Pavel Kacl",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/123998515"
+ },
+ "lamproie_de_planer_2": {
+  "auteur": "Shane Austin",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/330708268"
+ },
+ "lamproie_de_planer_3": {
+  "auteur": "Nicola Crockford",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/269014248"
+ },
+ "moire_de_lefebvre_2": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/392398332"
+ },
+ "semi_apollon_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/78749173"
+ },
+ "semi_apollon_3": {
+  "auteur": "MadMagpie",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/381443785"
+ },
+ "azure_du_serpolet_2": {
+  "auteur": "Samuel Paitreault",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/295486770"
+ },
+ "azure_du_serpolet_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/99783869"
+ },
+ "carabe_splendide_2": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/325589108"
+ },
+ "carabe_splendide_3": {
+  "auteur": "Robin Schmidt",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/220675460"
+ },
+ "miramelle_pyreneenne_2": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/337131797"
+ },
+ "miramelle_pyreneenne_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/69272974"
+ },
+ "cordulegastre_bidente_2": {
+  "auteur": "Jean-Louis Venet",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Libellule_Cordulegaster_bidentata.JPG"
+ },
+ "dectique_verrucivore_2": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/37753613"
+ },
+ "gaze_2": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/84591466"
+ },
+ "gaze_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/331899344"
+ },
+ "abeille_charpentiere_2": {
+  "auteur": "luckilucki",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/320187663"
+ },
+ "abeille_charpentiere_3": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/152520990"
+ },
+ "cicindele_champetre_2": {
+  "auteur": "Jacob Littlejohn",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/238030916"
+ },
+ "cicindele_champetre_3": {
+  "auteur": "Lucas Benaiche",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/338423655"
+ },
+ "geotrupe_du_fumier_2": {
+  "auteur": "Colin Legg",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/367985365"
+ },
+ "saltique_chevronne_2": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/321595069"
+ },
+ "dolomede_des_marais_2": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/323858346"
+ },
+ "dolomede_des_marais_3": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/86880465"
+ },
+ "iule_a_pattes_blanches_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/265584370"
+ },
+ "iule_a_pattes_blanches_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/341403295"
+ },
+ "ancyle_des_rivieres_2": {
+  "auteur": "petitcrabe",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/264647514"
+ },
+ "ancyle_des_rivieres_3": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/242062631"
+ },
+ "helice_des_bois_2": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/242875490"
+ },
+ "helice_des_bois_3": {
+  "auteur": "CorentinD",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/166588004"
+ },
+ "limnee_tronquee_2": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/261644078"
+ },
+ "limnee_tronquee_3": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/242062637"
+ },
+ "pouillot_fitis_2": {
+  "auteur": "Olivier Morel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/309913254"
+ },
+ "pouillot_fitis_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/81476489"
+ },
+ "fauvette_des_jardins_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/91883835"
+ },
+ "corbeau_freux_2": {
+  "auteur": "Carl Linnér",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/228798944"
+ },
+ "corbeau_freux_3": {
+  "auteur": "Yann Geshors",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/199185323"
+ },
+ "moire_de_la_canche_2": {
+  "auteur": "Thibaud Aronson",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/89756295"
+ },
+ "moire_de_la_canche_3": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/95147068"
+ },
+ "tristan_2": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/230534448"
+ },
+ "tristan_3": {
+  "auteur": "Antoine Thivolle",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/400549812"
+ },
+ "fadet_commun_2": {
+  "auteur": "Thibaud Aronson",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/89756285"
+ },
+ "aeschne_subarctique_2": {
+  "auteur": "Gilles San Martin",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/381832013"
+ },
+ "aeschne_subarctique_3": {
+  "auteur": "J. H.",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/405050522"
+ },
+ "petite_nymphe_au_corps_de_feu_2": {
+  "auteur": "Sylvain Montagner",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/271061397"
+ },
+ "petite_nymphe_au_corps_de_feu_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/82433747"
+ },
+ "grillon_des_bois_2": {
+  "auteur": "Samuel GUIRAUDOU",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/324419713"
+ },
+ "grillon_des_bois_3": {
+  "auteur": "Benoit NABHOLZ",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/267855767"
+ },
+ "decticelle_cendree_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/309746741"
+ },
+ "decticelle_cendree_3": {
+  "auteur": "Guillaume Hoffmann",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/95566526"
+ },
+ "carabe_a_reflets_dores_2": {
+  "auteur": "Bernard DUPONT",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/68659908"
+ },
+ "carabe_a_reflets_dores_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/241957418"
+ },
+ "rhagie_inquisitrice_2": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/168966739"
+ },
+ "rhagie_inquisitrice_3": {
+  "auteur": "Leo Cantiran",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/267176641"
+ },
+ "timarque_2": {
+  "auteur": "Julien Tchilinguirian",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/78124209"
+ },
+ "timarque_3": {
+  "auteur": "Adrien BENOIT à la GUILLAUME",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/154231572"
+ },
+ "geotrupe_des_bois_2": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/243609228"
+ },
+ "geotrupe_des_bois_3": {
+  "auteur": "luluchouette",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/286755933"
+ },
+ "typographe_2": {
+  "auteur": "agujaceratops",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/38298549"
+ },
+ "bourdon_des_champs_2": {
+  "auteur": "Albert Cardona",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/181532103"
+ },
+ "bourdon_des_champs_3": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/196377428"
+ },
+ "pholque_phalangide_2": {
+  "auteur": "DDutrey",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/247319631"
+ },
+ "pholque_phalangide_3": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/242077182"
+ },
+ "epeire_des_fissures_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/107789628"
+ },
+ "epeire_des_fissures_3": {
+  "auteur": "Ludivine Lamare",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/184542541"
+ },
+ "cloporte_rugueux_2": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/105988318"
+ },
+ "cloporte_rugueux_3": {
+  "auteur": "Thierry Arbault",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/331913208"
+ },
+ "limace_cendree_2": {
+  "auteur": "Thomas Koffel",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/160271483"
+ },
+ "limace_cendree_3": {
+  "auteur": "jfgodeau",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/111506504"
+ },
+ "bouton_commun_2": {
+  "auteur": "Björn S...",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Discus_rotundatus_(41276951412).jpg"
+ },
+ "bouquetin_des_alpes_3": {
+  "auteur": "Justine",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/307362902"
+ },
+ "chamois_3": {
+  "auteur": "Thomas Galewski",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/55205728"
+ },
+ "marmotte_des_alpes_3": {
+  "auteur": "Yves Bas",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/139739404"
+ },
+ "cerf_elaphe_3": {
+  "auteur": "sandravanaalst",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/27463329"
+ },
+ "chevreuil_3": {
+  "auteur": "Arthur BADEL",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/363142753"
+ },
+ "hermine_3": {
+  "auteur": "Antoine MARNAT",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/193577153"
+ },
+ "renard_roux_3": {
+  "auteur": "Aurélien Coste",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/92017571"
+ },
+ "chabot_des_pyrenees": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/305747198"
+ },
+ "azure_de_la_bugrane_3": {
+  "auteur": "Louis Aureglia",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/292560770"
+ },
+ "calopteryx_hemorroidal_3": {
+  "auteur": "Charly Jestin-Bellanger",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/334144294"
+ },
+ "crocothemis_ecarlate_3": {
+  "auteur": "Céline",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/57262393"
+ },
+ "cygne_tubercule_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/110283462"
+ },
+ "nette_rousse_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/348099005"
+ },
+ "fuligule_milouin_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/326685237"
+ },
+ "blongios_nain_3": {
+  "auteur": "Luc hoogenstein",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Ixobrychus_minutus,_Little_Bittern,_Wouwaap_01.jpg"
+ },
+ "bruant_des_roseaux_3": {
+  "auteur": "Kathy Büscher from Rinteln, Deutschland",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rohrammer_(1)_(34632512680).jpg"
+ },
+ "gobemouche_a_collier_3": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/57534404"
+ },
+ "grande_tortue_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/342443590"
+ },
+ "pic_tridactyle_3": {
+  "auteur": "Christoph Moning",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/226703619"
+ },
+ "pic_cendre_3": {
+  "auteur": "Hanna U.",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/343618842"
+ },
+ "sizerin_cabaret_3": {
+  "auteur": "caroline legg",
+  "licence": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lesser_Redpoll_(Male)_-_Carduelis_cabaret_(51161321691).jpg"
+ },
+ "gobemouche_noir_3": {
+  "auteur": "Codrin Bucur",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/131380575"
+ },
+ "harle_bievre_3": {
+  "auteur": "Fabien52851",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/351991299"
+ },
+ "grosbec_casse_noyaux_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/262002041"
+ },
+ "petit_mars_changeant_3": {
+  "auteur": "CorentinD",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/164795615"
+ },
+ "robert_le_diable_3": {
+  "auteur": "Patrick Le Mao",
+  "licence": "CC0 1.0",
+  "source": "https://www.inaturalist.org/observations/236586585"
+ },
+ "leucorrhine_a_gros_thorax_3": {
+  "auteur": "harry beaman",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/370829985"
+ },
+ "phoque_gris_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/248415310"
+ },
+ "phoque_veau_marin_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/248219104"
+ },
+ "fou_de_bassan_3": {
+  "auteur": "Julien Renoult",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/100349610"
+ },
+ "goeland_argente_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/164496582"
+ },
+ "mouette_rieuse_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/214447342"
+ },
+ "grand_cormoran_3": {
+  "auteur": "Alexis Lours",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/351280720"
+ },
+ "becasseau_variable_3": {
+  "auteur": "Donald Davesne",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/247185297"
  }
 };
 

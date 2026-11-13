@@ -1184,6 +1184,9 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
   if (session && session.focus && champ === IDENTIFICATION && typeof retourMesures === "function") {
     retour.insertAdjacentHTML("beforeend", retourMesures(espece));
     if (session.physique && typeof pictosEnsemble === "function" && RENCONTRE_COMPLETE) retour.insertAdjacentHTML("beforeend", pictosEnsemble(espece));   // étape RF6
+    // Étape PA1 (12/11, choix A2 d'Aubin) : la photo reconnue, son autre forme s'affiche d'elle-même (« La femelle »…),
+    //   en vignette ; toucher l'agrandit. Montrée, jamais demandée. Les « autre vue » ne sont pas montrées ici.
+    if (estJuste && typeof blocAutresFormes === "function") retour.insertAdjacentHTML("beforeend", blocAutresFormes(espece));
   }
   postitReponse(champ, estJuste ? "trouve" : presque ? "presque" : "rate");   // étape 151 : la ligne s'écrit
   // Étape RF4 : la photo reconnue, la bande de l'expédition montre enfin sa photo (silhouette avant)
@@ -1251,7 +1254,12 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     const verite = (document.querySelector('#reponses button[data-juste="oui"]') || {}).textContent || "";
     session.rafale.push({ texte: document.getElementById("affirmation").textContent, juste: !!estJuste, expl: explication, verite: verite.trim() });
     const restent = session.vie.filter(c => !session.posees.includes(c));
-    if (restent.length) { retour.textContent = estJuste ? "Juste." : "Pas tout à fait : vous le retrouverez dans le bilan."; boutonSuivant.textContent = "Carte suivante →"; }
+    // Étape R189 (note n° 13 d'Aubin) : plus de « Juste. » (le bouton vert suffit) ; une erreur donne tout de suite la vraie information
+    if (restent.length) {
+      const c = session.rafale[session.rafale.length - 1];
+      retour.innerHTML = estJuste ? "" : `<span class="rafale-vraie">${c.verite ? `<b>C'est ${echapper(minuscule(c.verite))}.</b> ` : ""}${echapper(c.expl || "")}</span>`;
+      boutonSuivant.textContent = "Carte suivante →";
+    }
     else retour.innerHTML = bilanRafale(session.rafale);
   }
   if (session) session.dernierJuste = !!estJuste;      // étape RF2 : « avancer d'un toucher » après une bonne réponse

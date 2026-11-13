@@ -781,11 +781,14 @@ function dessinerMaison() {
           <span class="mai-r-go" aria-hidden="true">▶</span></span></button>`;
   // Étape R183b (choix d'Aubin) : plus de carnet sur l'accueil (il est dans le Profil et l'Encyclopédie) ; l'espèce du jour
   //   et les défis du jour remontent juste sous la carte, pour ancrer le jeu dans le quotidien.
+  // Étape R189 (note n° 8 d'Aubin) : l'espèce du jour déjà rencontrée passe sous les défis du jour, qui remontent
+  const jourFait = typeof especeDuJour === "function" && especeDuJourFaite(especeDuJour());
   zone.innerHTML = `<div class="mai-page">
       <div class="mai-bonjour"><h1>Bonjour${p ? ` ${echapper(p)}` : ""}</h1><p>${date.charAt(0).toUpperCase() + date.slice(1)}</p></div>
       ${reprendre}
-      <div class="ac-jour" id="mai-jour"></div>
+      ${jourFait ? "" : `<div class="ac-jour" id="mai-jour"></div>`}
       <section class="mai-defis" id="mai-defis"></section>
+      ${jourFait ? `<div class="ac-jour" id="mai-jour"></div>` : ""}
       <div class="mai-liens">
         <button type="button" class="mai-lien" id="mai-carte">${iconeNiveau("territoire")}<span>Tous les territoires<b>La carte des territoires</b></span><span aria-hidden="true">→</span></button>
       </div></div>`;

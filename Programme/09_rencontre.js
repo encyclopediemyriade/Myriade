@@ -475,7 +475,9 @@ function dessinerPostit() {
   const prevues = Math.max(session.prevues || session.total, session.postit.length);
   const trouvees = session.postit.filter(l => l.etat === "trouve").length;
   const aRevoirIci = session.postit.filter(l => l.etat === "rate" || l.etat === "presque").length;
-  const reste = Math.max(0, prevues - session.postit.filter(l => l.etat && l.etat !== "encours").length);
+  // Étape R189 (note n° 2 d'Aubin, martinet noir : « 0 / 5 trouvée · encore 4 à découvrir ») : une espèce seulement présentée
+  //   (« Me la présenter ») a son nom écrit, mais sa photo reste à reconnaître : elle compte encore dans « à découvrir »
+  const reste = Math.max(0, prevues - session.postit.filter(l => l.etat && l.etat !== "encours" && l.etat !== "presentee").length);
   const points = session.postit.map(l => `<i class="${l.etat}"></i>`).join("") + "<i></i>".repeat(Math.max(0, prevues - session.postit.length));
   const connu = titre !== TITRE_CARNET_INCONNUE;
   // Étape R158 (08/11, choix d'Aubin) : « Votre fiche » devient « Ce que vous savez d'elle » ; sur téléphone, la fiche

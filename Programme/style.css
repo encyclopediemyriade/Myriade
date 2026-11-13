@@ -4714,3 +4714,40 @@ button.pastille-carnet:hover { background: #fff; }
 #question .fe-rappels .fe-rappel small { font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--texte-doux); }
 #question .fe-rappels .fe-rappel img { height: 34px; width: auto; max-width: 90px; object-fit: contain; opacity: .8; }
 #question .fe-rappels .fe-rappel.fe-rappel-scene { flex-basis: 100%; }
+
+/* ==================================================================
+   Étape PA1 (12/11/2026) : les 2e et 3e photos, montrées
+   ================================================================== */
+/* A1 — la fiche : rangée de vignettes sous la grande photo ; étiquette de la forme sur la photo */
+.pe-photo.agrandissable { cursor: zoom-in; }
+.pe-forme { position: absolute; left: 8px; bottom: 8px; background: rgba(30, 40, 32, .78); color: #fff; font-size: 13px; padding: 3px 9px; border-radius: 4px; pointer-events: none; }
+.pe-galerie { display: flex; gap: 6px; margin: -4px 0 10px; }
+.pe-vignette { flex: 1 1 0; min-width: 0; padding: 0; border: 2px solid transparent; border-radius: 5px; background: var(--verrou); cursor: pointer; position: relative; overflow: hidden; height: 54px; }
+.pe-vignette img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .75; transition: opacity .15s; }
+.pe-vignette.actif { border-color: var(--couleur-classe); }
+.pe-vignette.actif img, .pe-vignette:hover img { opacity: 1; }
+.pe-vignette small { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(30, 40, 32, .72); color: #fff; font-size: 11px; line-height: 1.5; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* A2 — la Rencontre : l'autre forme, en vignette sous la taille et le poids */
+.retour-formes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.retour-forme { display: flex; align-items: center; gap: 10px; padding: 4px 12px 4px 4px; border: 1px solid var(--trait); border-radius: 6px; background: transparent; cursor: zoom-in; font: inherit; color: inherit; }
+.retour-forme .rf-ph { width: 84px; height: 56px; border-radius: 4px; overflow: hidden; flex: none; background: var(--verrou); }
+.retour-forme .rf-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.retour-forme .rf-lib { font-size: 14px; }
+/* A3 — l'espèce du jour : l'étiquette de la forme */
+.ac-jour .ph .ph-forme { position: absolute; left: 8px; bottom: 8px; z-index: 1; background: rgba(30, 40, 32, .78); color: #fff; font-size: 12px; padding: 2px 8px; border-radius: 4px; }
+/* Voir une photo en grand */
+#photo-agrandie { position: fixed; inset: 0; z-index: 9999; background: rgba(15, 20, 16, .88); display: none; align-items: center; justify-content: center; padding: 16px; cursor: zoom-out; }
+#photo-agrandie.ouvert { display: flex; }
+#photo-agrandie figure { margin: 0; position: relative; max-width: min(960px, 100%); }
+#photo-agrandie img { max-width: 100%; max-height: 80vh; display: block; border-radius: 6px; object-position: 50% 50% !important; }
+#photo-agrandie figcaption { color: #f3eee2; text-align: center; margin-top: 8px; font-size: 15px; }
+#photo-agrandie .pa-fermer { position: absolute; top: -6px; right: -6px; width: 34px; height: 34px; border-radius: 50%; background: #f3eee2; color: #222; font-size: 22px; line-height: 34px; text-align: center; }
+
+/* Étape R189 (note n° 1 d'Aubin) : la pastille de couleur (54 px pour les questions) débordait de sa case dans les
+   pictos de l'ensemble (« Couleur · Brun », tourterelle turque, écrevisses) : un ovale trop grand qui sortait à gauche.
+   Dans toute case de picto, elle reste un rond qui tient dans la case. */
+.retour .pe-ensemble-item .picto .pastille { width: 24px; height: 24px; border-width: 1px; flex: none; }
+.picto .pastille, .ic .pastille, .pe-picto .pastille { flex: none; max-width: 100%; max-height: 100%; aspect-ratio: 1 / 1; box-sizing: border-box; }
+/* Étape R189 : l'espèce du jour rencontrée — un petit ✓ vert à côté du nom (remplace l'étiquette « ✓ Rencontrée ») */
+.ac-jour h2 .ac-jour-coche { display: inline-flex; align-items: center; justify-content: center; width: 1.15em; height: 1.15em;
+  margin-left: .3em; border-radius: 50%; background: var(--bon); color: #fff; font-size: .62em; vertical-align: .25em; font-family: system-ui, sans-serif; }

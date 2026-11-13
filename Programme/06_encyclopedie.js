@@ -357,6 +357,33 @@ function blocTerritoires(espece) {
   return `<div class="pe-presence"><div class="pe-titre-presence">Présente dans</div>${carte}<div>${etiquettes}</div></div>`;
 }
 
+// Étape PA1 (12/11, choix A1 d'Aubin) : la fiche montre les 2 ou 3 photos de l'espèce.
+//   Sous la grande photo, une rangée de vignettes ; toucher une vignette la met en grand, avec son étiquette
+//   (« La femelle », « Le jeune »… ; rien pour « autre vue ») ; toucher la grande photo l'agrandit en plein écran.
+function galeriePhotos(e) {
+  const ph = photosDe(e);
+  if (ph.length < 2) return "";
+  return `<div class="pe-galerie" role="group" aria-label="Ses photos">${ph.map((p, i) =>
+    `<button type="button" class="pe-vignette${i ? "" : " actif"}" data-i="${i}" aria-label="${echapper(etiquetteForme(p.sujet) || (i ? "Autre photo" : "Photo principale"))}">${imagePhoto(p.src, "", true)}${etiquetteForme(p.sujet) ? `<small>${majuscule(p.sujet)}</small>` : ""}</button>`).join("")}</div>`;
+}
+function brancherGaleriePhotos(zone, e) {
+  const ph = photosDe(e), cadre = zone.querySelector(".pe-photo");
+  if (!cadre || !ph.length) return;
+  let courante = 0;
+  const etiquette = cadre.querySelector(".pe-forme");
+  cadre.classList.add("agrandissable");
+  cadre.onclick = ev => { if (ev.target.closest(".rarete")) return; agrandirPhoto(ph[courante].src, [e.nom_courant, etiquetteForme(ph[courante].sujet)].filter(Boolean).join(" · ")); };
+  zone.querySelectorAll(".pe-vignette").forEach(b => b.onclick = () => {
+    courante = Number(b.dataset.i);
+    const img = cadre.querySelector("img");
+    if (img) img.src = ph[courante].src;
+    const lib = etiquetteForme(ph[courante].sujet);
+    etiquette.textContent = lib;
+    etiquette.classList.toggle("cache", !lib);
+    zone.querySelectorAll(".pe-vignette").forEach(v => v.classList.toggle("actif", v === b));
+  });
+}
+
 function ouvrirPageEspece(espece) {
   if (typeof arreterCri === "function") arreterCri();   // étape R176 : une autre fiche, un autre écran : le son s'arrête
   if (!espece) return;
@@ -387,7 +414,7 @@ function afficherPageEspece() {
   zone.innerHTML = `<div class="pe" style="--couleur-classe:${c.couleur}">
       <button class="pe-retour" id="pe-retour">← Retour à l'encyclopédie</button>
       <aside class="pe-cote">
-        <div class="pe-photo">${celluleImage(e)}${dessinRarete(e)}</div>
+        <div class="pe-photo">${celluleImage(e)}${dessinRarete(e)}<span class="pe-forme cache"></span></div>${galeriePhotos(e)}
         <div class="pe-medaille${termine ? "" : " vide"}">${medaille}<span><b>${termine ? NOMS_MEDAILLE[termine] : "Pas encore croisée"}</b><small>${detail}</small></span></div>
         <h1>${e.nom_courant}</h1>
         <div class="pe-sci">${e.nom_scientifique}</div>
@@ -411,6 +438,7 @@ function afficherPageEspece() {
       </main>
     </div>`;
   zone.querySelectorAll("[data-onglet]").forEach(b => b.onclick = () => { ongletEspece = b.dataset.onglet; afficherPageEspece(); });
+  brancherGaleriePhotos(zone, e);   // étape PA1
   // Étape 261 : la bulle au survol de la carte « Présente dans », comme sur la page carte
   const carteP = zone.querySelector(".pe-carte");
   if (carteP) {

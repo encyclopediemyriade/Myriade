@@ -963,7 +963,7 @@ function texteResteEtape2(x) {
   const n = x.liste.filter(e => estIdentifiee(e) && !faiteDans(x, e, 2)).reduce((s, e) => s + Math.min(TRAITS_VIE_POSES, champsEtape(e, 2)
     .filter(c => QUESTIONS.some(q => q.champ === c) && nbBonnes(e, c) === 0).length), 0);
   const parties = Math.max(1, Math.ceil(n / PARTIE_ETAPE2_MAX));
-  return `Encore ${parties > 1 ? `environ ${parties} parties` : "une partie"} · rien n'est perdu`;
+  return `Encore ${parties > 1 ? `environ ${parties} parties` : "une partie"}`;
 }
 // Étape R125 (choix B) : le bilan d'une partie de l'étape 3 — combien de choses découvertes, et les fiches qui ont avancé
 function bilanApprofondir(x, info, gagnees) { return bilanEtape(x, info, gagnees, 4); }
@@ -976,7 +976,7 @@ function bilanEtape(x, info, gagnees, k) {
   const { av, lignes, n } = lignesGagnees(x, info, k);
   if (k !== 4) return `<b>+${n} chose${n > 1 ? "s" : ""} découverte${n > 1 ? "s" : ""}</b> <span class="fiche-aide">en ocre : ce que vous venez de trouver</span>${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}
     ${lignes.length ? `<div class="fiches-exp">${lignes.map(e => ligneFiche(e, av[e.nom_courant], k, x)).join("")}</div>` : ""}
-    <small>${avanceeEtape(x, k).faites} espèce${avanceeEtape(x, k).faites > 1 ? "s" : ""} sur ${x.liste.length} : c'est fait. Continuez, rien n'est perdu.</small>`;
+    <small>${avanceeEtape(x, k).faites} espèce${avanceeEtape(x, k).faites > 1 ? "s" : ""} sur ${x.liste.length} : c'est fait.</small>`;
   const tete = n ? `<b>+${n} chose${n > 1 ? "s" : ""} découverte${n > 1 ? "s" : ""}</b> <span class="fiche-aide">en ocre : ce que vous venez de trouver</span>`
                  : `<b>Approfondir</b> : rien de nouveau cette fois, les questions manquées reviendront.`;
   return `${tete}${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}
@@ -1462,12 +1462,12 @@ function finExpedition(d) {
       <div class="exp-fin-pas">${dessinGain(x)}</div>
       <div class="exp-fin-texte">${finie ? `${k < NB_ETAPES && apres >= NB_ETAPES ? `<b>Expédition terminée !</b> Vous connaissiez déjà leur vie.` : resteApprofondir ? `<b>Étape ${k} terminée !</b>` : `<b>Étape ${k} réussie !</b>`} ${gagnees && !(etapeGagnee && apres >= NB_ETAPES) ? `+${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}${resteApprofondir ? ` ${resteApprofondir === 1 ? "La chose qui vous a échappé reviendra" : `Les ${resteApprofondir} choses qui vous ont échappé reviendront`} dans Approfondir.` : ""}`   // étape R146
         : k === 4 ? bilanApprofondir(x, info, gagnees)
-        : info.rattrapage ? (nbTraitsARevoir(x) ? `<b>Encore ${nbTraitsARevoir(x)} chose${nbTraitsARevoir(x) > 1 ? "s" : ""} à revoir</b> · ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}. Rien n'est perdu : la prochaine fois, 2 réponses seulement.`
+        : info.rattrapage ? (nbTraitsARevoir(x) ? `<b>Encore ${nbTraitsARevoir(x)} chose${nbTraitsARevoir(x) > 1 ? "s" : ""} à revoir</b> · ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}. La prochaine fois, 2 réponses seulement.`
           : resteApprofondir ? `<b>Étape 1 terminée !</b> ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}. ${resteApprofondir === 1 ? "La chose qui vous a échappé reviendra" : `Les ${resteApprofondir} choses qui vous ont échappé reviendront`} dans Approfondir.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`   // étape R146
           : `<b>Tout est rattrapé !</b> ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`)   // étape R132
         : info.revue ? `<b>Révision</b> : vous connaissiez déjà ${(info.especesRevue || []).length > 1 ? "ces espèces" : "cette espèce"} ailleurs. ${av.faites} sur ${av.total} reconnue${av.faites > 1 ? "s" : ""} ici.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}.` : ""}${d.revuesPassees ? ` ${d.revuesPassees > 1 ? "Celles qui vous ont échappé comptent quand même ici ; leur photo reviendra" : "Celle qui vous a échappé compte quand même ici ; sa photo reviendra"} dans vos prochaines parties.` : ""}`   // étape R184
         : k === 2 ? bilanEtape(x, info, gagnees, 2)   // étape R126
-        : `<b>Étape ${k} · ${ETAPES[k].titre}</b> : ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total}. Continuez, rien n'est perdu.`}</div>
+        : `<b>Étape ${k} · ${ETAPES[k].titre}</b> : ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total}.`}</div>
       <button class="ac-bouton" id="exp-fin-ecran">Voir l'expédition</button></div>${blocFinLieu(x, gagnees, etapeGagnee && apres >= NB_ETAPES)}`;   // R153
   document.getElementById("exp-fin-ecran").onclick = () => ouvrirExpedition(x);
   const rejouer = document.getElementById("bouton-rejouer-defi");
@@ -2782,10 +2782,11 @@ function resumeFinTelephone(ctx) {
   const phrase = k === 4 ? texteResteApprofondir(x)
     : finie && k === 2 ? `Vous savez comment vivent ces ${av.total} espèces.`
     : finie && k === 1 ? `Vous avez fait connaissance avec les ${av.total} espèces.`
-    : `${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} : c'est fait. Rien n'est perdu.`;
+    : `${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} : c'est fait.`;
   const principal = document.getElementById("bouton-rejouer-defi");
   const c = x.chapitre && chapitreParNom(x.territoire, x.chapitre), dansUnLieu = c && estLieu(c);
-  construireResume({ fin: "fin-defi", carnet: "carnet-fin-defi", etiq: k === 4 ? x.titre : `${x.titre} · étape ${k}`, titre,
+  construireResume({ fin: "fin-defi", carnet: "carnet-fin-defi", etiq: x.titre, titre,   // étape R189 (note n° 9) : « Étape 2 » n'est plus écrit dans le bandeau
+   
     score: d.faites ? `<b>${d.bonnes}</b> bonne${d.bonnes > 1 ? "s" : ""} réponse${d.bonnes > 1 ? "s" : ""} sur ${d.faites}` : "",
     corps: `${rondsResume(x, k)}<div class="rft-phrase">${phrase}</div>${empreintesResume(x, apres >= NB_ETAPES && avantEmp < NB_ETAPES ? 0 : gagnees)}`,   // R153 : la fête a dit « +N »
     principal: "bouton-rejouer-defi",
@@ -2806,7 +2807,7 @@ function resumeSessionTelephone(s) {
     const faite = especeFaite(e, 1), manques = faite ? 0 : manquesEtape1(e).length, av = avanceeEtape(x, 1);
     const gagnees = Math.max(0, gainExp(x) - (s.expedition.avantGain || 0));
     etat = RENCONTRE_COMPLETE && etapeFinie(x, 2) ? "Expédition terminée !" : etapeFinie(x, 1) ? "Étape 1 réussie !" : faite ? "Fait !" : `${manques} chose${manques > 1 ? "s" : ""} à revoir`;   // RF1
-    corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">${manques > 1 ? "Elles reviendront" : "Elle reviendra"} à la fin de l'étape, rien n'est perdu.</div>` : "")
+    corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">${manques > 1 ? "Elles reviendront" : "Elle reviendra"} à la fin de l'étape.</div>` : "")
       + rondsResume(x, 1, RENCONTRE_COMPLETE ? e : null) + empreintesResume(x, gagnees);
     retour = { texte: "← Expédition", action: () => { session = null; ouvrirExpedition(x); } };
     var quiEnsuiteTel = RENCONTRE_COMPLETE && faite && !etapeFinie(x, 1) ? blocQuiEnsuite(x) : "";   // étape RF1

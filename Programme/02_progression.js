@@ -229,6 +229,66 @@ function celluleImage(espece, petite) {
                onerror="if (this.src.includes('/mini/')) this.src='${grande}'; else if (this.parentNode) this.outerHTML='photo à venir';">`;
 }
 
+// ==================================================================
+// Étape PA1 (12/11/2026, choix d'Aubin « tout comme conseillé ») : les 2e et 3e photos, MONTRÉES (pas questionnées).
+//   • photosDe(e) : la photo principale, puis photo_2 et photo_3 quand elles existent, avec leur sujet
+//     (liste fermée : femelle, mâle, jeune, larve, chenille, adulte, plumage d'hiver, plumage d'été, pelage d'hiver,
+//     forme de printemps, autre vue). La principale n'a pas de sujet.
+//   • « autre vue » ne s'écrit jamais à l'écran (simple 2e photo) ; les autres formes ont une étiquette.
+//   • Règles posées d'office : la première rencontre et les questions d'allure restent sur la photo principale.
+// ==================================================================
+const ETIQUETTES_FORME = {
+  "femelle": "La femelle", "mâle": "Le mâle", "jeune": "Le jeune", "larve": "La larve", "chenille": "La chenille",
+  "adulte": "L'adulte", "plumage d'hiver": "En plumage d'hiver", "plumage d'été": "En plumage d'été",
+  "pelage d'hiver": "En pelage d'hiver", "forme de printemps": "Forme de printemps"
+};
+function photosDe(e) {
+  if (!e || !estRenseigne(e.photo)) return [];
+  const liste = [{ src: e.photo, sujet: "" }];
+  for (const n of [2, 3]) {
+    const src = e["photo_" + n];
+    if (estRenseigne(src)) liste.push({ src, sujet: estRenseigne(e[`photo_${n}_sujet`]) ? String(e[`photo_${n}_sujet`]).trim() : "autre vue" });
+  }
+  return liste;
+}
+// L'étiquette d'une photo (« La femelle », « Le jeune »…) ; rien pour la principale ni pour « autre vue »
+function etiquetteForme(sujet) { return ETIQUETTES_FORME[sujet] || ""; }
+// Les photos d'une AUTRE FORME (pas « autre vue ») : ce qu'on montre dans la Rencontre (A2)
+function autresFormes(e) { return photosDe(e).slice(1).filter(p => etiquetteForme(p.sujet)); }
+// Une photo d'espèce donnée par son fichier (comme celluleImage, mais pour n'importe laquelle des 3)
+function imagePhoto(src, alt, petite) {
+  const s = petite ? src.replace("Images/", "Images/mini/") : src;
+  return `<img src="${s}" alt="${String(alt || "").replace(/"/g, "&quot;")}"${petite ? ' loading="lazy" decoding="async"' : ""} onerror="if (this.src.includes('/mini/')) this.src='${src}';">`;
+}
+// Voir une photo en grand (toucher la vignette) : un voile sombre, la photo, sa légende ; toucher n'importe où ferme.
+function agrandirPhoto(src, legende) {
+  let voile = document.getElementById("photo-agrandie");
+  if (!voile) {
+    voile = document.createElement("div");
+    voile.id = "photo-agrandie";
+    voile.setAttribute("role", "dialog");
+    voile.onclick = () => voile.classList.remove("ouvert");
+    document.addEventListener("keydown", ev => { if (ev.key === "Escape") voile.classList.remove("ouvert"); });
+    document.body.appendChild(voile);
+  }
+  voile.innerHTML = `<figure>${imagePhoto(src, legende, false)}${legende ? `<figcaption>${legende}</figcaption>` : ""}<span class="pa-fermer" aria-label="Fermer">×</span></figure>`;
+  voile.classList.add("ouvert");
+}
+// Le bloc de la Rencontre (A2) : une ou deux vignettes « La femelle », « Le jeune »… (rien si l'espèce n'a pas d'autre forme)
+function blocAutresFormes(e) {
+  const formes = autresFormes(e);
+  if (!formes.length) return "";
+  return `<div class="retour-formes">${formes.map(p => `<button type="button" class="retour-forme" onclick="event.stopPropagation(); agrandirPhoto('${p.src}', '${String(e.nom_courant + " · " + etiquetteForme(p.sujet)).replace(/'/g, "\\'")}')">`
+    + `<span class="rf-ph">${imagePhoto(p.src, etiquetteForme(p.sujet), true)}</span><span class="rf-lib">${etiquetteForme(p.sujet)}</span></button>`).join("")}</div>`;
+}
+// La photo du jour d'une espèce DÉJÀ reconnue (A3) : une de ses photos, la même toute la journée ; inconnue : la principale
+function photoDuJourDe(e) {
+  const ph = photosDe(e);
+  if (ph.length < 2 || !(typeof estReconnue === "function" && estReconnue(e))) return ph[0] || null;
+  const graine = typeof graineDuJour === "function" ? graineDuJour() : 0;
+  return ph[graine % ph.length];
+}
+
 // Mettre une minuscule au début : "Falaises…" → "falaises…" (pour l'insérer dans une phrase)
 function minuscule(texte) {
   return String(texte).charAt(0).toLowerCase() + String(texte).slice(1);
@@ -589,6 +649,10 @@ const VOISINES = {
   corps_forme: [["Fuselé", "Allongé"], ["Allongé", "Très allongé"], ["Fuselé", "Très allongé"], ["Fuselé", "Trapu"],
                 ["Trapu", "Bossu"], ["Trapu", "Haut et plat"], ["Bossu", "Haut et plat"], ["Trapu", "Allongé"]],
   ailes_repos: [["Repliées", "En toit"]],
+  // Étape R189 (notes n° 10 et 16 d'Aubin : moineau « en cavité », bergeronnette grise « Bâtiment » seulement) : les oiseaux qui
+  //   nichent dans un trou ou sur une corniche passent souvent de l'un à l'autre ; ces trois endroits ne sont plus opposés.
+  //   En attendant la colonne du nid à plusieurs valeurs (3 recherches, plus tard).
+  emplacement_nid: [["Bâtiment", "Cavité d'arbre"], ["Bâtiment", "Falaise ou paroi rocheuse"], ["Cavité d'arbre", "Falaise ou paroi rocheuse"]],
 };
 function sontVoisines(champ, a, b) { return (VOISINES[champ] || []).some(([x, y]) => (x === a && y === b) || (x === b && y === a)); }
 // VERIF_PHOTOS (fichier facultatif verif_photos.js) : { "spirlin.jpg": { robe: { voisines: ["Uni"] } } } — la photo tranche
