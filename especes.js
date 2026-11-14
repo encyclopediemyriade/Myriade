@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V86.xlsx, especes_bassin_aquitain_V31.xlsx, especes_bassin_parisien_V44.xlsx, especes_corse_V37.xlsx, especes_grand_est_V33.xlsx, especes_jura_V35.xlsx, especes_massif_armoricain_V45.xlsx, especes_massif_central_V34.xlsx, especes_mediterranee_V41.xlsx, especes_pyrenees_V39.xlsx, especes_vosges_V30.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V87.xlsx, especes_bassin_aquitain_V32.xlsx, especes_bassin_parisien_V45.xlsx, especes_corse_V38.xlsx, especes_grand_est_V34.xlsx, especes_jura_V36.xlsx, especes_massif_armoricain_V46.xlsx, especes_massif_central_V35.xlsx, especes_mediterranee_V42.xlsx, especes_pyrenees_V40.xlsx, especes_vosges_V31.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
