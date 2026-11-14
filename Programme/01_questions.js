@@ -644,7 +644,13 @@ function valeurPortrait(espece, colonne) {
 // La réponse est-elle soufflée par le nom ? ("Jaune" pour le chocard à bec jaune, "Noir" pour le
 // pic noir, "Croisé" pour le bec-croisé…). Même idée que seDevineDuNom (partie 3), mais sur les
 // 4 premières lettres, pour rapprocher "vert" et "verte", "noir" et "noire".
+const memoSouffle = new Map();                     // étape R193 (latence) : même nom, même valeur → même réponse
 function souffleParLeNom(espece, valeur) {
+  const cle = espece.nom_courant + "\u0001" + valeur;
+  if (!memoSouffle.has(cle)) memoSouffle.set(cle, souffleParLeNomCalcul(espece, valeur));
+  return memoSouffle.get(cle);
+}
+function souffleParLeNomCalcul(espece, valeur) {
   const debuts = texte => String(texte).toLowerCase().split(/[^a-zàâäçéèêëîïôöùûüœ]+/)
                             .filter(mot => mot.length >= 4).map(mot => mot.slice(0, 4));
   const banals = MOTS_BANALS.map(mot => mot.slice(0, 4));
@@ -1181,13 +1187,18 @@ function questionPortrait({ champ, colonne, onglets, libelle, question, explicat
   const col = colonne || champ;
   const lecture = lire || (e => e[col]);
   const brute = valeur || (e => valeurPortrait(e, col));
+  const memoValeur = new Map();                    // étape R193
   return {
     champ, niveau: niveau || 1, libelle, format: "picto", colonnePicto: col, sansImage, affichageFiche, avecPhoto,
     onglets, lecture, proches,           // gardés pour le défi « Qui est-ce ? » (étape 70, voir vraiAussiPour)
     valeur: e => {
-      if (onglets && !onglets.includes(e.onglet)) return "NA";
-      const v = brute(e);
-      return estRenseigne(v) && souffleParLeNom(e, v) ? "NA" : v;      // réponse soufflée par le nom : pas de question
+      // Étape R193 (n° 11.8, latence) : la réponse d'une espèce ne change pas pendant une partie : calculée une fois, gardée
+      if (memoValeur.has(e)) return memoValeur.get(e);
+      let v;
+      if (onglets && !onglets.includes(e.onglet)) v = "NA";
+      else { v = brute(e); if (estRenseigne(v) && souffleParLeNom(e, v)) v = "NA"; }   // réponse soufflée par le nom : pas de question
+      memoValeur.set(e, v);
+      return v;
     },
     question,
     // "pieges" : une question peut fournir elle-même ses mauvaises réponses (étape 69)

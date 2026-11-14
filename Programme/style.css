@@ -4766,6 +4766,11 @@ button.pastille-carnet:hover { background: #fff; }
 .reperes .rp-pastille { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,.28); vertical-align: -1px; margin-left: 4px; }
 .reperes .rp-confusion { margin: 8px 0 0; padding: 6px 8px; border-radius: 6px; background: rgba(0,0,0,.04); font-size: .88rem; }
 .reperes .rp-confusion small { display: block; font-size: .72rem; color: #6b6b6b; }
+/* Étape R195 : les onglets de forme (« Mâle | Femelle », « Adulte | Jeune ») ; la carte suit la photo affichée */
+.reperes .rp-formes { display: flex; gap: 6px; margin: 2px 0 6px; flex-wrap: wrap; }
+.reperes .rp-forme { font: inherit; font-size: .82rem; padding: 3px 12px; border-radius: 14px; border: 1px solid rgba(0,0,0,.18); background: transparent; color: inherit; cursor: pointer; min-height: 30px; }
+.reperes .rp-forme.actif { background: #a8741f; border-color: #a8741f; color: #fff; }
+.reperes .rp-liste.cache { display: none; }
 .pe main > .reperes { margin: 0 0 12px; padding: 10px 12px; border: 1px solid rgba(0,0,0,.08); border-radius: 10px; background: rgba(255,255,255,.6); }
 
 /* ===== Étape R191 : Coup d'œil (« une photo, 4 noms »), maquette A choisie par Aubin ===== */
@@ -4914,4 +4919,40 @@ button.pastille-carnet:hover { background: #fff; }
   #onglet-carte::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z'/%3E%3Cpath d='M9 4v14M15 6v14'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z'/%3E%3Cpath d='M9 4v14M15 6v14'/%3E%3C/svg%3E"); }
   body:has(#carte-rencontre:not(.cache)) nav.barre #onglet-carte, body:has(#intermede-exp) nav.barre #onglet-carte,
   body:has(#vue-lieu:not(.cache) .finale-barre) nav.barre #onglet-carte, body:has(#forme-ecran) nav.barre #onglet-carte { display: none; }
+}
+
+/* ==================================================================
+   Étape R194 (14/11/2026, n° 14, choix d'Aubin : C « un tiroir qui monte du bas »)
+   Sur téléphone, la fiche « Ce que vous savez d'elle » n'est plus sous la question : c'est un tiroir fermé, que la bande
+   du bas ouvre. Ouvert, il monte jusque sous le rappel de la question (en haut, sur le fond papier). Ordinateur inchangé.
+   ================================================================== */
+.tiroir-rappel { display: none; }
+@media (max-width: 760px) {
+  #carte-rencontre.avec-postit .postit-rencontre {
+    position: fixed; left: 0; right: 0; bottom: 0; top: 104px; z-index: 41; margin: 0;
+    display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    padding: 0 14px calc(20px + env(safe-area-inset-bottom, 0px)); border: 0; border-top: 1px solid var(--trait);
+    border-radius: 14px 14px 0 0; background: var(--carte); box-shadow: 0 -8px 24px rgba(31, 58, 46, .18);
+    transform: translateY(105%); visibility: hidden;
+    transition: transform .28s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .28s; }
+  #carte-rencontre.avec-postit .postit-rencontre::before { content: ""; display: block; flex: none; width: 38px; height: 5px; border-radius: 3px;
+    background: var(--trait); margin: 9px auto 10px; }   /* la poignée */
+  #carte-rencontre.avec-postit.tiroir-ouvert .postit-rencontre { transform: none; visibility: visible; transition: transform .28s cubic-bezier(.2, .8, .2, 1), visibility 0s; }
+  #carte-rencontre.avec-postit .tiroir-rappel { display: none; }
+  #carte-rencontre.avec-postit.tiroir-ouvert .tiroir-rappel {
+    display: flex; flex-direction: column; gap: 3px; position: fixed; left: 0; right: 0; top: 0; height: 104px; z-index: 40;
+    padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px; border: 0; background: var(--papier);
+    font: inherit; color: var(--texte); text-align: left; cursor: pointer; overflow: hidden; }
+  .tiroir-rappel small { font-size: 12px; color: var(--texte-doux); }
+  .tiroir-rappel b { font-family: Literata, Georgia, serif; font-weight: 600; font-size: 16px; line-height: 1.25;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tiroir-rappel .tr-fermer { font-size: 12.5px; color: var(--ocre-texte); font-weight: 600; margin-top: auto; }
+  /* la bande se retire quand le tiroir est ouvert (et, comme avant, après la réponse : « Continuer » prend le bas de l'écran) */
+  .carte-rencontre.tiroir-ouvert .vers-fiche { display: none !important; }
+  html.tiroir-page, html.tiroir-page body { overflow: hidden; }
+  /* « Quitter » sous la question : plus de fiche entre les deux */
+  .carte-rencontre.avec-postit .pied-rencontre { border-top: 0; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  #carte-rencontre.avec-postit .postit-rencontre, #carte-rencontre.avec-postit.tiroir-ouvert .postit-rencontre { transition: none; }
 }

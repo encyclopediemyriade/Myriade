@@ -74,6 +74,7 @@ function surTelephone() { return !!(window.matchMedia && window.matchMedia("(max
 function visibleALEcran(el) { return el && el.getClientRects().length > 0 && !el.closest(".cache") && !el.disabled; }
 function retourTelephone() {
   if (typeof feteOuverte !== "undefined" && feteOuverte && typeof fermerFete === "function") { fermerFete(); return true; }
+  if (typeof tiroirOuvert === "function" && tiroirOuvert()) { fermerTiroir(); return true; }   // étape R194 : d'abord le tiroir de la fiche
   const fen = document.getElementById("fenetre");
   if (fen && fen.classList.contains("visible") && typeof fermerFenetre === "function") { fermerFenetre(); return true; }
   // Étape R188b (11/11, choix d'Aubin) : pendant une partie d'expédition, le retour du téléphone ramène d'abord à l'écran de

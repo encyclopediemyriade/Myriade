@@ -347,11 +347,13 @@ function majVersFiche(trouvees, prevues) {
   if (!b) return;
   const points = prevues <= 10 ? `<span class="vf-points">${"<i class=\"t\"></i>".repeat(trouvees)}${"<i></i>".repeat(Math.max(0, prevues - trouvees))}</span>`
                                : `<span class="vf-nombre">${trouvees} / ${prevues}</span>`;
+  // Étape R194 (n° 14, choix d'Aubin : C « un tiroir qui monte du bas ») : la flèche monte, la fiche s'ouvre en tiroir
   b.innerHTML = `<span class="vf-ic">${PICTO_CARNET}</span><span class="vf-txt"><b>Ce que vous savez d'elle</b>${points}</span>`
-    + `<span class="vf-voir">Voir<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>`;
-  b.setAttribute("aria-label", `Ce que vous savez d'elle : ${trouvees} sur ${prevues}. Voir la fiche`);
+    + `<span class="vf-voir">Voir<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>`;
+  b.setAttribute("aria-label", `Ce que vous savez d'elle : ${trouvees} sur ${prevues}. Ouvrir la fiche`);
   if (!b.onclick) {
-    b.onclick = () => document.getElementById("postit-rencontre").scrollIntoView({ behavior: "smooth", block: "start" });
+    b.onclick = () => { if (tiroirPossible()) ouvrirTiroir(); else document.getElementById("postit-rencontre").scrollIntoView({ behavior: "smooth", block: "start" }); };
+    brancherGlisserTiroir(b);
     // la bande se retire quand la fiche est à l'écran
     if (typeof IntersectionObserver === "function") {
       new IntersectionObserver(([en]) => document.getElementById("carte-rencontre").classList.toggle("fiche-vue", en.isIntersecting),
@@ -371,6 +373,7 @@ function placerFicheEcran2() {
   fiche.style.marginTop = "";
 }
 function revenirQuestion() {
+  if (tiroirOuvert()) { fermerTiroir(); return; }   // étape R194
   const c = document.getElementById("carte-rencontre");
   window.scrollTo({ top: Math.max(0, c.getBoundingClientRect().top + window.scrollY - 8), behavior: "smooth" });
 }
@@ -487,7 +490,7 @@ function dessinerPostit() {
     + `<p class="sci-postit${nomCache ? " floute" : ""}">${connu ? espece.nom_scientifique || "" : ""}</p><ul>${lignes.join("")}</ul>`
     + `<div class="legende-postit">${trouvees} / ${prevues} trouvée${trouvees > 1 ? "s" : ""}${aRevoirIci ? ` · ${aRevoirIci} à revoir` : ""}${reste ? ` · encore ${reste} à découvrir` : ""}`
     + `<div class="points-postit">${points}</div></div>`
-    + `<button type="button" class="retour-question" onclick="revenirQuestion()">↑ Remonter en haut</button></div>`;
+    + `<button type="button" class="retour-question" onclick="revenirQuestion()">↓ Revenir à la question</button></div>`;
   for (const l of session.postit) l.ecrit = false;              // l'animation d'écriture ne joue qu'une fois
 }
 
@@ -873,4 +876,69 @@ function finRencontreOrdinateur(s) {
   if (trois) corps.appendChild(trois);
   if (obj) corps.appendChild(obj);
   carnet.appendChild(pli);
+}
+
+// =====================================================================================================
+// Étape R194 (14/11/2026, n° 14, choix d'Aubin dans l'artefact « Fiche pendant les questions » : C, « un tiroir qui monte
+//   du bas »). Critère : pendant une question, l'écran ne montre que la question ; la fiche s'ouvre d'un geste, en entier,
+//   et se referme d'un geste sans perdre sa place. Sur téléphone (760 px et moins), la fiche n'est plus sous la question :
+//   la bande du bas l'ouvre (toucher, ou glisser vers le haut) ; elle monte presque jusqu'en haut, la question reste rappelée
+//   au-dessus ; on la referme en touchant ce rappel, en la faisant glisser vers le bas, par « Revenir à la question » ou par
+//   le retour du téléphone. Sur ordinateur, rien ne change (la fiche reste dans la colonne de droite).
+// =====================================================================================================
+function tiroirPossible() {
+  const c = document.getElementById("carte-rencontre");
+  return !!(c && c.classList.contains("avec-postit") && typeof surTelephone === "function" && surTelephone());
+}
+function tiroirOuvert() { const c = document.getElementById("carte-rencontre"); return !!(c && c.classList.contains("tiroir-ouvert")); }
+function rappelTiroir() {
+  let r = document.getElementById("tiroir-rappel");
+  if (!r) {
+    r = document.createElement("button"); r.type = "button"; r.id = "tiroir-rappel"; r.className = "tiroir-rappel";
+    r.onclick = fermerTiroir;
+    document.getElementById("carte-rencontre").append(r);
+  }
+  // le rappel de la question : le compteur, puis le titre et la phrase de la question (ce qui est écrit à l'écran)
+  const txt = id => { const el = document.getElementById(id); return el && !el.classList.contains("cache") ? el.textContent.replace(/\s+/g, " ").trim() : ""; };
+  const compteur = txt("compteur-rencontre"), q = [txt("nom"), txt("question")].filter(Boolean).join(" · ");
+  r.innerHTML = `${compteur ? `<small>${echapper(compteur)}</small>` : ""}<b>${echapper(q || "La question")}</b><span class="tr-fermer">Revenir à la question ↓</span>`;
+  return r;
+}
+function ouvrirTiroir() {
+  const c = document.getElementById("carte-rencontre"), f = document.getElementById("postit-rencontre");
+  if (!tiroirPossible() || !f) return;
+  rappelTiroir();
+  f.style.transform = "";
+  f.scrollTop = 0;
+  c.classList.add("tiroir-ouvert");
+  document.documentElement.classList.add("tiroir-page");          // la page derrière ne défile plus
+}
+function fermerTiroir() {
+  const c = document.getElementById("carte-rencontre"), f = document.getElementById("postit-rencontre");
+  if (!c) return;
+  c.classList.remove("tiroir-ouvert");
+  if (f) f.style.transform = "";
+  document.documentElement.classList.remove("tiroir-page");
+}
+// Glisser du doigt : vers le haut sur la bande pour ouvrir ; vers le bas sur le tiroir (quand il est en haut de sa liste) pour fermer
+function brancherGlisserTiroir(bande) {
+  let y0 = null;
+  bande.addEventListener("touchstart", ev => { y0 = ev.touches[0].clientY; }, { passive: true });
+  bande.addEventListener("touchmove", ev => { if (y0 !== null && y0 - ev.touches[0].clientY > 24) { y0 = null; ouvrirTiroir(); } }, { passive: true });
+  const f = document.getElementById("postit-rencontre");
+  if (!f || f.dataset.glisser) return;
+  f.dataset.glisser = "oui";
+  let depart = null, dy = 0;
+  f.addEventListener("touchstart", ev => { depart = (tiroirOuvert() && f.scrollTop <= 0) ? ev.touches[0].clientY : null; dy = 0; }, { passive: true });
+  f.addEventListener("touchmove", ev => {
+    if (depart === null) return;
+    dy = ev.touches[0].clientY - depart;
+    if (dy > 0) { f.style.transition = "none"; f.style.transform = `translateY(${dy}px)`; }
+  }, { passive: true });
+  f.addEventListener("touchend", () => {
+    if (depart === null) return;
+    f.style.transition = "";
+    if (dy > 90) fermerTiroir(); else f.style.transform = "";
+    depart = null; dy = 0;
+  });
 }

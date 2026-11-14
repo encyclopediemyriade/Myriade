@@ -381,6 +381,7 @@ function brancherGaleriePhotos(zone, e) {
     etiquette.textContent = lib;
     etiquette.classList.toggle("cache", !lib);
     zone.querySelectorAll(".pe-vignette").forEach(v => v.classList.toggle("actif", v === b));
+    if (typeof suivrePhotoReperes === "function") suivrePhotoReperes(zone, e, ph[courante].sujet);   // étape R195 : la carte suit la photo
   });
 }
 

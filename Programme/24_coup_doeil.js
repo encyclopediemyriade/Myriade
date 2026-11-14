@@ -155,7 +155,7 @@ function repondreCoupDoeil(choisie, bouton) {
   else retour.innerHTML = `<div class="cdo-erreur"><b>C'est ${echapper(nomAvecArticle(t.espece))}.</b>
       <div class="cdo-duo"><figure>${celluleImage(t.espece, true)}<figcaption>${echapper(t.espece.nom_courant)}</figcaption></figure>`
     + `<figure>${celluleImage(choisie, true)}<figcaption>${echapper(choisie.nom_courant)}<small>votre choix</small></figcaption></figure></div>`
-    + `${repereEntre(t.espece, choisie)}</div>${suivant}`;
+    + `${repereEntre(t.espece, choisie, t.photo && t.photo.sujet)}</div>${suivant}`;
   // La mise à jour des pastilles du haut
   zone.querySelector(".cdo-pts").outerHTML = enteteCoupDoeil().match(/<span class="cdo-pts">.*<\/span>/)[0];
   document.getElementById("cdo-suivant").onclick = () => { if (fin) finCoupDoeil(); else { coup.i++; afficherTourCoupDoeil(); } };
@@ -164,11 +164,13 @@ function repondreCoupDoeil(choisie, bouton) {
 }
 // Le repère qui sépare deux espèces : celui du groupe « À ne pas confondre » s'ils en font partie tous les deux,
 // sinon le premier repère de terrain de la bonne espèce (quand il existe)
-function repereEntre(bonne, choisie) {
+// Étape R195 : le repère de terrain vaut pour la forme de la photo montrée (femelle, jeune…)
+function repereEntre(bonne, choisie, sujet) {
   const g = typeof CONFUSIONS !== "undefined" ? CONFUSIONS.find(gr => gr.especes.includes(bonne.nom_courant) && gr.especes.includes(choisie.nom_courant) && gr.critere) : null;
   if (g) return `<p class="cdo-repere"><small>Le repère</small>${echapper(majuscule(g.critere))}</p>`;
   const r = typeof reperesDe === "function" ? reperesDe(bonne) : null;
-  if (r && r.reperes.length) return `<p class="cdo-repere"><small>Pour la reconnaître</small>${echapper(r.reperes[0].texte)}</p>`;
+  const liste = r ? (typeof reperesPourForme === "function" ? reperesPourForme(r, formePourPhoto(r, sujet || "")) : r.reperes) : [];
+  if (liste.length) return `<p class="cdo-repere"><small>Pour la reconnaître</small>${echapper(liste[0].texte)}</p>`;
   return "";
 }
 function finCoupDoeil() {

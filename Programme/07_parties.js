@@ -8,6 +8,7 @@
 //     c'est modeChoisi qui dit laquelle des deux on y affiche (étape 45).
 // ==================================================================
 function montrer(vue) {
+  if (typeof fermerTiroir === "function") fermerTiroir();   // étape R194 : la fiche en tiroir ne reste pas ouverte sur un autre écran
   arreterCri();                                          // on coupe un cri en cours si l'on change de page
   document.querySelectorAll("audio").forEach(a => a.pause());   // étape 212 : aussi les lecteurs des fiches
   if (defi) abandonnerDefi();                            // quitter la page pendant un défi l'annule, sans rien enregistrer

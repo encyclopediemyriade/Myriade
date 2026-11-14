@@ -761,7 +761,14 @@ const TRAITS_PORTRAIT = 5;                     // traits au plus par espèce
 function traitsPortrait(espece) {
   const niveau = accesTout() ? NB_NIVEAUX : niveauOuvert(espece);   // étape 274 : dans « Plus de jeux », tous les traits
   return questionsPossibles(espece).filter(q => q.format === "picto" && !q.sansImage && niveauMedaille(espece, q) <= niveau
-    && autresValeurs(q, valeurDe(espece, q), espece).length >= 2);
+    && assezDePiegesPortrait(espece, q));
+}
+// Étape R193 (n° 11.8, latence) : « au moins 2 mauvaises réponses » ne change pas pendant la partie : calculé une fois par trait
+const memoPiegesPortrait = new Map();
+function assezDePiegesPortrait(espece, q) {
+  const cle = espece.nom_courant + "|" + q.champ;
+  if (!memoPiegesPortrait.has(cle)) memoPiegesPortrait.set(cle, autresValeurs(q, valeurDe(espece, q), espece).length >= 2);
+  return memoPiegesPortrait.get(cle);
 }
 function ciblesPortrait(especes) {
   const tout = accesTout();                                   // étape 274 : « Plus de jeux » prend toutes les espèces

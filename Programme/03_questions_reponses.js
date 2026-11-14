@@ -181,6 +181,7 @@ function texteCompteur(champ) {
 
 // Affiche la question tirée au sort (c'était la suite de nouvelleRencontre jusqu'à l'étape 50)
 function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
+  if (typeof fermerTiroir === "function") fermerTiroir();  // étape R194 : la fiche en tiroir se referme à chaque question
   majBoutonPrecedente();                                   // étape 248 : visible dès qu'une question de la partie a été répondue
   document.getElementById("je-ne-sais-pas").classList.add("cache");
   // Étape R155 : le bouton reprend son texte habituel (il dit « Je ne la connais pas encore » sur la 1re photo d'une espèce)
@@ -373,7 +374,10 @@ const GRANDS_MILIEUX = { "Mer et océan": "mer", "Estuaires et lagunes": "mer", 
   "Rivières et torrents": "douce", "Mares et étangs": "douce", "Lacs": "douce", "Marais": "douce" };
 function grandMilieu(e) { return GRANDS_MILIEUX[e.milieu_principal] || "terre"; }
 function poserIdentification(espece) {
-  enTete(espece, true, false, "Quelle est cette espèce ?");
+  // Étape R192 (n° 12.6, note d'Aubin du 13/11) : dans une Rencontre, c'est une première rencontre, pas une interrogation :
+  //   « À votre avis, quelle est cette espèce ? » ; ailleurs (petits jeux, défis), la question reste courte.
+  const enRencontre = !defi && session && session.focus;
+  enTete(espece, true, false, enRencontre ? "À votre avis, quelle est cette espèce ?" : "Quelle est cette espèce ?");
   apparitionSauvage();                                          // 1re question d'une Rencontre : l'effet (étape 89)
   document.getElementById("question").textContent = "";       // le titre pose déjà la question : pas de seconde phrase
   // 3 pièges de la même classe (oiseau avec oiseaux, reptile avec reptiles…)

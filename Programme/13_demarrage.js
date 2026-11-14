@@ -42,6 +42,17 @@ document.getElementById("retour-bienvenue").onclick = () => { etapeBienvenue = E
 console.log("Commandes de test :  toutDebloquer()   toutDebloquer(0.5)   restaurerPartie()   changerProfil()\n"
           + "                     decouvrirEspeces()   decouvrirEspeces(10)   decouvrirEspece(\"Chamois\")\n"
           + "                     trouverCaracteristiques()   trouverCaracteristiques(0.5)");
+// Étape R192 (n° 11.7, note d'Aubin du 13/11 : « la page d'accueil ne se met pas à jour ») : sur téléphone, l'application
+//   reste ouverte en arrière-plan ; en y revenant (le lendemain, après une autre appli…), l'accueil montrait encore la date,
+//   l'espèce du jour, les défis et le lieu d'avant. On le redessine dès que le jeu revient à l'écran.
+function rafraichirAccueilVisible() {
+  if (document.hidden) return;
+  const maison = document.getElementById("vue-maison"), terr = document.getElementById("vue-accueil");
+  if (maison && !maison.classList.contains("cache") && typeof dessinerMaison === "function") dessinerMaison();
+  else if (terr && !terr.classList.contains("cache") && typeof afficherAccueil === "function") afficherAccueil();
+}
+document.addEventListener("visibilitychange", rafraichirAccueilVisible);
+window.addEventListener("pageshow", ev => { if (ev.persisted) rafraichirAccueilVisible(); });
 document.addEventListener("keydown", auClavier);    // le clavier pendant la Rencontre (partie 7 bis)
 window.addEventListener("scroll", fermerFenetre);   // la fenêtre se ferme si on fait défiler la page
 charger();                                         // ← on ressort la partie sauvegardée
@@ -51,3 +62,23 @@ verifierBadges(false);                             // étape 106 : les badges d�
 afficherStats();
 // Première visite (pas encore de profil) : ses trois écrans ; sinon, l'Accueil (étape 52)
 if (profil) montrer(vueAccueil()); else montrerBienvenue();   // étape 255 : on arrive sur la page carte
+// Étape R193 (n° 11.8, note d'Aubin du 14/11 : « un léger temps de latence pour tous les écrans ») : la première fois qu'un écran
+//   a besoin de toutes les espèces (Carte, Jeux, une expédition, la première Rencontre), le jeu calculait d'un coup, pour des
+//   centaines d'espèces, les questions possibles et les traits d'allure (jusqu'à 1,5 s sur téléphone). Ces calculs sont
+//   maintenant faits à l'avance, par petits paquets, pendant que le joueur lit l'accueil : les écrans s'ouvrent ensuite sans attente.
+function prechaufferCalculs() {
+  const liste = ESPECES.slice();
+  let i = 0;
+  const attendre = cb => (window.requestIdleCallback ? requestIdleCallback(cb, { timeout: 400 }) : setTimeout(() => cb(null), 30));
+  const paquet = echeance => {
+    const fin = performance.now() + 12;            // au plus ~12 ms d'affilée : le jeu reste fluide pendant ce temps
+    while (i < liste.length && (echeance ? echeance.timeRemaining() > 2 : performance.now() < fin)) {
+      const e = liste[i++];
+      try { listeQuestions(e); if (typeof casesCarnet === "function") casesCarnet(e); if (typeof traitsAllure === "function") traitsAllure(e); if (typeof traitsPortrait === "function") traitsPortrait(e); } catch (err) { /* une espèce en défaut ne bloque rien */ }
+      if (!echeance && performance.now() >= fin) break;
+    }
+    if (i < liste.length) attendre(paquet);
+  };
+  setTimeout(() => attendre(paquet), 600);         // juste après l'affichage de l'accueil
+}
+prechaufferCalculs();

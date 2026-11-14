@@ -9,12 +9,14 @@
 //   1. Le programme et les données (« ?v=… ») : la copie gardée d'abord, le réseau sinon.
 //      Le numéro de version change à chaque livraison, donc une nouvelle version est toujours rechargée.
 //   2. La page jeu.html : le réseau d'abord (pour voir tout de suite une nouvelle version), la copie sinon.
-//   3. Les photos, cris, silhouettes, pictos, empreintes : le réseau d'abord ; une copie est gardée
-//      au passage, servie si le réseau manque ou tarde trop.
+//   3. Les photos, cris, silhouettes, pictos, empreintes : la copie gardée d'abord, tout de suite ; le réseau la remet
+//      à jour en arrière-plan (au cas où le fichier aurait changé). Sans copie : le réseau, et on la garde au passage.
+//      (Étape R193, n° 11.8 : avant, chaque photo attendait le réseau même déjà gardée, d'où les photos de
+//       l'encyclopédie qui apparaissaient une par une.)
 //
 // NE PAS MODIFIER À LA MAIN la ligne VERSION ni la liste ESSENTIEL : Outils\changer_version.py les écrit.
 
-const VERSION = "1.7.1";
+const VERSION = "1.8.0";
 const CACHE_JEU = "myriade-jeu-" + VERSION;   // le programme de CETTE version (effacé à la version suivante)
 const CACHE_MEDIAS = "myriade-medias";        // photos et sons déjà vus (gardés d'une version à l'autre)
 const ATTENTE_RESEAU = 4000;                  // en millisecondes : au-delà, on montre la copie gardée
@@ -23,45 +25,47 @@ const ATTENTE_RESEAU = 4000;                  // en millisecondes : au-delà, on
 // DEBUT_ESSENTIEL
 const ESSENTIEL = [
   "jeu.html",
-  "Programme/style.css?v=1.7.1",
-  "version.js?v=1.7.1",
-  "especes.js?v=1.7.1",
-  "verif_photos.js?v=1.7.1",
-  "reperes.js?v=1.7.1",
-  "cadrage.js?v=1.7.1",
-  "territoires.js?v=1.7.1",
-  "credits.js?v=1.7.1",
-  "credits_silhouettes.js?v=1.7.1",
-  "identite.js?v=1.7.1",
-  "lieux_identite.js?v=1.7.1",
-  "lieux_carte.js?v=1.7.1",
-  "expeditions.js?v=1.7.1",
-  "familles.js?v=1.7.1",
-  "faits_questions.js?v=1.7.1",
-  "Programme/01_questions.js?v=1.7.1",
-  "Programme/02_progression.js?v=1.7.1",
-  "Programme/03_questions_reponses.js?v=1.7.1",
-  "Programme/04_fetes.js?v=1.7.1",
-  "Programme/05_accueil.js?v=1.7.1",
-  "Programme/06_encyclopedie.js?v=1.7.1",
-  "Programme/07_parties.js?v=1.7.1",
-  "Programme/08_petits_jeux.js?v=1.7.1",
-  "Programme/09_rencontre.js?v=1.7.1",
-  "Programme/10_premiere_visite.js?v=1.7.1",
-  "Programme/11_commandes_test.js?v=1.7.1",
-  "Programme/12_profil_badges.js?v=1.7.1",
-  "Programme/15_territoire.js?v=1.7.1",
-  "Programme/16_arcade.js?v=1.7.1",
-  "Programme/17_expeditions.js?v=1.7.1",
-  "Programme/20_formes.js?v=1.7.1",
-  "Programme/21_insolites.js?v=1.7.1",
-  "Programme/19_application.js?v=1.7.1",
-  "Programme/13_demarrage.js?v=1.7.1",
-  "Programme/14_clavier_menus.js?v=1.7.1",
-  "Programme/18_cadrage.js?v=1.7.1",
-  "Programme/23_reperes.js?v=1.7.1",
-  "Programme/24_coup_doeil.js?v=1.7.1",
-  "Programme/22_typographie.js?v=1.7.1",
+  "Programme/style.css?v=1.8.0",
+  "version.js?v=1.8.0",
+  "especes.js?v=1.8.0",
+  "verif_photos.js?v=1.8.0",
+  "reperes.js?v=1.8.0",
+  "cadrage.js?v=1.8.0",
+  "territoires.js?v=1.8.0",
+  "credits.js?v=1.8.0",
+  "credits_silhouettes.js?v=1.8.0",
+  "identite.js?v=1.8.0",
+  "lieux_identite.js?v=1.8.0",
+  "lieux_carte.js?v=1.8.0",
+  "expeditions.js?v=1.8.0",
+  "familles.js?v=1.8.0",
+  "faits_questions.js?v=1.8.0",
+  "Programme/01_questions.js?v=1.8.0",
+  "Programme/02_progression.js?v=1.8.0",
+  "Programme/03_questions_reponses.js?v=1.8.0",
+  "Programme/04_fetes.js?v=1.8.0",
+  "Programme/05_accueil.js?v=1.8.0",
+  "Programme/06_encyclopedie.js?v=1.8.0",
+  "Programme/07_parties.js?v=1.8.0",
+  "Programme/08_petits_jeux.js?v=1.8.0",
+  "Programme/09_rencontre.js?v=1.8.0",
+  "Programme/10_premiere_visite.js?v=1.8.0",
+  "Programme/11_commandes_test.js?v=1.8.0",
+  "Programme/12_profil_badges.js?v=1.8.0",
+  "Programme/15_territoire.js?v=1.8.0",
+  "Programme/16_arcade.js?v=1.8.0",
+  "Programme/17_expeditions.js?v=1.8.0",
+  "Programme/20_formes.js?v=1.8.0",
+  "Programme/21_insolites.js?v=1.8.0",
+  "relief_carte.js?v=1.8.0",
+  "Programme/25_carte.js?v=1.8.0",
+  "Programme/19_application.js?v=1.8.0",
+  "Programme/13_demarrage.js?v=1.8.0",
+  "Programme/14_clavier_menus.js?v=1.8.0",
+  "Programme/18_cadrage.js?v=1.8.0",
+  "Programme/23_reperes.js?v=1.8.0",
+  "Programme/24_coup_doeil.js?v=1.8.0",
+  "Programme/22_typographie.js?v=1.8.0",
   "manifest.webmanifest",
   "Images/myriade_icone.svg",
   "Images/myriade_logo.svg",
@@ -113,6 +117,18 @@ async function reseauDabord(requete, nomCache) {
   return Promise.race([reseau.catch(() => copie), delai]);
 }
 
+// Étape R193 : un média gardé est servi tout de suite ; le réseau rafraîchit la copie en arrière-plan.
+async function copieEtMiseAJour(requete, evenement) {
+  const cache = await caches.open(CACHE_MEDIAS);
+  const copie = await caches.match(requete, { ignoreSearch: true });
+  const reseau = fetch(requete).then(reponse => {
+    if (reponse && reponse.status === 200 && reponse.type === "basic") cache.put(requete, reponse.clone()).catch(() => {});
+    return reponse;
+  });
+  if (copie) { evenement.waitUntil(reseau.catch(() => {})); return copie; }
+  return reseau;
+}
+
 // La copie gardée d'abord ; le réseau sinon (et on la garde pour la prochaine fois).
 async function copieDabord(requete) {
   const cache = await caches.open(CACHE_JEU);
@@ -143,6 +159,6 @@ self.addEventListener("fetch", evenement => {
     );
     return;
   }
-  if (estMedia(url)) { evenement.respondWith(reseauDabord(requete, CACHE_MEDIAS)); return; }
+  if (estMedia(url)) { evenement.respondWith(copieEtMiseAJour(requete, evenement)); return; }   // étape R193
   evenement.respondWith(copieDabord(requete));
 });

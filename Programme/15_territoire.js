@@ -789,12 +789,9 @@ function dessinerMaison() {
       ${jourFait ? "" : `<div class="ac-jour" id="mai-jour"></div>`}
       <section class="mai-defis" id="mai-defis"></section>
       ${jourFait ? `<div class="ac-jour" id="mai-jour"></div>` : ""}
-      <div class="mai-liens">
-        <button type="button" class="mai-lien" id="mai-carte">${iconeNiveau("territoire")}<span>Tous les territoires<b>La carte des territoires</b></span><span aria-hidden="true">→</span></button>
-      </div></div>`;
+      </div>`;   // étape R192 (n° 11.7, choix d'Aubin) : plus de lien « Tous les territoires » ici — la carte a son onglet
   zone.querySelectorAll(".mai-rond").forEach(b => b.onclick = () => { const e = especeParNom(b.dataset.nom); if (e) ouvrirPageEspece(e); });
   document.getElementById("mai-reprendre").onclick = () => { montrer("accueil"); if (typeof dessinerCouverture === "function") dessinerCouverture(); window.scrollTo(0, 0); };   // étape M23 : vers la page du territoire
-  document.getElementById("mai-carte").onclick = () => { if (typeof ouvrirAtlas === "function") ouvrirAtlas(); else { montrer("carte"); window.scrollTo(0, 0); } }   // étape K2 : l'espace Carte;
   dessinerDefisMaison(t);
   if (typeof dessinerEspeceDuJour === "function") dessinerEspeceDuJour("mai-jour");
   if (avantProchainTerritoire() === 0) setTimeout(verifierOuverture, 300);   // étape R152 : palier atteint (par ex. règle du premier voyage) → le territoire s'ouvre, avec sa fête
