@@ -26,7 +26,7 @@ REGLES_COURTES.coupdoeil = "Une photo, quatre noms : qui est-ce ?";
 // Étape R191b (demande d'Aubin, 13/11 : « un bouton pour débloquer toutes les espèces sur la page des autres jeux ») :
 //   l'interrupteur « Toutes les espèces » (suivi.coupToutes) ouvre le jeu à toutes les espèces du choix, sans les marquer
 //   comme rencontrées : une espèce pas encore rencontrée bien reconnue ici ne compte pas pour elle (la vraie partie reste intacte).
-function coupToutes() { return !!(suivi && suivi.coupToutes); }
+function coupToutes() { return typeof modeCaddie === "function" ? modeCaddie() : !!(suivi && suivi.coupToutes); }   // étape E2-6 : le Mode Caddie
 function especesCoupDoeil(especes) { return especes.filter(e => estRenseigne(e.photo) && (coupToutes() || estReconnue(e))); }
 function possibiliteCoupDoeil(especes) {
   const n = especesCoupDoeil(especes).length;

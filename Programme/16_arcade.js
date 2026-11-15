@@ -33,10 +33,18 @@ function accesTout() {
   const vue = document.getElementById("vue-arcade");
   return depuisArcade || !!(vue && !vue.classList.contains("cache"));
 }
+// Étape E2-6 (15/11, demande d'Aubin) : le « Mode Caddie » de la page Jeux : tous les jeux de la page avec toutes les espèces,
+//   de tous les territoires (même pas encore ouverts), et Coup d'œil avec les espèces pas encore rencontrées.
+//   Elles ne comptent pas comme rencontrées. Remplace l'interrupteur « Coup d'œil avec toutes les espèces » (R191b).
+function modeCaddie() { return !!(suivi && (suivi.modeCaddie || suivi.coupToutes)); }
+function territoiresJeux() {
+  if (!modeCaddie()) return territoiresOuverts();
+  return Object.keys(TERRITOIRES).filter(t => especesDe(t).length);
+}
 function territoiresArcade() {
-  const ouverts = territoiresOuverts();
+  const ouverts = territoiresJeux();
   const libres = (suivi.territoiresLibres || []).filter(t => ouverts.includes(t));
-  return libres.length ? libres : [territoireActif()];
+  return libres.length ? libres : modeCaddie() ? ouverts : [territoireActif()];
 }
 function famillesArcade(T) {
   const presentes = famillesDe(T);
@@ -46,7 +54,8 @@ function famillesArcade(T) {
 // « Pyrénées · toutes les familles », « Pyrénées, Alpes · Oiseaux, Insectes »
 function resumeArcade(T, F) {
   const toutes = F.length === famillesDe(T).length;
-  return `${T.join(", ")} · ${toutes ? "toutes les familles" : F.map(f => CLASSES[f].nom).join(", ")}`;
+  const tousT = T.length > 1 && T.length === territoiresJeux().length;   // étape E2-6 : en Mode Caddie, « Tous les territoires »
+  return `${tousT ? "Tous les territoires" : T.join(", ")} · ${toutes ? "toutes les familles" : F.map(f => CLASSES[f].nom).join(", ")}`;
 }
 
 function afficherArcade() {
@@ -87,12 +96,19 @@ function afficherArcade() {
   // Étape R163 : sur téléphone, toute la ligne du jeu le lance (un seul geste)
   zone.querySelectorAll(".arc-jeu:not(.ferme)").forEach(a => a.onclick = () => { if (typeof surTelephone === "function" && surTelephone()) lancerArcade(a.querySelector(".arc-jouer").dataset.jeu); });
 
-  // ---- Étape R191b : l'interrupteur « Toutes les espèces » de Coup d'œil ----
+  // ---- Étape E2-6 : le bouton « Mode Caddie » (à la place de l'interrupteur de Coup d'œil, R191b) ----
   let inter = document.getElementById("arc-toutes");
-  if (!inter) { inter = document.createElement("label"); inter.id = "arc-toutes"; inter.className = "arc-toutes"; zone.after(inter); }
-  inter.innerHTML = `<input type="checkbox" id="arc-toutes-case"${suivi.coupToutes ? " checked" : ""}>`
-    + `<span><b>Coup d'œil avec toutes les espèces</b><small>Même celles pas encore rencontrées. Elles ne comptent pas comme rencontrées.</small></span>`;
-  document.getElementById("arc-toutes-case").onchange = ev => { suivi.coupToutes = ev.target.checked; sauvegarder(); afficherArcade(); };
+  if (!inter) { inter = document.createElement("div"); inter.id = "arc-toutes"; inter.className = "arc-toutes arc-caddie"; zone.after(inter); }
+  const caddie = modeCaddie();
+  inter.innerHTML = `<button type="button" class="arc-caddie-bouton${caddie ? " on" : ""}" id="arc-caddie" aria-pressed="${caddie}">`
+    + `<span class="arc-caddie-etat" aria-hidden="true">${caddie ? "✓" : ""}</span>Mode Caddie${caddie ? " · activé" : ""}</button>`
+    + `<small>${caddie ? "Tous les jeux de cette page prennent toutes les espèces, de tous les territoires. Elles ne comptent pas comme rencontrées."
+                        : "Pour jouer avec toutes les espèces, de tous les territoires, dans tous les jeux de cette page."}</small>`;
+  document.getElementById("arc-caddie").onclick = () => {
+    suivi.modeCaddie = !caddie; suivi.coupToutes = false;   // l'ancien interrupteur ne compte plus à part
+    suivi.territoiresLibres = null;                        // en Mode Caddie : tous les territoires ; sinon : celui où l'on est
+    sauvegarder(); afficherArcade();
+  };
 
   // ---- Le volet « Avec quelles espèces ? » (replié) ----
   const volet = document.getElementById("arc-terrain");
@@ -101,19 +117,19 @@ function afficherArcade() {
   volet.innerHTML = `<summary><span>Avec les espèces de :</span> <b>${resumeArcade(T, F)}</b> <small>(${nombre(nbEsp)} espèces)</small> <u>modifier</u></summary>
     <div class="arc-choix">
       <p>Territoires</p>
-      <div class="arc-puces">${territoiresOuverts().map(t => `<button class="arc-puce${T.includes(t) ? " on" : ""}" data-t="${echapper(t)}"`
+      <div class="arc-puces">${territoiresJeux().map(t => `<button class="arc-puce${T.includes(t) ? " on" : ""}" data-t="${echapper(t)}"`
         + ` style="--c:${(TERRITOIRES[t] || {}).couleur || "#7a736a"}">${t}</button>`).join("")}</div>
       <p>Familles</p>
       <div class="arc-puces">${famillesDe(T).map(f => `<button class="arc-puce${F.includes(f) ? " on" : ""}" data-f="${f}"`
         + ` style="--c:${CLASSES[f].couleur}">${CLASSES[f].nom}</button>`).join("")}</div>
-      <button class="arc-reset" id="arc-reset">Revenir au territoire où vous êtes (${territoireActif()})</button>
+      <button class="arc-reset" id="arc-reset">${modeCaddie() ? "Revenir à tous les territoires" : `Revenir au territoire où vous êtes (${territoireActif()})`}</button>
     </div>`;
   volet.open = ouvert;
   volet.querySelectorAll("[data-t]").forEach(b => b.onclick = () => {
     const t = b.dataset.t;
     let liste = T.includes(t) ? T.filter(x => x !== t) : T.concat(t);
     if (!liste.length) return;                              // au moins un territoire
-    suivi.territoiresLibres = territoiresOuverts().filter(x => liste.includes(x));
+    suivi.territoiresLibres = territoiresJeux().filter(x => liste.includes(x));
     sauvegarder(); afficherArcade();
   });
   volet.querySelectorAll("[data-f]").forEach(b => b.onclick = () => {

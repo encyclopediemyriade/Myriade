@@ -5004,3 +5004,9 @@ button.pastille-carnet:hover { background: #fff; }
 .reperes .rp-conf-ligne small { display: block; font-size: .8rem; color: inherit; line-height: 1.35; }
 /* Étape E2-4 (n° 25.6) : Coup d'œil, le bouton « Photo suivante » s'arrête au-dessus de la barre du bas */
 .cdo-suivant { scroll-margin-bottom: 84px; }
+/* Étape E2-6 : le bouton « Mode Caddie » de la page Jeux */
+.arc-caddie { flex-direction: column; gap: 6px; }
+.arc-caddie-bouton { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; font: inherit; font-weight: 600; color: #fff;
+  background: transparent; border: 1.5px solid rgba(255,255,255,.55); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+.arc-caddie-bouton.on { background: #e8c9a0; border-color: #e8c9a0; color: #1F3A2E; }
+.arc-caddie-etat { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid currentColor; display: grid; place-items: center; font-size: 11px; }
