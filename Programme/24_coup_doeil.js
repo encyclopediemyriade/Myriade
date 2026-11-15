@@ -159,6 +159,9 @@ function repondreCoupDoeil(choisie, bouton) {
   // La mise à jour des pastilles du haut
   zone.querySelector(".cdo-pts").outerHTML = enteteCoupDoeil().match(/<span class="cdo-pts">.*<\/span>/)[0];
   document.getElementById("cdo-suivant").onclick = () => { if (fin) finCoupDoeil(); else { coup.i++; afficherTourCoupDoeil(); } };
+  // Étape E2-4 (n° 25.6, note d'Aubin du 13/11) : le bouton « Photo suivante » est toujours amené à l'écran (au-dessus de la barre du bas)
+  const btn = document.getElementById("cdo-suivant"), r = btn.getBoundingClientRect();
+  if (r.bottom > window.innerHeight - 80 || r.top < 0) btn.scrollIntoView({ block: "end", behavior: "smooth" });
   // Toucher la photo passe aussi à la suite (comme dans la Rencontre)
   zone.querySelector(".cdo-photo").onclick = () => document.getElementById("cdo-suivant").click();
 }

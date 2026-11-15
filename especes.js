@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V88.xlsx, especes_bassin_aquitain_V33.xlsx, especes_bassin_parisien_V46.xlsx, especes_corse_V39.xlsx, especes_grand_est_V35.xlsx, especes_jura_V38.xlsx, especes_massif_armoricain_V47.xlsx, especes_massif_central_V36.xlsx, especes_mediterranee_V43.xlsx, especes_pyrenees_V41.xlsx, especes_vosges_V33.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V91.xlsx, especes_bassin_aquitain_V36.xlsx, especes_bassin_parisien_V46.xlsx, especes_corse_V42.xlsx, especes_grand_est_V36.xlsx, especes_jura_V41.xlsx, especes_massif_armoricain_V49.xlsx, especes_massif_central_V39.xlsx, especes_mediterranee_V46.xlsx, especes_pyrenees_V43.xlsx, especes_vosges_V35.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -227,6 +227,7 @@ const ESPECES = [
     photo_3: "Images/chamois_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/55205728",
     photo_3_sujet: "autre vue",
+    hiver: "reste actif",
     a_confirmer: []
   },
   {
@@ -1002,6 +1003,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    cause_declin: "collisions routières et fragmentation de son habitat",
     a_confirmer: ["territoire", "couleur_dominante", "pupille_forme"]
   },
   {
@@ -3639,6 +3642,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
     a_confirmer: []
   },
   {
@@ -3856,6 +3860,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: []
   },
   {
@@ -4180,6 +4185,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -4613,6 +4619,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4721,6 +4728,7 @@ const ESPECES = [
     photo_3: "Images/crave_a_bec_rouge_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/70339855",
     photo_3_sujet: "autre vue",
+    hiver: "reste actif",
     a_confirmer: ["territoire"]
   },
   {
@@ -4829,6 +4837,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
     a_confirmer: []
   },
   {
@@ -4937,6 +4946,7 @@ const ESPECES = [
     photo_3: "Images/chevechette_d_europe_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/154238821",
     photo_3_sujet: "autre vue",
+    hiver: "reste actif",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -5372,6 +5382,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -5480,6 +5491,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -8706,7 +8718,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "En été",
-    activite: null,
+    activite: "NA",
     revetement: "Carapace",
     emplacement_nid: "NA",
     naissance: "NA",
@@ -8750,6 +8762,7 @@ const ESPECES = [
     photo_3: "Images/miramelle_alpestre_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/176082719",
     photo_3_sujet: "femelle",
+    hiver: "NA",
     a_confirmer: ["ailes_repos"]
   },
   {
@@ -12942,6 +12955,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    venue_de: "d'Amérique du Nord",
     a_confirmer: ["territoire"]
   },
   {
@@ -13064,8 +13079,8 @@ const ESPECES = [
     classe: "Mammifère",
     ordre: "Cétacés",
     sous_groupe: null,
-    photo: "Images/dauphin_commun.jpg",
-    photo_source: "https://commons.wikimedia.org/wiki/File:Dauphins_communs_au_large_de_la_Corse_(Ifremer_00735-84729_-_40570).jpg",
+    photo: "Images/dauphin_commun_2.jpg",
+    photo_source: "https://www.inaturalist.org/observations/186891897",
     couleur: "Dos gris foncé, flancs chamois et gris, ventre blanc",
     taille_min_cm_male: 180,
     taille_max_cm_male: 230,
@@ -13156,14 +13171,15 @@ const ESPECES = [
     proies_items: "Calmars et poulpes ; Poissons",
     predateurs_items: "Requins ; Orques",
     genre_nom: "masculin",
-    photo_2: "Images/dauphin_commun_2.jpg",
-    photo_2_source: "https://www.inaturalist.org/observations/186891897",
+    photo_2: "Images/dauphin_commun_3.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/37688109",
     photo_2_sujet: "autre vue",
     oreilles_taille: "NA",
     museau_forme: null,
-    photo_3: "Images/dauphin_commun_3.jpg",
-    photo_3_source: "https://www.inaturalist.org/observations/37688109",
-    photo_3_sujet: "autre vue",
+    photo_3: null,
+    photo_3_source: null,
+    photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -14804,6 +14820,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
+    cause_declin: "dérangement humain et dégradation des plages",
     a_confirmer: ["territoire"]
   },
   {
@@ -15359,7 +15377,7 @@ const ESPECES = [
     indice_presence: "NA",
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: "Écailles",
     emplacement_nid: "NA",
     naissance: "NA",
@@ -15401,6 +15419,7 @@ const ESPECES = [
     photo_3: "Images/mulet_porc_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/408585341",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -16728,6 +16747,7 @@ const ESPECES = [
     photo_3: "Images/tourteau_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/330214075",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -16816,6 +16836,7 @@ const ESPECES = [
     photo_3: "Images/crabe_vert_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/9825262",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -16904,6 +16925,7 @@ const ESPECES = [
     photo_3: "Images/talitre_sauteur_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/170730944",
     photo_3_sujet: "autre vue",
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -16956,7 +16978,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: "Coquille",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -16993,6 +17015,8 @@ const ESPECES = [
     photo_3: "Images/huitre_creuse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/320428762",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
+    venue_de: "du nord-ouest du Pacifique",
     a_confirmer: []
   },
   {
@@ -17082,6 +17106,7 @@ const ESPECES = [
     photo_3: "Images/huitre_plate_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/350929158",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -17134,7 +17159,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: "Coquille",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -17171,6 +17196,7 @@ const ESPECES = [
     photo_3: "Images/moule_commune_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/39405534",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -17223,7 +17249,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: "Coquille",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -17260,6 +17286,7 @@ const ESPECES = [
     photo_3: "Images/coque_commune_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/37708784",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -17312,7 +17339,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: "Coquille",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -17349,6 +17376,7 @@ const ESPECES = [
     photo_3: "Images/bigorneau_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/144884652",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -17438,6 +17466,7 @@ const ESPECES = [
     photo_3: "Images/patelle_commune_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/205517671",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -17703,6 +17732,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -27625,6 +27655,7 @@ const ESPECES = [
     photo_3: "Images/pipit_rousseline_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/220228863",
     photo_3_sujet: "autre vue",
+    hiver: "part de la région",
     a_confirmer: []
   },
   {
@@ -29323,6 +29354,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -31041,6 +31073,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -31217,6 +31250,7 @@ const ESPECES = [
     photo_3: "Images/crabe_verruqueux_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/296896929",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -31661,6 +31695,7 @@ const ESPECES = [
     photo_3: "Images/ormeau_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/17863007",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -31925,6 +31960,7 @@ const ESPECES = [
     photo_3: "Images/spirographe_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/15868644",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -32035,6 +32071,8 @@ const ESPECES = [
     photo_3: "Images/grand_hamster_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/243758545",
     photo_3_sujet: "femelle",
+    hiver: "s'endort ou ralentit",
+    cause_declin: "cultures intensives de maïs, urbanisation et morcellement de son habitat",
     a_confirmer: ["territoire"]
   },
   {
@@ -32860,7 +32898,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "Cavité d'arbre",
     naissance: "NA",
@@ -32910,6 +32948,7 @@ const ESPECES = [
     photo_3: "Images/gobemouche_a_collier_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/57534404",
     photo_3_sujet: "autre vue",
+    hiver: "part de la région",
     a_confirmer: ["territoire"]
   },
   {
@@ -33005,6 +33044,7 @@ const ESPECES = [
     photo_3: "Images/crapaud_vert_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/342754130",
     photo_3_sujet: "mâle",
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -34161,6 +34201,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -34775,7 +34816,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "Libère des larves",
@@ -34812,6 +34853,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -35346,6 +35388,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -37642,6 +37685,7 @@ const ESPECES = [
     photo_3: "Images/bacchante_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/322023853",
     photo_3_sujet: "adulte",
+    hiver: "s'endort ou ralentit",
     a_confirmer: []
   },
   {
@@ -37738,6 +37782,7 @@ const ESPECES = [
     photo_3: "Images/moire_franconien_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/88789742",
     photo_3_sujet: "adulte",
+    hiver: "s'endort ou ralentit",
     a_confirmer: []
   },
   {
@@ -37834,6 +37879,7 @@ const ESPECES = [
     photo_3: "Images/moire_blanc_fascie_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/296455108",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -37930,6 +37976,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -38123,6 +38170,7 @@ const ESPECES = [
     photo_3: "Images/nacre_de_la_sanguisorbe_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/210125395",
     photo_3_sujet: "mâle",
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -38175,7 +38223,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "En été",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -38219,6 +38267,7 @@ const ESPECES = [
     photo_3: "Images/cuivre_de_la_verge_d_or_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/250676834",
     photo_3_sujet: "femelle",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -38423,8 +38472,8 @@ const ESPECES = [
     classe: "Insecte",
     ordre: "Odonates",
     sous_groupe: null,
-    photo: "Images/cordulie_arctique.jpg",
-    photo_source: "https://www.inaturalist.org/observations/298761204",
+    photo: "Images/cordulie_arctique_2.jpg",
+    photo_source: "https://www.inaturalist.org/observations/335089928",
     couleur: "Abdomen noir, yeux verts",
     taille_min_cm: 4.5,
     taille_max_cm: 5.1,
@@ -38465,7 +38514,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "En été",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -38503,12 +38552,13 @@ const ESPECES = [
     proies_items: "Insectes",
     predateurs_items: "NA",
     genre_nom: "féminin",
-    photo_2: "Images/cordulie_arctique_2.jpg",
-    photo_2_source: "https://www.inaturalist.org/observations/335089928",
-    photo_2_sujet: "mâle",
+    photo_2: "Images/cordulie_arctique.jpg",
+    photo_2_source: "https://www.inaturalist.org/observations/298761204",
+    photo_2_sujet: "autre vue",
     photo_3: "Images/cordulie_arctique_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/335089941",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -38702,6 +38752,8 @@ const ESPECES = [
     photo_3: "Images/agrion_haste_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/251195004",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -38798,6 +38850,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -38887,6 +38940,7 @@ const ESPECES = [
     photo_3: "Images/meta_des_cavernes_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/127596505",
     photo_3_sujet: "mâle",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -40669,6 +40723,7 @@ const ESPECES = [
     photo_3: "Images/grand_dauphin_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/37955847",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -40888,6 +40943,8 @@ const ESPECES = [
     photo_3: "Images/macareux_moine_3.jpg",
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Puffin_(Fratercula_arctica)_with_lesser_sand_eels_(Ammodytes_tobianus).jpg",
     photo_3_sujet: "autre vue",
+    hiver: "part de la région",
+    cause_declin: "manque de petits poissons pour nourrir les poussins",
     a_confirmer: []
   },
   {
@@ -41434,6 +41491,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "part de la région",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -41542,6 +41601,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
+    cause_declin: "prédateurs sur les îles où il niche",
     a_confirmer: []
   },
   {
@@ -42523,6 +42584,7 @@ const ESPECES = [
     photo_3: "Images/cormoran_huppe_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/181531528",
     photo_3_sujet: "autre vue",
+    hiver: "reste actif",
     a_confirmer: []
   },
   {
@@ -47545,6 +47607,7 @@ const ESPECES = [
     photo_3: "Images/vieille_commune_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/17863013",
     photo_3_sujet: "jeune",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -48020,6 +48083,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -48399,6 +48463,8 @@ const ESPECES = [
     photo_3: "Images/requin_pelerin_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/46483289",
     photo_3_sujet: "autre vue",
+    hiver: "part de la région",
+    cause_declin: "captures par la pêche",
     a_confirmer: []
   },
   {
@@ -49746,7 +49812,7 @@ const ESPECES = [
     indice_presence: "Guano (crottes)",
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "Surtout la nuit",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -49798,6 +49864,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -50129,6 +50196,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
     a_confirmer: ["territoire"]
   },
   {
@@ -51015,6 +51083,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    venue_de: "d'Inde et d'Asie du Sud-Est",
     a_confirmer: ["territoire"]
   },
   {
@@ -51780,6 +51850,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
     a_confirmer: []
   },
   {
@@ -52715,7 +52786,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "Au sol",
     naissance: "NA",
@@ -52765,6 +52836,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: ["territoire"]
   },
   {
@@ -55002,6 +55074,7 @@ const ESPECES = [
     photo_3: "Images/blageon_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/125798079",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -55288,6 +55361,7 @@ const ESPECES = [
     photo_3: "Images/cuivre_de_la_bistorte_3.jpg",
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Blauschillernder_Feuerfalter_(Lycaena_helle)_male_(51238032522).jpg",
     photo_3_sujet: "mâle",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -55480,6 +55554,7 @@ const ESPECES = [
     photo_3: "Images/nacre_de_la_canneberge_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/125914683",
     photo_3_sujet: "mâle",
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -55823,7 +55898,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "En été",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -55867,6 +55942,7 @@ const ESPECES = [
     photo_3: "Images/leucorrhine_douteuse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/305502660",
     photo_3_sujet: "mâle",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -55963,6 +56039,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -57679,6 +57757,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -58664,6 +58743,7 @@ const ESPECES = [
     photo_3: "Images/crabier_chevelu_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/32682043",
     photo_3_sujet: "autre vue",
+    hiver: "part de la région",
     a_confirmer: []
   },
   {
@@ -59204,6 +59284,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: []
   },
   {
@@ -59852,6 +59933,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
+    cause_declin: "disparition de la végétation rivulaire, altération des milieux aquatiques",
     a_confirmer: []
   },
   {
@@ -63807,6 +63890,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -63859,7 +63943,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: "Carapace",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -63895,6 +63979,7 @@ const ESPECES = [
     photo_3: "Images/bernard_l_ermite_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/206329729",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -64161,6 +64246,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: []
   },
   {
@@ -64338,6 +64424,7 @@ const ESPECES = [
     photo_3: "Images/oursin_violet_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/154460459",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -64602,6 +64689,7 @@ const ESPECES = [
     photo_3: "Images/anemone_verte_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/10182235",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -66102,6 +66190,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    cause_declin: "dérangement par les loisirs et fragmentation des forêts",
     a_confirmer: ["territoire"]
   },
   {
@@ -66863,6 +66953,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: []
   },
   {
@@ -66971,6 +67062,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "part de la région",
     a_confirmer: []
   },
   {
@@ -67029,7 +67121,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: "Plumes",
     emplacement_nid: "Au sol",
     naissance: "NA",
@@ -67079,6 +67171,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: []
   },
   {
@@ -67187,6 +67280,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "en partie",
     a_confirmer: []
   },
   {
@@ -69146,6 +69240,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -70237,7 +70332,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "NA",
     revetement: "Coquille",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -70274,6 +70369,7 @@ const ESPECES = [
     photo_3: "Images/helice_des_bois_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/166588004",
     photo_3_sujet: "autre vue",
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -71005,6 +71101,7 @@ const ESPECES = [
     photo_3: "Images/moire_de_la_canche_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/95147068",
     photo_3_sujet: "adulte",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -71057,7 +71154,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "Surtout le jour",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -71101,6 +71198,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {
@@ -71682,6 +71780,7 @@ const ESPECES = [
     photo_3: "Images/aeschne_subarctique_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/405050522",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -72607,7 +72706,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -72651,6 +72750,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
     a_confirmer: ["territoire"]
   },
   {

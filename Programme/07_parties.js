@@ -367,7 +367,7 @@ function afficherCarnetFin(idZone, { journal, avant, cases, manquees: manqueesFi
           if (n > 0) bouts.push(`+ ${n} espèce${n > 1 ? "s" : ""}`); if (m > 0 && !sansMed) bouts.push(`+ ${m} palier${m > 1 ? "s" : ""} d'espèce`);   // étape R144
           return bouts.length ? " · " + bouts.join(", ") : ""; })()}</small></div>`;   // étape 202 : en espèces et en médailles
   }
-  if (!blocF) blocF = `<p class="vide">Les familles avancent à chaque nouvelle espèce et chaque fois qu'une espèce devient croisée, comprise ou familière.</p>`;   // étape 202
+  if (!blocF) blocF = `<p class="vide">Les familles avancent à chaque nouvelle espèce et chaque fois qu'une espèce devient reconnue, comprise ou familière.</p>`;   // étape 202
   // 3) Les badges gagnés pendant la partie, sinon le prochain à portée
   let blocB = "";
   const gagnes = [];

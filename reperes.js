@@ -16513,5 +16513,2745 @@ const REPERES = {
     "pour": "jeune"
    }
   ]
+ },
+ "Hirondelle de rochers": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Dessus brun grisâtre uniforme",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Taches blanches sur la queue étalée",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue courte et carrée",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Dessous des ailes plus sombre",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Petit-duc scops": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Petites aigrettes parfois aplaties",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Jaune",
+    "texte": "Yeux jaunes",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Plumage strié, couleur d'écorce",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes emplumées, serres grises",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Ailes longues, queue courte",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Rémiz penduline": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "Gris clair",
+    "texte": "Tête gris clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Noir",
+    "texte": "Masque noir autour des yeux",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Roux",
+    "texte": "Dos cannelle ou châtain",
+    "pour": "tous"
+   },
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Bec fin et pointu",
+    "pour": "tous"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "NA",
+    "texte": "Dessous crème ou grisâtre",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Crabier chevelu": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Beige",
+    "texte": "Plumage chamois à brun clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "Blanc",
+    "texte": "Ailes blanches en vol",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Aigrettes nuptiales sur la tête",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes orangées ou rouges",
+    "pour": "tous"
+   },
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Bec bleuté à la reproduction",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Gobemouche à collier": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "mâle",
+   "femelle"
+  ],
+  "forme_photo": "mâle",
+  "reperes": [
+   {
+    "partie": "bec",
+    "couleur": "Noir",
+    "texte": "Bec noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "cou",
+    "couleur": "Blanc",
+    "texte": "Collier blanc complet autour du cou",
+    "pour": "mâle"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Dos noir, dessous blanc",
+    "pour": "mâle"
+   },
+   {
+    "partie": "calotte",
+    "couleur": "Blanc",
+    "texte": "Large tache blanche au front",
+    "pour": "mâle"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "Blanc",
+    "texte": "Large barre blanche sur l'aile",
+    "pour": "mâle"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Dessus brun grisâtre",
+    "pour": "femelle"
+   },
+   {
+    "partie": "cou",
+    "couleur": "NA",
+    "texte": "Collier presque absent",
+    "pour": "femelle"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "Blanc",
+    "texte": "Barre blanche alaire réduite",
+    "pour": "femelle"
+   }
+  ]
+ },
+ "Grand-duc d'Europe": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Grandes aigrettes sur la tête",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Orange",
+    "texte": "Gros yeux orange",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Dessus brun roussâtre taché de noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "NA",
+    "texte": "Dessous fauve, strié de brun",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Grand corbeau": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "bec",
+    "couleur": "Noir",
+    "texte": "Gros bec noir et courbé",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue en coin",
+    "pour": "tous"
+   },
+   {
+    "partie": "gorge",
+    "couleur": "NA",
+    "texte": "Plumes de la gorge hérissées",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Plumage noir à reflets bleutés",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Bec-croisé des sapins": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "mâle",
+   "femelle"
+  ],
+  "forme_photo": "mâle",
+  "reperes": [
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Bec épais aux pointes croisées",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Ailes et queue brun foncé",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Rouge",
+    "texte": "Dessus rouge brique",
+    "pour": "mâle"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "Rouge",
+    "texte": "Dessous rouge",
+    "pour": "mâle"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dessus olive grisâtre",
+    "pour": "femelle"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "Jaune",
+    "texte": "Poitrine et croupion jaunâtres",
+    "pour": "femelle"
+   }
+  ]
+ },
+ "Bruant fou": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "Gris",
+    "texte": "Tête grise rayée de noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "gorge",
+    "couleur": "Gris",
+    "texte": "Gorge et poitrine grises",
+    "pour": "tous"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "Roux",
+    "texte": "Dessous roux uni",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Roux",
+    "texte": "Dos roux rayé de noir",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Moiré franconien": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "Brun",
+    "texte": "Dessus brun foncé",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_avant",
+    "couleur": "NA",
+    "texte": "Bande orange autour des ocelles",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Ocelles noirs pupillés de blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Dessous orné comme le dessus",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Grand Sylvain": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "NA",
+    "texte": "Dessus brun-noir taché de blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Lunules orange près du bord",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Liseré bleuté au bord",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Dessous roux orangé, dessins blancs",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Courtilière": {
+  "contour": "criquet",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes avant en pelles fouisseuses",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "Brun",
+    "texte": "Corps brun, velouté",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Ailes avant courtes",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Morio": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [
+   "adulte",
+   "chenille"
+  ],
+  "forme_photo": "adulte",
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "NA",
+    "texte": "Dessus brun pourpre foncé",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Large bordure jaune pâle",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Rangée de taches bleues",
+    "pour": "adulte"
+   },
+   {
+    "partie": "corps",
+    "couleur": "Noir",
+    "texte": "Chenille noire à longues épines",
+    "pour": "chenille"
+   },
+   {
+    "partie": "corps",
+    "couleur": "NA",
+    "texte": "Taches rouges sur le dos",
+    "pour": "chenille"
+   },
+   {
+    "partie": "corps",
+    "couleur": "NA",
+    "texte": "Fins points blancs",
+    "pour": "chenille"
+   }
+  ]
+ },
+ "Méta des cavernes": {
+  "contour": "araignee",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "cephalothorax",
+    "couleur": "NA",
+    "texte": "Céphalothorax brun-rouge, bande sombre",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes annelées de sombre",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Abdomen marqué de dessins sombres",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Sauterelle cymbalière": {
+  "contour": "criquet",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "Vert",
+    "texte": "Corps vert",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Ailes courtes, au bout du corps",
+    "pour": "tous"
+   },
+   {
+    "partie": "antennes",
+    "couleur": "NA",
+    "texte": "Antennes fines, très longues",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Nacré de la sanguisorbe": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "Orange",
+    "texte": "Dessus orange taché de noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_avant",
+    "couleur": "NA",
+    "texte": "Bordure sombre continue",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Dessous jaune pâle et brun violacé",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Lycose radiée": {
+  "contour": "araignee",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "cephalothorax",
+    "couleur": "NA",
+    "texte": "Bande claire au milieu du céphalothorax",
+    "pour": "tous"
+   },
+   {
+    "partie": "cephalothorax",
+    "couleur": "NA",
+    "texte": "Fines rayures en rayons",
+    "pour": "tous"
+   },
+   {
+    "partie": "cephalothorax",
+    "couleur": "NA",
+    "texte": "Deux bandes sombres sur les côtés",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Tache sombre en cœur sur l'abdomen",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Typographe": {
+  "contour": "coleoptere",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "Brun",
+    "texte": "Corps cylindrique brun foncé",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps long d'environ 5 mm",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Quatre dents au bout des élytres",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Bacchante": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "NA",
+    "texte": "Ailes brun-gris",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Gros ocelles noirs cerclés de jaune",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Dessous : ocelles centrés de blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Dessous : large bande blanche",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Cordulégastre bidenté": {
+  "contour": "libellule",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Grande libellule noire et jaune",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Yeux verts, joints en un point",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "Noir",
+    "texte": "Triangle noir derrière les yeux",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Deux taches jaunes par anneau",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Grand hamster": {
+  "contour": "mammifere",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ventre",
+    "couleur": "Noir",
+    "texte": "Ventre noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos roux à brun-gris",
+    "pour": "tous"
+   },
+   {
+    "partie": "museau",
+    "couleur": "Blanc",
+    "texte": "Museau, joues et pattes blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Taches blanches sur les flancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue courte",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Campagnol terrestre": {
+  "contour": "mammifere",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps trapu, cou peu marqué",
+    "pour": "tous"
+   },
+   {
+    "partie": "museau",
+    "couleur": "NA",
+    "texte": "Tête ronde, museau arrondi",
+    "pour": "tous"
+   },
+   {
+    "partie": "oreilles",
+    "couleur": "NA",
+    "texte": "Petites oreilles courtes",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos brun, ventre plus clair",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Crapaud vert": {
+  "contour": "grenouille",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Taches vertes sur fond clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Parfois des points rouge-orangé",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "NA",
+    "texte": "Pupille horizontale, iris jaune-vert",
+    "pour": "tous"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "NA",
+    "texte": "Dessous clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "sac",
+    "couleur": "Blanc",
+    "texte": "Mâle : sac vocal sous la gorge",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Hélice des bois": {
+  "contour": "escargot",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille brune, mouchetée de clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Une fine bande sombre au pourtour",
+    "pour": "tous"
+   },
+   {
+    "partie": "ouverture",
+    "couleur": "Blanc",
+    "texte": "Bord de l'ouverture blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "pied",
+    "couleur": "NA",
+    "texte": "Corps sombre, souvent noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille large d'environ 2 cm",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Mulette épaisse": {
+  "contour": "bivalve",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille très épaisse",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille ovale, brun foncé à noire",
+    "pour": "tous"
+   },
+   {
+    "partie": "charniere",
+    "couleur": "NA",
+    "texte": "Charnière à dents",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Blageon": {
+  "contour": "poisson",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Bande sombre violacée sur le flanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Ligne latérale soulignée d'orange",
+    "pour": "tous"
+   },
+   {
+    "partie": "nageoires_dessous",
+    "couleur": "NA",
+    "texte": "Base des nageoires orangée",
+    "pour": "tous"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "NA",
+    "texte": "Flancs argentés, ventre blanc",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Vespère de Savi": {
+  "contour": "chauve_souris",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Dos brun",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Ventre clair, bien tranché",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Face et oreilles très sombres",
+    "pour": "tous"
+   },
+   {
+    "partie": "oreilles",
+    "couleur": "NA",
+    "texte": "Oreilles courtes, larges et arrondies",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Ailes sombres",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Patelle commune": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Coquille en cône bas, en chapeau",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Grosses côtes partant du sommet",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Bord de la coquille irrégulier",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Bigorneau": {
+  "contour": "escargot",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille épaisse, à pointe aiguë",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Dernier tour très grand, spire courte",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Souvent de fines bandes spirales sombres",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Moule commune": {
+  "contour": "bivalve",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille lisse, fines stries de croissance",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Bleu-violet à brun foncé",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Intérieur de la coquille nacré",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Touffe de filaments pour s'accrocher",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Huître plate": {
+  "contour": "bivalve",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille presque ronde",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Une valve plate, l'autre creuse",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Couches de croissance en lames",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Anémone verte": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Longs tentacules souples, très nombreux",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Tentacules verts ou gris-brun",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Pointe des tentacules parfois violette",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Oursin violet": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps hérissé de longs piquants",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Violet, brun ou vert olive",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps rond, un peu aplati",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Crabe vert": {
+  "contour": "crabe",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Cinq dents de chaque côté",
+    "pour": "tous"
+   },
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Trois bosses entre les yeux",
+    "pour": "tous"
+   },
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Vert sombre, parfois brun ou rouge",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Crabe marbré": {
+  "contour": "crabe",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Carapace presque carrée",
+    "pour": "tous"
+   },
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Sombre, marbrée de fines lignes claires",
+    "pour": "tous"
+   },
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Trois dents sur chaque bord",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes aplaties",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Tourteau": {
+  "contour": "crabe",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Bord avant découpé en lobes",
+    "pour": "tous"
+   },
+   {
+    "partie": "pinces",
+    "couleur": "Noir",
+    "texte": "Pointes des pinces noires",
+    "pour": "tous"
+   },
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Dessus brun-rouge, uni",
+    "pour": "tous"
+   },
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Carapace ovale, très large",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Crabe verruqueux": {
+  "contour": "crabe",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "pinces",
+    "couleur": "NA",
+    "texte": "Grosses pinces inégales",
+    "pour": "tous"
+   },
+   {
+    "partie": "pinces",
+    "couleur": "NA",
+    "texte": "Doigts des pinces très sombres",
+    "pour": "tous"
+   },
+   {
+    "partie": "carapace",
+    "couleur": "NA",
+    "texte": "Brun-vert semé de taches claires",
+    "pour": "tous"
+   },
+   {
+    "partie": "pinces",
+    "couleur": "NA",
+    "texte": "Pinces couvertes de bosses",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes garnies de longs poils",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Vison d'Amérique": {
+  "contour": "mammifere",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "museau",
+    "couleur": "Blanc",
+    "texte": "Tache blanche au menton",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Pelage brun très foncé",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue longue et touffue",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes courtes",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Rat noir": {
+  "contour": "mammifere",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue plus longue que le corps",
+    "pour": "tous"
+   },
+   {
+    "partie": "oreilles",
+    "couleur": "NA",
+    "texte": "Grandes oreilles",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Noir à brun, ventre plus clair",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Seiche commune": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps ovale et aplati",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Nageoire tout autour du corps",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Huit bras et deux longs tentacules",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Dos marbré, couleurs changeantes",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Gravelot à collier interrompu": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "mâle",
+   "femelle"
+  ],
+  "forme_photo": "mâle",
+  "reperes": [
+   {
+    "partie": "poitrine",
+    "couleur": "NA",
+    "texte": "Collier interrompu sur la poitrine",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Bec et pattes sombres",
+    "pour": "tous"
+   },
+   {
+    "partie": "calotte",
+    "couleur": "Roux",
+    "texte": "Calotte rousse",
+    "pour": "mâle"
+   },
+   {
+    "partie": "tete",
+    "couleur": "Noir",
+    "texte": "Barre noire sur le front",
+    "pour": "mâle"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "NA",
+    "texte": "Trait noir à travers l'œil",
+    "pour": "mâle"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Marques brunes, pas noires",
+    "pour": "femelle"
+   },
+   {
+    "partie": "calotte",
+    "couleur": "NA",
+    "texte": "Calotte brune, à peine rousse",
+    "pour": "femelle"
+   }
+  ]
+ },
+ "Vélelle": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "Bleu",
+    "texte": "Flotteur ovale, bleu",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Petite voile triangulaire dressée",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Voile posée en biais",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Centre du flotteur transparent",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Macareux moine": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Gros bec en triangle",
+    "pour": "tous"
+   },
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Bec rouge-orangé, gris-bleu et jaune",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Joues blanches ou gris pâle",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "Orange",
+    "texte": "Pattes orange vif",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Dessus noir, dessous blanc",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Puffin des Anglais": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Noir dessus, blanc dessous, bien tranché",
+    "pour": "tous"
+   },
+   {
+    "partie": "calotte",
+    "couleur": "NA",
+    "texte": "Calotte noire jusque sous l'œil",
+    "pour": "tous"
+   },
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Bec fin, sombre, à petit tube",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Océanite tempête": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Tout noir de suie",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "Blanc",
+    "texte": "Croupion blanc bien net",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "Blanc",
+    "texte": "Bande blanche sous l'aile",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue carrée",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Plus petit oiseau marin d'Europe",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Grand dauphin": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "Gris",
+    "texte": "Gris, flancs plus pâles, ventre clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Bec court et large",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Mâchoire du bas plus longue",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Haute nageoire du dos, courbée",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Requin pèlerin": {
+  "contour": "poisson",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Immenses fentes des branchies",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Museau conique et pointu",
+    "pour": "tous"
+   },
+   {
+    "partie": "nageoire_queue",
+    "couleur": "NA",
+    "texte": "Queue en croissant",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Gris-brun à noirâtre, dessous pâle",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Long de 7 à 8 m",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Crave à bec rouge": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "bec",
+    "couleur": "Rouge",
+    "texte": "Long bec rouge, courbé",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "Rouge",
+    "texte": "Pattes rouges",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Tout noir à reflets",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Pipit rousseline": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dessus couleur sable, presque uni",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Large sourcil clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "NA",
+    "texte": "Poitrine claire, peu ou pas striée",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Longues pattes jaunâtres",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Longue queue sombre, bords clairs",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Dauphin commun": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Flanc en sablier, jaune puis gris",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Dos sombre, ventre blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Bec fin, marqué d'un sillon",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Cercle noir autour de l'œil",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Trait sombre du menton aux nageoires",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Huître creuse": {
+  "contour": "bivalve",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille allongée, en ovale étroit",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Grosses arêtes en lames superposées",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Valve du dessous très creuse",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Teintes verdâtres, taches violacées",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Spirographe": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Long tube, jusqu'à 60 cm",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Panache de filaments enroulé en spirale",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Filaments rayés de bandes colorées",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Panache jusqu'à 15 cm de large",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Ormeau": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Coquille plate en forme d'oreille",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Rangée de trous près du bord",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Intérieur de la coquille très nacré",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps bordé de nombreux petits tentacules",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Coque commune": {
+  "contour": "bivalve",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille ronde et bombée",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Fortes côtes partant du sommet",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Blanchâtre, beige ou brune",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Deux valves de même forme",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Bernard-l'ermite": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Yeux noirs à points blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Yeux au bout de longues tiges",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Pinces presque égales, granuleuses",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Pattes marquées de rouge et bleu",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Vieille commune": {
+  "contour": "poisson",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "bouche",
+    "couleur": "NA",
+    "texte": "Grosses lèvres épaisses",
+    "pour": "tous"
+   },
+   {
+    "partie": "nageoire_dos",
+    "couleur": "NA",
+    "texte": "Une seule longue nageoire dorsale",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Corps massif",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Corps marbré ou taché de clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Grandes écailles bien visibles",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Hippocampe moucheté": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Museau long en tube",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Tête et dos garnis de filaments",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps moucheté de petits points blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Queue qui s'enroule, sans nageoire",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Rouget de roche": {
+  "contour": "poisson",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "bouche",
+    "couleur": "NA",
+    "texte": "Deux barbillons sous le menton",
+    "pour": "tous"
+   },
+   {
+    "partie": "nageoire_dos",
+    "couleur": "NA",
+    "texte": "Première dorsale rayée de brun",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Bande sombre le long du flanc",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Mulet porc": {
+  "contour": "poisson",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "nageoire_cote",
+    "couleur": "Noir",
+    "texte": "Tache noire au pied des pectorales",
+    "pour": "tous"
+   },
+   {
+    "partie": "nageoire_dos",
+    "couleur": "NA",
+    "texte": "Deux nageoires dorsales séparées",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Gris",
+    "texte": "Dos gris, ventre blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "bouche",
+    "couleur": "NA",
+    "texte": "Lèvre du haut mince",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Tête large et aplatie",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Talitre sauteur": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Corps aplati sur les côtés",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Gros yeux ronds et noirs",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Couleur sable ou gris-brun",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Une paire d'antennes longue, l'autre courte",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Cormoran huppé": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "adulte",
+   "jeune"
+  ],
+  "forme_photo": "adulte",
+  "reperes": [
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Bec long, fin et crochu",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Plumage noir à reflets verts",
+    "pour": "adulte"
+   },
+   {
+    "partie": "calotte",
+    "couleur": "NA",
+    "texte": "Petite huppe sur le front",
+    "pour": "adulte"
+   },
+   {
+    "partie": "bec",
+    "couleur": "NA",
+    "texte": "Coins du bec jaunes",
+    "pour": "adulte"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Plumage brun",
+    "pour": "jeune"
+   },
+   {
+    "partie": "gorge",
+    "couleur": "Blanc",
+    "texte": "Menton blanc",
+    "pour": "jeune"
+   }
+  ]
+ },
+ "Cordulie arctique": {
+  "contour": "libellule",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "thorax",
+    "couleur": "NA",
+    "texte": "Thorax vert métallique, reflets bronze",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Mâle : abdomen étranglé à la base",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "Jaune",
+    "texte": "Femelle : deux taches jaunes latérales",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Aeschne subarctique": {
+  "contour": "libellule",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Corps sombre, taches bleues et jaunes",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Coloration sombre et terne",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Grande libellule sombre",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Sympétrum noir": {
+  "contour": "libellule",
+  "etat": "verifie",
+  "formes": [
+   "mâle",
+   "femelle"
+  ],
+  "forme_photo": "mâle",
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Petite libellule",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "Noir",
+    "texte": "Pattes entièrement noires",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "Noir",
+    "texte": "Marque noire au bout des ailes",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "Noir",
+    "texte": "Corps presque entièrement noir",
+    "pour": "mâle"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Corps jaune ocre marqué de noir",
+    "pour": "femelle"
+   }
+  ]
+ },
+ "Nacré de la canneberge": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "Orange",
+    "texte": "Dessus orange roux vif",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_avant",
+    "couleur": "Noir",
+    "texte": "Gros points et traits noirs dessus",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "Roux",
+    "texte": "Dessous roux à taches blanc argenté",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Martinet à ventre blanc": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ventre",
+    "couleur": "Blanc",
+    "texte": "Ventre et gorge blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "Brun",
+    "texte": "Collier brun sur la poitrine",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Dessus brun uni",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue courte, un peu fourchue",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Plus grand que le martinet noir",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Tichodrome échelette": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "hiver",
+   "été"
+  ],
+  "forme_photo": "hiver",
+  "reperes": [
+   {
+    "partie": "ailes",
+    "couleur": "Rouge",
+    "texte": "Ailes rouge vif à points blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "bec",
+    "couleur": "Noir",
+    "texte": "Bec long, fin et courbé",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Gris",
+    "texte": "Tête et dos gris",
+    "pour": "tous"
+   },
+   {
+    "partie": "gorge",
+    "couleur": "Noir",
+    "texte": "Gorge noire chez le mâle",
+    "pour": "été"
+   },
+   {
+    "partie": "gorge",
+    "couleur": "Blanc",
+    "texte": "Gorge blanchâtre",
+    "pour": "hiver"
+   }
+  ]
+ },
+ "Leucorrhine douteuse": {
+  "contour": "libellule",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Mâle noir à petites taches rouges",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Femelle noire tachée de jaune",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "Noir",
+    "texte": "Base des ailes tachée de sombre",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Cassenoix moucheté": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Brun sombre moucheté de blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "calotte",
+    "couleur": "NA",
+    "texte": "Calotte sombre, sans taches",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "Blanc",
+    "texte": "Dessous de la queue blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "bec",
+    "couleur": "Noir",
+    "texte": "Bec noir, fort et pointu",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "Noir",
+    "texte": "Grandes plumes des ailes noires",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Venturon montagnard": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "adulte",
+   "jeune"
+  ],
+  "forme_photo": "adulte",
+  "reperes": [
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Deux barres claires sur l'aile",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue noirâtre, échancrée",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "Gris",
+    "texte": "Nuque et côtés du cou gris",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "Jaune",
+    "texte": "Dessous jaune verdâtre",
+    "pour": "adulte"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos vert olive, presque sans rayures",
+    "pour": "adulte"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Plumage brun strié, sans jaune",
+    "pour": "jeune"
+   }
+  ]
+ },
+ "Sérotine de Nilsson": {
+  "contour": "chauve_souris",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos sombre aux pointes dorées",
+    "pour": "tous"
+   },
+   {
+    "partie": "oreilles",
+    "couleur": "NA",
+    "texte": "Oreilles courtes et arrondies",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Face, oreilles et ailes brun-noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Ventre plus clair, brun jaunâtre",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Sérotine bicolore": {
+  "contour": "chauve_souris",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos sombre givré d'argent",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "Blanc",
+    "texte": "Ventre et gorge blanchâtres",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Face et ailes noir mat",
+    "pour": "tous"
+   },
+   {
+    "partie": "oreilles",
+    "couleur": "NA",
+    "texte": "Oreilles courtes, larges et arrondies",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Chamois": {
+  "contour": "ongule",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "cornes",
+    "couleur": "NA",
+    "texte": "Cornes droites, en crochet au bout",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Face blanche barrée de bandes sombres",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Raie sombre le long du dos",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "Blanc",
+    "texte": "Arrière-train blanc près de la queue",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Chouette de Tengmalm": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Grosse tête ronde",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Face claire bordée de noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Jaune",
+    "texte": "Yeux jaunes cerclés de noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Dos brun semé de points blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "Blanc",
+    "texte": "Pattes emplumées de blanc",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Grand tétras": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "mâle",
+   "femelle"
+  ],
+  "forme_photo": "mâle",
+  "reperes": [
+   {
+    "partie": "ailes",
+    "couleur": "Blanc",
+    "texte": "Petite tache blanche à l'épaule",
+    "pour": "tous"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "NA",
+    "texte": "Noir, poitrine à reflets verts",
+    "pour": "mâle"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Rouge",
+    "texte": "Peau rouge au-dessus de l'œil",
+    "pour": "mâle"
+   },
+   {
+    "partie": "bec",
+    "couleur": "Ivoire",
+    "texte": "Bec clair, blanchâtre",
+    "pour": "mâle"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Large queue en éventail",
+    "pour": "mâle"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Roux",
+    "texte": "Brun roux barré de noir",
+    "pour": "femelle"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "Roux",
+    "texte": "Grande tache rousse sur la poitrine",
+    "pour": "femelle"
+   },
+   {
+    "partie": "queue",
+    "couleur": "Roux",
+    "texte": "Queue rousse, assez longue",
+    "pour": "femelle"
+   }
+  ]
+ },
+ "Lynx boréal": {
+  "contour": "mammifere",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "oreilles",
+    "couleur": "Noir",
+    "texte": "Pinceaux noirs au bout des oreilles",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "Noir",
+    "texte": "Queue courte à bout noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Longs favoris encadrant la face",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Longues pattes, larges pieds",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Pelage fauve taché de noir",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Gélinotte des bois": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Petite huppe sur la tête",
+    "pour": "tous"
+   },
+   {
+    "partie": "gorge",
+    "couleur": "Noir",
+    "texte": "Mâle : gorge noire bordée de blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue grise à large bande noire",
+    "pour": "tous"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "NA",
+    "texte": "Dessous blanc écaillé de noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dessus gris-brun, finement marqué",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Chevêchette d'Europe": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Plus petite chouette d'Europe",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Tête ronde, sourcils blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Jaune",
+    "texte": "Petits yeux jaunes",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Dessus brun piqueté de blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "ventre",
+    "couleur": "Blanc",
+    "texte": "Dessous blanc rayé de brun",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Merle à plastron": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [
+   "mâle",
+   "femelle"
+  ],
+  "forme_photo": "mâle",
+  "reperes": [
+   {
+    "partie": "bec",
+    "couleur": "Jaune",
+    "texte": "Bec jaune",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes",
+    "couleur": "NA",
+    "texte": "Plumes des ailes bordées de clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "Blanc",
+    "texte": "Large croissant blanc sur la poitrine",
+    "pour": "mâle"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Plumage noir",
+    "pour": "mâle"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "NA",
+    "texte": "Croissant terne, teinté de brun",
+    "pour": "femelle"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Brun",
+    "texte": "Plumage brun sombre",
+    "pour": "femelle"
+   }
+  ]
+ },
+ "Pipit spioncelle": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Large sourcil blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "Noir",
+    "texte": "Pattes sombres, noirâtres",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "Blanc",
+    "texte": "Côtés de la queue blancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dessus gris-brun, peu rayé",
+    "pour": "tous"
+   },
+   {
+    "partie": "poitrine",
+    "couleur": "NA",
+    "texte": "Poitrine rose pâle en été",
+    "pour": "tous"
+   }
+  ]
  }
 };

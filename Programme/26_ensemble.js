@@ -3,7 +3,7 @@
 //   Critère A : l'étape 2 apprend comment les espèces de l'expédition vivent ensemble ici. Chaque question met en jeu
 //   au moins deux espèces, ou une espèce et le lieu ; 6 questions au plus, dans l'ordre des 8 types ci-dessous ;
 //   jamais de remplissage. Elle remplace « Leurs liens », la planche et « ce qui reste de leur vie ».
-//   Ce fichier FABRIQUE les questions (questionsEnsemble) ; l'affichage viendra à l'étape suivante.
+//   Ce fichier FABRIQUE les questions (questionsEnsemble, E2-2) et les AFFICHE (étape E2-3, 15/11 : ouvrirEnsembleExp).
 //   Réglage : ETAPE2_ENSEMBLE = false → l'ancienne étape 2 (Leurs liens + la planche), pour comparer.
 //   Il marche avec les colonnes actuelles ; les colonnes nouvelles (hiver, venue_de, cause_declin) sont lues
 //   quand elles sont remplies (étape E2-1).
@@ -398,3 +398,141 @@ function questionsEnsemble(x) {
 }
 // Une expédition qui n'offre qu'une question, ou aucune : pas d'étape 2 (la question unique se pose à la fin des Rencontres).
 function aUneEtapeEnsemble(x) { return ETAPE2_ENSEMBLE && questionsEnsemble(x).length >= 2; }
+
+
+// ==================================================================
+// E2-3 · L'AFFICHAGE DE L'ÉTAPE 2 (15/11/2026)
+//   - Une expédition avec au moins une question : l'étape 2 = ces questions, une par écran ; une seule réponse (un toucher)
+//     ou plusieurs (on coche, puis « Valider »). Une erreur est expliquée tout de suite ; la question revient UNE fois à la fin,
+//     puis compte quand même. Jamais d'échec.
+//   - Une expédition avec une seule question, ou aucune : pas d'étape 2 (elle se termine avec les Rencontres) ; la question
+//     unique est proposée juste après la dernière Rencontre (« Une dernière question »).
+//   - Étape 2 finie = les espèces de l'expédition deviennent « comprises » (suivi.comprises). Empreintes inchangées
+//     (+ GAIN_FIN_EXPEDITION à la fin, comme avant).
+//   - Rien ne recule : une expédition dont l'étape 2 était finie avant E2-3 le reste (suivi.etape2AvantE2).
+//   - Les questions d'une expédition restent les mêmes pendant toute la session (pas de nouveau tirage à chaque visite).
+// ==================================================================
+if (ETAPE2_ENSEMBLE && typeof ETAPES !== "undefined")
+  ETAPES[2] = { titre: "Ensemble", texte: "Comment ces espèces vivent ensemble ici : qui chasse qui, le jour et la nuit, l'hiver, ce qui les aide" };
+const memoEnsemble = new Map();
+function questionsEnsembleExp(x) {
+  if (!memoEnsemble.has(x.id)) { let q = []; try { q = questionsEnsemble(x); } catch (err) { q = []; } memoEnsemble.set(x.id, q); }
+  return memoEnsemble.get(x.id);
+}
+function ensembleFait(x) { return !!(suivi && suivi.ensembleFait && suivi.ensembleFait[x.id]); }
+function comprisesEnsemble() {
+  const l = (suivi && suivi.comprises) || [];
+  if (!comprisesEnsemble.cache || comprisesEnsemble.cache.src !== l || comprisesEnsemble.cache.n !== l.length) {
+    comprisesEnsemble.cache = new Set(l); comprisesEnsemble.cache.src = l; comprisesEnsemble.cache.n = l.length;
+  }
+  return comprisesEnsemble.cache;
+}
+function especeComprise(e) { return ETAPE2_ENSEMBLE && !!suivi && comprisesEnsemble().has(e.nom_courant); }
+// Une seule fois : les expéditions dont l'étape 2 était déjà finie (ancienne règle) le restent
+function etape2AvantE2() {
+  if (!suivi) return new Set();
+  if (!suivi.etape2AvantE2) {
+    suivi.etape2AvantE2 = EXPEDITIONS.map(y => expeditionParId(y.id)).filter(x => x && etapeFinieAncienne(x, 2)).map(x => x.id);
+    sauvegarder();
+  }
+  if (!etape2AvantE2.cache || etape2AvantE2.cache.src !== suivi.etape2AvantE2) { etape2AvantE2.cache = new Set(suivi.etape2AvantE2); etape2AvantE2.cache.src = suivi.etape2AvantE2; }
+  return etape2AvantE2.cache;
+}
+// L'étape 2 est-elle finie ? (appelé par etapeFinie, 17_expeditions.js, une fois l'étape 1 finie)
+function etape2EnsembleFinie(x) {
+  return ensembleFait(x) || etape2AvantE2().has(x.id) || questionsEnsembleExp(x).length <= 1;
+}
+// Une expédition a-t-elle une étape 2 à jouer ? (2 questions au moins)
+function aUneEtape2(x) { return !ETAPE2_ENSEMBLE || questionsEnsembleExp(x).length >= 2 || etape2AvantE2().has(x.id); }
+// Une expédition à une seule question : elle est proposée après la dernière Rencontre, tant qu'elle n'a pas été vue
+function questionFinaleExp(x) { return ETAPE2_ENSEMBLE && questionsEnsembleExp(x).length === 1 && !ensembleFait(x); }
+
+let ensemble = null;
+function ouvrirEnsembleExp(x) {
+  etape2AvantE2();   // la liste « rien ne recule » est faite avant toute nouvelle espèce comprise
+  const qs = questionsEnsembleExp(x);
+  if (!qs.length) { marquerEnsemble(x); ouvrirExpedition(x); return; }
+  ecranForme(x, 2);
+  ensemble = { x, file: qs.map(q => ({ q, reprise: false })), i: 0, total: qs.length, premierCoup: 0, avantGain: gainExp(x), avant: empreintesExp(x) };
+  dessinerEnsemble();
+}
+function marquerEnsemble(x) {
+  if (!suivi) return;
+  suivi.ensembleFait = suivi.ensembleFait || {};
+  suivi.ensembleFait[x.id] = true;
+  suivi.comprises = suivi.comprises || [];
+  for (const e of x.liste) if (!suivi.comprises.includes(e.nom_courant)) suivi.comprises.push(e.nom_courant);
+  sauvegarder();
+}
+function figureEnsemble(nom) {
+  const e = especeParNom(nom);
+  if (!e) return "";
+  return `<figure><img src="${photoMini(photoEsp(e))}" alt=""><figcaption>${echapper(e.nom_courant)}</figcaption></figure>`;
+}
+function boutonChoixEnsemble(c, i, plusieurs) {
+  const e = c.espece ? especeParNom(c.espece) : null;
+  const image = e ? `<img src="${photoMini(photoEsp(e))}" alt="">` : "";
+  return `<button type="button" class="fl-rep en-rep${e ? " en-avec-photo" : ""}" data-i="${i}" aria-pressed="${plusieurs ? "false" : ""}">
+      ${plusieurs ? `<span class="en-case" aria-hidden="true"></span>` : ""}${image}<span class="en-texte">${echapper(c.texte)}</span></button>`;
+}
+function dessinerEnsemble() {
+  const z = document.getElementById("forme-ecran"), E = ensemble;
+  if (!z || !E) return;
+  const { q, reprise } = E.file[E.i];
+  const n = E.file.filter(f => !f.reprise).length, rang = E.file.slice(0, E.i + 1).filter(f => !f.reprise).length;
+  const montrees = (q.montrees || []).map(figureEnsemble).filter(Boolean);
+  z.innerHTML = `<div class="fp-carte fl-carte en-carte">
+    <div class="fp-tete"><span class="fp-lib">${PICTO_LIENS}Ensemble, dans ce lieu</span><span class="fp-compte">${reprise ? "À revoir" : n === 1 ? "Une dernière question" : `${rang} / ${n}`}</span></div>
+    ${montrees.length ? `<div class="en-montrees${montrees.length > 2 ? " nombreuses" : ""}">${montrees.join("")}</div>` : ""}
+    <h3 class="fl-question">${echapper(q.question)}</h3>
+    ${q.plusieurs ? `<p class="en-consigne">Plusieurs réponses possibles.</p>` : ""}
+    <div class="fl-choix en-choix">${q.choix.map((c, i) => boutonChoixEnsemble(c, i, q.plusieurs)).join("")}</div>
+    <p class="fp-retour" id="en-retour"></p>
+    <div class="fp-pied">${q.plusieurs ? `<button type="button" class="bouton-accueil principal" id="en-valider" disabled>Valider</button>` : ""}
+      <button type="button" class="bouton-accueil principal cache" id="en-suite">${E.i + 1 < E.file.length ? "Question suivante" : "Continuer"}</button></div></div>`;
+  const boutons = [...z.querySelectorAll(".en-rep")];
+  const corriger = choisis => {
+    const bonnes = q.choix.map((c, i) => c.bonne ? i : -1).filter(i => i >= 0);
+    const juste = choisis.length === bonnes.length && choisis.every(i => bonnes.includes(i));
+    boutons.forEach(b => {
+      const i = Number(b.dataset.i); b.disabled = true; b.classList.remove("coche");
+      if (bonnes.includes(i)) b.classList.add(choisis.includes(i) || !q.plusieurs ? "juste" : "juste", ...(q.plusieurs && !choisis.includes(i) ? ["oubliee"] : []));
+      else if (choisis.includes(i)) b.classList.add("fausse");
+    });
+    try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
+    if (juste && !reprise) E.premierCoup++;
+    if (!juste && !reprise) E.file.push({ q: { ...q, choix: melanger(q.choix.slice()) }, reprise: true });   // revient une fois, à la fin
+    if (q.type === "liens" && typeof noterLienConnu === "function") noterLienConnu("ens|" + (q.especes || []).join("|"));   // badge « Leurs liens »
+    const v = document.getElementById("en-valider"); if (v) v.classList.add("cache");
+    const oubli = q.plusieurs && !juste && bonnes.some(i => !choisis.includes(i)) ? " Les bonnes réponses sont encadrées en vert." : "";
+    document.getElementById("en-retour").innerHTML = `${juste ? "Bravo ! " : ""}${echapper(q.explication || "")}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
+    const s = document.getElementById("en-suite");
+    s.textContent = E.i + 1 < E.file.length ? "Question suivante" : "Continuer";
+    s.classList.remove("cache"); s.focus();
+    s.onclick = () => { if (E.i + 1 < E.file.length) { E.i++; dessinerEnsemble(); window.scrollTo(0, 0); } else finirEnsemble(); };
+  };
+  if (q.plusieurs) {
+    const v = document.getElementById("en-valider");
+    boutons.forEach(b => b.onclick = () => {
+      const on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", on ? "true" : "false"); b.classList.toggle("coche", on);
+      v.disabled = !boutons.some(o => o.getAttribute("aria-pressed") === "true");
+    });
+    v.onclick = () => corriger(boutons.filter(b => b.getAttribute("aria-pressed") === "true").map(b => Number(b.dataset.i)));
+  } else boutons.forEach(b => b.onclick = () => corriger([Number(b.dataset.i)]));
+  window.scrollTo(0, 0);
+}
+function finirEnsemble() {
+  const E = ensemble, x = E.x;
+  marquerEnsemble(x);
+  fermerEcranForme(); ensemble = null;
+  const gagnees = Math.max(0, gainExp(x) - E.avantGain);
+  session = null;
+  ouvrirExpedition(x);
+  if (E.avant < NB_ETAPES && etapeFinie(x, 2)) {
+    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !",
+            detail: `${E.premierCoup} question${E.premierCoup > 1 ? "s" : ""} sur ${E.total} réussie${E.premierCoup > 1 ? "s" : ""} du premier coup${gagnees ? ` · +${gagnees} empreintes` : ""}`,
+            son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
+    if (gagnees) verifierOuverture();
+  }
+}

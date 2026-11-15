@@ -464,7 +464,7 @@ function afficherPageProgression() {
         <div class="pg-rang-carnet"><i class="jauge-jeu"><b style="width:${Math.round(100 * rc.part)}%"></b></i>
           <small>Carnet : ${nombre(rc.n)} espèces${rc.suivant ? ` · prochain rang : ${rc.suivant.nom}, à ${nombre(rc.suivant.seuil)}` : " · toutes les espèces du jeu !"}</small></div>
         <small>${(() => { const m = [0, 0, 0, 0]; for (const e of ESPECES.filter(estReconnue)) m[niveauTermine(e)]++;
-          return `Vos espèces : ${m[3]} familière${m[3] > 1 ? "s" : ""} · ${m[2]} comprise${m[2] > 1 ? "s" : ""} · ${m[1]} croisée${m[1] > 1 ? "s" : ""}`; })()}</small>
+          return `Vos espèces : ${m[3]} familière${m[3] > 1 ? "s" : ""} · ${m[2]} comprise${m[2] > 1 ? "s" : ""} · ${m[1]} reconnue${m[1] > 1 ? "s" : ""}`; })()}</small>
       </div>
       <div class="pg-favori">
         <p class="pg-petit-titre">Espèce favorite</p>

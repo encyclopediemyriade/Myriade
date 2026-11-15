@@ -619,6 +619,7 @@ function poserCases(espece, q) {
 }
 
 // ---- 6c. Vrai ou faux ---------------------------------------------
+let affirmationVraie = "";
 function poserVraiFaux(espece, q, bonne) {
   enTete(espece, true, true);
   document.getElementById("question").textContent = "Vrai ou faux ?";
@@ -626,6 +627,7 @@ function poserVraiFaux(espece, q, bonne) {
   const valeur = estVraie ? bonne : autresValeurs(q, bonne, espece)[0];
   const affirmation = document.getElementById("affirmation");
   affirmation.textContent = "« " + q.affirmation(valeur, espece) + " »";   // étape R184 : l'espèce (« s'accouple » chez les mammifères)
+  affirmationVraie = q.affirmation(bonne, espece);       // étape E2-4 : la phrase vraie, donnée après une erreur dans la rafale
   affirmation.classList.remove("cache");
   ajouterBouton("Vrai", estVraie);
   ajouterBouton("Faux", !estVraie);
@@ -1258,7 +1260,10 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
   if (session && session.focus && session.vie && session.vie.includes(champ) && !session.enRejeu) {
     session.rafale = session.rafale || [];
     const verite = (document.querySelector('#reponses button[data-juste="oui"]') || {}).textContent || "";
-    session.rafale.push({ texte: document.getElementById("affirmation").textContent, juste: !!estJuste, expl: explication, verite: verite.trim() });
+    // Étape E2-4 (n° 12.3) : après un « Vrai ou faux », l'explication est la phrase vraie (« Il est carnivore. »), plus « Son régime : carnivore. »
+    const vf = !document.getElementById("affirmation").classList.contains("cache") && affirmationVraie;
+    session.rafale.push({ texte: document.getElementById("affirmation").textContent, juste: !!estJuste, expl: vf ? affirmationVraie : explication, verite: verite.trim() });
+    affirmationVraie = "";
     const restent = session.vie.filter(c => !session.posees.includes(c));
     // Étape R189 (note n° 13 d'Aubin) : plus de « Juste. » (le bouton vert suffit) ; une erreur donne tout de suite la vraie information
     if (restent.length) {

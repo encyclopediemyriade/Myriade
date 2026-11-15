@@ -472,7 +472,7 @@ const SENS_MEDAILLE = ["", "Vous la reconnaissez à sa photo et à son allure", 
 // Étape R144 (07/11/2026, choix de l'utilisateur, proposition G revue) : les espèces n'ont plus de « médailles » (le mot est
 //   réservé aux lieux, R133) mais trois paliers de relation : Croisée (étape 1), Comprise (étape 2), Familière (Approfondir).
 //   Le calcul ne change pas (niveauTermine, medailleMax, colonnes bronze/argent/or des anecdotes) : seuls les mots et l'icône changent.
-const PALIERS_ESPECE = ["", "Croisée", "Comprise", "Familière"];
+const PALIERS_ESPECE = ["", "Reconnue", "Comprise", "Familière"];   // étape E2-3 (n° 13.1, choix d'Aubin du 14/11) : « Croisée » → « Reconnue »
 const CLASSES_PALIER = ["", "croisee", "comprise", "familiere"];   // classes CSS (couleurs vertes, plus de métal)
 function nomPalier(n) { return (PALIERS_ESPECE[n] || "").toLowerCase(); }
 

@@ -127,7 +127,7 @@ function carteEncyclopedie(espece, details) {
   const niveaux = [1, 2].map(n => champs.filter(c => niveauDonnee(espece, c) === n).length);
   details[espece.nom_courant] = `
     <h3>${espece.nom_courant}</h3>
-    <p class="statut">${termine >= 1 ? NOMS_MEDAILLE[termine] : "Pas encore croisée"}${estRenseigne(espece.rarete_observation) ? ` · ${espece.rarete_observation}` : ""}</p>
+    <p class="statut">${termine >= 1 ? NOMS_MEDAILLE[termine] : "Pas encore rencontrée"}${estRenseigne(espece.rarete_observation) ? ` · ${espece.rarete_observation}` : ""}</p>
     <div class="survol-global"><span class="survol-jauge"><i style="width:${pourcentage}%"></i></span><small>${trouvesFiche} sur ${champsFiche.length} trouvées</small></div>
     <div class="survol-rubriques">${rubriques}</div>
     <p class="survol-niveaux"><span class="niv">${dessinPoints(1)} Découvert ${niveaux[0]}</span><span class="niv">${dessinPoints(2)} Connu ${niveaux[1]}</span></p>
@@ -281,7 +281,7 @@ const RUBRIQUES_ESPECE = [
   { cle: "liens", nom: "Liens et protection", champs: ["plantes_liees","predateurs","defense_principale","danger_homme","statut_conservation"] },
   { cle: "traces", nom: "Traces et sons", champs: ["verbe_cri","cri_son","empreinte_nom","empreinte_choix","indice_presence"] },
 ];
-const NOMS_MEDAILLE = ["", "Espèce croisée", "Espèce comprise", "Espèce familière"];   // étape R144
+const NOMS_MEDAILLE = ["", "Espèce reconnue", "Espèce comprise", "Espèce familière"];   // étape E2-3 (n° 13.1) : « croisée » → « reconnue »   // étape R144
 let especeOuverte = null, ongletEspece = "portrait", positionEncyclopedie = 0;
 
 function rubriqueDe(q) {
@@ -416,7 +416,7 @@ function afficherPageEspece() {
       <button class="pe-retour" id="pe-retour">← Retour à l'encyclopédie</button>
       <aside class="pe-cote">
         <div class="pe-photo">${celluleImage(e)}${dessinRarete(e)}<span class="pe-forme cache"></span></div>${galeriePhotos(e)}
-        <div class="pe-medaille${termine ? "" : " vide"}">${medaille}<span><b>${termine ? NOMS_MEDAILLE[termine] : "Pas encore croisée"}</b><small>${detail}</small></span></div>
+        <div class="pe-medaille${termine ? "" : " vide"}">${medaille}<span><b>${termine ? NOMS_MEDAILLE[termine] : "Pas encore rencontrée"}</b><small>${detail}</small></span></div>
         <h1>${e.nom_courant}</h1>
         <div class="pe-sci">${e.nom_scientifique}</div>
         ${estReconnue(e) ? `<button class="pe-favori${especeFavorite === e.nom_courant ? " choisie" : ""}" id="pe-favori">${ETOILE}${especeFavorite === e.nom_courant ? "Mon espèce favorite" : "En faire mon espèce favorite"}</button>` : ""}

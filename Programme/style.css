@@ -3782,8 +3782,25 @@ button.pastille-carnet:hover { background: #fff; }
   .mai-d-case { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #CFC5AE; box-sizing: border-box; flex: none; display: grid; place-items: center; font-size: 12px; }
   .mai-defi.ok .mai-d-case { background: #3E7B55; border-color: #3E7B55; color: #fff; }
   .mai-d-texte { flex: 1; font-size: 13.5px; }
-  .mai-defi.ok .mai-d-texte { color: #5E584B; text-decoration: line-through; }
+  .mai-defi.ok .mai-d-texte { color: #5E584B; }   /* étape R218 : un défi réussi est coché, pas barré */
   .mai-defi > small { font-size: 12px; color: #5E584B; }
+  /* Étape R218 (n° 17, choix E) : tuile compacte de l'espèce du jour, série des défis et plume */
+  .mai-tuile-jour { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 1px solid var(--trait, #CFC5AE);
+    border-radius: 6px; background: #FBF8F1; font: inherit; color: #1F3A2E; text-align: left; cursor: pointer; }
+  .mai-tj-photo { width: 56px; height: 56px; flex: none; border-radius: 6px; overflow: hidden; background: #E4DCC9; }
+  .mai-tj-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mai-tj-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .mai-tj-texte small { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #8A4F1C; }
+  .mai-tj-texte b { font-size: 16px; font-weight: 600; line-height: 1.25; }
+  .mai-tj-coche { color: #3E7B55; font-size: 14px; }
+  .mai-tj-gain { font-size: 12.5px; color: #5E584B; }
+  .mai-tj-gain svg, .mai-tj-gain .pas { width: 13px; height: 13px; vertical-align: -2px; }
+  .mai-tuile-jour .mai-r-go { width: 32px; height: 32px; font-size: 12px; }
+  .mai-tuile-jour.faite .mai-r-go { background: #EFE7D6; }
+  .mai-serie { display: inline-flex; align-items: center; gap: 5px; }
+  .mai-plume { display: inline-flex; color: #3E7B55; }
+  .mai-plume.vide { color: #B9AF99; }
+  .mai-plume svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   /* L'espèce du jour (comme sur l'ancien accueil du téléphone) */
   #mai-jour { margin: 0; }
   #mai-jour .ph { min-height: 170px; }
@@ -4956,3 +4973,34 @@ button.pastille-carnet:hover { background: #fff; }
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
   #carte-rencontre.avec-postit .postit-rencontre, #carte-rencontre.avec-postit.tiroir-ouvert .postit-rencontre { transition: none; }
 }
+
+/* Étape E2-3 (15/11) : l'étape 2 « Ensemble, dans ce lieu » */
+.en-montrees { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 14px; margin: 6px 0 4px; }
+.en-montrees figure { margin: 0; width: 104px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.en-montrees img { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; }
+.en-montrees.nombreuses figure { width: 78px; }
+.en-montrees.nombreuses img { width: 64px; height: 64px; }
+.en-montrees figcaption { font-size: 12.5px; font-weight: 600; text-align: center; line-height: 1.25; }
+.en-consigne { margin: -4px 0 10px; font-size: 13px; color: var(--texte-doux); }
+.en-rep { display: flex; align-items: center; gap: 12px; font: inherit; color: inherit; cursor: pointer; }
+.en-rep img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex: none; }
+.en-texte { flex: 1; font-size: 15px; }
+.en-case { width: 20px; height: 20px; flex: none; border: 2px solid var(--trait); border-radius: 4px; box-sizing: border-box; display: grid; place-items: center; font-size: 12px; }
+.en-rep.coche { border: 2px solid var(--ocre); background: #fbf3e6; }
+.en-rep.coche .en-case { background: var(--ocre); border-color: var(--ocre); color: #fff; }
+.en-rep.coche .en-case::after { content: "✓"; }
+.en-rep.juste .en-case { background: var(--bon); border-color: var(--bon); color: #fff; }
+.en-rep.juste .en-case::after { content: "✓"; }
+.en-rep.oubliee { border-style: dashed; }
+.en-rep:disabled { cursor: default; color: inherit; }
+.en-carte .fp-pied { gap: 10px; }
+/* Étape E2-3 (n° 13.1) : la phrase sous la photo de fin de Rencontre */
+.rft-phrase-fin { margin: 10px 2px 0; font-size: 14.5px; line-height: 1.45; color: var(--texte); }
+/* Étape E2-3 (n° 12.5) : « À ne pas confondre », une ligne par espèce */
+.reperes .rp-conf ul { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.reperes .rp-conf-ligne { display: flex; align-items: center; gap: 10px; }
+.reperes .rp-conf-ligne img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex: none; }
+.reperes .rp-conf-ligne b { display: block; font-size: .88rem; }
+.reperes .rp-conf-ligne small { display: block; font-size: .8rem; color: inherit; line-height: 1.35; }
+/* Étape E2-4 (n° 25.6) : Coup d'œil, le bouton « Photo suivante » s'arrête au-dessus de la barre du bas */
+.cdo-suivant { scroll-margin-bottom: 84px; }

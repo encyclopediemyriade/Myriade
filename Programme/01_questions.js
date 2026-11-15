@@ -1434,10 +1434,101 @@ function saisonEnPhrase(v) {
 const GROUPES_GENERIQUES = ["bande", "troupe", "colonie", "banc", "volée", "groupe", "récif", "troupeau"];
 function groupePrecis(v) { return estRenseigne(v) && !String(v).startsWith("NA") && !GROUPES_GENERIQUES.includes(String(v).trim().toLowerCase()); }
 
+// ==================================================================
+// Étape E2-4 (15/11, n° 12.3, choix d'Aubin « tout en A ») : les affirmations du « Vrai ou faux » sont de vraies phrases,
+//   sans deux-points (« Il est herbivore. », « Face à un danger, elle se met en boule. ») ; il / elle selon l'espèce.
+//   Une valeur qu'une tournure ne sait pas écrire proprement garde l'ancienne forme (affirmationRepli).
+// ==================================================================
+function ilElle(e) { return e && e.genre_nom === "féminin" ? "elle" : "il"; }
+function IlElle(e) { return majuscule(ilElle(e)); }
+function sansPoint(t) { return String(t || "").trim().replace(/[.\s]+$/, ""); }
+const AFF_H_ASPIRES = /^(h[ée]risson|hanneton|hareng|hibou|homard|haricot|hêtre|héron|hamster|harle|hulotte)/i;
+function deElide(mot) { return /^[aeiouyéèêàâîïôûœ]/i.test(mot) || (/^h/i.test(mot) && !AFF_H_ASPIRES.test(mot)) ? "d'" : "de "; }
+const AFF_REGIME_F = { "suceur de sang": "suceuse de sang", "filtreur": "filtreuse" };
+const AFF_MILIEU = { "Falaises et rochers": "parmi les falaises et les rochers", "Alpages et pelouses d'altitude": "dans les alpages et les pelouses d'altitude",
+  "Forêt": "en forêt", "Campagne, haies et jardins": "dans la campagne, les haies et les jardins", "Rivières et torrents": "dans les rivières et les torrents",
+  "Landes et coteaux secs": "dans les landes et sur les coteaux secs", "Mares et étangs": "dans les mares et les étangs", "Lacs": "dans les lacs",
+  "Marais": "dans les marais", "Mer et océan": "en mer", "Estuaires et lagunes": "dans les estuaires et les lagunes", "Dunes et plages": "sur les dunes et les plages",
+  "Garrigue et maquis": "dans la garrigue et le maquis", "Eaux souterraines": "dans les eaux souterraines" };
+const AFF_DEFENSE = { "Fuite": "s'enfuit", "Refuge (terrier, eau, falaise)": "se réfugie dans un terrier, dans l'eau ou dans une falaise",
+  "Camouflage": "se fond dans le décor", "Morsure, cornes ou serres": "se défend avec ses dents, ses cornes ou ses serres", "Défense en groupe": "se défend en groupe",
+  "Odeur ou goût repoussant": "dégage une odeur ou un goût repoussant", "Venin, poison ou acide": "se défend par du venin, du poison ou de l'acide",
+  "Intimidation (se gonfle, siffle)": "cherche à intimider (se gonfle, siffle)", "Perte de la queue": "abandonne sa queue", "Perte d'un membre": "abandonne une patte",
+  "Se met en boule": "se met en boule", "Pinces": "se défend avec ses pinces", "Se cache dans sa coquille": "se cache dans sa coquille",
+  "Couleurs d'avertissement": "compte sur ses couleurs vives, qui servent d'avertissement", "Piquants ou poils urticants": "se protège par ses piquants ou ses poils urticants",
+  "Régurgitation": "régurgite le contenu de son estomac", "Fait le mort": "fait le mort" };
+const AFF_CHASSE = { "Poursuite": "poursuit ses proies", "Bond sur la proie": "bondit sur ses proies", "Affût": "guette ses proies à l'affût",
+  "Chasse en meute": "chasse en groupe", "Fouille du sol": "fouille le sol", "Pêche en plongée": "plonge pour pêcher",
+  "Piège en entonnoir (larve)": "creuse un piège en entonnoir (larve)", "Glanage sur le feuillage": "cherche ses proies sur le feuillage",
+  "Capture en vol": "attrape ses proies en vol", "Poursuite à la course": "poursuit ses proies à la course" };
+const AFF_NID = { "Falaise ou paroi rocheuse": "sur une falaise ou une paroi rocheuse", "Au sol": "au sol", "Cavité d'arbre": "dans un arbre creux",
+  "Arbre ou buisson": "dans un arbre ou un buisson", "Roselière ou végétation dense": "dans une roselière ou une végétation dense", "Terrier": "dans un terrier",
+  "Sur l'eau (nid flottant)": "sur l'eau, dans un nid flottant", "Bâtiment": "dans un bâtiment" };
+const AFF_PERIODE = { "Brame": "le « brame »", "Parade nuptiale": "la « parade nuptiale »", "Frai": "le « frai »", "Mise bas": "la « mise bas »",
+  "Essaimage": "l'« essaimage »", "Rut": "le « rut »", "Bouquinage": "le « bouquinage »" };
+const AFF_PATTES = { "aucune": "n'a aucune patte" };
+const INDICE_FEMININ = /^(toile|mue|exuvie|morsure|odeur|forte|fiente|crotte|pomme|plumée|trace|coquille|loge|capsule)\b/i;
+const INDICE_MASCULIN = /^(guano|boutis|igloo|amas|dôme|cocon|chant|nid|trou|turricule|terrier|reste|bain)\b/i;
+const INDICE_INVARIABLE = /^(boutis|amas)\b/i;
+function affirmationRepli(debut, v) { return `${debut} : ${minuscule(sansPoint(v))}.`; }
+// Une liste coupée aux virgules, sauf entre parenthèses ; « Poissons : carpes, tanches » devient « poissons (carpes, tanches) »
+function elementsListe(v) {
+  const t = sansPoint(v).replace(/^([^:(]+?)\s*:\s*(.+)$/, "$1 ($2)");
+  const out = []; let cur = "", prof = 0;
+  for (const c of t) { if (c === "(") prof++; if (c === ")") prof--; if ((c === "," || c === ";") && prof <= 0) { out.push(cur.trim()); cur = ""; } else cur += c; }
+  out.push(cur.trim());
+  return out.filter(Boolean);
+}
+function affProies(v, e) {
+  const items = elementsListe(v);
+  if (!items.length || items.some(t => /:/.test(t))) return affirmationRepli("Il se nourrit de", v);
+  const morceaux = items.map(t => {
+    t = minuscule(t);
+    if (/^(de |d'|du |des )/.test(t)) return t;
+    const m = t.match(/^(surtout|parfois|notamment|aussi|et|plus rarement|en hiver,?)\s+(.*)$/);
+    if (m) return `${m[1]} ${/^(de |d'|du |des )/.test(m[2]) ? m[2] : deElide(m[2]) + m[2]}`;
+    return deElide(t) + t;
+  });
+  const liste = morceaux.length > 1 ? morceaux.slice(0, -1).join(", ") + (/^(surtout|parfois|notamment|aussi|et|plus rarement)/.test(morceaux[morceaux.length - 1]) ? ", " : " et ") + morceaux[morceaux.length - 1] : morceaux[0];
+  return `${IlElle(e)} se nourrit ${liste}.`;
+}
+function affPredateurs(v, e) {
+  const items = sansPoint(v).split(/\s*[,;]\s*/).filter(Boolean);
+  const morceaux = [];
+  for (let t of items) {
+    t = minuscule(t);
+    const base = t.replace(/\s*\(.*\)\s*$/, "").trim(), reste = t.slice(base.length);
+    const premier = base.split(/\s+/)[0];
+    if (/^(peu|aucun|pas|rarement|chasse|routes|collisions|pollution|humain|homme|l'homme)\b/.test(base)) {
+      if (/^(humain|homme)$/.test(base)) { morceaux.push("l'humain" + reste); continue; }
+      return affirmationRepli("Ses prédateurs", v);
+    }
+    if (/^autres?\b/.test(base)) { morceaux.push("d'" + t); continue; }
+    if (/^chats?( domestiques?)?$/.test(base)) { morceaux.push((/^chats/.test(base) ? "des " + base : "le " + base) + reste); continue; }
+    const sp = typeof especeNommee === "function" ? especeNommee(base) : null;
+    if (sp && !sp.hors_jeu && typeof nomAvecArticle === "function" && sansAccent(sp.nom_courant).startsWith(sansAccent(base))) { morceaux.push(nomAvecArticle(sp) + reste); continue; }
+    if (/[sx]$/.test(premier)) { morceaux.push("des " + t); continue; }
+    return affirmationRepli("Ses prédateurs", v);
+  }
+  if (!morceaux.length) return affirmationRepli("Ses prédateurs", v);
+  const liste = morceaux.length > 1 ? morceaux.slice(0, -1).join(", ") + " et " + morceaux[morceaux.length - 1] : morceaux[0];
+  return `${IlElle(e)} peut être ${e && e.genre_nom === "féminin" ? "chassée" : "chassé"} par ${liste}.`;
+}
+function affIndice(v, e) {
+  const t = minuscule(sansPoint(v)), premier = t.split(/\s+/)[0];
+  let det;
+  if ((/[sx]$/.test(premier) && !INDICE_INVARIABLE.test(t)) || /^os\b/.test(t)) det = "ses ";
+  else if (INDICE_FEMININ.test(t)) det = /^[aeiouéèêh]/i.test(t) ? "son " : "sa ";
+  else if (INDICE_MASCULIN.test(t)) det = "son ";
+  else return affirmationRepli("Un indice de sa présence", v);
+  return `On repère souvent sa présence à ${det}${t}.`;
+}
+function affTable(table, v, faire, repli) { const p = table[sansPoint(v)] || table[majuscule(sansPoint(v))]; return p ? faire(p) : affirmationRepli(repli, v); }
+
 const QUESTIONS = [
   { champ: "regime_alimentaire_type", pictos: true, niveau: 1, libelle: "Régime",
     question: "Quel est son régime alimentaire ?",
-    affirmation: v => `Son régime alimentaire : ${v}.`,
+    affirmation: (v, e) => `${IlElle(e)} est ${ilElle(e) === "elle" && AFF_REGIME_F[minuscule(v)] ? AFF_REGIME_F[minuscule(v)] : minuscule(v)}.`,   // E2-4
     inverse: v => `Lequel est ${v} ?`,
     explication: e => `Son régime : ${e.regime_alimentaire_type}.` },
 
@@ -1446,7 +1537,7 @@ const QUESTIONS = [
   // « Lequel vit en groupe appelé bande ? » avait plusieurs bonnes réponses (mésange, mais aussi pigeon ramier…).
   { champ: "nom_groupe", niveau: 3, libelle: "Groupe", accepter: v => groupePrecis(v),
     question: "Comment appelle-t-on un groupe de cette espèce ?",
-    affirmation: v => `Un groupe de cette espèce s'appelle : ${v.toLowerCase()}.`,
+    affirmation: v => `En groupe, on parle de « ${v.toLowerCase()} ».`,   // E2-4
     inverse: v => `Lequel vit en groupe appelé « ${v.toLowerCase()} » ?`,
     explication: e => `Un groupe s'appelle : ${e.nom_groupe.toLowerCase()}.` },
 
@@ -1456,7 +1547,7 @@ const QUESTIONS = [
   { champ: "nom_petit", pasDansLeNom: true, niveau: 1, libelle: "Petit",
     accepter: v => REGLES_AVANT_227 || !/^(poussin|oisillon|têtard|larve)\b/i.test(String(v).trim()),
     question: "Comment s'appelle son petit ?",
-    affirmation: v => `Son petit s'appelle : ${v.toLowerCase()}.`,
+    affirmation: v => `On appelle son petit « ${v.toLowerCase()} ».`,   // E2-4
     inverse: v => `Lequel a pour petit : « ${v.toLowerCase()} » ?`,
     explication: e => `Son petit s'appelle : ${e.nom_petit.toLowerCase()}.` },
 
@@ -1489,7 +1580,7 @@ const QUESTIONS = [
     question: e => modeItems(e, "proies") ? "Lequel de ces aliments mange-t-il ?" : "Que mange-t-il ?",
     tirer: e => modeItems(e, "proies") ? itemAuHasard(e, "proies") : e.proies,
     affichageFiche: e => majuscule(e.proies),
-    affirmation: v => `Il se nourrit de : ${minuscule(v)}.`,
+    affirmation: (v, e) => affProies(v, e),   // E2-4
     inverse: v => `Lequel se nourrit de : ${minuscule(v)} ?`,
     explication: (e, v) => `Il se nourrit de : ${minuscule(e.proies)}.` },
 
@@ -1497,7 +1588,7 @@ const QUESTIONS = [
     question: e => modeItems(e, "predateurs") ? "Lequel de ces animaux est un de ses prédateurs ?" : "Qui sont ses prédateurs ?",
     tirer: e => modeItems(e, "predateurs") ? itemAuHasard(e, "predateurs") : e.predateurs,
     affichageFiche: e => majuscule(e.predateurs),
-    affirmation: v => `Ses prédateurs : ${minuscule(v)}.`,
+    affirmation: (v, e) => affPredateurs(v, e),   // E2-4
     inverse: v => `Lequel a pour prédateurs : ${minuscule(v)} ?`,
     explication: (e, v) => `Ses prédateurs : ${minuscule(e.predateurs)}.` },
 
@@ -1507,7 +1598,7 @@ const QUESTIONS = [
   // l'espèce vit (le principal et les secondaires). Aucun piège n'est donc "un peu vrai".
   { champ: "milieu_principal", pictos: true, niveau: 1, libelle: "Milieu", formats: ["qcm", "vraifaux"],
     question: "Où vit-il le plus souvent ?",
-    affirmation: v => `Il vit le plus souvent ici : ${minuscule(v)}.`,
+    affirmation: (v, e) => affTable(AFF_MILIEU, v, p => `${IlElle(e)} vit surtout ${p}.`, "Il vit le plus souvent ici"),   // E2-4
     pieges: e => {
       const lesSiens = milieuxATeviter(e);              // les siens ET leurs voisins (étape 77)
       // Poissons (étape 31) : proposer une forêt ou un alpage n'a aucun sens. Les mauvaises
@@ -1548,7 +1639,7 @@ const QUESTIONS = [
   { champ: "nom_logis", pasDansLeNom: true, niveau: 3, libelle: "Abri",
     accepter: v => !/^(terrier|nid|gîte|tanière|sous pierres|abri|fissure)/i.test(v),
     question: "Comment s'appelle son abri ?",
-    affirmation: v => `Son abri s'appelle : ${minuscule(v)}.`,
+    affirmation: v => `On appelle son abri « ${minuscule(sansPoint(v))} ».`,   // E2-4
     inverse: v => `Lequel a pour abri : ${minuscule(v)} ?`,
     explication: (e, v) => `Son abri : ${minuscule(v)}.` },
 
@@ -1656,7 +1747,7 @@ const QUESTIONS = [
   { champ: "nom_femelle", niveau: 3, libelle: "Femelle", formats: ["qcm", "vraifaux"],
     accepter: v => !/femelle|renarde|louve|blairelle/i.test(v),
     question: "Comment appelle-t-on la femelle ?",
-    affirmation: v => `La femelle s'appelle : ${v.toLowerCase()}.`,
+    affirmation: v => `On appelle la femelle « ${v.toLowerCase()} ».`,   // E2-4
     explication: (e, v) => `La femelle s'appelle : ${v.toLowerCase()}.` },
 
   // ---- Ajoutées à l'étape 24 (colonnes à liste fermée du tableur V16) ----
@@ -1669,13 +1760,13 @@ const QUESTIONS = [
   { champ: "defense_principale", pictos: true, niveau: 2, libelle: "Défense", formats: ["qcm", "vraifaux"],
     accepter: v => v !== "Fuite",
     question: "Quelle est sa principale défense ?",
-    affirmation: v => `Sa principale défense : ${minuscule(v)}.`,
+    affirmation: (v, e) => affTable(AFF_DEFENSE, v, p => `Face à un danger, ${ilElle(e)} ${p}.`, "Sa principale défense"),   // E2-4
     pieges: e => autresDeLaListe(e, "defense_principale", "defenses_secondaires").filter(v => v !== "Fuite"),
     explication: (e, v) => `Sa principale défense : ${minuscule(v)}.` },
 
   { champ: "chasse_principale", pictos: true, niveau: 2, libelle: "Chasse", formats: ["qcm", "vraifaux"],
     question: "Comment chasse-t-il le plus souvent ?",
-    affirmation: v => `Sa façon de chasser : ${minuscule(v)}.`,
+    affirmation: (v, e) => affTable(AFF_CHASSE, v, p => `Pour chasser, ${ilElle(e)} ${p}.`, "Sa façon de chasser"),   // E2-4
     pieges: e => autresDeLaListe(e, "chasse_principale", "chasses_secondaires"),
     explication: (e, v) => `Sa façon de chasser : ${minuscule(v)}.` },
 
@@ -1683,7 +1774,7 @@ const QUESTIONS = [
   // (un indice de reptile pour un oiseau…), pour qu'aucun ne soit "un peu vrai".
   { champ: "indice_presence", pictos: true, niveau: 2, libelle: "Indice", formats: ["qcm", "vraifaux"],
     question: "Quel indice trahit sa présence ?",
-    affirmation: v => `Un indice de sa présence : ${minuscule(v)}.`,
+    affirmation: (v, e) => affIndice(v, e),   // E2-4
     pieges: e => [...new Set(ESPECES.filter(a => a.onglet !== e.onglet && estRenseigne(a.indice_presence)).map(a => a.indice_presence))]
                    .filter(v => v !== e.indice_presence),
     explication: (e, v) => `Un indice de sa présence : ${minuscule(v)}.` },
@@ -1718,7 +1809,7 @@ const QUESTIONS = [
 
   { champ: "emplacement_nid", pictos: true, niveau: 2, libelle: "Nid", formats: ["qcm", "vraifaux"],
     question: "Où fait-il son nid ?",
-    affirmation: v => `Il fait son nid ici : ${minuscule(v)}.`,
+    affirmation: (v, e) => affTable(AFF_NID, v, p => `${IlElle(e)} niche ${p}.`, "Il fait son nid ici"),   // E2-4
     pieges: e => autresDeLaListe(e, "emplacement_nid"),
     explication: (e, v) => `Il fait son nid ici : ${minuscule(v)}.` },
 
@@ -1806,7 +1897,7 @@ const QUESTIONS = [
   { champ: "nombre_pattes", pictos: true, niveau: 1, libelle: "Pattes", formats: ["qcm", "vraifaux"],
     valeur: e => valeurPortrait(e, "nombre_pattes"),
     question: "Combien de pattes a-t-il ?",
-    affirmation: v => `Nombre de pattes : ${minuscule(v)}.`,
+    affirmation: (v, e) => `${IlElle(e)} ${AFF_PATTES[minuscule(v)] || `a ${minuscule(v)} pattes`}.`,   // E2-4
     pieges: e => autresDeLaListe(e, "nombre_pattes"),
     explication: (e, v) => v === "Aucune" ? "Il n'a aucune patte." : `Il a ${minuscule(v)} pattes.` },
 
@@ -1879,7 +1970,7 @@ const QUESTIONS = [
   { champ: "periode_reproduction_nom", niveau: 3, libelle: "Nom de la reproduction", formats: ["qcm", "vraifaux"],
     accepter: v => ["Brame", "Essaimage"].includes(v),
     question: "Comment appelle-t-on sa période de reproduction ?",
-    affirmation: v => `Sa période de reproduction s'appelle : ${minuscule(v)}.`,
+    affirmation: (v, e) => affTable(AFF_PERIODE, v, p => `Chez ${e && e.genre_nom === "féminin" ? "elle" : "lui"}, la période de reproduction s'appelle ${p}.`, "Sa période de reproduction s'appelle"),   // E2-4
     pieges: e => autresDeLaListe(e, "periode_reproduction_nom").filter(v => !(e.periode_reproduction_nom === "Brame" && v === "Rut")),
     explication: (e, v) => `Sa période de reproduction s'appelle : ${minuscule(v)}.` },
 

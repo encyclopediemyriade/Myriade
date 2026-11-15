@@ -109,11 +109,43 @@ function blocReperes(espece, opts = {}) {
     const g = confusionDe(espece);
     if (g) {
       const autres = g.especes.filter(n => n !== espece.nom_courant);
-      confusion = `<p class="rp-confusion"><small>À ne pas confondre avec ${echapper(listeDeNoms(autres))}</small>${echapper(majuscule(g.critere))}</p>`;
+      confusion = lignesNePasConfondre(espece, autres, courante)
+        || `<p class="rp-confusion"><small>À ne pas confondre avec ${echapper(listeDeNoms(autres))}</small>${echapper(majuscule(g.critere))}</p>`;
     }
   }
   const titre = opts.titre || (opts.fin ? "Ses repères" : "Pour la reconnaître · retenez-les");
   return `<div class="reperes${opts.fin ? " fin" : ""}" data-espece="${echapper(espece.nom_courant)}"><p class="rp-titre">${titre}</p>${onglets}${listes}${confusion}</div>`;
+}
+// Étape E2-3 (n° 12.5, choix d'Aubin du 14/11) : « À ne pas confondre » en une ligne par espèce (3 au plus) : la vignette,
+//   puis 2 repères vérifiés — le premier porte sur la même partie du corps chez toutes (cou contre cou), le second est un autre
+//   repère propre à l'espèce. Sans partie commune vérifiée : l'ancien affichage (le critère du groupe).
+// Deux repères d'une même partie « diffèrent » vraiment : moins de la moitié de leurs mots en commun
+//   (« Sous la queue : sombre, bout blanc » et « Queue sombre, bout blanc » disent la même chose)
+function motsRepere(t) { return new Set(String(t).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/[^a-z]+/).filter(w => w.length >= 3)); }
+function reperesDifferent(a, b) {
+  const A = motsRepere(a), B = motsRepere(b), communs = [...A].filter(w => B.has(w)).length, tous = new Set([...A, ...B]).size;
+  return tous > 0 && communs / tous < 0.5;
+}
+function lignesNePasConfondre(espece, autres, forme) {
+  const r = reperesDe(espece);
+  if (!r) return "";
+  const mesReperes = reperesPourForme(r, forme);
+  const deLAutre = nom => { const o = especeParNom(nom), ro = o && reperesDe(o); return ro ? { o, l: reperesPourForme(ro, formePourPhoto(ro, "")) } : null; };
+  const candidats = autres.map(deLAutre).filter(Boolean);
+  for (const x of mesReperes) {
+    if (!x.partie || x.partie === "NA") continue;
+    const avec = candidats.map(c => ({ ...c, rp: c.l.find(y => y.partie === x.partie) })).filter(c => c.rp && reperesDifferent(c.rp.texte, x.texte)).slice(0, 2);
+    if (!avec.length) continue;
+    // le second repère : une 2e partie commune et différente chez toutes si elle existe (queue contre queue), sinon le repère suivant de l'espèce
+    const p2 = mesReperes.find(y => y.partie && y.partie !== "NA" && y.partie !== x.partie
+      && avec.every(c => { const z = c.l.find(w => w.partie === y.partie); return z && reperesDifferent(z.texte, y.texte); }));
+    const second = (liste, partie) => (p2 && liste.find(y => y.partie === p2.partie)) || liste.find(y => y.partie !== partie && y.partie !== "NA") || null;
+    const ligne = (e, rp, l) => { const s2 = second(l, rp.partie);
+      return `<li class="rp-conf-ligne"><img src="${photoMini(photoEsp(e))}" alt=""><span><b>${echapper(e.nom_courant)}</b>
+        <small>${echapper(majuscule(rp.texte))}${s2 ? ` · ${echapper(s2.texte)}` : ""}</small></span></li>`; };
+    return `<div class="rp-confusion rp-conf"><small>À ne pas confondre</small><ul>${ligne(espece, x, mesReperes)}${avec.map(c => ligne(c.o, c.rp, c.l)).join("")}</ul></div>`;
+  }
+  return "";
 }
 // Étape R195 : toucher un onglet montre les repères de cette forme (un seul écouteur pour toute la page)
 let ONGLETS_REPERES_BRANCHES = false;

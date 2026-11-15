@@ -489,14 +489,45 @@ function nouveauxDefis(t) {
 }
 function avanceeDefi(t, d) { const s = SORTES_DEFI[d.sorte]; return s ? Math.max(0, Math.min(d.but, s.mesure(t, d))) : 0; }
 // Met à jour les défis du territoire : nouveaux chaque jour ; marque ceux qui viennent d'être réussis (rendus)
+// Étape R218 (n° 17, choix E d'Aubin du 13/11) : les défis du jour se renouvellent à 6 h du matin (pas à minuit) :
+//   une partie tard le soir compte encore pour la journée.
+function jourDefis() {
+  const d = new Date(Date.now() - 6 * 3600 * 1000);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+// Étape R218 : la série « N jours d'affilée » = les journées (de 6 h à 6 h) où au moins un défi du jour a été réussi.
+//   Une plume = un jour de grâce : un seul jour manqué ne casse pas la série (la plume sert alors, et revient après 7 jours).
+//   Rien n'est jamais montré quand la série s'arrête : elle repart simplement de 1 (règle « non anxiogène »).
+const JOURS_POUR_PLUME = 7;
+function ecartJours(a, b) { return Math.round((Date.parse(b + "T12:00:00") - Date.parse(a + "T12:00:00")) / 86400000); }
+function noterJourDeDefi() {
+  const jour = jourDefis(), s = suivi.serieDefis = suivi.serieDefis || { dernier: "", n: 0, plume: true, depuisPlume: 0 };
+  if (s.dernier === jour) return;
+  const ecart = s.dernier ? ecartJours(s.dernier, jour) : 99;
+  if (ecart === 1) s.n++;
+  else if (ecart === 2 && s.plume) { s.n++; s.plume = false; s.depuisPlume = 0; }   // le jour de grâce sert
+  else s.n = 1;
+  s.dernier = jour;
+  if (!s.plume && ++s.depuisPlume >= JOURS_POUR_PLUME) s.plume = true;
+  s.record = Math.max(s.record || 0, s.n);
+}
+// La série telle qu'on la montre aujourd'hui (0 si elle est arrêtée) et si la plume est disponible
+function serieDefis() {
+  const s = suivi && suivi.serieDefis;
+  if (!s || !s.dernier) return { n: 0, plume: true };
+  const ecart = ecartJours(s.dernier, jourDefis());
+  const vivante = ecart <= 1 || (ecart === 2 && s.plume);
+  return { n: vivante ? s.n : 0, plume: vivante ? s.plume : true };
+}
 function verifierDefis(t) {
   if (!suivi || !t) return [];
   suivi.defis = suivi.defis || {};
   let d = suivi.defis[t];
-  if (!d || d.jour !== aujourdhui() || d.liste.some(x => !SORTES_DEFI[x.sorte])) { d = suivi.defis[t] = { jour: aujourdhui(), liste: nouveauxDefis(t) }; sauvegarder(); }
+  if (!d || d.jour !== jourDefis() || d.liste.some(x => !SORTES_DEFI[x.sorte])) { d = suivi.defis[t] = { jour: jourDefis(), liste: nouveauxDefis(t) }; sauvegarder(); }
   const reussis = d.liste.filter(x => !x.reussi && avanceeDefi(t, x) >= x.but);
   if (reussis.length) {
     reussis.forEach(x => x.reussi = true);
+    noterJourDeDefi();   // étape R218 : la série des jours
     suivi.defisReussis = (suivi.defisReussis || 0) + reussis.length;
     ajouterEmpreinteBonus(t, POINTS_DEFI * reussis.length);
     if (typeof verifierOuverture === "function") verifierOuverture();
@@ -782,19 +813,43 @@ function dessinerMaison() {
   // Étape R183b (choix d'Aubin) : plus de carnet sur l'accueil (il est dans le Profil et l'Encyclopédie) ; l'espèce du jour
   //   et les défis du jour remontent juste sous la carte, pour ancrer le jeu dans le quotidien.
   // Étape R189 (note n° 8 d'Aubin) : l'espèce du jour déjà rencontrée passe sous les défis du jour, qui remontent
-  const jourFait = typeof especeDuJour === "function" && especeDuJourFaite(especeDuJour());
+  // Étape R218 (n° 17, choix E d'Aubin du 13/11) : entre « Bonjour » et « Reprendre », deux tuiles compactes : l'espèce du jour
+  //   (une vraie photo, en une ligne) puis les défis du jour (avec la série de jours) ; « Reprendre » reste visible sans défiler.
   zone.innerHTML = `<div class="mai-page">
       <div class="mai-bonjour"><h1>Bonjour${p ? ` ${echapper(p)}` : ""}</h1><p>${date.charAt(0).toUpperCase() + date.slice(1)}</p></div>
-      ${reprendre}
-      ${jourFait ? "" : `<div class="ac-jour" id="mai-jour"></div>`}
+      <button type="button" class="mai-tuile-jour" id="mai-jour"></button>
       <section class="mai-defis" id="mai-defis"></section>
-      ${jourFait ? `<div class="ac-jour" id="mai-jour"></div>` : ""}
+      ${reprendre}
       </div>`;   // étape R192 (n° 11.7, choix d'Aubin) : plus de lien « Tous les territoires » ici — la carte a son onglet
   zone.querySelectorAll(".mai-rond").forEach(b => b.onclick = () => { const e = especeParNom(b.dataset.nom); if (e) ouvrirPageEspece(e); });
   document.getElementById("mai-reprendre").onclick = () => { montrer("accueil"); if (typeof dessinerCouverture === "function") dessinerCouverture(); window.scrollTo(0, 0); };   // étape M23 : vers la page du territoire
   dessinerDefisMaison(t);
-  if (typeof dessinerEspeceDuJour === "function") dessinerEspeceDuJour("mai-jour");
+  dessinerTuileJour();   // étape R218
   if (avantProchainTerritoire() === 0) setTimeout(verifierOuverture, 300);   // étape R152 : palier atteint (par ex. règle du premier voyage) → le territoire s'ouvre, avec sa fête
+}
+// Étape R218 (n° 17, choix E) : la tuile de l'espèce du jour, en une ligne : une vraie photo, « Espèce du jour », le nom
+//   (caché tant qu'elle n'est pas rencontrée) et le gain ; un toucher la fait rencontrer (ou ouvre sa fiche une fois rencontrée).
+//   C'est un bonus : elle ne compte pas dans la série des défis.
+function dessinerTuileJour() {
+  const zone = document.getElementById("mai-jour");
+  if (!zone) return;
+  const e = typeof especeDuJour === "function" ? especeDuJour() : null;
+  if (!e) { zone.classList.add("cache"); return; }
+  const connue = estReconnue(e), faite = especeDuJourFaite(e);
+  const duJour = connue && typeof photoDuJourDe === "function" ? photoDuJourDe(e) : null;
+  const src = duJour && duJour.src ? duJour.src : e.photo;
+  const image = estRenseigne(src) ? `<img src="${photoMini(src)}" alt="" onerror="this.onerror=null;this.src='${src}'">` : "";
+  zone.className = "mai-tuile-jour" + (faite ? " faite" : "");
+  zone.setAttribute("aria-label", faite ? `Espèce du jour : ${e.nom_courant}, rencontrée. Voir sa fiche` : connue ? `Espèce du jour : ${e.nom_courant}. La retrouver en Rencontre` : "Espèce du jour : une espèce à découvrir. La rencontrer");
+  zone.innerHTML = `<span class="mai-tj-photo">${image}</span>
+      <span class="mai-tj-texte"><small>Espèce du jour</small>
+        <b>${connue ? echapper(e.nom_courant) : "Une espèce à découvrir"}${faite ? ` <span class="mai-tj-coche" aria-hidden="true">✓</span>` : ""}</b>
+        ${faite ? "" : `<span class="mai-tj-gain">+${GAIN_ESPECE_DU_JOUR} ${PAS_SVG}</span>`}</span>
+      <span class="mai-r-go" aria-hidden="true">▶</span>`;
+  zone.onclick = () => {
+    if (faite && connue) { ouvrirPageEspece(e); return; }
+    lancerRencontreAvec(e); rencontreDuJour = e.nom_courant;
+  };
 }
 // Les défis du jour du territoire, en liste courte (mêmes défis que la page du territoire)
 function dessinerDefisMaison(t) {
@@ -803,11 +858,18 @@ function dessinerDefisMaison(t) {
   verifierDefis(t);
   const liste = (suivi && suivi.defis && suivi.defis[t]) ? suivi.defis[t].liste : [];
   if (!liste.length) { zone.classList.add("cache"); return; }
-  zone.innerHTML = `<div class="mai-d-haut"><span>Défis du jour</span><small>+${POINTS_DEFI} ${PAS_SVG} chacun · nouveaux demain</small></div>`
+  // Étape R218 (choix E) : à droite du titre, la série « N jours d'affilée » et la plume (jour de grâce) ; un défi réussi est
+  //   coché, pas barré ; le compteur (« 2/5 ») seulement sur le défi en cours (le premier pas encore réussi).
+  const serie = serieDefis();
+  const plume = `<span class="mai-plume${serie.plume ? "" : " vide"}" role="img" aria-label="${serie.plume ? "Jour de grâce disponible" : "Jour de grâce déjà utilisé"}" title="${serie.plume ? "Jour de grâce disponible : un jour sans défi ne casse pas la série" : `Jour de grâce utilisé : il revient après ${JOURS_POUR_PLUME} jours`}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4c-8 0-13 5-13 12v4"/><path d="M7 16c5 0 10-3 11-9"/><path d="M4 20h6"/></svg></span>`;
+  const droite = serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée${plume}</small>`
+                              : `<small>+${POINTS_DEFI} ${PAS_SVG} chacun</small>`;
+  const enCours = liste.findIndex(d => !(d.reussi || avanceeDefi(t, d) >= d.but));
+  zone.innerHTML = `<div class="mai-d-haut"><span>Défis du jour</span>${droite}</div>`
     + liste.map((d, i) => {
       const fait = avanceeDefi(t, d), ok = d.reussi || fait >= d.but, clic = (d.exp || d.sorte === "inedites") && !ok;
       return `<${clic ? "button type=\"button\"" : "div"} class="mai-defi${ok ? " ok" : ""}" data-i="${i}"><span class="mai-d-case" aria-hidden="true">${ok ? "✓" : ""}</span>
-        <span class="mai-d-texte">${texteDefi(d)}</span><small>${ok ? "réussi" : `${fait}/${d.but}`}</small></${clic ? "button" : "div"}>`;
+        <span class="mai-d-texte">${texteDefi(d)}</span>${i === enCours && d.but > 1 ? `<small>${fait}/${d.but}</small>` : ""}</${clic ? "button" : "div"}>`;
     }).join("");
   zone.querySelectorAll("button.mai-defi").forEach(b => b.onclick = () => {
     const d = liste[Number(b.dataset.i)];
