@@ -8784,6 +8784,11 @@ const CREDITS_PHOTOS = {
   "auteur": "Donald Davesne",
   "licence": "CC BY 4.0",
   "source": "https://www.inaturalist.org/observations/247185297"
+ },
+ "pie_grieche_meridionale_3": {
+  "auteur": "Bastien Le Mort",
+  "licence": "CC BY 4.0",
+  "source": "https://www.inaturalist.org/observations/369735431"
  }
 };
 

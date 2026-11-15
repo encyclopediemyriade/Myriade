@@ -1348,6 +1348,7 @@ const CADRAGE = {
   "pie_grieche_grise_3.jpg": [62, 33],
   "pie_grieche_meridionale.jpg": [45, 22],
   "pie_grieche_meridionale_2.jpg": [53, 31],
+  "pie_grieche_meridionale_3.jpg": [55, 30],
   "pieride_de_la_rave.jpg": [62, 51],
   "pieride_de_la_rave_2.jpg": [54, 57],
   "pieride_de_la_rave_3.jpg": [64, 57],

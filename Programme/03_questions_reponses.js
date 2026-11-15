@@ -99,6 +99,9 @@ function nouvelleRencontre() {
   // Étape 140 : pareil au premier cri d'une partie du Carnet de terrain
   // Étape 164 : dans la Rencontre, les reprises et la question bonus sont annoncées (sinon elles arrivent de nulle part)
   if (session && session.focus && !defi) {
+    // Étape E2-7 (note 12) : avant la première question sur sa vie, l'écran « Sa vie » montre les faits (découvrir avant d'être interrogé)
+    if (!tirage.rejeu && !session.vieMontree && (session.vieFaits || []).length && (session.vie || []).includes(tirage.champ)
+        && typeof montrerSaVie === "function") { session.vieMontree = true; montrerSaVie(tirage); return; }
     if (tirage.bonus && !session.bonusAnnonce) { session.bonusAnnonce = true; annoncerBonus(tirage); return; }
     if (tirage.rejeu && !tirage.bonus && !session.reprisesAnnoncees) { session.reprisesAnnoncees = true; annoncerReprises(tirage); return; }
   }
@@ -220,7 +223,9 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   // Quel format ?
   let format;
   // La bonne réponse : la valeur de la case, ou UNE valeur tirée au hasard si la case est une liste
-  const bonne = !q ? null : q.tirer ? q.tirer(espece) : valeurDe(espece, q);
+  let bonne = !q ? null : q.tirer ? q.tirer(espece) : valeurDe(espece, q);
+  // Étape E2-7 : une question « Sa vie » reprend la valeur du fait montré sur l'écran « Sa vie » (même tirage)
+  if (q && session && session.vieBonnes && Object.prototype.hasOwnProperty.call(session.vieBonnes, champ)) bonne = session.vieBonnes[champ];
   if (champ === IDENTIFICATION)      format = "identification";
   else if (q.format === "picto" && casesPossibles(espece, q).bonnes.length >= 2) {   // étape R119 : l'aspect, en pictos ou en cases
     const f = deuxChoix ? ["picto"] : ["picto", "cases"].filter(x => x !== dernierFormat);   // R146 : pas de cases à cocher quand on aide
@@ -262,7 +267,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   if (format === "qcm")            poserQcm(espece, q, bonne);
   if (format === "vraifaux")       poserVraiFaux(espece, q, bonne);
   if (session && session.vie && session.vie.includes(champ))   // étape RF1 ; RF2 : la rafale, « 2 / 3 »
-    document.getElementById("revision").textContent = session.enRejeu ? "Sa vie · à revoir" : `Sa vie · vrai ou faux · ${session.vie.indexOf(champ) + 1} / ${session.vie.length}`;
+    document.getElementById("revision").textContent = session.enRejeu ? "Sa vie · à revoir" : `Sa vie · vrai ou faux · ${session.vie.indexOf(champ) + 1} / ${session.vie.length}`;   // E2-7 : 2 questions après l'écran « Sa vie »
   if (format === "photos")         poserPhotos(espece, q, bonne);
   if (format === "estimation")     poserEstimation(espece, q);
   if (format === "empreinte-nom")   poserEmpreinteNom(espece, bonne);
@@ -626,7 +631,7 @@ function poserVraiFaux(espece, q, bonne) {
   const estVraie = Math.random() < 0.5;                  // une fois sur deux, l'affirmation est vraie
   const valeur = estVraie ? bonne : autresValeurs(q, bonne, espece)[0];
   const affirmation = document.getElementById("affirmation");
-  affirmation.textContent = "« " + q.affirmation(valeur, espece) + " »";   // étape R184 : l'espèce (« s'accouple » chez les mammifères)
+  affirmation.textContent = q.affirmation(valeur, espece);   // étape R184 : l'espèce (« s'accouple » chez les mammifères) ; E2-7 (note 11) : sans guillemets
   affirmationVraie = q.affirmation(bonne, espece);       // étape E2-4 : la phrase vraie, donnée après une erreur dans la rafale
   affirmation.classList.remove("cache");
   ajouterBouton("Vrai", estVraie);
@@ -1178,6 +1183,9 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     // un point gratuit) ; elle revient à la fin de l'étape, avec les autres choses manquées (R132, R146).
     if (session && session.focus && !session.enBonus && champ === IDENTIFICATION && session.physique && !session.dejaRejouees.includes(champ)) {
       session.dejaRejouees.push(champ);
+    } else if (session && session.focus && !session.enBonus && (session.vie || []).includes(champ)) {
+      // Étape E2-7 (note 12, choix 4A) : une question « Sa vie » ratée ne revient pas en fin de Rencontre (c'est une découverte) ;
+      //   la ligne de la carte est montrée tout de suite, et la question reviendra plus tard dans les révisions.
     } else if (session && session.focus && !session.enBonus && !session.dejaRejouees.includes(champ)) {
       session.rejouer.push({ champ });
       session.dejaRejouees.push(champ);
@@ -1266,12 +1274,11 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     affirmationVraie = "";
     const restent = session.vie.filter(c => !session.posees.includes(c));
     // Étape R189 (note n° 13 d'Aubin) : plus de « Juste. » (le bouton vert suffit) ; une erreur donne tout de suite la vraie information
-    if (restent.length) {
-      const c = session.rafale[session.rafale.length - 1];
-      retour.innerHTML = estJuste ? "" : `<span class="rafale-vraie">${c.verite ? `<b>C'est ${echapper(minuscule(c.verite))}.</b> ` : ""}${echapper(c.expl || "")}</span>`;
-      boutonSuivant.textContent = "Carte suivante →";
-    }
-    else retour.innerHTML = bilanRafale(session.rafale);
+    // Étape E2-7 (note 12, choix 4A) : après une erreur, la ligne de l'écran « Sa vie » revient (« Sur sa carte ») ; plus de bilan à la fin
+    const c = session.rafale[session.rafale.length - 1];
+    retour.innerHTML = estJuste ? "" : (typeof rappelSaVie === "function" ? rappelSaVie(champ, c.expl || "")
+      : `<span class="rafale-vraie">${echapper(c.expl || "")}</span>`);
+    if (restent.length) boutonSuivant.textContent = "Question suivante →";
   }
   if (session) session.dernierJuste = !!estJuste;      // étape RF2 : « avancer d'un toucher » après une bonne réponse
   boutonSuivant.classList.remove("cache");

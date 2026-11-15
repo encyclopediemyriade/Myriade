@@ -5010,3 +5010,15 @@ button.pastille-carnet:hover { background: #fff; }
   background: transparent; border: 1.5px solid rgba(255,255,255,.55); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
 .arc-caddie-bouton.on { background: #e8c9a0; border-color: #e8c9a0; color: #1F3A2E; }
 .arc-caddie-etat { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid currentColor; display: grid; place-items: center; font-size: 11px; }
+
+/* ---------- Étape E2-7 (note 12) : l'écran « Sa vie » (liste à pictos) et son rappel après une erreur ---------- */
+#reponses.annonce-etape .sa-vie { background: var(--carte); border: 1px solid var(--trait); border-radius: 14px; padding: 4px 16px; text-align: left; margin: 4px 0 6px; }
+.sa-vie .sv-ligne { border-bottom: 1px solid var(--verrou); }
+.sa-vie .sv-ligne:last-child { border-bottom: 0; }
+.sv-ligne { display: flex; gap: 14px; align-items: center; padding: 13px 0; font-size: 16px; line-height: 1.4; color: var(--texte); }
+.sv-picto { width: 40px; height: 40px; border-radius: 50%; background: #e7efe8; color: var(--territoire); display: flex; align-items: center; justify-content: center; flex: none; }
+.sv-texte { flex: 1; }
+.sv-suite { font-size: 13px; color: var(--texte-doux); margin: 4px 0 12px; text-align: left; }
+.sv-rappel { margin-top: 10px; text-align: left; }
+.sv-rappel-titre { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--texte-doux); margin-bottom: 6px; }
+.sv-rappel .sv-ligne { background: var(--carte); border: 2px solid var(--bon); border-radius: 14px; padding: 12px 14px; }

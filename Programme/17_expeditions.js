@@ -53,6 +53,7 @@ const ETAPES_JOUEES = [1, 2];
 //   espèce à l'autre), puis un fait ÉTONNANT (deux affirmations, une vraie). L'étape 2 ne garde que ce qui reste
 //   (une chose de vie manquée) ; elle deviendra « Leurs liens » (étape RF3).
 //   false = le jeu d'avant (étape 1 = l'allure, étape 2 = la vie). Copie complète du jeu d'avant : jeu_1.6.5.html.
+const VIE_QUESTIONS = 2;               // étape E2-7 (note 12) : des 3 faits montrés sur l'écran « Sa vie », 2 sont ensuite demandés en vrai ou faux
 const VIE_PAR_RENCONTRE = 3;           // étape RF1 : les choses de sa vie posées dans la Rencontre (RF2 : 3 cartes « vrai ou faux » ; 2 restent exigées)
 const NB_TRAITS_ALLURE = RENCONTRE_COMPLETE ? 1 : 2;   // étape 1 : les traits d'allure les plus parlants (ET1 : 2 au lieu de 4 ; RF1 : 1)
 const NB_TRAITS_ALLURE_AVANT = 4;      // étape ET1 : les traits 3 et 4 passent dans Approfondir, posés mais pas exigés (rien ne recule)
@@ -1060,6 +1061,57 @@ function vieRencontre(x, e) {
   const choix = [...possibles.filter(c => !vus.includes(c)), ...possibles.filter(c => vus.includes(c))].slice(0, n);
   sujetsVusExp[x.id] = choix;
   return choix;
+}
+// ---- Étape E2-7 (note 12, choix d'Aubin « 1A · 2B · 3A · 4A · 5A », présentation A « liste à pictos ») ----
+// L'écran « Sa vie » : avant les questions sur sa vie, les faits (3 au plus) sont montrés, chacun avec son picto ;
+// puis 2 vrai ou faux sur ces faits. Après une erreur, la ligne du fait revient (« Sur sa carte »).
+const PICTOS_VIE = {
+  mange: '<path d="M12 7V4M8 10L5 8M16 10l3-2M8 14H4.5M16 14h3.5M8.5 17.5l-3 2M15.5 17.5l3 2"/><ellipse cx="12" cy="13" rx="4" ry="6"/>',
+  nid: '<path d="M3 11h18M4 11c1 5 4 8 8 8s7-3 8-8"/><circle cx="10" cy="9.2" r="1.8"/><circle cx="14" cy="9.2" r="1.8"/>',
+  saison: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  nuit: '<path d="M19.5 14.5A8 8 0 1 1 9.5 4.5a6.5 6.5 0 0 0 10 10z"/>',
+  hiver: '<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/>',
+  defense: '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/>',
+  milieu: '<path d="M12 21V10M12 10c-4 0-6-3-6-6 4 0 6 2 6 6zM12 13c4 0 6-3 6-6-4 0-6 2-6 6z"/>',
+  trace: '<ellipse cx="12" cy="15" rx="4" ry="5"/><circle cx="6.5" cy="8" r="1.6"/><circle cx="10" cy="5.5" r="1.6"/><circle cx="14" cy="5.5" r="1.6"/><circle cx="17.5" cy="8" r="1.6"/>',
+  groupe: '<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 19c1-3 3-4.5 5-4.5s4 1.5 5 4.5M11 19c1-3 3-4.5 5-4.5s4 1.5 5 4.5"/>',
+  autre: '<circle cx="12" cy="12" r="7"/><path d="M12 8v5M12 16v.5"/>'
+};
+function sortePictoVie(champ) {
+  if (/regime|proies|chasse|alimen/.test(champ)) return "mange";
+  if (/nid|logis|abri|terrier/.test(champ)) return "nid";
+  if (/hiver|hiberna/.test(champ)) return "hiver";
+  if (/activite/.test(champ)) return "nuit";
+  if (/saison|periode|frai|ponte|reproduction|croiser|observation/.test(champ)) return "saison";
+  if (/defense|predateur/.test(champ)) return "defense";
+  if (/milieu|habitat/.test(champ)) return "milieu";
+  if (/indice|trace/.test(champ)) return "trace";
+  if (/groupe|social/.test(champ)) return "groupe";
+  return "autre";
+}
+function pictoVie(champ) {
+  return `<span class="sv-picto" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${PICTOS_VIE[sortePictoVie(champ)]}</svg></span>`;
+}
+function phraseFaitVie(espece, champ) {
+  const q = QUESTIONS.find(x => x.champ === champ);
+  if (!q || !q.affirmation) return "";
+  const v = session && session.vieBonnes && champ in session.vieBonnes ? session.vieBonnes[champ] : (q.tirer ? q.tirer(espece) : valeurDe(espece, q));
+  return q.affirmation(v, espece);
+}
+function ligneSaVie(champ, phrase) {
+  return `<div class="sv-ligne">${pictoVie(champ)}<span class="sv-texte">${echapper(phrase)}</span></div>`;
+}
+function montrerSaVie(tirage) {
+  const espece = session.focus;
+  const lignes = (session.vieFaits || []).map(c => { const p = phraseFaitVie(espece, c); return p ? ligneSaVie(c, p) : ""; }).join("");
+  const n = (session.vie || []).length;
+  carteAnnonce(espece, espece.nom_courant, "",
+    `<div class="sa-vie">${lignes}</div><p class="sv-suite">${n > 1 ? `${n} questions sur ces lignes, juste après.` : "Une question sur ces lignes, juste après."}</p>`,
+    "Continuer", tirage, false);
+  document.getElementById("revision").textContent = "Sa vie";
+}
+function rappelSaVie(champ, phrase) {
+  return `<div class="sv-rappel"><div class="sv-rappel-titre">Sur sa carte</div>${ligneSaVie(champ, phrase)}</div>`;
 }
 // Étape RF6 : quand la photo est reconnue, l'ensemble en pictogrammes (ce qu'on ne demande plus : couleur, robe, corps, bec)
 function pictosEnsemble(e) {

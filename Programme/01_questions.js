@@ -1556,7 +1556,7 @@ const QUESTIONS = [
   { champ: "verbe_cri", pasDansLeNom: true, niveau: 1, libelle: "Cri", formats: ["qcm", "photos"],
     accepter: v => String(v).trim().toLowerCase() !== "crie",
     question: "Quel est son cri ? On dit qu'il…",
-    affirmation: v => `Pour son cri, on dit qu'il ${v.toLowerCase()}.`,
+    affirmation: (v, e) => `Pour son cri, on dit qu'${ilElle(e)} ${v.toLowerCase()}.`,   // E2-7 : il / elle (note 8)
     inverse: v => `Lequel ${v.toLowerCase()} ?`,
     explication: e => `On dit qu'il ${e.verbe_cri.toLowerCase()}.` },
 
@@ -1787,7 +1787,7 @@ const QUESTIONS = [
   { champ: "saison_observation", pictos: true, niveau: 2, libelle: "Période de l'année", formats: ["qcm", "vraifaux"],
     ignorer: ["Toute l'année"],
     question: "À quelle période de l'année peut-on le croiser ?",
-    affirmation: v => `On peut le croiser ${minuscule(v)}.`,                          // étape R166 (avant : « croiser : en été »)
+    affirmation: (v, e) => `On peut ${e && e.genre_nom === "féminin" ? "la" : "le"} croiser ${minuscule(v)}.`,   // E2-7 : le / la (note 8)                          // étape R166 (avant : « croiser : en été »)
     // Étape R166 : vrai / faux, « Laquelle des deux ? » et photos — jamais une période qui a une saison en commun
     // (« On peut le croiser en été » n'est plus « faux » pour le hérisson, qu'on croise du printemps à l'automne).
     pieges: e => sansSaisonCommune(e, "saison_observation").filter(v => v !== "Toute l'année"),
@@ -1835,7 +1835,7 @@ const QUESTIONS = [
 
   { champ: "saison_frai", pictos: true, niveau: 3, libelle: "Frai", formats: ["qcm", "vraifaux"],
     question: "À quelle saison pond-il ses œufs ?",
-    affirmation: v => `Il pond ses œufs ${saisonEnPhrase(v)}.`,                     // étape R166 (avant : « à cette saison : … »)
+    affirmation: (v, e) => `${IlElle(e)} pond ses œufs ${saisonEnPhrase(v)}.`,   // E2-7 : il / elle (note 8)                     // étape R166 (avant : « à cette saison : … »)
     pieges: e => sansSaisonCommune(e, "saison_frai"),                               // étape R166 : jamais une saison en commun
     explication: (e, v) => `Il pond ses œufs ${saisonEnPhrase(v)}.` },
 
@@ -1984,10 +1984,10 @@ const QUESTIONS = [
   // le texte dit « s'accouple » (seMultiplie). Les autres familles gardent « se reproduit » (ponte, nid, frai).
   { champ: "saison_reproduction", pictos: true, niveau: 2, libelle: "Saison de reproduction", formats: ["qcm", "vraifaux"],
     question: e => accouplementSeul(e) ? "À quelle saison s'accouple-t-il ?" : "À quelle saison se reproduit-il ?",
-    affirmation: (v, e) => `Il ${accouplementSeul(e) ? "s'accouple" : "se reproduit"} ${saisonEnPhrase(v)}.`,   // étape R166 (avant : « à cette saison : … »)
+    affirmation: (v, e) => `${IlElle(e)} ${accouplementSeul(e) ? "s'accouple" : "se reproduit"} ${saisonEnPhrase(v)}.`,   // E2-7 : il / elle (note 8)   // étape R166 (avant : « à cette saison : … »)
     // Étape R149 : « Toute l'année » et « Du printemps à l'automne » couvrent plusieurs saisons ; R166 : règle commune (sansSaisonCommune)
     pieges: e => sansSaisonCommune(e, "saison_reproduction"),
-    explication: (e, v) => accouplementSeul(e) ? `Il s'accouple ${saisonEnPhrase(v)}.` : `Sa saison de reproduction : ${minuscule(v)}.` },
+    explication: (e, v) => accouplementSeul(e) ? `${IlElle(e)} s'accouple ${saisonEnPhrase(v)}.` : `Sa saison de reproduction : ${minuscule(v)}.` },
 
   // ---- Ajoutées à l'étape 28 : les empreintes -------------------------
   // "format" impose un format de question à part (partie 6f) :

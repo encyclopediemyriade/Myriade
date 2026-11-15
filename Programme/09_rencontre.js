@@ -63,7 +63,13 @@ function demarrerFocus(imposee, options = {}) {
   session.vie = [];
   session.etonnant = null;
   if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE) {
-    session.vie = vieRencontre(expeditionParId(options.expedition.id), espece);
+    // Étape E2-7 (note 12, choix d'Aubin « 1A · 2B · 3A · 4A · 5A ») : sa vie se DÉCOUVRE d'abord (l'écran « Sa vie », 3 faits),
+    //   puis 2 vrai ou faux sur ces faits (VIE_QUESTIONS). La valeur de chaque fait est tirée une fois et resservie à la question.
+    session.vieFaits = vieRencontre(expeditionParId(options.expedition.id), espece);
+    session.vie = session.vieFaits.slice(0, VIE_QUESTIONS);
+    session.vieBonnes = {};
+    for (const c of session.vieFaits) { const q = QUESTIONS.find(x => x.champ === c); session.vieBonnes[c] = q.tirer ? q.tirer(espece) : valeurDe(espece, q); }
+    session.vieMontree = false;
     session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;
   }
   // Le nombre de questions : 8 au plus, moins s'il y a peu de choses à demander sur cette espèce
