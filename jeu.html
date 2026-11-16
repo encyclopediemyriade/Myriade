@@ -33,7 +33,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <!-- L'apparence du jeu -->
-  <link rel="stylesheet" href="Programme/style.css?v=1.11.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
+  <link rel="stylesheet" href="Programme/style.css?v=1.13.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
 </head>
 
 <body>
@@ -435,10 +435,20 @@
   </section>
 
   <section id="vue-coupdoeil" class="cache"></section>   <!-- étape R191 : le jeu Coup d'œil (24_coup_doeil.js) -->
+  <section id="vue-oreille" class="cache"></section>   <!-- étape E2-11 : À l'oreille (28_oreille.js) -->
+  <section id="vue-defiexp" class="cache"></section>   <!-- étape E2-8 : le défi d'une expédition, « Me tester » (27_defi_exp.js) -->
 
   <section id="vue-apropos" class="cache">
     <article class="apropos">
       <h1>À propos</h1>
+      <!-- Étape R238 (notes 4 et 5 du 15/11, choix « 9A · 10A · 11A · 12A ») : un menu de 4 pastilles qui reste en haut,
+           4 rubriques, la méthode en 5 étapes, les 8 sources principales puis toutes les sources (33) à déplier -->
+      <nav class="ap-menu" aria-label="Rubriques de la page">
+        <button type="button" class="ap-pastille" data-cible="ap-jouer">Jouer</button><button type="button" class="ap-pastille" data-cible="ap-reglages">Réglages</button><button type="button" class="ap-pastille" data-cible="ap-sources">Sources</button><button type="button" class="ap-pastille" data-cible="ap-credits">Crédits</button>
+      </nav>
+
+      <section class="ap-rubrique" id="ap-jouer">
+      <h2 class="ap-titre">Jouer</h2>
       <!-- Étape ML5 : nouveau texte d'introduction (choix de l'utilisateur, 03/11) -->
       <p class="chapeau">On protège mieux ce que l'on connaît. Myriade vous invite à découvrir les animaux de votre territoire,
         l'un après l'autre&nbsp;: leur allure, leur façon de vivre, les liens qui les unissent aux autres espèces et à leur milieu.
@@ -448,6 +458,89 @@
       <!-- Étape R188 (11/11) : la règle des empreintes (avant : sur la page de chaque lieu), remplie par afficherAPropos -->
       <section class="apropos-empreintes" id="apropos-empreintes"></section>
 
+      </section>
+
+      <section class="ap-rubrique" id="ap-reglages">
+      <h2 class="ap-titre">Réglages</h2>
+      <p>Votre prénom, la sauvegarde de votre partie, l'installation du jeu et, en bas, « Tout débloquer » ou « Recommencer ».</p>
+      <div id="ap-reglages-corps"></div>
+      </section>
+
+      <section class="ap-rubrique" id="ap-sources">
+      <h2 class="ap-titre">Sources et méthode</h2>
+      <p>Comment chaque information du jeu est choisie et vérifiée&nbsp;:</p>
+      <ol class="ap-etapes">
+          <li><b>Chercher trois fois</b> · chaque information est cherchée trois fois, de façon indépendante, avec sa source et la phrase citée.</li>
+          <li><b>Recouper</b> · au moins deux sources sérieuses doivent dire la même chose.</li>
+          <li><b>Trancher</b> · deux chiffres sont d'accord s'ils diffèrent de moins de 10 % ; dans une liste, on ne garde que ce que deux recherches sur trois confirment.</li>
+          <li><b>Laisser le doute de côté</b> · une valeur qui n'est pas confirmée n'est jamais posée en question.</li>
+          <li><b>Vérifier en jouant</b> · avant chaque version, un contrôle automatique pose toutes les questions du jeu (plus de 46 000) et signale la moindre erreur.</li>
+      </ol>
+      <h3>Les principales sources</h3>
+      <ul class="sources">
+          <li><a href="https://fr.wikipedia.org" target="_blank" rel="noopener">Wikipédia et Wikidata</a> <small>— l'encyclopédie, lue en français, anglais, allemand, néerlandais, espagnol et italien</small></li>
+          <li><a href="https://inpn.mnhn.fr" target="_blank" rel="noopener">INPN</a> <small>— Muséum national d'Histoire naturelle : espèces de France, noms, statuts officiels</small></li>
+          <li><a href="https://animaldiversity.org" target="_blank" rel="noopener">Animal Diversity Web</a> <small>— Université du Michigan : fiches détaillées</small></li>
+          <li><a href="https://doris.ffessm.fr" target="_blank" rel="noopener">DORIS</a> <small>— faune aquatique de France</small></li>
+          <li><a href="https://www.lpo.fr" target="_blank" rel="noopener">LPO</a> <small>— ligue pour la protection des oiseaux, et ses atlas régionaux</small></li>
+          <li><a href="https://www.gbif.org" target="_blank" rel="noopener">GBIF</a> <small>— observations naturalistes : où vit chaque espèce</small></li>
+          <li><a href="https://xeno-canto.org" target="_blank" rel="noopener">xeno-canto</a> <small>— les cris</small></li>
+          <li><a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons et iNaturalist</a> <small>— les photos</small></li>
+      </ul>
+      <details class="ap-toutes">
+        <summary>Toutes les sources (33)</summary>
+        <h3>Fiches : textes et chiffres</h3>
+        <ul class="sources">
+            <li><a href="https://fr.wikipedia.org" target="_blank" rel="noopener">Wikipédia</a> <small>— en français, anglais, allemand, néerlandais, espagnol et italien</small></li>
+            <li><a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> <small>— données structurées</small></li>
+            <li><a href="https://animaldiversity.org" target="_blank" rel="noopener">Animal Diversity Web</a> <small>— Université du Michigan</small></li>
+            <li><a href="https://genomics.senescence.info/species/" target="_blank" rel="noopener">AnAge</a> <small>— longévité, gestation, poids</small></li>
+            <li><a href="https://www.fishbase.se" target="_blank" rel="noopener">FishBase</a> <small>— poissons</small></li>
+            <li><a href="https://doris.ffessm.fr" target="_blank" rel="noopener">DORIS</a> <small>— faune aquatique de France</small></li>
+            <li><a href="https://www.marlin.ac.uk" target="_blank" rel="noopener">MarLIN</a> <small>— vie marine des côtes européennes</small></li>
+            <li><a href="https://amphibiaweb.org" target="_blank" rel="noopener">AmphibiaWeb</a> <small>— amphibiens</small></li>
+            <li><a href="https://reptile-database.reptarium.cz" target="_blank" rel="noopener">Reptile Database</a> <small>— reptiles</small></li>
+            <li><a href="https://www.oiseaux.net" target="_blank" rel="noopener">Oiseaux.net</a> <small>— fiches des oiseaux</small></li>
+            <li><a href="https://avibase.bsc-eoc.org" target="_blank" rel="noopener">Avibase</a> <small>— noms des oiseaux</small></li>
+            <li><a href="https://www.bto.org" target="_blank" rel="noopener">British Trust for Ornithology</a> <small>— oiseaux</small></li>
+            <li><a href="https://euring.org" target="_blank" rel="noopener">EURING</a> <small>— records de longévité des oiseaux bagués en Europe</small></li>
+            <li><a href="https://www.mammaldiversity.org" target="_blank" rel="noopener">Mammal Diversity Database</a> <small>— mammifères</small></li>
+            <li><a href="https://www.mammal.org.uk" target="_blank" rel="noopener">The Mammal Society</a> <small>— mammifères</small></li>
+            <li><a href="https://www.butterfliesoffrance.com" target="_blank" rel="noopener">Butterflies of France</a> <small>— papillons</small></li>
+            <li><a href="https://www.orthoptera.ch" target="_blank" rel="noopener">Orthoptera.ch</a> <small>— criquets et sauterelles</small></li>
+            <li><a href="https://araneae.nmbe.ch" target="_blank" rel="noopener">Araignées d'Europe</a> <small>— Musée d'histoire naturelle de Berne</small></li>
+            <li><a href="https://www.insectes.org" target="_blank" rel="noopener">OPIE</a> <small>— insectes</small></li>
+            <li><a href="https://www.lpo.fr" target="_blank" rel="noopener">LPO</a> <small>— et ses atlas régionaux</small></li>
+            <li><a href="https://www.faune-france.org" target="_blank" rel="noopener">Faune-France</a> <small>— atlas et synthèses régionales</small></li>
+            <li><a href="https://www.salamandre.org" target="_blank" rel="noopener">La Salamandre</a> <small>— revue nature</small></li>
+            <li><a href="https://www.info-fauna.ch" target="_blank" rel="noopener">info fauna – karch</a> <small>— amphibiens et reptiles de Suisse</small></li>
+        </ul>
+        <h3>Statuts et classification</h3>
+        <ul class="sources">
+            <li><a href="https://inpn.mnhn.fr" target="_blank" rel="noopener">INPN</a> <small>— statuts officiels (base de connaissance « Statuts ») et noms de référence (TAXREF)</small></li>
+            <li><a href="https://uicn.fr" target="_blank" rel="noopener">Comité français de l'UICN</a> <small>— listes rouges de France</small></li>
+            <li><a href="https://www.iucnredlist.org" target="_blank" rel="noopener">Liste rouge de l'UICN</a> <small>— statuts en Europe et dans le monde</small></li>
+            <li><a href="https://www.catalogueoflife.org" target="_blank" rel="noopener">Catalogue of Life</a> <small>— classification</small></li>
+        </ul>
+        <h3>Territoires et lieux</h3>
+        <ul class="sources">
+            <li><a href="https://www.gbif.org" target="_blank" rel="noopener">GBIF</a> <small>— présence de chaque espèce dans les territoires et autour des lieux</small></li>
+            <li><a href="https://inventaire-forestier.ign.fr" target="_blank" rel="noopener">IGN – Inventaire forestier national</a> <small>— les grandes régions écologiques (GRECO)</small></li>
+        </ul>
+        <h3>Photos, cris et silhouettes</h3>
+        <ul class="sources">
+            <li><a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> <small>— photos et cris</small></li>
+            <li><a href="https://www.inaturalist.org" target="_blank" rel="noopener">iNaturalist</a> <small>— photos et cris</small></li>
+            <li><a href="https://xeno-canto.org" target="_blank" rel="noopener">xeno-canto</a> <small>— cris</small></li>
+            <li><a href="https://www.phylopic.org" target="_blank" rel="noopener">PhyloPic</a> <small>— silhouettes</small></li>
+        </ul>
+        <p>S'y ajoutent de nombreuses sources ponctuelles (universités, muséums, associations, parcs nationaux).
+          Le détail de chaque valeur (source et phrase citée) est tenu dans les tableurs du jeu.</p>
+      </details>
+      </section>
+
+      <section class="ap-rubrique" id="ap-credits">
+      <h2 class="ap-titre">Crédits et participer</h2>
       <!-- Étape ML3 : rendre le jeu participatif (remplace « Nous écrire » de l'étape ML1).
            Chaque bouton ouvre un message déjà préparé vers l'adresse du jeu ; la liste des espèces
            sans photo est remplie par afficherAPropos (06_encyclopedie.js). -->
@@ -478,47 +571,6 @@
         <details class="credits-famille participer-attente" id="photos-attendues"></details>
         <p class="participer-adresse">Pour tout le reste&nbsp;: <a href="mailto:myriade.encyclopedie@gmail.com">myriade.encyclopedie@gmail.com</a></p>
       </section>
-
-      <!-- Étape ML6 : la liste des sources mise à jour (relevée dans les journaux de vérification et les faits insolites) -->
-      <h2>Les données des espèces</h2>
-      <p>Chaque caractéristique d'une fiche est cherchée plusieurs fois, de façon indépendante, puis recoupée entre
-        plusieurs sources. Une valeur qui n'est pas confirmée n'est jamais utilisée dans les questions. Les principales sources&nbsp;:</p>
-      <h3>Encyclopédies et guides</h3>
-      <ul class="sources">
-          <li><a href="https://fr.wikipedia.org" target="_blank" rel="noopener">Wikipédia</a> <small>— en français, anglais, allemand, espagnol et italien</small></li>
-          <li><a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> <small>— données structurées</small></li>
-          <li><a href="https://www.oiseaux.net" target="_blank" rel="noopener">Oiseaux.net</a> <small>— fiches des oiseaux</small></li>
-      </ul>
-      <h3>Bases scientifiques</h3>
-      <ul class="sources">
-          <li><a href="https://inpn.mnhn.fr" target="_blank" rel="noopener">INPN</a> <small>— Muséum national d'Histoire naturelle : espèces de France, noms, statuts officiels</small></li>
-          <li><a href="https://animaldiversity.org" target="_blank" rel="noopener">Animal Diversity Web</a> <small>— Université du Michigan</small></li>
-          <li><a href="https://genomics.senescence.info/species/" target="_blank" rel="noopener">AnAge</a> <small>— longévité, gestation, poids</small></li>
-          <li><a href="https://www.fishbase.se" target="_blank" rel="noopener">FishBase</a> <small>— poissons</small></li>
-          <li><a href="https://doris.ffessm.fr" target="_blank" rel="noopener">DORIS</a> <small>— faune aquatique de France</small></li>
-          <li><a href="https://amphibiaweb.org" target="_blank" rel="noopener">AmphibiaWeb</a> <small>— amphibiens</small></li>
-          <li><a href="https://www.marlin.ac.uk" target="_blank" rel="noopener">MarLIN</a> <small>— vie marine des côtes européennes</small></li>
-          <li><a href="https://uicn.fr" target="_blank" rel="noopener">Comité français de l'UICN</a> <small>— listes rouges de France</small></li>
-          <li><a href="https://www.iucnredlist.org" target="_blank" rel="noopener">Liste rouge de l'UICN</a> <small>— statuts de conservation en Europe et dans le monde</small></li>
-          <li><a href="https://euring.org" target="_blank" rel="noopener">EURING</a> <small>— records de longévité des oiseaux bagués en Europe</small></li>
-          <li><a href="https://www.bto.org" target="_blank" rel="noopener">British Trust for Ornithology</a> <small>— oiseaux</small></li>
-      </ul>
-      <h3>Associations et atlas naturalistes</h3>
-      <ul class="sources">
-          <li><a href="https://www.lpo.fr" target="_blank" rel="noopener">LPO</a> <small>— ligue pour la protection des oiseaux, et ses atlas régionaux</small></li>
-          <li><a href="https://www.faune-france.org" target="_blank" rel="noopener">Faune-France</a> <small>— atlas et synthèses régionales</small></li>
-          <li><a href="https://www.insectes.org" target="_blank" rel="noopener">OPIE</a> <small>— insectes</small></li>
-          <li><a href="https://www.salamandre.org" target="_blank" rel="noopener">La Salamandre</a> <small>— revue nature</small></li>
-          <li><a href="https://www.info-fauna.ch" target="_blank" rel="noopener">info fauna – karch</a> <small>— amphibiens et reptiles de Suisse</small></li>
-          <li><a href="https://araneae.nmbe.ch" target="_blank" rel="noopener">Araignées d'Europe</a> <small>— Musée d'histoire naturelle de Berne</small></li>
-          <li><a href="https://www.mammal.org.uk" target="_blank" rel="noopener">The Mammal Society</a> <small>— mammifères</small></li>
-      </ul>
-      <h3>Observations</h3>
-      <ul class="sources">
-          <li><a href="https://www.gbif.org" target="_blank" rel="noopener">GBIF</a> <small>— observations naturalistes : présence de chaque espèce dans les territoires et autour des lieux</small></li>
-      </ul>
-      <p>S'y ajoutent de nombreuses sources ponctuelles (universités, muséums, associations, parcs nationaux).
-        Le détail de chaque valeur (source et phrase citée) est tenu dans les tableurs du jeu.</p>
 
       <h2>La carte des territoires</h2>
       <p>Les territoires suivent les grandes régions écologiques (GRECO) définies par l'IGN. Contours tirés de la couche
@@ -561,6 +613,8 @@
         <a href="https://commons.wikimedia.org/wiki/File:Dance_Of_The_Starlings_(201781509).jpeg" target="_blank" rel="noopener">Wikimedia Commons</a>,
         licence <a href="https://creativecommons.org/licenses/by/3.0" target="_blank" rel="noopener">CC BY 3.0</a> (recadrée).</p>
 
+      </section>
+
       <p class="pied-apropos" id="pied-apropos"></p>
     </article>
   </section>
@@ -580,47 +634,49 @@
 
   <!-- ===================== JS ===================== -->
   <!-- Étape ML7 : le numéro de version (à changer à chaque livraison : Outils\changer_version.py) -->
-  <script src="version.js?v=1.11.0"></script>
-  <script src="especes.js?v=1.11.0"></script>
-  <script src="verif_photos.js?v=1.11.0"></script>   <!-- étape R185 : les questions d'allure vérifiées sur la photo (Données\verif_photos.xlsx → Outils\gen_verif_photos.py) -->
-  <script src="reperes.js?v=1.11.0"></script>   <!-- étape R190 : repères de terrain (Données\reperes_terrain.xlsx → Outils\reperes\gen_reperes.py) -->
-  <script src="cadrage.js?v=1.11.0"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
-  <script src="territoires.js?v=1.11.0"></script>
-  <script src="credits.js?v=1.11.0"></script>
-  <script src="credits_silhouettes.js?v=1.11.0"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
-  <script src="identite.js?v=1.11.0"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
-  <script src="lieux_identite.js?v=1.11.0"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
-  <script src="lieux_carte.js?v=1.11.0"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
-  <script src="expeditions.js?v=1.11.0"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
-  <script src="familles.js?v=1.11.0"></script>   <!-- étape 127 : cartes d'identité des familles -->
-  <script src="faits_questions.js?v=1.11.0"></script>   <!-- étape QI2 : les questions insolites (Données\faits_questions.xlsx → Outils\gen_faits_questions.py) -->
+  <script src="version.js?v=1.13.0"></script>
+  <script src="especes.js?v=1.13.0"></script>
+  <script src="verif_photos.js?v=1.13.0"></script>   <!-- étape R185 : les questions d'allure vérifiées sur la photo (Données\verif_photos.xlsx → Outils\gen_verif_photos.py) -->
+  <script src="reperes.js?v=1.13.0"></script>   <!-- étape R190 : repères de terrain (Données\reperes_terrain.xlsx → Outils\reperes\gen_reperes.py) -->
+  <script src="cadrage.js?v=1.13.0"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
+  <script src="territoires.js?v=1.13.0"></script>
+  <script src="credits.js?v=1.13.0"></script>
+  <script src="credits_silhouettes.js?v=1.13.0"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
+  <script src="identite.js?v=1.13.0"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
+  <script src="lieux_identite.js?v=1.13.0"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
+  <script src="lieux_carte.js?v=1.13.0"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
+  <script src="expeditions.js?v=1.13.0"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
+  <script src="familles.js?v=1.13.0"></script>   <!-- étape 127 : cartes d'identité des familles -->
+  <script src="faits_questions.js?v=1.13.0"></script>   <!-- étape QI2 : les questions insolites (Données\faits_questions.xlsx → Outils\gen_faits_questions.py) -->
   <!-- Le programme du jeu, en plusieurs fichiers (dossier « programme »), chargés dans l'ordre -->
-  <script src="Programme/01_questions.js?v=1.11.0"></script>
-  <script src="Programme/02_progression.js?v=1.11.0"></script>
-  <script src="Programme/03_questions_reponses.js?v=1.11.0"></script>
-  <script src="Programme/04_fetes.js?v=1.11.0"></script>
-  <script src="Programme/05_accueil.js?v=1.11.0"></script>
-  <script src="Programme/06_encyclopedie.js?v=1.11.0"></script>
-  <script src="Programme/07_parties.js?v=1.11.0"></script>
-  <script src="Programme/08_petits_jeux.js?v=1.11.0"></script>
-  <script src="Programme/09_rencontre.js?v=1.11.0"></script>
-  <script src="Programme/10_premiere_visite.js?v=1.11.0"></script>
-  <script src="Programme/11_commandes_test.js?v=1.11.0"></script>
-  <script src="Programme/12_profil_badges.js?v=1.11.0"></script>
-  <script src="Programme/15_territoire.js?v=1.11.0"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
-  <script src="Programme/16_arcade.js?v=1.11.0"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
-  <script src="Programme/17_expeditions.js?v=1.11.0"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
-  <script src="Programme/20_formes.js?v=1.11.0"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
-  <script src="Programme/21_insolites.js?v=1.11.0"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
-  <script src="Programme/26_ensemble.js?v=1.11.0"></script>   <!-- étape E2-2 : l'étape 2 « Ensemble, dans ce lieu » (les questions) -->
-  <script src="relief_carte.js?v=1.11.0"></script>   <!-- étape K2 : l'ombrage du relief des territoires (généré par gen_relief.py) -->
-  <script src="Programme/25_carte.js?v=1.11.0"></script>   <!-- étape K2 : l'espace Carte du téléphone -->
-  <script src="Programme/19_application.js?v=1.11.0"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
-  <script src="Programme/13_demarrage.js?v=1.11.0"></script>
-  <script src="Programme/14_clavier_menus.js?v=1.11.0"></script>   <!-- étape 229 : le clavier en fin de partie -->
-  <script src="Programme/18_cadrage.js?v=1.11.0"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
-  <script src="Programme/23_reperes.js?v=1.11.0"></script>   <!-- étape R190 : la carte d'identité (repères de terrain) -->
-  <script src="Programme/24_coup_doeil.js?v=1.11.0"></script>   <!-- étape R191 : Coup d'œil, « une photo, 4 noms » -->
-  <script src="Programme/22_typographie.js?v=1.11.0"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
+  <script src="Programme/01_questions.js?v=1.13.0"></script>
+  <script src="Programme/02_progression.js?v=1.13.0"></script>
+  <script src="Programme/03_questions_reponses.js?v=1.13.0"></script>
+  <script src="Programme/04_fetes.js?v=1.13.0"></script>
+  <script src="Programme/05_accueil.js?v=1.13.0"></script>
+  <script src="Programme/06_encyclopedie.js?v=1.13.0"></script>
+  <script src="Programme/07_parties.js?v=1.13.0"></script>
+  <script src="Programme/08_petits_jeux.js?v=1.13.0"></script>
+  <script src="Programme/09_rencontre.js?v=1.13.0"></script>
+  <script src="Programme/10_premiere_visite.js?v=1.13.0"></script>
+  <script src="Programme/11_commandes_test.js?v=1.13.0"></script>
+  <script src="Programme/12_profil_badges.js?v=1.13.0"></script>
+  <script src="Programme/15_territoire.js?v=1.13.0"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
+  <script src="Programme/16_arcade.js?v=1.13.0"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
+  <script src="Programme/17_expeditions.js?v=1.13.0"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
+  <script src="Programme/20_formes.js?v=1.13.0"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
+  <script src="Programme/21_insolites.js?v=1.13.0"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
+  <script src="Programme/26_ensemble.js?v=1.13.0"></script>   <!-- étape E2-2 : l'étape 2 « Ensemble, dans ce lieu » (les questions) -->
+  <script src="relief_carte.js?v=1.13.0"></script>   <!-- étape K2 : l'ombrage du relief des territoires (généré par gen_relief.py) -->
+  <script src="Programme/25_carte.js?v=1.13.0"></script>   <!-- étape K2 : l'espace Carte du téléphone -->
+  <script src="Programme/19_application.js?v=1.13.0"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
+  <script src="Programme/13_demarrage.js?v=1.13.0"></script>
+  <script src="Programme/14_clavier_menus.js?v=1.13.0"></script>   <!-- étape 229 : le clavier en fin de partie -->
+  <script src="Programme/18_cadrage.js?v=1.13.0"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
+  <script src="Programme/23_reperes.js?v=1.13.0"></script>   <!-- étape R190 : la carte d'identité (repères de terrain) -->
+  <script src="Programme/24_coup_doeil.js?v=1.13.0"></script>   <!-- étape R191 : Coup d'œil, « une photo, 4 noms » -->
+  <script src="Programme/27_defi_exp.js?v=1.13.0"></script>   <!-- étape E2-8 : le défi d'une expédition, « Me tester » -->
+  <script src="Programme/28_oreille.js?v=1.13.0"></script>   <!-- étape E2-11 : À l'oreille, « un cri, 4 photos » -->
+  <script src="Programme/22_typographie.js?v=1.13.0"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
 </body>
 </html>

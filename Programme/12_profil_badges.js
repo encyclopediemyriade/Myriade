@@ -263,7 +263,10 @@ function prochainSeuil(b) {
   return palier ? null : b.but;
 }
 const ROMAINS = ["", "I", "II", "III"];
-function nomBadge(b, palier = palierDe(b)) { return b.nom + (b.paliers && palier ? " " + ROMAINS[palier] : ""); }
+// Étape R238 (note 3 du 15/11, choix 8A) : le palier d'un badge en points (« Étonnant ! ●○○ ») au lieu d'un chiffre romain
+//   (« Étonnant ! I » se lisait mal) ; les paliers des badges sont déjà en points (B1).
+function pointsPalier(b, palier) { const n = (b.paliers || []).length || 3; return "●".repeat(palier) + "○".repeat(Math.max(0, n - palier)); }
+function nomBadge(b, palier = palierDe(b)) { return b.nom + (b.paliers && palier ? "\u00a0" + pointsPalier(b, palier) : ""); }
 function titresDisponibles() { return []; }   // étape PR3 : plus de titres (choix de l'utilisateur, 01/11)
 
 // ---- Vérifier les badges ----
@@ -397,13 +400,13 @@ function htmlBadgeMini(b, court) {
   const palier = palierDe(b), seuil = prochainSeuil(b);
   const jauge = seuil !== null ? `<span class="pg-mini-jauge"><i style="width:${Math.min(100, 100 * b.mesure() / seuil)}%"></i></span>` : "";
   return `<button class="pg-mini${palier ? "" : " gris"}${badgeOuvert === b.cle ? " ouvert" : ""}" data-badge="${b.cle}" title="${b.cond}">`
-    + `${dessinBadge(b)}<span class="nom">${court === true && b.court ? b.court + (b.paliers && palier ? " " + ROMAINS[palier] : "") : nomBadge(b)}</span>${jauge}</button>`;
+    + `${dessinBadge(b)}<span class="nom">${court === true && b.court ? b.court + (b.paliers && palier ? "\u00a0" + pointsPalier(b, palier) : "") : nomBadge(b)}</span>${jauge}</button>`;
 }
 // Le détail d'un badge : sa condition, où l'on en est, et « Porter le titre » s'il en a un
 function htmlBadgeDetail(b) {
   const palier = palierDe(b), seuil = prochainSeuil(b), mesure = b.mesure();
   const ou = seuil === null ? (b.paliers ? "Tous les paliers sont obtenus." : "Obtenu.")
-    : `${b.paliers && palier ? `Palier ${ROMAINS[palier]} obtenu · prochain palier : ` : ""}${Math.min(mesure, seuil)} / ${seuil}${b.unite || ""}`;
+    : `${b.paliers && palier ? `Palier ${pointsPalier(b, palier)} obtenu · prochain palier : ` : ""}${Math.min(mesure, seuil)} / ${seuil}${b.unite || ""}`;
   const paliers = b.paliers ? ` (paliers : ${b.paliers.join(" · ")})` : "";
   const bouton = "";   // étape PR3 : plus de titres
   return `<div class="pg-encart pg-detail${palier ? "" : " gris"}">${dessinBadge(b)}<div>
@@ -824,6 +827,17 @@ function badgePresque() {
   }
   return meilleur;
 }
+// Étape R238 (note 3 du 15/11, choix « 5A · 6B · 7B · 8A ») : les pictos des chiffres et des préférences du Profil (traits fins)
+const PICTOS_PROFIL = {
+  serie: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 13H11L10 21L19 10H13Z" fill="#A8652A"/></svg>',
+  partie: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18C7 16 9 13 12 13S17 16 20 18" fill="none" stroke="#1F3A2E" stroke-width="2" stroke-linecap="round"/><path d="M12 13V5L17 7.5L12 10" fill="#1F3A2E"/></svg>',
+  oeil: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" fill="none" stroke="#1F3A2E" stroke-width="1.8"/><circle cx="12" cy="12" r="3" fill="#1F3A2E"/></svg>',
+  expedition: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4C6 4 5 6 5 8S7 12 8 12 11 10 11 8 10 4 8 4ZM16 10C14 10 13 12 13 14S15 18 16 18 19 16 19 14 18 10 16 10Z" fill="#8A4F1C"/></svg>',
+  coeur: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20S3 14 3 8.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 2.5C21 14 12 20 12 20Z" fill="#b5442e"/></svg>',
+  famille: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 11 4 20 4C20 13 14 19 5 19Z" fill="#3E7B55"/><path d="M5 19L14 10" stroke="#FBF8F1" stroke-width="1.6"/></svg>',
+  coriace: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18L12 4L20 18Z" fill="none" stroke="#A8652A" stroke-width="2" stroke-linejoin="round"/><path d="M12 9V13M12 15.5V16" stroke="#A8652A" stroke-width="2" stroke-linecap="round"/></svg>',
+  heure: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="#d9a12b"/><path d="M12 2.5V5M12 19V21.5M2.5 12H5M19 12H21.5M5.3 5.3L7 7M17 17L18.7 18.7M5.3 18.7L7 17M17 7L18.7 5.3" stroke="#d9a12b" stroke-width="1.8" stroke-linecap="round"/></svg>',
+};
 function profilVitrine(rc) {
   const fav = favorite(), derniere = derniereRencontree(), portrait = fav || derniere;
   const t = territoireActif(), rangT = t && typeof rangTerritoire === "function" ? rangTerritoire(t) : null;
@@ -834,20 +848,22 @@ function profilVitrine(rc) {
   const presque = badgePresque();
   // Les chiffres (une case à zéro n'est pas montrée)
   const chiffres = [
-    [suivi.meilleureSerie || 0, "bonne" + ((suivi.meilleureSerie || 0) > 1 ? "s" : "") + " réponse" + ((suivi.meilleureSerie || 0) > 1 ? "s" : "") + " de suite", "votre plus belle série"],
-    [suivi.parties || 0, "partie" + ((suivi.parties || 0) > 1 ? "s" : "") + " jouée" + ((suivi.parties || 0) > 1 ? "s" : ""), `en ${suivi.jours.length} jour${suivi.jours.length > 1 ? "s" : ""} sur le terrain`],
-    [suivi.coupsDoeil || 0, "photo" + ((suivi.coupsDoeil || 0) > 1 ? "s" : "") + " reconnue" + ((suivi.coupsDoeil || 0) > 1 ? "s" : ""), "du premier coup"],
-    [nbFinies(), "expédition" + (nbFinies() > 1 ? "s" : "") + " finie" + (nbFinies() > 1 ? "s" : ""), "ses deux étapes"],
+    [suivi.meilleureSerie || 0, "bonne" + ((suivi.meilleureSerie || 0) > 1 ? "s" : "") + " réponse" + ((suivi.meilleureSerie || 0) > 1 ? "s" : "") + " de suite", "votre record", PICTOS_PROFIL.serie],
+    [suivi.parties || 0, "partie" + ((suivi.parties || 0) > 1 ? "s" : "") + " jouée" + ((suivi.parties || 0) > 1 ? "s" : ""), `en ${suivi.jours.length} jour${suivi.jours.length > 1 ? "s" : ""}`, PICTOS_PROFIL.partie],
+    [suivi.coupsDoeil || 0, "photo" + ((suivi.coupsDoeil || 0) > 1 ? "s" : "") + " reconnue" + ((suivi.coupsDoeil || 0) > 1 ? "s" : ""), "du premier coup", PICTOS_PROFIL.oeil],
+    [nbFinies(), "expédition" + (nbFinies() > 1 ? "s" : "") + " finie" + (nbFinies() > 1 ? "s" : ""), "", PICTOS_PROFIL.expedition],
   ].filter(c => c[0] > 0);
   const coeurT = territoireDeCoeur(), coeurF = familleDeCoeur(), coriace = especeCoriace(), heure = votreHeure();
   const meilleureDe = cle => especesRencontrees().filter(e => e.onglet === cle).sort((a, b) => niveauTermine(b) - niveauTermine(a))[0];
-  const ligneDit = (img, titre, detail, attr = "") => `<li${attr}>${img}<span><b>${titre}</b>${detail ? `<small>${detail}</small>` : ""}</span></li>`;
+  // Étape R238 (note 3, choix 6B) : une étiquette colorée avec son picto dit la nature de l'info, puis le nom, puis le détail
+  const ligneDit = (img, etiq, titre, detail, attr = "") => `<li${attr}>${img}<span class="pgv-dit-t">${etiq}<b>${titre}</b>${detail ? `<small>${detail}</small>` : ""}</span></li>`;
+  const etiq = (cle, texte) => `<span class="pgv-chip pgv-chip-${cle}">${PICTOS_PROFIL[cle] || ""}${texte}</span>`;
   const vignette = src => src ? `<img class="pgv-vign" src="${src}" alt="">` : `<span class="pgv-vign"></span>`;
   const dits = [
-    coeurT ? ligneDit(vignette(coeurT.lieu && estRenseigne(coeurT.lieu.photo) ? photoMini(coeurT.lieu.photo) : null), `Territoire de cœur · ${echapper(coeurT.t)}`, coeurT.lieu ? `${echapper(coeurT.lieu.nom)}, votre lieu le plus joué` : "") : "",
-    coeurF ? ligneDit(vignette(meilleureDe(coeurF.cle) ? photoMini(meilleureDe(coeurF.cle).photo) : null), `Famille de cœur · ${CLASSES[coeurF.cle].nom.toLowerCase()}`, `${coeurF.n} espèce${coeurF.n > 1 ? "s" : ""} au carnet, plus que toute autre famille`) : "",
-    coriace ? ligneDit(vignette(photoMini(coriace.e.photo)), `Votre coriace · ${echapper(minuscule(coriace.e.nom_courant))}`, `elle vous a résisté ${coriace.n} fois`, ` data-espece="${echapper(coriace.e.nom_courant)}"`) : "",
-    heure ? ligneDit(`<span class="pgv-vign pgv-heure ${heure.cle}" aria-hidden="true"></span>`, `Votre heure · ${heure.texte}`, "") : "",
+    coeurT ? ligneDit(vignette(coeurT.lieu && estRenseigne(coeurT.lieu.photo) ? photoMini(coeurT.lieu.photo) : null), etiq("coeur", "Territoire de cœur"), echapper(coeurT.t), coeurT.lieu ? `${echapper(coeurT.lieu.nom)}, votre lieu le plus joué` : "") : "",
+    coeurF ? ligneDit(vignette(meilleureDe(coeurF.cle) ? photoMini(meilleureDe(coeurF.cle).photo) : null), etiq("famille", "Famille de cœur"), echapper(CLASSES[coeurF.cle].nom), `${coeurF.n} espèce${coeurF.n > 1 ? "s" : ""} au carnet, plus que toute autre famille`) : "",
+    coriace ? ligneDit(vignette(photoMini(coriace.e.photo)), etiq("coriace", "Votre coriace"), echapper(coriace.e.nom_courant), `${pe(coriace.e).elle} vous a résisté ${coriace.n} fois`, ` data-espece="${echapper(coriace.e.nom_courant)}"`) : "",
+    heure ? ligneDit(`<span class="pgv-vign pgv-heure ${heure.cle}" aria-hidden="true"></span>`, etiq("heure", "Votre heure"), echapper(majuscule(heure.texte)), "") : "",
   ].filter(Boolean);
   const rencontres = especesRencontrees().filter(e => decouverte(e)).slice(0, 5);
   return `<div class="pgv">
@@ -868,8 +884,8 @@ function profilVitrine(rc) {
           <span class="pgv-presque-t"><small>Presque à vous</small><b>${nomBadge(presque.b, presque.palier)}</b> · encore ${nombre(presque.reste)}</span>
           <span class="pgv-voir" aria-hidden="true">Voir</span></button>` : ""}
     </section>
-    ${chiffres.length ? `<section class="pgv-bloc"><h2>Vos chiffres</h2><div class="pgv-chiffres">${chiffres.map(c => `<div class="pgv-chiffre"><b>${nombre(c[0])}</b><span>${c[1]}<small>${c[2]}</small></span></div>`).join("")}</div></section>` : ""}
-    ${dits.length ? `<section class="pgv-bloc"><div class="pgv-encart"><p class="pgv-etiq">Ce que disent vos chiffres</p><ul class="pgv-dits">${dits.join("")}</ul></div></section>` : ""}
+    ${chiffres.length ? `<section class="pgv-bloc"><h2>Vos chiffres</h2><ul class="pgv-chiffres-lignes">${chiffres.map(c => `<li><span class="pgv-ch-ic">${c[3]}</span><b>${nombre(c[0])}</b><span>${c[1]}${c[2] ? ` <small>· ${c[2]}</small>` : ""}</span></li>`).join("")}</ul></section>` : ""}
+    ${dits.length ? `<section class="pgv-bloc"><h2>Vos préférences</h2><div class="pgv-encart"><ul class="pgv-dits">${dits.join("")}</ul></div></section>` : ""}
     <section class="pgv-bloc"><div class="pgv-contrib"><b>0</b><span><strong>Vos contributions</strong><small>Bientôt : proposer une photo, une observation, une correction pour enrichir Myriade.</small></span></div></section>
     ${rencontres.length ? `<section class="pgv-bloc"><h2>Vos dernières rencontres</h2><div class="pgv-rencontres">${rencontres.map(e => `<button type="button" data-espece="${echapper(e.nom_courant)}" title="${echapper(e.nom_courant)}"><img src="${photoMini(e.photo)}" alt="${echapper(e.nom_courant)}"></button>`).join("")}</div></section>` : ""}
   </div>`;

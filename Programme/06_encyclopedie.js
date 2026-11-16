@@ -71,6 +71,13 @@ function carteEncyclopedie(espece, details) {
 
   // Pas encore identifiée : carte verrouillée. Sans rien de trouvé, pas de fiche détaillée ;
   // sinon, la carte dit combien de caractéristiques sont trouvées, et le survol les liste.
+  if (s === "inconnue" && typeof estOfferte === "function" && estOfferte(espece)) {   // étape E2-12 : offerte, « à reconnaître »
+    return `
+      <article class="fiche offerte" ${debut} data-nom="${espece.nom_courant}" data-page="1" title="Ouvrir sa page">
+        <div class="photo">${celluleImage(espece, true)}</div>
+        <div class="contenu"><h2>${espece.nom_courant}</h2><div class="ludique">À reconnaître</div><div class="scientifique">${estOfferteDepart(espece) ? "Offerte au départ" : "Déjà rencontrée"}</div></div>
+      </article>`;
+  }
   if (s === "inconnue") {
     if (trouvees.length) details[espece.nom_courant] = `
       <p class="statut">Pas encore identifiée · ${texteTrouvees}</p>
@@ -153,6 +160,9 @@ function carteEncyclopedie(espece, details) {
 // une recherche (parmi les espèces déjà découvertes seulement, pour ne jamais nommer une espèce inconnue) et deux onglets
 // « Les espèces » / « Les planches des lieux » (on revient aux espèces d'un geste). Caché sur ordinateur (style.css, étape M5).
 let rechercheEncyclo = "", familleAvantPlanches = "Toutes";
+// Étape K3 (16/11/2026, choix d'Aubin « 7B ») : les planches « Tout est lié » ne sont plus dans l'Encyclopédie (téléphone et
+//   ordinateur) ; les lieux vivent dans la Carte. Une planche se revoit toujours depuis la page de son lieu (bouton de la finale).
+const PLANCHES_DANS_ENCYCLO = false;
 function dessinerHautEncyclopedieMobile() {
   const mise = document.querySelector("#vue-encyclopedie .ency-mise");
   if (!mise) return;
@@ -175,8 +185,11 @@ function dessinerHautEncyclopedieMobile() {
     haut.querySelector("#ency-seg-planches").onclick = () => {
       if (filtreClasse !== "planches") { familleAvantPlanches = filtreClasse; filtreClasse = "planches"; afficherEncyclopedie(); }
     };
+    if (!PLANCHES_DANS_ENCYCLO) haut.querySelector(".ency-segments").remove();   // étape K3 : plus d'onglet « Les planches des lieux »
   }
+  if (!PLANCHES_DANS_ENCYCLO && filtreClasse === "planches") filtreClasse = familleAvantPlanches || "Toutes";   // étape K3
   const planches = filtreClasse === "planches", pl = planchesDuFiltre();
+  if (!haut.querySelector("#ency-seg-especes")) { haut.querySelector(".ency-recherche").classList.remove("cache"); mise.classList.remove("en-planches"); return; }   // étape K3
   const segE = haut.querySelector("#ency-seg-especes"), segP = haut.querySelector("#ency-seg-planches");
   segE.classList.toggle("actif", !planches); segE.setAttribute("aria-selected", String(!planches));
   segP.classList.toggle("actif", planches); segP.setAttribute("aria-selected", String(planches));
@@ -189,6 +202,7 @@ function afficherEncyclopedie() {
   dessinerHautEncyclopedieMobile();   // étape M5 (téléphone)
   const grille = document.getElementById("grille");
   fermerFenetre();
+  if (filtreClasse === "planches" && !PLANCHES_DANS_ENCYCLO) filtreClasse = "Toutes";   // étape K3
   if (filtreClasse === "planches") { afficherPlanches(grille); return; }   // étape 331
   const cherche = rechercheEncyclo && window.matchMedia && window.matchMedia("(max-width: 760px)").matches ? simplifier(rechercheEncyclo) : "";   // étape M5
   fermerPiste();
@@ -390,6 +404,11 @@ function ouvrirPageEspece(espece) {
   if (!espece) return;
   if (especeOuverte !== espece) ongletEspece = "portrait";
   especeOuverte = espece;
+  // Étape R236 (note 10 du 15/11) : ouvrir la fiche de l'espèce du jour (déjà reconnue) compte comme sa rencontre du jour
+  if (typeof especeDuJour === "function" && typeof validerEspeceDuJour === "function" && estReconnue(espece)) {
+    const j = especeDuJour();
+    if (j && j.nom_courant === espece.nom_courant && validerEspeceDuJour(espece.nom_courant, 500)) sauvegarder();
+  }
   positionEncyclopedie = window.scrollY;                 // pour revenir au même endroit de l'encyclopédie
   montrer("espece");
 }
@@ -405,7 +424,7 @@ function afficherPageEspece() {
   const champs = champsDe(e).filter(x => x !== IDENTIFICATION), trouves = champs.filter(x => nbBonnes(e, x) >= 1).length;
   const termine = niveauTermine(e);
   const medaille = termine >= 1 ? dessinMedaille(MEDAILLES[termine], termine) : `<span class="pe-sans"></span>`;
-  const detail = termine >= 1 ? SENS_MEDAILLE[termine] : "Faites connaissance avec elle en expédition";   // étape R144
+  const detail = termine >= 1 ? sensMedaille(termine, e) : `Faites connaissance ${pe(e).avecElle} en expédition`;   // R236 : accordé au nom   // étape R144
   const jauges = presentes.map(r => {
     const qs = par[r.cle], t = qs.filter(q => nbBonnes(e, q.champ) >= 1).length;
     return `<button class="pe-rub${r.cle === ongletEspece ? " actif" : ""}" data-onglet="${r.cle}"><span>${r.nom}</span><small>${t} / ${qs.length}</small>`
@@ -433,7 +452,7 @@ function afficherPageEspece() {
         ${blocTerritoires(e)}
       </aside>
       <main>
-        ${estReconnue(e) && typeof blocReperes === "function" ? blocReperes(e, { titre: "Pour la reconnaître" }) : ""}${/* étape R190 : la carte d'identité */ ""}
+        ${(estReconnue(e) || (typeof estOfferte === "function" && estOfferte(e))) && typeof blocReperes === "function" ? blocReperes(e, { titre: `Pour ${pe(e).la} reconnaître` }) : ""}${/* étape R190 : la carte d'identité */ ""}
         <div class="pe-onglets">${onglets}</div>
         <div class="pe-page">${par[ongletEspece].map(q => lignePage(e, q)).join("")}</div>
         ${blocAnecdotes(e)}
@@ -527,7 +546,9 @@ function dessinerActionsAPropos(attente) {
   let bloc = document.getElementById("bloc-debloquer");
   if (!bloc) { bloc = document.createElement("div"); bloc.id = "bloc-debloquer"; bloc.className = "tout-debloquer"; }
   const article = vue.querySelector("article.apropos") || vue, pied = document.getElementById("pied-apropos");
-  if (pied && pied.parentNode === article) article.insertBefore(bloc, pied); else article.appendChild(bloc);   // en bas de la page, avant la signature
+  const reglages = document.getElementById("ap-reglages-corps");   // R238 : dans la rubrique « Réglages »
+  if (reglages) { if (bloc.parentNode !== reglages) reglages.appendChild(bloc); }
+  else if (pied && pied.parentNode === article) article.insertBefore(bloc, pied); else article.appendChild(bloc);   // en bas de la page, avant la signature
   const oui = typeof toutDebloque === "function" && toutDebloque();
   const actions = [
     { cle: "debloquer", titre: oui ? "Revenir au jeu pas à pas" : "Tout débloquer",
@@ -569,7 +590,30 @@ function dessinerActionsAPropos(attente) {
   bloc.querySelectorAll("[data-oui]").forEach(bt => bt.onclick = () => actions.find(x => x.cle === bt.dataset.oui).faire());
   if (typeof brancherReglagesApplication === "function") brancherReglagesApplication();   // étape ML7
 }
+// Étape R238 (note 5 du 15/11, choix 9A) : les 4 pastilles en haut de la page ; un toucher descend à la rubrique,
+//   la pastille de la rubrique lue est allumée (une seule mise en place)
+let menuAProposBranche = false;
+function brancherMenuAPropos() {
+  const menu = document.querySelector("#vue-apropos .ap-menu");
+  if (!menu || menuAProposBranche) return;
+  menuAProposBranche = true;
+  const allumer = id => menu.querySelectorAll(".ap-pastille").forEach(p => p.classList.toggle("actif", p.dataset.cible === id));
+  menu.querySelectorAll(".ap-pastille").forEach(p => p.onclick = () => {
+    const cible = document.getElementById(p.dataset.cible);
+    if (cible) cible.scrollIntoView({ behavior: "smooth", block: "start" });
+    allumer(p.dataset.cible);
+  });
+  allumer("ap-jouer");
+  if (typeof IntersectionObserver === "function") {
+    const obs = new IntersectionObserver(entrees => {
+      const vue = entrees.filter(en => en.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (vue) allumer(vue.target.id);
+    }, { rootMargin: "-90px 0px -60% 0px" });
+    document.querySelectorAll("#vue-apropos .ap-rubrique").forEach(r => obs.observe(r));
+  }
+}
 function afficherAPropos() {
+  brancherMenuAPropos();
   // Étape PR5 (01/11, demande de l'utilisateur) : « Tout débloquer » et « Recommencer » à la fin de la page,
   //   avec le même bouton, et une confirmation dans la page après le clic (Oui / Annuler).
   dessinerActionsAPropos();
@@ -749,7 +793,7 @@ function afficherFiltres() {
   // Étape 331 : les planches « Tout est lié » des lieux terminés, gardées dans l'encyclopédie.
   // Étape 334 (Revoir 8) : dans un bloc à part, sous les familles, pour ne plus les confondre avec un filtre.
   const pl = planchesDuFiltre();
-  if (pl.total) {
+  if (PLANCHES_DANS_ENCYCLO && pl.total) {   // étape K3 : retiré (choix « 7B »)
     const bloc = document.createElement("div");
     bloc.className = "bloc-planches";
     bloc.innerHTML = `<span class="titre-filtre">Les finales des lieux</span>`;
@@ -780,9 +824,10 @@ function sommaireCollection() {
   for (const cle in CLASSES) {
     const especes = especesDuFiltre().filter(e => e.onglet === cle);
     if (!especes.length) continue;
-    const vues = especes.filter(estRencontree), autres = especes.filter(e => !estRencontree(e));
+    const off = e => typeof estOfferte === "function" && estOfferte(e);   // étape E2-12 : les offertes juste après les rencontrées
+    const vues = especes.filter(estRencontree), autres = [...especes.filter(e => !estRencontree(e) && off(e)), ...especes.filter(e => !estRencontree(e) && !off(e))];
     const montrees = [...vues, ...autres].slice(0, 8);
-    const ronds = montrees.map(e => estRencontree(e)
+    const ronds = montrees.map(e => estRencontree(e) || (typeof estOfferte === "function" && estOfferte(e))   // étape E2-12 : les offertes en photo
       ? `<span class="som-rond som-photo">${imgMini(e.photo, e.nom_courant)}</span>`
       : caseSilhouette(e, "som-rond som-vide")).join("");
     const reste = especes.length - montrees.length;
@@ -800,9 +845,10 @@ try { albumMesEspeces = localStorage.getItem("myriade-album-mes-especes") === "o
 function albumFamille(cle) {
   const especes = especesDuFiltre().filter(e => e.onglet === cle);
   const vues = especes.filter(estRencontree).length;
-  const montrees = albumMesEspeces ? especes.filter(estRencontree) : especes;
-  const cases = montrees.map(e => estRencontree(e)
-    ? `<button type="button" class="alb-case alb-vue" data-nom="${echapper(e.nom_courant)}">${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}</span></button>`
+  const montrees = albumMesEspeces ? especes.filter(e => estRencontree(e) || (typeof estOfferte === "function" && estOfferte(e))) : especes;   // étape E2-12 : + les offertes
+  const offerte = e => typeof estOfferte === "function" && estOfferte(e);   // étape E2-12
+  const cases = montrees.map(e => estRencontree(e) || offerte(e)
+    ? `<button type="button" class="alb-case alb-vue${offerte(e) ? " alb-offerte" : ""}" data-nom="${echapper(e.nom_courant)}">${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}${offerte(e) ? "<small>À reconnaître</small>" : ""}</span></button>`
     : `<button type="button" class="alb-case alb-vide" data-piste="${echapper(e.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(e, "alb-sil")}</button>`).join("")
     || `<p class="alb-rien">Aucune espèce découverte ici pour l'instant.</p>`;
   const bouton = `<button type="button" class="alb-mes-especes" aria-pressed="${albumMesEspeces}">${albumMesEspeces ? "✓ " : ""}Seulement mes espèces découvertes</button>`;

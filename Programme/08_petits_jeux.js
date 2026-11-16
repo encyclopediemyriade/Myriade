@@ -397,7 +397,7 @@ function repondreDecouverte(boutonClique, estJuste) {
     boutonClique.classList.add("fausse");
     jouerSon("mauvaise");                               // étape 170 : le hou-hou de chouette
     aRevoirPlusTard(espece, IDENTIFICATION);
-    retour.textContent = enCours.explication + " Elle reviendra.";
+    retour.textContent = enCours.explication + ` ${pe(espece).Elle} reviendra.`;
   }
   sauvegarder();
   afficherStats();
@@ -738,8 +738,8 @@ function repondreRevision(boutonClique, estJuste, jeNeSaisPas) {
     retour.textContent = explication;
     // Étape R184 : dans la révision d'une expédition, la photo ratée revient à la fin ; ratée à la reprise, elle compte quand même ici
     if (champ === IDENTIFICATION && typeof revueARepreendre === "function") {
-      if (revueARepreendre(espece)) retour.textContent = `${explication} Elle reviendra à la fin de cette révision.`;
-      else if (revuePassee(espece)) retour.textContent = `${explication} Elle compte quand même pour cette expédition ; sa photo reviendra dans vos prochaines parties.`;
+      if (revueARepreendre(espece)) retour.textContent = `${explication} ${pe(espece).Elle} reviendra à la fin de cette révision.`;
+      else if (revuePassee(espece)) retour.textContent = `${explication} ${pe(espece).Elle} compte quand même pour cette expédition ; sa photo reviendra dans vos prochaines parties.`;
     }
   }
   defi.faites = defi.faites + 1;

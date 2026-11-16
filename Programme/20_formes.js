@@ -302,10 +302,8 @@ function poserChoixIndices(espece, montres, pieges) {
     if (!juste) b.classList.add("fausse");
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     const nom = typeof nomAvecArticle === "function" ? nomAvecArticle(espece) : espece.nom_courant;
-    const raisons = montres.filter(i => i.texte && i.etiq !== "Où" && !i.scene).map(i => minuscule(i.texte));
-    document.getElementById("retour").textContent = juste
-      ? `C'est ${nom}.${raisons.length ? ` ${majuscule(raisons.join(" · "))}.` : ""}`
-      : `C'était cette photo-ci : ${nom}.${raisons.length ? ` Les indices : ${raisons.join(" · ")}.` : ""}`;
+    // Étape R234 (note 15 du 15/11) : une phrase courte ; les indices restent affichés juste au-dessus
+    document.getElementById("retour").textContent = juste ? `C'est ${nom}.` : `C'était cette photo-ci : ${nom}.`;
     document.getElementById("nom").textContent = espece.nom_courant;
     const suite = document.createElement("button");
     suite.type = "button"; suite.className = "suivant bouton-annonce fe-go"; suite.textContent = "La découvrir →";
@@ -404,7 +402,7 @@ const PHRASES_PLANCHE = {
   naissance: v => majuscule(v),
   pelage_hiver: v => /change/i.test(v) ? "Change de couleur en hiver" : null,
   milieu_principal: v => `Vit surtout : ${minuscule(v)}`,
-  emplacement_nid: v => `Nid : ${minuscule(v)}`,
+  emplacement_nid: v => `Nid le plus souvent : ${minuscule(v)}`,   // étape R237 (choix d'Aubin du 16/11) : l'endroit principal
   saison_reproduction: (v, e) => `${accouplementSeul(e) ? "S'accouple" : "Se reproduit"} ${saisonEnPhrase(v)}`,   // étape R184
   saison_observation: v => `Se croise ${saisonEnPhrase(v)}`,
   defense_principale: v => `Pour se défendre : ${minuscule(v)}`,
@@ -421,6 +419,17 @@ function phrasePlanche(q, v, e) {
 // (règle de la réciprocité R166 : toutes les autres espèces montrées doivent être des pièges sûrs).
 // Une espèce qui rendrait une phrase douteuse n'est simplement pas montrée sur la planche (elle reste dans la suite de l'étape).
 // neuves = seulement ce qui n'est pas encore trouvé. Renvoie { phrases, montrees }.
+// Étape R237 (16/11, choix d'Aubin « le plus souvent ») : la phrase du nid ne parle que de l'endroit principal (« Nid le plus
+// souvent : au sol ») ; une autre espèce montrée n'a qu'à nicher le plus souvent ailleurs, et pas dans un endroit voisin
+// (le pigeon ramier, qui niche parfois au sol, peut être montré). Les autres questions gardent la règle des pièges sûrs.
+function sursPlanche(e, q, bonne, toutes) {
+  if (q.champ !== "emplacement_nid") return new Set(especesPieges(e, q, bonne));
+  return new Set(toutes.filter(o => {
+    if (o === e || !estRenseigne(o.photo)) return false;
+    const v = valeurDe(o, q);
+    return estRenseigne(v) && !(o.a_confirmer || []).includes(q.champ) && v !== bonne && !sontVoisines(q.champ, v, bonne);
+  }));
+}
 function phrasesPlanche(x, neuves) {
   const toutes = x.liste.filter(e => estRenseigne(e.photo));
   const cands = [];
@@ -434,7 +443,7 @@ function phrasesPlanche(x, neuves) {
       if (!estRenseigne(bonne) || typeof bonne !== "string") continue;
       const texte = phrasePlanche(q, bonne, e);
       if (!texte) continue;
-      const surs = new Set(especesPieges(e, q, bonne));
+      const surs = sursPlanche(e, q, bonne, toutes);                 // étape R237
       cands.push({ e, champ: c, q, bonne, texte, conflits: toutes.filter(o => o !== e && (!surs.has(o) || conflitPlanche(c, e, o))), hasard: Math.random() });
     }
   }

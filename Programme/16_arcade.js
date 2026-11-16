@@ -82,6 +82,7 @@ function afficherArcade() {
                : st.parties ? `${st.parties} partie${st.parties > 1 ? "s" : ""} jouée${st.parties > 1 ? "s" : ""}` : "Pas encore joué";
     // Étape R167 : pour « Compléter le carnet », ce qu'il reste à découvrir (pas de record)
     if (cle === "coupdoeil" && typeof metaCoupDoeil === "function") meta = metaCoupDoeil();   // étape R191
+    if (cle === "oreille" && typeof metaOreille === "function") meta = metaOreille();          // étape E2-11
     if (cle === "carnet" && etat.possible) { const n = resteCarnet(d.especes); meta = `encore ${nombre(n)} chose${n > 1 ? "s" : ""} à découvrir`; }
     return `<article class="arc-jeu${etat.possible ? "" : " ferme"}">
         <div class="arc-picto">${picto(cle)}</div>
@@ -147,6 +148,7 @@ function afficherArcade() {
 function lancerArcade(cle) {
   if (cle === "carnet") { lancerCarnet(true); return; }    // étape R167
   if (cle === "coupdoeil") { lancerCoupDoeil(); return; }   // étape R191
+  if (cle === "oreille") { lancerOreille(); return; }       // étape E2-11
   const T = territoiresArcade(), F = famillesArcade(T);
   const d = construireDefi(T, F);
   if (!d) { afficherBulle("Aucune espèce avec ce choix"); return; }

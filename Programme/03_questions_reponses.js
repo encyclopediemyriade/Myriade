@@ -326,6 +326,7 @@ function enTete(espece, montrerPhoto, montrerNom, titre) {
   photo.classList.toggle("grande", !montrerNom);        // photo plus haute quand il faut reconnaître
   photo.classList.remove("cadre-empreinte");            // (remis seulement par la question sur l'empreinte)
   photo.classList.remove("cadre-son", "devoile", "floutee", "jumelles");   // RF4 : « jumelles »
+  { const c = document.getElementById("carte-rencontre"); if (c) c.classList.remove("bravo-photo"); }   // R238 : la photo n'est fixée que sur l'écran « Bravo ! »
   photo.querySelectorAll(".fe-plus-large").forEach(b => b.remove());   // (remis seulement par la question sur le cri, ou le bonus : étape 162)
   photo.innerHTML = celluleImage(espece);
   const famille = document.getElementById("famille");
@@ -1195,11 +1196,16 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
 
   // Étape 310 : dans une Rencontre, la photo reconnue (ou le nom donné) s'accompagne toujours de la taille, avec son picto chiffré
   // Étape R168 : et le poids, à côté
-  if (session && session.focus && champ === IDENTIFICATION && typeof retourMesures === "function") {
+  if (session && session.focus && champ === IDENTIFICATION && estJuste && !session.presentee && typeof carteBravo === "function") {
+    // Étape R238 (note 7) : la photo reconnue, une seule carte « Pour le reconnaître » + les vignettes de ses photos, photo fixée en haut
+    { const ph = document.getElementById("photo-rencontre"); if (ph) ph.insertAdjacentHTML("beforeend", vignettesBravo(espece)); }   // posées sur la photo
+    retour.insertAdjacentHTML("beforeend", carteBravo(espece));
+    const carteR = document.getElementById("carte-rencontre"); if (carteR) carteR.classList.add("bravo-photo");
+  } else if (session && session.focus && champ === IDENTIFICATION && typeof retourMesures === "function") {
     retour.insertAdjacentHTML("beforeend", retourMesures(espece));
     if (session.physique && typeof pictosEnsemble === "function" && RENCONTRE_COMPLETE) retour.insertAdjacentHTML("beforeend", pictosEnsemble(espece));   // étape RF6
     // Étape R190 : la photo reconnue, la carte d'identité (repères de terrain) au début de la Rencontre, si elle n'a pas déjà été présentée
-    if (estJuste && !session.presentee && typeof blocReperes === "function") retour.insertAdjacentHTML("beforeend", blocReperes(espece, { titre: "Retenez-les : on vous les redemandera" }));
+    if (estJuste && !session.presentee && typeof blocReperes === "function") retour.insertAdjacentHTML("beforeend", blocReperes(espece, { titre: `Pour ${pe(espece).la} reconnaître` }));
     // Étape PA1 (12/11, choix A2 d'Aubin) : la photo reconnue, son autre forme s'affiche d'elle-même (« La femelle »…),
     //   en vignette ; toucher l'agrandit. Montrée, jamais demandée. Les « autre vue » ne sont pas montrées ici.
     if (estJuste && typeof blocAutresFormes === "function") retour.insertAdjacentHTML("beforeend", blocAutresFormes(espece));
@@ -1232,7 +1238,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     const medaille = CLASSES_PALIER[niveauApres];      // étape R144 : le palier de l'espèce (plus de médaille)
     const pop = { couleur, image: photo, medaille: dessinMedaille(medaille, niveauApres),
       etiquette: `Espèce ${nomPalier(niveauApres)}`, titre: nom, detail: "" };
-    feter({ etiquette: pop.etiquette, titre: nom, detail: SENS_MEDAILLE[niveauApres], son: "medaille", pop,
+    feter({ etiquette: pop.etiquette, titre: nom, detail: sensMedaille(niveauApres, espece), son: "medaille", pop,
             visuel: visuelEspece(espece, medaille, dessinMedaille(medaille, niveauApres)) });
   } else if (apres !== avant && apres === "identifiée") {
     annoncerNouvelleEspece(espece, "rejoint l'encyclopédie");   // étape 206

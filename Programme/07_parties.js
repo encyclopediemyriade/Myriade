@@ -15,7 +15,7 @@ function montrer(vue) {
   if (typeof majFilExpedition === "function") majFilExpedition(null);   // étape 332 : le bandeau d'expédition, remis par les lancements d'expédition
   const jeu = vue === "jouer";                           // l'onglet Jouer (étape 72)
   if (!jeu) modeLibre = false;
-  if (!jeu && vue !== "arcade" && vue !== "coupdoeil") depuisArcade = false;    // étape 274 : on a quitté « Plus de jeux »
+  if (!jeu && vue !== "arcade" && vue !== "coupdoeil" && vue !== "oreille") depuisArcade = false;    // étape 274 : on a quitté « Plus de jeux »
   // Étape 253 : trois usages de cet écran — « Partir ailleurs » (un territoire), « Plus de jeux » (choix libre), lancement direct
   if (jeu) modeTerrain = !lancementDirect && !modeLibre;
   if (jeu && modeTerrain) territoiresDefi = [territoireActif()];   // étape 252 : on part du territoire où l'on est (un seul)
@@ -37,6 +37,12 @@ function montrer(vue) {
   const vueCoup = document.getElementById("vue-coupdoeil");                            // étape R191 : Coup d'œil
   if (vueCoup) vueCoup.classList.toggle("cache", vue !== "coupdoeil");
   if (vue !== "coupdoeil" && typeof coup !== "undefined") coup = null;
+  const vueOreille = document.getElementById("vue-oreille");                           // étape E2-11 : À l'oreille
+  if (vueOreille) vueOreille.classList.toggle("cache", vue !== "oreille");
+  if (vue !== "oreille" && typeof oreille !== "undefined") oreille = null;
+  const vueDefiExp = document.getElementById("vue-defiexp");                           // étape E2-8 : le défi d'une expédition
+  if (vueDefiExp) vueDefiExp.classList.toggle("cache", vue !== "defiexp");
+  if (vue !== "defiexp" && typeof defiExp !== "undefined") { defiExp = null; document.querySelectorAll(".dfx-voile").forEach(v => v.remove()); }
   const vueExp = document.getElementById("vue-expedition");                            // étape 282 : l'écran d'une expédition
   if (vueExp) vueExp.classList.toggle("cache", vue !== "expedition");
   const vueLieu = document.getElementById("vue-lieu");                                  // étape 290 : la page d'un lieu
@@ -48,7 +54,7 @@ function montrer(vue) {
   document.getElementById("vue-progression").classList.toggle("cache", vue !== "progression");   // étape 106
   document.getElementById("onglet-progression").classList.toggle("actif", vue === "progression");
   document.getElementById("onglet-accueil").classList.toggle("actif", vue === "accueil" || vue === "maison" || vue === "carte" || vue === "expedition" || vue === "lieu");
-  document.getElementById("onglet-jouer").classList.toggle("actif", vue === "arcade" || vue === "coupdoeil" || (jeu && modeLibre));   // étape 262 : l'Arcade
+  document.getElementById("onglet-jouer").classList.toggle("actif", vue === "arcade" || vue === "coupdoeil" || vue === "oreille" || (jeu && modeLibre));   // étape 262 : l'Arcade
   document.body.classList.toggle("ecran-jouer", jeu);   // étape 91 : la barre du haut s'élargit comme le carnet
   document.getElementById("onglet-encyclopedie").classList.toggle("actif", vue === "encyclopedie" || vue === "espece");
   fermerFenetre();
@@ -430,27 +436,34 @@ function casesRencontre(s) {
 
 // Fin de session : écran dédié, puis Rejouer / Encyclopédie (étape 8)
 let rencontreDuJour = null;                               // étape 212 : la Rencontre lancée depuis « Espèce du jour »
+// L'espèce du jour est « rencontrée » pour aujourd'hui : la première fois, 2 empreintes. Rend true si c'est la première fois.
+// Étape R236 (note 10 du 15/11) : sortie de terminerSession pour servir aussi quand on ouvre sa fiche (ouvrirPageEspece, 06).
+function validerEspeceDuJour(nom, delai = 900) {
+  if (!suivi.duJour || suivi.duJour.date !== aujourdhui()) suivi.duJour = { date: aujourdhui(), faites: [] };
+  if (suivi.duJour.faites.includes(nom)) return false;
+  suivi.duJour.faites.push(nom);
+  // Étape R183c : la première Rencontre du jour avec l'espèce du jour rapporte 2 empreintes, dans le territoire actif
+  //   s'il l'abrite, sinon dans le premier territoire ouvert où elle vit (aucun défi ne la compte : pas de double gain)
+  const e = typeof especeParNom === "function" ? especeParNom(nom) : null;
+  const ouverts = typeof territoiresOuverts === "function" ? territoiresOuverts() : [];
+  const ici = e ? territoiresJeu(e) : [], ta = territoireActif();
+  const t = ici.includes(ta) ? ta : ici.find(x => ouverts.includes(x)) || ta;
+  if (t && typeof ajouterEmpreinteBonus === "function" && typeof GAIN_ESPECE_DU_JOUR !== "undefined") {
+    ajouterEmpreinteBonus(t, GAIN_ESPECE_DU_JOUR);
+    setTimeout(() => afficherBulle(`✓ Espèce du jour rencontrée · +${GAIN_ESPECE_DU_JOUR} empreintes`), delai);
+    if (typeof verifierOuverture === "function") setTimeout(verifierOuverture, delai + 700);
+  }
+  return true;
+}
 function terminerSession() {
   arreterCri();                                          // étape R176 : l'écran de fin ne garde pas le cri de la dernière question
   const s = session;
   session = null;
   if (s) s.duJour = !!rencontreDuJour;                     // étape R187 : la fin de la Rencontre du jour a sa propre suite
+  // Étape R236 (note 9) : la photo n'a pas été reconnue à la fin de la Rencontre → l'espèce entre au carnet « à reconnaître »
+  if (s && s.focus && typeof mettreAReconnaitre === "function") mettreAReconnaitre(s.focus);
   if (rencontreDuJour) {
-    if (!suivi.duJour || suivi.duJour.date !== aujourdhui()) suivi.duJour = { date: aujourdhui(), faites: [] };
-    if (!suivi.duJour.faites.includes(rencontreDuJour)) {
-      suivi.duJour.faites.push(rencontreDuJour);
-      // Étape R183c : la première Rencontre du jour avec l'espèce du jour rapporte 2 empreintes, dans le territoire actif
-      //   s'il l'abrite, sinon dans le premier territoire ouvert où elle vit (aucun défi ne la compte : pas de double gain)
-      const e = typeof especeParNom === "function" ? especeParNom(rencontreDuJour) : null;
-      const ouverts = typeof territoiresOuverts === "function" ? territoiresOuverts() : [];
-      const ici = e ? territoiresJeu(e) : [], ta = territoireActif();
-      const t = ici.includes(ta) ? ta : ici.find(x => ouverts.includes(x)) || ta;
-      if (t && typeof ajouterEmpreinteBonus === "function" && typeof GAIN_ESPECE_DU_JOUR !== "undefined") {
-        ajouterEmpreinteBonus(t, GAIN_ESPECE_DU_JOUR);
-        setTimeout(() => afficherBulle(`✓ Espèce du jour rencontrée · +${GAIN_ESPECE_DU_JOUR} empreintes`), 900);
-        if (typeof verifierOuverture === "function") setTimeout(verifierOuverture, 1600);
-      }
-    }
+    validerEspeceDuJour(rencontreDuJour);
     rencontreDuJour = null;
   }
   statsDe("rencontre").parties++;                          // étape 92 : une Rencontre de plus
@@ -982,6 +995,7 @@ function possibiliteJeuCalcul(jeu, choisi) {
     return { possible: false, raison: manque > 0 ? `encore ${pluriel(manque, "espèce")} à identifier` : "pas assez d'indices" };
   }
   if (jeu === "coupdoeil" && typeof possibiliteCoupDoeil === "function") return possibiliteCoupDoeil(especes);   // étape R191
+  if (jeu === "oreille" && typeof possibiliteOreille === "function") return possibiliteOreille(especes);         // étape E2-11
   if (jeu === "plus")  return duelsPossibles(especes, true).length ? { possible: true } : { possible: false, raison: "pas assez d'espèces ici" };
   if (jeu === "carnet") {                                 // étape R167
     if (!especes.some(e => estIdentifiee(e) && estRenseigne(e.photo))) return { possible: false, raison: "aucune espèce rencontrée ici pour l'instant" };

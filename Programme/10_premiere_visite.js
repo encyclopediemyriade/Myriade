@@ -16,7 +16,8 @@ const NIVEAUX_PROFIL = [
 ];
 const NB_TERRITOIRES_PROFIL = 1;        // combien de territoires le joueur débloque au départ
 const NB_DEPART_PAR_FAMILLE = 2;
-const ESPECES_OFFERTES = false;          // étape R92 (Revoir 9, choix D3) : le carnet commence vide ; la première expédition le remplit        // combien d'espèces offertes par famille au départ
+const ESPECES_OFFERTES = true;           // étape E2-12 (seconde partie, 16/11) : 8 espèces offertes au départ, « à reconnaître » (avant : false depuis R92)
+const NB_OFFERTES = 8;                  // étape E2-12 : combien d'espèces offertes
 const RARETE_DEPART = "Commun";         // leur rareté (colonne rarete_observation du tableur)
 const DERNIER_ECRAN = 3;
 // Étape PR4 (01/11, choix de l'utilisateur) : « au fil du jeu » pour tout le monde ; l'écran 2 (la question) n'est plus montré.
@@ -227,7 +228,7 @@ function poserExplication() {
   };
   const LIGNES = [
     ["boussole", "Partez en expédition", `dans de vrais lieux ${deTerritoire(territoireDeDepart(brouillon.territoires))}.`],   // « des Vosges »
-    ["loupe",    "Reconnaissez les espèces,", "puis découvrez comment elles vivent."],
+    ["loupe",    "Découvrez les espèces en expédition,", "ou testez-vous tout de suite."],   // étape E2-12 (seconde partie)
     ["pas",      "Gagnez des empreintes :", "elles ouvrent de nouveaux lieux, puis de nouveaux territoires."],
   ];
   const zone = document.createElement("ol");
@@ -252,7 +253,7 @@ function poserExplication() {
     note.id = "note-depart";
     // "des Alpes" se dit naturellement ; pour un autre territoire, on garde une tournure qui marche avec tous les noms
     const ou = deTerritoire(lieu);   // étape 190 : « des Alpes », « du Massif armoricain », « du Bassin parisien et Val de Loire »
-    note.innerHTML = `Pour bien démarrer, <strong>${brouillon.depart.length} espèces communes</strong> ${ou} sont déjà identifiées. Reste à découvrir comment elles vivent.`;
+    note.innerHTML = `Pour bien démarrer, <strong>${brouillon.depart.length} espèces communes</strong> ${ou} sont dans votre carnet, à reconnaître : leur photo et leur carte sont déjà là, et vous pouvez jouer avec tout de suite.`;   // étape E2-12
     corps.appendChild(note);
     // Une vignette par espèce : sa miniature dans un cadre à la couleur de sa famille, puis son nom
     const grille = document.createElement("div");
@@ -278,7 +279,27 @@ function territoireDeDepart(choisis) {
 // Tire les espèces de départ : pour chaque famille, 2 espèces communes au hasard.
 // Si une famille n'a pas 2 espèces communes (les reptiles des Alpes n'en ont qu'une),
 // on complète avec des "Peu commun", puis avec ce qui reste.
+// Étape E2-12 (seconde partie, 16/11) : 8 espèces très communes du premier lieu du territoire, de familles différentes
+// (une par famille d'abord, puis une deuxième dans les familles les plus fournies), toujours avec une photo.
 function tirerEspecesDeDepart(lieu) {
+  const c = typeof lieuxDe === "function" ? lieuxDe(lieu)[0] : null;
+  const duLieu = c && typeof expeditionsDuChapitre === "function" ? [...new Set(expeditionsDuChapitre(lieu, c.nom).flatMap(x => x.liste))] : [];
+  const base = (duLieu.length >= NB_OFFERTES ? duLieu : especesDe(lieu)).filter(e => estRenseigne(e.photo));
+  const rang = e => rareteDe(e) === RARETE_DEPART ? 0 : rareteDe(e) === "Peu commun" ? 1 : 2;
+  const triees = melanger(base.slice()).sort((a, b) => rang(a) - rang(b));
+  const tirees = [];
+  for (let tour = 0; tirees.length < NB_OFFERTES && tour < 4; tour++) {
+    for (const cle of Object.keys(CLASSES)) {
+      if (tirees.length >= NB_OFFERTES) break;
+      if (tirees.filter(e => e.onglet === cle).length > tour) continue;
+      const e = triees.find(x => x.onglet === cle && !tirees.includes(x) && (tour > 0 || rang(x) === 0));
+      if (e) tirees.push(e);
+    }
+  }
+  for (const e of triees) if (tirees.length < NB_OFFERTES && !tirees.includes(e)) tirees.push(e);
+  return tirees;
+}
+function tirerEspecesDeDepartAncien(lieu) {   // l'ancien tirage (2 par famille, étape 60), gardé pour mémoire
   const tirees = [];
   for (const cle of Object.keys(CLASSES)) {
     const famille = especesDe(lieu).filter(e => e.onglet === cle && estRenseigne(e.photo));
@@ -292,7 +313,26 @@ function tirerEspecesDeDepart(lieu) {
 
 // Place une espèce dans l'encyclopédie sans question : elle est "identifiée" (photo et nom
 // visibles), mais aucune caractéristique n'est trouvée. Même geste qu'à la fin d'un défi.
+// Étape E2-12 : une espèce offerte est « à reconnaître » : dans le carnet (photo, nom, carte visibles), jouable dans
+// Coup d'œil et À l'oreille, mais pas encore Reconnue ; elle le devient en la réussissant en défi ou en Rencontre
+// (sa Rencontre rapporte toujours son empreinte). Sauvegarde : suivi.offertes (noms).
 function offrirEspece(espece) {
+  suivi.offertes = suivi.offertes || [];
+  if (!suivi.offertes.includes(espece.nom_courant)) suivi.offertes.push(espece.nom_courant);
+}
+// Étape R236 (note 9 du 15/11, choix d'Aubin « BA ») : une espèce rencontrée dont la photo n'a pas été reconnue à la fin de sa
+//   Rencontre n'est plus perdue : elle devient « à reconnaître », comme les espèces offertes (carnet, Coup d'œil, À l'oreille).
+//   Elle devient Reconnue quand on la réussit (Rencontre, défi, ou Coup d'œil). Sauvegarde : suivi.aReconnaitre (noms).
+function mettreAReconnaitre(espece) {
+  if (!espece || estReconnue(espece) || !estRenseigne(espece.photo)) return;
+  suivi.aReconnaitre = suivi.aReconnaitre || [];
+  if (!suivi.aReconnaitre.includes(espece.nom_courant)) suivi.aReconnaitre.push(espece.nom_courant);
+}
+function estOfferteDepart(espece) { return !!(suivi && suivi.offertes && suivi.offertes.includes(espece.nom_courant)) && !estReconnue(espece); }
+function estARevoirRencontre(espece) { return !!(suivi && suivi.aReconnaitre && suivi.aReconnaitre.includes(espece.nom_courant)) && !estReconnue(espece); }
+// « À reconnaître » : offerte au départ, ou rencontrée sans avoir été reconnue (R236)
+function estOfferte(espece) { return estOfferteDepart(espece) || estARevoirRencontre(espece); }
+function offrirEspeceAncien(espece) {   // l'ancien don (espèce identifiée d'office, étape 60), gardé pour mémoire
   marquerVue(espece);
   progression[espece.nom_courant].acquis[IDENTIFICATION] = 1;
   progression[espece.nom_courant].decouverteLe = Date.now();   // étape 107 : les espèces offertes ont aussi une date
@@ -305,7 +345,7 @@ function suiteBienvenue() {
   profil = { niveau: brouillon.niveau, territoires: brouillon.territoires.slice() };
   // Nouveau joueur : ses espèces de départ. (Pas avec changerProfil : la partie existe déjà.)
   // Ce sont celles montrées sur le dernier écran (brouillon.depart, tirées dans poserExplication).
-  if (nouveauJoueur && ESPECES_OFFERTES && brouillon.depart) brouillon.depart.forEach(offrirEspece);   // étape R92 : désactivé (D3)
+  if (nouveauJoueur && ESPECES_OFFERTES && brouillon.depart) brouillon.depart.forEach(offrirEspece);   // étape E2-12 : de nouveau, « à reconnaître »
   if (nouveauJoueur) territoiresOuvertsListe = profil.territoires.filter(t => especesDe(t).length).slice(0, 1);   // étape 209
   if (brouillon.decouverte === "tout" || brouillon.decouverte === "toutjeu") territoiresOuvertsListe = null;   // étape 275 : tout d'un coup (null = tout est ouvert)
   if (typeof reglerToutDebloque === "function" && suivi) suivi.toutDebloque = brouillon.decouverte === "toutjeu";   // étape 332

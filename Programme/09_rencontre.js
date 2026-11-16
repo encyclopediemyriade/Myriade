@@ -348,15 +348,15 @@ const TITRE_CARNET_INCONNUE = "Espèce à découvrir";   // R158 : avant « Fich
 // ---- Étape R158 : la bande du bas (téléphone) et le 2e écran de la fiche ----
 const PICTO_CARNET = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
   + '<path d="M2 6c3-1.5 6-1.5 10 0v13c-4-1.5-7-1.5-10 0z"/><path d="M22 6c-3-1.5-6-1.5-10 0v13c4-1.5 7-1.5 10 0z"/></svg>';
-function majVersFiche(trouvees, prevues) {
+function majVersFiche(trouvees, prevues, espece) {   // R236 : espece = l'espèce dont le nom est connu (sinon null)
   const b = document.getElementById("vers-fiche");
   if (!b) return;
   const points = prevues <= 10 ? `<span class="vf-points">${"<i class=\"t\"></i>".repeat(trouvees)}${"<i></i>".repeat(Math.max(0, prevues - trouvees))}</span>`
                                : `<span class="vf-nombre">${trouvees} / ${prevues}</span>`;
   // Étape R194 (n° 14, choix d'Aubin : C « un tiroir qui monte du bas ») : la flèche monte, la fiche s'ouvre en tiroir
-  b.innerHTML = `<span class="vf-ic">${PICTO_CARNET}</span><span class="vf-txt"><b>Ce que vous savez d'elle</b>${points}</span>`
+  b.innerHTML = `<span class="vf-ic">${PICTO_CARNET}</span><span class="vf-txt"><b>Ce que vous savez ${pe(espece).dElle}</b>${points}</span>`
     + `<span class="vf-voir">Voir<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>`;
-  b.setAttribute("aria-label", `Ce que vous savez d'elle : ${trouvees} sur ${prevues}. Ouvrir la fiche`);
+  b.setAttribute("aria-label", `Ce que vous savez ${pe(espece).dElle} : ${trouvees} sur ${prevues}. Ouvrir la fiche`);
   if (!b.onclick) {
     b.onclick = () => { if (tiroirPossible()) ouvrirTiroir(); else document.getElementById("postit-rencontre").scrollIntoView({ behavior: "smooth", block: "start" }); };
     brancherGlisserTiroir(b);
@@ -491,8 +491,8 @@ function dessinerPostit() {
   const connu = titre !== TITRE_CARNET_INCONNUE;
   // Étape R158 (08/11, choix d'Aubin) : « Votre fiche » devient « Ce que vous savez d'elle » ; sur téléphone, la fiche
   // est un 2e écran sous la question, ouvert par la bande du bas, avec « ↑ Revenir à la question » à la fin
-  majVersFiche(trouvees, prevues);
-  zone.innerHTML = `<div class="postit"><div class="tt-postit">Ce que vous savez d'elle</div><h2${nomCache ? ' class="floute"' : ""}>${titre}</h2>`
+  majVersFiche(trouvees, prevues, connu ? espece : null);   // R236 : « de lui » / « d'elle » une fois le nom connu
+  zone.innerHTML = `<div class="postit"><div class="tt-postit">Ce que vous savez ${pe(connu ? espece : null).dElle}</div><h2${nomCache ? ' class="floute"' : ""}>${titre}</h2>`
     + `<p class="sci-postit${nomCache ? " floute" : ""}">${connu ? espece.nom_scientifique || "" : ""}</p><ul>${lignes.join("")}</ul>`
     + `<div class="legende-postit">${trouvees} / ${prevues} trouvée${trouvees > 1 ? "s" : ""}${aRevoirIci ? ` · ${aRevoirIci} à revoir` : ""}${reste ? ` · encore ${reste} à découvrir` : ""}`
     + `<div class="points-postit">${points}</div></div>`
@@ -629,6 +629,47 @@ function retourMesures(e) {
   return l ? `<span class="retour-mesures">${l}</span>` : "";
 }
 
+// ---- Étape R238 (note 7 du 15/11, choix d'Aubin « 1A · 2B · 3A · 4A ») : l'écran « Bravo ! » après la photo reconnue ----
+//   1A : la photo reste fixée en haut pendant qu'on lit (téléphone, CSS « bravo-photo ») ;
+//   3A : sous la photo, une vignette par forme (adulte, jeune, femelle…) : un toucher change la grande photo et la carte suit
+//        (remplace les onglets de la carte et la vignette « Le jeune » du bas) ;
+//   2B + 4A : une seule carte « Pour le reconnaître » : « Sa silhouette » (taille, poids et l'ensemble en tuiles), puis « Ses repères ».
+function vignettesBravo(e) {
+  const r = typeof reperesDe === "function" ? reperesDe(e) : null;
+  const photos = photosDe(e).filter((p, i) => i === 0 || etiquetteForme(p.sujet));
+  if (photos.length < 2) return "";
+  const nom = p => {
+    if (!p.sujet) return r && r.forme_photo && NOMS_FORME[r.forme_photo] ? NOMS_FORME[r.forme_photo] : "Photo";
+    const f = FORME_DE_SUJET[p.sujet];
+    return (f && NOMS_FORME[f]) || majuscule(etiquetteForme(p.sujet).replace(/^(Le |La |L'|Les )/, ""));
+  };
+  return `<div class="bravo-vignettes" role="group" aria-label="Ses photos">${photos.map((p, i) => `<button type="button" class="bravo-vign${i === 0 ? " actif" : ""}" aria-pressed="${i === 0}"`
+    + ` data-src="${p.src}" data-sujet="${echapper(p.sujet)}" onclick="event.stopPropagation(); bravoMontrerPhoto(this)">${imagePhoto(p.src, "", true)}<span>${echapper(nom(p))}</span></button>`).join("")}</div>`;
+}
+function bravoMontrerPhoto(b) {
+  const e = enCours && enCours.espece;
+  if (!e || !b) return;
+  const photo = document.getElementById("photo-rencontre");
+  if (photo) { const img = photo.querySelector("img"); if (img) { img.src = b.dataset.src; img.removeAttribute("srcset"); } }
+  b.parentNode.querySelectorAll(".bravo-vign").forEach(o => { const on = o === b; o.classList.toggle("actif", on); o.setAttribute("aria-pressed", on); });
+  const r = typeof reperesDe === "function" ? reperesDe(e) : null;
+  const carte = document.querySelector("#carte-rencontre .carte-bravo .reperes");
+  if (r && carte) choisirFormeReperes(carte, formePourPhoto(r, b.dataset.sujet || ""));
+}
+function carteBravo(e) {
+  const t = tailleRencontre(e), p = poidsRencontre(e);
+  const tuile = (dessin, texte, lib) => `<span class="cb-tuile">${dessin ? `<span class="cb-dessin">${dessin}</span>` : ""}${texte ? `<b>${texte}</b>` : ""}<small>${lib}</small></span>`;
+  const tuiles = [
+    t ? tuile(pictoTaille(t), "", echapper(t.mesure || "taille")) : "",
+    p ? tuile(pictoPoids(p), "", "poids") : "",
+    ...(typeof elementsEnsemble === "function" ? elementsEnsemble(e) : []).map(x => tuile(x.dessin, x.texte, echapper(minuscule(x.libelle))))
+  ].filter(Boolean);
+  const rp = typeof blocReperes === "function" ? blocReperes(e, { sansOnglets: true, sansTitre: true }) : "";
+  return `<div class="carte-bravo"><p class="cb-titre">Pour ${pe(e).la} reconnaître</p>`
+    + (tuiles.length ? `<p class="cb-sous">Sa silhouette</p><div class="cb-tuiles">${tuiles.join("")}</div>` : "")
+    + (rp ? `<p class="cb-sous">Ses repères</p>${rp}` : "") + `</div>`;
+}
+
 function presenterEspece(espece) {
   session.presentee = true;
   marquerVue(espece);
@@ -653,7 +694,7 @@ function presenterEspece(espece) {
   let traits = [...melanger(visibles.filter(q => q.niveau === 1)), ...melanger(visibles.filter(q => q.niveau === 2))].slice(0, TRAITS_PRESENTES);
   // Étape R190 (carte d'identité, choix E d'Aubin) : quand l'espèce a ses repères de terrain, la carte garde la taille, le poids
   //   et l'ensemble (couleur, aspect…), puis les repères ; les autres traits laissent la place (pas de lourdeur à lire).
-  const blocRp = typeof blocReperes === "function" ? blocReperes(espece, { arrivee: 1.3, titre: "Retenez-les : on vous les redemandera" }) : "";
+  const blocRp = typeof blocReperes === "function" ? blocReperes(espece, { arrivee: 1.3, titre: "Ses repères" }) : "";
   if (blocRp && typeof TRAITS_ENSEMBLE !== "undefined") traits = traits.filter(q => TRAITS_ENSEMBLE.includes(q.champ)).slice(0, 2);
   session.presentes = traits.map(q => q.champ);
   const lignes = traits.map(q => {
@@ -665,7 +706,7 @@ function presenterEspece(espece) {
   const taille = ligneTaille(espece, ` style="animation-delay:.7s"`).replaceAll('class="trait-taille', 'class="trait-arrive trait-taille');   // étape 310 : la taille d'abord ; R168 : et le poids
   const zone = document.getElementById("reponses");
   zone.className = "";
-  zone.innerHTML = `<div class="presentation"><p class="trait-arrive" style="animation-delay:.5s">Pour la reconnaître :</p><ul class="traits-presentation">${taille}${lignes}</ul>${blocRp}</div>`;
+  zone.innerHTML = `<div class="presentation"><p class="trait-arrive" style="animation-delay:.5s">Pour ${pe(espece).la} reconnaître :</p><ul class="traits-presentation">${taille}${lignes}</ul>${blocRp}</div>`;
   const suivant = document.getElementById("suivant");
   suivant.textContent = "Observer de plus près →";
   // le bouton n'arrive qu'une fois les traits posés (on ne saute pas la présentation par mégarde)
@@ -687,7 +728,7 @@ function afficherFicheSession(s) {
   const gain = trouvees - s.ficheAvant;
   const niveau = niveauTermine(espece);
   const medaille = niveau && !s.expedition ? dessinMedaille(MEDAILLES[niveau], niveau) : "";   // étape R130 : pas de médaille dans une expédition
-  const etat = estIdentifiee(espece) ? majuscule(statut(espece)) : "Pas encore reconnue : elle reviendra";
+  const etat = estIdentifiee(espece) ? majuscule(statut(espece)) : `Pas encore reconnu${pe(espece).e} : ${pe(espece).elle} reviendra`;
   zone.style.setProperty("--couleur-classe", classeDe(espece).couleur);
   zone.innerHTML = `
     <div class="fiche-session-haut">
@@ -795,17 +836,24 @@ function ligneRarete(espece) {
   const suivant = document.getElementById("suivant");
   if (!suivant || !window.matchMedia || typeof MutationObserver === "undefined") return;
   const telephone = window.matchMedia("(max-width: 760px)");
+  // Étape R234 (note 16 du 15/11) : plus de défilement par à-coups. Le bouton fixé en bas est toujours visible : la page
+  //   ne bouge que si une explication écrite est cachée, une seule fois, en douceur, jusqu'au bas de cette explication
+  //   (sans jamais faire sortir son haut de l'écran). Avant : deux défilements, et un défilement inutile quand il n'y avait
+  //   rien à lire (la page descendait pour montrer « Quitter » et le vide dessous).
+  let attente = null;
   const montrerSuite = () => {
     if (!telephone.matches || suivant.classList.contains("cache") || !suivant.getClientRects().length) return;   // (offsetParent vaut null pour un bouton fixé)
-    // Étape M15 : le bouton « Continuer » est fixé en bas de l'écran ; c'est l'explication qui doit rester visible au-dessus
     const fixe = getComputedStyle(suivant).position === "fixed";
     const retour = document.getElementById("retour");
-    const cible = fixe && retour && retour.offsetParent && retour.textContent.trim() ? retour : suivant;
+    const aLire = retour && retour.offsetParent && retour.textContent.trim();
+    const cible = fixe ? (aLire ? retour : null) : suivant;
+    if (!cible) return;
     const limite = fixe ? suivant.getBoundingClientRect().top - 12 : window.innerHeight;
-    const bas = cible.getBoundingClientRect().bottom + 12;
-    if (bas > limite) window.scrollBy({ top: bas - limite, behavior: "smooth" });
+    const r = cible.getBoundingClientRect();
+    const dy = Math.min(r.bottom + 12 - limite, r.top - 12);          // jusqu'au bas de l'explication, son haut reste visible
+    if (dy > 4) window.scrollBy({ top: dy, behavior: "smooth" });
   };
-  new MutationObserver(() => { setTimeout(montrerSuite, 60); setTimeout(montrerSuite, 450); })   // M15 : une 2e fois, l'explication peut arriver juste après
+  new MutationObserver(() => { clearTimeout(attente); attente = setTimeout(montrerSuite, 350); })   // une seule fois, quand l'explication est écrite
     .observe(suivant, { attributes: true, attributeFilter: ["class"] });
 })();
 

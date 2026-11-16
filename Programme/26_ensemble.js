@@ -336,12 +336,15 @@ function questionFragiles(x) {
 // Une phrase fixe par lieu de nid (à vérifier une fois, 2 sources, avant la mise en ligne). « exclus » : lieux de nid trop proches
 // pour être montrés comme « non » (un nid de bâtiment est souvent dans une cavité…). « milieu » : la bonne réponse doit vivre là.
 const ET_SI = {
-  "Cavité d'arbre": { question: "Garder les vieux arbres creux profite à lesquelles de ces espèces ?", exclus: ["Arbre ou buisson", "Bâtiment"] },
-  "Bâtiment": { question: "Laisser des accès sous les toits et dans les vieux bâtiments profite à lesquelles de ces espèces ?", exclus: ["Cavité d'arbre"] },
-  "Arbre ou buisson": { question: "Garder les haies, les buissons et les arbres profite à lesquelles de ces espèces ?", exclus: ["Cavité d'arbre"] },
-  "Roselière ou végétation dense": { question: "Garder les roselières profite à lesquelles de ces espèces ?", exclus: ["Au sol", "Sur l'eau (nid flottant)"],
+// Étape R236 (note 17 du 15/11) : « profite à » était à moitié vrai (le rougegorge, qui niche au sol, profite aussi des haies :
+//   abri, nourriture). La question dit maintenant ce qu'elle juge : le lieu du nid. Et un nid au sol n'est plus montré comme « non »
+//   pour les haies (souvent au pied d'une haie ou d'un buisson).
+  "Cavité d'arbre": { question: "Garder les vieux arbres creux offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Arbre ou buisson", "Bâtiment"] },
+  "Bâtiment": { question: "Laisser des accès sous les toits et dans les vieux bâtiments offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Cavité d'arbre"] },
+  "Arbre ou buisson": { question: "Garder les haies, les buissons et les arbres offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Cavité d'arbre", "Au sol", "Roselière ou végétation dense"] },
+  "Roselière ou végétation dense": { question: "Garder les roselières offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Au sol", "Sur l'eau (nid flottant)"],
     milieu: e => /Marais|Mares|Lacs|Estuaires/.test(e.milieu_principal || "") || /rosea|roseli|marais/i.test(String(e.habitat || "")) },
-  "Au sol": { question: "Ne pas faucher les prés avant l'été profite à lesquelles de ces espèces ?", exclus: ["Roselière ou végétation dense"],
+  "Au sol": { question: "Ne pas faucher les prés avant l'été protège le nid de lesquelles de ces espèces ?", exclus: ["Roselière ou végétation dense"],
     milieu: e => /Campagne/.test(e.milieu_principal || "") || /prair|\bprés?\b|champ/i.test(String(e.habitat || "")) },
 };
 const NIDS_NETS = ["Cavité d'arbre", "Bâtiment", "Arbre ou buisson", "Roselière ou végétation dense", "Au sol", "Falaise ou paroi rocheuse", "Terrier", "Sur l'eau (nid flottant)"];
@@ -349,6 +352,12 @@ const NIDS_DITS = { "Cavité d'arbre": "dans un arbre creux", "Bâtiment": "dans
   "Roselière ou végétation dense": "dans une roselière ou une végétation dense", "Au sol": "au sol", "Falaise ou paroi rocheuse": "dans une falaise",
   "Terrier": "dans un terrier", "Sur l'eau (nid flottant)": "sur l'eau, dans un nid flottant" };
 function nidNet(e) { return confirme(e, "emplacement_nid") && NIDS_NETS.includes(String(e.emplacement_nid).trim()) ? String(e.emplacement_nid).trim() : null; }
+// Étape R237 : les autres endroits où une espèce niche aussi (2 sources : colonne « autres » ; 1 source : Pieges_interdits)
+function nidsAussi(e) {
+  const interdits = (typeof PIEGES_INTERDITS === "undefined" ? [] : PIEGES_INTERDITS)
+    .filter(p => p.nom_courant === e.nom_courant && p.colonne === "emplacement_nid").map(p => String(p.reponse_interdite));
+  return [...valeursAutres(e, "emplacement_nid"), ...interdits];
+}
 function questionEtSi(x) {
   // une espèce dont le lieu dit déjà où elle niche (lien « Sa maison » : le balbuzard sur la falaise de Scandola) n'est pas montrée :
   // sa fiche (« arbre ou buisson ») pourrait contredire ce lieu
@@ -356,14 +365,21 @@ function questionEtSi(x) {
   const logees = new Set((c ? liensDuLieu(x.territoire, c.nom) : []).filter(k => k.nature_b === "element" && k.role === "Sa maison").map(k => k.a));
   let mieux = null;
   for (const [cas, r] of Object.entries(ET_SI)) {
-    const l = x.liste.filter(e => { const n = nidNet(e); return n && !logees.has(e.nom_courant) && !r.exclus.includes(n) && (n !== cas || !r.milieu || r.milieu(e)); });
+    // Étape R237 : une espèce montrée comme « non » ne niche nulle part près de ce cas, même en second (colonne
+    // emplacement_nid_autres, ou onglet Pieges_interdits : le rougegorge dans les haies, le moineau dans les arbres)
+    const l = x.liste.filter(e => { const n = nidNet(e); return n && !logees.has(e.nom_courant) && !r.exclus.includes(n) && (n !== cas || !r.milieu || r.milieu(e))
+      && (n === cas || !nidsAussi(e).some(v => v === cas || r.exclus.includes(v))); });
     const bonnes = l.filter(e => nidNet(e) === cas);
     if (l.length < 3 || !bonnes.length || bonnes.length === l.length) continue;
     if (!mieux || bonnes.length > mieux.bonnes.length) mieux = { cas, r, l, bonnes };
   }
   if (!mieux) return null;
   const { r, l, bonnes } = mieux;
-  const explication = l.map(e => `${LeNom(e)} niche ${NIDS_DITS[nidNet(e)]}.`).join(" ");
+  // Étape R236 (note 17) : l'explication regroupe les espèces par lieu de nid (avant : « Le … niche … » répété pour chacune)
+  const groupes = new Map([[mieux.cas, []]]);
+  for (const e of l) { const n = nidNet(e); if (!groupes.has(n)) groupes.set(n, []); groupes.get(n).push(e); }
+  const explication = majuscule([...groupes].filter(([, g]) => g.length)
+    .map(([n, g]) => `${listeEt(g.map(leNom))} ${g.length > 1 ? "nichent" : "niche"} ${NIDS_DITS[n]}`).join(" ; ")) + ".";
   return { type: "etsi", question: r.question, montrees: [], choix: melanger(l.map(e => choixEspece(e, bonnes.includes(e)))),
            plusieurs: true, explication, especes: l.map(e => e.nom_courant) };
 }
@@ -493,7 +509,11 @@ function dessinerEnsemble() {
   const boutons = [...z.querySelectorAll(".en-rep")];
   const corriger = choisis => {
     const bonnes = q.choix.map((c, i) => c.bonne ? i : -1).filter(i => i >= 0);
-    const juste = choisis.length === bonnes.length && choisis.every(i => bonnes.includes(i));
+    // Étape R236 (note 17, décision d'Aubin du 15/11) : à plusieurs réponses, la question est validée si le joueur trouve au moins
+    //   les 2/3 des bonnes réponses (2 sur 3, 2 sur 2, 3 sur 4…) sans cocher de fausse réponse ; les oubliées restent montrées.
+    const trouvees = choisis.filter(i => bonnes.includes(i)).length, fausses = choisis.filter(i => !bonnes.includes(i)).length;
+    const juste = fausses === 0 && trouvees >= (q.plusieurs ? Math.ceil(bonnes.length * 2 / 3) : bonnes.length);
+    const partiel = juste && trouvees < bonnes.length;
     boutons.forEach(b => {
       const i = Number(b.dataset.i); b.disabled = true; b.classList.remove("coche");
       if (bonnes.includes(i)) b.classList.add(choisis.includes(i) || !q.plusieurs ? "juste" : "juste", ...(q.plusieurs && !choisis.includes(i) ? ["oubliee"] : []));
@@ -505,7 +525,8 @@ function dessinerEnsemble() {
     if (q.type === "liens" && typeof noterLienConnu === "function") noterLienConnu("ens|" + (q.especes || []).join("|"));   // badge « Leurs liens »
     const v = document.getElementById("en-valider"); if (v) v.classList.add("cache");
     const oubli = q.plusieurs && !juste && bonnes.some(i => !choisis.includes(i)) ? " Les bonnes réponses sont encadrées en vert." : "";
-    document.getElementById("en-retour").innerHTML = `${juste ? "Bravo ! " : ""}${echapper(q.explication || "")}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
+    const debut = partiel ? `Validé : ${trouvees} sur ${bonnes.length}. ` : juste ? "Bravo ! " : "";
+    document.getElementById("en-retour").innerHTML = `${debut}${echapper(q.explication || "")}${partiel ? `<br><small>${bonnes.length - trouvees > 1 ? "Les autres sont encadrées" : "L'autre est encadrée"} en vert.</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
     const s = document.getElementById("en-suite");
     s.textContent = E.i + 1 < E.file.length ? "Question suivante" : "Continuer";
     s.classList.remove("cache"); s.focus();

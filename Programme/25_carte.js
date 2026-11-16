@@ -7,6 +7,12 @@
 //   • Un toucher sur un territoire ouvert : la vraie carte du territoire, les lieux en pastilles sobres (carteDesLieux, 17),
 //     la montagne en ombrage doux (Images/Relief/relief_<territoire>.png, gen_relief.py), sans nom de sommet.
 //     Un toucher sur un lieu le choisit : sa carte s'affiche dessous, avec le bouton pour y aller.
+//   • Étape K3 (16/11/2026, choix d'Aubin « 1B · 2A · 3C · 4B · 5C · 6B · 7B », canvas « Aperçu des territoires ») :
+//     TOUS les territoires se touchent, même fermés. Un territoire fermé s'ouvre « en aperçu » sur le même écran qu'un
+//     territoire ouvert (rien ne change de place le jour où il s'ouvre) : bandeau « Aperçu » et une ligne sur ce qui l'ouvre,
+//     la carte des lieux (tous « plus tard »), le portrait (photo, phrase, chiffres), les 8 espèces emblématiques en photo
+//     avec leur nom (IDENTITE), les lieux avec leur espèce vedette ; un lieu touché montre sa fiche (photo, phrase,
+//     titres de ses expéditions, son espèce) ; en bas, ce qui l'ouvre et « Continuer dans … ». Pas d'« enjeu » dans l'aperçu.
 
 // La place des noms sur la carte de France (unités de territoires.js) : x, y, taille, lignes
 const ATLAS_NOMS = {
@@ -38,7 +44,7 @@ let atlasLieu = null;            // le lieu choisi sur la carte du territoire
 function afficherAtlas() {
   const zone = document.getElementById("vue-atlas");
   if (!zone) return;
-  if (atlasTerritoire && !territoiresOuverts().includes(atlasTerritoire)) atlasTerritoire = null;
+  if (atlasTerritoire && !tousLesTerritoires().includes(atlasTerritoire)) atlasTerritoire = null;   // étape K3 : un territoire fermé se montre en aperçu
   if (atlasTerritoire) dessinerAtlasTerritoire(zone, atlasTerritoire); else dessinerAtlasFrance(zone);
   window.scrollTo(0, 0);
 }
@@ -80,59 +86,106 @@ function dessinerAtlasFrance(zone) {
     <div class="at-carte-france"><svg viewBox="${CARTE_CADRE}" role="img" aria-label="Carte de France des territoires">${formes}${contourProchain}${noms}${maison}</svg></div>
     <h2 class="at-titre">Vos territoires</h2>
     <ul class="at-liste">${[ici].filter(t => ouverts.includes(t)).concat(ouverts.filter(t => t !== ici)).map(ligne).join("")}</ul>
-    ${suivant ? `<div class="at-suivant"><span class="at-pastille pale" style="background:${pale(couleur(suivant))};border-color:${couleur(suivant)}"></span>
-        <span><b>Prochain territoire : ${echapper(suivant)}</b><small>${(m => m === null ? "" : m ? "Encore " + texteManque(m) : "Il s'ouvre maintenant")(avantProchainTerritoire())}</small></span></div>` : ""}
+    ${suivant ? `<button class="at-suivant at-ligne-ferme" type="button" data-t="${echapper(suivant)}"><span class="at-pastille pale" style="background:${pale(couleur(suivant))};border-color:${couleur(suivant)}"></span>
+        <span><b>Prochain territoire : ${echapper(suivant)}</b><small>${(m => m === null ? "" : m ? "Encore " + texteManque(m) : "Il s'ouvre maintenant")(avantProchainTerritoire())} · voir l'aperçu</small></span><span class="at-fleche" aria-hidden="true">›</span></button>` : ""}
     ${autres.length ? `<details class="at-plus-tard"><summary>Plus tard · ${autres.length} territoire${autres.length > 1 ? "s" : ""}</summary>
-        <ul>${autres.map(t => `<li><span class="at-pastille pale" style="background:${pale(couleur(t))}"></span>${echapper(t)}</li>`).join("")}</ul></details>` : ""}`;
-  const aller = t => {
+        <ul>${autres.map(t => `<li><button class="at-ligne-ferme" type="button" data-t="${echapper(t)}"><span class="at-pastille pale" style="background:${pale(couleur(t))}"></span><span>${echapper(t)}</span><span class="at-fleche" aria-hidden="true">›</span></button></li>`).join("")}</ul></details>` : ""}`;
+  const aller = t => {   // étape K3 : ouvert ou fermé, on y va (un territoire fermé se montre en aperçu)
     if (!t) return;
-    if (!ouverts.includes(t)) {
-      const m = avantProchainTerritoire();
-      afficherBulle(t === suivant && m !== null ? `${t} s'ouvre avec encore ${texteManque(m)}` : `${t} s'ouvrira plus tard`);
-      return;
-    }
     atlasTerritoire = t; atlasLieu = null; afficherAtlas();
   };
   zone.querySelectorAll(".at-terr").forEach(p => p.addEventListener("click", () => aller(p.dataset.t)));
-  zone.querySelectorAll(".at-ligne").forEach(b => b.onclick = () => aller(b.dataset.t));
+  zone.querySelectorAll(".at-ligne, .at-ligne-ferme").forEach(b => b.onclick = () => aller(b.dataset.t));
 }
 
 // ---- 2. Un territoire : la vraie carte, les lieux en pastilles, le lieu choisi dessous ----
+// Étape K3 : le même écran pour un territoire fermé, « en aperçu » (rien ne s'y joue).
+const LOCK_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`;
+function territoireEnApercu(t) { return !territoiresOuverts().includes(t) && !toutDebloque(); }
+// « dans le Jura », « en Corse », « dans les Alpes »
+function dansTerritoire(t) { const a = articleTerritoire(t); return a === "en" ? `en ${t}` : `dans ${a} ${t}`; }
+// Ce qui ouvre un territoire fermé, en une phrase
+function phraseOuverture(t) {
+  const suivant = prochainTerritoire(), m = avantProchainTerritoire();
+  if (t === suivant) return m === null ? "C'est le prochain territoire." : m ? `C'est le prochain territoire : encore ${texteManque(m)}.` : "C'est le prochain territoire : il s'ouvre maintenant.";
+  return `Ce territoire s'ouvrira plus tard.${suivant ? ` Prochain territoire : ${suivant}.` : ""}`;
+}
+// Les espèces emblématiques du territoire (carte d'identité, IDENTITE) : photo et nom (choix « 2A »), 8 au plus (« 3C »)
+function emblemesTerritoire(t) {
+  const id = typeof IDENTITE !== "undefined" ? IDENTITE[t] : null;
+  const ici = new Set(especesDe(t).map(e => e.nom_courant));
+  return ((id && id.emblemes) || []).map(n => especeParNom(n)).filter(e => e && ici.has(e.nom_courant)).slice(0, 8);
+}
+function portraitTerritoire(t) {
+  const id = typeof IDENTITE !== "undefined" ? IDENTITE[t] : null;
+  const ph = photoTerritoire(t, id), chiffres = chiffresTerritoire(t, id).slice(0, 3);
+  const emb = emblemesTerritoire(t), autres = especesDe(t).length - emb.length;
+  const vignette = e => `<button class="at-emb" type="button" data-nom="${echapper(e.nom_courant)}">
+      <span class="at-emb-ph">${imgMini(photoEsp(e), e.nom_courant)}${estReconnue(e) ? `<i class="at-emb-ok" aria-label="Reconnue">✓</i>` : ""}</span>
+      <span>${echapper(e.nom_courant)}</span></button>`;
+  return `<section class="at-portrait">
+      <img src="${ph.fichier}" alt="${echapper(ph.legende || t)}" loading="lazy">
+      <div class="at-portrait-corps">
+        ${ph.legende ? `<small class="at-portrait-leg">${legendeCouv(ph, true)}</small>` : ""}
+        ${id && id.phrase ? `<p class="at-phrase">${echapper(id.phrase)}</p>` : ""}
+        ${chiffres.length ? `<div class="at-chiffres">${chiffres.map(c => `<div><b>${echapper(c.valeur)}</b><small>${echapper(c.texte)}</small></div>`).join("")}</div>` : ""}
+      </div></section>
+    ${emb.length ? `<h2 class="at-titre">Ceux qui vous y attendent</h2>
+    <div class="at-emblemes">${emb.map(vignette).join("")}</div>
+    ${autres > 0 ? `<p class="at-note">et ${nombre(autres)} autres espèces, à découvrir sur place.</p>` : ""}` : ""}`;
+}
 function dessinerAtlasTerritoire(zone, t) {
   const couleur = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
+  const apercu = territoireEnApercu(t);
   const lieux = chapitresDe(t).filter(c => estLieu(c) || c.type === "remarquable");
   if (!atlasLieu || !lieux.some(c => c.nom === atlasLieu)) {
-    const l = lieuDernierJoue(t) || lieux[0];
+    const l = (apercu ? null : lieuDernierJoue(t)) || lieux[0];
     atlasLieu = l ? l.nom : null;
   }
   const r = rangTerritoire(t);
-  const carte = carteDesLieux(t, { largeur: 360, hauteur: 300, point: 0.85, relief: reliefTerritoire(t) });
+  const carte = carteDesLieux(t, { largeur: 360, hauteur: 300, point: 0.85, relief: reliefTerritoire(t), apercu });
   const etiq = c => {
-    if (c.type === "remarquable") return chapitreOuvert(t, c) ? "Site remarquable" : "Site remarquable · à la fin du territoire";
+    if (c.type === "remarquable") return chapitreOuvert(t, c) && !apercu ? "Site remarquable" : "Site remarquable · à la fin du territoire";
+    if (apercu) return `${c.pays ? echapper(c.pays) + " · " : ""}${expeditionsDuChapitre(t, c.nom).length} expéditions`;
     const e = etatLieu(t, c), m = medailleLieu(t, c);
     if (e === "ferme") return prochainLieu(t) === c ? "Le prochain lieu" : "Plus tard";
     if (e === "fini") return "Terminé";
     return (m ? MEDAILLES_LIEU[m].titre + " · " : "") + (finaleAJouer(t, c) ? "finale à jouer" : e === "cours" ? "en cours" : "ouvert");
   };
   const pastille = c => {
-    if (c.type === "remarquable") return `<span class="at-lp site${chapitreOuvert(t, c) ? "" : " ferme"}"></span>`;
+    if (apercu && c.type !== "remarquable") return `<span class="at-lp-ph">${imgMini(c.photo, "")}</span>`;
+    if (c.type === "remarquable") return `<span class="at-lp site${chapitreOuvert(t, c) && !apercu ? "" : " ferme"}"></span>`;
     const e = etatLieu(t, c), m = medailleLieu(t, c);
     return e !== "ferme" && m ? `<span class="at-lp med">${medailleSvg(m)}</span>` : `<span class="at-lp ${e}"></span>`;
   };
+  const vedette = c => { const v = c.type === "remarquable" ? null : vedetteLieu(t, c); return v ? `<small class="at-lieu-ici">Ici : ${echapper(v.nom_courant)}</small>` : ""; };
+  const ouverture = phraseOuverture(t);
   zone.innerHTML = `
     <header class="at-tete terr">
       <button class="at-retour" type="button" aria-label="Retour à la France"><span aria-hidden="true">←</span></button>
       <div><small>France</small><h1>${echapper(t)}</h1></div>
-      <span class="at-emp">${PAS_SVG}<b>${r.empreintes}</b></span>
+      ${apercu ? `<span class="at-badge-apercu" style="--couleur-t:${couleur}">${LOCK_SVG}Aperçu</span>` : `<span class="at-emp">${PAS_SVG}<b>${r.empreintes}</b></span>`}
     </header>
+    ${apercu ? `<p class="at-bandeau-apercu" style="--couleur-t:${couleur}">${echapper(ouverture)} Vous pouvez déjà tout regarder.</p>` : ""}
     <div class="at-carte-terr" style="--couleur-t:${couleur}">${carte}</div>
     <section class="at-choix" id="at-choix"></section>
+    ${portraitTerritoire(t)}
     <h2 class="at-titre">Les lieux</h2>
     <ul class="at-lieux">${lieux.map(c => `<li><button class="at-lieu-ligne${c.nom === atlasLieu ? " choisi" : ""}" type="button" data-lieu="${echapper(c.nom)}">
-        ${pastille(c)}<span><b>${echapper(c.nom)}</b><small>${etiq(c)}</small></span></button></li>`).join("")}</ul>
-    <button class="at-page-terr" type="button">La page ${deTerritoire(t)} <span aria-hidden="true">→</span></button>`;
+        ${pastille(c)}<span><b>${echapper(c.nom)}</b><small>${etiq(c)}</small>${vedette(c)}</span></button></li>`).join("")}</ul>
+    ${apercu ? `<section class="at-pour-y-aller" style="--couleur-t:${couleur}"><p><b>Pour y aller :</b> ${echapper(ouverture)}</p>
+        <button class="at-continuer" type="button">Continuer ${echapper(dansTerritoire(territoireActif()))} <span aria-hidden="true">→</span></button></section>`
+      : `<button class="at-page-terr" type="button">La page ${deTerritoire(t)} <span aria-hidden="true">→</span></button>`}`;
   zone.querySelector(".at-retour").onclick = () => { atlasTerritoire = null; afficherAtlas(); };
-  zone.querySelector(".at-page-terr").onclick = () => { changerTerritoire(t); montrer("accueil"); window.scrollTo(0, 0); };
+  const pageT = zone.querySelector(".at-page-terr");
+  if (pageT) pageT.onclick = () => { changerTerritoire(t); montrer("accueil"); window.scrollTo(0, 0); };
+  const cont = zone.querySelector(".at-continuer");
+  if (cont) cont.onclick = () => { montrer("accueil"); window.scrollTo(0, 0); };
+  zone.querySelectorAll(".at-emb").forEach(b => b.onclick = () => {
+    const e = especeParNom(b.dataset.nom);
+    if (e && estReconnue(e)) ouvrirPageEspece(e);
+    else afficherBulle(`Vous ${pe(e).la} rencontrerez ${dansTerritoire(t)}`);   // R236 : le nom est affiché (K3)
+  });
   const choisir = nom => {
     atlasLieu = nom;
     zone.querySelectorAll(".cl-lieu").forEach(g => g.classList.toggle("choisi", g.dataset.lieu === nom));
@@ -149,13 +202,25 @@ function dessinerAtlasTerritoire(zone, t) {
   });
   if (atlasLieu) choisir(atlasLieu);
 }
+// Étape K3 : un lieu pas encore ouvert (ou d'un territoire en aperçu) montre ce qui l'attend : sa phrase, ses expéditions, son espèce
+function avantGoutLieu(t, c) {
+  const exps = expeditionsDuChapitre(t, c.nom), v = vedetteLieu(t, c);
+  return `${c.phrase ? `<p class="at-lieu-phrase">${echapper(c.phrase)}</p>` : ""}
+    ${exps.length ? `<div class="at-exps"><b>${exps.length} expédition${exps.length > 1 ? "s" : ""} vous y attend${exps.length > 1 ? "ent" : ""}</b>
+      <ul>${exps.map(x => `<li>${echapper(x.titre)}</li>`).join("")}</ul></div>` : ""}
+    ${v ? `<div class="at-vedette">${imgMini(photoEsp(v), v.nom_courant)}<span>L'espèce du lieu<b>${echapper(v.nom_courant)}</b></span></div>` : ""}`;
+}
 function dessinerChoixLieu(t, c) {
   const zone = document.getElementById("at-choix");
   if (!zone || !c) return;
   const couleur = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
-  const site = c.type === "remarquable", ouvert = chapitreOuvert(t, c);
-  let etat, texte, bouton = "";
-  if (site) {
+  const apercu = territoireEnApercu(t);
+  const site = c.type === "remarquable", ouvert = chapitreOuvert(t, c) && !apercu;
+  let etat, texte = "", bouton = "", gout = "";
+  if (apercu) {
+    etat = site ? "Le site remarquable · à venir" : "Lieu à venir";
+    gout = site ? `<p class="at-lieu-phrase">${echapper(c.phrase || "Le site remarquable du territoire.")}</p>` : avantGoutLieu(t, c);
+  } else if (site) {
     etat = "Le site remarquable";
     texte = ouvert ? "Révision de tout le territoire." : "Il s'ouvre quand tous les lieux du territoire sont terminés.";
     if (ouvert) bouton = "Y aller";
@@ -164,6 +229,7 @@ function dessinerChoixLieu(t, c) {
     texte = lieuPrecedent(t, c) && chapitreOuvert(t, lieuPrecedent(t, c))
       ? `S'ouvre à l'argent ${echapper(deLieu(lieuPrecedent(t, c).nom))} : ${texteManqueLieu(t, c, true).toLowerCase()}.`
       : "S'ouvrira plus tard.";
+    gout = avantGoutLieu(t, c);
   } else {
     const e = etatLieu(t, c);
     etat = e === "fini" ? "Lieu terminé" : e === "cours" ? (lieuDernierJoue(t) === c ? "Lieu en cours" : "Lieu commencé") : "Lieu ouvert";
@@ -173,9 +239,10 @@ function dessinerChoixLieu(t, c) {
   zone.style.setProperty("--couleur-t", couleur);
   zone.innerHTML = `<div class="at-choix-haut">
       <span class="at-choix-ph">${imgMini(c.photo, "")}</span>
-      <div><small class="at-etiq">${etat}</small><h2>${echapper(c.nom)}</h2>${c.pays ? `<small class="at-pays">${echapper(c.pays)}</small>` : ""}</div></div>
+      <div><small class="at-etiq">${apercu ? LOCK_SVG : ""}${etat}</small><h2>${echapper(c.nom)}</h2>${c.pays ? `<small class="at-pays">${echapper(c.pays)}</small>` : ""}</div></div>
     ${!site && ouvert ? sentierLieu(t, c, { court: true }) : ""}
-    <p>${texte}</p>
+    ${texte ? `<p>${texte}</p>` : ""}
+    ${gout}
     ${bouton ? `<button class="at-aller" type="button">${bouton} <span aria-hidden="true">→</span></button>` : ""}`;
   const b = zone.querySelector(".at-aller");
   if (b) b.onclick = () => { changerTerritoire(t); if (site) ouvrirSite(t); else ouvrirLieu(t, c.nom); window.scrollTo(0, 0); };

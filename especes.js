@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V94.xlsx, especes_bassin_aquitain_V37.xlsx, especes_bassin_parisien_V46.xlsx, especes_corse_V45.xlsx, especes_grand_est_V36.xlsx, especes_jura_V42.xlsx, especes_massif_armoricain_V49.xlsx, especes_massif_central_V41.xlsx, especes_mediterranee_V51.xlsx, especes_pyrenees_V45.xlsx, especes_vosges_V35.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V96.xlsx, especes_bassin_aquitain_V40.xlsx, especes_bassin_parisien_V47.xlsx, especes_corse_V48.xlsx, especes_grand_est_V37.xlsx, especes_jura_V43.xlsx, especes_massif_armoricain_V50.xlsx, especes_massif_central_V42.xlsx, especes_mediterranee_V52.xlsx, especes_pyrenees_V47.xlsx, especes_vosges_V36.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -2227,6 +2227,7 @@ const ESPECES = [
     photo_3: "Images/campagnol_des_neiges_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/217544927",
     photo_3_sujet: "autre vue",
+    hiver: "reste actif",
     a_confirmer: ["poil_longueur"]
   },
   {
@@ -2893,6 +2894,7 @@ const ESPECES = [
     photo_3_sujet: "jeune",
     hiver: "reste actif",
     cause_declin: "NA",
+    emplacement_nid_autres: "Arbre ou buisson",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3003,6 +3005,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "NA",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -3111,6 +3114,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3220,6 +3225,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/92491701",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Falaise ou paroi rocheuse ; Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -3328,6 +3334,8 @@ const ESPECES = [
     photo_3: "Images/chocard_a_bec_jaune_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/151111181",
     photo_3_sujet: "autre vue",
+    hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -3437,6 +3445,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Arbre ou buisson ; Bâtiment",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3546,6 +3555,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/250348544",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -3655,6 +3665,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: null,
     a_confirmer: []
   },
   {
@@ -3764,6 +3775,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -3873,6 +3885,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -3981,6 +3994,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -4089,6 +4103,7 @@ const ESPECES = [
     photo_3: "Images/perdrix_bartavelle_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/300673478",
     photo_3_sujet: "autre vue",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -4198,6 +4213,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -4306,6 +4322,8 @@ const ESPECES = [
     photo_3: "Images/niverolle_alpine_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/85598793",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["aspect_robe", "queue_vol"]
   },
   {
@@ -4415,6 +4433,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/237251968",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Arbre ou buisson ; Falaise ou paroi rocheuse",
     a_confirmer: ["bec_couleur", "pattes_aspect", "queue_vol"]
   },
   {
@@ -4524,6 +4543,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/393287277",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4633,6 +4653,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4742,6 +4763,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/70339855",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: ["territoire"]
   },
   {
@@ -4851,6 +4873,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Au sol ; Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -4960,6 +4983,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/154238821",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -5069,6 +5093,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["motif_robe"]
   },
   {
@@ -5178,6 +5203,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Arbre ou buisson ; Bâtiment ; Cavité d'arbre",
     a_confirmer: []
   },
   {
@@ -5287,6 +5313,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/182821309",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["bec_couleur", "difference_male_femelle"]
   },
   {
@@ -5396,6 +5423,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -5505,6 +5533,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -5614,6 +5643,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -5723,6 +5753,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/302960338",
     photo_3_sujet: "jeune",
     hiver: "reste actif",
+    emplacement_nid_autres: null,
     a_confirmer: ["queue_vol"]
   },
   {
@@ -7821,6 +7852,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -9939,6 +9972,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -12861,6 +12895,8 @@ const ESPECES = [
     photo_3: "Images/vison_d_europe_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/37094309",
     photo_3_sujet: "adulte",
+    hiver: "reste actif",
+    cause_declin: "concurrence du vison d'Amérique introduit",
     a_confirmer: []
   },
   {
@@ -13306,6 +13342,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "en partie",
     cause_declin: "collisions avec les lignes électriques et assèchement des zones humides",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -13416,6 +13453,7 @@ const ESPECES = [
     photo_3_sujet: "jeune",
     hiver: "reste actif",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -13525,6 +13563,7 @@ const ESPECES = [
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Bubulcus_ibis_-_Western_Cattle_Egret,_Adana_08.jpg",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -13634,6 +13673,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -13744,6 +13784,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "intensification agricole et perte des prairies humides",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -13854,6 +13895,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "part de la région",
     cause_declin: "changements agricoles et prélèvements par la chasse",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -13963,6 +14005,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/118810200",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -14072,6 +14115,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Bâtiment",
     a_confirmer: []
   },
   {
@@ -14181,6 +14225,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -14291,6 +14336,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "hivers très rigoureux",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -14401,6 +14447,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "pratiques agricoles intensives et chasse en migration",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -14510,6 +14557,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/326156688",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "Roselière ou végétation dense",
     a_confirmer: []
   },
   {
@@ -14619,6 +14667,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/366639839",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -14728,6 +14777,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/126269429",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -14838,6 +14888,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "dérangement humain et dégradation des plages",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -14947,6 +14998,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/60319387",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -15057,6 +15109,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "part de la région",
     cause_declin: "intensification agricole et usage de pesticides",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -15110,7 +15163,7 @@ const ESPECES = [
     indice_presence: "NA",
     empreinte: "NA",
     saison_observation: "En été",
-    activite: null,
+    activite: "NA",
     revetement: "Carapace",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -15151,6 +15204,7 @@ const ESPECES = [
     photo_3: "Images/tortue_luth_3.jpg",
     photo_3_source: "https://commons.wikimedia.org/wiki/File:LeatherbackTurtle.jpg",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -15299,7 +15353,7 @@ const ESPECES = [
     indice_presence: "NA",
     empreinte: "NA",
     saison_observation: "NA",
-    activite: null,
+    activite: "NA",
     revetement: "Plaques osseuses",
     emplacement_nid: "NA",
     naissance: "NA",
@@ -15341,6 +15395,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -15488,7 +15544,7 @@ const ESPECES = [
     indice_presence: "NA",
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "NA",
     revetement: "Écailles",
     emplacement_nid: "NA",
     naissance: "NA",
@@ -15530,6 +15586,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -15624,6 +15681,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    cause_declin: "croisement avec le brochet commun introduit",
     a_confirmer: []
   },
   {
@@ -15816,6 +15875,7 @@ const ESPECES = [
     photo_3: "Images/fadet_des_laiches_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/366435586",
     photo_3_sujet: "mâle",
+    hiver: "s'endort ou ralentit",
     a_confirmer: []
   },
   {
@@ -16680,6 +16740,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -17540,7 +17601,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: "Coquille",
     emplacement_nid: "NA",
     naissance: null,
@@ -17577,6 +17638,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    cause_declin: "pollution des rivières et disparition de l'esturgeon",
     a_confirmer: []
   },
   {
@@ -17665,6 +17728,7 @@ const ESPECES = [
     photo_3: "Images/physalie_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/375814471",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -17806,7 +17870,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: "Peau nue",
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -17842,6 +17906,7 @@ const ESPECES = [
     photo_3: "Images/arenicole_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/112659410",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -18730,6 +18795,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/142522644",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -18839,6 +18905,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -18948,6 +19015,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19057,6 +19125,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/70526019",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19166,6 +19235,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19275,6 +19345,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19384,6 +19455,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/208244637",
     photo_3_sujet: "adulte",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Terrier",
     a_confirmer: []
   },
   {
@@ -19493,6 +19565,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/333706406",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19602,6 +19675,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/364382722",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19711,6 +19785,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19820,6 +19895,7 @@ const ESPECES = [
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Little_ringed_plover_(Charadrius_dubius)_in_flight_Malta.jpg",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -19930,6 +20006,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "en partie",
     cause_declin: "persécutions passées et pesticides comme le DDT",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -20039,6 +20116,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/37706114",
     photo_3_sujet: "jeune",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -20149,6 +20227,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "en partie",
     cause_declin: "disparition des roselières et drainage des zones humides",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -20259,6 +20338,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "destruction des zones humides",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -20368,6 +20448,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -20477,6 +20558,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/315113082",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -20586,6 +20668,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/334230460",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -20695,6 +20778,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Roselière ou végétation dense",
     a_confirmer: ["territoire"]
   },
   {
@@ -20804,6 +20888,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/74494000",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -20913,6 +20998,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -21022,6 +21108,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -21131,6 +21218,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/78385613",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "Au sol",
     a_confirmer: []
   },
   {
@@ -21240,6 +21328,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/202258736",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Au sol",
     a_confirmer: []
   },
   {
@@ -21349,6 +21438,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Cavité d'arbre",
     a_confirmer: []
   },
   {
@@ -21458,6 +21548,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Arbre ou buisson ; Cavité d'arbre",
     a_confirmer: []
   },
   {
@@ -21567,6 +21658,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -21676,6 +21768,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -21785,6 +21878,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/380293527",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -21894,6 +21988,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/153815349",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -22003,6 +22098,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/299928082",
     photo_3_sujet: "jeune",
     hiver: "part de la région",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -22112,6 +22208,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -24962,6 +25059,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -25059,7 +25158,7 @@ const ESPECES = [
     hibernation_detail: null,
     proies_groupes: "Herbes et feuilles ; Fruits et graines",
     predateurs_groupes: null,
-    origine: "Indigène",
+    origine: "Introduite",
     introduction_date: "NA",
     proies_items: "Herbes ; Fruits et baies",
     predateurs_items: "NA",
@@ -25072,6 +25171,8 @@ const ESPECES = [
     photo_3: "Images/lievre_de_corse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/331856299",
     photo_3_sujet: "autre vue",
+    hiver: "reste actif",
+    venue_de: "d'Italie",
     a_confirmer: []
   },
   {
@@ -25181,6 +25282,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "NA",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Bâtiment ; Au sol",
     a_confirmer: []
   },
   {
@@ -25239,7 +25341,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "Bâtiment",
     naissance: "NA",
@@ -25289,6 +25391,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -25397,6 +25501,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -25505,6 +25611,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -25613,6 +25721,9 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    cause_declin: "perte des vieilles forêts de pins laricio",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -25722,6 +25833,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -25832,6 +25944,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -25941,6 +26054,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/201154215",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26050,6 +26164,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/280861150",
     photo_3_sujet: "jeune",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26159,6 +26274,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/208965555",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26268,6 +26384,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26326,7 +26443,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "Arbre ou buisson",
     naissance: "NA",
@@ -26376,6 +26493,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26485,6 +26604,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26594,6 +26714,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26652,7 +26773,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "Arbre ou buisson",
     naissance: "NA",
@@ -26702,6 +26823,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26811,6 +26934,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/111660214",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -26920,6 +27044,7 @@ const ESPECES = [
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Eurasian_wren_(Troglodytes_troglodytes).jpg",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Cavité d'arbre ; Bâtiment",
     a_confirmer: []
   },
   {
@@ -27030,6 +27155,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "NA",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -27139,6 +27265,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -27248,6 +27375,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -27357,6 +27485,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -27467,6 +27596,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "NA",
     cause_declin: "chats et rats introduits, prises accidentelles par la pêche",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -27576,6 +27706,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/81575663",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -27685,6 +27816,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/220228863",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -27780,6 +27912,7 @@ const ESPECES = [
     photo_3: "Images/salamandre_de_corse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/405012453",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -27875,6 +28008,7 @@ const ESPECES = [
     photo_3: "Images/rainette_sarde_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/276168397",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -27970,6 +28104,7 @@ const ESPECES = [
     photo_3: "Images/euprocte_de_corse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/9601666",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -28161,6 +28296,7 @@ const ESPECES = [
     photo_3: "Images/discoglosse_corse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/366997300",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -28256,6 +28392,7 @@ const ESPECES = [
     photo_3: "Images/crapaud_vert_des_baleares_3.jpg",
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Bufo-viridis-sardinia.jpg",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -28350,6 +28487,7 @@ const ESPECES = [
     photo_3: "Images/lezard_tyrrhenien_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/326701657",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -28444,6 +28582,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -28538,6 +28677,7 @@ const ESPECES = [
     photo_3: "Images/lezard_de_bedriaga_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/331856276",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -28632,6 +28772,7 @@ const ESPECES = [
     photo_3: "Images/algyroide_de_fitzinger_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/283079144",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -28821,6 +28962,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -29580,6 +29722,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -29632,7 +29775,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -29676,6 +29819,7 @@ const ESPECES = [
     photo_3: "Images/megere_tyrrhenienne_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/331856303",
     photo_3_sujet: "mâle",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -29728,7 +29872,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Du printemps à l'automne",
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -29772,6 +29916,7 @@ const ESPECES = [
     photo_3: "Images/fadet_tyrrhenien_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/128479788",
     photo_3_sujet: "adulte",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -30309,7 +30454,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -30353,6 +30498,7 @@ const ESPECES = [
     photo_3: "Images/porte_queue_de_corse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/141373157",
     photo_3_sujet: "adulte",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -30546,6 +30692,7 @@ const ESPECES = [
     photo_3: "Images/cardinal_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/125597811",
     photo_3_sujet: "adulte",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -30889,7 +31036,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "NA",
@@ -30933,6 +31080,7 @@ const ESPECES = [
     photo_3: "Images/oedipode_corse_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/61339869",
     photo_3_sujet: "femelle",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -31343,7 +31491,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: "Pond des œufs",
@@ -31379,6 +31527,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    venue_de: "d'Amérique du Nord",
     a_confirmer: []
   },
   {
@@ -31431,7 +31581,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: null,
-    activite: null,
+    activite: "NA",
     revetement: null,
     emplacement_nid: "NA",
     naissance: null,
@@ -31468,6 +31618,7 @@ const ESPECES = [
     photo_3: "Images/helice_de_raspail_3.jpg",
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Tacheocampylaea_raspailii,_a_Corsican_land_snail.jpg",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -32226,6 +32377,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/110283462",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -32335,6 +32487,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/348099005",
     photo_3_sujet: "mâle",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -32445,6 +32598,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "perte des zones humides et pression de chasse",
+    emplacement_nid_autres: "Au sol",
     a_confirmer: ["territoire"]
   },
   {
@@ -32554,6 +32708,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/8603342",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -32664,6 +32819,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "dégradation des zones humides et des haltes migratoires",
+    emplacement_nid_autres: "Arbre ou buisson",
     a_confirmer: ["territoire"]
   },
   {
@@ -32774,6 +32930,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "disparition des roselières et des zones humides",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -32884,6 +33041,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "NA",
+    emplacement_nid_autres: "Arbre ou buisson ; Roselière ou végétation dense",
     a_confirmer: []
   },
   {
@@ -32993,6 +33151,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/57534404",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -35764,6 +35923,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/342116394",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -35874,6 +36034,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "exploitation forestière intensive et manque d'arbres morts",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -35984,6 +36145,7 @@ const ESPECES = [
     photo_3_sujet: "mâle",
     hiver: "reste actif",
     cause_declin: "régression des forêts de feuillus et gestion forestière intensive",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["ornement_tete"]
   },
   {
@@ -36094,6 +36256,7 @@ const ESPECES = [
     photo_3_sujet: "mâle",
     hiver: "en partie",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -36203,6 +36366,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/333706404",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -36313,6 +36477,7 @@ const ESPECES = [
     photo_3_sujet: "femelle",
     hiver: "part de la région",
     cause_declin: "réchauffement climatique et décalage avec les insectes",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -36422,6 +36587,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/351991299",
     photo_3_sujet: "femelle",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -36531,6 +36697,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/262002041",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["bec_couleur"]
   },
   {
@@ -36640,6 +36807,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/286751069",
     photo_3_sujet: "mâle",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -36749,6 +36917,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -36859,6 +37028,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "fauche précoce des prairies et intensification agricole",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -36968,6 +37138,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/69942824",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Terrier ; Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -40998,6 +41169,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "manque de petits poissons pour nourrir les poussins",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -41107,6 +41279,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/100349610",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -41217,6 +41390,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "marées noires et raréfaction des proies marines",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -41327,6 +41501,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "marées noires et pollution pétrolière",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -41436,6 +41611,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/366604081",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Au sol",
     a_confirmer: []
   },
   {
@@ -41546,6 +41722,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "part de la région",
     cause_declin: "NA",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -41656,6 +41833,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "prédateurs sur les îles où il niche",
+    emplacement_nid_autres: "Terrier",
     a_confirmer: []
   },
   {
@@ -41766,6 +41944,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "raréfaction des proies marines (surpêche, réchauffement)",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -41875,6 +42054,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/164496582",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Bâtiment",
     a_confirmer: []
   },
   {
@@ -41984,6 +42164,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/207638852",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -42093,6 +42274,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/343207940",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -42202,6 +42384,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/214447342",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Au sol",
     a_confirmer: []
   },
   {
@@ -42311,6 +42494,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/388872893",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -42420,6 +42604,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/6540013",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -42529,6 +42714,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/351280720",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Au sol",
     a_confirmer: []
   },
   {
@@ -42638,6 +42824,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/181531528",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -42747,6 +42934,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/379538351",
     photo_3_sujet: "jeune",
     hiver: "en partie",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -42857,6 +43045,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "en partie",
     cause_declin: "perte des prairies humides et intensification agricole",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -42966,6 +43155,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/247185297",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -43076,6 +43266,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -43185,6 +43376,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -43294,6 +43486,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/17472779",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "Roselière ou végétation dense ; Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -43403,6 +43596,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Roselière ou végétation dense",
     a_confirmer: []
   },
   {
@@ -43512,6 +43706,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/351276842",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "Roselière ou végétation dense",
     a_confirmer: []
   },
   {
@@ -43621,6 +43816,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/252057860",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -43730,6 +43926,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Cavité d'arbre",
     a_confirmer: []
   },
   {
@@ -43839,6 +44036,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/351287789",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -43948,6 +44146,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "Au sol",
     a_confirmer: []
   },
   {
@@ -44057,6 +44256,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Au sol",
     a_confirmer: []
   },
   {
@@ -44167,6 +44367,7 @@ const ESPECES = [
     photo_3_sujet: "femelle",
     hiver: "en partie",
     cause_declin: "pollution des eaux et dégradation des berges",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -44276,6 +44477,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Cavité d'arbre ; Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -44385,6 +44587,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -44494,6 +44697,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -44604,6 +44808,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "hivers très rigoureux",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -44713,6 +44918,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -44823,6 +45029,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "raréfaction des graines sauvages (herbicides, perte des haies)",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -44932,6 +45139,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Cavité d'arbre ; Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -45041,6 +45249,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -45150,6 +45359,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/195445442",
     photo_3_sujet: "jeune",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -45259,6 +45469,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/111689399",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -45368,6 +45579,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Cavité d'arbre ; Bâtiment",
     a_confirmer: []
   },
   {
@@ -45477,6 +45689,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -45586,6 +45799,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: ["bec_forme"]
   },
   {
@@ -45695,6 +45909,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -45804,6 +46019,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -45913,6 +46129,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -46022,6 +46239,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -46131,6 +46349,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/223451195",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -51364,6 +51583,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -51474,6 +51694,7 @@ const ESPECES = [
     photo_3_sujet: "adulte",
     hiver: "part de la région",
     cause_declin: "transformation de ses habitats",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: ["territoire"]
   },
   {
@@ -51583,6 +51804,7 @@ const ESPECES = [
     photo_3_source: "https://commons.wikimedia.org/wiki/File:Accipiter_gentilis_-Fife,_Scotland-8.jpg",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -51692,6 +51914,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/70571437",
     photo_3_sujet: "mâle",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -51801,6 +52024,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/362390886",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -51910,6 +52134,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -52019,6 +52244,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/84684317",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -52129,6 +52355,7 @@ const ESPECES = [
     photo_3_sujet: "jeune",
     hiver: "en partie",
     cause_declin: "drainage des zones humides et intensification agricole",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -52239,6 +52466,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "intensification agricole et disparition des haies",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -52349,6 +52577,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "part de la région",
     cause_declin: "intensification agricole et fauches précoces",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -52458,6 +52687,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Terrier",
     a_confirmer: []
   },
   {
@@ -52568,6 +52798,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "intensification des pratiques agricoles",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -52677,6 +52908,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/193319106",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -52787,6 +53019,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "intensification des pratiques agricoles",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -52896,6 +53129,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -53005,6 +53239,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Bâtiment ; Terrier",
     a_confirmer: []
   },
   {
@@ -53114,6 +53349,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -53223,6 +53459,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/119237538",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -53333,6 +53570,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "raréfaction des bois morts en forêt",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -53442,6 +53680,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/399931674",
     photo_3_sujet: "autre vue",
     hiver: "en partie",
+    emplacement_nid_autres: "Terrier",
     a_confirmer: []
   },
   {
@@ -53551,6 +53790,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -53660,6 +53900,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["yeux_couleur"]
   },
   {
@@ -53770,6 +54011,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
     cause_declin: "raréfaction du bois mort en forêt",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -53879,6 +54121,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/71639853",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire", "bec_forme"]
   },
   {
@@ -53988,6 +54231,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/205417328",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -54097,6 +54341,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -54206,6 +54451,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/104784238",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -54315,6 +54561,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -54424,6 +54671,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/233732682",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -54534,6 +54782,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "recul des jachères et des plantes à graines, braconnage",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -54644,6 +54893,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "intensification agricole et maladie trichomonose",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -54754,6 +55004,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "intensification agricole et perte des sites de nidification",
+    emplacement_nid_autres: "Bâtiment ; Falaise ou paroi rocheuse ; Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -58606,6 +58857,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -58716,6 +58968,7 @@ const ESPECES = [
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
     cause_declin: "rats introduits sur les îles et prises par la pêche",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -58825,6 +59078,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/32682043",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "Roselière ou végétation dense",
     a_confirmer: []
   },
   {
@@ -58935,6 +59189,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "NA",
     cause_declin: "intensification de l'agriculture",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -59045,6 +59300,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "part de la région",
     cause_declin: "intensification de l'agriculture",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Cavité d'arbre ; Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -59155,6 +59411,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "électrocution sur les lignes électriques et persécution humaine",
+    emplacement_nid_autres: "Arbre ou buisson",
     a_confirmer: []
   },
   {
@@ -59265,6 +59522,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "part de la région",
     cause_declin: "empoisonnement et électrocution sur les lignes électriques",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -59374,6 +59632,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -59483,6 +59742,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/310079809",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: ["territoire"]
   },
   {
@@ -59592,6 +59852,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/362515881",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -59702,6 +59963,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -59811,6 +60073,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -59921,6 +60184,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "part de la région",
     cause_declin: "NA",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -60031,6 +60295,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "disparition de la végétation rivulaire, altération des milieux aquatiques",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -60140,6 +60405,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -65123,6 +65389,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "s'endort ou ralentit",
+    cause_declin: "chasse et destructions par l'homme",
     a_confirmer: []
   },
   {
@@ -65233,6 +65501,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
     a_confirmer: []
   },
   {
@@ -65343,6 +65612,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    cause_declin: "gale et concurrence d'ongulés introduits",
     a_confirmer: []
   },
   {
@@ -65453,6 +65724,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    cause_declin: "aménagement des cours d'eau et vison d'Amérique",
     a_confirmer: []
   },
   {
@@ -66340,6 +66613,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "dérangement par les loisirs et fragmentation des forêts",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -66448,6 +66722,9 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "reste actif",
+    cause_declin: "exploitation intensive des forêts et manque de bois mort",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -66558,6 +66835,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "en partie",
     cause_declin: "empoisonnement accidentel ou volontaire et changement des paysages ruraux",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -66667,6 +66945,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -66776,6 +67055,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -66885,6 +67165,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -66994,6 +67275,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -67103,6 +67385,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -67212,6 +67495,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -67321,6 +67605,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse",
     a_confirmer: []
   },
   {
@@ -67430,6 +67715,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "en partie",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -67540,6 +67826,7 @@ const ESPECES = [
     photo_3_sujet: null,
     hiver: "reste actif",
     cause_declin: "dégradation de son habitat et réchauffement climatique",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -67649,6 +67936,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/103253258",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Falaise ou paroi rocheuse ; Terrier",
     a_confirmer: []
   },
   {
@@ -67758,6 +68046,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -67867,6 +68156,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -67962,6 +68252,8 @@ const ESPECES = [
     photo_3: "Images/calotriton_des_pyrenees_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/218525922",
     photo_3_sujet: "autre vue",
+    hiver: "s'endort ou ralentit",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -68057,6 +68349,8 @@ const ESPECES = [
     photo_3: "Images/grenouille_des_pyrenees_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/361487560",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -68151,6 +68445,8 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
+    cause_declin: "changement climatique",
     a_confirmer: []
   },
   {
@@ -68245,6 +68541,8 @@ const ESPECES = [
     photo_3: "Images/vipere_de_seoane_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/233758775",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
+    cause_declin: "NA",
     a_confirmer: []
   },
   {
@@ -68392,7 +68690,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: "Peau nue",
     emplacement_nid: "NA",
     naissance: "NA",
@@ -68434,6 +68732,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -68486,7 +68785,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "Toute l'année",
-    activite: null,
+    activite: "NA",
     revetement: "Écailles",
     emplacement_nid: "NA",
     naissance: "NA",
@@ -68528,6 +68827,8 @@ const ESPECES = [
     photo_3: "Images/omble_de_fontaine_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/123998515",
     photo_3_sujet: "jeune",
+    hiver: "NA",
+    venue_de: "d'Amérique du Nord",
     a_confirmer: []
   },
   {
@@ -68814,6 +69115,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -69104,6 +69406,7 @@ const ESPECES = [
     photo_3: "Images/carabe_splendide_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/220675460",
     photo_3_sujet: "autre vue",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -69200,6 +69503,7 @@ const ESPECES = [
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -69252,7 +69556,7 @@ const ESPECES = [
     indice_presence: null,
     empreinte: "NA",
     saison_observation: "En été",
-    activite: null,
+    activite: "NA",
     revetement: "Carapace",
     emplacement_nid: "NA",
     naissance: "NA",
@@ -69296,6 +69600,7 @@ const ESPECES = [
     photo_3: "Images/miramelle_pyreneenne_3.jpg",
     photo_3_source: "https://www.inaturalist.org/observations/69272974",
     photo_3_sujet: "mâle",
+    hiver: "NA",
     a_confirmer: []
   },
   {
@@ -70721,6 +71026,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment",
     a_confirmer: []
   },
   {
@@ -70830,6 +71136,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/81476489",
     photo_3_sujet: "autre vue",
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -70939,6 +71246,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -71048,6 +71356,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "part de la région",
+    emplacement_nid_autres: "NA",
     a_confirmer: []
   },
   {
@@ -71157,6 +71466,7 @@ const ESPECES = [
     photo_3_source: "https://www.inaturalist.org/observations/49707811",
     photo_3_sujet: "autre vue",
     hiver: "reste actif",
+    emplacement_nid_autres: "Bâtiment ; Au sol",
     a_confirmer: ["territoire"]
   },
   {
@@ -73471,6 +73781,61 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Jaune"
   },
   {
+    "nom_courant": "Tichodrome échelette",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Crave à bec rouge",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Grand-duc d'Europe",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Buse variable",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Buse variable",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Circaète Jean-le-Blanc",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Merle à plastron",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Merle à plastron",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Bruant ortolan",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Goéland leucophée",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Bouscarle de Cetti",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
     "nom_courant": "Gendarme",
     "colonne": "motif_robe",
     "reponse_interdite": "Ocelles (faux yeux)"
@@ -73489,6 +73854,206 @@ const PIEGES_INTERDITS = [
     "nom_courant": "Héron pourpré",
     "colonne": "comportement_social",
     "reponse_interdite": "Colonie"
+  },
+  {
+    "nom_courant": "Busard cendré",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Roselière ou végétation dense"
+  },
+  {
+    "nom_courant": "Chevêche d'Athéna",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Chevêche d'Athéna",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Balbuzard pêcheur",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Butor étoilé",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Sur l'eau (nid flottant)"
+  },
+  {
+    "nom_courant": "Grande aigrette",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Roselière ou végétation dense"
+  },
+  {
+    "nom_courant": "Grande aigrette",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Foulque macroule",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Moineau domestique",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Moineau domestique",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Mésange charbonnière",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Tourterelle turque",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Cigogne blanche",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Huppe fasciée",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Moineau cisalpin",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Étourneau unicolore",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Étourneau unicolore",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Mésange à longue queue",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Cavité d'arbre"
+  },
+  {
+    "nom_courant": "Mésange à longue queue",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Pigeon biset",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Gallinule poule-d'eau",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Gallinule poule-d'eau",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Sur l'eau (nid flottant)"
+  },
+  {
+    "nom_courant": "Gallinule poule-d'eau",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Troglodyte mignon",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Troglodyte mignon",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Troglodyte mignon",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Grive musicienne",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Martinet pâle",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Puffin yelkouan",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Fuligule milouin",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Cavité d'arbre"
+  },
+  {
+    "nom_courant": "Grive litorne",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Grive litorne",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Grive litorne",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Gobemouche noir",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Gobemouche noir",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Harle bièvre",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Harle bièvre",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Harle bièvre",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Pigeon colombin",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Pigeon colombin",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
   },
   {
     "nom_courant": "Putois d'Europe",
@@ -74571,6 +75136,131 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Bavette"
   },
   {
+    "nom_courant": "Macareux moine",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Pingouin torda",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Océanite tempête",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Goéland brun",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Mouette rieuse",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Sterne pierregarin",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Grand cormoran",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Roselière ou végétation dense"
+  },
+  {
+    "nom_courant": "Huîtrier pie",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Tournepierre à collier",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Aigrette garzette",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Spatule blanche",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Spatule blanche",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Tadorne de Belon",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Tadorne de Belon",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Tadorne de Belon",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Gorgebleue à miroir",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Martin-pêcheur d'Europe",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Geai des chênes",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Geai des chênes",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Cavité d'arbre"
+  },
+  {
+    "nom_courant": "Pie bavarde",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Rougegorge familier",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Rougegorge familier",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Merle noir",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Hirondelle rustique",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Bruant zizi",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
     "nom_courant": "Mésange nonnette",
     "colonne": "bec_forme",
     "reponse_interdite": "Conique"
@@ -74596,6 +75286,151 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Plastron"
   },
   {
+    "nom_courant": "Vautour moine",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Hibou moyen-duc",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Hibou moyen-duc",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Cavité d'arbre"
+  },
+  {
+    "nom_courant": "Traquet motteux",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Bruant jaune",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Bruant fou",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Bruant fou",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Bergeronnette grise",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Bergeronnette grise",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Bergeronnette grise",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Cavité d'arbre"
+  },
+  {
+    "nom_courant": "Bergeronnette grise",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Grive draine",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Grive draine",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Torcol fourmilier",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Rougequeue à front blanc",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Rougequeue à front blanc",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Mésange nonnette",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Mésange nonnette",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Corneille noire",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Puffin de Scopoli",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Vautour percnoptère",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Vautour percnoptère",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Vautour percnoptère",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Petit-duc scops",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Rollier d'Europe",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Terrier"
+  },
+  {
+    "nom_courant": "Rollier d'Europe",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Traquet oreillard",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Traquet oreillard",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Rémiz penduline",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Roselière ou végétation dense"
+  },
+  {
     "nom_courant": "Mésange noire",
     "colonne": "bec_forme",
     "reponse_interdite": "Conique"
@@ -74604,6 +75439,41 @@ const PIEGES_INTERDITS = [
     "nom_courant": "Mésange noire",
     "colonne": "motif_robe",
     "reponse_interdite": "Plastron"
+  },
+  {
+    "nom_courant": "Aigle botté",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Falaise ou paroi rocheuse"
+  },
+  {
+    "nom_courant": "Rougequeue noir",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Cavité d'arbre"
+  },
+  {
+    "nom_courant": "Monticole de roche",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Monticole de roche",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Au sol"
+  },
+  {
+    "nom_courant": "Mésange noire",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
+  },
+  {
+    "nom_courant": "Mésange noire",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Grimpereau des bois",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
   },
   {
     "nom_courant": "Pouillot fitis",

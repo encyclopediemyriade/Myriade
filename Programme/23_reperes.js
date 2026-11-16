@@ -100,7 +100,7 @@ function blocReperes(espece, opts = {}) {
   const listes = formes.length
     ? formes.map(f => `<ul class="rp-liste${f === courante ? "" : " cache"}" data-forme="${f}">${listeDe(f)}</ul>`).join("")
     : `<ul class="rp-liste">${listeDe(null)}</ul>`;
-  const onglets = formes.length > 1
+  const onglets = formes.length > 1 && !opts.sansOnglets   // R238 : sur l'écran « Bravo ! », les vignettes des photos font les onglets
     ? `<div class="rp-formes" role="tablist" aria-label="Formes">${formes.map(f => `<button type="button" role="tab" class="rp-forme${f === courante ? " actif" : ""}" data-forme="${f}" aria-selected="${f === courante}">${NOMS_FORME[f] || majuscule(f)}</button>`).join("")}</div>`
     : "";
   if (onglets) brancherOngletsReperes();
@@ -113,8 +113,8 @@ function blocReperes(espece, opts = {}) {
         || `<p class="rp-confusion"><small>À ne pas confondre avec ${echapper(listeDeNoms(autres))}</small>${echapper(majuscule(g.critere))}</p>`;
     }
   }
-  const titre = opts.titre || (opts.fin ? "Ses repères" : "Pour la reconnaître · retenez-les");
-  return `<div class="reperes${opts.fin ? " fin" : ""}" data-espece="${echapper(espece.nom_courant)}"><p class="rp-titre">${titre}</p>${onglets}${listes}${confusion}</div>`;
+  const titre = opts.titre || (opts.fin ? "Ses repères" : `Pour ${pe(espece).la} reconnaître · retenez-les`);   // R236 : accordé au nom
+  return `<div class="reperes${opts.fin ? " fin" : ""}" data-espece="${echapper(espece.nom_courant)}">${opts.sansTitre ? "" : `<p class="rp-titre">${titre}</p>`}${onglets}${listes}${confusion}</div>`;
 }
 // Étape E2-3 (n° 12.5, choix d'Aubin du 14/11) : « À ne pas confondre » en une ligne par espèce (3 au plus) : la vignette,
 //   puis 2 repères vérifiés — le premier porte sur la même partie du corps chez toutes (cou contre cou), le second est un autre

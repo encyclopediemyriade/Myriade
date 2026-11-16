@@ -95,7 +95,7 @@ function poserInsolite(espece) {
     document.getElementById("question").textContent = "Vrai ou faux ?";
     const vraie = Math.random() < 0.5;
     const affirmation = document.getElementById("affirmation");
-    affirmation.textContent = "« " + (vraie ? it.fait : it.faux) + " »";
+    affirmation.textContent = vraie ? it.fait : it.faux;   // R234 (note 11) : sans guillemets, l'encadré suffit
     affirmation.classList.remove("cache");
     ajouterBouton("Vrai", vraie);
     ajouterBouton("Faux", !vraie);

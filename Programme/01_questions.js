@@ -1441,6 +1441,13 @@ function groupePrecis(v) { return estRenseigne(v) && !String(v).startsWith("NA")
 // ==================================================================
 function ilElle(e) { return e && e.genre_nom === "féminin" ? "elle" : "il"; }
 function IlElle(e) { return majuscule(ilElle(e)); }
+// Étape R236 (note 8 du 15/11) : les phrases de l'interface qui parlent de l'espèce suivent aussi le genre de son nom affiché
+//   (« Ce que vous savez de lui » pour le merle, « Pour le reconnaître »…). Sans espèce (ou nom encore caché), on garde le
+//   féminin de « l'espèce » : pe(null).la = « la ».
+function pe(e) {
+  const m = !!e && e.genre_nom === "masculin";
+  return { la: m ? "le" : "la", elle: m ? "il" : "elle", Elle: m ? "Il" : "Elle", dElle: m ? "de lui" : "d'elle", avecElle: m ? "avec lui" : "avec elle", e: m ? "" : "e" };
+}
 function sansPoint(t) { return String(t || "").trim().replace(/[.\s]+$/, ""); }
 const AFF_H_ASPIRES = /^(h[ée]risson|hanneton|hareng|hibou|homard|haricot|hêtre|héron|hamster|harle|hulotte)/i;
 function deElide(mot) { return /^[aeiouyéèêàâîïôûœ]/i.test(mot) || (/^h/i.test(mot) && !AFF_H_ASPIRES.test(mot)) ? "d'" : "de "; }
@@ -1464,6 +1471,10 @@ const AFF_CHASSE = { "Poursuite": "poursuit ses proies", "Bond sur la proie": "b
 const AFF_NID = { "Falaise ou paroi rocheuse": "sur une falaise ou une paroi rocheuse", "Au sol": "au sol", "Cavité d'arbre": "dans un arbre creux",
   "Arbre ou buisson": "dans un arbre ou un buisson", "Roselière ou végétation dense": "dans une roselière ou une végétation dense", "Terrier": "dans un terrier",
   "Sur l'eau (nid flottant)": "sur l'eau, dans un nid flottant", "Bâtiment": "dans un bâtiment" };
+// Étape R237 : les mêmes endroits, en plus court, pour « Il peut aussi nicher … » (plusieurs à la suite)
+const NID_AUSSI = { "Falaise ou paroi rocheuse": "sur une falaise", "Au sol": "au sol", "Cavité d'arbre": "dans un arbre creux",
+  "Arbre ou buisson": "dans un arbre ou un buisson", "Roselière ou végétation dense": "dans les roseaux", "Terrier": "dans un terrier",
+  "Sur l'eau (nid flottant)": "sur un nid flottant", "Bâtiment": "dans un bâtiment" };
 const AFF_PERIODE = { "Brame": "le « brame »", "Parade nuptiale": "la « parade nuptiale »", "Frai": "le « frai »", "Mise bas": "la « mise bas »",
   "Essaimage": "l'« essaimage »", "Rut": "le « rut »", "Bouquinage": "le « bouquinage »" };
 const AFF_PATTES = { "aucune": "n'a aucune patte" };
@@ -1810,8 +1821,14 @@ const QUESTIONS = [
   { champ: "emplacement_nid", pictos: true, niveau: 2, libelle: "Nid", formats: ["qcm", "vraifaux"],
     question: "Où fait-il son nid ?",
     affirmation: (v, e) => affTable(AFF_NID, v, p => `${IlElle(e)} niche ${p}.`, "Il fait son nid ici"),   // E2-4
-    pieges: e => autresDeLaListe(e, "emplacement_nid"),
-    explication: (e, v) => `Il fait son nid ici : ${minuscule(v)}.` },
+    // Étape R237 (notes 10 et 16 d'Aubin) : les autres endroits où l'espèce niche aussi (colonne emplacement_nid_autres,
+    //   2 sources sur 3) ne sont jamais des pièges ; l'explication les cite (« Il peut aussi nicher… »).
+    pieges: e => autresDeLaListe(e, "emplacement_nid", "emplacement_nid_autres"),
+    explication: (e, v) => {
+      const aussi = valeursAutres(e, "emplacement_nid").map(x => NID_AUSSI[x]).filter(Boolean);
+      const fin = aussi.length ? ` ${IlElle(e)} peut aussi nicher ${aussi.length > 1 ? aussi.slice(0, -1).join(", ") + ", ou " + aussi[aussi.length - 1] : aussi[0]}.` : "";
+      return `${IlElle(e)} fait son nid ici : ${minuscule(v)}.${fin}`;
+    } },
 
   { champ: "naissance", pictos: true, niveau: 1, libelle: "Naissance", formats: ["qcm"],
     question: "Que fait la femelle pour se reproduire ?",

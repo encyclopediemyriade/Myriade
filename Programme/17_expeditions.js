@@ -442,6 +442,7 @@ function especeFaite(e, k) {
   if (k === 1 && estIdentifiee(e) && etape1Acquises().has(e.nom_courant)) return true;   // étape R132 : rien ne recule
   if (k === 4 && approfondiesAvantR167().has(e.nom_courant)) return true;                // étape R167 : rien ne recule
   if (k === 1 && estIdentifiee(e) && suivi && suivi.etape1Passees && suivi.etape1Passees.includes(e.nom_courant)) return true;   // étape R146
+  if (k === 1 && estIdentifiee(e) && suivi && suivi.reconnuesDefi && suivi.reconnuesDefi.includes(e.nom_courant)) return true;   // étape E2-8 : reconnue par un défi « Me tester »
   return (k !== 1 || estIdentifiee(e)) && trouvesEspece(e, k) >= butEspece(e, k);
 }
 // Étape R132 (05/11, choix de l'utilisateur « 2 bis ») : à l'étape 1, tout ce qui est demandé doit être trouvé (plus d'erreur
@@ -869,7 +870,7 @@ function apresReponseExpedition(espece) {
     if (defi.faiteAvant || !especeFaite(espece, k)) setTimeout(() => { if (!feteOuverte && !fileFetes.length) afficherBulle(`+1 pour ${nomAvecArticle(espece)}`); }, 500); }
   if (!defi.faiteAvant && especeFaite(espece, k)) {
     defi.faiteAvant = true;
-    const texte = `✓ ${espece.nom_courant} : ${k === 4 ? "vous la connaissez par cœur" : "vous savez comment elle vit"}`;
+    const texte = `✓ ${espece.nom_courant} : ${k === 4 ? `vous ${pe(espece).la} connaissez par cœur` : `vous savez comment ${pe(espece).elle} vit`}`;
     setTimeout(() => { if (!feteOuverte && !fileFetes.length) afficherBulle(texte); }, 700);
   }
 }
@@ -1114,14 +1115,18 @@ function rappelSaVie(champ, phrase) {
   return `<div class="sv-rappel"><div class="sv-rappel-titre">Sur sa carte</div>${ligneSaVie(champ, phrase)}</div>`;
 }
 // Étape RF6 : quand la photo est reconnue, l'ensemble en pictogrammes (ce qu'on ne demande plus : couleur, robe, corps, bec)
-function pictosEnsemble(e) {
-  const lignes = TRAITS_ENSEMBLE.map(c => QUESTIONS.find(q => q.champ === c)).filter(q => q && (!q.pour || q.pour(e))).map(q => {
-    let v; try { v = valeurDe(e, q); } catch (err) { return ""; }
-    if (!estRenseigne(v) || v === "NA" || String(v).startsWith("NA")) return "";
+// Étape R238 : les éléments de l'ensemble (dessin, libellé, texte), aussi pour les tuiles « Sa silhouette » de l'écran « Bravo ! »
+function elementsEnsemble(e) {
+  return TRAITS_ENSEMBLE.map(c => QUESTIONS.find(q => q.champ === c)).filter(q => q && (!q.pour || q.pour(e))).map(q => {
+    let v; try { v = valeurDe(e, q); } catch (err) { return null; }
+    if (!estRenseigne(v) || v === "NA" || String(v).startsWith("NA")) return null;
     const texte = q.affichageFiche ? q.affichageFiche(e, v) : majuscule(String(v));
     const dessin = q.sansImage || q.format !== "picto" ? "" : dessinReponse(q.colonnePicto, v);
-    return `<span class="pe-ensemble-item">${dessin ? `<span class="picto">${dessin}</span>` : ""}<span><small>${echapper(q.libelle || "")}</small>${texte}</span></span>`;
+    return { dessin, libelle: q.libelle || "", texte };
   }).filter(Boolean).slice(0, 3);
+}
+function pictosEnsemble(e) {
+  const lignes = elementsEnsemble(e).map(x => `<span class="pe-ensemble-item">${x.dessin ? `<span class="picto">${x.dessin}</span>` : ""}<span><small>${echapper(x.libelle)}</small>${x.texte}</span></span>`);
   return lignes.length ? `<span class="pe-ensemble">${lignes.join("")}</span>` : "";
 }
 // ---- Étape RF2 (choix d'Aubin : « apprendre à chaque question ») : « Bravo ! … Et aussi : … » ----
@@ -1827,12 +1832,15 @@ function dessinerEcranExpedition() {
   const ens = (typeof ETAPE2_ENSEMBLE !== "undefined" && ETAPE2_ENSEMBLE);   // étape E2-3 : l'étape 2 « Ensemble » (une expédition sans question n'a pas d'étape 2)
   const etapes = ETAPES_JOUEES.filter(k => k !== 2 || !ens || aUneEtape2(x)).map(k => {
     const finie = etapeFinie(x, k), ouverte = k === 1 || etapeFinie(x, k - 1) || toutDebloque(), av = avanceeEtape(x, k), active = k === cours;
+    if (k === 1 && !finie && typeof portesEtape1 === "function") return portesEtape1(x);   // étape E2-9 : les deux portes
+    const sansRencontre = k === 1 && finie && typeof especesSansRencontre === "function" ? especesSansRencontre(x).length : 0;   // étape E2-9
     return `<div class="exp-etape${finie ? " finie" : ""}${active ? " active" : ""}${ouverte ? "" : " fermee"}">
         <span class="exp-num">${finie ? "✓" : k}</span>
         <span class="exp-etape-texte"><b>Étape ${k} · ${ETAPES[k].titre}</b><small>${ETAPES[k].texte}</small>
           ${active && k === 2 && ens ? `<small>${questionsEnsembleExp(x).length} question${questionsEnsembleExp(x).length > 1 ? "s" : ""}, environ ${Math.max(1, Math.round(questionsEnsembleExp(x).length * 0.6))} min</small>`
             : active ? `<i class="jauge-jeu"><b style="width:${Math.round(100 * av.faites / av.total)}%"></b></i><small>${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total}${k === 1 && especeAConnaitre(x) ? ` · ${especeFaite(especeAConnaitre(x), 1) ? `à revoir : ${especesARevoirIci(x).length} espèce${especesARevoirIci(x).length > 1 ? "s" : ""} déjà rencontrée${especesARevoirIci(x).length > 1 ? "s" : ""} ailleurs (une photo chacune)` : `prochaine rencontre : ${estIdentifiee(especeAConnaitre(x)) ? especeAConnaitre(x).nom_courant : "une espèce inconnue"}`}` : ""}</small>` : ""}</span>
         <span class="exp-etape-gain ${finie ? "pris" : ""}" title="Empreintes de cette étape">+${gainEtape(x, k)}${k === 1 ? `<small>(1 par espèce)</small>` : ""}<span>${PAS_SVG}</span></span>
+        ${sansRencontre ? `<button class="duo-autres" data-rencontrer="1" title="Reconnues par le défi : leur Rencontre reste à faire (sans empreintes en double)">Les rencontrer (${sansRencontre})</button>` : ""}
         ${ouverte ? `<button class="${active ? "couv-go petit" : "duo-autres"}" data-k="${k}">${active ? "Jouer ▶" : finie ? "Rejouer" : "Jouer"}</button>`
                   : `<small class="exp-verrou">🔒 après l'étape ${k - 1}</small>`}
       </div>`;
@@ -1899,6 +1907,7 @@ function dessinerEcranExpedition() {
     retour: () => estLieu(lieuDeX) ? ouvrirLieu(x.territoire, lieuDeX.nom) : montrer("accueil"),
     bouton: kJouer ? `Étape ${kJouer}` : "", action: () => lancerExpedition(x, kJouer) });
   zone.querySelectorAll(".exp-etape button[data-k]").forEach(b => b.onclick = () => lancerExpedition(x, Number(b.dataset.k)));
+  if (typeof brancherPortes === "function") brancherPortes(zone, x);   // étapes E2-8, E2-9 : les deux portes, « Les rencontrer »
   zone.querySelectorAll(".exp-esp:not(.inconnue)").forEach(b => b.onclick = () => ouvrirPageEspece(ESPECES.find(e => e.nom_courant === b.dataset.nom)));
 }
 
@@ -1986,12 +1995,12 @@ function carteDesLieux(t, o = {}) {
   const ppu = Math.min((o.largeur || 970) / cadre[2], (o.hauteur || 330) / cadre[3]);   // pixels par km, à peu près
   const echelle = (o.point || 0.9) / ppu;                             // des points et des noms de même taille à l'écran, quel que soit le territoire
   const voisins = o.sombre ? "" : CARTE_TERRITOIRES.filter(k => k.nom !== t).map(k => `<path d="${k.contour}" class="cl-voisin"/>`).join("");
-  const enCours = lieuDernierJoue(t);
+  const enCours = o.apercu ? null : lieuDernierJoue(t);   // étape K3 : un territoire fermé, en aperçu
   const pts = chapitresDe(t).map(c => {
     const p = LIEUX_CARTE.points[t + "|" + c.nom];
     if (!p) return "";
     // Étape 339 : seul le lieu de la dernière expédition jouée est en orange (« vous êtes ici ») ; les autres lieux commencés sont « ouverts »
-    const site = c.type === "remarquable", base = site ? (chapitreOuvert(t, c) ? "ouvert" : "ferme") : etatLieu(t, c);
+    const site = c.type === "remarquable", base = o.apercu ? "ferme" : site ? (chapitreOuvert(t, c) ? "ouvert" : "ferme") : etatLieu(t, c);   // étape K3 : en aperçu, tout est « plus tard »
     const etat = !site && enCours && enCours.nom === c.nom ? "cours" : base === "cours" ? "ouvert" : base;
     const r = (etat === "cours" ? 12 : 9) * echelle, [x, y] = p;   // étape 339 : le lieu de la dernière expédition, un peu plus gros
     const dessin = site

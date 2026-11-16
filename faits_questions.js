@@ -1337,7 +1337,7 @@ const QUESTIONS_INSOLITES = {
    "espece": "Saltique chevronné",
    "format": "lequel",
    "etape": "1",
-   "fait": "Elle se tourne pour vous suivre du regard ; derrière ses grands yeux fixes, ses rétines bougent pour viser.",
+   "fait": "Il se tourne pour vous suivre du regard ; derrière ses grands yeux fixes, ses rétines bougent pour viser.",
    "question": "Lequel de ces animaux a de grands yeux immobiles, mais des rétines qui bougent derrière pour viser ?",
    "pieges": [
     "Lézard des murailles",
@@ -1345,7 +1345,7 @@ const QUESTIONS_INSOLITES = {
     "Scutigère véloce"
    ],
    "faux": "Ses grands yeux tournent dans tous les sens, comme ceux d'un caméléon, pour suivre les passants.",
-   "explication": "Elle traque ses proies à vue avant de bondir dessus, sur les murs, clôtures et troncs.",
+   "explication": "Il traque ses proies à vue avant de bondir dessus, sur les murs, clôtures et troncs.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -1531,15 +1531,15 @@ const QUESTIONS_INSOLITES = {
    "espece": "Zoropsis à pattes épineuses",
    "format": "lequel",
    "etape": "3",
-   "fait": "Originaire du pourtour méditerranéen, elle s'étend aujourd'hui vers le nord de l'Europe, au-delà des Alpes.",
+   "fait": "Originaire du pourtour méditerranéen, il s'étend aujourd'hui vers le nord de l'Europe, au-delà des Alpes.",
    "question": "Laquelle de ces araignées, venue du pourtour méditerranéen, gagne peu à peu le nord de l'Europe ?",
    "pieges": [
     "Épeire diadème",
     "Saltique chevronné",
     "Thomise variable"
    ],
-   "faux": "Venue d'Europe du Nord, elle recule aujourd'hui vers le sud, autour de la Méditerranée.",
-   "explication": "Elle ne tisse pas de toile : elle chasse la nuit, et entre volontiers dans les maisons.",
+   "faux": "Venu d'Europe du Nord, il recule aujourd'hui vers le sud, autour de la Méditerranée.",
+   "explication": "Il ne tisse pas de toile : il chasse la nuit, et entre volontiers dans les maisons.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -1607,11 +1607,11 @@ const QUESTIONS_INSOLITES = {
    "espece": "Philoscie des mousses",
    "format": "vrai_faux",
    "etape": "3",
-   "fait": "C'est l'un des cloportes les plus rapides : quand on le dérange, il détale à toute allure.",
+   "fait": "Elle compte parmi les cloportes les plus rapides : quand on la dérange, elle détale à toute allure.",
    "question": "",
    "pieges": [],
-   "faux": "C'est l'un des cloportes les plus lents : quand on le dérange, il reste immobile.",
-   "explication": "Il aime les lieux herbeux ; sa tête est souvent plus sombre que le corps, presque noire.",
+   "faux": "Elle compte parmi les cloportes les plus lents : quand on la dérange, elle reste immobile.",
+   "explication": "Elle aime les lieux herbeux ; sa tête est souvent plus sombre que le corps, presque noire.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -2502,11 +2502,11 @@ const QUESTIONS_INSOLITES = {
    "espece": "Synème globuleux",
    "format": "vrai_faux",
    "etape": "3",
-   "fait": "L'abeille domestique, pourtant plus grande qu'elle, compte parmi ses proies les plus fréquentes.",
+   "fait": "L'abeille domestique, pourtant plus grande que lui, compte parmi ses proies les plus fréquentes.",
    "question": "",
    "pieges": [],
-   "faux": "Elle ne s'attaque qu'aux tout petits moucherons, jamais aux abeilles, trop grosses pour elle.",
-   "explication": "Les abeilles apprennent vite : beaucoup évitent ensuite les fleurs où une synème est postée.",
+   "faux": "Il ne s'attaque qu'aux tout petits moucherons, jamais aux abeilles, trop grosses pour lui.",
+   "explication": "Les abeilles apprennent vite : beaucoup évitent ensuite les fleurs où un synème est posté.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -3132,10 +3132,10 @@ const QUESTIONS_INSOLITES = {
    "espece": "Rhagie inquisitrice",
    "format": "vrai_faux",
    "etape": "3",
-   "fait": "Il fabrique l'une des protéines antigel les plus puissantes connues chez les animaux : elle empêche son corps de geler.",
+   "fait": "Elle fabrique l'une des protéines antigel les plus puissantes connues chez les animaux, qui empêche son corps de geler.",
    "question": "",
    "pieges": [],
-   "faux": "En hiver, il laisse son corps geler entièrement, puis il dégèle et repart au printemps.",
+   "faux": "En hiver, elle laisse son corps geler entièrement, puis elle dégèle et repart au printemps.",
    "explication": "Cette protéine circule dans son sang ; ce coléoptère vit jusque dans les régions froides, comme la Scandinavie ou la Sibérie.",
    "apresAnecdote": true,
    "medaille": "bronze"
@@ -3611,15 +3611,15 @@ const QUESTIONS_INSOLITES = {
    "espece": "Murin de Natterer",
    "format": "lequel",
    "etape": "3",
-   "fait": "Elle sait cueillir des araignées suspendues à leur fil de soie, tout près du feuillage.",
+   "fait": "Il sait cueillir des araignées suspendues à leur fil de soie, tout près du feuillage.",
    "question": "Lequel de ces animaux sait cueillir des araignées suspendues à leur fil de soie, près du feuillage ?",
    "pieges": [
     "Noctule de Leisler",
     "Noctule commune",
     "Pipistrelle pygmée"
    ],
-   "faux": "Elle ne chasse qu'en plein ciel, au-dessus des cimes, sans jamais s'approcher du feuillage.",
-   "explication": "Elle peut aussi se poser au sol pour attraper des petites bêtes actives la nuit.",
+   "faux": "Il ne chasse qu'en plein ciel, au-dessus des cimes, sans jamais s'approcher du feuillage.",
+   "explication": "Il peut aussi se poser au sol pour attraper des petites bêtes actives la nuit.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -3628,10 +3628,10 @@ const QUESTIONS_INSOLITES = {
    "espece": "Murin à moustaches",
    "format": "vrai_faux",
    "etape": "1",
-   "fait": "Elle ressemble tant au murin de Brandt que même les spécialistes ont besoin d'un examen très poussé pour les distinguer.",
+   "fait": "Il ressemble tant au murin de Brandt que même les spécialistes ont besoin d'un examen très poussé pour les distinguer.",
    "question": "",
    "pieges": [],
-   "faux": "On la distingue d'un coup d'œil du murin de Brandt, presque deux fois plus grand qu'elle.",
+   "faux": "On le distingue d'un coup d'œil du murin de Brandt, presque deux fois plus grand que lui.",
    "explication": "Pour être sûr, il faut parfois examiner ses dents, voire analyser son ADN.",
    "apresAnecdote": true,
    "medaille": "bronze"
@@ -8102,7 +8102,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Elle est la première victime de la « peste des écrevisses » : une rivière touchée perd toutes ses écrevisses américaines.",
-   "explication": "Wikipédia (EN) le confirme : c'est une menace pour les écrevisses natives d'Europe.",
+   "explication": "C'est une menace pour les écrevisses natives d'Europe.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -8225,13 +8225,13 @@ const QUESTIONS_INSOLITES = {
    "espece": "Anodonte des cygnes",
    "format": "lequel",
    "etape": "3",
-   "fait": "Elle garde ses larves dans ses branchies tout l'hiver, puis les relâche au printemps ou en été.",
+   "fait": "Il garde ses larves dans ses branchies tout l'hiver, puis les relâche au printemps ou en été.",
    "question": "Lequel de ces animaux garde ses larves dans ses branchies tout l'hiver ?",
    "pieges": [
     "Moule zébrée",
     "Grande limnée"
    ],
-   "faux": "Elle colle ses œufs sous les feuilles des plantes de l'eau, puis les abandonne.",
+   "faux": "Il colle ses œufs sous les feuilles des plantes de l'eau, puis les abandonne.",
    "explication": "Une fois relâchées, ses larves doivent s'accrocher à un poisson pour poursuivre leur développement.",
    "apresAnecdote": true,
    "medaille": "bronze"
@@ -8825,7 +8825,7 @@ const QUESTIONS_INSOLITES = {
    "espece": "Leucorrhine à gros thorax",
    "format": "vrai_faux",
    "etape": "3",
-   "fait": "Jeune adulte, il s'éloigne une dizaine de jours pour mûrir, sans forcément revenir à sa mare d'origine.",
+   "fait": "Jeune adulte, elle s'éloigne une dizaine de jours pour mûrir, sans forcément revenir à sa mare d'origine.",
    "question": "",
    "pieges": [],
    "faux": "Sorti de l'eau, le jeune adulte reste toute sa vie au bord de la mare où il a grandi.",
@@ -10619,7 +10619,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Ses bois ne tombent jamais : ils grandissent d'environ 2 cm chaque année.",
-   "explication": "Pendant la pousse, les bois sont couverts d'un « velours » plein de vaisseaux sanguins qui les nourrit ; il tombe vers fin juillet. (Wikipédia FR : « Une enveloppe nourricière, duveteuse et irriguée de sang, assure leur croissance » ; « Fin juillet, le velours tombe. »)",
+   "explication": "Pendant la pousse, les bois sont couverts d'un « velours » plein de vaisseaux sanguins qui les nourrit ; il tombe vers fin juillet.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10645,7 +10645,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le brocard perd ses bois à la fin de l'hiver et les refait pousser en été, comme le cerf.",
-   "explication": "Ses bois sont prêts au printemps, à temps pour défendre son territoire et le rut de l'été. (Wikipédia EN : les mâles frottent leurs bois « so that their antlers are hard and stiff for the duels during the mating season »)",
+   "explication": "Ses bois sont prêts au printemps, à temps pour défendre son territoire et le rut de l'été.",
    "apresAnecdote": true,
    "medaille": "argent"
   },
@@ -10705,7 +10705,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Il mange toujours tout sur place et ne garde jamais de réserves.",
-   "explication": "Il marque même d'urine les cachettes qu'il a vidées, pour ne pas perdre de temps à les refouiller. (Wikipédia EN Red fox : « Urine is also used to mark empty cache sites… This serves as a reminder not to waste time »)",
+   "explication": "Il marque même d'urine les cachettes qu'il a vidées, pour ne pas perdre de temps à les refouiller.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10731,7 +10731,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Quand il bondit sur un mulot caché, il réussit aussi bien quelle que soit la direction de son saut.",
-   "explication": "Il utiliserait le champ magnétique terrestre comme un repère pour estimer la distance de la proie qu'il entend sans la voir. (Wikipédia FR : il « utiliserait également le champ magnétique terrestre comme un télémètre pour localiser l'endroit exact où se trouvent ses proies »)",
+   "explication": "Il utiliserait le champ magnétique terrestre comme un repère pour estimer la distance de la proie qu'il entend sans la voir.",
    "apresAnecdote": true,
    "medaille": "or"
   },
@@ -10748,7 +10748,7 @@ const QUESTIONS_INSOLITES = {
     "Sanglier"
    ],
    "faux": "",
-   "explication": "Ces latrines, placées près du terrier et aux limites du territoire, servent aussi de « panneaux » odorants pour le clan. (European badger — Wikipédia EN — https://en.wikipedia.org/wiki/European_badger — « Badgers defecate in latrines located near the sett, as well as at strategic locations on territorial boundaries »)",
+   "explication": "Ces latrines, placées près du terrier et aux limites du territoire, servent aussi de « panneaux » odorants pour le clan.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10761,7 +10761,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Il transpire beaucoup, comme un cheval : il n'a pas besoin de boue pour se rafraîchir.",
-   "explication": "Après la souille, il se frotte contre les troncs voisins : il y laisse boue et parasites, et marque son territoire. (Wikipédia FR : il « se frotte avec insistance contre les troncs d'arbres avoisinants pour se débarrasser d'un certain nombre de parasites, réguler sa température corporelle et marquer son territoire »)",
+   "explication": "Après la souille, il se frotte contre les troncs voisins : il y laisse boue et parasites, et marque son territoire.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10778,7 +10778,7 @@ const QUESTIONS_INSOLITES = {
     "Pic mar"
    ],
    "faux": "",
-   "explication": "Ses grandes loges, qu'il est souvent le seul à pouvoir creuser, servent ensuite de logis à la chouette de Tengmalm, à la martre ou au choucas. (Wikipédia FR : « Ses loges sont réutilisées comme nichoir par de nombreuses autres espèces »)",
+   "explication": "Ses grandes loges, qu'il est souvent le seul à pouvoir creuser, servent ensuite de logis à la chouette de Tengmalm, à la martre ou au choucas.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10791,7 +10791,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Au printemps, il perce de petits trous en anneau autour d'un tronc pour y boire l'eau de pluie.",
-   "explication": "La sève qui monte au printemps est riche en sucres, une énergie précieuse avant que les insectes soient nombreux. (Larousse – Pic épeiche — https://www.larousse.fr/encyclopedie/vie-sauvage/pic_épeiche/184860 ; Waldwissen.net – Le pic épeiche)",
+   "explication": "La sève qui monte au printemps est riche en sucres, une énergie précieuse avant que les insectes soient nombreux.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10808,7 +10808,7 @@ const QUESTIONS_INSOLITES = {
     "Pic cendré"
    ],
    "faux": "",
-   "explication": "Son bec fin n'est pas fait pour forer le bois sain : il dépend des vieux chênes à écorce crevassée. (INPN – Cahiers d'habitats Oiseaux, Pic mar — https://inpn.mnhn.fr/docs-web/docs/download/440891 — « Le bec fin du Pic mar ne lui permet pas de forer du bois sain »)",
+   "explication": "Son bec fin n'est pas fait pour forer le bois sain : il dépend des vieux chênes à écorce crevassée.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10821,7 +10821,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Chez ce petit pic, la femelle creuse seule la loge, et le mâle ne nourrit presque pas les petits.",
-   "explication": "Les deux parents couvent, et les petits sont nourris surtout d'insectes cueillis sur les feuilles, comme les pucerons. (Wikipédia EN Lesser spotted woodpecker : « Both birds help to incubate » ; « Nestlings are mainly fed with surface-living insects, such as aphids »)",
+   "explication": "Les deux parents couvent, et les petits sont nourris surtout d'insectes cueillis sur les feuilles, comme les pucerons.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10834,7 +10834,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Son chant ressemble au rire du pic vert, mais en plus rapide et plus explosif.",
-   "explication": "Ses notes descendent peu à peu et ralentissent, comme un rire qui s'éteint. (INPN – Cahiers d'habitats Oiseaux (MNHN), Pic cendré — https://inpn.mnhn.fr/docs-web/docs/download/440936 — « Le chant rappelle un rire de Pic vert (Picus viridis) descendant et plus flûté, un peu plaintif, au rythme lent » ; Wikipédia EN : « declining pitch and gradual slowing »)",
+   "explication": "Ses notes descendent peu à peu et ralentissent, comme un rire qui s'éteint.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11219,7 +11219,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "En hiver, sa tache blanche des fesses a la forme d'un cœur chez le mâle, d'un haricot chez la femelle.",
-   "explication": "Cette tache, le « miroir », peut se hérisser : quand il s'alarme, le chevreuil la fait gonfler, ce qui prévient les autres de fuir. (Wikipédia FR : « La tache claire et érectile qui orne le fessier est dite miroir » ; il lève son toupet « en cas d'alerte »)",
+   "explication": "Cette tache, le « miroir », peut se hérisser : quand il s'alarme, le chevreuil la fait gonfler, ce qui prévient les autres de fuir.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11245,7 +11245,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Il est plus lourd qu'un chien de même taille, car ses os de pattes sont épais et massifs.",
-   "explication": "Cette ossature légère le rend très agile : il bondit haut pour retomber sur ses proies. (Wikipédia EN : « They are very agile » ; ADW : « It then leaps high and brings the forelimbs straight down »)",
+   "explication": "Cette ossature légère le rend très agile : il bondit haut pour retomber sur ses proies.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11258,7 +11258,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Sa mâchoire du bas se déboîte facilement, pour avaler des proies plus grosses que sa tête.",
-   "explication": "Ce verrou rend sa morsure très solide : sa mâchoire, puissante au point de broyer la plupart des os, ne fait guère que s'ouvrir et se fermer. (Blaireau européen — Wikipédia FR — https://fr.wikipedia.org/wiki/Blaireau_europ%C3%A9en — « leur mâchoire est suffisamment puissante pour broyer la plupart des os »)",
+   "explication": "Ce verrou rend sa morsure très solide : sa mâchoire, puissante au point de broyer la plupart des os, ne fait guère que s'ouvrir et se fermer.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11271,7 +11271,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Avant le rut, la peau du mâle s'amincit sur les épaules et les flancs.",
-   "explication": "Cette masse de tissu dur, sous une peau qui peut atteindre 6 cm d'épaisseur, amortit les coups de défenses des rivaux. (Larousse : « cette masse de tissu conjonctif, recouverte par une peau pouvant atteindre 6 cm d'épaisseur, ne plie pas »)",
+   "explication": "Cette masse de tissu dur, sous une peau qui peut atteindre 6 cm d'épaisseur, amortit les coups de défenses des rivaux.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11288,7 +11288,7 @@ const QUESTIONS_INSOLITES = {
     "Pic mar"
    ],
    "faux": "",
-   "explication": "Derrière cette entrée, la loge descend comme un puits jusqu'à environ 55 cm de profondeur. (Wikipédia FR : « en forme de puits pouvant aller jusqu'à 55 cm de profondeur »)",
+   "explication": "Derrière cette entrée, la loge descend comme un puits jusqu'à environ 55 cm de profondeur.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11301,7 +11301,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le jeune pic épeiche a la tête sans aucun rouge : le rouge n'apparaît qu'à l'âge adulte.",
-   "explication": "Adulte, seul le mâle garde une petite tache rouge sur la nuque ; la femelle a la nuque noire. (Wikipédia FR : « La femelle est identique au mâle, à part sa nuque qui est noire » ; « pour ce qui concerne le mâle, une petite tache rouge sur la nuque »)",
+   "explication": "Adulte, seul le mâle garde une petite tache rouge sur la nuque ; la femelle a la nuque noire.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11314,7 +11314,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Ses joues blanches sont entourées d'un épais cadre noir, comme chez le pic épeiche.",
-   "explication": "Ce visage clair et sa calotte toute rouge aident à ne pas le confondre avec le pic épeiche, aux marques noires bien plus étendues. (Wikipédia FR : « les parties noires de la face, qui sont beaucoup plus prononcées chez le pic épeiche »)",
+   "explication": "Ce visage clair et sa calotte toute rouge aident à ne pas le confondre avec le pic épeiche, aux marques noires bien plus étendues.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11327,7 +11327,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Chez la femelle, la moustache noire a le centre rouge ; chez le mâle, elle est toute noire.",
-   "explication": "C'est la seule différence visible entre les sexes : tous deux portent une calotte rouge et un « masque de Zorro » noir. (Wikipédia FR : « Les deux sexes possèdent une calotte rouge » ; « formant un « masque de Zorro » »)",
+   "explication": "C'est la seule différence visible entre les sexes : tous deux portent une calotte rouge et un « masque de Zorro » noir.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11340,7 +11340,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Comme le pic épeiche, il a une tache rouge vif sous la queue.",
-   "explication": "C'est le plus petit pic d'Europe, à peu près de la taille d'un moineau, et il passe beaucoup de temps en haut des arbres. (Wikipédia FR : « la plus petite des espèces de pics européens, avec une taille aux alentours de celle du moineau » ; Wikipédia EN : « spending most of its time in the tops of tall trees »)",
+   "explication": "C'est le plus petit pic d'Europe, à peu près de la taille d'un moineau, et il passe beaucoup de temps en haut des arbres.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -11461,7 +11461,7 @@ const QUESTIONS_INSOLITES = {
     "Spatule blanche"
    ],
    "faux": "",
-   "explication": "Ce sont des couvertures et des plumes internes de l'aile, très allongées, qui retombent en « bouquet » au-dessus de la vraie queue, courte. Source : Wikipédia EN – Common crane — https://en.wikipedia.org/wiki/Common_crane — « the greater coverts droop into explosive plumes ».",
+   "explication": "Ce sont des couvertures et des plumes internes de l'aile, très allongées, qui retombent en « bouquet » au-dessus de la vraie queue, courte.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11478,7 +11478,7 @@ const QUESTIONS_INSOLITES = {
     "Cigogne noire"
    ],
    "faux": "",
-   "explication": "Il l'attrape dans ses serres, pattes en avant, puis le replace dans l'axe de son corps : moins de résistance de l'air pendant le vol. Source : Wikipédia FR – Balbuzard pêcheur — https://fr.wikipedia.org/wiki/Balbuzard_p%C3%AAcheur — « les poissons de grande taille sont placés tête en avant afin de réduire la résistance de l'air ».",
+   "explication": "Il l'attrape dans ses serres, pattes en avant, puis le replace dans l'axe de son corps : moins de résistance de l'air pendant le vol.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11491,7 +11491,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Sous l'eau, il voit bien plus loin que nous : il repère ses proies de loin et les poursuit à grande vitesse.",
-   "explication": "Il fouille le fond, souvent dans une eau trouble, et surprend les poissons cachés au dernier moment, au lieu de les traquer de loin. Source : Wikipédia FR – Grand Cormoran — https://fr.wikipedia.org/wiki/Grand_Cormoran — « plonge sous l'eau depuis la surface pour capturer ses proies, qui vivent généralement sur le fond ».",
+   "explication": "Il fouille le fond, souvent dans une eau trouble, et surprend les poissons cachés au dernier moment, au lieu de les traquer de loin.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11508,7 +11508,7 @@ const QUESTIONS_INSOLITES = {
     "Balbuzard pêcheur"
    ],
    "faux": "",
-   "explication": "L'ombre supprime les reflets du soleil sur l'eau et attirerait les poissons, qui croient trouver un abri. Source : Wikipédia DE – Schwarzstorch — https://de.wikipedia.org/wiki/Schwarzstorch — « Möglicherweise werden dadurch die Lichtreflexionen auf dem Wasser gemildert ».",
+   "explication": "L'ombre supprime les reflets du soleil sur l'eau et attirerait les poissons, qui croient trouver un abri.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11521,7 +11521,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Quand le mâle remonte de plongée avec des plantes, il les garde toujours pour lui : la femelle ne mange que ce qu'elle trouve seule.",
-   "explication": "Ce partage de plantes, très rare chez les canards, se voit surtout au moment où les couples se forment, à la fin de l'hiver et au printemps. Source : Wikipédia DE – Kolbenente — https://de.wikipedia.org/wiki/Kolbenente — « Balzfüttern, das bei Entenvögeln nur sehr selten vorkommt ».",
+   "explication": "Ce partage de plantes, très rare chez les canards, se voit surtout au moment où les couples se forment, à la fin de l'hiver et au printemps.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11534,7 +11534,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Chez ce canard, les femelles sont bien plus nombreuses : en Europe, environ 7 oiseaux sur 10 sont des femelles.",
-   "explication": "Cet écart viendrait surtout d'une moins bonne survie des femelles ; il s'est accentué ces dernières décennies. Source : BirdGuides – Drakes increasingly dominate Pochard populations — https://birdguides.com/articles/drakes-increasingly-dominate-pochard-populations (titre : « les mâles dominent de plus en plus »).",
+   "explication": "Cet écart viendrait surtout d'une moins bonne survie des femelles ; il s'est accentué ces dernières décennies.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11547,7 +11547,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Pendant leurs premières semaines, les canetons restent au fond du creux d'arbre où ils sont nés, nourris par leur mère.",
-   "explication": "Nés dans un trou d'arbre parfois haut placé, les canetons sautent dans le vide dès le lendemain, en freinant avec leurs moignons d'ailes, puis suivent leur mère sur l'eau. Source : Wikipédia DE – Gänsesäger — https://de.wikipedia.org/wiki/G%C3%A4nses%C3%A4ger — « Die Jungen benutzen beim Sprung aus der Höhle ihre Flügelstummel als Fallschirm ».",
+   "explication": "Nés dans un trou d'arbre parfois haut placé, les canetons sautent dans le vide dès le lendemain, en freinant avec leurs moignons d'ailes, puis suivent leur mère sur l'eau.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11560,7 +11560,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Chaque famille reste toujours à l'écart des autres : les canetons ne se mêlent jamais aux petits d'autres parents.",
-   "explication": "Ainsi libérés, beaucoup d'adultes partent en juin-juillet muer sur les vasières de la mer des Wadden, en Allemagne, où ils ne peuvent plus voler pendant environ un mois. Source : Wikipédia FR – Tadorne de Belon — https://fr.wikipedia.org/wiki/Tadorne_de_Belon — « Les adultes regroupent les jeunes en crèches sous la surveillance d'un ou de plusieurs adultes puis partent, généralement en juin et juillet, muer dans la mer des Wadden » ; durée sans vol : Wikipédia DE – Brandgans — « 25 bis 31 Tagen flugunfähig ».",
+   "explication": "Ainsi libérés, beaucoup d'adultes partent en juin-juillet muer sur les vasières de la mer des Wadden, en Allemagne, où ils ne peuvent plus voler pendant environ un mois.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11573,7 +11573,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le poussin naît déjà avec un petit bec en spatule, comme celui de ses parents en miniature.",
-   "explication": "Le bec s'allonge et s'élargit au bout pendant la croissance ; même à l'envol, le jeune a encore un bec pâle, rosé, différent du bec noir à bout jaune de l'adulte. Source : DREAL Grand Est – La Spatule blanche (PDF) — https://www.grand-est.developpement-durable.gouv.fr/IMG/pdf/la_spatule_blanche_cle59b45a.pdf — « l'immature a le bec rose ».",
+   "explication": "Le bec s'allonge et s'élargit au bout pendant la croissance ; même à l'envol, le jeune a encore un bec pâle, rosé, différent du bec noir à bout jaune de l'adulte.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11586,7 +11586,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Tous les mâles mugissent exactement de la même façon : impossible de les distinguer, même avec un enregistrement.",
-   "explication": "Ce son très grave porte à plusieurs kilomètres : le mâle le produit en remplissant d'air son œsophage, qui résonne dans son cou. Source : Animal Diversity Web – Botaurus stellaris — https://animaldiversity.org/accounts/Botaurus_stellaris/ — « the bittern forces its esophagus full of air and physically produces resonance between its neck and its air-filled esophagus ».",
+   "explication": "Ce son très grave porte à plusieurs kilomètres : le mâle le produit en remplissant d'air son œsophage, qui résonne dans son cou.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11599,7 +11599,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Au printemps, le mâle signale sa présence par un mugissement de taureau si puissant qu'on l'entend à 5 km.",
-   "explication": "C'est le mâle, arrivé d'Afrique avant la femelle, qui chante ainsi pour marquer son territoire dans la roselière et chasser les concurrents. Source : Wikipédia FR – Blongios nain — https://fr.wikipedia.org/wiki/Ixobrychus_minutus — « les mâles arrivent en premier lieu. Il marque son territoire par le chant ».",
+   "explication": "C'est le mâle, arrivé d'Afrique avant la femelle, qui chante ainsi pour marquer son territoire dans la roselière et chasser les concurrents.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12007,7 +12007,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Au printemps, son dos gris devient brun-roux grâce à de nouvelles plumes colorées qui poussent à la mue.",
-   "explication": "Ce maquillage l'aiderait à se fondre dans la végétation autour de son nid posé au sol ; parmi les grues, seule la grue du Canada fait de même. Source : Wikipédia EN – Common crane — https://en.wikipedia.org/wiki/Common_crane — « common cranes \"paint\" their bodies with mud or decaying vegetation, apparently in order to blend into their nesting environment ».",
+   "explication": "Ce maquillage l'aiderait à se fondre dans la végétation autour de son nid posé au sol ; parmi les grues, seule la grue du Canada fait de même.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12020,7 +12020,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le dessous de ses doigts est lisse et couvert de petites plumes serrées, qui sèchent vite après la plongée.",
-   "explication": "Ces écailles dirigées vers l'arrière agissent comme une râpe : le poisson ne peut pas glisser hors des serres, même quand il se débat. Source : Animal Diversity Web – Pandion haliaetus — https://animaldiversity.org/accounts/Pandion_haliaetus/ — « spiny footpads called spicules ... to aid in gripping slippery fish ».",
+   "explication": "Ces écailles dirigées vers l'arrière agissent comme une râpe : le poisson ne peut pas glisser hors des serres, même quand il se débat.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12033,7 +12033,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Au printemps, sa tête et son cou deviennent entièrement blancs, comme ceux d'une aigrette.",
-   "explication": "Ces plumes blanches, comme la tache blanche de la cuisse, font partie de sa tenue de noces et disparaissent après la saison des nids. Source : Wikipédia EN – Great cormorant — https://en.wikipedia.org/wiki/Great_cormorant — « In the breeding season, adults have white filoplume patches on the thighs and on the head and upper neck ».",
+   "explication": "Ces plumes blanches, comme la tache blanche de la cuisse, font partie de sa tenue de noces et disparaissent après la saison des nids.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12046,7 +12046,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le jeune a déjà le bec et les pattes rouge vif, comme ses parents, dès sa sortie du nid.",
-   "explication": "Son plumage aussi est plus terne, brunâtre ; ses vraies couleurs, rouge vif et noir à reflets, s'installent au cours de sa première année. Source : Animal Diversity Web – Ciconia nigra — https://animaldiversity.org/accounts/Ciconia_nigra/ — « Young black storks do not have as a rich coloration to their feathers, but these colors become vibrant by one year of age ».",
+   "explication": "Son plumage aussi est plus terne, brunâtre ; ses vraies couleurs, rouge vif et noir à reflets, s'installent au cours de sa première année.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12059,7 +12059,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "La femelle a le même bec rouge vif que le mâle : seul son plumage brun permet de la reconnaître.",
-   "explication": "Avec ses joues pâles, ce bout de bec rose est le meilleur indice pour reconnaître la femelle parmi les autres canes brunes. Source : Wikipédia DE – Kolbenente — https://de.wikipedia.org/wiki/Kolbenente — « Die hellgrauen Wangen sowie diese rote Querbinde an der Spitze des Schnabels sind ein wesentliches Erkennungsmerkmal ».",
+   "explication": "Avec ses joues pâles, ce bout de bec rose est le meilleur indice pour reconnaître la femelle parmi les autres canes brunes.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12072,7 +12072,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "De près, le dos du mâle est d'un blanc pur, sans le moindre dessin.",
-   "explication": "Ces milliers de fines rayures sombres sur fond pâle se fondent à distance : l'œil ne voit plus qu'un gris très clair, presque blanc. Source : Wikipédia FR – Fuligule milouin — https://fr.wikipedia.org/wiki/Fuligule_milouin — « semble avoir, de loin, un dos blanc ; mais, de plus près, ce blanc est un gris très clair finement vermiculé ».",
+   "explication": "Ces milliers de fines rayures sombres sur fond pâle se fondent à distance : l'œil ne voit plus qu'un gris très clair, presque blanc.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12085,7 +12085,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le blanc de la poitrine et des flancs du mâle est souvent teinté de bleu pâle.",
-   "explication": "Cette teinte rose viendrait de pigments contenus dans certains poissons et crustacés qu'il mange, comme chez le flamant. Source : Wikipédia EN – Common merganser — https://en.wikipedia.org/wiki/Common_merganser — « the salmon-pink colouration shown variably by males is probably dietary-derived from the carotenoid pigments found in some crustaceans and fish ».",
+   "explication": "Cette teinte rose viendrait de pigments contenus dans certains poissons et crustacés qu'il mange, comme chez le flamant.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12098,7 +12098,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "La bosse rouge du bec du mâle garde la même taille toute l'année, été comme hiver.",
-   "explication": "Sa taille suit l'activité de ses organes reproducteurs : la bosse est un signal de forme pour les femelles, qui disparaît presque quand la saison est finie. Source : Wikipédia DE – Brandgans — https://de.wikipedia.org/wiki/Brandgans — « Seine Größe variiert in Abhängigkeit von der Größe der Hoden ».",
+   "explication": "Sa taille suit l'activité de ses organes reproducteurs : la bosse est un signal de forme pour les femelles, qui disparaît presque quand la saison est finie.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12111,7 +12111,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le jeune a les ailes toutes blanches ; c'est l'adulte qui a le bout des ailes noir.",
-   "explication": "Ce bout d'aile sombre se voit surtout en vol et permet de repérer les jeunes de l'année dans un groupe de spatules. Source : Wikipédia EN – Eurasian spoonbill — https://en.wikipedia.org/wiki/Eurasian_spoonbill — « immature birds have a pale bill and black tips to the primary flight feathers ».",
+   "explication": "Ce bout d'aile sombre se voit surtout en vol et permet de repérer les jeunes de l'année dans un groupe de spatules.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12124,7 +12124,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Figé bec vers le ciel, il reste toujours raide comme un piquet, même quand le vent agite les roseaux autour de lui.",
-   "explication": "Dans cette pose, ses rayures verticales s'alignent sur les tiges, et ses yeux restent tournés vers l'avant pour surveiller l'intrus. Source : Wikipédia DE – Rohrdommel — https://de.wikipedia.org/wiki/Rohrdommel — « zum Himmel gerecktem Schnabel, aber dabei zum Beobachten weiterhin nach vorn gerichteten Augen ».",
+   "explication": "Dans cette pose, ses rayures verticales s'alignent sur les tiges, et ses yeux restent tournés vers l'avant pour surveiller l'intrus.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12137,7 +12137,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Les petits restent blottis au fond du nid sans jamais en sortir, jusqu'à ce qu'ils sachent voler.",
-   "explication": "Dès 5 ou 6 jours, ils s'agrippent aux tiges autour du nid ; vers 10 jours, encore en duvet, ils se tiennent déjà raides et droits comme les adultes. Source : Wikipédia FR – Blongios nain — https://fr.wikipedia.org/wiki/Ixobrychus_minutus — « Les petits à 5 ou 6 jours sont déjà en mesure de quitter un instant la plate-forme et de récupérer les tiges aux alentours ».",
+   "explication": "Dès 5 ou 6 jours, ils s'agrippent aux tiges autour du nid ; vers 10 jours, encore en duvet, ils se tiennent déjà raides et droits comme les adultes.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12232,7 +12232,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Son dos est d'un noir mat, sans aucun reflet, même en plein soleil.",
-   "explication": "En hiver, ce dos paraît plus vert, et ses plumes sont bordées de jaunâtre (Wikipédia NL : « In de winter is de rug groener met gelige randen aan de veren »).",
+   "explication": "En hiver, ce dos paraît plus vert, et ses plumes sont bordées de jaunâtre.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12518,7 +12518,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Son petit naît à terre et doit y rester plusieurs semaines avant de savoir nager.",
-   "explication": "Il perd son duvet de bébé avant même de naître : son pelage est déjà celui d'un adulte, ce qui lui permet d'aller tout de suite dans l'eau froide (Animal Diversity Web — https://animaldiversity.org/accounts/Phoca_vitulina/ — « harbor seal pups shed their lanugo well before they are born »).",
+   "explication": "Il perd son duvet de bébé avant même de naître : son pelage est déjà celui d'un adulte, ce qui lui permet d'aller tout de suite dans l'eau froide.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12531,7 +12531,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Le blanchon suit sa mère dans l'eau dès ses premières heures et tète en nageant.",
-   "explication": "Pendant ce jeûne à terre, son sang et ses muscles stockent de plus en plus d'oxygène : il se prépare à plonger (Noren et al. 2005 — https://doi.org/10.1086/430228 — « resulting in a 35% increase in total body mass-specific oxygen stores »).",
+   "explication": "Pendant ce jeûne à terre, son sang et ses muscles stockent de plus en plus d'oxygène : il se prépare à plonger.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12544,7 +12544,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Il fait un seul gros repas par jour, puis se repose de longues heures à la surface.",
-   "explication": "Petit et léger, son corps perd vite sa chaleur dans l'eau froide : il doit manger très souvent et compter sur sa graisse (Wikipédia FR — https://fr.wikipedia.org/wiki/Phocoena_phocoena — « leur corps perd plus rapidement sa chaleur dans l'eau que celui les autres cétacés, ce qui les oblige à manger souvent »).",
+   "explication": "Petit et léger, son corps perd vite sa chaleur dans l'eau froide : il doit manger très souvent et compter sur sa graisse.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12557,7 +12557,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Il couve son œuf en le serrant contre une plaque de peau nue de son ventre, comme la plupart des oiseaux.",
-   "explication": "Juste avant l'éclosion, il dégage l'œuf de ses pattes pour ne pas l'écraser sous son poids quand le poussin perce la coquille (Wikipédia EN — https://en.wikipedia.org/wiki/Northern_gannet — « the brooding bird releases the egg from its feet to prevent the egg from breaking »).",
+   "explication": "Juste avant l'éclosion, il dégage l'œuf de ses pattes pour ne pas l'écraser sous son poids quand le poussin perce la coquille.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12574,7 +12574,7 @@ const QUESTIONS_INSOLITES = {
     "Fou de Bassan"
    ],
    "faux": "",
-   "explication": "Il tient les poissons en travers du bec, comme le macareux, et rapporte des proies de plus en plus grosses à mesure que le poussin grandit (Animal Diversity Web — https://animaldiversity.org/accounts/Alca_torda/ — « The parents hold the fish crosswise in the bill to feed »).",
+   "explication": "Il tient les poissons en travers du bec, comme le macareux, et rapporte des proies de plus en plus grosses à mesure que le poussin grandit.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12587,7 +12587,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Ses œufs sont tous d'un blanc uniforme, sans aucune tache, si bien qu'on ne peut pas les distinguer.",
-   "explication": "Ces différences viennent de la quantité de pigments déposés dans la coquille, qui suit l'aspect propre à chaque œuf (Natural History Museum — https://nhm.openrepository.com/handle/10141/622539 — « Shell pigment concentrations track the unique appearance of Common Murre eggs »).",
+   "explication": "Ces différences viennent de la quantité de pigments déposés dans la coquille, qui suit l'aspect propre à chaque œuf.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12600,7 +12600,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Elle niche à l'écart des mouettes rieuses, qu'elle chasse énergiquement de sa colonie.",
-   "explication": "Peu agressive, elle profite en échange des mouettes, plus combatives, qui éloignent les prédateurs de la colonie (Wikipédia EN — https://en.wikipedia.org/wiki/Sandwich_tern — « it is not very aggressive toward potential predators »).",
+   "explication": "Peu agressive, elle profite en échange des mouettes, plus combatives, qui éloignent les prédateurs de la colonie.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12617,7 +12617,7 @@ const QUESTIONS_INSOLITES = {
     "Guillemot de Troïl"
    ],
    "faux": "",
-   "explication": "À l'automne, ce sont surtout les femelles qui s'attardent dans les champs pendant leur migration (Baert et al. 2018, Scientific Reports — https://doi.org/10.1038/s41598-018-23605-x — « females strongly focussed on agricultural areas »).",
+   "explication": "À l'automne, ce sont surtout les femelles qui s'attardent dans les champs pendant leur migration.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12630,7 +12630,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Elle évite toujours de nicher près des harfangs des neiges, qui mangeraient ses oisons.",
-   "explication": "Plus elles nichent près d'un nid de harfang, plus elles pondent d'œufs, et de plus gros (van Kleef et al. 2007 — https://openpolar.no/Record/crwiley:10.1111%2Fj.2007.0908-8857.03639.x — « clutch size as well as egg size increased with decreasing distance from the snowy owl nest »).",
+   "explication": "Plus elles nichent près d'un nid de harfang, plus elles pondent d'œufs, et de plus gros.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -12900,7 +12900,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Dans l'eau trouble, il repère ses proies en émettant des clics, comme les dauphins et les marsouins.",
-   "explication": "Ses moustaches poussent dans des follicules environ dix fois plus riches en terminaisons nerveuses que ceux d'un rat (Wikipédia FR — https://fr.wikipedia.org/wiki/Phoca_vitulina — « environ dix fois plus de terminaisons nerveuses que celles des moustaches d'un rat »).",
+   "explication": "Ses moustaches poussent dans des follicules environ dix fois plus riches en terminaisons nerveuses que ceux d'un rat.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12913,7 +12913,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Mâle et femelle ont la même robe : seule leur taille permet de les distinguer.",
-   "explication": "La femelle a aussi souvent le ventre nettement plus clair, et le mâle un cou et une poitrine plissés et marqués de cicatrices (Wikipédia EN — https://en.wikipedia.org/wiki/Grey_seal — « The neck and chest of males tend to be wrinkled and scarred, while females are smoother. »).",
+   "explication": "La femelle a aussi souvent le ventre nettement plus clair, et le mâle un cou et une poitrine plissés et marqués de cicatrices.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12926,7 +12926,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "La femelle n'a un petit que tous les trois ou quatre ans, le temps de bien l'élever.",
-   "explication": "Le lait de la mère contient environ 50 % de graisse, ce qui permet au petit de grandir vite ; il mange ses premiers poissons vers cinq mois (Wikipédia FR — https://fr.wikipedia.org/wiki/Phocoena_phocoena — « Le lait est très riche en matières grasses (environ 50 %) »).",
+   "explication": "Le lait de la mère contient environ 50 % de graisse, ce qui permet au petit de grandir vite ; il mange ses premiers poissons vers cinq mois.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12939,7 +12939,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Au moment de quitter le nid, le jeune ne pèse encore que la moitié du poids de ses parents.",
-   "explication": "Ces réserves l'aident à passer ses premiers jours seul en mer, où il ne sait pas encore bien voler ni pêcher : il les perd en une dizaine de jours (Animal Diversity Web — https://animaldiversity.org/accounts/Morus_bassanus/ — « This weight is lost within 7 to 10 days of fledging »).",
+   "explication": "Ces réserves l'aident à passer ses premiers jours seul en mer, où il ne sait pas encore bien voler ni pêcher : il les perd en une dizaine de jours.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12952,7 +12952,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Son bec noir porte une tache rouge vif, comme celui des goélands.",
-   "explication": "Le reste de son bec, noir, est barré d'une fine ligne blanche, et un autre trait blanc relie le bec à l'œil (Wikipédia FR — https://fr.wikipedia.org/wiki/Petit_Pingouin — « Une autre rayure blanche part de la base du bec et s’allonge longitudinalement jusqu'à l’œil »).",
+   "explication": "Le reste de son bec, noir, est barré d'une fine ligne blanche, et un autre trait blanc relie le bec à l'œil.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12965,7 +12965,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Ces « lunettes » blanches ne se voient que chez les jeunes de l'année, qui les perdent en devenant adultes.",
-   "explication": "Ce n'est pas une sous-espèce mais une simple forme, d'autant plus fréquente que les oiseaux nichent loin au nord (Wikipédia EN — https://en.wikipedia.org/wiki/Common_murre — « a polymorphism that becomes more common the farther north the birds breed »).",
+   "explication": "Ce n'est pas une sous-espèce mais une simple forme, d'autant plus fréquente que les oiseaux nichent loin au nord.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12978,7 +12978,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Ses populations du nord hivernent toutes près de leurs nids, en mer du Nord.",
-   "explication": "Certains parcourent ainsi jusqu'à 7 500 km, jusqu'aux lacs et fleuves d'Afrique de l'Est (Wikipédia FR — https://fr.wikipedia.org/wiki/Go%C3%A9land_brun — « parcourant parfois jusqu'à 7 500 km »).",
+   "explication": "Certains parcourent ainsi jusqu'à 7 500 km, jusqu'aux lacs et fleuves d'Afrique de l'Est.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -12991,7 +12991,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "À son arrivée en automne, le jeune a des taches blanches au cou plus grandes que celles des adultes.",
-   "explication": "Il se reconnaît aussi à de fines lignes blanches sur les ailes, que les adultes n'ont pas (LPO, La Bernache cravant, histoires et péripéties d'une oie de Sibérie — https://cdnfiles1.biolovision.net/www.faune-aquitaine.org/userfiles/Fichestechniques/Livretbernache.pdf — « La présence de liserés blancs sur les ailes permet de différencier les jeunes de l'année des adultes. »).",
+   "explication": "Il se reconnaît aussi à de fines lignes blanches sur les ailes, que les adultes n'ont pas.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -13663,7 +13663,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Sa nageoire du dos ne commence qu'au milieu du corps, loin derrière la tête.",
-   "explication": "Cette nageoire se soude ensuite à celle de la queue et à celle du ventre : elles forment une seule frange autour de l'arrière du corps (MarLIN : « fused making a complete fringe around the body »).",
+   "explication": "Cette nageoire se soude ensuite à celle de la queue et à celle du ventre : elles forment une seule frange autour de l'arrière du corps.",
    "apresAnecdote": false,
    "medaille": ""
   },

@@ -251,6 +251,16 @@ function photosDe(e) {
   }
   return liste;
 }
+// Étape R234 (note 6 du 15/11) : les photos d'un stade qu'on ne reconnaît pas (têtards, larves, chenilles) ne servent
+// jamais dans les jeux de reconnaissance (Coup d'œil, défi d'une expédition) ; elles restent dans l'Encyclopédie.
+const SUJETS_NON_RECONNAISSABLES = ["larve", "chenille"];
+function photoReconnaissable(e, p) {
+  if (SUJETS_NON_RECONNAISSABLES.includes(p.sujet)) return false;
+  if (p.sujet === "jeune" && e && e.onglet === "Amphibiens") return false;   // le « jeune » d'un amphibien est un têtard (pélodyte)
+  return true;
+}
+// Les photos d'une espèce utilisables dans un jeu de reconnaissance (la principale, toujours, s'il ne reste rien)
+function photosJeu(e) { const l = photosDe(e).filter(p => photoReconnaissable(e, p)); return l.length ? l : photosDe(e).slice(0, 1); }
 // L'étiquette d'une photo (« La femelle », « Le jeune »…) ; rien pour la principale ni pour « autre vue »
 function etiquetteForme(sujet) { return ETIQUETTES_FORME[sujet] || ""; }
 // Les photos d'une AUTRE FORME (pas « autre vue ») : ce qu'on montre dans la Rencontre (A2)
@@ -383,6 +393,9 @@ function calculerQuestionsPossibles(espece) {
     // Étape R184 (10/11, retour d'Aubin : « Comment sont ses oreilles ? » de la fouine, une seule réponse, « Moyennes ») :
     // la même règle pour les questions en dessins (format « picto »), qui y échappaient
     if (q.format === "picto" && autresValeurs(q, v, espece).length === 0) return false;
+    // Étape R237 (note du 12/11 : « si l'espèce niche presque partout, ne pas poser la question ») : le nid n'est demandé que
+    // s'il reste au moins 3 endroits où l'espèce ne niche sûrement pas (la bergeronnette grise : il n'en reste que 2)
+    if (q.champ === "emplacement_nid" && autresValeurs(q, v, espece).length < 3) return false;
     // Étape R102 (Revoir 10, choix E2) : le bec des mésanges est trop petit et trop sombre pour juger sa couleur sur une photo
     if (q.champ === "bec_couleur" && /^Mésange/.test(espece.nom_courant)) return false;
     if (q.pasDansLeNom && seDevineDuNom(espece, v)) return false;     // réponse soufflée par le nom de l'espèce
@@ -468,7 +481,12 @@ const NB_NIVEAUX = 3;
 const MEDAILLES = ["", "bronze", "argent", "or"];     // niveau 1 terminé = bronze, 2 = argent, 3 = or
 // Étape PR2 (01/11) : ce que dit chaque médaille — bronze = son allure (étape 1), argent = sa vie (étape 2), or = Approfondir
 // Étape R102 (Revoir 10, choix D2) : chaque phrase dit ce que le joueur sait faire
-const SENS_MEDAILLE = ["", "Vous la reconnaissez à sa photo et à son allure", "Vous savez comment elle vit", "Vous la connaissez en profondeur"];   // R144 : explication de chaque palier
+const SENS_MEDAILLE = ["", "Vous la reconnaissez à sa photo et à son allure", "Vous savez comment elle vit", "Vous la connaissez en profondeur"];
+// Étape R236 (note 8) : la même phrase, accordée au nom de l'espèce (« Vous le reconnaissez… » pour le merle)
+function sensMedaille(niveau, e) {
+  const p = pe(e);
+  return ["", `Vous ${p.la} reconnaissez à sa photo et à son allure`, `Vous savez comment ${p.elle} vit`, `Vous ${p.la} connaissez en profondeur`][niveau] || "";
+}   // R144 : explication de chaque palier
 // Étape R144 (07/11/2026, choix de l'utilisateur, proposition G revue) : les espèces n'ont plus de « médailles » (le mot est
 //   réservé aux lieux, R133) mais trois paliers de relation : Croisée (étape 1), Comprise (étape 2), Familière (Approfondir).
 //   Le calcul ne change pas (niveauTermine, medailleMax, colonnes bronze/argent/or des anecdotes) : seuls les mots et l'icône changent.
@@ -652,9 +670,20 @@ const VOISINES = {
   // Étape R189 (notes n° 10 et 16 d'Aubin : moineau « en cavité », bergeronnette grise « Bâtiment » seulement) : les oiseaux qui
   //   nichent dans un trou ou sur une corniche passent souvent de l'un à l'autre ; ces trois endroits ne sont plus opposés.
   //   En attendant la colonne du nid à plusieurs valeurs (3 recherches, plus tard).
-  emplacement_nid: [["Bâtiment", "Cavité d'arbre"], ["Bâtiment", "Falaise ou paroi rocheuse"], ["Cavité d'arbre", "Falaise ou paroi rocheuse"]],
+  emplacement_nid: [["Bâtiment", "Cavité d'arbre"], ["Bâtiment", "Falaise ou paroi rocheuse"], ["Cavité d'arbre", "Falaise ou paroi rocheuse"],
+  //   Étape R237 : un nid flottant est presque toujours amarré dans les roseaux (grèbes, foulque, mouette rieuse) : jamais opposés.
+    ["Roselière ou végétation dense", "Sur l'eau (nid flottant)"]],
 };
 function sontVoisines(champ, a, b) { return (VOISINES[champ] || []).some(([x, y]) => (x === a && y === b) || (x === b && y === a)); }
+// ---- Étape R237 (16/11, notes 10 et 16 d'Aubin : « Où fait-elle son nid ? ») ----
+// Une question à une seule bonne réponse peut avoir une colonne « autres » : les autres valeurs, vraies AUSSI pour l'espèce
+// (relues dans les sources, 2 sur 3). Elles ne sont jamais des pièges : ni dans le QCM, ni dans le Vrai ou faux, ni chez
+// une autre espèce (« Laquelle des deux ? », photos, planche), ni dans l'étape 2 (« Et si… ? »). Leurs voisines non plus.
+const COLONNES_AUTRES = { emplacement_nid: "emplacement_nid_autres" };
+function valeursAutres(espece, champ) {
+  const c = COLONNES_AUTRES[champ];
+  return c && espece && estRenseigne(espece[c]) ? String(espece[c]).split(";").map(v => v.trim()).filter(estRenseigne) : [];
+}
 // VERIF_PHOTOS (fichier facultatif verif_photos.js) : { "spirlin.jpg": { robe: { voisines: ["Uni"] } } } — la photo tranche
 function lignePhoto(espece, champ) {
   if (!espece || typeof VERIF_PHOTOS === "undefined") return null;
@@ -668,7 +697,7 @@ function voisinePermise(espece, champ, valeur) {
 function piegeInterdit(q, bonne, valeur, espece) {
   if ((JAMAIS_PIEGES[q.champ] || []).includes(valeur)) return true;
   if (VOISINES[q.champ]) {                                     // étape R185
-    const bonnes = espece ? [bonne, ...valeursDe(espece, q)] : [bonne];
+    const bonnes = espece ? [bonne, ...valeursDe(espece, q), ...valeursAutres(espece, q.champ)] : [bonne];   // R237 : + les autres
     if (bonnes.some(b => sontVoisines(q.champ, b, valeur)) && !voisinePermise(espece, q.champ, valeur)) return true;
   }
   return ((PIEGES_A_EVITER[q.champ] || {})[bonne] || []).includes(valeur);
@@ -711,6 +740,9 @@ function aussiVraiPour(q, espece, valeur) {
     p.nom_courant === espece.nom_courant && (p.colonne === q.champ || p.colonne === q.colonnePicto)
     && String(p.reponse_interdite).toLowerCase() === String(valeur).toLowerCase());
   if (interdit) return true;
+  // 1b. Étape R237 : une valeur de la colonne « autres » (le nid : « Bâtiment » ET « Falaise » pour le moineau friquet)
+  //     ou une de ses voisines (dans l'autre sens aussi : « Laquelle des deux niche dans un bâtiment ? »)
+  if (valeursAutres(espece, q.champ).some(x => x === valeur || sontVoisines(q.champ, x, valeur))) return true;
   // 2. Aliments et prédateurs : un groupe en commun suffit
   if (q.champ === "proies" || q.champ === "predateurs") {
     const siens = listeGroupes(espece[q.champ + "_groupes"]);
