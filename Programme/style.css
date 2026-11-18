@@ -5749,3 +5749,78 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
 .cbf-txt small { font-size: 12.5px; line-height: 1.25; color: #4b4a40; }
 .presentation .cb-formes-bloc { margin-top: 10px; text-align: left; }
 .presentation .cb-formes-bloc .cb-sous { margin: 6px 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #8A4F1C; font-weight: 600; }
+
+/* ---- Étape CQ7 (18/11, Notion 23.5, « Reliez série 1 : 1C · 2A ») : « Reliez », un fait à la fois ---- */
+.rz-carte .fp-tete h2 { margin-right: 52px; }
+.rz-fait { font-family: "Literata", Georgia, serif; font-size: 17px; line-height: 1.45; margin: 4px 0 14px; padding: 16px;
+  background: #fff; border: 1.5px solid var(--encre, #1F3A2E); border-radius: 10px; color: var(--texte); }
+.rz-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.rz-ph { display: flex; flex-direction: column; padding: 0; background: var(--carte); border: 1.5px solid var(--trait); border-radius: 10px;
+  overflow: hidden; font: inherit; color: inherit; cursor: pointer; text-align: center; }
+.rz-ph img { width: 100%; height: 118px; object-fit: cover; display: block; }
+.rz-ph span { display: block; padding: 5px 4px 7px; font-size: 13px; font-weight: 600; line-height: 1.2; }
+.rz-ph:hover:not([disabled]) { border-color: #b9a984; }
+.rz-ph[disabled] { cursor: default; }
+.rz-ph.ok { border: 2px solid var(--bon); box-shadow: inset 0 0 0 1px var(--bon); }
+.rz-ph.ko { border: 2px solid #c58a4a; }
+.rz-ph.estompe { opacity: .45; }
+.rz-points { display: flex; gap: 6px; justify-content: center; margin: 12px 0 0; }
+.rz-points i { width: 8px; height: 8px; border-radius: 50%; background: var(--trait); }
+.rz-points i.f { background: var(--encre, #1F3A2E); }
+.rz-retour { margin: 12px 0 0; padding: 9px 11px; border-radius: 8px; background: #f2e3cf; font-size: 14px; line-height: 1.45; }
+.rz-retour.bon { background: #e3efe6; }
+@media (max-width: 760px) {
+  .rz-fait { font-size: 16px; padding: 13px 14px; margin-bottom: 12px; }
+  .rz-ph img { height: 96px; }
+  .rz-ph span { font-size: 12.5px; }
+}
+
+/* ---------- Étape CT1 (18/11/2026) : « Signaler une erreur » (choix 1A · 2A · 3A · 4A · 5A · 6B) ---------- */
+/* Le lien : petit texte souligné, discret (1A en bas de la fiche, 2A sous l'explication) */
+.sig-lien { font: inherit; font-size: 13px; background: none; border: 0; padding: 6px 2px; margin: 0; color: var(--texte-doux);
+  text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.sig-lien:hover { color: var(--ocre-texte); }
+.sig-bas-fiche { text-align: center; margin: 22px 0 6px; }
+.sig-sous-retour { display: flex; justify-content: flex-end; margin: 2px 0 6px; }
+.sig-sous-retour[hidden] { display: none; }
+.sig-sous-retour .sig-lien { font-size: 12.5px; padding: 4px 2px; }
+#dfx-retour .sig-sous-retour { margin: 4px 0 8px; }
+/* Le panneau qui monte du bas (3A) */
+#sig-panneau { position: fixed; inset: 0; z-index: 1300; }
+#sig-panneau .sig-voile { position: absolute; inset: 0; background: rgba(31,58,46,0); transition: background .25s; }
+#sig-panneau.ouvert .sig-voile { background: rgba(31,58,46,.35); }
+#sig-panneau .sig-feuille { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; max-width: 620px; height: min(86vh, 720px);
+  background: var(--papier); border-radius: 16px 16px 0 0; box-shadow: 0 -6px 24px rgba(0,0,0,.15); display: flex; flex-direction: column;
+  transform: translateY(100%); transition: transform .26s ease-out; padding-bottom: env(safe-area-inset-bottom); }
+#sig-panneau.ouvert .sig-feuille { transform: none; }
+.sig-poignee { width: 40px; height: 4px; border-radius: 2px; background: var(--trait); margin: 8px auto 0; flex: none; }
+.sig-tete { display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px 18px; border-bottom: 1px solid var(--trait); flex: none; }
+.sig-picto { width: 20px; height: 20px; flex: none; fill: none; stroke: var(--ocre-texte); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.sig-titre { flex: 1; font-family: Literata, Georgia, serif; font-weight: 600; font-size: 18px; color: var(--territoire); }
+.sig-fermer { font: inherit; font-size: 26px; line-height: 1; background: none; border: 0; color: var(--texte-doux); padding: 6px 10px; cursor: pointer; min-width: 44px; min-height: 44px; }
+.sig-sujet { margin: 10px 18px 0; font-size: 13.5px; color: var(--texte-doux); flex: none; }
+.sig-corps { flex: 1; min-height: 0; padding: 0 6px; }
+.sig-cadre { width: 100%; height: 100%; border: 0; display: block; background: transparent; }
+.sig-horsligne { margin: 24px 18px; font-size: 15px; }
+@media (min-width: 761px) {
+  #sig-panneau .sig-feuille { bottom: 50%; transform: translateY(60%); border-radius: 14px; height: min(80vh, 680px); opacity: 0; transition: transform .26s ease-out, opacity .2s; }
+  #sig-panneau.ouvert .sig-feuille { transform: translateY(50%); opacity: 1; }
+  .sig-poignee { display: none; }
+}
+/* Le merci (4A) : un bandeau vert sapin en bas, quelques secondes */
+#sig-merci { position: fixed; left: 16px; right: 16px; bottom: calc(80px + env(safe-area-inset-bottom)); margin: 0 auto; max-width: 420px; z-index: 1310;
+  background: var(--territoire); color: var(--carte); border-radius: 10px; padding: 13px 16px; display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18); font-size: 15px; opacity: 0; transform: translateY(12px); transition: opacity .25s, transform .25s; pointer-events: none; }
+#sig-merci.visible { opacity: 1; transform: none; }
+#sig-merci svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* À propos (6B) : deux lignes avec picto, comme dans le Profil */
+.participer-lignes { margin: 14px 0 0; background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 2px 16px; }
+.participer-ligne { display: flex; align-items: center; gap: 14px; width: 100%; box-sizing: border-box; padding: 13px 0; font: inherit; color: var(--territoire);
+  text-align: left; text-decoration: none; background: none; border: 0; cursor: pointer; }
+.participer-ligne + .participer-ligne { border-top: 1px solid #e3dccb; }
+.participer-ligne svg { width: 22px; height: 22px; flex: none; fill: none; stroke: var(--ocre-texte); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.participer-ligne span { flex: 1; font-size: 15px; line-height: 1.35; }
+.participer-ligne small { display: block; color: var(--texte-doux); font-size: 13px; }
+.participer-ligne i { font-style: normal; color: var(--texte-doux); font-size: 18px; }
+.participer-ligne:hover b { text-decoration: underline; text-underline-offset: 3px; }
+.participer-note { font-size: 13px !important; color: var(--texte-doux); margin: 10px 0 0 !important; }

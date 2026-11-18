@@ -456,10 +456,12 @@ function afficherPageEspece() {
         <div class="pe-onglets">${onglets}</div>
         <div class="pe-page">${par[ongletEspece].map(q => lignePage(e, q)).join("")}</div>
         ${blocAnecdotes(e)}
+        ${typeof lienSignalerFiche === "function" ? lienSignalerFiche(e) : ""}${/* étape CT1 : « Signaler une erreur sur cette fiche » (1A) */ ""}
       </main>
     </div>`;
   zone.querySelectorAll("[data-onglet]").forEach(b => b.onclick = () => { ongletEspece = b.dataset.onglet; afficherPageEspece(); });
   brancherGaleriePhotos(zone, e);   // étape PA1
+  if (typeof brancherSignalerFiche === "function") brancherSignalerFiche(zone, e);   // étape CT1
   // Étape 261 : la bulle au survol de la carte « Présente dans », comme sur la page carte
   const carteP = zone.querySelector(".pe-carte");
   if (carteP) {

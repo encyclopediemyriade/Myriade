@@ -123,6 +123,7 @@ let dernierAppuiAccueil = 0;
 function surTelephone() { return !!(window.matchMedia && window.matchMedia("(max-width: 760px)").matches); }
 function visibleALEcran(el) { return el && el.getClientRects().length > 0 && !el.closest(".cache") && !el.disabled; }
 function retourTelephone() {
+  if (typeof signalementOuvert === "function" && signalementOuvert()) { fermerSignalement(); return true; }   // étape CT1 : le panneau « Signaler » se ferme d'abord
   if (typeof feteOuverte !== "undefined" && feteOuverte && typeof fermerFete === "function") { fermerFete(); return true; }
   if (typeof tiroirOuvert === "function" && tiroirOuvert()) { fermerTiroir(); return true; }   // étape R194 : d'abord le tiroir de la fiche
   const grande = document.getElementById("photo-agrandie");   // R239 : la grande photo (et la galerie) se ferme d'abord

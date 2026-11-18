@@ -675,7 +675,7 @@ const NOMS_FEMININS = ["Marmotte","Hermine","Martre","Loutre","Fouine","Belette"
   "Grémille","Langouste","Leucorrhine","Libellule","Mangore","Micrommate","Mourgette","Mulette","Mygale","Mégère","Méta","Nette",
   "Pastenague","Patelle","Philoscie","Physalie","Piéride","Processionnaire","Punaise","Pyrale","Rhagie","Rousserolle","Sauterelle",
   "Soucoupe","Souris","Sérotine","Vandoise","Vélelle"];
-const H_ASPIRES = ["Hérisson", "Héron", "Hanneton", "Huppe"];   // « le héron », « la huppe » (étape 205)                              // « le hérisson », pas « l'hérisson »
+const H_ASPIRES = ["Hérisson", "Héron", "Hanneton", "Huppe", "Harle", "Hibou", "Hotu"];   // CQ7 : « le harle », « le hibou », « le hotu »   // « le héron », « la huppe » (étape 205)                              // « le hérisson », pas « l'hérisson »
 function articleDe(espece) {
   const mot = espece.nom_courant.split(/[ -]/)[0];
   if (/^[AEIOUYÉÈÊÂÎÔŒH]/i.test(mot) && !H_ASPIRES.includes(mot)) return "l'";

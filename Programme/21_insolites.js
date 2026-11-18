@@ -309,6 +309,7 @@ function repondreInsoliteRencontre(boutonClique, estJuste) {
   // Étape R246 (36.31, choix 31C du 17/11) : « Étonnant » → la fenêtre « Le saviez-vous ? » juste après la réponse
   //   (le fait + son complément) ; l'explication sous les réponses reste courte (le complément est dans la fenêtre).
   if (insolite.etonnant) retour.textContent = estJuste ? "Bravo !" : "Pas tout à fait : c'était l'autre.";
+  if (insolite.etonnant) noterEtonnantVu(insolite.item.id);   // étape CQ7 : un « Étonnant » lu (trouvé ou non) peut revenir dans « Reliez »
   const boutonSuivant = document.getElementById("suivant");
   if (session) {
     session.faites = session.faites + 1;
@@ -388,15 +389,115 @@ function siPourExpedition(x) {
 function reliezPourExpedition(x) {
   const d = donneesInsolites();
   if (!INSOLITES_ACTIFS || !d || !x) return null;
+  if (RELIEZ_ETONNANTS) return reliezEtonnants(x);
   const noms = new Set(x.liste.filter(estIdentifiee).map(e => e.nom_courant));
   return d.reliez.find(r => r.paires.length >= 3 && r.paires.every(p => noms.has(p.espece)) && !insoliteTrouve(r.id)) || null;
+}
+
+// ==================================================================
+// Étape CQ7 (18/11, Notion 23.5, choix 4A puis « Reliez série 1 : 1C · 2A ») : « Reliez » refait avec les faits
+//   « Étonnant » que le joueur a déjà lus dans ses Rencontres (trouvés ou non : suivi.insolites et suivi.insolitesVus).
+//   • Proposé en fin d'expédition (une fois : au moment où elle se termine), seulement si au moins 3 espèces de
+//     l'expédition ont un « Étonnant » lu ; 3 espèces, un fait chacune, jamais deux faits sur le même sujet.
+//   • Un fait à la fois (choix 1C) : « À qui est ce fait ? », le fait en grand, les 3 photos ; 3 tours.
+//   • Jamais d'échec : une erreur montre la bonne espèce et le fait (avec son complément) ; rien n'est retiré.
+//   Les 3 anciennes planches (onglet « Reliez » du classeur) ne servent plus : RELIEZ_ETONNANTS = false les remet.
+// ==================================================================
+const RELIEZ_ETONNANTS = true;
+const RELIEZ_NB = 3;
+// Les sujets (pour ne jamais poser deux faits sur le même sujet : ils se confondraient d'une espèce à l'autre)
+const RELIEZ_SUJETS = [
+  ["hiver", /hiver|hiberne|hibernation|engourdi/i],
+  ["voyage", /migr|afrique|traverse|parcourt|kilom|\bkm\b/i],
+  ["famille", /\bnids?\b|nidifi|niche|couve|couvée|ponte|pond\b|pondent|œufs?\b|éclosion|\bpetits?\b|jeunes|juvéniles?|poussins?|oisillons?|canetons?|faons?|levrauts?|lapereaux|marcassins?|louveteaux|oursons?|renardeaux|alevins?|nichée|portée|têtards?|chenilles?|larves?|\bmères?\b/i],
+  ["âge", /\bans\b|vieux|longévité|vivre jusqu|vit jusqu/i],
+  ["taille", /\bcm\b|mètres?\b|\bkg\b|grammes?|envergure|poids|pèse/i],
+  ["vitesse", /km\/h|vitesse|rapide/i],
+  ["eau", /plong|sous l'eau|apnée|nage\b|nagent/i],
+  ["voix", /chant|chante|\bcris?\b|siffl|appel/i],
+  ["repas", /mange|dévore|avale|proies?\b|chasse|se nourrit|nourriture/i],
+  ["allure", /couleur|change de|plumes?\b|plumage|pelage|robe\b|teint|taches?\b|rayures?|bandes?\b/i]
+];
+function sujetsDuFait(texte) { return RELIEZ_SUJETS.filter(([, re]) => re.test(texte || "")).map(([n]) => n); }
+function noterEtonnantVu(id) { suivi.insolitesVus = suivi.insolitesVus || {}; suivi.insolitesVus[id] = 1; }
+function etonnantLu(id) { return insoliteTrouve(id) || !!(suivi && suivi.insolitesVus && suivi.insolitesVus[id]); }
+// Les « Étonnant » lus d'une espèce (mêmes faits que ceux de la Rencontre : avec leur fausse affirmation)
+function etonnantsLus(espece) {
+  const d = donneesInsolites();
+  if (!d || !espece) return [];
+  return d.faits.filter(f => f.espece === espece.nom_courant && f.fait && f.faux && etonnantLu(f.id));
+}
+function reliezEtonnants(x) {
+  const parEspece = x.liste.filter(e => estIdentifiee(e) && e.photo).map(e => ({ e, faits: etonnantsLus(e) })).filter(c => c.faits.length);
+  if (parEspece.length < RELIEZ_NB) return null;
+  // Plusieurs tirages au hasard ; on garde le premier sans sujet en double, de préférence avec le même pronom
+  //   (« Il… » / « Elle… ») pour les 3 faits, sinon le pronom désignerait la bonne espèce.
+  const pronom = f => (/^elle\b/i.test(f.fait) ? "f" : /^il\b/i.test(f.fait) ? "m" : "?");
+  let secours = null;
+  for (let essai = 0; essai < 120; essai++) {
+    const trois = melanger(parEspece).slice(0, RELIEZ_NB).map(c => ({ e: c.e, f: auHasard(c.faits) }));
+    const sujets = trois.flatMap(t => sujetsDuFait(t.f.fait));
+    if (new Set(sujets).size !== sujets.length) continue;
+    if (new Set(trois.map(t => pronom(t.f))).size === 1) return { id: "RX|" + x.id, paires: trois };
+    if (!secours) secours = { id: "RX|" + x.id, paires: trois };
+  }
+  return secours;
+}
+
+// « Reliez », un fait à la fois (choix 1C) : le fait en grand, « À qui est ce fait ? », les 3 photos
+function ouvrirReliezUnParUn(it, apres) {
+  const { z, fermer } = ecranFinInsolite();
+  const especes = melanger(it.paires.map(p => p.e));
+  const tours = melanger(it.paires.slice());
+  const r = { i: 0, repondu: null, bonnes: 0, faits: [] };
+  const dessiner = () => {
+    const t = tours[r.i], dernier = r.i >= tours.length - 1;
+    const points = tours.map((_, j) => `<i class="${j < r.i || (j === r.i && r.repondu) ? "f" : ""}"></i>`).join("");
+    let retour = "";
+    if (r.repondu) {
+      const juste = r.repondu === t.e.nom_courant;
+      retour = `<p class="rz-retour${juste ? " bon" : ""}">${juste ? `Bravo : c'est bien ${echapper(nomAvecArticle(t.e))}.` : `Pas tout à fait : c'était ${echapper(nomAvecArticle(t.e))}.`}${t.f.explication ? ` ${echapper(t.f.explication)}` : ""}</p>`;
+    }
+    z.innerHTML = `<div class="fp-carte qi-reliez rz-carte">
+      <div class="fp-tete"><span class="fp-lib">Reliez</span><h2>À qui est ce fait ?</h2>
+        <span class="fp-compte">${r.i + 1} / ${tours.length}</span></div>
+      <p class="rz-fait">« ${echapper(t.f.fait.replace(/\s*\.?\s*$/, ""))}. »</p>
+      <div class="rz-photos">${especes.map(e => {
+        const deja = r.faits.includes(e.nom_courant);
+        const etat = !r.repondu ? (deja ? " estompe" : "") : e === t.e ? " ok" : e.nom_courant === r.repondu ? " ko" : " estompe";
+        return `<button type="button" class="rz-ph${etat}" data-nom="${echapper(e.nom_courant)}"${r.repondu ? " disabled" : ""}>
+          ${imgMini(e.photo, e.nom_courant)}<span>${echapper(e.nom_courant)}${deja && !r.repondu ? " ✓" : ""}</span></button>`; }).join("")}</div>
+      <div class="rz-points" aria-hidden="true">${points}</div>
+      ${retour}
+      <div class="fp-pied">${r.repondu ? `<button type="button" class="bouton-accueil principal" id="qi-suite">${dernier ? "Continuer" : "Fait suivant"}</button>` : ""}</div></div>`;
+    z.querySelectorAll(".rz-ph").forEach(b => b.onclick = () => {
+      if (r.repondu) return;
+      r.repondu = b.dataset.nom;
+      const juste = r.repondu === t.e.nom_courant;
+      if (juste) r.bonnes++;
+      try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
+      dessiner();
+    });
+    const s = document.getElementById("qi-suite");
+    if (s) {
+      s.onclick = () => {
+        r.faits.push(t.e.nom_courant);
+        if (!dernier) { r.i++; r.repondu = null; dessiner(); window.scrollTo(0, 0); return; }
+        if (r.bonnes >= tours.length) noterInsoliteTrouve(it.id);
+        fermer(apres)();
+      };
+      s.focus();
+    }
+  };
+  dessiner();
+  window.scrollTo(0, 0);
 }
 // Appelée par finExpedition (17) JUSTE AVANT proposerLienDuLieu : le lien du lieu, s'il y en a un, passe donc en premier
 // (il garde, pour après lui, le bouton tel que nous le laissons ici).
 function proposerFinInsolite(x, k, info, apres) {
   if (k !== 2 || !(apres >= NB_ETAPES && info.avant < NB_ETAPES)) return;
   const suites = [];
-  const r = reliezPourExpedition(x); if (r) suites.push({ texte: "Reliez faits et espèces ▶", ouvrir: fin => ouvrirReliezFin(r, fin) });
+  const r = reliezPourExpedition(x); if (r) suites.push({ texte: RELIEZ_ETONNANTS ? "Reliez ▶" : "Reliez faits et espèces ▶", ouvrir: fin => RELIEZ_ETONNANTS ? ouvrirReliezUnParUn(r, fin) : ouvrirReliezFin(r, fin) });   // CQ7 : choix 1C · 2A
   const s = siPourExpedition(x);     if (s) suites.push({ texte: "Et si… ? ▶", ouvrir: fin => ouvrirSiFin(s, fin) });
   if (!suites.length) return;
   const bouton = document.getElementById("bouton-rejouer-defi");

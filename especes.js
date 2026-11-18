@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V100.xlsx, especes_bassin_aquitain_V43.xlsx, especes_bassin_parisien_V49.xlsx, especes_corse_V52.xlsx, especes_grand_est_V40.xlsx, especes_jura_V46.xlsx, especes_massif_armoricain_V54.xlsx, especes_massif_central_V46.xlsx, especes_mediterranee_V56.xlsx, especes_pyrenees_V52.xlsx, especes_vosges_V38.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V101.xlsx, especes_bassin_aquitain_V44.xlsx, especes_bassin_parisien_V49.xlsx, especes_corse_V54.xlsx, especes_grand_est_V42.xlsx, especes_jura_V46.xlsx, especes_massif_armoricain_V55.xlsx, especes_massif_central_V47.xlsx, especes_mediterranee_V56.xlsx, especes_pyrenees_V52.xlsx, especes_vosges_V39.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -6090,7 +6090,7 @@ const ESPECES = [
     milieux_secondaires: "Forêt ; Landes et coteaux secs ; Campagne, haies et jardins ; Alpages et pelouses d'altitude",
     altitude_min_m: 0,
     altitude_max_m: 2800,
-    periode_observation: "Mars à octobre (hiberne l'hiver)",
+    periode_observation: "Février à octobre (hiberne l'hiver)",
     longevite_max_annees: 14,
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Commun",
@@ -15212,7 +15212,7 @@ const ESPECES = [
     altitude_min_m: 0,
     altitude_max_m: 1200,
     periode_observation: "D'avril à octobre (nicheur migrateur)",
-    longevite_max_annees: 13,
+    longevite_max_annees: "NA",
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Commun",
     repartition_geographique: "Europe et Afrique ; hiverne au sud du Sahara",
@@ -27280,7 +27280,7 @@ const ESPECES = [
     altitude_min_m: 0,
     altitude_max_m: 4000,
     periode_observation: null,
-    longevite_max_annees: 10,
+    longevite_max_annees: "NA",
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Peu commun",
     repartition_geographique: null,
@@ -32365,7 +32365,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["milieu_principal"]
   },
   {
     onglet: "Araignees_mille_pattes",
@@ -34318,7 +34318,7 @@ const ESPECES = [
     altitude_min_m: null,
     altitude_max_m: null,
     periode_observation: null,
-    longevite_max_annees: 11,
+    longevite_max_annees: "NA",
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Commun",
     repartition_geographique: null,
@@ -34620,7 +34620,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
-    a_confirmer: ["territoire"]
+    a_confirmer: ["longevite_max_annees", "territoire"]
   },
   {
     onglet: "Poissons",
@@ -45829,7 +45829,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["yeux_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -47200,7 +47200,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["yeux_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -49636,7 +49636,7 @@ const ESPECES = [
     photo_source: "https://commons.wikimedia.org/wiki/File:Pollachius_pollachius_Saint-Quay.JPG",
     couleur: "Dos brun-vert, flancs dorés à argentés, ligne latérale sombre",
     taille_min_cm: 30,
-    taille_max_cm: 75,
+    taille_max_cm: 130,
     poids_min_kg: "NA",
     poids_max_kg: 14.1,
     habitat: "Fonds rocheux, épaves, forêts de laminaires",
@@ -49933,7 +49933,7 @@ const ESPECES = [
     photo_source: null,
     couleur: "Dos brun-gris tacheté de jaune et noir, ventre blanc",
     taille_min_cm: 50,
-    taille_max_cm: 100,
+    taille_max_cm: 120,
     poids_min_kg: "NA",
     poids_max_kg: 18,
     habitat: "Fonds sableux, vaseux ou caillouteux côtiers",
@@ -50033,7 +50033,7 @@ const ESPECES = [
     photo_source: "https://commons.wikimedia.org/wiki/File:Lenguado_común_(Solea_solea),_Parque_natural_de_la_Arrábida,_Portugal,_2023-07-28,_DD_08.jpg",
     couleur: "Dessus brun-gris taché de sombre, dessous blanchâtre",
     taille_min_cm: 25,
-    taille_max_cm: 35,
+    taille_max_cm: 70,
     poids_min_kg: "NA",
     poids_max_kg: 3,
     habitat: "Fonds de sable et de vase, estuaires",
@@ -50132,9 +50132,9 @@ const ESPECES = [
     photo_source: "https://commons.wikimedia.org/wiki/File:Conger-Meeraal,_Nationalpark_Port-Cros.JPG",
     couleur: "Gris bleu foncé, ventre plus clair",
     taille_min_cm: 100,
-    taille_max_cm: 200,
+    taille_max_cm: 300,
     poids_min_kg: "NA",
-    poids_max_kg: 85,
+    poids_max_kg: 110,
     habitat: "Fonds rocheux, épaves, failles et cavités",
     milieu_principal: "Mer et océan",
     milieux_secondaires: "NA",
@@ -50415,7 +50415,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["activite"]
   },
   {
     onglet: "Poissons",
@@ -50429,7 +50429,7 @@ const ESPECES = [
     photo_source: "https://commons.wikimedia.org/wiki/File:Lophius_piscatorius_2.jpg",
     couleur: "Dos brun-jaune ou vert marbré, ventre blanc",
     taille_min_cm: 50,
-    taille_max_cm: 100,
+    taille_max_cm: 200,
     poids_min_kg: "NA",
     poids_max_kg: 51,
     habitat: "Fonds de sable, gravier ou vase",
@@ -50514,7 +50514,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["activite"]
   },
   {
     onglet: "Poissons",
@@ -50613,7 +50613,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["defenses_secondaires"]
   },
   {
     onglet: "Poissons",
@@ -54839,7 +54839,7 @@ const ESPECES = [
     altitude_min_m: 0,
     altitude_max_m: 3000,
     periode_observation: null,
-    longevite_max_annees: 8.8,
+    longevite_max_annees: "NA",
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Commun",
     repartition_geographique: null,
@@ -74228,7 +74228,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["yeux_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -79633,7 +79633,7 @@ const ANECDOTES = {
   "bronze": "Ni le mâle ni la femelle ne peuvent voler : ce petit grillon se déplace très peu et colonise difficilement de nouveaux bois."
  },
  "Couleuvre vipérine": {
-  "bronze": "Excellente nageuse, elle peut rester plusieurs dizaines de minutes au fond de l'eau sans remonter respirer."
+  "bronze": "Excellente nageuse, elle peut rester jusqu'à un quart d'heure au fond de l'eau sans remonter respirer."
  },
  "Cistude d'Europe": {
   "bronze": "La chaleur du nid décide en partie du sexe des petits : au chaud naissent surtout des femelles, au frais surtout des mâles."
@@ -79894,7 +79894,7 @@ const ANECDOTES = {
   "bronze": "Des mâles suivis chassent la nuit en eau chaude peu profonde, puis se reposent et digèrent le jour plus bas, au frais."
  },
  "Maquereau commun": {
-  "bronze": "Il doit nager sans arrêt : s'il s'immobilisait, il ne ferait plus passer assez d'eau dans ses branchies pour respirer."
+  "bronze": "Contrairement à la plupart des poissons, il n'a pas de vessie natatoire : il change vite de profondeur, mais coule s'il cesse de nager."
  },
  "Sole commune": {
   "bronze": "Comme les autres poissons plats, la jeune sole a un œil de chaque côté ; en grandissant, son œil gauche passe à droite."

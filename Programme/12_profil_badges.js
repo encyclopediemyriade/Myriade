@@ -838,7 +838,7 @@ const PICTOS_PROFIL = {
   famille: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 11 4 20 4C20 13 14 19 5 19Z" fill="#3E7B55"/><path d="M5 19L14 10" stroke="#FBF8F1" stroke-width="1.6"/></svg>',
   coriace: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18L12 4L20 18Z" fill="none" stroke="#A8652A" stroke-width="2" stroke-linejoin="round"/><path d="M12 9V13M12 15.5V16" stroke="#A8652A" stroke-width="2" stroke-linecap="round"/></svg>',
   lune: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.5a8.5 8.5 0 1 0 5 14 6.5 6.5 0 0 1-5-14Z" fill="#5b6a8a"/></svg>',   // R239 (36.01) : le soir et la nuit
-  contrib: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="#3E7B55" stroke-width="2.2" stroke-linecap="round"/></svg>',   // R248 (36.01)
+  contrib: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 4h10l-2 3.5 2 3.5H6" fill="none" stroke="#8a4f1c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',   // R248 (36.01) ; CT1 : le drapeau « Signaler »
   heure: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="#d9a12b"/><path d="M12 2.5V5M12 19V21.5M2.5 12H5M19 12H21.5M5.3 5.3L7 7M17 17L18.7 18.7M5.3 18.7L7 17M17 7L18.7 5.3" stroke="#d9a12b" stroke-width="1.8" stroke-linecap="round"/></svg>',
 };
 function profilVitrine(rc) {
@@ -889,7 +889,7 @@ function profilVitrine(rc) {
           <span class="pgv-voir" aria-hidden="true">Voir</span></button>` : ""}
     </section>
     <section class="pgv-bloc"><h2>Vos chiffres</h2><ul class="pgv-chiffres-lignes">${chiffres.map(c => `<li><span class="pgv-ch-ic">${c[3]}</span><b>${nombre(c[0])}</b><span>${c[1]}${c[2] ? ` <small>· ${c[2]}</small>` : ""}</span></li>`).join("")}
-      <li class="pgv-contrib-ligne"><span class="pgv-ch-ic">${PICTOS_PROFIL.contrib}</span><b>0</b><span>contribution <small>· bientôt : proposer une photo, une observation, une correction</small></span></li></ul></section>
+      ${(suivi.signalements || 0) > 0 ? `<li class="pgv-contrib-ligne"><span class="pgv-ch-ic">${PICTOS_PROFIL.contrib}</span><b>${nombre(suivi.signalements)}</b><span>signalement${suivi.signalements > 1 ? "s" : ""} envoyé${suivi.signalements > 1 ? "s" : ""} <small>· merci</small></span></li>` : ""}</ul></section>${/* étape CT1 (5A) : la ligne n'apparaît qu'au premier signalement envoyé */ ""}
     ${dits.length ? `<section class="pgv-bloc"><h2>Vos préférences</h2><div class="pgv-encart"><ul class="pgv-dits">${dits.join("")}</ul></div></section>` : ""}
     ${rencontres.length ? `<section class="pgv-bloc"><h2>Vos dernières rencontres</h2><div class="pgv-rencontres">${rencontres.map(e => `<button type="button" data-espece="${echapper(e.nom_courant)}" title="${echapper(e.nom_courant)}"><img src="${photoMini(e.photo)}" alt="${echapper(e.nom_courant)}"></button>`).join("")}</div></section>` : ""}
   </div>`;

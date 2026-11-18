@@ -33,7 +33,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <!-- L'apparence du jeu -->
-  <link rel="stylesheet" href="Programme/style.css?v=1.17.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
+  <link rel="stylesheet" href="Programme/style.css?v=1.18.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
 </head>
 
 <body>
@@ -549,28 +549,19 @@
         <h2>Participer à Myriade</h2>
         <p>Myriade se construit pas à pas, et vous pouvez y prendre part. Chaque message est lu ;
           tout ce qui entre dans le jeu est d'abord vérifié.</p>
-        <div class="participer-cartes">
-          <div class="participer-carte">
-            <h3>Proposer vos photos</h3>
-            <p>Vous avez photographié un animal du jeu&nbsp;? Une photo nette d'un animal entier, vivant, dans son milieu.
-              Vous restez l'auteur&nbsp;: votre nom apparaît dans les crédits.</p>
-            <a class="bouton-apropos" href="mailto:myriade.encyclopedie@gmail.com?subject=Myriade%20%C2%B7%20Proposer%20une%20photo&amp;body=Esp%C3%A8ce%20%3A%0ALieu%20et%20date%20de%20la%20photo%20%3A%0ANom%20%C3%A0%20afficher%20dans%20les%20cr%C3%A9dits%20%3A%0AJ%27accepte%20que%20cette%20photo%20soit%20utilis%C3%A9e%20dans%20Myriade%2C%20avec%20mon%20nom%20dans%20les%20cr%C3%A9dits%20%3A%20oui%20/%20non%0A%0A%28Joignez%20la%20photo%20%C3%A0%20ce%20message%2C%20dans%20sa%20taille%20d%27origine.%29%0A">Proposer une photo</a>
-          </div>
-          <div class="participer-carte">
-            <h3>Corriger ou compléter une fiche</h3>
-            <p>Une taille, une alimentation, un territoire qui vous semble faux ou incomplet&nbsp;?
-              Indiquez si possible votre source.</p>
-            <a class="bouton-apropos" href="mailto:myriade.encyclopedie@gmail.com?subject=Myriade%20%C2%B7%20Corriger%20ou%20compl%C3%A9ter%20une%20fiche&amp;body=Esp%C3%A8ce%20%3A%0ACe%20qui%20est%20%C3%A9crit%20dans%20le%20jeu%20%3A%0ACe%20qui%20serait%20juste%20%3A%0AVotre%20source%20%28atlas%2C%20article%2C%20livre%2C%20site%29%20%3A%0A">Signaler une correction</a>
-          </div>
-          <div class="participer-carte">
-            <h3>Partager une idée</h3>
-            <p>Une question ambiguë, un écran peu clair, un jeu que vous aimeriez voir&nbsp;:
-              vos remarques font avancer Myriade.</p>
-            <a class="bouton-apropos" href="mailto:myriade.encyclopedie@gmail.com?subject=Myriade%20%C2%B7%20Une%20id%C3%A9e%20pour%20le%20jeu&amp;body=Votre%20id%C3%A9e%20ou%20remarque%20%3A%0AO%C3%B9%20dans%20le%20jeu%20%28%C3%A9cran%2C%20esp%C3%A8ce%2C%20lieu%29%20%3A%0A">Envoyer une idée</a>
-          </div>
+        <!-- Étape CT1 (18/11, choix 6B) : deux lignes à la place des trois cartes ; les erreurs et les idées passent par le formulaire « Signaler » -->
+        <div class="participer-lignes">
+          <button type="button" class="participer-ligne" id="ap-remarque">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 4h10l-2 3.5 2 3.5H6"/></svg>
+            <span><b>Une remarque sur le jeu</b><small>Un souci, une idée, un écran peu clair</small></span><i aria-hidden="true">›</i>
+          </button>
+          <a class="participer-ligne" href="mailto:myriade.encyclopedie@gmail.com?subject=Myriade%20%C2%B7%20Proposer%20une%20photo&amp;body=Esp%C3%A8ce%20%3A%0ALieu%20et%20date%20de%20la%20photo%20%3A%0ANom%20%C3%A0%20afficher%20dans%20les%20cr%C3%A9dits%20%3A%0AJ%27accepte%20que%20cette%20photo%20soit%20utilis%C3%A9e%20dans%20Myriade%2C%20avec%20mon%20nom%20dans%20les%20cr%C3%A9dits%20%3A%20oui%20/%20non%0A%0A%28Joignez%20la%20photo%20%C3%A0%20ce%20message%2C%20dans%20sa%20taille%20d%27origine.%29%0A">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.3"/><path d="M8 6l1.5-2h5L16 6"/></svg>
+            <span><b>Proposer vos photos</b><small>Une photo nette d'un animal entier, vivant, dans son milieu · votre nom dans les crédits</small></span><i aria-hidden="true">›</i>
+          </a>
         </div>
+        <p class="participer-note">Une erreur sur une espèce&nbsp;? Le lien «&nbsp;Signaler&nbsp;» est en bas de sa fiche et après chaque question.</p>
         <details class="credits-famille participer-attente" id="photos-attendues"></details>
-        <p class="participer-adresse">Pour tout le reste&nbsp;: <a href="mailto:myriade.encyclopedie@gmail.com">myriade.encyclopedie@gmail.com</a></p>
       </section>
 
       <h2>La carte des territoires</h2>
@@ -635,52 +626,53 @@
 
   <!-- ===================== JS ===================== -->
   <!-- Étape ML7 : le numéro de version (à changer à chaque livraison : Outils\changer_version.py) -->
-  <script src="version.js?v=1.17.0"></script>
-  <script src="especes.js?v=1.17.0"></script>
-  <script src="verif_photos.js?v=1.17.0"></script>   <!-- étape R185 : les questions d'allure vérifiées sur la photo (Données\verif_photos.xlsx → Outils\gen_verif_photos.py) -->
-  <script src="reperes.js?v=1.17.0"></script>   <!-- étape R190 : repères de terrain (Données\reperes_terrain.xlsx → Outils\reperes\gen_reperes.py) -->
-  <script src="cadrage.js?v=1.17.0"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
-  <script src="territoires.js?v=1.17.0"></script>
-  <script src="credits.js?v=1.17.0"></script>
-  <script src="credits_silhouettes.js?v=1.17.0"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
-  <script src="identite.js?v=1.17.0"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
-  <script src="lieux_identite.js?v=1.17.0"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
-  <script src="lieux_carte.js?v=1.17.0"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
-  <script src="expeditions.js?v=1.17.0"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
-  <script src="familles.js?v=1.17.0"></script>   <!-- étape 127 : cartes d'identité des familles -->
-  <script src="faits_questions.js?v=1.17.0"></script>
-  <script src="moments.js?v=1.17.0"></script>   <!-- étape R248c : les moments forts des espèces (Données\moments_saison.xlsx → Outils\gen_moments.py) -->
-  <script src="empreintes_tailles.js?v=1.17.0"></script>   <!-- étape R246 : cadre et taille réelle de chaque dessin d'empreinte (Outils\gen_tailles_empreintes.py) -->   <!-- étape QI2 : les questions insolites (Données\faits_questions.xlsx → Outils\gen_faits_questions.py) -->
+  <script src="version.js?v=1.18.0"></script>
+  <script src="especes.js?v=1.18.0"></script>
+  <script src="verif_photos.js?v=1.18.0"></script>   <!-- étape R185 : les questions d'allure vérifiées sur la photo (Données\verif_photos.xlsx → Outils\gen_verif_photos.py) -->
+  <script src="reperes.js?v=1.18.0"></script>   <!-- étape R190 : repères de terrain (Données\reperes_terrain.xlsx → Outils\reperes\gen_reperes.py) -->
+  <script src="cadrage.js?v=1.18.0"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
+  <script src="territoires.js?v=1.18.0"></script>
+  <script src="credits.js?v=1.18.0"></script>
+  <script src="credits_silhouettes.js?v=1.18.0"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
+  <script src="identite.js?v=1.18.0"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
+  <script src="lieux_identite.js?v=1.18.0"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
+  <script src="lieux_carte.js?v=1.18.0"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
+  <script src="expeditions.js?v=1.18.0"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
+  <script src="familles.js?v=1.18.0"></script>   <!-- étape 127 : cartes d'identité des familles -->
+  <script src="faits_questions.js?v=1.18.0"></script>
+  <script src="moments.js?v=1.18.0"></script>   <!-- étape R248c : les moments forts des espèces (Données\moments_saison.xlsx → Outils\gen_moments.py) -->
+  <script src="empreintes_tailles.js?v=1.18.0"></script>   <!-- étape R246 : cadre et taille réelle de chaque dessin d'empreinte (Outils\gen_tailles_empreintes.py) -->   <!-- étape QI2 : les questions insolites (Données\faits_questions.xlsx → Outils\gen_faits_questions.py) -->
   <!-- Le programme du jeu, en plusieurs fichiers (dossier « programme »), chargés dans l'ordre -->
-  <script src="Programme/01_questions.js?v=1.17.0"></script>
-  <script src="Programme/02_progression.js?v=1.17.0"></script>
-  <script src="Programme/03_questions_reponses.js?v=1.17.0"></script>
-  <script src="Programme/04_fetes.js?v=1.17.0"></script>
-  <script src="Programme/05_accueil.js?v=1.17.0"></script>
-  <script src="Programme/06_encyclopedie.js?v=1.17.0"></script>
-  <script src="Programme/07_parties.js?v=1.17.0"></script>
-  <script src="Programme/08_petits_jeux.js?v=1.17.0"></script>
-  <script src="Programme/09_rencontre.js?v=1.17.0"></script>
-  <script src="Programme/10_premiere_visite.js?v=1.17.0"></script>
-  <script src="Programme/11_commandes_test.js?v=1.17.0"></script>
-  <script src="Programme/12_profil_badges.js?v=1.17.0"></script>
-  <script src="Programme/15_territoire.js?v=1.17.0"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
-  <script src="Programme/16_arcade.js?v=1.17.0"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
-  <script src="Programme/17_expeditions.js?v=1.17.0"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
-  <script src="Programme/20_formes.js?v=1.17.0"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
-  <script src="Programme/21_insolites.js?v=1.17.0"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
-  <script src="Programme/26_ensemble.js?v=1.17.0"></script>   <!-- étape E2-2 : l'étape 2 « Ensemble, dans ce lieu » (les questions) -->
-  <script src="relief_carte.js?v=1.17.0"></script>   <!-- étape K2 : l'ombrage du relief des territoires (généré par gen_relief.py) -->
-  <script src="Programme/25_carte.js?v=1.17.0"></script>   <!-- étape K2 : l'espace Carte du téléphone -->
-  <script src="Programme/19_application.js?v=1.17.0"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
-  <script src="Programme/13_demarrage.js?v=1.17.0"></script>
-  <script src="Programme/14_clavier_menus.js?v=1.17.0"></script>   <!-- étape 229 : le clavier en fin de partie -->
-  <script src="Programme/18_cadrage.js?v=1.17.0"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
-  <script src="Programme/23_reperes.js?v=1.17.0"></script>   <!-- étape R190 : la carte d'identité (repères de terrain) -->
-  <script src="Programme/24_coup_doeil.js?v=1.17.0"></script>   <!-- étape R191 : Coup d'œil, « une photo, 4 noms » -->
-  <script src="Programme/27_defi_exp.js?v=1.17.0"></script>   <!-- étape E2-8 : le défi d'une expédition, « Me tester » -->
-  <script src="Programme/28_oreille.js?v=1.17.0"></script>   <!-- étape E2-11 : À l'oreille, « un cri, 4 photos » -->
-  <script src="Programme/29_approfondir.js?v=1.17.0"></script>   <!-- étape R250 : Approfondir à deux portes, « Découvrir » / « Me tester » -->
-  <script src="Programme/22_typographie.js?v=1.17.0"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
+  <script src="Programme/01_questions.js?v=1.18.0"></script>
+  <script src="Programme/02_progression.js?v=1.18.0"></script>
+  <script src="Programme/03_questions_reponses.js?v=1.18.0"></script>
+  <script src="Programme/04_fetes.js?v=1.18.0"></script>
+  <script src="Programme/05_accueil.js?v=1.18.0"></script>
+  <script src="Programme/06_encyclopedie.js?v=1.18.0"></script>
+  <script src="Programme/07_parties.js?v=1.18.0"></script>
+  <script src="Programme/08_petits_jeux.js?v=1.18.0"></script>
+  <script src="Programme/09_rencontre.js?v=1.18.0"></script>
+  <script src="Programme/10_premiere_visite.js?v=1.18.0"></script>
+  <script src="Programme/11_commandes_test.js?v=1.18.0"></script>
+  <script src="Programme/12_profil_badges.js?v=1.18.0"></script>
+  <script src="Programme/15_territoire.js?v=1.18.0"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
+  <script src="Programme/16_arcade.js?v=1.18.0"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
+  <script src="Programme/17_expeditions.js?v=1.18.0"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
+  <script src="Programme/20_formes.js?v=1.18.0"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
+  <script src="Programme/21_insolites.js?v=1.18.0"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
+  <script src="Programme/26_ensemble.js?v=1.18.0"></script>   <!-- étape E2-2 : l'étape 2 « Ensemble, dans ce lieu » (les questions) -->
+  <script src="relief_carte.js?v=1.18.0"></script>   <!-- étape K2 : l'ombrage du relief des territoires (généré par gen_relief.py) -->
+  <script src="Programme/25_carte.js?v=1.18.0"></script>   <!-- étape K2 : l'espace Carte du téléphone -->
+  <script src="Programme/19_application.js?v=1.18.0"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
+  <script src="Programme/13_demarrage.js?v=1.18.0"></script>
+  <script src="Programme/14_clavier_menus.js?v=1.18.0"></script>   <!-- étape 229 : le clavier en fin de partie -->
+  <script src="Programme/18_cadrage.js?v=1.18.0"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
+  <script src="Programme/23_reperes.js?v=1.18.0"></script>   <!-- étape R190 : la carte d'identité (repères de terrain) -->
+  <script src="Programme/24_coup_doeil.js?v=1.18.0"></script>   <!-- étape R191 : Coup d'œil, « une photo, 4 noms » -->
+  <script src="Programme/27_defi_exp.js?v=1.18.0"></script>   <!-- étape E2-8 : le défi d'une expédition, « Me tester » -->
+  <script src="Programme/28_oreille.js?v=1.18.0"></script>   <!-- étape E2-11 : À l'oreille, « un cri, 4 photos » -->
+  <script src="Programme/29_approfondir.js?v=1.18.0"></script>   <!-- étape R250 : Approfondir à deux portes, « Découvrir » / « Me tester » -->
+  <script src="Programme/30_signaler.js?v=1.18.0"></script>   <!-- étape CT1 : « Signaler une erreur » (formulaire Tally, panneau, merci) -->
+  <script src="Programme/22_typographie.js?v=1.18.0"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
 </body>
 </html>
