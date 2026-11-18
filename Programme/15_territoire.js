@@ -201,7 +201,7 @@ function dessinerEmblemes(t, id) {
     + `<div class="emb-grille">${liste.map((e, i) => {
       const connue = estReconnue(e);
       return `<button class="emb${connue ? "" : " inconnue"}" data-i="${i}" title="${connue ? "Voir sa fiche" : "La rencontrer"}">`
-        + `<span class="emb-ph">${e.photo ? `<img src="${e.photo}" alt="${connue ? echapper(e.nom_courant) : ""}">` : ""}</span>`
+        + `<span class="emb-ph">${e.photo ? imgMini(e.photo, connue ? e.nom_courant : "") : ""}</span>`
         + `<span class="emb-nom">${e.nom_courant}</span><small>${connue ? "Dans votre carnet" : "À rencontrer"}</small></button>`;
     }).join("")}</div>`;
   zone.querySelectorAll(".emb").forEach(b => b.onclick = () => {
@@ -283,7 +283,7 @@ function dessinerPasserelle(d) {
   if (!nouvelles.length) { zone.classList.add("cache"); zone.innerHTML = ""; return; }
   zone.classList.remove("cache");
   zone.innerHTML = nouvelles.map((e, i) => `<div class="pass-ligne">
-    <span class="pass-ph">${e.photo ? `<img src="${e.photo}" alt="">` : ""}</span>
+    <span class="pass-ph">${e.photo ? imgMini(e.photo, "") : ""}</span>
     <span class="pass-texte">Vous avez croisé <b>${nomAvecArticle(e)}</b> pour la première fois.<small>Le rencontrer pour mieux le connaître ?</small></span>
     <button class="pass-bouton" data-i="${i}">Rencontre <span aria-hidden="true">▶</span></button></div>`).join("");
   zone.querySelectorAll(".pass-bouton").forEach(b => b.onclick = () => lancerRencontreAvec(nouvelles[Number(b.dataset.i)]));

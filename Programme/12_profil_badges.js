@@ -279,7 +279,14 @@ function verifierBadgesBientot() {
   verificationPrevue = true;
   setTimeout(() => { verificationPrevue = false; verifierBadges(); }, 0);
 }
+// Étape R262 (lenteurs) : la vérification silencieuse du chargement (tous les badges, donc toutes les expéditions et toutes
+//   les espèces) ne bloque plus l'ouverture du jeu : elle est faite juste après, pendant que le joueur lit l'accueil
+//   (13_demarrage.js). Si une vérification « avec vignette » arrive avant, la silencieuse passe d'abord : un badge déjà
+//   mérité n'est jamais fêté comme nouveau.
+let badgesInitiaux = false;
 function verifierBadges(annoncer = true) {
+  if (!annoncer) badgesInitiaux = true;
+  else if (!badgesInitiaux) verifierBadges(false);
   if (annoncer) verifierOuverture();                     // étape 209 : un nouveau territoire ?
   if (typeof toutDebloque === "function" && toutDebloque()) return;   // étape PR6 : rien à gagner sur des espèces offertes
   let change = false;
@@ -732,7 +739,7 @@ function carteNaturaliste(rc) {
   const lieux = terrs.reduce((s, x) => s + (typeof lieuxDe === "function" ? lieuxDe(x).filter(c => lieuTermine(x, c)).length : 0), 0);
   const coeur = familleDeCoeur();
   const rangT = t && typeof rangTerritoire === "function" ? rangTerritoire(t) : null;
-  const avatar = e ? `<img src="${photoEsp(e)}" alt="Votre espèce favorite : ${echapper(e.nom_courant)}">`
+  const avatar = e ? imgMini(photoEsp(e), "Votre espèce favorite : " + e.nom_courant)   // étape R262 : la miniature suffit (cadre de 78 px)
                    : `<span class="pg-avatar-vide">${typeof PICTO_LIENS !== "undefined" ? "" : ""}?</span>`;
   return `<section class="pg-carte-nat">
       <div class="pg-cn-etiq">Carte de naturaliste · Myriade</div>

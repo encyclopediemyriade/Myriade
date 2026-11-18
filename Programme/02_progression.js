@@ -196,6 +196,7 @@ function recommencer() {
 }
 function effacerPartie() {
   localStorage.removeItem(CLE_SAUVEGARDE);
+  try { localStorage.removeItem(CLE_SAUVEGARDE + "-empreintes-barre"); } catch (e) { /* rien */ }   // étape R262
   location.reload();                             // recharge la page, vide
 }
 
@@ -613,8 +614,14 @@ function repartitionMedailles(espece) {
   return r;
 }
 function niveauMedaille(espece, q) { return repartitionMedailles(espece).get(q.champ) || q.niveau; }
+// Étape R262 (lenteurs) : gardé en mémoire avec la liste des questions (même principe que repartitionMedailles)
+const memoChampsNiveau = new WeakMap();
 function champsDuNiveau(espece, niveau) {
-  return listeQuestions(espece).filter(q => niveauMedaille(espece, q) === niveau).map(q => q.champ);
+  const liste = listeQuestions(espece);
+  let m = memoChampsNiveau.get(liste);
+  if (!m) { m = {}; memoChampsNiveau.set(liste, m); }
+  if (!m[niveau]) m[niveau] = liste.filter(q => niveauMedaille(espece, q) === niveau).map(q => q.champ);
+  return m[niveau].slice();
 }
 
 // Combien de niveaux l'espèce a-t-elle TERMINÉS ? (0, 1, 2 ou 3)
@@ -1224,7 +1231,28 @@ function piegesVraiFaux(q, bonne, espece) {
 // ==================================================================
 const STATUTS = ["inconnue", "identifiée", "fiche partielle", "fiche complète", "maîtrisée"];
 
+// Étape R262 (lenteurs) : une mémoire valable le temps de dessiner une page (Profil, Carte, Encyclopédie, accueil…).
+//   Une page demandait des centaines de fois le statut des mêmes espèces (jusqu'à 1,6 s sur un téléphone lent).
+//   Le dessin d'une page ne change pas la progression : la mémoire est sûre, et elle est jetée dès la page dessinée.
+//   avecMemoPage(f) rend une version de f qui ouvre cette mémoire le temps de son appel (13_demarrage.js).
+let memoPage = null;
+function avecMemoPage(f) {
+  const g = function (...args) {
+    if (memoPage) return f.apply(this, args);
+    memoPage = new Map();
+    try { return f.apply(this, args); } finally { memoPage = null; }
+  };
+  g.avantMemo = f;
+  return g;
+}
 function statut(espece) {
+  if (!memoPage) return calculerStatut(espece);
+  const cle = "s|" + espece.nom_courant;
+  let v = memoPage.get(cle);
+  if (v === undefined) { v = calculerStatut(espece); memoPage.set(cle, v); }
+  return v;
+}
+function calculerStatut(espece) {
   // Pas encore reconnue : "inconnue", qu'elle ait déjà été montrée ou non (étape 58).
   // (Le jeu sait quand même si elle s'est déjà montrée : voir estVue, partie 11.)
   if (!progression[espece.nom_courant] || !estIdentifiee(espece)) return "inconnue";

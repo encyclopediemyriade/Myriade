@@ -228,10 +228,10 @@ function afficherEncyclopedie() {
   for (const cle in CLASSES) {                              // une section par famille, dans l'ordre de CLASSES
     if (filtreClasse !== "Toutes" && cle !== filtreClasse) continue;
     const especes = especesDuFiltre().filter(e => e.onglet === cle);   // étape 207 : selon le territoire choisi
-    let visibles = decouvertesSeules ? especes.filter(e => statut(e) !== "inconnue") : especes;
-    if (cherche) visibles = visibles.filter(e => statut(e) !== "inconnue" && simplifier(e.nom_courant).includes(cherche));   // étape M5
+    let visibles = decouvertesSeules ? especes.filter(e => estReconnue(e)) : especes;
+    if (cherche) visibles = visibles.filter(e => estReconnue(e) && simplifier(e.nom_courant).includes(cherche));   // étape M5
     if (visibles.length === 0) continue;                    // rien à montrer : pas de titre vide
-    const decouvertes = especes.filter(e => statut(e) !== "inconnue").length;
+    const decouvertes = especes.filter(e => estReconnue(e)).length;
     html += `<section class="groupe-famille" style="--couleur-classe:${CLASSES[cle].couleur}">
                <h2 class="titre-famille">${CLASSES[cle].nom}<small>${decouvertes} / ${especes.length}</small></h2>
                ${filtreClasse === cle && FAMILLES_INFO[cle] ? `<details class="bandeau-famille"${bandeauFamilleOuvert ? " open" : ""}>
@@ -815,7 +815,7 @@ function afficherFiltres() {
   liste.innerHTML = `<span class="titre-filtre">Familles</span>`;   // étape 334 : un titre, et plus de points de couleur
   liste.setAttribute("aria-label", "Familles");
   function ajouterFiltre(cle, nom, couleur, especes) {
-    const reconnues = especes.filter(e => STATUTS.indexOf(statut(e)) >= 1).length;
+    const reconnues = especes.filter(estReconnue).length;
     const bouton = document.createElement("button");
     bouton.className = "filtre" + (filtreClasse === cle ? " actif" : "");
     bouton.style.setProperty("--couleur-classe", couleur || "var(--territoire)");
@@ -832,7 +832,7 @@ function afficherFiltres() {
   // Étape R245 (36.26, choix 26C du 17/11) : deux onglets « Toutes · N | Découvertes · N » sous les familles
   //   (remplacent l'interrupteur « Découvertes uniquement ») ; le choix est gardé, sans rien afficher à ce sujet.
   const dansFiltre = especesDuFiltre().filter(e => filtreClasse === "Toutes" || filtreClasse === "planches" || e.onglet === filtreClasse);
-  zone.insertAdjacentHTML("beforeend", ongletsDecouvertes(dansFiltre.length, dansFiltre.filter(e => statut(e) !== "inconnue").length, decouvertesSeules, "ency-onglets-filtres"));
+  zone.insertAdjacentHTML("beforeend", ongletsDecouvertes(dansFiltre.length, dansFiltre.filter(e => estReconnue(e)).length, decouvertesSeules, "ency-onglets-filtres"));
   zone.querySelectorAll(".ency-onglets-filtres [data-vue]").forEach(b => b.onclick = () => {
     decouvertesSeules = b.dataset.vue === "decouvertes"; sauvegarder(); afficherEncyclopedie();
   });
@@ -866,7 +866,7 @@ function ongletsDecouvertes(toutes, decouvertes, seules, classe) {
 }
 let bandeauAlbumOuvert = false;   // sur téléphone, la carte d'identité de la famille est repliée au départ (elle prend tout l'écran)
 function collectionSurTelephone() { return typeof surTelephone === "function" && surTelephone(); }
-const estRencontree = e => statut(e) !== "inconnue";
+const estRencontree = e => estReconnue(e);
 function caseSilhouette(e, classe) {
   return `<span class="${classe}"><img src="${fichierSilhouette(e)}" alt="" loading="lazy" onerror="this.remove()"></span>`;
 }

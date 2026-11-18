@@ -313,7 +313,17 @@ const PARTIES_DES_TRAITS = { cornes_bois_forme: ["tete"], queue_forme: ["queue"]
   nageoires_dos: ["nageoire_dos"], queue_poisson: ["nageoire_queue", "queue"], bouche_position: ["bouche"], bouche_type: ["bouche"],
   barbillons: ["bouche", "museau"], antennes_forme: ["antennes"], ailes_visibles: ["ailes", "ailes_avant"], ailes_repos: ["ailes", "ailes_avant"] };
 let traitCarteEteint = false;   // vrai pendant le calcul de la liste « rien ne recule »
+// Étape R262 (lenteurs) : le résultat ne dépend que des repères de l'espèce (et du mode test) : gardé en mémoire
+const memoPartiesCarte = new Map();
 function partiesDeLaCarte(e) {
+  if (typeof reperesDe !== "function") return calculerPartiesDeLaCarte(e);   // repères pas encore chargés (23 vient après) : rien en mémoire
+  const cle = (typeof modeTestReperes === "function" && modeTestReperes() ? "t|" : "j|") + e.nom_courant;
+  if (memoPartiesCarte.has(cle)) return memoPartiesCarte.get(cle);
+  const res = calculerPartiesDeLaCarte(e);
+  memoPartiesCarte.set(cle, res);
+  return res;
+}
+function calculerPartiesDeLaCarte(e) {
   const r = typeof reperesDe === "function" ? reperesDe(e) : null;
   if (!r) return null;
   const l = typeof reperesPourForme === "function" ? reperesPourForme(r, formePourPhoto(r, "")) : r.reperes;
@@ -349,7 +359,20 @@ function traitsEtape1(e) {
   const d = traitDetail(e);
   return d ? [d] : [];
 }
+// Étape R262 (lenteurs) : pour les étapes 1 à 3, la liste ne dépend que des données de l'espèce et des réglages (son,
+//   cri « quand même », règle d'avant E2-5, mode test des repères) : elle est gardée en mémoire. Elle était recalculée
+//   des milliers de fois à chaque page (Profil, Carte, Encyclopédie, territoire). L'étape 4 (Approfondir) dépend de ce
+//   que le joueur a trouvé : toujours recalculée.
+const memoChampsEtape = new Map();
 function champsEtape(e, k) {
+  if (k === 4 || typeof reperesDe !== "function") return calculerChampsEtape(e, k);   // repères pas encore chargés : rien en mémoire
+  const cle = k + "|" + (sonActif ? 1 : 0) + (avecCriQuandMeme ? 1 : 0) + (traitCarteEteint ? 1 : 0)
+            + (typeof modeTestReperes === "function" && modeTestReperes() ? 1 : 0) + "|" + e.nom_courant;
+  let l = memoChampsEtape.get(cle);
+  if (!l) { l = calculerChampsEtape(e, k); memoChampsEtape.set(cle, l); }
+  return l.slice();
+}
+function calculerChampsEtape(e, k) {
   if (k === 1) {                                    // étape 288 : la Rencontre physique
     const possibles = champsAvecCri(e);
     const sens = ["cri_son", "empreinte_nom"].filter(c => possibles.includes(c));
@@ -443,7 +466,16 @@ function etape1AvantRF6() {
   }
   return etape1AvantRF6.cache;
 }
+// Étape R262 (lenteurs) : pendant le dessin d'une page (memoPage, 02_progression.js), la réponse est gardée : une page
+//   la demandait plusieurs fois pour chaque espèce. Hors dessin d'une page (pendant une partie), toujours recalculée.
 function especeFaite(e, k) {
+  if (!memoPage || traitCarteEteint) return calculerEspeceFaite(e, k);
+  const cle = "f" + k + "|" + e.nom_courant;
+  let v = memoPage.get(cle);
+  if (v === undefined) { v = calculerEspeceFaite(e, k); memoPage.set(cle, v); }
+  return v;
+}
+function calculerEspeceFaite(e, k) {
   if (k === 2 && typeof especeComprise === "function" && especeComprise(e)) return true;   // étape E2-3 : comprise à l'étape 2 « Ensemble »
   if (k === 1 && RENCONTRE_COMPLETE && estIdentifiee(e) && etape1AvantRF6().has(e.nom_courant)) return true;   // étape RF6 : rien ne recule
   if (k === 1 && TRAIT_SUIT_CARTE && !traitCarteEteint && estIdentifiee(e) && etape1AvantE25().has(e.nom_courant)) return true;   // étape E2-5 : rien ne recule

@@ -79,7 +79,7 @@ const RETOURS_ECRAN = [
 const pileRetour = [];
 let pageCourante = null, retourEnCours = false;
 function etatPage(vue) {
-  const y = window.scrollY || 0;
+  const y = 0;   // étape R262 (lenteurs) : la position est lue en quittant la page (noterDepartPage) ; la lire ici forçait un calcul de mise en page
   switch (vue) {
     case "maison": case "accueil": case "progression": case "apropos": case "carte": case "arcade":
       return { vue, cle: vue, y, aller: () => montrer(vue) };

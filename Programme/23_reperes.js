@@ -17,8 +17,12 @@
 //     la carte montre « tous » + la forme affichée. forme_photo = la forme de la photo principale.
 //   • Quand l'espèce a plusieurs formes, des onglets « Mâle | Femelle » (ou « Adulte | Jeune ») permettent de passer
 //     de l'une à l'autre ; la forme de départ est celle de la photo affichée.
+// Étape R262 (lenteurs) : l'adresse ne change pas sans recharger la page : elle n'est lue qu'une fois (cette fonction est appelée très souvent)
+let adresseTest = null;
 function modeTestReperes() {
-  try { return /[?&]test\b/.test(location.search) || !!window.ACCES_TEST_OUVERT; } catch (e) { return false; }
+  if (window.ACCES_TEST_OUVERT) return true;
+  if (adresseTest === null) { try { adresseTest = /[?&]test\b/.test(location.search); } catch (e) { adresseTest = false; } }
+  return adresseTest;
 }
 function reperesDe(espece) {
   if (!espece || typeof REPERES === "undefined") return null;

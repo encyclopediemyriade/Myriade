@@ -115,7 +115,13 @@ function entrerRencontre() {
   document.getElementById("fin-defi").classList.add("cache");
   document.getElementById("hud-defi").classList.add("cache");
   document.getElementById("choix-longueur").classList.toggle("cache", enCours);
-  if (!enCours) { calculerOrdreJeux(); afficherChoixDefi(); }
+  // Étape R262 (lenteurs) : lors d'un lancement direct (expédition, révision…), la partie démarre aussitôt et l'écran de choix
+  //   reste caché : on ne le dessine que s'il est encore visible juste après (le lancement n'a pas abouti).
+  if (!enCours) {
+    calculerOrdreJeux();
+    if (!lancementDirect) afficherChoixDefi();
+    else setTimeout(() => { const c = document.getElementById("choix-longueur"); if (c && !c.classList.contains("cache") && !document.getElementById("vue-rencontre").classList.contains("cache")) afficherChoixDefi(); }, 0);
+  }
   // Session en cours : on reprend là où elle en était (étape 44)
   document.getElementById("carte-rencontre").classList.toggle("cache", !enCours);
 }

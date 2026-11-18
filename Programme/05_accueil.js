@@ -6,7 +6,7 @@
 //    haut ET par l'écran d'Accueil (une seule formule, deux affichages)
 // ==================================================================
 function progresGlobal() {
-  const identifiees = ESPECES.filter(e => STATUTS.indexOf(statut(e)) >= 1).length;
+  const identifiees = ESPECES.filter(estReconnue).length;   // étape R262 : estReconnue, sans calculer tout le statut
   return { identifiees, total: ESPECES.length, pourcentage: Math.round(100 * identifiees / ESPECES.length) };
 }
 
@@ -35,6 +35,20 @@ function basculerDetailCarnet(forcer) {
     if (!ev.target.closest("#stats")) { d.hidden = true; document.removeEventListener("click", fermer); }
   }), 0);
 }
+// Étape R262 (lenteurs) : le nombre d'empreintes de la barre du haut demande l'état de toutes les expéditions. Au lancement,
+//   on affiche celui de la dernière visite (gardé à part, la sauvegarde ne change pas), puis le vrai chiffre dès que les
+//   calculs préparés en fond sont prêts (13_demarrage.js, finPrechauffage) : l'accueil s'ouvre sans attendre.
+const CLE_EMPREINTES_BARRE = CLE_SAUVEGARDE + "-empreintes-barre";
+let calculsPrets = false;
+function empreintesBarre() {
+  if (typeof empreintesTotal !== "function") return 0;
+  if (!calculsPrets) {
+    try { const v = localStorage.getItem(CLE_EMPREINTES_BARRE); if (v !== null && /^\d+$/.test(v)) return Number(v); } catch (e) { /* rien */ }
+  }
+  const n = empreintesTotal();
+  try { localStorage.setItem(CLE_EMPREINTES_BARRE, String(n)); } catch (e) { /* rien */ }
+  return n;
+}
 function afficherStats() {
   const p = progresGlobal();
   // Une pastille : l'XP (les graines ont été retirées à l'étape 53). Le nombre d'espèces
@@ -49,13 +63,13 @@ function afficherStats() {
   const nbBadges = tousLesBadges().filter(b => palierDe(b) > 0).length;   // étape PR3
   // Étape 196 : plus de rang de naturaliste ni de jauge : le carnet (espèces identifiées) et les médailles d'espèce
   const trouvees = ESPECES.filter(estReconnue);
-  const med = [0, 0, 0, 0];
-  for (const e of trouvees) med[niveauTermine(e)]++;
+  // Étape R262 (lenteurs) : le décompte des médailles (plus affiché depuis l'étape 335) est retiré : il calculait, au lancement,
+  //   toutes les étapes de toutes les espèces du carnet avant d'afficher l'accueil.
   const stats = document.getElementById("stats");
   // Étape 335 (Revoir 8, choix C2) : plus de médailles dans la barre du haut. Le carnet, les espèces rares découvertes
   //   et les empreintes (la monnaie du jeu). Un clic ouvre le détail par rareté, avec un lien vers le Profil.
   const rares = trouvees.filter(e => e.rarete_observation === "Rare").length;
-  const pas = typeof empreintesTotal === "function" ? empreintesTotal() : 0;
+  const pas = empreintesBarre();
   // Étape M2 (01/11) : « Carnet : » dans un <span> pour pouvoir le masquer sur téléphone (rien ne change sur ordinateur)
   stats.innerHTML = `<button class="stat pastille-carnet" type="button" aria-haspopup="true" title="Votre carnet en détail"><span class="ph-carnet">Carnet : </span><strong>${nombre(trouvees.length)}</strong> espèce${trouvees.length > 1 ? "s" : ""}`
     + `<span class="ph-rares">${ETOILE_RARE}${nombre(rares)} rare${rares > 1 ? "s" : ""}</span>`
@@ -74,8 +88,10 @@ function afficherStats() {
 
 // Une espèce compte comme "reconnue" à partir du statut "identifiée"
 // (c'est-à-dire : au moins reconnue sur sa photo).
+// Étape R262 (lenteurs) : même réponse que « statut ≠ inconnue », sans calculer les médailles et les étapes (c'était,
+//   au lancement, le calcul de toutes les questions de toutes les espèces avant d'afficher l'accueil).
 function estReconnue(espece) {
-  return STATUTS.indexOf(statut(espece)) >= 1;
+  return !!progression[espece.nom_courant] && estIdentifiee(espece);
 }
 
 // Le territoire dont l'accueil montre la progression (texte + barres par famille).

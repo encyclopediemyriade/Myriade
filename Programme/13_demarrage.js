@@ -55,10 +55,15 @@ document.addEventListener("visibilitychange", rafraichirAccueilVisible);
 window.addEventListener("pageshow", ev => { if (ev.persisted) rafraichirAccueilVisible(); });
 document.addEventListener("keydown", auClavier);    // le clavier pendant la Rencontre (partie 7 bis)
 window.addEventListener("scroll", fermerFenetre);   // la fenêtre se ferme si on fait défiler la page
+// Étape R262 (lenteurs) : chaque dessin de page garde en mémoire, le temps du dessin, le statut et l'avancement des espèces
+//   (avecMemoPage, 02_progression.js). Les pages ne changent pas la progression : rien d'autre ne change.
+for (const nom of ["afficherAccueil", "afficherStats", "afficherPageCarte", "afficherAtlas", "afficherArcade", "afficherEncyclopedie",
+                   "afficherPageEspece", "afficherPageProgression", "dessinerMaison", "dessinerEcranExpedition", "afficherAPropos", "verifierBadges", "photoFin", "photoProgression"])
+  if (typeof window[nom] === "function" && !window[nom].avantMemo) window[nom] = avecMemoPage(window[nom]);
 charger();                                         // ← on ressort la partie sauvegardée
 if (typeof migrerToutDebloque === "function") migrerToutDebloque();   // étape PR6 : Tout débloquer, espèces comprises
 if (typeof migrerLieuxR133 === "function") migrerLieuxR133();         // étape R133 : les lieux déjà ouverts le restent
-verifierBadges(false);                             // étape 106 : les badges déjà mérités, sans vignette
+// Étape 106 : les badges déjà mérités, sans vignette — étape R262 : fait après l'ouverture (fin de prechaufferCalculs)
 afficherStats();
 // Première visite (pas encore de profil) : ses trois écrans ; sinon, l'Accueil (étape 52)
 if (profil) montrer(vueAccueil()); else montrerBienvenue();   // étape 255 : on arrive sur la page carte
@@ -88,11 +93,20 @@ function prechaufferCalculs() {
     const fin = performance.now() + 12;            // au plus ~12 ms d'affilée : le jeu reste fluide pendant ce temps
     while (i < liste.length && (echeance ? echeance.timeRemaining() > 2 : performance.now() < fin)) {
       const e = liste[i++];
-      try { listeQuestions(e); if (typeof casesCarnet === "function") casesCarnet(e); if (typeof traitsAllure === "function") traitsAllure(e); if (typeof traitsPortrait === "function") traitsPortrait(e); } catch (err) { /* une espèce en défaut ne bloque rien */ }
+      try { listeQuestions(e); if (typeof champsEtape === "function") { champsEtape(e, 1); champsEtape(e, 2); champsEtape(e, 3); }   // R262
+            if (typeof casesCarnet === "function") casesCarnet(e); if (typeof traitsAllure === "function") traitsAllure(e); if (typeof traitsPortrait === "function") traitsPortrait(e); } catch (err) { /* une espèce en défaut ne bloque rien */ }
       if (!echeance && performance.now() >= fin) break;
     }
     if (i < liste.length) attendre(paquet);
-    else if (!prechauffeExp) { prechauffeExp = true; prechaufferExpeditions(); }
+    else if (!prechauffeExp) {
+      prechauffeExp = true;
+      // Étape R262 : les badges déjà mérités (sans vignette), maintenant que les calculs sont prêts
+      attendre(() => {
+        if (!badgesInitiaux) verifierBadges(false);
+        calculsPrets = true; afficherStats();      // R262 : le vrai nombre d'empreintes dans la barre du haut
+        prechaufferExpeditions();
+      });
+    }
   };
   setTimeout(() => attendre(paquet), 600);         // juste après l'affichage de l'accueil
 }
