@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V101.xlsx, especes_bassin_aquitain_V44.xlsx, especes_bassin_parisien_V49.xlsx, especes_corse_V54.xlsx, especes_grand_est_V42.xlsx, especes_jura_V46.xlsx, especes_massif_armoricain_V55.xlsx, especes_massif_central_V47.xlsx, especes_mediterranee_V56.xlsx, especes_pyrenees_V52.xlsx, especes_vosges_V39.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V101.xlsx, especes_bassin_aquitain_V44.xlsx, especes_bassin_parisien_V49.xlsx, especes_corse_V55.xlsx, especes_grand_est_V42.xlsx, especes_jura_V46.xlsx, especes_massif_armoricain_V55.xlsx, especes_massif_central_V47.xlsx, especes_mediterranee_V56.xlsx, especes_pyrenees_V52.xlsx, especes_vosges_V39.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -27833,8 +27833,8 @@ const ESPECES = [
     classe: "Oiseau",
     ordre: "Passériformes",
     sous_groupe: null,
-    photo: "Images/fauvette_de_moltoni.jpg",
-    photo_source: "https://www.inaturalist.org/observations/225350133",
+    photo: "Images/fauvette_de_moltoni_2.jpg",
+    photo_source: "https://commons.wikimedia.org/wiki/File:Curruca_subalpina_74746110.png",
     couleur: "Mâle au dessous rose saumon",
     taille_min_cm: null,
     taille_max_cm: null,
@@ -27925,15 +27925,15 @@ const ESPECES = [
     couleurs_plumage: "NA",
     couleurs_plumage_absentes: "NA",
     genre_nom: "féminin",
-    photo_2: "Images/fauvette_de_moltoni_2.jpg",
-    photo_2_source: "https://commons.wikimedia.org/wiki/File:Curruca_subalpina_74746110.png",
-    photo_2_sujet: "mâle",
+    photo_2: null,
+    photo_2_source: null,
+    photo_2_sujet: null,
     photo_3: null,
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "NA",
     emplacement_nid_autres: "NA",
-    photo_2_differente: "non",
+    photo_2_differente: "NA",
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",

@@ -64,12 +64,12 @@ function presenterFamillesEnAttente() {
 }
 
 let minuteurBulle;
-function afficherBulle(texte) {
+function afficherBulle(texte, duree = 2200) {   // étape R258 : durée au choix
   const bulle = document.getElementById("bulle");
   bulle.textContent = texte;
   bulle.classList.add("visible");
   clearTimeout(minuteurBulle);                              // annule l'ancien minuteur
-  minuteurBulle = setTimeout(() => bulle.classList.remove("visible"), 2200); // disparaît après 2,2 s
+  minuteurBulle = setTimeout(() => bulle.classList.remove("visible"), duree); // disparaît après 2,2 s (par défaut)
 }
 
 // Deux notes très douces, fabriquées par le navigateur (pas de fichier son).

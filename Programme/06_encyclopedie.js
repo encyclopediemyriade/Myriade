@@ -225,11 +225,13 @@ function afficherEncyclopedie() {
                <div class="grille-famille">${visibles.map(e => carteEncyclopedie(e, details)).join("")}</div>
              </section>`;
   }
+  if (html && !cherche && filtreClasse === "Toutes") html = htmlPistesASuivre() + html;   // étape R258 (5B) : aussi sur ordinateur
   grille.innerHTML = html || (cherche ? `<p class="grille-vide">Aucune espèce découverte ne correspond à « ${echapper(rechercheEncyclo)} ».</p>`
                                      : `<p class="grille-vide">Aucune espèce découverte ici pour l'instant.</p>`);
   // Étape 127 : le bandeau de la famille garde sa position (ouvert / fermé) tant que la page n'est pas rechargée
   const bandeau = grille.querySelector(".bandeau-famille");
   if (bandeau) bandeau.ontoggle = () => { bandeauFamilleOuvert = bandeau.open; };
+  brancherPistesASuivre(grille);   // étape R258
 
   // On branche le survol : entrer sur une carte ouvre la fenêtre, en sortir la ferme.
   // (focus / blur = la même chose au clic, pour les écrans sans souris)
@@ -403,13 +405,15 @@ function ouvrirPageEspece(espece) {
   if (typeof arreterCri === "function") arreterCri();   // étape R176 : une autre fiche, un autre écran : le son s'arrête
   if (!espece) return;
   if (especeOuverte !== espece) ongletEspece = "portrait";
+  if (!ficheParLien) pileFiches = [];   // étape R258 : venue d'ailleurs que d'un lien de fiche
+  ficheParLien = false;
   especeOuverte = espece;
   // Étape R236 (note 10 du 15/11) : ouvrir la fiche de l'espèce du jour (déjà reconnue) compte comme sa rencontre du jour
   if (typeof especeDuJour === "function" && typeof validerEspeceDuJour === "function" && estReconnue(espece)) {
     const j = especeDuJour();
     if (j && j.nom_courant === espece.nom_courant && validerEspeceDuJour(espece.nom_courant, 500)) sauvegarder();
   }
-  positionEncyclopedie = window.scrollY;                 // pour revenir au même endroit de l'encyclopédie
+  if (!pileFiches.length) positionEncyclopedie = window.scrollY;   // pour revenir au même endroit de l'encyclopédie
   montrer("espece");
 }
 
@@ -441,21 +445,21 @@ function afficherPageEspece() {
         ${estReconnue(e) ? `<button class="pe-favori${especeFavorite === e.nom_courant ? " choisie" : ""}" id="pe-favori">${ETOILE}${especeFavorite === e.nom_courant ? "Mon espèce favorite" : "En faire mon espèce favorite"}</button>` : ""}
         <div class="pe-groupe"><span style="color:${c.couleur}">${c.nom}</span> · ${e.nom_affichage_groupe}</div>
         <div class="pe-statut">${majuscule(statut(e))} · ${trouves} sur ${champs.length} trouvées</div>
-        ${estReconnue(e) ? (() => {
-          // Étape M20 (07/11, choix d'Aubin « un seul total ») : « Encore N » = le même total que « X sur Y trouvées » (Y − X).
-          //   La Rencontre n'en pose qu'une partie (pas l'apparence : la photo est là) ; le reste se gagne dans les autres jeux.
-          const n = champs.length - trouves, enRencontre = champsReste(e).length;
-          const reste = `Encore ${n} chose${n > 1 ? "s" : ""} à découvrir`;
-          return `<button class="pe-rencontre" id="pe-rencontre">${picto("rencontre")}${enRencontre ? `Faire une Rencontre<small>${reste}</small>`
-            : `Refaire une Rencontre<small>${n ? `${reste} dans les autres jeux` : "pour revoir ses caractéristiques"}</small>`}</button>`; })() : ""}
+        ${estReconnue(e) ? boutonFiche(e, champs.length - trouves) : ""}${/* étape R258 (4A) : « Faire une Rencontre » ou « Compléter sa fiche » */ ""}
         <nav>${jauges}</nav>
-        ${blocTerritoires(e)}
       </aside>
       <main>
-        ${(estReconnue(e) || (typeof estOfferte === "function" && estOfferte(e))) && typeof blocReperes === "function" ? blocReperes(e, { titre: `Pour ${pe(e).la} reconnaître` }) : ""}${/* étape R190 : la carte d'identité */ ""}
-        <div class="pe-onglets">${onglets}</div>
-        <div class="pe-page">${par[ongletEspece].map(q => lignePage(e, q)).join("")}</div>
-        ${blocAnecdotes(e)}
+        ${(() => {   // étape R258 (Notion 24, choix 2A) : une page en 4 parties, dans l'ordre de la phrase du jeu
+          const reperes = (estReconnue(e) || (typeof estOfferte === "function" && estOfferte(e))) && typeof blocReperes === "function" ? blocReperes(e, { sansTitre: true }) : "";
+          const complete = trouves >= champs.length && champs.length > 0;
+          return (reperes ? `<section class="pe-partie pe-p-reconnaitre"><h2 class="pe-h">${majuscule(pe(e).la)} reconnaître</h2>${reperes}</section>` : "")
+            + `<section class="pe-partie pe-p-savoir"><h2 class="pe-h">Ce que vous savez <small>${trouves} / ${champs.length}${complete ? " · fiche complète" : ""}</small></h2>
+                <div class="pe-onglets">${onglets}</div>
+                <div class="pe-page">${par[ongletEspece].map(q => lignePage(e, q)).join("")}</div>
+                ${blocAnecdotes(e)}</section>`
+            + blocLiensFiche(e)
+            + `<section class="pe-partie pe-p-lieux"><h2 class="pe-h">Où ${pe(e).la} revoir</h2>${blocTerritoires(e)}${blocLieuxFiche(e)}</section>`;
+        })()}
         ${typeof lienSignalerFiche === "function" ? lienSignalerFiche(e) : ""}${/* étape CT1 : « Signaler une erreur sur cette fiche » (1A) */ ""}
       </main>
     </div>`;
@@ -469,7 +473,16 @@ function afficherPageEspece() {
     brancherBulleCarte(carteP, carteP.closest(".pe-presence"),
       nom => `<span class="bt-espece${ici.includes(nom) ? " oui" : ""}">${ici.includes(nom) ? "✓ " + e.nom_courant + " vit ici" : "Absente de ce territoire"}</span>`, true);
   }
-  document.getElementById("pe-retour").onclick = () => { montrer("encyclopedie"); window.scrollTo(0, positionEncyclopedie); };
+  // Étape R258 : de fiche en fiche par les liens, « ← » ramène à la fiche d'avant
+  const retourPe = document.getElementById("pe-retour");
+  if (pileFiches.length) retourPe.textContent = `← ${pileFiches[pileFiches.length - 1].nom_courant}`;
+  retourPe.onclick = () => {
+    if (pileFiches.length) { const avant = pileFiches.pop(); ficheParLien = true; ouvrirPageEspece(avant); window.scrollTo(0, 0); return; }
+    montrer("encyclopedie"); window.scrollTo(0, positionEncyclopedie);
+  };
+  brancherLiensFiche(zone, e);
+  if (document.getElementById("pe-fiche")) document.getElementById("pe-fiche").onclick = () => lancerFicheEspece(e);
+  setTimeout(() => verifierFichesCompletes([e]), 400);   // étape R258 (7A)
   // Étape 176 : une espèce entièrement découverte peut être rencontrée à nouveau, depuis sa fiche.
   // Étape 238 (22/10) : dès qu'elle est identifiée (plus besoin d'attendre l'or).
   if (document.getElementById("pe-rencontre")) document.getElementById("pe-rencontre").onclick = () => lancerRencontreAvec(e);
@@ -880,8 +893,8 @@ function albumFamille(cle) {
       <div class="alb-grille">${cases}</div></section>`;
 }
 // Où rencontrer une espèce : les lieux (et l'expédition) qui la contiennent, les lieux ouverts d'abord.
-function pistesEspece(e) {
-  const terrs = filtreTerritoire === "Tous" ? [territoireActif(), ...tousLesTerritoires()] : [filtreTerritoire];
+function pistesEspece(e, tous) {   // étape R258 : tous = chercher dans tous les territoires (liens de la fiche, pistes à suivre)
+  const terrs = tous || filtreTerritoire === "Tous" ? [territoireActif(), ...tousLesTerritoires()] : [filtreTerritoire];
   const ouverts = typeof territoiresOuverts === "function" ? territoiresOuverts() : [];
   const vus = new Set(), pistes = [];
   for (const t of terrs) {
@@ -897,7 +910,7 @@ function fermerPiste() {
   const p = document.getElementById("ency-piste");
   if (p) p.classList.remove("ouvert");
 }
-function ouvrirPiste(e) {
+function ouvrirPiste(e, tous) {
   let p = document.getElementById("ency-piste");
   if (!p) {
     p = document.createElement("div");
@@ -906,12 +919,12 @@ function ouvrirPiste(e) {
     document.body.appendChild(p);
     p.querySelector(".ep-fond").onclick = fermerPiste;
   }
-  const pistes = pistesEspece(e), ouverte = pistes.find(x => x.ouvert), premiere = ouverte || pistes[0];
+  const pistes = pistesEspece(e, tous), ouverte = pistes.find(x => x.ouvert), premiere = ouverte || pistes[0];
   const trouvees = questionsPossibles(e).filter(q => nbBonnes(e, q.champ) >= 1).length;
   let ou = "";
   if (premiere) {
     const autres = pistes.filter(x => x !== premiere && x.c.nom !== premiere.c.nom).length;
-    ou = `<p class="ep-ou">À rencontrer ${filtreTerritoire === "Tous" && premiere.t !== territoireActif() ? `(${echapper(premiere.t)}) ` : ""}: <b>${echapper(premiere.c.nom)}</b>,
+    ou = `<p class="ep-ou">À rencontrer ${(tous || filtreTerritoire === "Tous") && premiere.t !== territoireActif() ? `(${echapper(premiere.t)}) ` : ""}: <b>${echapper(premiere.c.nom)}</b>,
           dans l'expédition « ${echapper(premiere.x.titre)} »${autres ? `, et dans ${autres} autre${autres > 1 ? "s" : ""} lieu${autres > 1 ? "x" : ""}` : ""}.</p>`
       + (premiere.ouvert ? `<button type="button" class="ep-aller">Aller : ${echapper(premiere.c.nom)} ▶</button>`
                          : `<p class="ep-ferme">Ce lieu s'ouvrira plus tard, au fil de vos expéditions.</p>`);
@@ -932,7 +945,8 @@ function ouvrirPiste(e) {
   p.querySelector(".ep-fermer").focus();
 }
 function afficherCollectionTelephone(grille) {
-  grille.innerHTML = filtreClasse === "Toutes" ? sommaireCollection() : albumFamille(filtreClasse);
+  grille.innerHTML = filtreClasse === "Toutes" ? htmlPistesASuivre() + sommaireCollection() : albumFamille(filtreClasse);   // étape R258 (5B)
+  brancherPistesASuivre(grille);
   for (const b of grille.querySelectorAll(".som-famille")) b.onclick = () => { filtreClasse = b.dataset.cle; afficherEncyclopedie(); window.scrollTo(0, 0); };
   const retour = grille.querySelector(".alb-retour");
   if (retour) retour.onclick = () => { filtreClasse = "Toutes"; afficherEncyclopedie(); window.scrollTo(0, 0); };
@@ -949,4 +963,212 @@ function afficherCollectionTelephone(grille) {
   // et de navigation ; la famille choisie est ramenée au milieu de la bande.
   const bande = document.querySelector("#filtres .liste-familles"), active = bande && bande.querySelector(".filtre.actif");
   if (bande && active && filtreClasse !== "Toutes") bande.scrollLeft = Math.max(0, active.offsetLeft - bande.offsetLeft - (bande.clientWidth - active.offsetWidth) / 2);
+}
+
+// ==================================================================
+// Étape R258 (18/11/2026, Notion 24, choix d'Aubin « 2A · 3A · 4A · 5B · 6A · 7A ») — l'Encyclopédie qui renvoie sur le terrain.
+//   Vision : « On découvre sur le terrain, on approfondit dans le carnet, et le carnet renvoie sur le terrain. »
+//   • la fiche en 4 parties : La reconnaître · Ce que vous savez · Ses liens · Où la revoir ;
+//   • « Ses liens » : ce qu'elle mange, qui la mange, ses sosies, les espèces des mêmes lieux. Déjà rencontrée = sa photo (sa fiche) ;
+//     pas encore = sa silhouette et son groupe, sans le nom (la piste : le lieu où la rencontrer) ;
+//   • le bouton « Compléter sa fiche » (l'ancien jeu « Compléter le carnet », pour cette espèce seule) ;
+//   • la bande « Pistes à suivre » en haut de l'Encyclopédie ; la bulle « Fiche complète ».
+//   Ce qu'elle mange et qui la mange ne s'affichent qu'une fois la case de la fiche trouvée (sinon ce serait la réponse).
+// ==================================================================
+let pileFiches = [], ficheParLien = false;
+const estVueFiche = e => estRencontree(e) || (typeof estOfferte === "function" && estOfferte(e));
+
+// Qui mange qui, pour tout le jeu, calculé une fois : d'après les proies de chacune et les prédateurs de chacune.
+//   Un nom de la fiche ne compte que s'il désigne une seule espèce du jeu (« Renard » → le renard roux ; « Grenouille » → rien).
+let grapheMange = null;
+function construireGrapheMange() {
+  if (grapheMange) return grapheMange;
+  const cache = new Map(), une = it => {
+    const k = sansAccent(it);
+    if (!cache.has(k)) { const m = especesDuNom(it, ESPECES); cache.set(k, m.length === 1 ? m[0] : null); }
+    return cache.get(k);
+  };
+  const mange = new Map(), par = new Map(), ajoute = (a, b) => {   // a mange b
+    if (!a || !b || a === b) return;
+    if (!mange.has(a)) mange.set(a, new Set()); mange.get(a).add(b);
+    if (!par.has(b)) par.set(b, new Set()); par.get(b).add(a);
+  };
+  for (const o of ESPECES) {
+    for (const it of itemsListe(o, "proies")) ajoute(o, une(it));
+    for (const it of itemsListe(o, "predateurs")) ajoute(une(it), o);
+  }
+  grapheMange = { mange, par };
+  return grapheMange;
+}
+// Les lieux de chaque espèce (et ses voisines d'expédition), calculés une fois
+let indexLieux = null;
+function construireIndexLieux() {
+  if (indexLieux) return indexLieux;
+  const lieux = new Map(), voisins = new Map();
+  for (const t of tousLesTerritoires()) for (const c of (typeof lieuxDe === "function" ? lieuxDe(t) : [])) for (const x of expeditionsDuChapitre(t, c.nom)) {
+    for (const s of x.liste) {
+      if (!lieux.has(s)) lieux.set(s, []);
+      const l = lieux.get(s), d = l.find(y => y.t === t && y.c === c);
+      if (d) d.n++; else l.push({ t, c, n: 1 });
+      if (!voisins.has(s)) voisins.set(s, new Map());
+      for (const o of x.liste) if (o !== s) voisins.get(s).set(o, (voisins.get(s).get(o) || 0) + 1);
+    }
+  }
+  indexLieux = { lieux, voisins };
+  return indexLieux;
+}
+function lieuxDeLEspece(e) {
+  const ouverts = typeof territoiresOuverts === "function" ? territoiresOuverts() : [];
+  return (construireIndexLieux().lieux.get(e) || []).map(l => ({ ...l, ouvert: ouverts.includes(l.t) && chapitreOuvert(l.t, l.c), tOuvert: ouverts.includes(l.t) }));
+}
+function liensFiche(e) {
+  const g = construireGrapheMange(), v = construireIndexLieux().voisins.get(e) || new Map();
+  const tri = l => [...l].sort((a, b) => estVueFiche(b) - estVueFiche(a));
+  const mange = tri(g.mange.get(e) || []), par = tri(g.par.get(e) || []);
+  const sosies = typeof sosiesDe === "function" ? tri(sosiesDe(e)) : [];
+  const deja = new Set([...mange, ...par, ...sosies]);
+  const autour = [...v.entries()].filter(([o]) => !deja.has(o)).sort((a, b) => b[1] - a[1]).map(([o]) => o);
+  const inconnues = autour.filter(o => !estVueFiche(o)).slice(0, 3);   // les mêmes lieux : quelques-unes à découvrir, puis les connues
+  const voisines = [...autour.filter(estVueFiche).slice(0, 6 - inconnues.length), ...inconnues];
+  return { mange, par, sosies, voisines };
+}
+const caseTrouvee = (e, champ) => nbBonnes(e, champ) >= 1;
+function rondLien(o) {
+  if (estVueFiche(o)) return `<button type="button" class="pl-rond pl-vu" data-fiche="${echapper(o.nom_courant)}">${imgMini(o.photo || fichierSilhouette(o), o.nom_courant)}<small>${echapper(o.nom_courant)}</small></button>`;
+  return `<button type="button" class="pl-rond pl-sil" data-piste="${echapper(o.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(o, "pl-silh")}<small>${echapper(minuscule(o.nom_affichage_groupe || classeDe(o).nom))}</small></button>`;
+}
+function rangLien(lib, liste, cachee) {
+  if (!liste.length) return "";
+  const corps = cachee
+    ? `<span class="pl-cache"><b>?</b> À découvrir : complétez sa fiche</span>`
+    : `<div class="pl-ronds">${liste.slice(0, 8).map(rondLien).join("")}</div>`;
+  return `<div class="pl-rang"><span class="pl-lib">${lib}</span>${corps}</div>`;
+}
+function blocLiensFiche(e) {
+  const l = liensFiche(e), p = pe(e);
+  const h = rangLien(`${p.Elle} mange`, l.mange, !caseTrouvee(e, "proies"))
+    + rangLien(`Mangé${p.e} par`, l.par, !caseTrouvee(e, "predateurs"))
+    + rangLien("À ne pas confondre", l.sosies)
+    + rangLien("Dans les mêmes lieux", l.voisines);
+  return h ? `<section class="pe-partie pe-p-liens"><h2 class="pe-h">Ses liens</h2>${h}</section>` : "";
+}
+function blocLieuxFiche(e) {
+  const l = lieuxDeLEspece(e);
+  if (!l.length) return "";
+  const ici = territoireActif();
+  const ouverts = l.filter(x => x.ouvert).sort((a, b) => (b.t === ici) - (a.t === ici));
+  const fermes = l.filter(x => x.tOuvert && !x.ouvert);
+  const terrFermes = [...new Set(l.filter(x => !x.tOuvert).map(x => x.t))];
+  const ligne = x => `<button type="button" class="pl-lieu" data-t="${echapper(x.t)}" data-lieu="${echapper(x.c.nom)}"><span><b>${echapper(x.c.nom)}</b>`
+    + `<small>${x.t !== ici ? `${echapper(x.t)} · ` : ""}${x.n} expédition${x.n > 1 ? "s" : ""}</small></span><span aria-hidden="true">▶</span></button>`;
+  return `<div class="pl-lieux">${ouverts.map(ligne).join("")}`
+    + (fermes.length ? `<p class="pl-ferme">${fermes.length > 1 ? "S'ouvriront" : "S'ouvrira"} plus tard : ${fermes.map(x => `<b>${echapper(x.c.nom)}</b>`).join(", ")}</p>` : "")
+    + (terrFermes.length ? `<p class="pl-ferme">Territoire${terrFermes.length > 1 ? "s" : ""} pas encore ouvert${terrFermes.length > 1 ? "s" : ""} : ${terrFermes.map(t => `<b>${echapper(t)}</b>`).join(", ")}</p>` : "") + `</div>`;
+}
+function ouvrirFicheParLien(o) {
+  if (especeOuverte) pileFiches.push(especeOuverte);
+  ficheParLien = true;
+  ouvrirPageEspece(o);
+  window.scrollTo(0, 0);
+}
+function allerAuLieu(t, nom) {
+  if (t !== territoireActif()) changerTerritoire(t);
+  ouvrirLieu(t, nom);
+}
+function brancherLiensFiche(zone, e) {
+  zone.querySelectorAll(".pl-vu[data-fiche]").forEach(b => b.onclick = () => ouvrirFicheParLien(especeParNom(b.dataset.fiche)));
+  zone.querySelectorAll(".pl-sil[data-piste]").forEach(b => b.onclick = () => ouvrirPiste(especeParNom(b.dataset.piste), true));
+  zone.querySelectorAll(".pl-lieu[data-lieu]").forEach(b => b.onclick = () => allerAuLieu(b.dataset.t, b.dataset.lieu));
+}
+
+// Le bouton du haut de la fiche (4A) : « Compléter sa fiche » tant qu'il reste à découvrir ; sinon « Refaire une Rencontre »
+function boutonFiche(e, n) {
+  const enRencontre = champsReste(e).length, aDemander = resteCarnet([e]);
+  const reste = k => `encore ${k} chose${k > 1 ? "s" : ""} à découvrir`;
+  // Doute tranché en codant (à relire) : la Rencontre depuis la fiche posait déjà ce qui restait (R129), sauf l'allure ;
+  //   « Compléter sa fiche » pose tout. Un seul bouton tant qu'il reste quelque chose, pour ne pas garder deux portes.
+  if (aDemander) return `<button class="pe-rencontre pe-completer" id="pe-fiche">${picto("carnet")}Compléter sa fiche<small>${reste(aDemander)}</small></button>`;
+  if (enRencontre) return `<button class="pe-rencontre" id="pe-rencontre">${picto("rencontre")}Faire une Rencontre<small>${majuscule(reste(n))}</small></button>`;
+  return `<button class="pe-rencontre" id="pe-rencontre">${picto("rencontre")}Refaire une Rencontre<small>pour revoir ses caractéristiques</small></button>`;
+}
+// « Compléter sa fiche » : le moteur de « Compléter le carnet » (R167), sur cette seule espèce ; 10 questions au plus
+function lancerFicheEspece(e) {
+  const reste = resteCarnet([e]);
+  if (!reste) { afficherBulle("Rien de plus à découvrir sur cette espèce ici"); return; }
+  const d = { cle: "fiche|" + e.nom_courant, nom: e.nom_courant, especes: [e], ouvert: true };
+  jeuChoisi = "revision"; revisionsSeules = false; photosSeules = false; questionsClassique = Math.min(QUESTIONS_REVISION, reste);
+  territoiresDefi = [territoireActif()]; famillesDefi = [e.onglet];
+  depuisArcade = false; modeLibre = false;
+  lancementDirect = true;
+  montrer("jouer");
+  lancementDirect = false;
+  document.getElementById("bouton-territoire-defi").textContent = "Retour à la fiche";
+  demarrerDefi(d, { jouer: true, carnet: true });
+  questionsClassique = QUESTIONS_REVISION;   // la longueur choisie ailleurs ne change pas
+  if (defi) defi.ficheEspece = e.nom_courant;
+  if (typeof majHautJeu === "function") majHautJeu();   // « ← Fiche »
+}
+
+// « Fiche complète » (7A) : toutes les cases d'une espèce reconnue sont trouvées. Une bulle, une fois ; la mention sur sa fiche.
+function ficheComplete(e) {
+  if (!estReconnue(e)) return false;
+  const ch = champsDe(e).filter(x => x !== IDENTIFICATION);
+  return ch.length > 0 && ch.every(x => nbBonnes(e, x) >= 1);
+}
+function verifierFichesCompletes(liste) {
+  if (!suivi) return;
+  if (!suivi.fichesCompletes || !suivi.fichesCompletesR258) {   // rien ne se fête d'un coup : celles déjà complètes sont notées sans bulle
+    suivi.fichesCompletes = suivi.fichesCompletes || {};
+    for (const e of ESPECES) if (ficheComplete(e)) suivi.fichesCompletes[e.nom_courant] = true;
+    suivi.fichesCompletesR258 = true;
+    sauvegarder();
+    return;
+  }
+  const nouv = (liste || ESPECES).filter(e => e && !suivi.fichesCompletes[e.nom_courant] && ficheComplete(e));
+  if (!nouv.length) return;
+  for (const e of nouv) suivi.fichesCompletes[e.nom_courant] = true;
+  sauvegarder();
+  const nom = n => { const m = minuscule(n.nom_courant); return (deElide(m) === "d'" ? "de l'" : n.genre_nom === "masculin" ? "du " : "de la ") + m; };
+  afficherBulle(nouv.length === 1 ? `Fiche complète : vous savez tout ce que le carnet dit ${nom(nouv[0])}.`
+                                  : `${nouv.length} fiches complètes : vous savez tout ce que le carnet dit de ces espèces.`, 4200);
+}
+
+// La bande « Pistes à suivre » (5B) : 3 espèces pas encore rencontrées, liées aux vôtres, dans un lieu ouvert.
+//   Sans le nom (la silhouette et le groupe) ; tirées dans le même ordre toute la journée ; une piste suivie disparaît d'elle-même.
+function pistesASuivre() {
+  const vues = new Set(), cand = [];
+  const ajouter = (u, k, sorte) => { if (estVueFiche(u) || vues.has(u)) return; if (!lieuxDeLEspece(u).some(l => l.ouvert)) return; vues.add(u); cand.push({ u, k, sorte }); };
+  for (const k of ESPECES.filter(estReconnue)) {
+    const l = liensFiche(k);
+    for (const u of l.sosies) ajouter(u, k, "sosie");
+    if (caseTrouvee(k, "predateurs")) for (const u of l.par) ajouter(u, k, "par");
+    if (caseTrouvee(k, "proies")) for (const u of l.mange) ajouter(u, k, "mange");
+    for (const u of l.voisines) ajouter(u, k, "voisin");
+  }
+  if (!cand.length) return [];
+  const jour = typeof jourDefis === "function" ? jourDefis() : "";
+  const h = t => { let x = 0; for (const ch of t) x = (x * 31 + ch.charCodeAt(0)) | 0; return x; };
+  const rang = { sosie: 0, par: 1, mange: 2, voisin: 3 };
+  cand.sort((a, b) => rang[a.sorte] - rang[b.sorte] || h(jour + a.u.nom_courant) - h(jour + b.u.nom_courant));
+  // trois sortes différentes si possible, puis le reste
+  const choix = [], sortes = new Set();
+  for (const c of cand) if (choix.length < 3 && !sortes.has(c.sorte)) { choix.push(c); sortes.add(c.sorte); }
+  for (const c of cand) if (choix.length < 3 && !choix.includes(c)) choix.push(c);
+  return choix;
+}
+function htmlPistesASuivre() {
+  const l = pistesASuivre();
+  if (!l.length) return "";
+  const votre = k => `votre ${minuscule(k.nom_courant)}`;
+  const phrase = { sosie: c => `Elle ressemble à ${votre(c.k)}`, par: c => `Elle mange ${votre(c.k)}`,
+                   mange: c => `${majuscule(votre(c.k))} la mange`, voisin: c => `Elle vit dans les mêmes lieux que ${votre(c.k)}` };
+  return `<section class="pistes-suivre"><h2>Pistes à suivre</h2>${l.map(c => {
+      const lieu = lieuxDeLEspece(c.u).find(x => x.ouvert);
+      return `<button type="button" class="ps-piste" data-piste="${echapper(c.u.nom_courant)}">${caseSilhouette(c.u, "ps-sil")}`
+        + `<span><b>Une espèce à découvrir</b><small>· ${echapper(minuscule(c.u.nom_affichage_groupe || classeDe(c.u).nom))}</small>`
+        + `<em>${phrase[c.sorte](c)}</em><i>${echapper(lieu.c.nom)}</i></span><span aria-hidden="true">▶</span></button>`;
+    }).join("")}</section>`;
+}
+function brancherPistesASuivre(zone) {
+  zone.querySelectorAll(".ps-piste[data-piste]").forEach(b => b.onclick = () => ouvrirPiste(especeParNom(b.dataset.piste), true));
 }

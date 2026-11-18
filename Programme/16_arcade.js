@@ -10,7 +10,9 @@
 // • En fin de partie, le bouton du bas ramène à l'Arcade (depuisArcade).
 // Pour ajouter un jeu plus tard : ajouter sa clé dans JEUX_ARCADE et sa phrase dans REGLES_ARCADE.
 
-const JEUX_ARCADE = ["carnet", "plus", "indices", "portrait"];   // étape R167 : + « Compléter le carnet », en tête
+// Étape R258 (Notion 24) : « Compléter le carnet » quitte la page Jeux ; il devient le bouton « Compléter sa fiche » de chaque espèce
+//   (le défi du jour « Découvrir N choses nouvelles sur vos espèces » le lance toujours, sur le territoire).
+const JEUX_ARCADE = ["plus", "indices", "portrait"];   // avant R258 : ["carnet", "plus", "indices", "portrait"] (R167)
 const REGLES_ARCADE = {
   carnet: "Dix questions sur ce que vous ne savez pas encore des espèces déjà rencontrées : leur allure, leur vie, leurs mesures… Les moins connues d'abord.",   // étape R167
   plus: `Deux espèces, une question : laquelle vit le plus longtemps, laquelle est la plus lourde ? ${VIES_DUEL} vies pour aller le plus loin possible.`,

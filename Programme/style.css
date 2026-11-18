@@ -5824,3 +5824,73 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
 .participer-ligne i { font-style: normal; color: var(--texte-doux); font-size: 18px; }
 .participer-ligne:hover b { text-decoration: underline; text-underline-offset: 3px; }
 .participer-note { font-size: 13px !important; color: var(--texte-doux); margin: 10px 0 0 !important; }
+
+/* ==================================================================
+   Étape R258 (18/11/2026, Notion 24, choix « 2A · 3A · 4A · 5B · 6A · 7A ») — la fiche en 4 parties, « Ses liens »,
+   « Où la revoir », « Compléter sa fiche », la bande « Pistes à suivre » de l'Encyclopédie.
+   ================================================================== */
+.pe-partie { margin: 0 0 18px; }
+.pe-h { margin: 0 0 8px; padding-top: 10px; border-top: 1px solid var(--trait); font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 18px; color: #1F3A2E; }
+.pe-partie:first-child .pe-h { border-top: 0; padding-top: 0; }
+.pe-h small { font-family: "Work Sans", system-ui, sans-serif; font-weight: 400; font-size: 13.5px; color: var(--texte-doux); margin-left: 6px; }
+.pe-partie > .reperes { margin: 0; }
+.pe-p-lieux .pe-presence { margin-top: 0; }
+.pe-completer .picto { stroke: var(--couleur-classe); }
+/* Ses liens : une rangée par sorte de lien */
+.pl-rang { display: grid; grid-template-columns: 116px 1fr; gap: 8px; align-items: start; padding: 6px 0; border-bottom: 1px dotted var(--trait); }
+.pl-rang:last-child { border-bottom: 0; }
+.pl-lib { font-size: 13.5px; color: var(--texte-doux); padding-top: 12px; }
+.pl-ronds { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+.pl-rond { flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+.pl-rond > img, .pl-rond .pl-silh { width: 46px; height: 46px; border-radius: 50%; overflow: hidden; display: block; box-sizing: border-box; }
+.pl-rond > img { object-fit: cover; border: 2px solid var(--carte); box-shadow: 0 0 0 1px var(--trait); }
+.pl-rond .pl-silh { position: relative; background: #fff; border: 1.5px dashed var(--ocre); }
+.pl-rond .pl-silh img { position: absolute; inset: 8px; width: 27px; height: 27px; object-fit: contain; opacity: .4; }
+.pl-rond small { font-size: 11px; line-height: 1.15; text-align: center; color: #1F3A2E; overflow-wrap: anywhere; }
+.pl-sil small { color: var(--ocre-texte); }
+.pl-cache { display: flex; align-items: center; gap: 8px; min-height: 46px; font-size: 13.5px; color: var(--texte-doux); }
+.pl-cache b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1.5px dashed var(--ocre); color: var(--ocre-texte); font-size: 15px; }
+/* Où la revoir : les lieux */
+.pl-lieux { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.pl-lieu { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 7px 12px; text-align: left; font: inherit; color: #1F3A2E;
+  background: var(--carte); border: 1px solid var(--trait); border-radius: 8px; cursor: pointer; }
+.pl-lieu b { display: block; font-weight: 600; font-size: 14.5px; }
+.pl-lieu small { display: block; font-size: 12.5px; color: var(--texte-doux); }
+.pl-lieu:hover { border-color: #1F3A2E; }
+.pl-ferme { margin: 0; padding: 2px 12px; font-size: 13px; color: var(--texte-doux); }
+.pl-ferme b { font-weight: 600; }
+/* Pistes à suivre (Encyclopédie) */
+.pistes-suivre { display: flex; flex-direction: column; gap: 6px; margin: 0 0 14px; width: 100%; }
+.pistes-suivre h2 { margin: 0 0 2px; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 17px; color: #1F3A2E; }
+.ps-piste { display: grid; grid-template-columns: 46px 1fr auto; gap: 10px; align-items: center; width: 100%; padding: 8px 12px 8px 8px; text-align: left; font: inherit; color: #1F3A2E;
+  background: var(--carte); border: 1px solid var(--ocre); border-radius: 8px; cursor: pointer; }
+.ps-piste .ps-sil { position: relative; width: 46px; height: 46px; border-radius: 50%; background: #fff; border: 1.5px dashed var(--ocre); box-sizing: border-box; }
+.ps-piste .ps-sil img { position: absolute; inset: 8px; width: 27px; height: 27px; object-fit: contain; opacity: .4; }
+.ps-piste b { font-weight: 600; font-size: 14px; color: var(--ocre-texte); }
+.ps-piste small { font-size: 12px; color: var(--texte-doux); margin-left: 6px; }
+.ps-piste em { display: block; font-style: normal; font-size: 13.5px; line-height: 1.3; }
+.ps-piste i { display: block; font-style: normal; font-size: 12.5px; color: var(--texte-doux); }
+.ps-piste > span:last-child { color: var(--ocre-texte); }
+#grille > .pistes-suivre { grid-column: 1 / -1; }
+@media (max-width: 800px) {
+  .pe-cote nav { display: none; }   /* les jauges des rubriques : les onglets de « Ce que vous savez » suffisent */
+  .pl-rang { grid-template-columns: 1fr; gap: 2px; }
+  .pl-lib { padding-top: 0; }
+}
+/* La piste d'une espèce à découvrir (#ency-piste) existait seulement sur téléphone : la même fenêtre, centrée, sur ordinateur */
+@media (min-width: 761px) {
+  #ency-piste { position: fixed; inset: 0; z-index: 60; }
+  #ency-piste.ouvert { display: block; }
+  #ency-piste .ep-fond { position: absolute; inset: 0; background: rgba(31,30,26,.35); }
+  #ency-piste .ep-panneau { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 420px; max-width: calc(100% - 40px); padding: 18px; background: var(--carte);
+    border-radius: 14px; box-shadow: 0 6px 24px rgba(44,42,36,.2); display: flex; flex-direction: column; gap: 10px; }
+  #ency-piste .ep-fermer { position: absolute; top: 6px; right: 8px; width: 44px; height: 44px; border: 0; background: none; font-size: 26px; color: var(--texte-doux); cursor: pointer; }
+  #ency-piste .ep-haut { display: flex; gap: 12px; align-items: center; padding-right: 36px; }
+  #ency-piste .ep-sil { flex: none; position: relative; width: 64px; height: 64px; border-radius: 8px; background: #EDE6D6; }
+  #ency-piste .ep-sil img { position: absolute; inset: 9px; width: 46px; height: 46px; object-fit: contain; opacity: .4; }
+  #ency-piste .ep-haut h3 { margin: 0; font-family: "Literata", Georgia, serif; font-size: 18px; font-weight: 600; color: #1F3A2E; }
+  #ency-piste .ep-haut p { margin: 2px 0 0; font-size: 13.5px; color: var(--texte-doux); }
+  #ency-piste .ep-ou { margin: 0; font-size: 14.5px; line-height: 1.4; }
+  #ency-piste .ep-ferme { margin: 0; font-size: 13.5px; color: var(--texte-doux); }
+  #ency-piste .ep-aller { min-height: 46px; border: 0; border-radius: 8px; background: #1F3A2E; color: #FBF8F1; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; }
+}

@@ -1871,7 +1871,7 @@ const VERIF_PHOTOS = {
    "verdict": "ok"
   }
  },
- "fauvette_de_moltoni.jpg": {
+ "fauvette_de_moltoni_2.jpg": {
   "robe": {
    "verdict": "ok"
   }

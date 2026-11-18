@@ -85,10 +85,12 @@ function quitterJeu() {
   // Étape R188 (11/11, note n° 16 d'Aubin) : dans une partie lancée depuis une expédition, « Quitter » ramène au LIEU
   //   (avant : à l'accueil, on perdait l'endroit où l'on était). Le retour du téléphone fait pareil (14_clavier_menus.js).
   const x = typeof expeditionDuFil === "function" ? expeditionDuFil() : null;
+  const fe = defi && defi.ficheEspece ? especeParNom(defi.ficheEspece) : null;   // étape R258 : « Compléter sa fiche » → retour à la fiche
   if (defi) abandonnerDefi();          // les XP déjà gagnés sont gardés
   session = null;                      // la Rencontre en cours ne sera pas reprise
   // Étape R241 (note 17 du 16/11) : depuis une expédition, retour direct à la page de l'expédition (avant : au lieu)
   if (x) { majFilExpedition(null); ouvrirExpedition(x); return; }
+  if (fe) { ouvrirPageEspece(fe); window.scrollTo(0, 0); return; }   // étape R258
   // R241 : là d'où la partie a été lancée — la page des jeux, sinon l'accueil
   if (depuisArcade) { montrer("arcade"); return; }
   if (typeof rencontreDuJour !== "undefined" && rencontreDuJour) { rencontreDuJour = null; montrer(typeof vueAccueil === "function" ? vueAccueil() : "accueil"); window.scrollTo(0, 0); return; }
@@ -101,7 +103,7 @@ function quitterJeu() {
 function majHautJeu() {
   const b = document.querySelector("#haut-jeu .haut-jeu-retour");
   if (!b) return;
-  const vers = depuisArcade ? "Jeux" : (typeof rencontreDuJour !== "undefined" && rencontreDuJour) ? "Accueil" : "Retour";
+  const vers = defi && defi.ficheEspece ? "Fiche" : depuisArcade ? "Jeux" : (typeof rencontreDuJour !== "undefined" && rencontreDuJour) ? "Accueil" : "Retour";
   b.textContent = "← " + vers;
 }
 function entrerRencontre() {
@@ -323,6 +325,7 @@ function dessinPoints(n) {
 //   les espèces (nouvelles, médailles, traits découverts), les familles (rang et part), les badges.
 //   Disparaissent : les lignes Connu / Confirmé, le pourcentage du carnet, le rang de naturaliste.
 function afficherCarnetFin(idZone, { journal, avant, cases, manquees: manqueesFin, origine, parfaite }) {
+  if (typeof verifierFichesCompletes === "function") setTimeout(() => verifierFichesCompletes(), 1400);   // étape R258 (7A)
   verifierBadges();                        // étape 106 : les badges de fin de partie (Sans faute, Arpenteur…)
   const zone = document.getElementById(idZone);
   const terr = Object.keys(avant ? avant.territoires : {});
@@ -1891,7 +1894,7 @@ function terminerDefi() {
                     + (d.recordSerieAvant > 0 && d.meilleureSerie > d.recordSerieAvant ? "nouveau record" : `record : ${suivi.recordSerieDuel}`)]);
   }
   if (d.jouer) { casesJeu.length = 0; casesJeu.push([`${d.bonnes} / ${d.faites}`, "bonnes réponses"]); }   // étape 196
-  const nomFin = d.carnet ? `Compléter le carnet · ${d.nom}` : d.jouer ? "Sortie terminée" : d.reprise ? `Questions à revoir · ${d.nom}` :
+  const nomFin = d.ficheEspece ? `Compléter sa fiche · ${d.nom}` : d.carnet ? `Compléter le carnet · ${d.nom}` : d.jouer ? "Sortie terminée" : d.reprise ? `Questions à revoir · ${d.nom}` :
     `${jeu.nom}${d.longueur ? ` · ${d.longueur} questions` : ""} · ${d.nom}`;
   const origine = d.reprise ? null : { ecran: "defi", jeu: d.jeu, nomFin, journal: d.bilan, avant: d.photoAvant,
                                       cases: casesJeu, rattrapees: 0, reprises: 0, rejouer: null };
@@ -1936,7 +1939,16 @@ function terminerDefi() {
   document.getElementById("choix-longueur").classList.add("cache");
   document.getElementById("fin-defi").classList.remove("cache");
   // "Rejouer ce défi" relance le même périmètre (recalculé : la progression a pu changer)
+  // Étape R258 : « Compléter sa fiche » ramène à la fiche ; « Continuer sa fiche » s'il reste à découvrir
+  const fe = d.ficheEspece ? especeParNom(d.ficheEspece) : null, btT = document.getElementById("bouton-territoire-defi");
+  btT.onclick = fe ? () => { ouvrirPageEspece(fe); window.scrollTo(0, 0); }
+                   : () => { montrer(depuisArcade ? "arcade" : "accueil"); window.scrollTo(0, 0); };   // comme au démarrage (13)
+  if (fe) btT.textContent = "Retour à la fiche";
+  const resteFe = fe ? resteCarnet([fe]) : 0;
+  document.getElementById("bouton-rejouer-defi").classList.toggle("cache", !!fe && !resteFe);
+  if (fe && resteFe) document.getElementById("bouton-rejouer-defi").textContent = "Continuer sa fiche";
   document.getElementById("bouton-rejouer-defi").onclick = () => {
+    if (fe) { lancerFicheEspece(fe); return; }                            // étape R258
     if (d.carnet) { lancerCarnet(d.depuisJeux); return; }                 // étape R167
     if (d.jouer) { lancerJouer(); return; }                               // étape 196 : « Jouer », sur le terrain du moment
     const meme = retrouverDefi(d.cle);                                    // y compris un défi à plusieurs familles

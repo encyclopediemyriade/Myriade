@@ -24869,5 +24869,258 @@ const REPERES = {
     "pour": "tous"
    }
   ]
+ },
+ "Diane": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [
+   "adulte",
+   "larve"
+  ],
+  "forme_photo": "adulte",
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "Jaune",
+    "texte": "Ailes jaunes à dessins noirs",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Bord des ailes noir et dentelé",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "Rouge",
+    "texte": "Taches rouges sur l'aile arrière",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "Bleu",
+    "texte": "Taches bleues sur l'aile arrière",
+    "pour": "adulte"
+   },
+   {
+    "partie": "corps",
+    "couleur": "NA",
+    "texte": "Rangées d'épines orange",
+    "pour": "larve"
+   },
+   {
+    "partie": "corps",
+    "couleur": "NA",
+    "texte": "Corps clair ponctué de noir",
+    "pour": "larve"
+   },
+   {
+    "partie": "corps",
+    "couleur": "NA",
+    "texte": "Épines au bout noir",
+    "pour": "larve"
+   }
+  ]
+ },
+ "Coronelle girondine": {
+  "contour": "serpent",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Bande sombre entre les yeux",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Noir",
+    "texte": "Trait noir derrière l'œil",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Noir",
+    "texte": "Petit trait noir sous l'œil",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Barres sombres en travers du dos",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Scorpion languedocien": {
+  "contour": "aucun",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "NA",
+    "couleur": "Jaune",
+    "texte": "Corps jaune paille, sans noir",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Pinces fines et allongées",
+    "pour": "tous"
+   },
+   {
+    "partie": "NA",
+    "couleur": "Jaune",
+    "texte": "Pattes jaunes comme le corps",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Salamandre de Corse": {
+  "contour": "triton",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Noir",
+    "texte": "Noire brillante à taches jaunes",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Tête large au museau arrondi",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "Jaune",
+    "texte": "Grosses glandes jaunes derrière les yeux",
+    "pour": "tous"
+   },
+   {
+    "partie": "queue",
+    "couleur": "NA",
+    "texte": "Queue courte et ronde",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Crapaud vert des Baléares": {
+  "contour": "grenouille",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Vert",
+    "texte": "Taches vertes sur fond clair",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Rouge",
+    "texte": "Verrues rouges sur les flancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Grosses glandes derrière les yeux",
+    "pour": "tous"
+   },
+   {
+    "partie": "tete",
+    "couleur": "NA",
+    "texte": "Corps trapu, tête large",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Mourgette": {
+  "contour": "escargot",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ouverture",
+    "couleur": "Blanc",
+    "texte": "Bord de l'ouverture blanc",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille claire à bandes brunes",
+    "pour": "tous"
+   },
+   {
+    "partie": "coquille",
+    "couleur": "NA",
+    "texte": "Coquille épaisse et aplatie",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Lézard tyrrhénien": {
+  "contour": "lezard",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos brun ou vert",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Bleu",
+    "texte": "Points bleus sur les flancs",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Taches sombres en réseau",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Fauvette de Moltoni": {
+  "contour": "oiseau",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "poitrine",
+    "couleur": "Rose",
+    "texte": "Gorge et poitrine rose saumon",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "Gris",
+    "texte": "Dessus gris bleuté",
+    "pour": "tous"
+   },
+   {
+    "partie": "oeil",
+    "couleur": "Rouge",
+    "texte": "Cercle rouge autour de l'œil",
+    "pour": "tous"
+   }
+  ]
  }
 };
