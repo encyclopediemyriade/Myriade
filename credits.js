@@ -2040,7 +2040,7 @@ const CREDITS_PHOTOS = {
   "licence": "CC BY 2.5",
   "source": "https://commons.wikimedia.org/wiki/File:Tachypodoiulus_niger_1.jpg"
  },
- "ancyle_des_rivieres": {
+ "patelline_des_fleuves": {
   "auteur": "Florent",
   "licence": "CC0",
   "source": "https://www.inaturalist.org/observations/346732234"
@@ -8395,12 +8395,12 @@ const CREDITS_PHOTOS = {
   "licence": "CC0 1.0",
   "source": "https://www.inaturalist.org/observations/341403295"
  },
- "ancyle_des_rivieres_2": {
+ "patelline_des_fleuves_2": {
   "auteur": "petitcrabe",
   "licence": "CC BY 4.0",
   "source": "https://www.inaturalist.org/observations/264647514"
  },
- "ancyle_des_rivieres_3": {
+ "patelline_des_fleuves_3": {
   "auteur": "Bastien Le Mort",
   "licence": "CC BY 4.0",
   "source": "https://www.inaturalist.org/observations/242062631"

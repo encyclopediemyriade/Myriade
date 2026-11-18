@@ -169,6 +169,7 @@ function repondreCoupDoeil(choisie, bouton) {
   if (t.choix) return;
   t.choix = choisie;
   const juste = choisie === t.espece;
+  try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}   // R239 (36.04)
   const zone = document.getElementById("vue-coupdoeil");
   zone.querySelectorAll(".cdo-nom").forEach((b, k) => {
     b.disabled = true;
@@ -189,10 +190,10 @@ function repondreCoupDoeil(choisie, bouton) {
   const retour = document.getElementById("cdo-retour");
   const fin = coup.i >= coup.tours.length - 1;
   const suivant = `<button class="cdo-suivant" id="cdo-suivant">${fin ? "Voir le résultat" : "Photo suivante →"}</button>`;
-  if (juste) retour.innerHTML = `<p class="cdo-bravo">${echapper(t.espece.nom_courant)}${coup.serie >= 3 ? ` · ${coup.serie} d'affilée` : ""}</p>${suivant}`;
+  if (juste) retour.innerHTML = `${coup.serie >= 3 ? `<p class="cdo-serie">${coup.serie} d'affilée</p>` : ""}${suivant}`;   // R239 (36.09) : le nom n'est plus répété
   else retour.innerHTML = `<div class="cdo-erreur"><b>C'est ${echapper(nomAvecArticle(t.espece))}.</b>
-      <div class="cdo-duo"><figure>${celluleImage(t.espece, true)}<figcaption>${echapper(t.espece.nom_courant)}</figcaption></figure>`
-    + `<figure>${celluleImage(choisie, true)}<figcaption>${echapper(choisie.nom_courant)}<small>votre choix</small></figcaption></figure></div>`
+      <div class="cdo-duo agrandir-groupe"><figure class="agr" data-legende="${echapper(t.espece.nom_courant)}"><span class="agr-cadre">${celluleImage(t.espece, true)}${LOUPE_SVG}</span><figcaption>${echapper(t.espece.nom_courant)}</figcaption></figure>`
+    + `<figure class="agr" data-legende="Votre choix · ${echapper(choisie.nom_courant)}"><span class="agr-cadre">${celluleImage(choisie, true)}${LOUPE_SVG}</span><figcaption>${echapper(choisie.nom_courant)}<small>votre choix</small></figcaption></figure></div>`
     + `${repereEntre(t.espece, choisie, t.photo && t.photo.sujet)}</div>${suivant}`;
   // La mise à jour des pastilles du haut
   zone.querySelector(".cdo-pts").outerHTML = enteteCoupDoeil().match(/<span class="cdo-pts">.*<\/span>/)[0];
@@ -207,6 +208,7 @@ function repondreCoupDoeil(choisie, bouton) {
 // sinon le premier repère de terrain de la bonne espèce (quand il existe)
 // Étape R195 : le repère de terrain vaut pour la forme de la photo montrée (femelle, jeune…)
 function repereEntre(bonne, choisie, sujet) {
+  if (typeof blocSepare === "function") { const b = blocSepare(bonne, choisie, sujet); if (b) return b; }   // R243 (36.21) : comme le défi, un repère de chaque espèce sur la même partie
   const g = typeof CONFUSIONS !== "undefined" ? CONFUSIONS.find(gr => gr.especes.includes(bonne.nom_courant) && gr.especes.includes(choisie.nom_courant) && gr.critere) : null;
   if (g) return `<p class="cdo-repere"><small>Le repère</small>${echapper(majuscule(g.critere))}</p>`;
   const r = typeof reperesDe === "function" ? reperesDe(bonne) : null;

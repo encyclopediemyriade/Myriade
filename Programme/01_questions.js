@@ -692,12 +692,21 @@ function dessinReponse(colonne, valeur) {
 // de la bonne pour être proposées (roux pour un animal brun…). S'il en reste moins de trois
 // dans la famille, on complète avec les valeurs des autres familles.
 // Étape 135 : "exclues" = d'autres réponses à écarter pour cette espèce (ex : les couleurs citées dans sa description)
+// Étape R239b (36.03, lenteurs) : les valeurs d'une famille sont gardées en mémoire pour chaque façon de lire (même fonction)
+const LIRE_COULEUR_DOMINANTE = x => x.couleur_dominante, LIRE_YEUX_COULEUR = x => x.yeux_couleur;
+const memoPortrait = new WeakMap();
+function valeursPortrait(lire, onglet) {
+  let m = memoPortrait.get(lire);
+  if (!m) { m = new Map(); memoPortrait.set(lire, m); }
+  let v = m.get(onglet);
+  if (!v) { v = [...new Set((onglet === "*" ? ESPECES : ESPECES.filter(e => e.onglet === onglet)).map(lire).filter(estRenseigne))]; m.set(onglet, v); }
+  return v;
+}
 function piegesPortrait(espece, bonne, lire, proches, exclues = []) {
   const interdites = [bonne, ...((proches || {})[bonne] || []), ...exclues];
-  const valeursParmi = especes => [...new Set(especes.map(lire).filter(estRenseigne))].filter(v => !interdites.includes(v));
-  const famille = valeursParmi(ESPECES.filter(e => e.onglet === espece.onglet));
+  const famille = valeursPortrait(lire, espece.onglet).filter(v => !interdites.includes(v));
   if (famille.length >= 3 || !proches) return famille;
-  return [...new Set([...famille, ...valeursParmi(ESPECES)])];
+  return [...new Set([...famille, ...valeursPortrait(lire, "*").filter(v => !interdites.includes(v))])];
 }
 
 // -- Le pelage, le plumage, la peau : UNE seule question pour deux colonnes --
@@ -778,7 +787,19 @@ function robesAussiVraies(espece) {
   if (espece.onglet === "Oiseaux" && /\bray|\bstri/i.test(texte)) vues.push("Taches", "Rayures");   // étape R102 (C1)
   // Étape R119 : les autres motifs vérifiés de l'espèce (colonne motif_robe_autres) ne sont jamais des pièges
   vues.push(...listeRobeAutres(espece));
-  return [...new Set([...vues, ...vues.filter(v => motifs.includes(v)).flatMap(v => ROBES_PROCHES[v])])];
+  return [...new Set([...vues, ...vues.filter(v => motifs.includes(v)).flatMap(v => ROBES_PROCHES[v]), ...robesDuGroupe(espece)])];
+}
+// Étape AL2c (18/11, choix d'Aubin) : des motifs que tout le groupe montre sur une photo ne sont jamais des pièges pour lui
+// (vérification à l'œil AL2 : c'est ce qui retirait le plus de questions d'aspect). Leurs voisins restent des pièges.
+//   « Nervures » : libellules et demoiselles, fourmilion et ascalaphe, criquets, sauterelles et grillons, cigales (ailes nervurées) ;
+//   « Barres » : crustacés, araignées, mille-pattes, scorpions (corps à segments, pattes annelées) ;
+//   « Rayures » : mollusques à coquille (côtes, stries de croissance, bandes) — pas la seiche, le poulpe ni les limaces.
+function robesDuGroupe(e) {
+  const r = [];
+  if (["Odonates", "Névroptères", "Orthoptères"].includes(e.ordre) || (e.ordre === "Hémiptères" && /^Cigale/.test(e.nom_courant))) r.push("Nervures");
+  if (e.onglet === "Crustaces" || e.onglet === "Araignees_mille_pattes") r.push("Barres");
+  if (e.onglet === "Mollusques" && !["Octopodes", "Sépiides"].includes(e.ordre) && !/limace|loche/i.test(e.nom_courant)) r.push("Rayures");
+  return r;
 }
 // Étape 75 : gris et noir (et gris et blanc) se distinguent mal sur une photo : ils ne sont plus proposés ensemble.
 const COULEURS_PROCHES = { Brun: ["Roux", "Beige", "Noir"], Roux: ["Brun", "Orange", "Beige"], Beige: ["Brun", "Roux", "Gris", "Blanc"],
@@ -1153,7 +1174,9 @@ const SILHOUETTE_UTILE = new Set([
   "queue_adulte",                                                               // amphibiens
   "pattes_nombre", "museau_forme",                                              // reptiles
   "nageoires_dos", "queue_poisson", "bouche_position",                          // poissons
-  "ailes_visibles", "antennes_forme", "ailes_repos",                            // insectes
+  "ailes_visibles", "antennes_forme",                                           // insectes
+  // (étape SIL1 : plus « ailes_repos » : presque tous les dessins montrent les ailes étalées, même quand l'insecte
+  //  les tient dressées, en toit ou repliées au repos)
 ]);
 function poilDeuxLongueurs(v) { return v === "Mi-long" ? "Long" : v; }   // étape 274
 // (étape 274 : pas pour le poil du hérisson, dont la silhouette hérissée donnerait « Piquants »)
@@ -1166,13 +1189,19 @@ function silhouetteUtile(q, espece) {
 // Étape R189 (note n° 4 d'Aubin, la grémille montrée avec deux nageoires dorsales : c'est un dessin de perche) :
 //   quand la silhouette est le dessin d'une espèce voisine (colonne « dessin_de » des crédits), elle n'aide à une question
 //   de forme que si cette voisine n'a pas une autre réponse dans le jeu ; sinon, pas de « Voir la silhouette ».
-let DESSIN_DE = null;
+let DESSIN_DE = null, NE_MONTRE_PAS = null;
 function silhouetteContredit(q, espece) {
   if (typeof CREDITS_SILHOUETTES === "undefined") return false;
   if (!DESSIN_DE) {
     DESSIN_DE = {};
     for (const c of CREDITS_SILHOUETTES) if (c.dessin_de && String(c.dessin_de).trim()) DESSIN_DE[c.nom] = String(c.dessin_de).trim();
   }
+  // Étape SIL1 (17/11) : parties relevées à l'œil où le dessin montre autre chose que l'espèce (colonne « ne_montre_pas »)
+  if (!NE_MONTRE_PAS) {
+    NE_MONTRE_PAS = {};
+    for (const c of CREDITS_SILHOUETTES) if (Array.isArray(c.ne_montre_pas) && c.ne_montre_pas.length) NE_MONTRE_PAS[c.nom] = c.ne_montre_pas;
+  }
+  if ((NE_MONTRE_PAS[espece.nom_courant] || []).includes(q.champ)) return true;
   const voisin = DESSIN_DE[espece.nom_courant];
   if (!voisin) return false;
   const modele = ESPECES.find(e => e.nom_scientifique && String(e.nom_scientifique).trim().toLowerCase() === voisin.toLowerCase());
@@ -1227,7 +1256,7 @@ const QUESTIONS_PORTRAIT = [
   // changent trop la couleur sur la photo : brun, gris et argenté se confondent)
   questionPortrait({ champ: "couleur_dominante", libelle: "Couleur", proches: COULEURS_PROCHES,
     onglets: ["Mammiferes", "Oiseaux", "Amphibiens", "Reptiles", "Insectes", "Araignees_mille_pattes", "Crustaces", "Mollusques", "Vers_meduses_compagnie"],
-    pieges: e => piegesPortrait(e, e.couleur_dominante, x => x.couleur_dominante, COULEURS_PROCHES, [...couleursCitees(e), ...listeCouleursPlumage(e)]),   // R135 : ni ses couleurs bien visibles
+    pieges: e => piegesPortrait(e, e.couleur_dominante, LIRE_COULEUR_DOMINANTE, COULEURS_PROCHES, [...couleursCitees(e), ...listeCouleursPlumage(e)]),   // R135 : ni ses couleurs bien visibles
     question: e => couleurVariable(e) ? "Quelle couleur peut-il avoir ?" : "Quelle est sa couleur dominante ?",
     explication: (e, v) => couleurVariable(e) ? `Sa couleur varie d'un individu à l'autre : ${minuscule(v)}, entre autres.`
                                               : `Sa couleur dominante : ${minuscule(v)}.` }),
@@ -1346,7 +1375,7 @@ const QUESTIONS_PORTRAIT = [
     // Étape R134 (05/11, pigeon ramier : « Jaune et noir ») : toute pupille est noire, donc pour un œil clair,
     // « Noir » (et « Brun », trop proche sur une photo) serait une mauvaise réponse à moitié vraie : jamais en piège.
     // La question précise qu'on parle du cercle autour de la pupille (même texte pour tous les oiseaux).
-    pieges: e => piegesPortrait(e, e.yeux_couleur, x => x.yeux_couleur,
+    pieges: e => piegesPortrait(e, e.yeux_couleur, LIRE_YEUX_COULEUR,
       YEUX_PROCHES,
       e.yeux_couleur === "Noir" ? [] : ["Noir", "Brun"]),
     question: "De quelle couleur sont ses yeux (le cercle autour de la pupille) ?",
@@ -1449,7 +1478,7 @@ function pe(e) {
   return { la: m ? "le" : "la", elle: m ? "il" : "elle", Elle: m ? "Il" : "Elle", dElle: m ? "de lui" : "d'elle", avecElle: m ? "avec lui" : "avec elle", e: m ? "" : "e" };
 }
 function sansPoint(t) { return String(t || "").trim().replace(/[.\s]+$/, ""); }
-const AFF_H_ASPIRES = /^(h[ée]risson|hanneton|hareng|hibou|homard|haricot|hêtre|héron|hamster|harle|hulotte)/i;
+const AFF_H_ASPIRES = /^(h[ée]risson|hanneton|hareng|hibou|homard|haricot|hêtre|héron|hamster|harle|hulotte|huchon|harfang)/i;   // VF5 : huchon, harfang
 function deElide(mot) { return /^[aeiouyéèêàâîïôûœ]/i.test(mot) || (/^h/i.test(mot) && !AFF_H_ASPIRES.test(mot)) ? "d'" : "de "; }
 const AFF_REGIME_F = { "suceur de sang": "suceuse de sang", "filtreur": "filtreuse" };
 const AFF_MILIEU = { "Falaises et rochers": "parmi les falaises et les rochers", "Alpages et pelouses d'altitude": "dans les alpages et les pelouses d'altitude",
@@ -1464,6 +1493,89 @@ const AFF_DEFENSE = { "Fuite": "s'enfuit", "Refuge (terrier, eau, falaise)": "se
   "Se met en boule": "se met en boule", "Pinces": "se défend avec ses pinces", "Se cache dans sa coquille": "se cache dans sa coquille",
   "Couleurs d'avertissement": "compte sur ses couleurs vives, qui servent d'avertissement", "Piquants ou poils urticants": "se protège par ses piquants ou ses poils urticants",
   "Régurgitation": "régurgite le contenu de son estomac", "Fait le mort": "fait le mort" };
+// ---- Étape VF2 (n° 12.3, notes 19 et 30 du 16/11) : la défense « Refuge (terrier, eau, falaise) » dite selon l'espèce ----
+//   Avant : « Face à un danger, il se réfugie dans un terrier, dans l'eau ou dans une falaise », pour toutes les espèces
+//   (le ragondin « dans une falaise »). Maintenant, la phrase est tirée de sa fiche (technique_defense, puis nom_logis et
+//   type_terrier) : « il plonge sous l'eau », « il s'enfouit dans le sable »… Sans indice sûr dans la fiche (chauves-souris,
+//   oiseaux qui ne nichent à l'abri que pour leur nid, larves seules concernées…), pas de phrase : la défense n'est alors
+//   posée qu'en QCM. La valeur générique ne sert jamais de fausse affirmation (VF_JAMAIS_FAUX, 02).
+const REFUGE = "Refuge (terrier, eau, falaise)";
+const REFUGES_TECHNIQUE = [   // [ce que dit technique_defense, la phrase] : la première qui convient
+  [/sifflement d'alerte/, "siffle pour donner l'alerte, puis se réfugie dans son terrier"],
+  [/larve|sécheresse/, null],                                          // lamproies (seules les larves s'enfouissent), limnée
+  [/(plong|sous l'eau).*entrée|entrée.*(sous l'eau|immergée)/, "plonge et regagne son abri, dont l'entrée est sous l'eau"],
+  [/enfoui\w* dans le sable/, "s'enfouit dans le sable"],
+  [/dans la vase/, "s'enfouit dans la vase"],
+  [/terrier.*plong/, "se réfugie dans son terrier ou plonge sous l'eau"],
+  [/plong.*pierres/, "plonge sous l'eau ou se cache sous les pierres"],
+  [/plong|sous l'eau/, "plonge sous l'eau"],
+  [/saute à l'eau/, "saute à l'eau"],
+  [/vers la mer/, "regagne la mer"],
+  [/rochers escarpés/, "se réfugie dans les rochers escarpés"],
+  [/galeries entre les rochers/, "se réfugie dans ses galeries, entre les rochers"],
+  [/sa galerie/, "se réfugie dans sa galerie"],
+  [/galeries/, "se réfugie dans ses galeries"],
+  [/creusés au fond/, "se cache dans un trou creusé au fond de l'eau"],
+  [/terrier/, "se réfugie dans son terrier"],
+  [/trou/, "se cache dans un trou de rocher"],
+  [/failles|grottes/, "se cache dans les failles et les creux des rochers"],
+  [/berges creuses/, "se cache sous les berges creuses et le bois noyé"],
+  [/murets|sous les pierres/, "se cache sous les pierres et dans les murets"],
+  [/fissure/, "se glisse dans une fissure"] ];
+function refugeDe(e) {
+  if (!e || e.ordre === "Chiroptères") return null;   // chez les chauves-souris, la fiche décrit le gîte, pas la réaction au danger
+  const td = String(e.technique_defense || "").toLowerCase();
+  for (const [motif, phrase] of REFUGES_TECHNIQUE) if (motif.test(td)) return phrase;
+  const lg = `${e.nom_logis || ""} ${e.type_terrier || ""}`.toLowerCase();   // rien dans la technique : son abri
+  const eau = MILIEUX_EAU_DOUCE.includes(e.milieu_principal) || MILIEUX_MER.includes(e.milieu_principal);
+  if (e.onglet === "Oiseaux")   // grèbes, fuligule (oiseaux plongeurs d'eau douce) ; le nid d'un oiseau n'est pas son refuge
+    return !td.replace(/^na$/, "") && MILIEUX_EAU_DOUCE.includes(e.milieu_principal) ? "plonge sous l'eau" : null;
+  if (/tube/.test(lg)) return "se retire dans son tube";
+  if (/cloche/.test(lg)) return "se réfugie dans sa cloche d'air, sous l'eau";
+  if (/fissure/.test(lg)) return "se glisse dans une fissure";
+  if (/sous les pierres/.test(lg)) return "se cache sous les pierres";
+  if (e.onglet === "Mammiferes" && /terrier/.test(lg)) return "se réfugie dans son terrier";
+  if (e.onglet === "Mammiferes" && /galerie/.test(lg)) return "se réfugie dans ses galeries";
+  if (e.onglet !== "Mammiferes" && e.onglet !== "Oiseaux" && /galerie/.test(lg)) return "se retire au fond de sa galerie";
+  if (!td.replace(/^na$/, "") && eau && e.ordre === "Anoures") return "saute à l'eau";          // grenouille rieuse
+  return null;
+}
+// Étape VF2 : les autres défenses « à trois termes », dites selon le groupe de l'espèce (avant : « se défend avec ses dents,
+//   ses cornes ou ses serres » pour le lucane, « par du venin, du poison ou de l'acide » pour l'abeille, « (se gonfle, siffle) »
+//   pour un papillon). Sans phrase sûre pour son groupe : "" (la défense n'est alors posée qu'en QCM).
+const RAPACES = ["Accipitriformes", "Falconiformes", "Strigiformes"];
+function defenseSelonEspece(v, e) {
+  const o = e.ordre || "", g = e.onglet || "", nom = e.nom_courant || "";
+  switch (sansPoint(v)) {
+    case REFUGE: return refugeDe(e);
+    case "Morsure, cornes ou serres":
+      if (RAPACES.includes(o)) return "se défend avec ses serres";
+      if (g === "Crustaces") return "se défend avec ses pinces";
+      if (g === "Oiseaux" || o === "Artiodactyles") return null;   // coups de bec, cornes ou bois, défenses : la fiche ne dit pas lesquels
+      return "se défend en mordant";
+    case "Venin, poison ou acide":
+      if (g === "Amphibiens") return "sécrète un poison par sa peau";
+      if (/^Fourmi/.test(nom)) return "projette de l'acide";
+      if (o === "Hyménoptères") return "pique avec son dard";
+      if (o === "Scorpions") return "pique avec le dard de sa queue";
+      if (/^Vipère/.test(nom)) return "mord avec ses crochets venimeux";
+      if (o === "Myliobatiformes") return "se défend avec l'aiguillon venimeux de sa queue";
+      if (o === "Scorpaeniformes") return "se défend avec ses épines venimeuses";
+      if (g === "Vers_meduses_compagnie") return "se défend avec ses filaments urticants";
+      if (o === "Aranéides" || o === "Scolopendromorphes") return "se défend par une morsure venimeuse";
+      if (o === "Lépidoptères") return "se protège par ses poils urticants";
+      return null;
+    case "Intimidation (se gonfle, siffle)": return "cherche à intimider son agresseur";
+    case "Piquants ou poils urticants": return g === "Insectes" ? "se protège par ses poils urticants" : "se protège par ses piquants";
+  }
+  return undefined;   // les autres : la table AFF_DEFENSE
+}
+function affDefense(v, e) {
+  const r = defenseSelonEspece(v, e || {});
+  if (r === null) return "";
+  if (r) return `Face à un danger, ${ilElle(e)} ${r}.`;
+  return affTable(AFF_DEFENSE, v, p => `Face à un danger, ${ilElle(e)} ${p}.`, "Sa principale défense");
+}
 const AFF_CHASSE = { "Poursuite": "poursuit ses proies", "Bond sur la proie": "bondit sur ses proies", "Affût": "guette ses proies à l'affût",
   "Chasse en meute": "chasse en groupe", "Fouille du sol": "fouille le sol", "Pêche en plongée": "plonge pour pêcher",
   "Piège en entonnoir (larve)": "creuse un piège en entonnoir (larve)", "Glanage sur le feuillage": "cherche ses proies sur le feuillage",
@@ -1503,29 +1615,88 @@ function affProies(v, e) {
   const liste = morceaux.length > 1 ? morceaux.slice(0, -1).join(", ") + (/^(surtout|parfois|notamment|aussi|et|plus rarement)/.test(morceaux[morceaux.length - 1]) ? ", " : " et ") + morceaux[morceaux.length - 1] : morceaux[0];
   return `${IlElle(e)} se nourrit ${liste}.`;
 }
-function affPredateurs(v, e) {
-  const items = sansPoint(v).split(/\s*[,;]\s*/).filter(Boolean);
-  const morceaux = [];
-  for (let t of items) {
-    t = minuscule(t);
-    const base = t.replace(/\s*\(.*\)\s*$/, "").trim(), reste = t.slice(base.length);
-    const premier = base.split(/\s+/)[0];
-    if (/^(peu|aucun|pas|rarement|chasse|routes|collisions|pollution|humain|homme|l'homme)\b/.test(base)) {
-      if (/^(humain|homme)$/.test(base)) { morceaux.push("l'humain" + reste); continue; }
-      return affirmationRepli("Ses prédateurs", v);
-    }
-    if (/^autres?\b/.test(base)) { morceaux.push("d'" + t); continue; }
-    if (/^chats?( domestiques?)?$/.test(base)) { morceaux.push((/^chats/.test(base) ? "des " + base : "le " + base) + reste); continue; }
-    const sp = typeof especeNommee === "function" ? especeNommee(base) : null;
-    if (sp && !sp.hors_jeu && typeof nomAvecArticle === "function" && sansAccent(sp.nom_courant).startsWith(sansAccent(base))) { morceaux.push(nomAvecArticle(sp) + reste); continue; }
-    if (/[sx]$/.test(premier)) { morceaux.push("des " + t); continue; }
-    return affirmationRepli("Ses prédateurs", v);
+// Étape VF5 (n° 12.3) : toutes les listes de prédateurs en phrase (avant, ~1/3 restait « Ses prédateurs : brochet, perche » :
+//   un nom au singulier qui n'est pas une espèce du jeu, « peu de prédateurs », « aucun »…). Le nom prend son article d'après le
+//   genre des espèces du jeu qui commencent par le même mot (« le brochet », « la perche », « l'orque ») ; ce qui n'est pas un
+//   prédateur (« chasse », « menacée par… », « surtout pendant les mues ») est laissé de côté ; « cannibalisme » = « les plus gros
+//   de son espèce » ; parasites et champignons : « attaqué » au lieu de « chassé ».
+const GENRE_MOT_PREDATEUR = { chien: "m", chevaine: "m", "crécerelle": "f", faisan: "m", flet: "m", harfang: "m", huchon: "m", hulotte: "f",
+  janthine: "f", merlan: "m", orque: "f", "poisson-lune": "m", pygargue: "m", "araignée": "f", "guêpe": "f", champignon: "m", "vipère": "f",
+  rat: "m", aigle: "m", "héron": "m", brochet: "m", perche: "f", lynx: "m", loup: "m", renard: "m", corneille: "f", "hérisson": "m" };
+let memoGenreMot = null;
+function genreDuMot(mot) {
+  if (!memoGenreMot) {
+    memoGenreMot = {};
+    for (const x of ESPECES) { const m = sansAccent(String(x.nom_courant).toLowerCase()).split(/\s+/)[0];
+      if (x.genre_nom && !(m in memoGenreMot)) memoGenreMot[m] = x.genre_nom === "féminin" ? "f" : "m"; }
   }
-  if (!morceaux.length) return affirmationRepli("Ses prédateurs", v);
+  const brut = mot.toLowerCase();
+  return GENRE_MOT_PREDATEUR[brut] || memoGenreMot[sansAccent(brut)] || null;
+}
+let memoMotsExacts = null;
+function motExactDuJeu(mot) {   // VF5 : le premier mot d'un nom d'espèce du jeu, tel quel (« ours », « putois », « lynx », « souris »)
+  if (!memoMotsExacts) memoMotsExacts = new Set(ESPECES.map(x => String(x.nom_courant).toLowerCase().split(/\s+/)[0]));
+  return memoMotsExacts.has(mot.toLowerCase());
+}
+function nomPorteParUneSeule(base) {   // VF5 : combien d'espèces du jeu ont ce nom comme mot entier (« cormoran » : 2)
+  const b = sansAccent(base.toLowerCase());
+  return ESPECES.filter(x => (" " + sansAccent(String(x.nom_courant).toLowerCase()) + " ").includes(" " + b + " ")).length <= 1;
+}
+function avecArticleSingulier(t) {   // « brochet » → « le brochet » ; « jeune vipère » → « la jeune vipère » ; null si le genre est inconnu
+  const mots = t.split(/\s+/), cle = mots[0] === "jeune" && mots[1] ? mots[1].replace(/\(.*$/, "") : mots[0].replace(/\(.*$/, "");
+  const g = genreDuMot(cle);
+  if (!g) return null;
+  if (deElide(t) === "d'") return "l'" + t;
+  return (g === "f" ? "la " : "le ") + t;
+}
+function affPredateurs(v, e) {
+  const brut = sansPoint(v), il = IlElle(e), fem = e && e.genre_nom === "féminin";
+  if (/^(aucun|pas de prédateur)/i.test(brut))
+    return /adulte/i.test(brut.split(";")[0]) ? `Adulte, ${ilElle(e)} n'a pas de prédateur naturel.` : `${il} n'a pas de prédateur naturel connu.`;
+  if (/^(très )?peu de prédateurs/i.test(brut)) return `${il} a peu de prédateurs naturels.`;
+  if (/^menac/i.test(brut)) return "";
+  const morceaux = [];
+  let attaque = false;
+  for (const seg of brut.split(/\s*;\s*/)) {
+    if (/^(l')?(humain|homme)$/i.test(seg)) { morceaux.push("l'humain"); continue; }
+    if (/^(chass|routes?\b|menac|tirs|principale|mâles|oiseaux et mammifères pillent)/i.test(seg)) continue;   // pas un prédateur (« chasse », « mâles tuent parfois les oursons »)
+    for (let item of elementsListe(seg)) {
+      // « faucons crécerelle et pèlerin » reste entier : on ne coupe au « et » que si la suite est elle-même un animal
+      const parts = [];
+      for (const x of item.split(/\s+et\s+(?![^(]*\))/)) {
+        const seul = x.trim().split(/\s+/).length === 1 && !/[sx]$/.test(x.trim()) && !genreDuMot(x.trim()) && !(typeof especeNommee === "function" && especeNommee(x.trim()));
+        if (parts.length && seul) parts[parts.length - 1] += " et " + x; else parts.push(x);
+      }
+      for (let t of parts) {
+        if (/^surtout pendant/i.test(t.trim())) continue;
+        t = minuscule(t.trim()).replace(/^(surtout|aussi)\s+/, "").replace(/\s+surtout$/, "");
+        if (!t) continue;
+        const base = t.replace(/\s*\(.*\)\s*$/, "").trim(), reste = t.slice(base.length);
+        if (/parasit|champignon/.test(t)) attaque = true;
+        if (base === "cannibalisme") { morceaux.push("les plus gros de son espèce"); continue; }
+        if (/^(humain|homme)$/.test(base)) { morceaux.push("l'humain" + (/^\s*\(chasse\)$/.test(reste) ? "" : reste)); continue; }
+        if (/^autres?\b/.test(base)) { morceaux.push("d'" + base); continue; }   // « autres sandres (cannibalisme) » → « d'autres sandres »
+        if (/^chats?( domestiques?)?$/.test(base)) { morceaux.push((/^chats/.test(base) ? "des " + base : "le " + base) + reste); continue; }
+        const premierMot = base.split(/\s+/)[0];
+        const pluriel = /[sx]$/.test(premierMot) && !motExactDuJeu(premierMot);   // « ours », « putois », « lynx » : singuliers (noms du jeu)
+        // un pluriel reste général (« des étoiles de mer », pas « l'étoile de mer rouge ») ; un nom porté par plusieurs espèces
+        // du jeu aussi (« le cormoran », pas « le cormoran huppé » : il y a aussi le grand cormoran)
+        const sp = !pluriel && typeof especeNommee === "function" ? especeNommee(base) : null;
+        if (sp && !sp.hors_jeu && typeof nomAvecArticle === "function" && sansAccent(sp.nom_courant).startsWith(sansAccent(base)) && nomPorteParUneSeule(base)) { morceaux.push(nomAvecArticle(sp) + reste); continue; }
+        if (pluriel) { morceaux.push((/^(grand|grande|petit|petite|gros|grosse)s?\s/.test(t) ? "de " : "des ") + t); continue; }
+        const art = avecArticleSingulier(t);
+        if (art) { morceaux.push(art); continue; }
+        return affirmationRepli("Ses prédateurs", v);
+      }
+    }
+  }
+  if (!morceaux.length) return "";
   const liste = morceaux.length > 1 ? morceaux.slice(0, -1).join(", ") + " et " + morceaux[morceaux.length - 1] : morceaux[0];
-  return `${IlElle(e)} peut être ${e && e.genre_nom === "féminin" ? "chassée" : "chassé"} par ${liste}.`;
+  return `${il} peut être ${attaque ? "attaqué" : "chassé"}${fem ? "e" : ""} par ${liste}.`;
 }
 function affIndice(v, e) {
+  // VF2 : un mammifère n'a pas de pelotes ; on le repère dans celles des chouettes (pachyure étrusque)
+  if (e && e.onglet === "Mammiferes" && sansPoint(v) === "Pelotes de réjection") return "On trouve souvent ses restes dans les pelotes de réjection des chouettes.";
   const t = minuscule(sansPoint(v)), premier = t.split(/\s+/)[0];
   let det;
   if ((/[sx]$/.test(premier) && !INDICE_INVARIABLE.test(t)) || /^os\b/.test(t)) det = "ses ";
@@ -1616,7 +1787,7 @@ const QUESTIONS = [
       // réponses sont donc toutes des milieux AQUATIQUES (liste MILIEUX_AQUATIQUES, juste au-dessus).
       if (e.onglet === "Poissons") return MILIEUX_AQUATIQUES.filter(milieu => !lesSiens.includes(milieu)
         && !(milieu === "Eaux souterraines" && ["Mer et océan", "Estuaires et lagunes"].includes(e.milieu_principal)));   // étape R151
-      const tous = [...new Set(ESPECES.map(autre => autre.milieu_principal).filter(estRenseigne))];
+      const tous = valeursColonne("milieu_principal");   // R239b (lenteurs) : calculé une fois
       // Étape R151 : un animal de la mer ou des estuaires (sauf les oiseaux, qui volent d'un milieu à l'autre) a des pièges
       // dans l'eau, pas dans la campagne (avant : « Il vit le plus souvent ici : campagne, haies et jardins » pour la patelle)
       if (["Mer et océan", "Estuaires et lagunes"].includes(e.milieu_principal) && e.onglet !== "Oiseaux")
@@ -1771,13 +1942,14 @@ const QUESTIONS = [
   { champ: "defense_principale", pictos: true, niveau: 2, libelle: "Défense", formats: ["qcm", "vraifaux"],
     accepter: v => v !== "Fuite",
     question: "Quelle est sa principale défense ?",
-    affirmation: (v, e) => affTable(AFF_DEFENSE, v, p => `Face à un danger, ${ilElle(e)} ${p}.`, "Sa principale défense"),   // E2-4
+    affirmation: (v, e) => affDefense(v, e),   // E2-4 ; VF2 : le refuge selon l'espèce
     pieges: e => autresDeLaListe(e, "defense_principale", "defenses_secondaires").filter(v => v !== "Fuite"),
-    explication: (e, v) => `Sa principale défense : ${minuscule(v)}.` },
+    explication: (e, v) => defenseSelonEspece(v, e) ? affDefense(v, e) : `Sa principale défense : ${minuscule(v)}.` },
 
   { champ: "chasse_principale", pictos: true, niveau: 2, libelle: "Chasse", formats: ["qcm", "vraifaux"],
     question: "Comment chasse-t-il le plus souvent ?",
-    affirmation: (v, e) => affTable(AFF_CHASSE, v, p => `Pour chasser, ${ilElle(e)} ${p}.`, "Sa façon de chasser"),   // E2-4
+    affirmation: (v, e) => sansPoint(v) === "Chasse en meute" ? `${IlElle(e)} chasse en groupe.`   // VF2 : plus de « Pour chasser, il chasse en groupe »
+      : affTable(AFF_CHASSE, v, p => `Pour chasser, ${ilElle(e)} ${p}.`, "Sa façon de chasser"),   // E2-4
     pieges: e => autresDeLaListe(e, "chasse_principale", "chasses_secondaires"),
     explication: (e, v) => `Sa façon de chasser : ${minuscule(v)}.` },
 
@@ -2016,7 +2188,7 @@ const QUESTIONS = [
   // Son niveau ne change pas : les médailles restent calculées comme avant.
   { champ: "empreinte_nom", niveau: 3, toujoursOuverte: true, libelle: "Empreinte", format: "empreinte-nom",
     valeur: e => fichierEmpreinte(e),
-    affichage: v => `<img class="mini-empreinte" src="${v}" alt="son empreinte">`,
+    affichage: v => typeof miniEmpreinte === "function" ? miniEmpreinte(v) : `<img class="mini-empreinte" src="${v}" alt="son empreinte">`,   // R246 (36.29)
     explication: e => texteEmpreinte(e) },
 
   // Étape 172 (13/10) : retirée — « À qui appartient cette empreinte ? » suffit.

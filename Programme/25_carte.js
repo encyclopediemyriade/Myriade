@@ -47,6 +47,7 @@ function afficherAtlas() {
   if (atlasTerritoire && !tousLesTerritoires().includes(atlasTerritoire)) atlasTerritoire = null;   // étape K3 : un territoire fermé se montre en aperçu
   if (atlasTerritoire) dessinerAtlasTerritoire(zone, atlasTerritoire); else dessinerAtlasFrance(zone);
   window.scrollTo(0, 0);
+  if (typeof noterArriveePage === "function" && !zone.classList.contains("cache")) noterArriveePage("atlas");   // R241 : la France ou un territoire
 }
 function ouvrirAtlas(t) { atlasTerritoire = t || null; atlasLieu = null; montrer("atlas"); }
 
@@ -134,46 +135,63 @@ function portraitTerritoire(t) {
     <div class="at-emblemes">${emb.map(vignette).join("")}</div>
     ${autres > 0 ? `<p class="at-note">et ${nombre(autres)} autres espèces, à découvrir sur place.</p>` : ""}` : ""}`;
 }
+// Étape R247 (17/11, 36.25, choix 25B ; cas non prévus 8A, 9A) : la page d'un territoire, dans l'ordre :
+//   le titre, le territoire en 2 lignes (sa phrase), la carte (petite France), puis les lieux numérotés comme les pastilles
+//   (1 à N dans l'ordre d'ouverture ; le site remarquable = étoile sans numéro, en dernier). Une pastille touchée fait défiler
+//   jusqu'à son lieu ; un lieu ouvert touché ouvre sa page ; un lieu fermé se déplie (ce qui l'attend, ce qui l'ouvre).
+//   Plus de fiche du lieu choisi sous la carte ; plus de portrait (photo, chiffres) ; les espèces emblématiques restent
+//   seulement dans l'aperçu d'un territoire fermé, en bande sous la liste (K3).
+function phraseTerritoire(t) {
+  const id = typeof IDENTITE !== "undefined" ? IDENTITE[t] : null;
+  return id && id.phrase ? id.phrase : "";
+}
+function emblemesApercu(t) {
+  const emb = emblemesTerritoire(t), autres = especesDe(t).length - emb.length;
+  if (!emb.length) return "";
+  return `<h2 class="at-titre">Ceux qui vous y attendent</h2>
+    <div class="at-emblemes">${emb.map(e => `<button class="at-emb" type="button" data-nom="${echapper(e.nom_courant)}">
+      <span class="at-emb-ph">${imgMini(photoEsp(e), e.nom_courant)}${estReconnue(e) ? `<i class="at-emb-ok" aria-label="Reconnue">✓</i>` : ""}</span>
+      <span>${echapper(e.nom_courant)}</span></button>`).join("")}</div>
+    ${autres > 0 ? `<p class="at-note">et ${nombre(autres)} autres espèces, à découvrir sur place.</p>` : ""}`;
+}
 function dessinerAtlasTerritoire(zone, t) {
   const couleur = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
   const apercu = territoireEnApercu(t);
-  const lieux = chapitresDe(t).filter(c => estLieu(c) || c.type === "remarquable");
-  if (!atlasLieu || !lieux.some(c => c.nom === atlasLieu)) {
-    const l = (apercu ? null : lieuDernierJoue(t)) || lieux[0];
-    atlasLieu = l ? l.nom : null;
-  }
+  const lieux = lieuxDe(t), site = siteRemarquable(t);
+  const tous = site ? [...lieux, site] : lieux;
   const r = rangTerritoire(t);
-  const carte = carteDesLieux(t, { largeur: 360, hauteur: 300, point: 0.85, relief: reliefTerritoire(t), apercu });
+  if (!atlasLieu && !apercu) { const l = lieuDernierJoue(t); atlasLieu = l ? l.nom : null; }   // son nom reste écrit sur la carte
+  const carte = carteDesLieux(t, { largeur: 360, hauteur: 300, point: 0.85, relief: reliefTerritoire(t), apercu, numeros: true });
   const etiq = c => {
-    if (c.type === "remarquable") return chapitreOuvert(t, c) && !apercu ? "Site remarquable" : "Site remarquable · à la fin du territoire";
+    if (c.type === "remarquable") return chapitreOuvert(t, c) && !apercu ? "Site remarquable · révision du territoire" : "Site remarquable · à la fin du territoire";
     if (apercu) return `${c.pays ? echapper(c.pays) + " · " : ""}${expeditionsDuChapitre(t, c.nom).length} expéditions`;
     const e = etatLieu(t, c), m = medailleLieu(t, c);
     if (e === "ferme") return prochainLieu(t) === c ? "Le prochain lieu" : "Plus tard";
-    if (e === "fini") return "Terminé";
+    if (e === "fini") return (m ? MEDAILLES_LIEU[m].titre + " · " : "") + "terminé";
     return (m ? MEDAILLES_LIEU[m].titre + " · " : "") + (finaleAJouer(t, c) ? "finale à jouer" : e === "cours" ? "en cours" : "ouvert");
   };
-  const pastille = c => {
-    if (apercu && c.type !== "remarquable") return `<span class="at-lp-ph">${imgMini(c.photo, "")}</span>`;
-    if (c.type === "remarquable") return `<span class="at-lp site${chapitreOuvert(t, c) && !apercu ? "" : " ferme"}"></span>`;
-    const e = etatLieu(t, c), m = medailleLieu(t, c);
-    return e !== "ferme" && m ? `<span class="at-lp med">${medailleSvg(m)}</span>` : `<span class="at-lp ${e}"></span>`;
+  const numero = c => {
+    if (c.type === "remarquable") return `<span class="at-lp site${chapitreOuvert(t, c) && !apercu ? "" : " ferme"}" aria-hidden="true"></span>`;
+    const e = apercu ? "ferme" : etatLieu(t, c), enCours = !apercu && lieuDernierJoue(t) === c;
+    return `<span class="at-num ${enCours ? "cours" : e === "cours" ? "ouvert" : e}" aria-hidden="true">${lieux.indexOf(c) + 1}</span>`;
   };
   const vedette = c => { const v = c.type === "remarquable" ? null : vedetteLieu(t, c); return v ? `<small class="at-lieu-ici">Ici : ${echapper(v.nom_courant)}</small>` : ""; };
-  const ouverture = phraseOuverture(t);
+  const ouvertIci = c => !apercu && chapitreOuvert(t, c);
+  const ouverture = phraseOuverture(t), phrase = phraseTerritoire(t);
   zone.innerHTML = `
     <header class="at-tete terr">
       <button class="at-retour" type="button" aria-label="Retour à la France"><span aria-hidden="true">←</span></button>
       <div><small>France</small><h1>${echapper(t)}</h1></div>
       ${apercu ? `<span class="at-badge-apercu" style="--couleur-t:${couleur}">${LOCK_SVG}Aperçu</span>` : `<span class="at-emp">${PAS_SVG}<b>${r.empreintes}</b></span>`}
     </header>
+    ${phrase ? `<p class="at-deux-lignes">${echapper(phrase)}</p>` : ""}
     ${apercu ? `<p class="at-bandeau-apercu" style="--couleur-t:${couleur}">${echapper(ouverture)} Vous pouvez déjà tout regarder.</p>` : ""}
-    <div class="at-carte-terr" style="--couleur-t:${couleur}">${carte}</div>
-    <section class="at-choix" id="at-choix"></section>
-    ${portraitTerritoire(t)}
+    <div class="at-carte-terr" style="--couleur-t:${couleur}">${carte}${typeof miniFrance === "function" ? miniFrance(t) : ""}</div>
     <h2 class="at-titre">Les lieux</h2>
-    <ul class="at-lieux">${lieux.map(c => `<li><button class="at-lieu-ligne${c.nom === atlasLieu ? " choisi" : ""}" type="button" data-lieu="${echapper(c.nom)}">
-        ${pastille(c)}<span><b>${echapper(c.nom)}</b><small>${etiq(c)}</small>${vedette(c)}</span></button></li>`).join("")}</ul>
-    ${apercu ? `<section class="at-pour-y-aller" style="--couleur-t:${couleur}"><p><b>Pour y aller :</b> ${echapper(ouverture)}</p>
+    <ul class="at-lieux">${tous.map(c => `<li class="at-li" data-lieu="${echapper(c.nom)}"><button class="at-lieu-ligne${ouvertIci(c) ? " ouvre" : " deplie"}" type="button" data-lieu="${echapper(c.nom)}"${ouvertIci(c) ? "" : ` aria-expanded="false"`}>
+        ${numero(c)}<span><b>${echapper(c.nom)}</b><small>${etiq(c)}</small>${vedette(c)}</span>
+        <span class="at-fleche" aria-hidden="true">${ouvertIci(c) ? "›" : "⌄"}</span></button><div class="at-depli" hidden></div></li>`).join("")}</ul>
+    ${apercu ? `${emblemesApercu(t)}<section class="at-pour-y-aller" style="--couleur-t:${couleur}"><p><b>Pour y aller :</b> ${echapper(ouverture)}</p>
         <button class="at-continuer" type="button">Continuer ${echapper(dansTerritoire(territoireActif()))} <span aria-hidden="true">→</span></button></section>`
       : `<button class="at-page-terr" type="button">La page ${deTerritoire(t)} <span aria-hidden="true">→</span></button>`}`;
   zone.querySelector(".at-retour").onclick = () => { atlasTerritoire = null; afficherAtlas(); };
@@ -186,21 +204,42 @@ function dessinerAtlasTerritoire(zone, t) {
     if (e && estReconnue(e)) ouvrirPageEspece(e);
     else afficherBulle(`Vous ${pe(e).la} rencontrerez ${dansTerritoire(t)}`);   // R236 : le nom est affiché (K3)
   });
-  const choisir = nom => {
+  const ligneDe = nom => [...zone.querySelectorAll(".at-li")].find(li => li.dataset.lieu === nom);
+  // une pastille de la carte : on descend jusqu'à son lieu, qui s'éclaire un instant (et se déplie s'il est fermé)
+  const montrerLieu = nom => {
     atlasLieu = nom;
     zone.querySelectorAll(".cl-lieu").forEach(g => g.classList.toggle("choisi", g.dataset.lieu === nom));
-    zone.querySelectorAll(".at-lieu-ligne").forEach(b => b.classList.toggle("choisi", b.dataset.lieu === nom));
-    dessinerChoixLieu(t, chapitreParNom(t, nom));
+    const li = ligneDe(nom); if (!li) return;
+    const b = li.querySelector(".at-lieu-ligne");
+    if (b.classList.contains("deplie") && b.getAttribute("aria-expanded") !== "true") deplier(li, true);
+    li.scrollIntoView({ behavior: "smooth", block: "center" });
+    b.classList.remove("eclaire"); void b.offsetWidth; b.classList.add("eclaire");
+  };
+  const deplier = (li, oui) => {
+    const b = li.querySelector(".at-lieu-ligne"), d = li.querySelector(".at-depli"), c = chapitreParNom(t, li.dataset.lieu);
+    if (oui && !d.innerHTML) d.innerHTML = texteLieuFerme(t, c);
+    d.hidden = !oui; b.setAttribute("aria-expanded", oui ? "true" : "false");
   };
   zone.querySelectorAll(".carte-lieux [data-lieu]").forEach(g => {
-    g.addEventListener("click", () => choisir(g.dataset.lieu));
-    g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); choisir(g.dataset.lieu); } });
+    g.addEventListener("click", () => montrerLieu(g.dataset.lieu));
+    g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); montrerLieu(g.dataset.lieu); } });
   });
   zone.querySelectorAll(".at-lieu-ligne").forEach(b => b.onclick = () => {
-    choisir(b.dataset.lieu);
-    document.getElementById("at-choix").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    const c = chapitreParNom(t, b.dataset.lieu);
+    if (!c) return;
+    if (b.classList.contains("ouvre")) { changerTerritoire(t); if (c.type === "remarquable") ouvrirSite(t); else ouvrirLieu(t, c.nom); window.scrollTo(0, 0); return; }
+    deplier(b.closest(".at-li"), b.getAttribute("aria-expanded") !== "true");
   });
-  if (atlasLieu) choisir(atlasLieu);
+  if (atlasLieu) zone.querySelectorAll(".cl-lieu").forEach(g => g.classList.toggle("choisi", g.dataset.lieu === atlasLieu));
+}
+// Étape R247 : ce qu'un lieu fermé (ou d'un territoire en aperçu) montre quand il se déplie : ce qui l'ouvre, puis ce qui l'attend
+function texteLieuFerme(t, c) {
+  const apercu = territoireEnApercu(t);
+  if (c.type === "remarquable") return `<p class="at-lieu-phrase">${echapper(c.phrase || "Le site remarquable du territoire.")}</p>`
+    + `<p class="at-ouvre">${apercu ? "Il s'ouvre à la fin du territoire." : "Il s'ouvre quand tous les lieux du territoire sont terminés."}</p>`;
+  const ouvre = apercu ? "" : lieuPrecedent(t, c) && chapitreOuvert(t, lieuPrecedent(t, c))
+    ? `S'ouvre à l'argent ${echapper(deLieu(lieuPrecedent(t, c).nom))} : ${texteManqueLieu(t, c, true).toLowerCase()}.` : "S'ouvrira plus tard.";
+  return (ouvre ? `<p class="at-ouvre">${ouvre}</p>` : "") + avantGoutLieu(t, c);
 }
 // Étape K3 : un lieu pas encore ouvert (ou d'un territoire en aperçu) montre ce qui l'attend : sa phrase, ses expéditions, son espèce
 function avantGoutLieu(t, c) {

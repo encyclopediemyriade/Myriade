@@ -100,39 +100,53 @@ function poserInsolite(espece) {
     ajouterBouton("Vrai", vraie);
     ajouterBouton("Faux", !vraie);
     enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null,
-                explication: (vraie ? it.fait : "C'est faux : " + minusculeDebut(it.fait)) + (it.explication ? " " + it.explication : "") };
+                explication: (vraie ? it.fait : "C'est faux : " + minusculeDebut(it.fait)) + (it.explication ? " " + it.explication : ""),
+                // R239 (36.39) : la phrase vraie est déjà affichée → l'explication ne la répète pas
+                ...(vraie ? { montre: true, complement: it.explication || "", erreur: "Pas tout à fait : c'est vrai." } : {}) };
   } else if (c.type === "deux") {                      // étape RF1 : « Étonnant » — deux affirmations, une seule vraie
     enTete(espece, true, true);
     document.getElementById("question").textContent = "À votre avis, lequel est vrai ?";
     zone.classList.add("reponses-phrases");
     for (const t of melanger([it.fait, it.faux])) ajouterBouton(t, t === it.fait);
-    enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null, explication: it.fait + (it.explication ? " " + it.explication : "") };
+    enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null, explication: it.fait + (it.explication ? " " + it.explication : ""),
+                montre: true, complement: it.explication || "", erreur: "Pas tout à fait : c'était l'autre." };   // R239 (36.39)
   } else if (c.type === "intrus") {
     enTete(espece, true, true);
     document.getElementById("question").textContent = "Une de ces phrases est fausse. Laquelle ?";
     zone.classList.add("reponses-phrases");
     for (const t of melanger([...it.vraies, it.fausse])) ajouterBouton(t, t === it.fausse);
     enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null,
-                explication: `L'intrus : « ${it.fausse} »${it.explication ? " " + it.explication : ""}` };
+                explication: `L'intrus : « ${it.fausse} »${it.explication ? " " + it.explication : ""}`,
+                montre: true, complement: it.explication || "", erreur: "Pas tout à fait : l'intrus est la phrase en vert." };   // R239 (36.39)
   }
   else if (c.type === "scene") {                       // QI6 : la scène « Que fait-il ? » (étape 2)
     enTete(espece, true, true);
     document.getElementById("question").textContent = `${it.scene} ${it.question}`;
     zone.classList.add("reponses-phrases");
     for (const t of melanger([it.bonne, ...it.mauvaises])) ajouterBouton(t, t === it.bonne);
-    enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null, explication: it.bonne + (it.explication ? " " + it.explication : "") };
+    enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null, explication: it.bonne + (it.explication ? " " + it.explication : ""),
+                montre: true, complement: it.explication || "", erreur: it.mauvaises.length > 1 ? "Pas tout à fait : la bonne réponse est en vert." : "Pas tout à fait : c'était l'autre." };   // R239 (36.39)
   }
   else if (c.type === "si") {                          // QI5 : « Que se passe-t-il si… ? » (dans l'essai, et plus tard la finale)
     enTete(espece, true, true);
     document.getElementById("question").textContent = `${it.situation} ${it.question}`;   // la situation d'abord, puis la question
     zone.classList.add("reponses-phrases");
     for (const t of melanger([it.bonne, ...it.mauvaises])) ajouterBouton(t, t === it.bonne);
-    enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null, explication: it.bonne + (it.explication ? " " + it.explication : "") };
+    enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null, explication: it.bonne + (it.explication ? " " + it.explication : ""),
+                montre: true, complement: it.explication || "", erreur: it.mauvaises.length > 1 ? "Pas tout à fait : la bonne réponse est en vert." : "Pas tout à fait : c'était l'autre." };   // R239 (36.39)
   }
   if (typeof avantQuestionExpedition === "function") avantQuestionExpedition(espece);   // la bande montre l'espèce de la question
 }
 function minusculeDebut(t) { return t ? t.charAt(0).toLowerCase() + t.slice(1) : ""; }
 
+// Étape R239 (36.39, note 39 du 16/11) : quand la bonne phrase est déjà affichée (en vert), l'explication ne la répète pas :
+//   « Bravo ! » + le complément seulement ; en cas d'erreur, « Pas tout à fait : c'était l'autre. » + le complément.
+function texteRetourInsolite(estJuste) {
+  const ec = enCours;
+  if (!ec.montre) return (estJuste ? "Bravo ! " : "") + ec.explication;
+  const debut = estJuste ? "Bravo !" : ec.erreur || "Pas tout à fait : la bonne réponse est en vert.";
+  return ec.complement ? `${debut} ${ec.complement}` : debut;
+}
 // ---- La réponse (appelé par repondreRevision, 08) ----
 function repondreInsolite(boutonClique, estJuste) {
   const { espece, explication, insolite } = enCours;
@@ -155,12 +169,12 @@ function repondreInsolite(boutonClique, estJuste) {
     noterAuBilan(espece, INSOLITE, "Fait insolite : " + (insolite.type === "intrus" ? "l'intrus repéré" : minusculeDebut(insolite.item.fait)));
     defi.bonnes = defi.bonnes + 1;
     defi.score = defi.score + 1;
-    retour.textContent = "Bravo ! " + explication;
+    retour.textContent = texteRetourInsolite(true);
     jouerSon();
   } else {
     if (boutonClique) { boutonClique.classList.add("fausse"); jouerSon("mauvaise"); }
     if (!defi.rates.some(r => r.nom === espece.nom_courant && r.explication === explication)) defi.rates.push({ nom: espece.nom_courant, explication });
-    retour.textContent = explication;
+    retour.textContent = texteRetourInsolite(false);
   }
   defi.faites = defi.faites + 1;
   if (typeof apresReponseExpedition === "function") apresReponseExpedition(espece);
@@ -286,12 +300,15 @@ function repondreInsoliteRencontre(boutonClique, estJuste) {
     suivi.insolites = suivi.insolites || {};
     suivi.insolites[insolite.item.id] = (suivi.insolites[insolite.item.id] || 0) + 1;
     noterAuBilan(espece, INSOLITE, "Fait insolite : " + minusculeDebut(insolite.item.fait));
-    retour.textContent = "Bravo ! " + explication;
+    retour.textContent = texteRetourInsolite(true);
     jouerSon();
   } else {
     if (boutonClique) { boutonClique.classList.add("fausse"); jouerSon("mauvaise"); }
-    retour.textContent = explication;
+    retour.textContent = texteRetourInsolite(false);
   }
+  // Étape R246 (36.31, choix 31C du 17/11) : « Étonnant » → la fenêtre « Le saviez-vous ? » juste après la réponse
+  //   (le fait + son complément) ; l'explication sous les réponses reste courte (le complément est dans la fenêtre).
+  if (insolite.etonnant) retour.textContent = estJuste ? "Bravo !" : "Pas tout à fait : c'était l'autre.";
   const boutonSuivant = document.getElementById("suivant");
   if (session) {
     session.faites = session.faites + 1;
@@ -305,7 +322,54 @@ function repondreInsoliteRencontre(boutonClique, estJuste) {
   sauvegarder();
   boutonSuivant.classList.remove("cache");
   noterDansHistorique();
+  // le bouton de la suite attend la fenêtre (c'est elle qui mène à la suite) : pas de course entre les deux
+  if (insolite.etonnant) { if (session) session.saviezMontre = true; boutonSuivant.classList.add("cache");
+    setTimeout(() => ouvrirSaviezVous({ espece, fait: insolite.item.fait, complement: insolite.item.explication, viaSuivant: true }), 650); }
 }
+
+// ==================================================================
+// Étape R246 (36.31, choix 31C du 17/11) : la fenêtre « Le saviez-vous ? »
+//   Un seul fait par Rencontre : le fait « Étonnant » (faits insolites) s'il y en a un ; sinon l'anecdote gagnée de l'espèce
+//   (anecdotes vérifiées), montrée une seule fois, à la fin de la Rencontre. Plus d'encadré « Fait insolite » sur l'écran de fin.
+//   Le bouton de la fenêtre mène directement à la suite (un seul toucher).
+// ==================================================================
+function ouvrirSaviezVous({ espece, fait, complement, suite, viaSuivant }) {
+  let f = document.getElementById("saviez-vous");
+  if (!f) {
+    f = document.createElement("div");
+    f.id = "saviez-vous";
+    f.innerHTML = `<div class="sv-fond"></div><div class="sv-panneau" role="dialog" aria-modal="true" aria-labelledby="sv-titre"></div>`;
+    document.body.appendChild(f);
+  }
+  const bouton = document.getElementById("suivant");
+  const texteSuite = viaSuivant && bouton ? bouton.textContent.replace(/\s*→\s*$/, "") : "Continuer";
+  f.querySelector(".sv-panneau").innerHTML = `
+      <div class="sv-haut"><span class="sv-ico" aria-hidden="true">!</span><h3 id="sv-titre">Le saviez-vous ?</h3></div>
+      <p class="sv-fait">${fait}</p>${complement ? `<p class="sv-complement">${complement}</p>` : ""}
+      <p class="sv-espece">${espece ? espece.nom_courant : ""}</p>
+      <button type="button" id="saviez-fermer" class="sv-suite">${texteSuite} →</button>`;
+  const fermer = () => { f.classList.remove("ouvert"); if (viaSuivant && bouton) bouton.classList.remove("cache"); };
+  f.querySelector(".sv-fond").onclick = fermer;
+  f.querySelector("#saviez-fermer").onclick = () => {
+    fermer();
+    if (suite) suite();
+    else if (viaSuivant && bouton) bouton.click();
+  };
+  f.classList.add("ouvert");
+  setTimeout(() => { const b = document.getElementById("saviez-fermer"); if (b) b.focus(); }, 50);
+}
+function saviezVousOuvert() { const f = document.getElementById("saviez-vous"); return !!(f && f.classList.contains("ouvert")); }
+function fermerSaviezVous() { const f = document.getElementById("saviez-vous"); if (f) { const fond = f.querySelector(".sv-fond"); if (fond) fond.click(); else f.classList.remove("ouvert"); } }
+// Sans fait « Étonnant » : l'anecdote gagnée de l'espèce (la plus récente), une seule fois par anecdote
+function anecdoteAMontrer(espece) {
+  if (!espece || typeof anecdotesGagnees !== "function" || !estIdentifiee(espece)) return null;
+  const a = anecdotesGagnees(espece)[0];
+  if (!a) return null;
+  const cle = espece.nom_courant + "|" + a.niveau;
+  if (suivi.saviezVus && suivi.saviezVus[cle]) return null;
+  return { cle, texte: a.texte };
+}
+function noterAnecdoteVue(cle) { suivi.saviezVus = suivi.saviezVus || {}; suivi.saviezVus[cle] = 1; sauvegarder(); }
 
 // ==================================================================
 // Étape QI5 (09/11, choix d'Aubin : « Que se passe-t-il si » en fin d'expédition, « Reliez » s'il y a de bons candidats)
@@ -382,7 +446,7 @@ function ouvrirSiFin(it, apres) {
     if (!juste) btn.classList.add("fausse");
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     if (juste) noterInsoliteTrouve(it.id);
-    document.getElementById("qi-retour").innerHTML = `${juste ? "Bravo ! " : ""}${echapper(it.bonne)}${it.explication ? `<br><small>${echapper(it.explication)}</small>` : ""}`;
+    document.getElementById("qi-retour").innerHTML = `${juste ? "Bravo !" : choix.length > 2 ? "Pas tout à fait : la bonne réponse est en vert." : "Pas tout à fait : c'était l'autre."}${it.explication ? ` ${echapper(it.explication)}` : ""}`;   // R239 (36.39) : la bonne réponse, déjà en vert, n'est plus recopiée
     const s = document.getElementById("qi-suite"); s.classList.remove("cache"); s.onclick = fermer(apres); s.focus();
   });
   window.scrollTo(0, 0);

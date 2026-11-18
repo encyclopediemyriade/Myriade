@@ -78,14 +78,26 @@ function afficherBulle(texte) {
 // Étape 143 : sons choisis le 12/10 (goutte de bois, arpège de harpe, clochettes, grand arpège)
 // Étape 170 (choix du 13/10, maquette_sons_erreur.html) : la mauvaise réponse a un son, le « hou-hou de chouette ».
 //   Tous les jeux (le Duel aussi depuis l'étape 171). Pas de son pour « Je ne sais pas » ni pour « Presque ».
-const SONS_CHOISIS = { bonne: "bonne_goutte", medaille: "medaille_harpe", badge: "badge_clochettes", rang: "rang_harpe",
-                       mauvaise: "erreur_chouette", fin: "fin_carillon", parfaite: "fin_parfaite" };   // étape 196 : le son de fin de partie
+// Étape R245 (36.12, choix d'Aubin du 17/11) : famille « Bois doux » partout — une seule recette pour tout le jeu,
+//   plus basse et plus douce que les cris (bonne : 2 notes de bois qui montent ; mauvaise : une note grave courte ;
+//   fin : 4 notes). Le joueur peut couper ces petits sons dans Réglages (« Petits sons : oui / non ») ; les cris restent.
+const SONS_CHOISIS = { bonne: "doux_bonne", medaille: "doux_medaille", badge: "doux_badge", rang: "doux_rang",
+                       mauvaise: "doux_mauvaise", fin: "doux_fin", parfaite: "doux_parfaite" };
 // ---- Les sons du jeu, fabriqués par le navigateur (aucun fichier) ----
 // Chaque son est une « recette » : des notes (en hertz) jouées l'une après l'autre avec un timbre.
 //   timbres : "doux" (sinus), "cloche" (sinus + harmonique de cloche), "harpe" (triangle pincé),
 //             "bois" (marimba : sinus court), "flute" (attaque lente, léger vibrato), "oiseau" (sifflement qui glisse),
 //             "cor" (dent de scie adoucie, accord tenu)
 const RECETTES_SONS = {
+  // Étape R245 : la famille « Bois doux » (timbre boisdoux : sinus rond, attaque douce, extinction rapide, pas d'harmonique aiguë)
+  doux_bonne:     { timbre: "boisdoux", notes: [392, 523], ecart: 0.09, duree: 0.28, volume: 0.07 },
+  doux_mauvaise:  { timbre: "boisdoux", notes: [220], ecart: 0, duree: 0.22, volume: 0.075 },
+  doux_fin:       { timbre: "boisdoux", notes: [392, 494, 587, 784], ecart: 0.13, duree: 0.45, volume: 0.07 },
+  doux_parfaite:  { timbre: "boisdoux", notes: [392, 494, 587, 784, 988], ecart: 0.11, duree: 0.6, volume: 0.07 },
+  doux_medaille:  { timbre: "boisdoux", notes: [440, 554, 659], ecart: 0.1, duree: 0.45, volume: 0.07 },
+  doux_badge:     { timbre: "boisdoux", notes: [523, 659, 784], ecart: 0.1, duree: 0.45, volume: 0.07 },
+  doux_rang:      { timbre: "boisdoux", notes: [392, 494, 587, 784, 988], ecart: 0.1, duree: 0.6, volume: 0.07 },
+  // Anciennes recettes (gardées pour mémoire, plus utilisées depuis R245)
   // Bonne réponse
   bonne_actuel:   { timbre: "doux",   notes: [660, 880], ecart: 0.12, duree: 0.35, volume: 0.06 },
   bonne_goutte:   { timbre: "bois",   notes: [880, 1320], ecart: 0.07, duree: 0.25, volume: 0.10 },
@@ -140,6 +152,13 @@ function jouerRecette(nom) {
         g.gain.value = gainRel; o.connect(g); g.connect(sortie); o.start(t); o.stop(fin + 0.05);
         return o;
       };
+      if (r.timbre === "boisdoux") { sortie.gain.setValueAtTime(0.0001, t); sortie.gain.linearRampToValueAtTime(r.volume, t + 0.012);
+                                     sortie.gain.exponentialRampToValueAtTime(0.0001, fin);
+                                     const filtre = ctx.createBiquadFilter(); filtre.type = "lowpass"; filtre.frequency.value = 1800; filtre.connect(sortie);
+                                     const o1 = ctx.createOscillator(), g1 = ctx.createGain(); o1.type = "sine"; o1.frequency.value = f; g1.gain.value = 1;
+                                     o1.connect(g1); g1.connect(filtre); o1.start(t); o1.stop(fin + 0.05);
+                                     const o2 = ctx.createOscillator(), g2 = ctx.createGain(); o2.type = "sine"; o2.frequency.value = f * 2; g2.gain.value = 0.18;
+                                     o2.connect(g2); g2.connect(filtre); o2.start(t); o2.stop(t + 0.08); }
       if (r.timbre === "doux")   { enveloppe(sortie, 0.02); osc("sine", f); }
       if (r.timbre === "cloche") { enveloppe(sortie, 0.005); osc("sine", f); osc("sine", f * 2.76, 0.35); osc("sine", f * 5.4, 0.12); }
       if (r.timbre === "harpe")  { enveloppe(sortie, 0.004); osc("triangle", f); osc("sine", f * 2, 0.25); }
@@ -159,10 +178,11 @@ function jouerRecette(nom) {
   } catch (e) { /* pas de son possible : tant pis */ }
 }
 
+// Étape R245 : « Petits sons : oui / non » (Réglages) ; non = aucun petit son, les cris des animaux restent
+function petitsSonsActifs() { return !(typeof suivi === "object" && suivi && suivi.petitsSons === false); }
 function jouerSon(moment = "bonne") {
-  if (!sonActif || moment === null) return;   // étape 212 : null = pas de son (déjà joué)                 // le joueur a répondu qu'il n'a pas le son (étape 51)
+  if (!sonActif || moment === null || !petitsSonsActifs()) return;   // étape 212 : null = pas de son (déjà joué)                 // le joueur a répondu qu'il n'a pas le son (étape 51)
   jouerRecette(SONS_CHOISIS[moment]);
-  if (moment === "parfaite") setTimeout(() => jouerRecette("fin_parfaite_accord"), 700);   // étape 205
 }
 
 // ---- Étape 165 : la série du Duel, en sons et en images ----
@@ -170,16 +190,16 @@ function jouerSon(moment = "bonne") {
 // que la bonne réponse habituelle. Après 11 d'affilée, on reste sur la note la plus haute.
 const GAMME_SERIE = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24];      // en demi-tons au-dessus de la première note
 function jouerNoteSerie(n) {
-  if (!sonActif) return;
-  const f = 784 * Math.pow(2, GAMME_SERIE[Math.min(n, GAMME_SERIE.length) - 1] / 12);
-  jouerRecette({ timbre: "bois", notes: [f, f * 1.5], ecart: 0.07, duree: 0.25, volume: 0.10 });
+  if (!sonActif || !petitsSonsActifs()) return;
+  const f = 392 * Math.pow(2, GAMME_SERIE[Math.min(n, GAMME_SERIE.length) - 1] / 12);   // R245 : bois doux, plus bas
+  jouerRecette({ timbre: "boisdoux", notes: [f, f * 4 / 3], ecart: 0.09, duree: 0.28, volume: 0.07 });
 }
 // Un palier de série : un petit arpège de harpe, plus long à chaque niveau (étape 167)
 function jouerSonPalier(niveau) {
-  if (!sonActif) return;
-  const base = [523, 587, 659, 698, 784][Math.min(niveau, 5) - 1] || 523;
+  if (!sonActif || !petitsSonsActifs()) return;
+  const base = [392, 440, 494, 523, 587][Math.min(niveau, 5) - 1] || 392;   // R245 : bois doux
   const notes = [1, 1.25, 1.5, 2, 2.5, 3].slice(0, 2 + Math.min(niveau, 4)).map(x => base * x);
-  jouerRecette({ timbre: "harpe", notes, ecart: 0.07, duree: 0.9, volume: 0.11 });
+  jouerRecette({ timbre: "boisdoux", notes, ecart: 0.1, duree: 0.5, volume: 0.07 });
 }
 // Le bandeau d'un palier de série : « 10 d'affilée ! », quelques étoiles depuis le compteur (le jeu n'est pas coupé)
 const COULEURS_NIVEAU = ["var(--texte-doux)", "var(--territoire)", "#3e7b55", "#b98b52", "#c9a227", "#c9a227"];

@@ -5316,3 +5316,436 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
   color: #fff; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
 .apropos .ap-toutes { margin: 10px 0; border: 1px solid var(--trait, #CFC5AE); border-radius: 6px; background: var(--carte, #FBF8F1); padding: 0 14px; }
 .apropos .ap-toutes summary { cursor: pointer; padding: 12px 0; font-weight: 600; }
+
+/* ==========================================================================
+   Étape R239 (17/11/2026, retours du 16/11 au soir, corrections sûres)
+   ========================================================================== */
+/* 36.05 : « Plusieurs réponses » en étiquette (étape 2, « Et si… ? », Approfondir) ; plus de case à cocher, la réponse s'allume */
+.etiq-plusieurs { display: inline-block; padding: 2px 9px; border-radius: 999px; background: #F3E6D2; color: #8A4F1C; font-size: 12.5px; font-weight: 600; letter-spacing: .02em; }
+.en-consigne { margin: 2px 0 8px; }
+#question .consigne-cases { margin-top: 6px; }
+/* 36.09 : titre des jeux sur deux lignes au plus (il poussait la page hors de l'écran et le bouton du bas avec elle) */
+.cdo-titre, .dfx-haut .cdo-titre { flex: 1; min-width: 0; white-space: normal; line-height: 1.25; overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.cdo-serie { margin: 4px 0 8px; color: var(--texte-doux); font-size: .9rem; }
+@media (max-width: 760px) {
+  html, body { overflow-x: clip; }   /* filet de sécurité : rien ne doit élargir la page sur téléphone */
+}
+/* 36.27 : les lignes du Profil qui s'ouvrent (territoire, famille, coriace) */
+.pgv-touche { cursor: pointer; }
+.pgv-touche:active { background: rgba(31,58,46,.06); }
+.pgv-fleche { flex: none; align-self: center; margin-left: 6px; font-size: 22px; line-height: 1; color: var(--texte-doux); }
+/* 36.25a : la petite France en haut à gauche de la carte d'un territoire (onglet Carte), comme sur la carte « Reprendre » */
+.at-carte-terr { position: relative; }
+.at-carte-terr .mini-france { position: absolute; left: 6px; top: 6px; width: 58px; padding: 4px; border-radius: 6px; background: rgba(251,248,241,.92); box-sizing: border-box; pointer-events: none; }
+/* 36.15 : page d'un lieu, le titre de la prochaine expédition au-dessus du bouton */
+.lieu-go-titre { display: block; margin: 2px 0 6px; font-weight: 600; }
+/* 36.30 : le dessin du régime alimentaire dans le rond de l'écran « Quelques informations sur sa vie » */
+.sv-picto.sv-img { background: #EFE9DB; }
+.sv-picto.sv-img img { width: 30px; height: 30px; object-fit: contain; }
+/* 36.35 : l'écran de lecture « Quelques informations sur sa vie » se lit sans descendre sur téléphone (photo plus basse, lignes serrées) */
+@media (max-width: 760px) {
+  .carte-rencontre:has(#reponses .sa-vie) #photo-rencontre { height: clamp(110px, 20svh, 170px); }
+  .sa-vie .sv-ligne { padding: 9px 0; gap: 12px; font-size: 15px; line-height: 1.35; }
+  .sa-vie .sv-picto { width: 34px; height: 34px; }
+  .sa-vie .sv-picto svg { width: 21px; height: 21px; }
+  .sa-vie .sv-picto.sv-img img { width: 26px; height: 26px; }
+  #reponses.annonce-etape .sa-vie { margin: 2px 0 4px; padding: 2px 14px; }
+}
+/* 36.16b : toucher une photo pour l'agrandir (petite loupe dans le coin), glisser de l'une à l'autre */
+.agr { cursor: zoom-in; }
+.agr-cadre { position: relative; display: block; }
+.agr .agr-loupe, .agr-cadre .agr-loupe { position: absolute; right: 6px; top: 6px; width: 26px; height: 26px; border-radius: 50%; background: rgba(251,248,241,.9);
+  color: #1F3A2E; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 2; }
+.agr .agr-loupe svg { width: 15px; height: 15px; }
+.fe-photo.agr { position: relative; }
+#photo-agrandie .pa-points { position: absolute; left: 0; right: 0; bottom: -26px; display: flex; justify-content: center; gap: 8px; }
+#photo-agrandie .pa-points i { width: 8px; height: 8px; border-radius: 50%; background: rgba(243,238,226,.4); }
+#photo-agrandie .pa-points i.actif { background: #f3eee2; }
+#photo-agrandie.galerie figcaption { margin-bottom: 18px; }
+/* 36.32 : après une question « trouver parmi plusieurs photos », la bonne en grand, les autres en rangée dessous avec leur nom */
+#reponses.forme-choix[data-repondu] .fe-photos, #reponses.forme-choix[data-repondu] .fe-photos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#reponses.forme-choix[data-repondu] .fe-photo { position: relative; }
+#reponses.forme-choix[data-repondu] .fe-photo.juste { grid-column: 1 / -1; order: -1; }
+#reponses.forme-choix[data-repondu] .fe-photo:not(.juste) .fe-legende { position: static; display: block; background: var(--carte); color: var(--texte); font-size: 12px; line-height: 1.25; padding: 4px 5px; }
+#reponses.forme-choix[data-repondu] .fe-photo:not(.juste) { aspect-ratio: auto; display: flex; flex-direction: column; }
+#reponses.forme-choix[data-repondu] .fe-photo:not(.juste) img, #reponses.forme-choix[data-repondu] .fe-photo:not(.juste) .a-venir { aspect-ratio: 4 / 3; height: auto; }
+#reponses.forme-choix[data-repondu] .fe-photo.fausse { opacity: 1; outline: 3px solid #c58a4a; outline-offset: -3px; }
+.ore-photos.repondu { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.ore-photos.repondu .ore-photo.bon { grid-column: 1 / -1; order: -1; }
+.ore-photos.repondu .ore-photo { position: relative; }
+.ore-photos.repondu .ore-photo:not(.bon) .ore-nom { font-size: 12px; padding: 4px 6px; font-weight: 500; line-height: 1.25; }
+.ore-photos.repondu .ore-photo.autre { opacity: 1; }
+@media (max-width: 760px) {
+  #reponses.forme-choix[data-repondu] .fe-photos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+}
+/* Étape R239b (36.03, note 3 du 16/11) : effets d'apparition raccourcis — le contenu arrive plus vite (avant : 1,9 s d'attente
+   au début d'une Rencontre ; nom révélé en 0,8 s ; annonces après 0,35 s). Mêmes effets, plus courts. */
+#photo-rencontre.apparition-sauvage img { animation-duration: 1.1s; }
+.carte-rencontre.apparition-sauvage .contenu { animation-duration: .35s; animation-delay: .6s; }
+#nom.revele { animation-duration: .45s; }
+.trait-arrive { animation-duration: .3s; }
+#intermede-exp { animation-duration: .2s; }
+/* Étape R241 (notes 33, 17 et 2 du 16/11) : plus de « Quitter » ; la sortie est en haut */
+.haut-jeu { margin: 0 0 8px; }
+.haut-jeu-retour { font: inherit; font-size: 14px; color: var(--texte); background: var(--carte); border: 1px solid var(--trait); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+#vue-rencontre:has(#fil-expedition) .haut-jeu { display: none; }
+.dfx-haut .dfx-sortir { font-size: 18px; line-height: 1; padding: 5px 12px; }
+/* Étape R242 (36.10 + 36.13) : les questions du défi par d'autres chemins — « Laquelle est … ? » et le cri, en 4 photos */
+.dfx-q-nom { margin: 6px 0 10px; }
+.dfx-ecoute { margin: 2px 0 10px; }
+.dfx-ecoute .ore-play { width: 76px; height: 76px; }
+.dfx-photos .ore-photo.retire { opacity: .25; }
+.dfx-ecouter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 4px; }
+.dfx-ecouter small { width: 100%; color: var(--texte-doux); }
+.dfx-ecouter button { display: inline-flex; align-items: center; gap: 6px; }
+.dfx-ecouter svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* Étape R245 (36.12) : réglage « Petits sons : oui / non » — deux boutons collés, le choix en vert sombre */
+.reglage-oui-non { display: inline-flex; gap: 0; }
+.reglage-oui-non .bouton-apropos { border-radius: 0; min-width: 56px; }
+.reglage-oui-non .bouton-apropos:first-child { border-radius: 6px 0 0 6px; }
+.reglage-oui-non .bouton-apropos:last-child { border-radius: 0 6px 6px 0; border-left: 0; }
+.reglage-oui-non .bouton-apropos.choisi { background: #1F3A2E; border-color: #1F3A2E; color: #F3EEE2; }
+
+/* Étape R245 (36.26, choix 26C) : deux onglets « Toutes · N | Découvertes · N » sous les familles */
+.ency-onglets { display: flex; width: 100%; max-width: 360px; border: 1.5px solid #1F3A2E; border-radius: 999px; overflow: hidden; margin: 10px 0 6px; }
+.ency-onglets button { flex: 1 1 50%; min-height: 36px; padding: 0 10px; border: 0; background: var(--carte); color: #1F3A2E; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.ency-onglets button + button { border-left: 1.5px solid #1F3A2E; }
+.ency-onglets button.actif { background: #1F3A2E; color: #FBF8F1; }
+.filtres .ency-onglets-filtres { margin-top: 12px; }
+@media (max-width: 760px) {
+  .ency-onglets-filtres { display: none; }
+  .alb-onglets { max-width: none; margin: 8px 0 8px; }
+}
+
+/* Étape R245 (36.37) : « ← Question précédente » retiré partout */
+.revoir-precedente { display: none !important; }
+
+/* Étape R246 (36.31, choix 31C) : la fenêtre « Le saviez-vous ? » juste après la question « Étonnant » */
+#saviez-vous { display: none; position: fixed; inset: 0; z-index: 1200; align-items: center; justify-content: center; padding: 18px; }
+#saviez-vous.ouvert { display: flex; }
+#saviez-vous .sv-fond { position: absolute; inset: 0; background: rgba(31, 58, 46, .45); animation: sv-fondu .2s ease-out; }
+#saviez-vous .sv-panneau { position: relative; width: 100%; max-width: 420px; background: var(--carte); border-radius: 14px; padding: 18px 18px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25); border-top: 4px solid #A8652A; animation: sv-monte .25s ease-out; }
+#saviez-vous .sv-haut { display: flex; align-items: center; gap: 10px; }
+#saviez-vous .sv-ico { flex: none; width: 28px; height: 28px; border-radius: 50%; background: #A8652A; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: Literata, Georgia, serif; }
+#saviez-vous h3 { margin: 0; font-family: Literata, Georgia, serif; font-size: 20px; color: #1F3A2E; }
+#saviez-vous .sv-fait { margin: 12px 0 0; font-size: 17px; line-height: 1.45; font-weight: 600; color: var(--texte); }
+#saviez-vous .sv-complement { margin: 8px 0 0; font-size: 15px; line-height: 1.45; color: var(--texte); }
+#saviez-vous .sv-espece { margin: 10px 0 0; font-size: 13px; color: var(--texte-doux); }
+#saviez-vous .sv-suite { display: block; width: 100%; margin-top: 14px; min-height: 46px; border: 0; border-radius: 999px; background: #1F3A2E; color: #FBF8F1;
+  font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; }
+@keyframes sv-fondu { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sv-monte { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* Étape R246 (36.38, choix 38B) : fin de Rencontre — photo plus petite, « Qui rencontrer ensuite ? » juste dessous,
+   les espèces à rencontrer entourées d'ocre (touchables), les autres grisées ; tout tient sur l'écran sans descendre */
+.resume-fin-tel .rft-grande.rft-petite { height: 150px; }
+.resume-fin-tel .rft-grande.rft-petite .rft-titre { font-size: 21px; }
+.resume-fin-tel .rft-grande.rft-petite .rft-grande-bas { padding: 26px 12px 9px; }
+.resume-fin-tel .qui-ensuite-bande { margin: 10px 0 2px; text-align: center; }
+.resume-fin-tel .qui-ensuite-bande h3 { font-family: Literata, Georgia, serif; font-size: 17px; margin: 0 0 8px; color: #1F3A2E; text-align: left; }
+.resume-fin-tel .qui-ensuite-bande .rft-ronds { gap: 7px; justify-content: flex-start; padding-left: 3px; }
+.resume-fin-tel .qui-ensuite-bande .rft-rond, .resume-fin-tel .qui-ensuite-bande .rft-rond img { width: 38px; height: 38px; }
+.resume-fin-tel .qui-ensuite-bande .rft-rond img { border-radius: 50%; object-fit: cover; display: block; }
+.resume-fin-tel .qe-choix { padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer; }
+.resume-fin-tel .qe-choix img { opacity: 1; box-shadow: 0 0 0 3px #A8652A; }
+.resume-fin-tel .qe-choix:active img { transform: scale(.94); }
+.resume-fin-tel .qe-gris img { opacity: .45; filter: grayscale(.85); }
+.resume-fin-tel .qe-gris.arrive img { opacity: .8; filter: grayscale(.4); box-shadow: none; }
+.resume-fin-tel .qe-aide { display: block; margin-top: 7px; font-size: 13px; color: var(--texte-doux); text-align: left; }
+.resume-fin-tel .rft-score.rft-score-ligne { margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Étape R246 (36.11, choix 11B) : étape 2 — compteur en cases (ocre = ratée), étiquette « ↻ À revoir » sur la question reposée */
+.en-carte .fp-compte { display: inline-flex; align-items: center; gap: 8px; }
+.en-cases { display: inline-flex; gap: 3px; }
+.en-cases i { display: block; width: 14px; height: 5px; border-radius: 3px; background: var(--trait, #CFC5AE); }
+.en-cases i.ok { background: #3E7B55; }
+.en-cases i.rate { background: #A8652A; }
+.en-cases i.encours { outline: 1.5px solid #1F3A2E; outline-offset: 1px; }
+.en-cases i.encours:not(.ok):not(.rate) { background: #1F3A2E; }
+.en-a-revoir { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 8px 0 2px; font-size: 13.5px; color: var(--texte-doux); }
+.etiq-a-revoir { display: inline-block; padding: 2px 9px; border-radius: 999px; background: #F3E6D2; color: #8A4F1C; font-size: 12.5px; font-weight: 600; }
+
+/* Étape R246 (36.29, choix 29C) : les empreintes en grand — l'une au-dessus de l'autre, la taille réelle en gros,
+   une loupe bien visible (44 px) dans un coin réservé (le coin n'est pas une réponse) */
+#reponses.empreintes-duo { display: flex; flex-direction: column; gap: 12px; }
+.emp-carte { position: relative; }
+.emp-choix .emp-bouton { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; min-height: 200px;
+  padding: 12px 64px 10px 12px; background: #efe8da; border: 2px solid var(--trait, #CFC5AE); border-radius: 12px; cursor: pointer; }
+.emp-choix .emp-bouton.juste { border-color: #3E7B55; background: #E4EFE3; }
+.emp-choix .emp-bouton.fausse { border-color: #A8652A; background: #F6E9DA; }
+.emp-choix .emp-bouton .legende { margin-top: 2px; font-weight: 600; color: var(--texte); }
+.emp-dessin { display: flex; align-items: center; justify-content: center; min-height: 150px; width: 100%; }
+.emp-svg { display: block; overflow: hidden; }
+.emp-taille { display: flex; align-items: baseline; justify-content: center; gap: 6px; color: #1F3A2E; }
+.emp-taille b { font-family: Literata, Georgia, serif; font-size: 22px; font-weight: 700; }
+.emp-taille small { font-size: 13px; color: var(--texte-doux); }
+.emp-taille.emp-piste { align-items: center; gap: 8px; }
+.emp-taille.emp-piste i { display: block; height: 6px; border: 2px solid #1F3A2E; border-top: 0; }
+.emp-taille.emp-piste b { font-size: 19px; }
+/* le coin réservé : 64 × 64 px en haut à droite, la loupe de 44 px au milieu ; un toucher ici n'est jamais une réponse */
+.emp-coin { position: absolute; top: 0; right: 0; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; z-index: 2; }
+.emp-loupe { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #1F3A2E; background: #FBF8F1; color: #1F3A2E; display: flex; align-items: center; justify-content: center;
+  padding: 0; cursor: pointer; box-shadow: 0 2px 6px rgba(31,58,46,.18); }
+.emp-loupe svg { width: 24px; height: 24px; }
+.emp-loupe:active { background: #1F3A2E; color: #FBF8F1; }
+.emp-meme-echelle { margin: -2px 0 0; font-size: 13px; color: var(--texte-doux); text-align: center; }
+/* une seule empreinte, à la place de la photo (« À qui appartient cette empreinte ? ») */
+.photo.cadre-empreinte .emp-seule { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 100%; padding: 12px 12px 10px; box-sizing: border-box; }
+/* plein écran (loupe) */
+#photo-agrandie .pa-empreinte { background: #efe8da; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+#photo-agrandie .pa-empreinte figcaption { color: #1F3A2E; }
+/* la petite empreinte de la fiche */
+.mini-empreinte-bloc { display: inline-flex; align-items: center; gap: 8px; vertical-align: middle; cursor: zoom-in; }
+.mini-empreinte-bloc small { font-size: 13px; color: var(--texte); white-space: nowrap; }
+
+/* ===== Étape R247 (17/11) : pages ===== */
+/* 36.20 : « Expédition terminée · Et maintenant ? », en haut de la page de l'expédition */
+.exp-maintenant { margin: 12px 0 14px; padding: 14px 16px; border: 2px solid #3E7B55; border-radius: 12px; background: #EEF4EC; display: flex; flex-direction: column; gap: 10px; }
+.em-tete { display: flex; align-items: center; gap: 12px; }
+.em-coche { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #3E7B55; color: #FBF8F1; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
+.em-tete small { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #3E7B55; font-weight: 700; }
+.em-tete b { font-family: Literata, Georgia, serif; font-size: 21px; color: #1F3A2E; }
+.exp-maintenant .em-suite { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 11px 14px; font-size: 17px; }
+.exp-maintenant .em-suite small { font-size: 13px; font-weight: 500; }
+.em-approf { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; border: 1px solid var(--trait, #CFC5AE); border-radius: 8px; background: var(--carte, #FBF8F1);
+  font: inherit; font-weight: 600; color: #1F3A2E; cursor: pointer; }
+.em-approf em, .exp-facultatif { font-style: normal; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #6E6656;
+  border: 1px solid #CFC5AE; border-radius: 99px; padding: 1px 8px; vertical-align: middle; }
+.exp-facultatif { margin-left: 4px; }
+.exp-etape.eclaire { animation: r247-eclaire 1.4s ease-out; }
+@keyframes r247-eclaire { 0%, 30% { box-shadow: 0 0 0 4px #E9C9A0; } 100% { box-shadow: 0 0 0 0 rgba(233,201,160,0); } }
+/* 36.14 : la carte du lieu en cours — la photo ouvre la page du lieu, le bouton reprend */
+.tm-photo.touchable { cursor: pointer; }
+.tm-photo.touchable:active { filter: brightness(.9); }
+.tm-ouvrir { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 2; width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(251,248,241,.92); color: #1F3A2E; font-size: 22px; line-height: 28px; text-align: center; font-weight: 700; }
+.tm-aller:active { filter: brightness(1.15); }
+/* 36.25 : la page d'un territoire (onglet Carte) */
+.at-deux-lignes { margin: -4px 0 12px; font-size: 15px; line-height: 1.4; color: var(--texte); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cl-num { fill: #1F3A2E; font-weight: 700; font-family: Inter, system-ui, sans-serif; pointer-events: none; }
+.cl-num.fini, .cl-num.cours { fill: #FBF8F1; }
+.at-num { width: 26px; height: 26px; flex: none; border-radius: 50%; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #1F3A2E; background: #B9B0A0; }
+.at-num.fini { background: #3E7B55; color: #FBF8F1; } .at-num.cours { background: #A8652A; color: #FBF8F1; }
+.at-num.ouvert { background: #FBF8F1; border: 2.5px solid #3E7B55; } .at-num.ferme { background: #E4DED0; border: 1.5px dashed #8E8676; color: #6E6656; }
+.at-lieux .at-li { scroll-margin: 90px 0 120px; }
+.at-lieu-ligne { border-color: var(--trait); background: var(--carte); }
+.at-lieu-ligne > span:nth-child(2) { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.at-lieu-ligne .at-fleche { flex: none; font-size: 20px; color: #6E6656; }
+.at-lieu-ligne:active { filter: brightness(.96); }
+.at-lieu-ligne.eclaire { animation: r247-eclaire 1.4s ease-out; }
+.at-depli { margin: -4px 4px 4px 50px; padding: 8px 0 4px; font-size: 14px; display: flex; flex-direction: column; gap: 8px; }
+.at-depli[hidden] { display: none; }
+.at-depli p { margin: 0; }
+.at-ouvre { color: #8A4F1E; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .exp-etape.eclaire, .at-lieu-ligne.eclaire { animation: none; } }
+
+/* ===== Étape R248 (17/11) : Accueil, récompenses ===== */
+/* 36.23 : l'espèce du jour en grand */
+.mai-jour-grand { background: var(--carte, #FBF8F1); border: 1px solid var(--trait, #CFC5AE); border-radius: 12px; overflow: hidden; }
+.mai-jour-grand.cache { display: none; }
+.mj-photo { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 0; background: #E4E0D3; cursor: pointer; }
+.mj-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mj-etiq { position: absolute; left: 10px; top: 10px; padding: 3px 10px; border-radius: 99px; background: rgba(31,58,46,.86); color: #FBF8F1;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.mj-corps { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
+.mj-corps h2 { margin: 0; font-family: Literata, Georgia, serif; font-size: 22px; line-height: 1.2; color: #1F3A2E; }
+.mj-ligne { margin: 0; font-size: 14.5px; line-height: 1.4; color: var(--texte); }
+.mj-ou, .mj-sv { font-weight: 700; color: #3E7B55; margin-right: 2px; }
+.mj-ou::after { content: " :"; }
+.mj-boutons { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.mj-go { font-size: 16px; padding: 9px 16px; }
+.mj-ecouter { min-height: 40px; padding: 6px 14px; border: 1px solid var(--trait, #CFC5AE); border-radius: 8px; background: none; font: inherit; font-weight: 600; color: #1F3A2E; cursor: pointer; }
+.mj-ecouter.en-lecture { background: #1F3A2E; color: #FBF8F1; }
+.mj-boutons .mai-tj-gain { margin-left: auto; }
+/* 36.24 : le bouton « +N » pour récupérer, « Tout récupérer », l'envol vers le compteur */
+.recup { flex: none; display: inline-flex; align-items: center; gap: 4px; min-height: 36px; min-width: 56px; justify-content: center; padding: 4px 12px; margin-left: auto;
+  border: 0; border-radius: 99px; background: #A8652A; color: #FBF8F1; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer;
+  box-shadow: 0 2px 0 #7E4A1C; animation: r248-recup 2.4s ease-in-out infinite; }
+.recup svg { width: 15px; height: 15px; fill: currentColor; }
+.recup:active { transform: translateY(1px); box-shadow: none; }
+@keyframes r248-recup { 0%, 80%, 100% { transform: scale(1); } 90% { transform: scale(1.07); } }
+.recup-tout { width: 100%; min-height: 44px; margin-top: 8px; border: 2px solid #A8652A; border-radius: 10px; background: #F6E9DA; color: #7E4A1C;
+  font: inherit; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.recup-tout svg { width: 15px; height: 15px; fill: currentColor; }
+.mai-defi .recup { margin: -4px 0; }
+.mai-d-hier { display: block; font-size: 11.5px; font-weight: 700; color: #A8652A; text-transform: uppercase; letter-spacing: .04em; }
+.mai-defis-plie { width: 100%; display: flex; align-items: center; gap: 10px; padding: 4px 0; border: 0; background: none; font: inherit; color: var(--texte); text-align: left; cursor: pointer; }
+.mai-defis-plie .mai-d-texte { flex: 1; font-weight: 600; }
+.mai-defis-plie .mai-d-case { background: #3E7B55; border-color: #3E7B55; color: #FBF8F1; }
+.mai-d-fleche { color: #6E6656; font-size: 18px; }
+.mai-d-replier { margin-top: 6px; border: 0; background: none; font: inherit; font-size: 13px; color: #6E6656; text-decoration: underline; cursor: pointer; align-self: center; }
+.envol-pas { position: fixed; z-index: 9999; transform: translate(-50%, -50%); pointer-events: none; display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 99px; background: #A8652A; color: #FBF8F1; font-weight: 700; font-size: 15px;
+  transition: transform .5s cubic-bezier(.5,0,.75,.4), opacity .5s ease-in; }
+.envol-pas svg { width: 15px; height: 15px; fill: currentColor; }
+#stats .ph-pas.recu { animation: r248-recu .5s ease-out; }
+@keyframes r248-recu { 0% { transform: scale(1); } 40% { transform: scale(1.25); color: #A8652A; } 100% { transform: scale(1); } }
+.defi .recup { margin-left: 8px; }
+.ac-boutons .recup { margin-left: 0; }
+/* « Reprendre » : un simple bandeau avec la photo du lieu */
+.mai-bandeau { display: flex; align-items: stretch; border-radius: 12px; overflow: hidden; background: #1F3A2E; color: #FBF8F1; min-height: 84px; }
+.mb-lieu { flex: 1; position: relative; display: flex; align-items: flex-end; padding: 12px 14px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; min-width: 0; }
+.mb-lieu img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mb-lieu::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,34,27,.9), rgba(20,34,27,.45)); }
+.mb-lieu:active::after { background: linear-gradient(90deg, rgba(20,34,27,.95), rgba(20,34,27,.6)); }
+.mb-texte { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mb-texte small { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #E9C9A0; }
+.mb-texte b { font-family: Literata, Georgia, serif; font-size: 19px; line-height: 1.2; }
+.mb-texte em { font-style: normal; font-size: 13px; color: #DCD5C4; }
+.mb-go { flex: none; width: 72px; border: 0; background: #E9C9A0; color: #1F3A2E; font-size: 22px; cursor: pointer; }
+.mb-go:active { filter: brightness(.93); }
+/* « En ce moment près de chez vous » */
+.mai-moment { background: var(--carte, #FBF8F1); border: 1px solid var(--trait, #CFC5AE); border-radius: 12px; padding: 12px 14px; }
+.mai-moment.cache { display: none; }
+.mm-liste { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.mm-esp { display: flex; align-items: center; gap: 12px; padding: 4px 0; border: 0; background: none; font: inherit; color: var(--texte); text-align: left; cursor: pointer; }
+.mm-ph { width: 56px; height: 56px; flex: none; border-radius: 10px; overflow: hidden; background: #E4E0D3; }
+.mm-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mm-texte { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.mm-texte b { font-weight: 600; font-size: 15px; } .mm-texte small { font-size: 13px; color: var(--texte-doux); }
+@media (prefers-reduced-motion: reduce) { .recup, #stats .ph-pas.recu { animation: none; } }
+/* 36.01 : Profil 1A — la roue dentée, les contributions dans « Vos chiffres » ; les records sous chaque jeu */
+.pgv-tete { position: relative; }
+.pgv-roue { position: absolute; top: 0; right: 0; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--trait, #CFC5AE); background: var(--carte, #FBF8F1);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; z-index: 2; }
+.pgv-roue svg { width: 24px; height: 24px; fill: none; stroke: #1F3A2E; stroke-width: 1.9; stroke-linecap: round; }
+.pgv-roue:active { background: #EEE8DA; }
+.pgv-tete .pgv-qui { padding-right: 48px; }
+.pgv-contrib-ligne small { color: var(--texte-doux); }
+.arc-records { margin: 2px 0 0; font-size: 12.5px; color: #E9C9A0; }
+.arc-records span { font-weight: 700; text-transform: uppercase; letter-spacing: .05em; font-size: 11px; margin-right: 4px; }
+.arc-records b { color: #FBF8F1; }
+/* R248b : la petite France ne cache plus un lieu du bord (1 des Pyrénées) : la carte commence sous elle */
+.at-carte-terr .carte-lieux { padding-top: 50px; }
+.at-carte-terr .mini-france { width: 48px; padding: 3px; }
+
+/* Étape R248h (17/11, demande d'Aubin) : le choix 38B aussi sur ordinateur — la fin d'une Rencontre d'expédition reprend le
+   résumé du téléphone (mêmes textes), en deux colonnes : la grande photo à gauche, « Qui rencontrer ensuite ? » et la suite
+   à droite. Tout tient dans 1366 × 768 sans descendre ; l'ancienne page reste dans « Voir le détail ». Rien ne change sous 760 px. */
+@media (min-width: 761px) {
+  .fin-courte.fin-ordi:not(.detail-ouvert) > :not(.resume-fin-tel) { display: none !important; }
+  .fin-courte.fin-ordi.detail-ouvert > .resume-fin-tel { margin-bottom: 22px; }
+  body:has(#fin-session.fin-courte.fin-ordi:not(.detail-ouvert):not(.cache)) #bande-expedition { display: none; }
+  /* #fin-session fait 620 px de large : le résumé en deux colonnes en déborde, centré (880 px au plus) */
+  .resume-fin-tel.rft-ordi { display: block; --l: min(880px, calc(100vw - 64px)); width: var(--l); margin: 6px 0 0 calc(50% - var(--l) / 2); text-align: left; }
+  .rft-ordi .rft-carte { background: var(--carte, #FBF8F1); border: 1px solid var(--trait, #CFC5AE); border-radius: 10px;
+    padding: 20px 22px 20px; display: flex; flex-direction: column; gap: 12px; text-align: center; }
+  .rft-ordi .rft-etiq { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ocre-texte, #8A4F1C); font-weight: 600; }
+  .rft-ordi .rft-titre { font-family: "Literata", Georgia, serif; font-size: 26px; color: var(--texte, #1F3A2E); margin: 0; font-weight: 600; }
+  .rft-ordi .rft-score { font-size: 15px; color: var(--texte-doux); }
+  .rft-ordi .rft-score b { font-size: 18px; color: var(--texte); }
+  .rft-ordi .rft-ronds { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .rft-ordi .rft-rond { position: relative; width: 46px; height: 46px; flex: none; }
+  .rft-ordi .rft-rond img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; display: block; opacity: .55; }
+  .rft-ordi .rft-rond.fait img { opacity: 1; }
+  .rft-ordi .rft-rond i { position: absolute; right: -3px; bottom: -3px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--bon, #3E7B55); color: #fff; font-size: 10px; font-style: normal; display: grid; place-items: center; border: 2px solid var(--carte, #FBF8F1); }
+  .rft-ordi .rft-phrase { font-size: 15px; color: var(--texte); }
+  .rft-ordi .rft-emp { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; color: var(--ocre-texte, #8A4F1C);
+    background: var(--papier, #F3EEE2); border-radius: 6px; padding: 9px 12px; }
+  .rft-ordi .rft-emp svg { width: 16px; height: 16px; flex: none; color: var(--ocre, #A8652A); }
+  .rft-ordi .rft-insec { white-space: nowrap; }
+  .rft-ordi .rft-actions { padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .rft-ordi .rft-principal { font: inherit; font-weight: 600; font-size: 16px; min-height: 50px; border: 0; border-radius: 8px;
+    background: var(--texte, #1F3A2E); color: #FBF8F1; width: 100%; cursor: pointer; }
+  .rft-ordi .rft-principal:hover { background: #2B4D3E; }
+  .rft-ordi .rft-aide { text-align: center; font-size: 13px; color: var(--texte-doux); margin-top: -4px; }
+  .rft-ordi .rft-second { font: inherit; font-weight: 600; font-size: 15px; min-height: 46px; border: 1px solid var(--texte, #1F3A2E);
+    border-radius: 8px; background: transparent; color: var(--texte, #1F3A2E); width: 100%; cursor: pointer; }
+  .rft-ordi .rft-liens { display: flex; justify-content: space-between; gap: 8px; }
+  .rft-ordi .rft-lien { font: inherit; font-size: 14px; color: var(--texte, #1F3A2E); background: none; border: 0; text-decoration: underline;
+    min-height: 36px; padding: 0 4px; cursor: pointer; }
+  .rft-ordi .rft-espece { display: flex; align-items: center; gap: 16px; text-align: left; }
+  .rft-ordi .rft-espece img { width: 72px; height: 72px; flex: none; border-radius: 50%; object-fit: cover; border: 3px solid var(--carte, #FBF8F1); box-shadow: 0 0 0 1px var(--trait, #CFC5AE); }
+  .rft-ordi .rft-espece .rft-etat { display: block; font-size: 14px; color: var(--bon, #3E7B55); margin-top: 2px; }
+  .rft-ordi .rft-fait { display: flex; gap: 10px; align-items: flex-start; text-align: left; background: #E4EFE3; border-radius: 6px; padding: 10px 12px; font-size: 14px; }
+  .rft-ordi .rft-fait .fi-ico { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--bon, #3E7B55); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  /* sans photo (une seule colonne) : la carte reste étroite */
+  .resume-fin-tel.rft-ordi:not(:has(.rft-deux)) { --l: 100%; }
+  /* les deux colonnes : la photo à gauche, tout le reste à droite */
+  .rft-ordi .rft-carte.rft-deux { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 26px; row-gap: 12px; align-items: start; }
+  .rft-ordi .rft-deux > .rft-etiq { grid-column: 1 / -1; text-align: left; }
+  .rft-ordi .rft-deux > .rft-grande { grid-column: 1; margin: 0; }
+  .rft-ordi .rft-grande, .rft-ordi .rft-grande.rft-petite { height: auto; aspect-ratio: 4 / 3; border-radius: 10px; }
+  .rft-ordi .rft-grande .rft-titre, .rft-ordi .rft-grande.rft-petite .rft-titre { font-size: 26px; }
+  .rft-ordi .rft-grande-bas, .rft-ordi .rft-grande.rft-petite .rft-grande-bas { padding: 40px 16px 14px; }
+  .rft-ordi .rft-droite { grid-column: 2; display: flex; flex-direction: column; gap: 12px; text-align: left; min-width: 0; }
+  .rft-ordi .rft-droite .rft-actions { padding-top: 4px; }
+  .rft-ordi .rft-droite .rft-phrase, .rft-ordi .rft-droite .rft-emp { text-align: left; justify-content: flex-start; }
+  .rft-ordi .rft-droite .rft-ronds { justify-content: flex-start; }
+  .rft-ordi .qui-ensuite-bande { margin: 0; }
+  .rft-ordi .qui-ensuite-bande h3 { font-size: 20px; margin: 0 0 12px; }
+  .rft-ordi .qui-ensuite-bande .rft-ronds { gap: 8px; padding-left: 3px; }
+  .rft-ordi .qui-ensuite-bande .rft-rond, .rft-ordi .qui-ensuite-bande .rft-rond img { width: 48px; height: 48px; }
+  .rft-ordi .qe-choix img { opacity: 1; transition: transform .12s; }
+  .rft-ordi .qe-gris img { opacity: .45; filter: grayscale(.85); }
+  .rft-ordi .qe-gris.arrive img { opacity: .8; filter: grayscale(.4); }
+  .rft-ordi .qe-choix:hover img, .rft-ordi .qe-choix:focus-visible img { transform: scale(1.08); box-shadow: 0 0 0 3px #A8652A, 0 2px 8px rgba(31,58,46,.25); }
+  .rft-ordi .qe-choix:focus-visible { outline: none; }
+  .rft-ordi .qe-aide { font-size: 13.5px; margin-top: 9px; }
+  .rft-ordi .rft-phrase-fin { margin: 2px 0 0; font-size: 15px; }
+  .rft-ordi .rft-score.rft-score-ligne { margin: 0; }
+}
+
+/* ---- Étape R249 (17/11, 36.41) : le repêchage du défi (aussi pour « Me tester » d'Approfondir) ---- */
+.dfx-rep { text-align: left; }
+.dfx-rep-etiq { display: inline-block; margin: 18px 0 0; padding: 3px 10px; border-radius: 999px; background: #f3e3cf; color: var(--ocre-texte, #8a4f1c);
+  font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.dfx-rep h2 { font-family: var(--titre, Georgia, serif); font-size: 1.9rem; margin: 8px 0 2px; color: var(--texte); }
+.dfx-rep .cdo-suivant { width: 100%; }
+.dfx-barre.rep i.cur { background: var(--ocre, #A8652A); }
+.dfx-efface { margin: 0 0 10px; color: var(--bon); font-weight: 600; }
+
+/* ---- Étape R250 (17/11, 36.07) : Approfondir à deux portes, « Découvrir » / « Me tester » (29_approfondir.js) ---- */
+.apf-portes .etiq-jeu .exp-facultatif { margin-left: 6px; }
+.apf-portes.finie .dfx-bandeau { background: #edf4ee; border-color: #c9dccd; }
+.apf-ronds { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 12px; }
+.apf-espece { display: flex; gap: 12px; align-items: center; margin: 4px 0 10px; }
+.apf-espece .apf-ph { width: 64px; height: 64px; border-radius: 12px; overflow: hidden; flex: none; background: #E6DFCF; }
+.apf-espece .apf-ph img, .apf-espece .apf-ph .a-venir { width: 100%; height: 100%; object-fit: cover; display: block; }
+.apf-espece small { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ocre-texte, #8a4f1c); font-weight: 600; }
+.apf-espece b { font-family: var(--titre, Georgia, serif); font-size: 1.35rem; font-weight: 600; color: var(--texte); }
+.apf-espece.petite .apf-ph { width: 48px; height: 48px; border-radius: 10px; }
+.apf-espece.petite b { font-size: 1.1rem; }
+.apf .apf-lignes { background: var(--carte); border: 1px solid var(--trait); border-radius: 14px; padding: 4px 16px; margin: 0 0 8px; }
+.apf-annonce { color: var(--texte-doux); font-size: .9rem; margin: 0 0 12px; }
+.apf .apf-q { margin: 6px 0 10px; }
+.apf-choix { grid-template-columns: 1fr; }
+.apf-choix .cdo-nom { text-align: left; justify-content: flex-start; }
+.apf-plus { margin: 0 0 10px; color: var(--bon); font-weight: 600; }
+.apf-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+.apf-duo > div { border-radius: 10px; padding: 10px 12px; background: #fff; display: flex; flex-direction: column; gap: 4px; }
+.apf-duo .ko { border: 2px solid #c58a4a; }
+.apf-duo .ok { border: 2px solid var(--bon); }
+.apf-duo small { font-size: .78rem; font-weight: 600; }
+.apf-duo .ko small { color: var(--ocre-texte, #8a4f1c); }
+.apf-duo .ok small { color: var(--bon); }
+.apf-duo b { font-weight: 600; line-height: 1.3; }
+.apf-erreur .sv-rappel { margin-top: 12px; }
+.apf-fin .fiches-exp { margin: 6px 0 2px; }
+.apf-fin .fiche-aide { display: block; color: var(--texte-doux); font-size: .8rem; margin: 0 0 12px; }
+@media (max-width: 760px) {
+  .apf .apf-lignes .sv-ligne { padding: 10px 0; gap: 12px; font-size: 15px; line-height: 1.35; }
+  .apf-portes .dfx-p { min-height: 150px; }
+}
+.apf-choix .cdo-nom.retire { display: none; }
+
+/* ---- Étape R253 (17/11, Notion 36.34, choix 34C) : « Ses autres formes » dans la carte « Pour la reconnaître » ---- */
+.cb-formes { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; margin-bottom: 6px; }
+.cb-forme { display: flex; align-items: center; gap: 8px; padding: 4px 6px 4px 4px; background: #fff; border: 1px solid #e3dccb; border-radius: 6px;
+  text-align: left; font: inherit; color: inherit; cursor: zoom-in; min-height: 56px; }
+.cb-forme:hover { border-color: #b9a984; }
+.cbf-ph { position: relative; flex: 0 0 66px; width: 66px; height: 50px; border-radius: 4px; overflow: hidden; background: #eee7d6; }
+.cbf-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cbf-ph .agr-loupe { position: absolute; right: 2px; bottom: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(251,248,241,.9);
+  display: flex; align-items: center; justify-content: center; color: #1F3A2E; }
+.cbf-ph .agr-loupe svg { width: 11px; height: 11px; }
+.cbf-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.cbf-txt b { font-size: 13.5px; font-weight: 600; color: #1F3A2E; }
+.cbf-txt small { font-size: 12.5px; line-height: 1.25; color: #4b4a40; }
+.presentation .cb-formes-bloc { margin-top: 10px; text-align: left; }
+.presentation .cb-formes-bloc .cb-sous { margin: 6px 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #8A4F1C; font-weight: 600; }

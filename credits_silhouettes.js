@@ -10,7 +10,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/d9a43501-4ac8-4b23-a8d7-96d52df253e2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "abeille_mellifere.svg",
@@ -19,7 +20,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f551f54e-1e17-4b0e-985c-74d34a53cb63",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ablette.svg",
@@ -28,7 +30,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/01f82781-789d-484d-9f52-453347e06898",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "accenteur_alpin.svg",
@@ -37,7 +40,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/5dd2f320-737e-4efe-85e0-372a69dad45b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "accenteur_mouchet.svg",
@@ -46,7 +50,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/88aeb901-6979-40a9-8991-b33dd8ac0a38",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aeschne_bleue.svg",
@@ -55,7 +60,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/f436351d-8099-4466-8da1-5a92c16215ef",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aeschne_subarctique.svg",
@@ -64,7 +70,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/f436351d-8099-4466-8da1-5a92c16215ef",
-  "dessin_de": "Aeshna cyanea"
+  "dessin_de": "Aeshna cyanea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "agrion_de_mercure.svg",
@@ -73,7 +80,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/516df51a-adc7-4cfc-86b9-9954698bd5ed",
-  "dessin_de": "Ischnura elegans"
+  "dessin_de": "Ischnura elegans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "agrion_haste.svg",
@@ -82,7 +90,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/516df51a-adc7-4cfc-86b9-9954698bd5ed",
-  "dessin_de": "Ischnura elegans"
+  "dessin_de": "Ischnura elegans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "agrion_elegant.svg",
@@ -91,7 +100,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/516df51a-adc7-4cfc-86b9-9954698bd5ed",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aigle_botte.svg",
@@ -100,7 +110,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f133b189-620f-4478-aec6-6f7a2c801bcc",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aigle_de_bonelli.svg",
@@ -109,7 +120,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4b094583-9af1-46cc-bc7d-fe475f09a2d8",
-  "dessin_de": "Aquila heliaca"
+  "dessin_de": "Aquila heliaca",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aigle_royal.svg",
@@ -118,7 +130,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b2b60a18-fd7d-49b2-a15d-54a62cdcac6b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aigrette_garzette.svg",
@@ -127,7 +140,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/870b2111-9eef-42e6-9e22-a8f67bbb444a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "algyroide_de_fitzinger.svg",
@@ -136,7 +150,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bad1295c-4349-4992-af66-5ef7bdf83e7d",
-  "dessin_de": "Podarcis tiliguerta"
+  "dessin_de": "Podarcis tiliguerta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "alouette_des_champs.svg",
@@ -145,7 +160,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/8ddf3f37-2e1e-40d7-b7d6-0458e71f4b50",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "alouette_lulu.svg",
@@ -154,7 +170,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/61b944da-341d-48cb-962d-1c7bf47175d8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "alyte_accoucheur.svg",
@@ -163,7 +180,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b271587e-a51f-4608-9725-9c2998455ae1",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "amaryllis.svg",
@@ -172,7 +190,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5a47f798-5a88-4c77-bf01-244367788ded",
-  "dessin_de": "Megisto cymela"
+  "dessin_de": "Megisto cymela",
+  "ne_montre_pas": []
  },
  {
   "fichier": "anax_empereur.svg",
@@ -181,16 +200,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2ef6d810-dc60-4dd2-aaba-bc0313c66ff6",
-  "dessin_de": ""
- },
- {
-  "fichier": "ancyle_des_rivieres.svg",
-  "nom": "Ancyle des rivières",
-  "auteur": "Nathan Jay Baker",
-  "licence": "CC0 1.0",
-  "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
-  "source": "https://www.phylopic.org/images/3dddaa14-b34d-427a-87c6-cc114411fc93",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "anguille_europeenne.svg",
@@ -199,7 +210,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/a3104d25-d759-46c5-b01a-f7103ede445f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "anodonte_des_cygnes.svg",
@@ -208,7 +220,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d0a2c160-7630-43fc-abf4-aa52302ae316",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "anemone_verte.svg",
@@ -217,7 +230,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/759759f0-a1c7-43b5-ac6b-df06a7f46a26",
-  "dessin_de": "Bunodosoma cavernata"
+  "dessin_de": "Bunodosoma cavernata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "apogon.svg",
@@ -226,7 +240,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a4c2026-2af9-4785-b427-bbe472b32d07",
-  "dessin_de": "Yarica hyalosoma"
+  "dessin_de": "Yarica hyalosoma",
+  "ne_montre_pas": []
  },
  {
   "fichier": "apollon.svg",
@@ -235,7 +250,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/18e306c8-0035-470e-aee4-460586309b46",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "apron_du_rhone.svg",
@@ -244,7 +260,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/71b7c167-ffd2-4748-889a-3ace8935424f",
-  "dessin_de": "Etheostoma cragini"
+  "dessin_de": "Etheostoma cragini",
+  "ne_montre_pas": []
  },
  {
   "fichier": "argiope_frelon.svg",
@@ -253,7 +270,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/593cd880-1440-4562-b589-264cc6f9e5f2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "argyronete.svg",
@@ -262,7 +280,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/fc3650f6-89c0-4251-a0bd-b47ef0850d51",
-  "dessin_de": "Dictyna"
+  "dessin_de": "Dictyna",
+  "ne_montre_pas": []
  },
  {
   "fichier": "arenicole.svg",
@@ -271,7 +290,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1d469b08-8b5c-44ca-ad1d-2cc3ec37087f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ascalaphe_soufre.svg",
@@ -280,7 +300,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/60fc28c2-d267-4de1-823d-a3af82fbf2d3",
-  "dessin_de": "Myrmeleon"
+  "dessin_de": "Myrmeleon",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aselle.svg",
@@ -289,7 +310,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/639a8581-cf15-4ab0-a81a-d4319f7078d7",
-  "dessin_de": "Proasellus"
+  "dessin_de": "Proasellus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "aurore.svg",
@@ -298,7 +320,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7c15898f-a80c-4f2b-bac5-07a187782879",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "autour_des_palombes.svg",
@@ -307,7 +330,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2ed36bac-299a-4c53-b6c5-3077ebee048a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "avocette_elegante.svg",
@@ -316,7 +340,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/3266d069-f33e-4f80-9d0a-d8b0fddd1fe2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "azure_de_la_bugrane.svg",
@@ -325,7 +350,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5aeaf558-3c48-4173-83b4-dbf2846f8d75",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "azure_des_mouilleres.svg",
@@ -334,7 +360,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/4875023f-7497-4ae7-94c7-b7553fbc75c9",
-  "dessin_de": "Phengaris rebeli"
+  "dessin_de": "Phengaris rebeli",
+  "ne_montre_pas": []
  },
  {
   "fichier": "azure_du_serpolet.svg",
@@ -343,7 +370,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/cae5767c-6f52-4695-8daa-145853f1bba7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bacchante.svg",
@@ -352,7 +380,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0c391d43-30a5-4077-bdcb-fbb80f5d13e6",
-  "dessin_de": "Erebia"
+  "dessin_de": "Erebia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "balbuzard_pecheur.svg",
@@ -361,7 +390,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8353477c-dc5d-44b6-ab3c-9d0cdf4d64f7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bar_commun.svg",
@@ -370,7 +400,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/73799b2d-4a6c-4359-924f-d76152839eb6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "barbastelle_d_europe.svg",
@@ -379,7 +410,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/7daaa041-9539-44f5-a727-b58c2e3a3cfa",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "barbeau_fluviatile.svg",
@@ -388,7 +420,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8027b226-bb3c-4b6d-a049-0ff58836ab9f",
-  "dessin_de": "Luciobarbus graellsii"
+  "dessin_de": "Luciobarbus graellsii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "barbeau_meridional.svg",
@@ -397,7 +430,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8027b226-bb3c-4b6d-a049-0ff58836ab9f",
-  "dessin_de": "Luciobarbus graellsii"
+  "dessin_de": "Luciobarbus graellsii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "barge_a_queue_noire.svg",
@@ -406,7 +440,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/1fda4a62-111c-4e4c-9e12-ac0da0656cd9",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "baudroie_commune.svg",
@@ -415,7 +450,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/a1933d3f-43ee-47ec-a15b-e4bf0d83b21a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bec_croise_des_sapins.svg",
@@ -424,7 +460,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/6174bd27-8161-44c0-8629-293f3b618db3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "belette.svg",
@@ -433,7 +470,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/20b6096e-2d6d-43c4-acda-fd74f0f91d48",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "belle_dame.svg",
@@ -442,7 +480,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/4207925a-1a59-47cd-acc5-e75da4e5e128",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bergeronnette_des_ruisseaux.svg",
@@ -451,7 +490,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/9e79e7f5-10bb-4897-8593-42f588c739e7",
-  "dessin_de": "Motacilla alba"
+  "dessin_de": "Motacilla alba",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bergeronnette_grise.svg",
@@ -460,7 +500,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/9e79e7f5-10bb-4897-8593-42f588c739e7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bernache_cravant.svg",
@@ -469,7 +510,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/29eac052-8f65-48f7-97da-b52711b3ec8d",
-  "dessin_de": "Branta leucopsis"
+  "dessin_de": "Branta leucopsis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bernard_l_ermite.svg",
@@ -478,7 +520,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d2064615-2851-40c8-b99c-f7e5669958ee",
-  "dessin_de": "Paguridae"
+  "dessin_de": "Paguridae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bigorneau.svg",
@@ -487,7 +530,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3244258c-e93a-497b-8f37-ac008e574c44",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bihoreau_gris.svg",
@@ -496,7 +540,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/05e6dc79-14df-422d-b47a-89e170ef7575",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "blageon.svg",
@@ -505,7 +550,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/d0177225-8273-4355-b124-88c2d30e291c",
-  "dessin_de": "Phoxinus phoxinus"
+  "dessin_de": "Phoxinus phoxinus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "blaireau_europeen.svg",
@@ -514,7 +560,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0c32ffbe-26ee-495a-9ec5-adb14ff1444b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "blennie_fluviatile.svg",
@@ -523,7 +570,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/3b38a3ae-404b-47ed-b0a2-8d0c82ea22e4",
-  "dessin_de": "Cirripectes quagga"
+  "dessin_de": "Cirripectes quagga",
+  "ne_montre_pas": []
  },
  {
   "fichier": "blongios_nain.svg",
@@ -532,7 +580,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/05e6dc79-14df-422d-b47a-89e170ef7575",
-  "dessin_de": "Nycticorax nycticorax"
+  "dessin_de": "Nycticorax nycticorax",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bondree_apivore.svg",
@@ -541,7 +590,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f830c83d-e32f-41be-8cbe-f29d00326727",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bouquetin_des_alpes.svg",
@@ -550,7 +600,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2b07a361-5d1b-4bb9-a61e-a7708cf57ecb",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bouquetin_iberique.svg",
@@ -559,7 +610,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2b07a361-5d1b-4bb9-a61e-a7708cf57ecb",
-  "dessin_de": "Capra"
+  "dessin_de": "Capra",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bourdon_des_alpes.svg",
@@ -568,7 +620,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/ccf32802-954f-433d-a5e7-d8a9d63098e5",
-  "dessin_de": "Bombus vosnesenskii"
+  "dessin_de": "Bombus vosnesenskii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bourdon_des_champs.svg",
@@ -577,7 +630,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/750eeb4f-7ca5-49ff-a814-27a12d0cb13a",
-  "dessin_de": "Bombus terrestris"
+  "dessin_de": "Bombus terrestris",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bourdon_des_pierres.svg",
@@ -586,7 +640,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/750eeb4f-7ca5-49ff-a814-27a12d0cb13a",
-  "dessin_de": "Bombus terrestris"
+  "dessin_de": "Bombus terrestris",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bourdon_des_pyrenees.svg",
@@ -595,7 +650,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/048ef28b-12b9-4dcd-9899-fbe7b15deeee",
-  "dessin_de": "Bombus"
+  "dessin_de": "Bombus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bourdon_terrestre.svg",
@@ -604,7 +660,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/750eeb4f-7ca5-49ff-a814-27a12d0cb13a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bouscarle_de_cetti.svg",
@@ -613,7 +670,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/387c194c-ab87-4d65-83cf-53c1a9f09cc8",
-  "dessin_de": "Cettia fortipes"
+  "dessin_de": "Cettia fortipes",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bouton_commun.svg",
@@ -622,7 +680,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bouviere.svg",
@@ -631,7 +690,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/96556cca-4e09-4ad6-9064-c7b75c4ec42a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bouvreuil_pivoine.svg",
@@ -640,7 +700,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/45438f27-d4d3-4fb4-bc7c-a4a9375a8547",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "brochet.svg",
@@ -649,7 +710,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/e11a3135-cfe1-4f8a-8e1e-1824fef0e833",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "brochet_aquitain.svg",
@@ -658,7 +720,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e8173d95-0261-4984-a5c2-5111f213e1d4",
-  "dessin_de": "Esox lucius"
+  "dessin_de": "Esox lucius",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bruant_des_roseaux.svg",
@@ -667,7 +730,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/23a213e9-cb33-424a-8d3f-e8e5cd7d7e65",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bruant_fou.svg",
@@ -676,7 +740,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/74656b4c-c2e6-4a80-94d2-a917d105724b",
-  "dessin_de": "Emberiza citrinella"
+  "dessin_de": "Emberiza citrinella",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bruant_jaune.svg",
@@ -685,7 +750,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/74656b4c-c2e6-4a80-94d2-a917d105724b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bruant_ortolan.svg",
@@ -694,7 +760,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8391310d-05ec-4a27-af93-e0c94e7ec4e8",
-  "dessin_de": "Emberiza"
+  "dessin_de": "Emberiza",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bruant_proyer.svg",
@@ -703,7 +770,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/74656b4c-c2e6-4a80-94d2-a917d105724b",
-  "dessin_de": "Emberiza citrinella"
+  "dessin_de": "Emberiza citrinella",
+  "ne_montre_pas": []
  },
  {
   "fichier": "bruant_zizi.svg",
@@ -712,7 +780,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/74656b4c-c2e6-4a80-94d2-a917d105724b",
-  "dessin_de": "Emberiza citrinella"
+  "dessin_de": "Emberiza citrinella",
+  "ne_montre_pas": []
  },
  {
   "fichier": "breme_commune.svg",
@@ -721,7 +790,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/fc97b67e-627d-4430-9a5a-2cf661640bc7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "busard_cendre.svg",
@@ -730,7 +800,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ed2e30f7-f1a4-4bce-8a16-f20218718bc4",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "busard_des_roseaux.svg",
@@ -739,7 +810,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a0b2742-083a-4ba5-8f2f-f75dc08601db",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "busard_saint_martin.svg",
@@ -748,7 +820,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6a86d308-33b6-4043-a9c9-d196c4f666d1",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "buse_variable.svg",
@@ -757,7 +830,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ffc0b03a-9606-4d5a-9b2e-4eda2d63c85b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "butor_etoile.svg",
@@ -766,7 +840,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/248a86e6-f8f8-46ea-8147-56bcb0cdd465",
-  "dessin_de": "Ardeola grayii"
+  "dessin_de": "Ardeola grayii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "becasse_des_bois.svg",
@@ -775,7 +850,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/68652b89-95d8-46d7-9519-ee9d49733eac",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "becasseau_sanderling.svg",
@@ -784,7 +860,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/fcc02884-41c9-4fb8-a766-1c42874ad0e6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "becasseau_variable.svg",
@@ -793,7 +870,10 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3813ebf5-b823-4f08-b05c-076fa09426e5",
-  "dessin_de": "Calidris pugnax"
+  "dessin_de": "Calidris pugnax",
+  "ne_montre_pas": [
+   "bec_forme"
+  ]
  },
  {
   "fichier": "becassine_des_marais.svg",
@@ -802,7 +882,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/fba21da5-0dc4-44d0-a5ac-a9a2e024f46f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cachalot.svg",
@@ -811,7 +892,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7a808331-75b4-4b5e-8399-4d6933313cd8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "caille_des_bles.svg",
@@ -820,7 +902,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e0a19491-63a1-4f09-9eea-7a755d8d2f83",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "calopteryx_hemorroidal.svg",
@@ -829,7 +912,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/8af9c80d-92f9-4ba8-87c0-8ffa026c770c",
-  "dessin_de": "Calopteryx splendens"
+  "dessin_de": "Calopteryx splendens",
+  "ne_montre_pas": []
  },
  {
   "fichier": "calopteryx_vierge.svg",
@@ -838,7 +922,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/8af9c80d-92f9-4ba8-87c0-8ffa026c770c",
-  "dessin_de": "Calopteryx splendens"
+  "dessin_de": "Calopteryx splendens",
+  "ne_montre_pas": []
  },
  {
   "fichier": "calopteryx_eclatant.svg",
@@ -847,7 +932,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/8af9c80d-92f9-4ba8-87c0-8ffa026c770c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "calotriton_des_pyrenees.svg",
@@ -856,7 +942,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f8556ac8-b536-418a-8a68-0ce22d33f4d6",
-  "dessin_de": "Salamandridae"
+  "dessin_de": "Salamandridae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "campagnol_agreste.svg",
@@ -865,7 +952,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/975b0734-0a15-48e6-b00d-cf27b2de2285",
-  "dessin_de": "Microtus arvalis"
+  "dessin_de": "Microtus arvalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "campagnol_amphibie.svg",
@@ -874,7 +962,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/975b0734-0a15-48e6-b00d-cf27b2de2285",
-  "dessin_de": "Microtus arvalis"
+  "dessin_de": "Microtus arvalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "campagnol_des_champs.svg",
@@ -883,7 +972,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/975b0734-0a15-48e6-b00d-cf27b2de2285",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "campagnol_des_neiges.svg",
@@ -892,7 +982,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f7d6d04c-73fa-4bf3-8c94-48134e6857b9",
-  "dessin_de": "Myodes glareolus"
+  "dessin_de": "Myodes glareolus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "campagnol_des_pyrenees.svg",
@@ -901,7 +992,10 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/fcc26dae-bc5d-47c8-8117-a7e6245e45f5",
-  "dessin_de": "Microtus"
+  "dessin_de": "Microtus",
+  "ne_montre_pas": [
+   "queue_forme"
+  ]
  },
  {
   "fichier": "campagnol_provencal.svg",
@@ -910,7 +1004,10 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/fcc26dae-bc5d-47c8-8117-a7e6245e45f5",
-  "dessin_de": "Microtus pennsylvanicus"
+  "dessin_de": "Microtus pennsylvanicus",
+  "ne_montre_pas": [
+   "queue_forme"
+  ]
  },
  {
   "fichier": "campagnol_roussatre.svg",
@@ -919,7 +1016,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f7d6d04c-73fa-4bf3-8c94-48134e6857b9",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "campagnol_souterrain.svg",
@@ -928,7 +1026,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/975b0734-0a15-48e6-b00d-cf27b2de2285",
-  "dessin_de": "Microtus arvalis"
+  "dessin_de": "Microtus arvalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "campagnol_terrestre.svg",
@@ -937,7 +1036,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/975b0734-0a15-48e6-b00d-cf27b2de2285",
-  "dessin_de": "Microtus arvalis"
+  "dessin_de": "Microtus arvalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "canard_colvert.svg",
@@ -946,7 +1046,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/1c044a03-f1ba-49fd-857e-f10aa8778e30",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "carabe_dore.svg",
@@ -955,7 +1056,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/fbb67694-0fd2-4e90-b88d-efab9cbac37c",
-  "dessin_de": "Carabus rumelicus"
+  "dessin_de": "Carabus rumelicus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "carabe_splendide.svg",
@@ -964,7 +1066,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/fbb67694-0fd2-4e90-b88d-efab9cbac37c",
-  "dessin_de": "Carabus"
+  "dessin_de": "Carabus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "carabe_a_reflets_dores.svg",
@@ -973,7 +1076,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/fbb67694-0fd2-4e90-b88d-efab9cbac37c",
-  "dessin_de": "Carabus rumelicus"
+  "dessin_de": "Carabus rumelicus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cardinal.svg",
@@ -982,7 +1086,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/dc500f07-4ea3-41c6-aad1-f9f1af5c780e",
-  "dessin_de": "Argynnis paphia"
+  "dessin_de": "Argynnis paphia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "carpe_commune.svg",
@@ -991,7 +1096,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/25a76141-cca2-4b56-bd9f-9f5fdcd8efa1",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "carte_geographique.svg",
@@ -1000,7 +1106,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/a9e60cb5-18ca-412f-b366-557f69b4668d",
-  "dessin_de": "Aglais urticae"
+  "dessin_de": "Aglais urticae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cassenoix_mouchete.svg",
@@ -1009,7 +1116,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b693c0c1-a893-47f6-97a9-cee614e83db9",
-  "dessin_de": "Nucifraga columbiana"
+  "dessin_de": "Nucifraga columbiana",
+  "ne_montre_pas": []
  },
  {
   "fichier": "castagnole.svg",
@@ -1018,7 +1126,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c382c0a4-07fd-4942-baa3-6395a4062799",
-  "dessin_de": "Chromis pelloura"
+  "dessin_de": "Chromis pelloura",
+  "ne_montre_pas": []
  },
  {
   "fichier": "castor_d_europe.svg",
@@ -1027,7 +1136,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0b9b783b-b537-4fa6-b387-a9ca2d3f7a12",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cerf_elaphe.svg",
@@ -1036,7 +1146,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/72f2f997-e474-4caf-bbd5-72fc8dbcc40d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chabot.svg",
@@ -1045,7 +1156,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/6b4f3733-df07-4c73-b978-455385bbcc02",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chabot_des_pyrenees.svg",
@@ -1054,7 +1166,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/a3f9f381-998b-4459-b505-2946e6cb928a",
-  "dessin_de": "Cottus"
+  "dessin_de": "Cottus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chamois.svg",
@@ -1063,7 +1176,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bf013755-e13a-4b36-a833-e02fd9cf4246",
-  "dessin_de": "Rupicapra pyrenaica"
+  "dessin_de": "Rupicapra pyrenaica",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chardonneret_elegant.svg",
@@ -1072,7 +1186,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a4885cb-2ab5-432d-bed7-db7dc0445018",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chat_forestier.svg",
@@ -1081,7 +1196,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/17b7a839-9b29-4783-b381-4e5478202bc5",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chevalier_guignette.svg",
@@ -1090,7 +1206,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/55ef874a-f0aa-4796-9dec-416d43a9e833",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chevesne.svg",
@@ -1099,7 +1216,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/66674c55-bafe-4dae-ae9a-3f84d7d7fd8a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chevreuil.svg",
@@ -1108,7 +1226,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b36a215a-adb3-445d-b364-1e63dddd6950",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cheveche_d_athena.svg",
@@ -1117,7 +1236,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4e35207e-a75a-4518-8eca-1d574eebfbb4",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chevechette_d_europe.svg",
@@ -1126,7 +1246,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e1f87612-c33c-477e-b231-fb07b61a2741",
-  "dessin_de": "Glaucidium nana"
+  "dessin_de": "Glaucidium nana",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chocard_a_bec_jaune.svg",
@@ -1135,7 +1256,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/28951ec2-1ef3-437c-b1dc-4d54010732f7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "choucas_des_tours.svg",
@@ -1144,7 +1266,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/04896387-a505-4330-b76a-aee36dfc9457",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chouette_de_tengmalm.svg",
@@ -1153,7 +1276,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4e35207e-a75a-4518-8eca-1d574eebfbb4",
-  "dessin_de": "Athene noctua"
+  "dessin_de": "Athene noctua",
+  "ne_montre_pas": []
  },
  {
   "fichier": "chouette_hulotte.svg",
@@ -1162,7 +1286,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/a9628703-8bc2-4fd6-bf3f-2fa706b380dd",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cicindele_champetre.svg",
@@ -1171,7 +1296,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f5b4eca8-b306-4dc4-9c4e-45f1305edc62",
-  "dessin_de": "Cicindela"
+  "dessin_de": "Cicindela",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cigale_de_mer.svg",
@@ -1180,7 +1306,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f9b08e44-7955-4506-b452-9cb3a793255e",
-  "dessin_de": "Scyllarides squammosus"
+  "dessin_de": "Scyllarides squammosus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cigale_grise.svg",
@@ -1189,7 +1316,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/97fbc065-760a-4a23-bada-ce88871eeded",
-  "dessin_de": "Magicicada"
+  "dessin_de": "Magicicada",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cigale_plebeienne.svg",
@@ -1198,7 +1326,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/a30c2e81-ef42-4273-9f8d-11132b49c694",
-  "dessin_de": "Magicicada"
+  "dessin_de": "Magicicada",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cigale_rouge.svg",
@@ -1207,7 +1336,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/29af591e-9d31-4fef-8942-391367b542c5",
-  "dessin_de": "Magicicada"
+  "dessin_de": "Magicicada",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cigogne_blanche.svg",
@@ -1216,7 +1346,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/0f0f45a7-06d8-416b-9b82-87140ad37307",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cigogne_noire.svg",
@@ -1225,7 +1356,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c321a063-09bc-4ae3-9949-ed6ab429e2f2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cincle_plongeur.svg",
@@ -1234,7 +1366,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4766291d-7d90-4414-a3f7-a604d3aa684a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "circaete_jean_le_blanc.svg",
@@ -1243,7 +1376,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/9cf25c45-c312-4a68-95b0-0f0ec37534c6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cisticole_des_joncs.svg",
@@ -1252,7 +1386,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/09938c03-f830-4552-a047-ea60e72cb9a8",
-  "dessin_de": "Cisticolidae"
+  "dessin_de": "Cisticolidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cistude_d_europe.svg",
@@ -1261,7 +1396,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/1a6160a0-c1c0-456a-af04-43bb365b3e87",
-  "dessin_de": "Chrysemys picta"
+  "dessin_de": "Chrysemys picta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "citron.svg",
@@ -1270,7 +1406,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/8f728633-cb06-434f-9aea-a7038417bd8d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "citron_de_provence.svg",
@@ -1279,7 +1416,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/8f728633-cb06-434f-9aea-a7038417bd8d",
-  "dessin_de": "Gonepteryx rhamni"
+  "dessin_de": "Gonepteryx rhamni",
+  "ne_montre_pas": []
  },
  {
   "fichier": "clausilie_commune.svg",
@@ -1288,7 +1426,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1dffb5d5-f9ee-4b01-bb8a-ad1feff0f4fb",
-  "dessin_de": "Clausilia cruciata"
+  "dessin_de": "Clausilia cruciata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cloporte_commun.svg",
@@ -1297,7 +1436,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/cc116ca2-836f-41b2-995e-fe6e778e673a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cloporte_des_murs.svg",
@@ -1306,7 +1446,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b8bbc11e-56cf-4d5b-ba74-1d6d4edf45b3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cloporte_rugueux.svg",
@@ -1315,7 +1456,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b8bbc11e-56cf-4d5b-ba74-1d6d4edf45b3",
-  "dessin_de": "Oniscus asellus"
+  "dessin_de": "Oniscus asellus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coccinelle_asiatique.svg",
@@ -1324,7 +1466,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/984448b7-2ada-4e49-aaf1-3dcb7b056532",
-  "dessin_de": "Coccinella undecimpunctata"
+  "dessin_de": "Coccinella undecimpunctata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coccinelle_a_sept_points.svg",
@@ -1333,7 +1476,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/984448b7-2ada-4e49-aaf1-3dcb7b056532",
-  "dessin_de": "Coccinella undecimpunctata"
+  "dessin_de": "Coccinella undecimpunctata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "concombre_de_mer.svg",
@@ -1342,7 +1486,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/40c1fa4a-9eef-404f-bccc-aa933ef3d7f9",
-  "dessin_de": "Holothuriidae"
+  "dessin_de": "Holothuriidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "congre.svg",
@@ -1351,7 +1496,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/629e1135-d0c5-4f02-bb13-8cbf63e48692",
-  "dessin_de": "Anguilla rostrata"
+  "dessin_de": "Anguilla rostrata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "conocephale_gracieux.svg",
@@ -1360,7 +1506,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/cfd55051-7165-4eb0-ae1a-630705d7a603",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coque_commune.svg",
@@ -1369,7 +1516,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5cd81ddf-0252-4540-a91b-455ee655c0e8",
-  "dessin_de": "Cardiidae"
+  "dessin_de": "Cardiidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "corail_rouge.svg",
@@ -1378,7 +1526,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/04a489bd-d65f-4f13-88f1-065e5bbf2c82",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "corb.svg",
@@ -1387,7 +1536,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/cac669c6-5dd7-470a-9bba-280e2b13a2df",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "corbeau_freux.svg",
@@ -1396,7 +1546,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/66050974-e7f8-4b75-9211-6162adccf959",
-  "dessin_de": "Corvus corone"
+  "dessin_de": "Corvus corone",
+  "ne_montre_pas": []
  },
  {
   "fichier": "corbicule_asiatique.svg",
@@ -1405,7 +1556,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/70d345ec-c53a-45b9-a4af-93cf6f3e2125",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cordulie_arctique.svg",
@@ -1414,7 +1566,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/ce57b692-e1e0-468e-a025-8c10ceebca22",
-  "dessin_de": "Somatochlora tenebrosa"
+  "dessin_de": "Somatochlora tenebrosa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cordulie_a_corps_fin.svg",
@@ -1423,7 +1576,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/ce57b692-e1e0-468e-a025-8c10ceebca22",
-  "dessin_de": "Somatochlora tenebrosa"
+  "dessin_de": "Somatochlora tenebrosa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cordulegastre_annele.svg",
@@ -1432,7 +1586,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f9f40ed4-c092-4456-aade-acf36174dfdd",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cordulegastre_bidente.svg",
@@ -1441,7 +1596,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f9f40ed4-c092-4456-aade-acf36174dfdd",
-  "dessin_de": "Cordulegaster"
+  "dessin_de": "Cordulegaster",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cormoran_huppe.svg",
@@ -1450,7 +1606,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/21a3420c-8d7a-4bd2-8ff7-b89fe7f5add5",
-  "dessin_de": "Phalacrocorax carbo"
+  "dessin_de": "Phalacrocorax carbo",
+  "ne_montre_pas": []
  },
  {
   "fichier": "corneille_mantelee.svg",
@@ -1459,7 +1616,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/66050974-e7f8-4b75-9211-6162adccf959",
-  "dessin_de": "Corvus corone"
+  "dessin_de": "Corvus corone",
+  "ne_montre_pas": []
  },
  {
   "fichier": "corneille_noire.svg",
@@ -1468,7 +1626,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/66050974-e7f8-4b75-9211-6162adccf959",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coronelle_girondine.svg",
@@ -1477,7 +1636,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/96e9b778-5bda-4b17-a6e9-ecca1ffba8bb",
-  "dessin_de": "Coronella austriaca"
+  "dessin_de": "Coronella austriaca",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coronelle_lisse.svg",
@@ -1486,7 +1646,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/96e9b778-5bda-4b17-a6e9-ecca1ffba8bb",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coregone.svg",
@@ -1495,7 +1656,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/7de72752-6afe-4c7c-97ff-bfd97e56923c",
-  "dessin_de": "Coregonus hoyi"
+  "dessin_de": "Coregonus hoyi",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coucou_geai.svg",
@@ -1504,7 +1666,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/7c79c082-17ab-4a3f-ae27-48c8e46a8a1a",
-  "dessin_de": "Guira guira"
+  "dessin_de": "Guira guira",
+  "ne_montre_pas": []
  },
  {
   "fichier": "coucou_gris.svg",
@@ -1513,7 +1676,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5311f33f-6db1-47b0-94c4-c60fa7521884",
-  "dessin_de": "Cuculinae"
+  "dessin_de": "Cuculinae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "couleuvre_d_esculape.svg",
@@ -1522,7 +1686,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f8674c18-e271-4302-8d3c-8df9aa6de619",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "couleuvre_de_montpellier.svg",
@@ -1531,7 +1696,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/1d77a974-d510-4963-b5c2-f85dbf89e394",
-  "dessin_de": "Tantilla coronata"
+  "dessin_de": "Tantilla coronata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "couleuvre_helvetique.svg",
@@ -1540,7 +1706,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/1da15fb6-e1f2-4122-b5ae-dbdaa7ef7525",
-  "dessin_de": "Natrix natrix"
+  "dessin_de": "Natrix natrix",
+  "ne_montre_pas": []
  },
  {
   "fichier": "couleuvre_verte_et_jaune.svg",
@@ -1549,7 +1716,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/d38e6764-b49c-4728-aacd-2f8bbd26718e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "couleuvre_viperine.svg",
@@ -1558,7 +1726,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/1da15fb6-e1f2-4122-b5ae-dbdaa7ef7525",
-  "dessin_de": "Natrix natrix"
+  "dessin_de": "Natrix natrix",
+  "ne_montre_pas": []
  },
  {
   "fichier": "couleuvre_a_echelons.svg",
@@ -1567,7 +1736,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/84890313-45b3-48c4-b44e-261dd5ac44d3",
-  "dessin_de": "Zamenis situla"
+  "dessin_de": "Zamenis situla",
+  "ne_montre_pas": []
  },
  {
   "fichier": "courlis_cendre.svg",
@@ -1576,7 +1746,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/910114e1-39c6-4eae-87d5-fd702dc47161",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "courtiliere.svg",
@@ -1585,7 +1756,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/30eb60b1-e471-4187-8011-1fb175576b4f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crabe_bleu.svg",
@@ -1594,7 +1766,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7197c71a-0653-4e82-bcbb-b156c150826a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crabe_marbre.svg",
@@ -1603,7 +1776,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5a3f0bf2-1ae9-4224-9eeb-3319e901ea83",
-  "dessin_de": "Hemigrapsus takanoi"
+  "dessin_de": "Hemigrapsus takanoi",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crabe_verruqueux.svg",
@@ -1612,7 +1786,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/604d2670-7bf3-4543-b8e3-fbf8e370a530",
-  "dessin_de": "Metacarcinus magister"
+  "dessin_de": "Metacarcinus magister",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crabe_vert.svg",
@@ -1621,7 +1796,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/96523a56-068b-436f-a44f-ebf05605e700",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crabier_chevelu.svg",
@@ -1630,7 +1806,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/248a86e6-f8f8-46ea-8147-56bcb0cdd465",
-  "dessin_de": "Ardeola grayii"
+  "dessin_de": "Ardeola grayii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crapaud_calamite.svg",
@@ -1639,7 +1816,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ec29cbcc-8a65-41fd-adb0-80f52554e242",
-  "dessin_de": "Incilius valliceps"
+  "dessin_de": "Incilius valliceps",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crapaud_commun.svg",
@@ -1648,7 +1826,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/35ff35a9-fa6c-496f-a279-22908ac7e7ec",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crapaud_vert.svg",
@@ -1657,7 +1836,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ec29cbcc-8a65-41fd-adb0-80f52554e242",
-  "dessin_de": "Incilius valliceps"
+  "dessin_de": "Incilius valliceps",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crapaud_vert_des_baleares.svg",
@@ -1666,7 +1846,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ec29cbcc-8a65-41fd-adb0-80f52554e242",
-  "dessin_de": "Incilius valliceps"
+  "dessin_de": "Incilius valliceps",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crapaud_epineux.svg",
@@ -1675,7 +1856,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/35ff35a9-fa6c-496f-a279-22908ac7e7ec",
-  "dessin_de": "Bufo bufo"
+  "dessin_de": "Bufo bufo",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crave_a_bec_rouge.svg",
@@ -1684,7 +1866,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/bc1e5eb7-56ae-44ef-901a-71709cf14be6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crevette_grise.svg",
@@ -1693,7 +1876,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/aed2513d-2386-4218-b913-384838c0107b",
-  "dessin_de": "Penaeus"
+  "dessin_de": "Penaeus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "criquet_des_patures.svg",
@@ -1702,7 +1886,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/2cafecfc-f4e0-4992-946e-1a4351ea1107",
-  "dessin_de": "Pseudochorthippus montanus"
+  "dessin_de": "Pseudochorthippus montanus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "criquet_ensanglante.svg",
@@ -1711,7 +1896,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/2cafecfc-f4e0-4992-946e-1a4351ea1107",
-  "dessin_de": "Pseudochorthippus montanus"
+  "dessin_de": "Pseudochorthippus montanus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "criquet_egyptien.svg",
@@ -1720,7 +1906,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/0de35750-d9ba-472a-b4f2-3c630777fcc3",
-  "dessin_de": "Acrididae"
+  "dessin_de": "Acrididae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crocidure_leucode.svg",
@@ -1729,7 +1916,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/00abdf76-f67c-4903-91a4-71c6c83443a9",
-  "dessin_de": "Crocidura suaveolens"
+  "dessin_de": "Crocidura suaveolens",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crocothemis_ecarlate.svg",
@@ -1738,7 +1926,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/43086692-0bcb-4ccc-973d-8a71797cb928",
-  "dessin_de": "Sympetrum danae"
+  "dessin_de": "Sympetrum danae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crossope_aquatique.svg",
@@ -1747,7 +1936,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/36339ae4-c132-4264-a2b2-7b22e7d78066",
-  "dessin_de": "Sorex araneus"
+  "dessin_de": "Sorex araneus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crossope_de_miller.svg",
@@ -1756,7 +1946,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/36339ae4-c132-4264-a2b2-7b22e7d78066",
-  "dessin_de": "Sorex araneus"
+  "dessin_de": "Sorex araneus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "crenilabre_paon.svg",
@@ -1765,7 +1956,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/40c41a37-68a4-444a-be52-d8601447eb03",
-  "dessin_de": "Labrus bergylta"
+  "dessin_de": "Labrus bergylta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cuivre_commun.svg",
@@ -1774,7 +1966,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/88d7cbf3-8696-46dc-a71f-86f6e6ec538b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cuivre_de_la_bistorte.svg",
@@ -1783,7 +1976,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/30c282fc-9c25-4d00-8e41-1c7937f47dad",
-  "dessin_de": "Lycaena tityrus"
+  "dessin_de": "Lycaena tityrus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cuivre_de_la_verge_d_or.svg",
@@ -1792,7 +1986,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/88d7cbf3-8696-46dc-a71f-86f6e6ec538b",
-  "dessin_de": "Lycaena phlaeas"
+  "dessin_de": "Lycaena phlaeas",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cuivre_des_marais.svg",
@@ -1801,7 +1996,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ca88c3ed-7265-4837-bec6-7aea150992fd",
-  "dessin_de": "Lycaena phlaeas"
+  "dessin_de": "Lycaena phlaeas",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cygne_tubercule.svg",
@@ -1810,7 +2006,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/05cd7d8c-6b2c-4b97-b7b8-053559019eeb",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "cetoine_doree.svg",
@@ -1819,7 +2016,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/b747d5ad-0fa9-470b-82fd-85d8837299b3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "damier_de_la_succise.svg",
@@ -1828,7 +2026,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/fe680f09-4e5c-4f69-b300-787eebd43ade",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "dauphin_bleu_et_blanc.svg",
@@ -1837,7 +2036,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/22298a5b-06f8-4619-97d6-aaa54690264d",
-  "dessin_de": "Stenella coeruleoalbus"
+  "dessin_de": "Stenella coeruleoalbus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "dauphin_commun.svg",
@@ -1846,7 +2046,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/3caf4fbd-ca3a-48b4-925a-50fbe9acd887",
-  "dessin_de": "Delphinus capensis"
+  "dessin_de": "Delphinus capensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "dauphin_de_risso.svg",
@@ -1855,7 +2056,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/78d1f7fa-aece-4f92-bacf-843418d95723",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "daurade_royale.svg",
@@ -1864,7 +2066,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/19759b22-303b-451f-b4d8-eb6873346a26",
-  "dessin_de": "Stenotomus chrysops"
+  "dessin_de": "Stenotomus chrysops",
+  "ne_montre_pas": []
  },
  {
   "fichier": "decticelle_cendree.svg",
@@ -1873,7 +2076,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3b63434f-264a-4662-bbfd-faa16f9ed1a4",
-  "dessin_de": "Decticus verrucivorus"
+  "dessin_de": "Decticus verrucivorus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "dectique_verrucivore.svg",
@@ -1882,7 +2086,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3b63434f-264a-4662-bbfd-faa16f9ed1a4",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "demi_deuil.svg",
@@ -1891,7 +2096,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2843c501-c820-4e88-89b4-9ce5c6eef23e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "desman_des_pyrenees.svg",
@@ -1900,7 +2106,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2471d1e0-d509-43d6-b59b-b83386d27858",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "diane.svg",
@@ -1909,7 +2116,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/48f87a82-eb10-49ec-bf7e-5812be6a6241",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "discoglosse_corse.svg",
@@ -1918,7 +2126,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b4c738cd-34a8-4acf-b2ae-85c9627e9936",
-  "dessin_de": "Alytes obstetricans"
+  "dessin_de": "Alytes obstetricans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "discoglosse_peint.svg",
@@ -1927,7 +2136,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b4c738cd-34a8-4acf-b2ae-85c9627e9936",
-  "dessin_de": "Alytes obstetricans"
+  "dessin_de": "Alytes obstetricans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "discoglosse_sarde.svg",
@@ -1936,7 +2146,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b4c738cd-34a8-4acf-b2ae-85c9627e9936",
-  "dessin_de": "Alytes obstetricans"
+  "dessin_de": "Alytes obstetricans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "dolomede_des_marais.svg",
@@ -1945,7 +2156,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a1258f2a-bf4c-4cab-8fd3-3e658c237896",
-  "dessin_de": "Pisauridae"
+  "dessin_de": "Pisauridae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "effraie_des_clochers.svg",
@@ -1954,7 +2166,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5672d2a9-8f5f-449c-a6dd-ba4ebe3f768b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "empuse_pennee.svg",
@@ -1963,7 +2176,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/7cf0223b-c3b7-43aa-9990-0b99be0aa1ec",
-  "dessin_de": "Hypsicorypha gracilis"
+  "dessin_de": "Hypsicorypha gracilis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "engoulevent_d_europe.svg",
@@ -1972,7 +2186,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/19899811-afff-4ba8-8084-cc7fe762da7e",
-  "dessin_de": "Caprimulgus"
+  "dessin_de": "Caprimulgus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "escargot_de_bourgogne.svg",
@@ -1981,7 +2196,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d8f236a7-e36b-4313-9162-8f2dead31a8a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "escargot_des_haies.svg",
@@ -1990,7 +2206,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "escargot_des_jardins.svg",
@@ -1999,7 +2216,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "esturgeon_europeen.svg",
@@ -2008,7 +2226,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/5ce55e7c-827d-4049-b128-ae0bc8fb2981",
-  "dessin_de": "Acipenser oxyrhynchus"
+  "dessin_de": "Acipenser oxyrhynchus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "euprocte_de_corse.svg",
@@ -2017,7 +2236,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f8556ac8-b536-418a-8a68-0ce22d33f4d6",
-  "dessin_de": "Salamandridae"
+  "dessin_de": "Salamandridae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fadet_commun.svg",
@@ -2026,7 +2246,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4f0f770a-cadd-4358-a027-3657e2ab1346",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fadet_des_laiches.svg",
@@ -2035,7 +2256,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4f0f770a-cadd-4358-a027-3657e2ab1346",
-  "dessin_de": "Coenonympha pamphilus"
+  "dessin_de": "Coenonympha pamphilus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fadet_des_tourbieres.svg",
@@ -2044,7 +2266,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4f0f770a-cadd-4358-a027-3657e2ab1346",
-  "dessin_de": "Coenonympha pamphilus"
+  "dessin_de": "Coenonympha pamphilus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fadet_tyrrhenien.svg",
@@ -2053,7 +2276,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4f0f770a-cadd-4358-a027-3657e2ab1346",
-  "dessin_de": "Coenonympha pamphilus"
+  "dessin_de": "Coenonympha pamphilus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "faucheux.svg",
@@ -2062,7 +2286,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/05aa1876-bf3a-4c00-b286-1c8178f9c6c9",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "faucon_crecerelle.svg",
@@ -2071,7 +2296,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/65203614-6b64-410b-9d23-c194f3b7d7c6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "faucon_crecerellette.svg",
@@ -2080,7 +2306,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/47dc8ed9-7380-4a2a-baac-6b01ef666cfc",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "faucon_d_eleonore.svg",
@@ -2089,7 +2316,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/46548333-2f43-4f33-9792-d3da59d2b953",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "faucon_hobereau.svg",
@@ -2098,7 +2326,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/25cbb3aa-3f66-4ab1-912e-e42f4a2e4af2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "faucon_pelerin.svg",
@@ -2107,7 +2336,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/6cebf754-cb71-448d-a5bb-947157205264",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_babillarde.svg",
@@ -2116,7 +2346,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/12e851cc-3a9a-4412-a080-13c94f134810",
-  "dessin_de": "Curruca communis"
+  "dessin_de": "Curruca communis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_de_moltoni.svg",
@@ -2125,7 +2356,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/78b29b4c-09d0-409c-9068-afbe095a0426",
-  "dessin_de": "Sylvia atricapilla"
+  "dessin_de": "Sylvia atricapilla",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_des_jardins.svg",
@@ -2134,7 +2366,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/021031e6-6816-4adc-8449-30c86953c9cc",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_grisette.svg",
@@ -2143,7 +2376,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/12e851cc-3a9a-4412-a080-13c94f134810",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_melanocephale.svg",
@@ -2152,7 +2386,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/78b29b4c-09d0-409c-9068-afbe095a0426",
-  "dessin_de": "Sylvia atricapilla"
+  "dessin_de": "Sylvia atricapilla",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_pitchou.svg",
@@ -2161,7 +2396,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/12e851cc-3a9a-4412-a080-13c94f134810",
-  "dessin_de": "Curruca communis"
+  "dessin_de": "Curruca communis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_sarde.svg",
@@ -2170,7 +2406,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/12e851cc-3a9a-4412-a080-13c94f134810",
-  "dessin_de": "Curruca communis"
+  "dessin_de": "Curruca communis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fauvette_a_tete_noire.svg",
@@ -2179,7 +2416,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/78b29b4c-09d0-409c-9068-afbe095a0426",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "flamant_rose.svg",
@@ -2188,7 +2426,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a1244226-f2c2-41dc-b113-f1c6545958ce",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "flambe.svg",
@@ -2197,7 +2436,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/47f14e8b-6069-4540-95db-5fd7a1788e35",
-  "dessin_de": "Iphiclides podalirinus"
+  "dessin_de": "Iphiclides podalirinus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fou_de_bassan.svg",
@@ -2206,7 +2446,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/1190635e-704a-40d3-b39e-815aef85b0ed",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fouine.svg",
@@ -2215,7 +2456,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7f7431c6-8f78-498b-92e2-ebf8882a8923",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "foulque_macroule.svg",
@@ -2224,7 +2466,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5aaa4378-de29-4a20-bdaa-41a8b9b7ad54",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fourmi_moissonneuse.svg",
@@ -2233,7 +2476,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/9baeb207-5a37-4e43-9d9c-4cfb9038c0cc",
-  "dessin_de": "Messor capitatus"
+  "dessin_de": "Messor capitatus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fourmi_rousse_des_bois.svg",
@@ -2242,7 +2486,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/efecbd35-8143-40a7-9163-ea3120caa15b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fourmilion.svg",
@@ -2251,7 +2496,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/60fc28c2-d267-4de1-823d-a3af82fbf2d3",
-  "dessin_de": "Myrmeleon"
+  "dessin_de": "Myrmeleon",
+  "ne_montre_pas": []
  },
  {
   "fichier": "frelon_asiatique.svg",
@@ -2260,7 +2506,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ddfa0a49-bb7b-4bfd-8dd7-10529861553e",
-  "dessin_de": "Vespa crabro"
+  "dessin_de": "Vespa crabro",
+  "ne_montre_pas": []
  },
  {
   "fichier": "frelon_europeen.svg",
@@ -2269,7 +2516,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ddfa0a49-bb7b-4bfd-8dd7-10529861553e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fuligule_milouin.svg",
@@ -2278,7 +2526,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e0751483-faa8-40fa-a0e6-75c5ed523a1c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "fulmar_boreal.svg",
@@ -2287,7 +2536,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/e8c26a02-7902-4abe-9b95-918efce22ac7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gallinule_poule_d_eau.svg",
@@ -2296,7 +2546,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c3551df6-2dfc-4b84-b8b3-aa59fbb272bd",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gambusie.svg",
@@ -2305,7 +2556,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6af4d5e4-b0d7-454f-88fa-27871e30f561",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gammare.svg",
@@ -2314,7 +2566,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f3aa7be8-0050-47a3-a074-a11f2f9e6053",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gardon.svg",
@@ -2323,7 +2576,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2da2c075-6a2f-4984-8683-d2e1b86b9b51",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gaze.svg",
@@ -2332,7 +2586,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7c15898f-a80c-4f2b-bac5-07a187782879",
-  "dessin_de": "Pieridae"
+  "dessin_de": "Pieridae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "geai_des_chenes.svg",
@@ -2341,7 +2596,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/f7a09e0a-7c42-4c68-adf9-25869322b811",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gendarme.svg",
@@ -2350,7 +2606,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/ed1b3f0f-2a19-4fc9-8525-bbfe50e28d1c",
-  "dessin_de": "Rhopalidae"
+  "dessin_de": "Rhopalidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "genette_commune.svg",
@@ -2359,7 +2616,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b24a25fd-6554-4cc9-ab6b-f04c9788882b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "girelle_commune.svg",
@@ -2368,7 +2626,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/eb1c7dfd-c4c6-4fae-8a92-da0e2f16867d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "girelle_paon.svg",
@@ -2377,7 +2636,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/eb1c7dfd-c4c6-4fae-8a92-da0e2f16867d",
-  "dessin_de": "Coris julis"
+  "dessin_de": "Coris julis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "globicephale_noir.svg",
@@ -2386,7 +2646,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/aedc9e7f-6df5-419e-a971-fd9ee34fe3b9",
-  "dessin_de": "Globicephala melaena"
+  "dessin_de": "Globicephala melaena",
+  "ne_montre_pas": []
  },
  {
   "fichier": "glomeris.svg",
@@ -2395,7 +2656,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/5a6d4413-8aad-49a9-8b16-da21ad65c1e5",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gobemouche_noir.svg",
@@ -2404,7 +2666,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/5ab4e738-0e28-4fff-acf7-7634dad221ce",
-  "dessin_de": "Ficedula albicollis"
+  "dessin_de": "Ficedula albicollis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gobemouche_a_collier.svg",
@@ -2413,7 +2676,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/5ab4e738-0e28-4fff-acf7-7634dad221ce",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gomphe_de_graslin.svg",
@@ -2422,7 +2686,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ba61ce1b-b940-433b-a573-5e338ca4ef87",
-  "dessin_de": "Gomphus vulgatissimus"
+  "dessin_de": "Gomphus vulgatissimus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gorgebleue_a_miroir.svg",
@@ -2431,7 +2696,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/46036e45-f30d-4857-8dd4-e9dc57a2bddc",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gorgone_rouge.svg",
@@ -2440,7 +2706,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/04a489bd-d65f-4f13-88f1-065e5bbf2c82",
-  "dessin_de": "Corallium rubrum"
+  "dessin_de": "Corallium rubrum",
+  "ne_montre_pas": []
  },
  {
   "fichier": "goujon_commun.svg",
@@ -2449,7 +2716,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/16aa31fe-440d-43df-9926-da5b9a4309f3",
-  "dessin_de": "Gobio"
+  "dessin_de": "Gobio",
+  "ne_montre_pas": []
  },
  {
   "fichier": "goujon.svg",
@@ -2458,7 +2726,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/16aa31fe-440d-43df-9926-da5b9a4309f3",
-  "dessin_de": "Gobio"
+  "dessin_de": "Gobio",
+  "ne_montre_pas": []
  },
  {
   "fichier": "goeland_argente.svg",
@@ -2467,7 +2736,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/1e45eae7-b1eb-4a08-9e1f-4f34f2fb7710",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "goeland_brun.svg",
@@ -2476,7 +2746,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/23eecd7f-89e1-45c5-9d8a-7c7f373d3af7",
-  "dessin_de": "Larus smithsonianus smithsonianus"
+  "dessin_de": "Larus smithsonianus smithsonianus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "goeland_d_audouin.svg",
@@ -2485,7 +2756,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/35f902d0-c82d-40d5-8c9b-42a76223edc2",
-  "dessin_de": "Larus"
+  "dessin_de": "Larus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "goeland_leucophee.svg",
@@ -2494,7 +2766,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/35f902d0-c82d-40d5-8c9b-42a76223edc2",
-  "dessin_de": "Larus"
+  "dessin_de": "Larus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "goeland_marin.svg",
@@ -2503,7 +2776,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/94c75552-1e1e-45f9-99f9-994de7956b57",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_capricorne.svg",
@@ -2512,7 +2786,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/36c3098b-6137-4d60-ac50-5ba362f9d321",
-  "dessin_de": "Monochamus galloprovincialis"
+  "dessin_de": "Monochamus galloprovincialis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_corbeau.svg",
@@ -2521,7 +2796,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/73ae2599-c13c-45a9-811d-5c75ef7c8037",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_cormoran.svg",
@@ -2530,7 +2806,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/21a3420c-8d7a-4bd2-8ff7-b89fe7f5add5",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_dauphin.svg",
@@ -2539,7 +2816,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/0b5c6b41-3a44-4c9e-869a-63ed54bf7c65",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_gravelot.svg",
@@ -2548,7 +2826,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/5ccc0a37-77ae-4e69-b824-ad3e85f802c6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_hamster.svg",
@@ -2557,7 +2836,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/975b0734-0a15-48e6-b00d-cf27b2de2285",
-  "dessin_de": "Microtus arvalis"
+  "dessin_de": "Microtus arvalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_mars_changeant.svg",
@@ -2566,7 +2846,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/3080da77-7b00-4ff7-901e-60545416461a",
-  "dessin_de": "Limenitis reducta"
+  "dessin_de": "Limenitis reducta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_murin.svg",
@@ -2575,7 +2856,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/a9e7b688-7921-4038-92df-62c8699f8489",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_paon_de_nuit.svg",
@@ -2584,7 +2866,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2529b2ba-ac5a-438c-b4cc-f93fbfe75057",
-  "dessin_de": "Saturnia"
+  "dessin_de": "Saturnia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_rhinolophe.svg",
@@ -2593,7 +2876,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0d386ce5-28e2-407c-b985-c1aac350bd1a",
-  "dessin_de": "Rhinolophus hipposideros"
+  "dessin_de": "Rhinolophus hipposideros",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_sylvain.svg",
@@ -2602,7 +2886,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/3080da77-7b00-4ff7-901e-60545416461a",
-  "dessin_de": "Limenitis reducta"
+  "dessin_de": "Limenitis reducta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_tetras.svg",
@@ -2611,7 +2896,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/462ef30f-88d1-4d0b-a75a-f6f5485056df",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grand_duc_d_europe.svg",
@@ -2620,7 +2906,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/d7d457c1-4c08-4e7e-9af4-f537020c2775",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_aigrette.svg",
@@ -2629,7 +2916,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0733834b-18e7-4309-b4e4-4f5b6209f5bc",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_alose.svg",
@@ -2638,7 +2926,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/713b2c9f-377f-4499-bbfa-6780f69bc397",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_limnee.svg",
@@ -2647,7 +2936,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d02f8a8d-8393-42a4-b90d-8da6a71b15a4",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_loche.svg",
@@ -2656,7 +2946,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2df5ac90-523f-4071-8f92-4181b94dd04e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_mulette.svg",
@@ -2665,7 +2956,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/72dc8fac-4583-4b39-8ba3-681bd09ead61",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_nacre.svg",
@@ -2674,7 +2966,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/754edd70-4cf4-4bfa-98ce-9bad9e90dad9",
-  "dessin_de": "Pinnidae"
+  "dessin_de": "Pinnidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_sauterelle_verte.svg",
@@ -2683,7 +2976,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/4e8b3091-959c-40c3-9666-2d4939e7f390",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grande_tortue.svg",
@@ -2692,7 +2986,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ec822d7d-ef19-4652-b81d-0de952369fbd",
-  "dessin_de": "Nymphalis antiopa"
+  "dessin_de": "Nymphalis antiopa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gravelot_a_collier_interrompu.svg",
@@ -2701,7 +2996,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8e624402-5e75-4f02-bc94-36fa8a6b4929",
-  "dessin_de": "Charadrius semipalmatus"
+  "dessin_de": "Charadrius semipalmatus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grenouille_agile.svg",
@@ -2710,7 +3006,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/b14f5941-85a7-4d9a-bd6b-81e4f40402bf",
-  "dessin_de": "Rana temporaria"
+  "dessin_de": "Rana temporaria",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grenouille_des_pyrenees.svg",
@@ -2719,7 +3016,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e63285f9-4a46-4e5c-8394-a65815b3ab0d",
-  "dessin_de": "Rana"
+  "dessin_de": "Rana",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grenouille_rieuse.svg",
@@ -2728,7 +3026,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/238318b2-1838-418d-b6fe-acec780dd5c3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grenouille_rousse.svg",
@@ -2737,7 +3036,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e73c5c1c-7727-4687-bf0b-3957343edfc3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grenouille_verte.svg",
@@ -2746,7 +3046,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/43f6f587-7461-4579-880f-68d508adbc78",
-  "dessin_de": "Pelophylax"
+  "dessin_de": "Pelophylax",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grillon_champetre.svg",
@@ -2755,7 +3056,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1e045fef-4aa9-4ddd-b17f-75212b869238",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grillon_des_bois.svg",
@@ -2764,7 +3066,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1e045fef-4aa9-4ddd-b17f-75212b869238",
-  "dessin_de": "Gryllus campestris"
+  "dessin_de": "Gryllus campestris",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grimpereau_des_bois.svg",
@@ -2773,7 +3076,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/2dedd43f-169c-4c03-a54f-1471dbb8bbb3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grimpereau_des_jardins.svg",
@@ -2782,7 +3086,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/2dedd43f-169c-4c03-a54f-1471dbb8bbb3",
-  "dessin_de": "Certhia familiaris"
+  "dessin_de": "Certhia familiaris",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grive_draine.svg",
@@ -2791,7 +3096,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e40adfe7-6dc5-426b-9b50-aa02b033db6d",
-  "dessin_de": "Turdus philomelos"
+  "dessin_de": "Turdus philomelos",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grive_litorne.svg",
@@ -2800,7 +3106,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/fc1d469f-e1d7-47f2-a796-38bdebd62d2c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grive_musicienne.svg",
@@ -2809,7 +3116,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e40adfe7-6dc5-426b-9b50-aa02b033db6d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grosbec_casse_noyaux.svg",
@@ -2818,7 +3126,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0580ee17-1897-4e87-ad2e-0644a36cdce8",
-  "dessin_de": "Chloris chloris"
+  "dessin_de": "Chloris chloris",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grue_cendree.svg",
@@ -2827,7 +3136,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/5d6a2703-c087-4f58-a14d-0bbc55131100",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grebe_castagneux.svg",
@@ -2836,7 +3146,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/cc7d35ad-fcab-47d5-8a63-2930bd128891",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grebe_huppe.svg",
@@ -2845,7 +3156,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/deba1d91-daa8-40a6-8d48-7a9f295bc662",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "grebe_a_cou_noir.svg",
@@ -2854,7 +3166,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/cc7d35ad-fcab-47d5-8a63-2930bd128891",
-  "dessin_de": "Tachybaptus ruficollis"
+  "dessin_de": "Tachybaptus ruficollis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gremille.svg",
@@ -2863,7 +3176,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1c06074b-62c6-4066-8ed2-1ab127e45709",
-  "dessin_de": "Perca fluviatilis"
+  "dessin_de": "Perca fluviatilis, retouché par Claude",
+  "ne_montre_pas": []
  },
  {
   "fichier": "guifette_moustac.svg",
@@ -2872,7 +3186,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3d48f0be-6ad5-42e4-adbe-fc7b3e4b8a91",
-  "dessin_de": "Chlidonias niger"
+  "dessin_de": "Chlidonias niger",
+  "ne_montre_pas": []
  },
  {
   "fichier": "guillemot_de_troil.svg",
@@ -2881,7 +3196,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/822f0866-55b5-4b8b-aa0e-df6cf2678865",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "guepier_d_europe.svg",
@@ -2890,7 +3206,10 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/086d2b94-f13c-47ab-9538-c9b71d97f934",
-  "dessin_de": "Coracias caudata"
+  "dessin_de": "Coracias caudata",
+  "ne_montre_pas": [
+   "bec_forme"
+  ]
  },
  {
   "fichier": "gypaete_barbu.svg",
@@ -2899,7 +3218,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/2c8d7b25-ceec-4b6a-be73-c3126421927c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "gelinotte_des_bois.svg",
@@ -2908,7 +3228,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5e68cdb0-9fde-4218-a9d7-ff48e2e60bfc",
-  "dessin_de": "Canachites canadensis"
+  "dessin_de": "Canachites canadensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "geotrupe_des_bois.svg",
@@ -2917,7 +3238,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2c01a014-a177-4335-92a4-8b08a89d5c05",
-  "dessin_de": "Geotrupidae"
+  "dessin_de": "Geotrupidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "geotrupe_du_fumier.svg",
@@ -2926,7 +3248,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2c01a014-a177-4335-92a4-8b08a89d5c05",
-  "dessin_de": "Geotrupidae"
+  "dessin_de": "Geotrupidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hanneton_commun.svg",
@@ -2935,7 +3258,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1feddf6f-5b20-4646-b3ea-76d3421bc6fd",
-  "dessin_de": "Hylamorpha elegans"
+  "dessin_de": "Hylamorpha elegans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hanneton_foulon.svg",
@@ -2944,7 +3268,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/3caa2e18-dfcb-4b4a-a4e1-7b3cc57105a9",
-  "dessin_de": "Amphimallon solstitiale"
+  "dessin_de": "Amphimallon solstitiale",
+  "ne_montre_pas": []
  },
  {
   "fichier": "harle_bievre.svg",
@@ -2953,7 +3278,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/341058b7-f082-4648-a1bc-e182f599b7f3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hermine.svg",
@@ -2962,7 +3288,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/001f56ab-8383-4dfb-9673-67872280449e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hibou_moyen_duc.svg",
@@ -2971,7 +3298,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/4d807333-2126-4922-946a-1f9ec23aca56",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hippocampe_mouchete.svg",
@@ -2980,7 +3308,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/1ce0d9a9-c644-4cc6-b4b3-02e2e7aa2266",
-  "dessin_de": "Hippocampus"
+  "dessin_de": "Hippocampus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hirondelle_de_fenetre.svg",
@@ -2989,7 +3318,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/868fa4ad-efbe-4752-97f3-857cc2e17839",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hirondelle_de_rivage.svg",
@@ -2998,7 +3328,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d285f6dd-b3f4-4c08-af24-2e51a6b3cde8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hirondelle_de_rochers.svg",
@@ -3007,7 +3338,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/cf38be70-f0a8-4a47-b387-e797ec16c7c1",
-  "dessin_de": "Hirundinidae"
+  "dessin_de": "Hirundinidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hirondelle_rustique.svg",
@@ -3016,7 +3348,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/cf38be70-f0a8-4a47-b387-e797ec16c7c1",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hotu.svg",
@@ -3025,7 +3358,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/02974d7f-f93c-4c59-b847-3b080368c168",
-  "dessin_de": "Pseudochondrostoma duriense"
+  "dessin_de": "Pseudochondrostoma duriense",
+  "ne_montre_pas": []
  },
  {
   "fichier": "huppe_fasciee.svg",
@@ -3034,7 +3368,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b217ad1b-0669-4666-80da-9ddc3c3506e2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "huitre_creuse.svg",
@@ -3043,7 +3378,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d8877f55-4429-47f4-8163-064f98199815",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "huitre_plate.svg",
@@ -3052,7 +3388,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/628464c6-9fb8-4ab0-93b6-a39d20792672",
-  "dessin_de": "Ostrea chilensis"
+  "dessin_de": "Ostrea chilensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "huitrier_pie.svg",
@@ -3061,7 +3398,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e485635e-7dc3-4cb5-afcd-fe21c6767c71",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "helice_de_raspail.svg",
@@ -3070,7 +3408,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "helice_des_bois.svg",
@@ -3079,7 +3418,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "hemidactyle_verruqueux.svg",
@@ -3088,7 +3428,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/44fd7a92-f1a6-4d1e-94db-4899bb772fe7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "herisson_d_europe.svg",
@@ -3097,7 +3438,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ecff71e-fcfc-4cb9-b773-9e6e21607587",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "heron_cendre.svg",
@@ -3106,7 +3448,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/9b0855e1-4ca1-44e4-939a-d8d20c80cbce",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "heron_garde_boeufs.svg",
@@ -3115,7 +3458,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/afaed2dc-f0e9-442a-bae2-7ef437033356",
-  "dessin_de": "Egretta rufescens"
+  "dessin_de": "Egretta rufescens",
+  "ne_montre_pas": []
  },
  {
   "fichier": "heron_pourpre.svg",
@@ -3124,7 +3468,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5d38ae89-8938-427d-ba49-3ae4cde0016c",
-  "dessin_de": "Ardea cinerea"
+  "dessin_de": "Ardea cinerea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ibis_falcinelle.svg",
@@ -3133,7 +3478,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/665521e1-1a70-465e-9bdb-b67d13ae3661",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "isabelle_de_france.svg",
@@ -3142,7 +3488,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8bd1dca6-cc08-4445-8590-3c8c73d44078",
-  "dessin_de": "Actias luna"
+  "dessin_de": "Actias luna",
+  "ne_montre_pas": []
  },
  {
   "fichier": "isard.svg",
@@ -3151,7 +3498,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bf013755-e13a-4b36-a833-e02fd9cf4246",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "iule_a_pattes_blanches.svg",
@@ -3160,7 +3508,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/14ddbc46-8148-494f-af3a-160a13f0b749",
-  "dessin_de": "Julidae"
+  "dessin_de": "Julidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lagopede_alpin.svg",
@@ -3169,7 +3518,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/42f85a2b-7517-439a-8dc3-b745a35c035d",
-  "dessin_de": "Lagopus lagopus"
+  "dessin_de": "Lagopus lagopus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lamproie_de_planer.svg",
@@ -3178,7 +3528,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5b0688cf-c547-457e-bb5b-61a851f82966",
-  "dessin_de": "Lampetra"
+  "dessin_de": "Lampetra",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lamproie_marine.svg",
@@ -3187,7 +3538,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/63953094-ac64-42c3-920e-53ee87ab188f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "langouste_rouge.svg",
@@ -3196,7 +3548,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d96e18f2-c9d6-4b2e-914c-678ed3c72a28",
-  "dessin_de": "Panulirus interruptus"
+  "dessin_de": "Panulirus interruptus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lancon.svg",
@@ -3205,7 +3558,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/31124fe7-c960-40dd-943b-dbecd53650db",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lapin_de_garenne.svg",
@@ -3214,7 +3568,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ad7d2a9d-ef0d-46f2-895d-7c67bb8e6355",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "leucorrhine_douteuse.svg",
@@ -3223,7 +3578,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/6b9c86a1-09a3-4a68-9c28-ead1c3fbd4b6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "leucorrhine_a_gros_thorax.svg",
@@ -3232,7 +3588,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/6b9c86a1-09a3-4a68-9c28-ead1c3fbd4b6",
-  "dessin_de": "Leucorrhinia dubia"
+  "dessin_de": "Leucorrhinia dubia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "libellule_deprimee.svg",
@@ -3241,7 +3598,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/cf2b4de2-300a-46d9-8340-22a6229afcc3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "libellule_a_quatre_taches.svg",
@@ -3250,7 +3608,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/cf2b4de2-300a-46d9-8340-22a6229afcc3",
-  "dessin_de": "Libellula depressa"
+  "dessin_de": "Libellula depressa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lieu_jaune.svg",
@@ -3259,7 +3618,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b5f46e3c-63cb-40ad-b1ef-03a368142fa5",
-  "dessin_de": "Pollachius virens"
+  "dessin_de": "Pollachius virens",
+  "ne_montre_pas": []
  },
  {
   "fichier": "limace_cendree.svg",
@@ -3268,7 +3628,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/b3545b91-286f-4f30-b7ef-986c7bcc087b",
-  "dessin_de": "Limax maximus"
+  "dessin_de": "Limax maximus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "limace_leopard.svg",
@@ -3277,7 +3638,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/b3545b91-286f-4f30-b7ef-986c7bcc087b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "limnee_tronquee.svg",
@@ -3286,7 +3648,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/33003fa5-f5ba-4cdb-9c7b-99d805a1b6c1",
-  "dessin_de": "Lymnaeidae"
+  "dessin_de": "Lymnaeidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "linotte_melodieuse.svg",
@@ -3295,7 +3658,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/2e3770b7-e621-429b-bffc-7a5038aaae1b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lithobie_a_pinces.svg",
@@ -3304,7 +3668,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/83c995d5-0936-441b-8a27-089005086c61",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lievre_d_europe.svg",
@@ -3313,7 +3678,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4afd156c-051f-4b43-9064-cf6b673faadb",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lievre_de_corse.svg",
@@ -3322,7 +3688,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4afd156c-051f-4b43-9064-cf6b673faadb",
-  "dessin_de": "Lepus europaeus"
+  "dessin_de": "Lepus europaeus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lievre_variable.svg",
@@ -3331,7 +3698,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/8930c815-0a3e-4b77-a2da-e7273bccddd7",
-  "dessin_de": "Lepus saxatilis"
+  "dessin_de": "Lepus saxatilis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "loche_de_riviere.svg",
@@ -3340,7 +3708,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/97b23944-70b5-43f1-95c3-4b017cc78b16",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "loche_franche.svg",
@@ -3349,7 +3718,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/63028840-34fa-44fb-8883-41b2866e61b8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "loir_gris.svg",
@@ -3358,7 +3728,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3ee2a93c-2f0a-423b-941c-88e30db399b9",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lombric_commun.svg",
@@ -3367,7 +3738,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f0d839a1-5a3e-42b2-828a-c5e536f0f7b7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "loriot_d_europe.svg",
@@ -3376,7 +3748,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/fbbf9841-91bf-4aae-8e07-b004d9f66f56",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lote.svg",
@@ -3385,7 +3758,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/9e87f9e3-a1a6-49e0-9037-924d81ab53a3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "loup_gris.svg",
@@ -3394,7 +3768,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/da5faa63-085f-4523-a542-e71cb386c999",
-  "dessin_de": "Canis latrans"
+  "dessin_de": "Canis latrans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "loutre_d_europe.svg",
@@ -3403,7 +3778,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3cdae098-058b-4ce2-8f46-ad3101b624db",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lucane_cerf_volant.svg",
@@ -3412,7 +3788,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/6b947ea6-07c9-4946-9556-d7739dd1a672",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lycose_de_narbonne.svg",
@@ -3421,7 +3798,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/16ce8ca6-f4f7-42e5-891c-a5fc773005ac",
-  "dessin_de": "Lycosidae"
+  "dessin_de": "Lycosidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lycose_radiee.svg",
@@ -3430,7 +3808,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/16ce8ca6-f4f7-42e5-891c-a5fc773005ac",
-  "dessin_de": "Lycosidae"
+  "dessin_de": "Lycosidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lynx_boreal.svg",
@@ -3439,7 +3818,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/20442a12-596d-4987-a668-509c19a155da",
-  "dessin_de": "Lynx pardinus"
+  "dessin_de": "Lynx pardinus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lerot.svg",
@@ -3448,7 +3828,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/477e2496-9df7-4e60-b66d-8d7d3d295b2f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_catalan.svg",
@@ -3457,7 +3838,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bad1295c-4349-4992-af66-5ef7bdf83e7d",
-  "dessin_de": "Podarcis tiliguerta"
+  "dessin_de": "Podarcis tiliguerta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_de_bedriaga.svg",
@@ -3466,7 +3848,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/18af6753-2f5b-49d2-a28d-4cc1b7deaf6f",
-  "dessin_de": "Lacertidae"
+  "dessin_de": "Lacertidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_de_bonnal.svg",
@@ -3475,7 +3858,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/18af6753-2f5b-49d2-a28d-4cc1b7deaf6f",
-  "dessin_de": "Lacertidae"
+  "dessin_de": "Lacertidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_des_murailles.svg",
@@ -3484,7 +3868,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/025d7525-5902-4bc4-9c72-a48cf0506a0f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_des_souches.svg",
@@ -3493,7 +3878,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/18af6753-2f5b-49d2-a28d-4cc1b7deaf6f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_ocelle.svg",
@@ -3502,7 +3888,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/be7c2c59-4ae7-478e-b0d7-b243e7b7a874",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_sicilien.svg",
@@ -3511,7 +3898,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/025d7525-5902-4bc4-9c72-a48cf0506a0f",
-  "dessin_de": "Podarcis muralis"
+  "dessin_de": "Podarcis muralis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_tyrrhenien.svg",
@@ -3520,7 +3908,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bad1295c-4349-4992-af66-5ef7bdf83e7d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_vert_occidental.svg",
@@ -3529,7 +3918,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/18af6753-2f5b-49d2-a28d-4cc1b7deaf6f",
-  "dessin_de": "Lacerta agilis"
+  "dessin_de": "Lacerta agilis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "lezard_vivipare.svg",
@@ -3538,7 +3928,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b471c37e-8e9e-4ef2-a486-1fdee807b85a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "macareux_moine.svg",
@@ -3547,7 +3938,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/18ff6244-3ec9-4750-a29a-aaad7e2f14ad",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "machaon.svg",
@@ -3556,7 +3948,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f21829d7-6dfc-4b2f-991c-e16181c24d29",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "magicienne_dentelee.svg",
@@ -3565,7 +3958,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8f55e2ec-f2ea-407a-bfbf-077aa10b5d36",
-  "dessin_de": "Tettigoniidae"
+  "dessin_de": "Tettigoniidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "maigre.svg",
@@ -3574,7 +3968,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ba7d2620-6e6d-4985-9de6-6951a03606b6",
-  "dessin_de": "Cynoscion regalis"
+  "dessin_de": "Cynoscion regalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "malmignatte.svg",
@@ -3583,7 +3978,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/c27d24d2-7c1e-4dbd-8f0b-d2f7009bbe3c",
-  "dessin_de": "Latrodectus katipo"
+  "dessin_de": "Latrodectus katipo",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mangore_petite_bouteille.svg",
@@ -3592,7 +3988,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2f7145fc-002c-40e8-9b35-16f95b05f0e3",
-  "dessin_de": "Araneus diadematus"
+  "dessin_de": "Araneus diadematus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mante_religieuse.svg",
@@ -3601,7 +3998,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c5a14ad6-6d6f-49db-97b9-680cb36f8646",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "maquereau_commun.svg",
@@ -3610,7 +4008,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a9e322a9-9cc8-46e1-aef1-bba8838b27e7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "marmotte_des_alpes.svg",
@@ -3619,7 +4018,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/eee50efb-40dc-47d0-b2cb-52a14a5e0e51",
-  "dessin_de": "Marmota monax"
+  "dessin_de": "Marmota monax",
+  "ne_montre_pas": []
  },
  {
   "fichier": "marsouin_commun.svg",
@@ -3628,7 +4028,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/81441ece-7fda-457e-b6ef-c2c84f08dffb",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "martin_pecheur_d_europe.svg",
@@ -3637,7 +4038,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/632580ed-9bf0-4e01-b3b6-3cf31fcf417e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "martinet_noir.svg",
@@ -3646,7 +4048,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0ca96de2-83a1-4f3c-b20d-8b0df1dd6960",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "martinet_pale.svg",
@@ -3655,7 +4058,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/737a0176-deee-4a0f-a721-11534ff2b0c5",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "martinet_a_ventre_blanc.svg",
@@ -3664,7 +4068,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d1b47cc3-6f96-42d8-92e7-b0abc89712fd",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "martre_des_pins.svg",
@@ -3673,7 +4078,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7f7431c6-8f78-498b-92e2-ebf8882a8923",
-  "dessin_de": "Martes foina"
+  "dessin_de": "Martes foina",
+  "ne_montre_pas": []
  },
  {
   "fichier": "merle_noir.svg",
@@ -3682,7 +4088,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ec11f62e-ed3e-49bb-bcff-4e47b281d378",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "merle_a_plastron.svg",
@@ -3691,7 +4098,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/fc1d469f-e1d7-47f2-a796-38bdebd62d2c",
-  "dessin_de": "Turdus pilaris"
+  "dessin_de": "Turdus pilaris",
+  "ne_montre_pas": []
  },
  {
   "fichier": "micrommate_emeraude.svg",
@@ -3700,7 +4108,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/1a980550-dfd0-402a-a574-c6d8058e9f62",
-  "dessin_de": "Sparassidae"
+  "dessin_de": "Sparassidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "milan_noir.svg",
@@ -3709,7 +4118,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/63f337b6-8a58-4939-ba8b-f1bd3b8c1037",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "milan_royal.svg",
@@ -3718,7 +4128,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/aec14bd0-7666-45e2-8a30-17fdd0c79578",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "minioptere_de_schreibers.svg",
@@ -3727,7 +4138,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/95005cad-5b63-45ba-9290-77b9f42c3c53",
-  "dessin_de": "Nyctalus leisleri"
+  "dessin_de": "Nyctalus leisleri",
+  "ne_montre_pas": []
  },
  {
   "fichier": "miramelle_alpestre.svg",
@@ -3736,7 +4148,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/65ec03a6-68be-4789-815f-02440b32289c",
-  "dessin_de": "Stenobothrus nigromaculatus"
+  "dessin_de": "Stenobothrus nigromaculatus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "miramelle_pyreneenne.svg",
@@ -3745,7 +4158,10 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e7ba011c-6172-47ca-84bf-0dfc87b47a32",
-  "dessin_de": "Acrididae"
+  "dessin_de": "Acrididae",
+  "ne_montre_pas": [
+   "ailes_visibles"
+  ]
  },
  {
   "fichier": "moineau_cisalpin.svg",
@@ -3754,7 +4170,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3a4cdd72-e553-40ad-838e-3b23037b2010",
-  "dessin_de": "Passer domesticus"
+  "dessin_de": "Passer domesticus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moineau_domestique.svg",
@@ -3763,7 +4180,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3a4cdd72-e553-40ad-838e-3b23037b2010",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moineau_friquet.svg",
@@ -3772,7 +4190,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/1f13537d-6c37-4179-a127-710218b97072",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moire_blanc_fascie.svg",
@@ -3781,7 +4200,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/992eb7ee-3d63-4f14-b3ca-5436d213f8b3",
-  "dessin_de": "Erebia medusa"
+  "dessin_de": "Erebia medusa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moire_de_la_canche.svg",
@@ -3790,7 +4210,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/992eb7ee-3d63-4f14-b3ca-5436d213f8b3",
-  "dessin_de": "Erebia medusa"
+  "dessin_de": "Erebia medusa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moire_de_lefebvre.svg",
@@ -3799,7 +4220,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0c391d43-30a5-4077-bdcb-fbb80f5d13e6",
-  "dessin_de": "Erebia"
+  "dessin_de": "Erebia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moire_franconien.svg",
@@ -3808,7 +4230,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/992eb7ee-3d63-4f14-b3ca-5436d213f8b3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "molosse_de_cestoni.svg",
@@ -3817,7 +4240,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/336c3c4b-9c57-47ee-af7a-b8a9e0d93cb5",
-  "dessin_de": "Vespertilio murinus"
+  "dessin_de": "Vespertilio murinus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "monticole_bleu.svg",
@@ -3826,7 +4250,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/426c4d27-9898-4dbb-ab08-d1f242038f5d",
-  "dessin_de": "Muscicapidae"
+  "dessin_de": "Muscicapidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "monticole_de_roche.svg",
@@ -3835,7 +4260,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/426c4d27-9898-4dbb-ab08-d1f242038f5d",
-  "dessin_de": "Muscicapidae"
+  "dessin_de": "Muscicapidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "morio.svg",
@@ -3844,7 +4270,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ec822d7d-ef19-4652-b81d-0de952369fbd",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moro_sphinx.svg",
@@ -3853,7 +4280,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/e832d984-0983-4aee-a6e4-2ff344d3ba93",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mouette_rieuse.svg",
@@ -3862,7 +4290,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e4bbf935-366e-4e20-a6f2-4a0465f9b7df",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mouette_tridactyle.svg",
@@ -3871,7 +4300,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/71526878-5cc3-4456-8785-69336ac3c93e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mouflon_mediterraneen.svg",
@@ -3880,7 +4310,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b7344c53-6115-49cf-836d-ae71cc3853a8",
-  "dessin_de": "Ovis canadensis"
+  "dessin_de": "Ovis canadensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moule_commune.svg",
@@ -3889,7 +4320,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c6bdabec-410f-45f2-9dd1-991d1d22fdc7",
-  "dessin_de": "Mytilus platensis"
+  "dessin_de": "Mytilus platensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "moule_zebree.svg",
@@ -3898,7 +4330,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/234c9bf2-277f-4295-aa7e-a1b2481afe1b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mourgette.svg",
@@ -3907,7 +4340,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mulet_porc.svg",
@@ -3916,7 +4350,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/ead318d0-2ded-4ca5-b263-b9702374a564",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mulette_perliere.svg",
@@ -3925,7 +4360,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/72dc8fac-4583-4b39-8ba3-681bd09ead61",
-  "dessin_de": "Margaritifera auricularia"
+  "dessin_de": "Margaritifera auricularia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mulette_epaisse.svg",
@@ -3934,7 +4370,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/96fe700f-1443-4454-9fcb-7a98eeb09c59",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mulot_sylvestre.svg",
@@ -3943,7 +4380,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3b89954e-b28e-4062-89cd-1ad5df0eb431",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mulot_a_collier.svg",
@@ -3952,7 +4390,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3b89954e-b28e-4062-89cd-1ad5df0eb431",
-  "dessin_de": "Apodemus"
+  "dessin_de": "Apodemus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "murin_de_bechstein.svg",
@@ -3961,7 +4400,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/f962019c-bbf9-41fc-8432-ee1c1f348697",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "murin_de_daubenton.svg",
@@ -3970,7 +4410,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a2ef021b-2000-49f0-a36e-916840755480",
-  "dessin_de": "Aeorestes cinereus"
+  "dessin_de": "Aeorestes cinereus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "murin_de_natterer.svg",
@@ -3979,7 +4420,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/99093950-7014-466f-b0d3-7b0bd9572b11",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "murin_du_maghreb.svg",
@@ -3988,7 +4430,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/a9e7b688-7921-4038-92df-62c8699f8489",
-  "dessin_de": "Myotis myotis"
+  "dessin_de": "Myotis myotis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "murin_a_moustaches.svg",
@@ -3997,7 +4440,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/70d2cfe4-9639-4c8a-9e1a-71d76d50a16d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "murin_a_oreilles_echancrees.svg",
@@ -4006,7 +4450,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a2ef021b-2000-49f0-a36e-916840755480",
-  "dessin_de": "Aeorestes cinereus"
+  "dessin_de": "Aeorestes cinereus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "murene.svg",
@@ -4015,7 +4460,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/33d68cc1-4702-4d9e-8e23-5aa07acaf3ee",
-  "dessin_de": "Gymnothorax polyuranodon"
+  "dessin_de": "Gymnothorax polyuranodon",
+  "ne_montre_pas": []
  },
  {
   "fichier": "musaraigne_alpine.svg",
@@ -4024,7 +4470,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/822c549b-b29b-47eb-9fe3-dc5bbb0abccb",
-  "dessin_de": "Sorex"
+  "dessin_de": "Sorex",
+  "ne_montre_pas": []
  },
  {
   "fichier": "musaraigne_carrelet.svg",
@@ -4033,7 +4480,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/36339ae4-c132-4264-a2b2-7b22e7d78066",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "musaraigne_couronnee.svg",
@@ -4042,7 +4490,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/822c549b-b29b-47eb-9fe3-dc5bbb0abccb",
-  "dessin_de": "Sorex"
+  "dessin_de": "Sorex",
+  "ne_montre_pas": []
  },
  {
   "fichier": "musaraigne_des_jardins.svg",
@@ -4051,7 +4500,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/00abdf76-f67c-4903-91a4-71c6c83443a9",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "musaraigne_musette.svg",
@@ -4060,7 +4510,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/00abdf76-f67c-4903-91a4-71c6c83443a9",
-  "dessin_de": "Crocidura suaveolens"
+  "dessin_de": "Crocidura suaveolens",
+  "ne_montre_pas": []
  },
  {
   "fichier": "musaraigne_pygmee.svg",
@@ -4069,7 +4520,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/36339ae4-c132-4264-a2b2-7b22e7d78066",
-  "dessin_de": "Sorex araneus"
+  "dessin_de": "Sorex araneus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "muscardin.svg",
@@ -4078,7 +4530,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/ef52bfa8-5495-469b-83f1-5e291dbdc5c2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mygale_a_chaussette.svg",
@@ -4087,7 +4540,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/59d388a8-d80b-4052-8dbb-c7f4ae87e977",
-  "dessin_de": "Aliatypus californicus"
+  "dessin_de": "Aliatypus californicus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "myrtil.svg",
@@ -4096,7 +4550,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5a47f798-5a88-4c77-bf01-244367788ded",
-  "dessin_de": "Megisto cymela"
+  "dessin_de": "Megisto cymela",
+  "ne_montre_pas": []
  },
  {
   "fichier": "meduse_d_eau_douce.svg",
@@ -4105,7 +4560,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/12b88747-2892-454a-a882-c9c7e5f2c715",
-  "dessin_de": "Gonionemus vertens"
+  "dessin_de": "Gonionemus vertens",
+  "ne_montre_pas": []
  },
  {
   "fichier": "megere_tyrrhenienne.svg",
@@ -4114,7 +4570,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0c391d43-30a5-4077-bdcb-fbb80f5d13e6",
-  "dessin_de": "Erebia"
+  "dessin_de": "Erebia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "merou_brun.svg",
@@ -4123,7 +4580,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/c86a4115-2c35-4d30-a150-c974a8c207b6",
-  "dessin_de": "Epinephelus malabaricus"
+  "dessin_de": "Epinephelus malabaricus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mesange_bleue.svg",
@@ -4132,7 +4590,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/069c4833-e1ac-48e7-90d5-f7bd11000588",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mesange_boreale.svg",
@@ -4141,7 +4600,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/44ca7679-ad00-4c9e-91d5-6414f08f81f2",
-  "dessin_de": "Poecile carolinensis"
+  "dessin_de": "Poecile carolinensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mesange_charbonniere.svg",
@@ -4150,7 +4610,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/037d72a3-1289-4717-83b1-edaffeee4f38",
-  "dessin_de": "Parus atricapillus"
+  "dessin_de": "Parus atricapillus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mesange_huppee.svg",
@@ -4159,7 +4620,10 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/dfdfb59e-8126-44e1-a7a9-1bf698113e1c",
-  "dessin_de": "Paridae"
+  "dessin_de": "Paridae",
+  "ne_montre_pas": [
+   "ornement_tete"
+  ]
  },
  {
   "fichier": "mesange_noire.svg",
@@ -4168,7 +4632,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/dfdfb59e-8126-44e1-a7a9-1bf698113e1c",
-  "dessin_de": "Paridae"
+  "dessin_de": "Paridae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mesange_nonnette.svg",
@@ -4177,7 +4642,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/44ca7679-ad00-4c9e-91d5-6414f08f81f2",
-  "dessin_de": "Poecile carolinensis"
+  "dessin_de": "Poecile carolinensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "mesange_a_longue_queue.svg",
@@ -4186,7 +4652,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/49d94179-c795-4a53-938b-9c4d2d2ac692",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "meta_des_cavernes.svg",
@@ -4195,7 +4662,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2f7145fc-002c-40e8-9b35-16f95b05f0e3",
-  "dessin_de": "Araneus diadematus"
+  "dessin_de": "Araneus diadematus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "nacre_de_la_canneberge.svg",
@@ -4204,7 +4672,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e6025d2c-3159-4813-8ac4-110d985b5d73",
-  "dessin_de": "Boloria eunomia"
+  "dessin_de": "Boloria eunomia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "nacre_de_la_sanguisorbe.svg",
@@ -4213,7 +4682,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e6025d2c-3159-4813-8ac4-110d985b5d73",
-  "dessin_de": "Boloria eunomia"
+  "dessin_de": "Boloria eunomia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "nette_rousse.svg",
@@ -4222,7 +4692,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/1c044a03-f1ba-49fd-857e-f10aa8778e30",
-  "dessin_de": "Anas platyrhynchos"
+  "dessin_de": "Anas platyrhynchos",
+  "ne_montre_pas": []
  },
  {
   "fichier": "niverolle_alpine.svg",
@@ -4231,7 +4702,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/1f13537d-6c37-4179-a127-710218b97072",
-  "dessin_de": "Passer montanus"
+  "dessin_de": "Passer montanus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "noctule_commune.svg",
@@ -4240,7 +4712,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/78e236f9-eeda-4082-87cc-c64802bb0974",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "noctule_de_leisler.svg",
@@ -4249,7 +4722,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/78e236f9-eeda-4082-87cc-c64802bb0974",
-  "dessin_de": "Nyctalus noctula"
+  "dessin_de": "Nyctalus noctula",
+  "ne_montre_pas": []
  },
  {
   "fichier": "necrophore_fossoyeur.svg",
@@ -4258,7 +4732,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/4e3892fe-0054-4c94-a5bf-46a9818bb252",
-  "dessin_de": "Nicrophorus"
+  "dessin_de": "Nicrophorus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oblade.svg",
@@ -4267,7 +4742,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ea65474f-4949-4e12-a1ec-8d2371cd5a74",
-  "dessin_de": "Sarpa salpa"
+  "dessin_de": "Sarpa salpa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oceanite_tempete.svg",
@@ -4276,7 +4752,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/d6668ea1-5914-4b05-abe9-fbc7562f83fc",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "omble_chevalier.svg",
@@ -4285,7 +4762,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/7413aa3a-d736-435a-8635-0c316ff73f26",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "omble_de_fontaine.svg",
@@ -4294,7 +4772,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/62723107-bea2-4624-84ff-2be5f0dd0c3c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ombre_commun.svg",
@@ -4303,7 +4782,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2b26fca9-33c3-42e3-9704-b569ecb165a0",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oreillard_gris.svg",
@@ -4312,7 +4792,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/805e756d-81f2-449f-a9ef-662708f6399a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oreillard_montagnard.svg",
@@ -4321,7 +4802,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/805e756d-81f2-449f-a9ef-662708f6399a",
-  "dessin_de": "Plecotus austriacus"
+  "dessin_de": "Plecotus austriacus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oreillard_roux.svg",
@@ -4330,7 +4812,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/00e0ac1c-9e1e-4a30-aac7-5f768ff915ae",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ormeau.svg",
@@ -4339,7 +4822,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/676fd1fd-3605-4047-a7dd-97d6273753dd",
-  "dessin_de": "Haliotis"
+  "dessin_de": "Haliotis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "orvet_fragile.svg",
@@ -4348,7 +4832,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3dd275e2-3ae8-4e24-86f7-a5db129897ce",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ours_brun.svg",
@@ -4357,7 +4842,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/43e82541-0f4a-467c-864e-f7f44c38b5af",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oursin_noir.svg",
@@ -4366,7 +4852,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/21f01ed3-d1ce-419c-8339-06be3c353466",
-  "dessin_de": "Strongylocentrotus purpuratus"
+  "dessin_de": "Strongylocentrotus purpuratus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oursin_violet.svg",
@@ -4375,7 +4862,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/21f01ed3-d1ce-419c-8339-06be3c353466",
-  "dessin_de": "Strongylocentrotus purpuratus"
+  "dessin_de": "Strongylocentrotus purpuratus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "outarde_canepetiere.svg",
@@ -4384,7 +4872,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4291fa38-2fbd-4b3e-970c-ee8a937e4f4d",
-  "dessin_de": "Chlamydotis undulata"
+  "dessin_de": "Chlamydotis undulata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pacha_a_deux_queues.svg",
@@ -4393,7 +4882,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/a4d9a32e-d31e-4f17-adc1-b27b9cda0212",
-  "dessin_de": "Fountainea ryphea ryphea"
+  "dessin_de": "Fountainea ryphea ryphea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pachyure_etrusque.svg",
@@ -4402,7 +4892,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/27347fc7-bec9-4653-b94d-b9713cc52301",
-  "dessin_de": "Crocidura"
+  "dessin_de": "Crocidura",
+  "ne_montre_pas": []
  },
  {
   "fichier": "paon_du_jour.svg",
@@ -4411,7 +4902,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bf1c60d6-6fd6-49e9-9ce3-ea115e42da4f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pastenague_commune.svg",
@@ -4420,7 +4912,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a997f4cc-e9e1-49f9-88c6-13a1cbcb75cb",
-  "dessin_de": "Taeniura"
+  "dessin_de": "Taeniura",
+  "ne_montre_pas": []
  },
  {
   "fichier": "patelle_commune.svg",
@@ -4429,7 +4922,18 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/87d3bfdc-4cac-4b47-9899-952776f829da",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
+ },
+ {
+  "fichier": "patelline_des_fleuves.svg",
+  "nom": "Patelline des fleuves",
+  "auteur": "Nathan Jay Baker",
+  "licence": "CC0 1.0",
+  "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://www.phylopic.org/images/3dddaa14-b34d-427a-87c6-cc114411fc93",
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pennipatte_bleuatre.svg",
@@ -4438,7 +4942,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/371dccbd-688f-462c-b337-a5c17561158b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "perche_commune.svg",
@@ -4447,7 +4952,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1c06074b-62c6-4066-8ed2-1ab127e45709",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "perche_soleil.svg",
@@ -4456,7 +4962,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/1882dc2b-97aa-41ed-aa1b-546e90609026",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "perdrix_bartavelle.svg",
@@ -4465,7 +4972,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/975d7f04-bb6e-4a0f-ace0-87a289ff7328",
-  "dessin_de": "Tropicoperdix charltonii"
+  "dessin_de": "Tropicoperdix charltonii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "perdrix_grise.svg",
@@ -4474,7 +4982,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/c7e2cbb6-d375-48eb-a49d-5eed0147d035",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "perdrix_rouge.svg",
@@ -4483,7 +4992,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/c7e2cbb6-d375-48eb-a49d-5eed0147d035",
-  "dessin_de": "Perdix perdix"
+  "dessin_de": "Perdix perdix",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petit_gravelot.svg",
@@ -4492,7 +5002,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2ff4c7f3-d403-407d-a430-e0e2bc54fab0",
-  "dessin_de": "Charadrius"
+  "dessin_de": "Charadrius",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petit_mars_changeant.svg",
@@ -4501,7 +5012,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/3080da77-7b00-4ff7-901e-60545416461a",
-  "dessin_de": "Limenitis reducta"
+  "dessin_de": "Limenitis reducta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petit_paon_de_nuit.svg",
@@ -4510,7 +5022,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2529b2ba-ac5a-438c-b4cc-f93fbfe75057",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petit_rhinolophe.svg",
@@ -4519,7 +5032,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0d386ce5-28e2-407c-b985-c1aac350bd1a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petit_sylvain.svg",
@@ -4528,7 +5042,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/3080da77-7b00-4ff7-901e-60545416461a",
-  "dessin_de": "Limenitis reducta"
+  "dessin_de": "Limenitis reducta",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petit_duc_scops.svg",
@@ -4537,7 +5052,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/287a0319-b793-4638-8b16-93839522a91e",
-  "dessin_de": "Megascops asio"
+  "dessin_de": "Megascops asio",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petit_gris.svg",
@@ -4546,7 +5062,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petite_biche.svg",
@@ -4555,7 +5072,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/a7c0a838-62b3-4129-9176-bc0f806fda1b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petite_nymphe_au_corps_de_feu.svg",
@@ -4564,7 +5082,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/516df51a-adc7-4cfc-86b9-9954698bd5ed",
-  "dessin_de": "Ischnura elegans"
+  "dessin_de": "Ischnura elegans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petite_roussette.svg",
@@ -4573,7 +5092,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/76d77c63-d04e-4667-846d-0e80db46c654",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "petite_tortue.svg",
@@ -4582,7 +5102,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/a9e60cb5-18ca-412f-b366-557f69b4668d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "philoscie_des_mousses.svg",
@@ -4591,7 +5112,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b8bbc11e-56cf-4d5b-ba74-1d6d4edf45b3",
-  "dessin_de": "Oniscus asellus"
+  "dessin_de": "Oniscus asellus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pholque_phalangide.svg",
@@ -4600,7 +5122,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/30f1ff17-1839-451f-872e-8d8b7a29cd75",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "phoque_gris.svg",
@@ -4609,7 +5132,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2cb70775-9086-496a-8d86-5191ddd4791b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "phoque_veau_marin.svg",
@@ -4618,7 +5142,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/44ee07ec-f829-49f9-b242-f4b92bb9cf73",
-  "dessin_de": "Halichoerus grypus"
+  "dessin_de": "Halichoerus grypus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "phyllodactyle_d_europe.svg",
@@ -4627,7 +5152,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4c92d506-8e20-40a6-b9e4-f29758bfe3a0",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "physalie.svg",
@@ -4636,7 +5162,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6d8398b2-5a9f-484d-a625-f73ccf5b8d88",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_cendre.svg",
@@ -4645,7 +5172,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/064ea922-2df2-4316-8b1d-3ed5d35f2b6a",
-  "dessin_de": "Picus viridis"
+  "dessin_de": "Picus viridis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_mar.svg",
@@ -4654,7 +5182,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/40b1e9ee-3fd8-41e5-975c-1a25e2cb7026",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_noir.svg",
@@ -4663,7 +5192,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/91fff72a-a346-4207-8f61-8386254f031a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_tridactyle.svg",
@@ -4672,7 +5202,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/d06e801f-665b-4bda-bbe5-345c9eb6ba0c",
-  "dessin_de": "Picoides dorsalis"
+  "dessin_de": "Picoides dorsalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_vert.svg",
@@ -4681,7 +5212,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/064ea922-2df2-4316-8b1d-3ed5d35f2b6a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_a_dos_blanc.svg",
@@ -4690,7 +5222,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ddd5783c-ded5-48f2-a07d-cc37c83b227b",
-  "dessin_de": "Dendrocopos"
+  "dessin_de": "Dendrocopos",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_epeiche.svg",
@@ -4699,7 +5232,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ddd5783c-ded5-48f2-a07d-cc37c83b227b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pic_epeichette.svg",
@@ -4708,7 +5242,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/b181b464-ec1c-49cf-acce-84efe5a34fa2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pie_bavarde.svg",
@@ -4717,7 +5252,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Common_magpie_(Pica_pica).jpg",
-  "dessin_de": "silhouette tirée de la photo du jeu par Claude"
+  "dessin_de": "silhouette tirée de la photo du jeu par Claude",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pie_grieche_grise.svg",
@@ -4726,7 +5262,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/8736d908-5008-45ea-b81c-523f9179de25",
-  "dessin_de": "Lanius collurio"
+  "dessin_de": "Lanius collurio",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pie_grieche_meridionale.svg",
@@ -4735,7 +5272,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b6c3ce0c-fb9b-409b-a66d-c5e8b8d52ebb",
-  "dessin_de": "Lanius ludovicianus"
+  "dessin_de": "Lanius ludovicianus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pie_grieche_a_tete_rousse.svg",
@@ -4744,7 +5282,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b6c3ce0c-fb9b-409b-a66d-c5e8b8d52ebb",
-  "dessin_de": "Lanius ludovicianus"
+  "dessin_de": "Lanius ludovicianus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pie_grieche_ecorcheur.svg",
@@ -4753,7 +5292,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/8736d908-5008-45ea-b81c-523f9179de25",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pigeon_biset.svg",
@@ -4762,7 +5302,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/310b4994-af54-4d7b-93ac-27bbf80f7706",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pigeon_colombin.svg",
@@ -4771,7 +5312,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/7f1e85ac-5aca-4571-b43b-5978a232151b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pigeon_ramier.svg",
@@ -4780,7 +5322,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/9509aeb5-dbae-4902-9c56-6fdd01b321f2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pingouin_torda.svg",
@@ -4789,7 +5332,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Tordalk_(Alca_torda)_Handa.jpg",
-  "dessin_de": "silhouette tirée de la photo du jeu par Claude"
+  "dessin_de": "silhouette tirée de la photo du jeu par Claude",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pinson_des_arbres.svg",
@@ -4798,7 +5342,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/0b72dd38-2dc1-4675-990e-a46259855ce1",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipistrelle_commune.svg",
@@ -4807,7 +5352,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e7da460a-e04d-42f4-989f-1b2c6b51350b",
-  "dessin_de": "Eptesicus fuscus"
+  "dessin_de": "Eptesicus fuscus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipistrelle_de_kuhl.svg",
@@ -4816,7 +5362,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/70d2cfe4-9639-4c8a-9e1a-71d76d50a16d",
-  "dessin_de": "Myotis mystacinus"
+  "dessin_de": "Myotis mystacinus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipistrelle_de_nathusius.svg",
@@ -4825,7 +5372,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e7da460a-e04d-42f4-989f-1b2c6b51350b",
-  "dessin_de": "Eptesicus fuscus"
+  "dessin_de": "Eptesicus fuscus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipistrelle_pygmee.svg",
@@ -4834,7 +5382,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e7da460a-e04d-42f4-989f-1b2c6b51350b",
-  "dessin_de": "Eptesicus fuscus"
+  "dessin_de": "Eptesicus fuscus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipit_des_arbres.svg",
@@ -4843,7 +5392,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/c9285a43-3f87-4f2e-890b-7a2379f6f9a8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipit_farlouse.svg",
@@ -4852,7 +5402,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/c9285a43-3f87-4f2e-890b-7a2379f6f9a8",
-  "dessin_de": "Anthus trivialis"
+  "dessin_de": "Anthus trivialis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipit_rousseline.svg",
@@ -4861,7 +5412,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/c9285a43-3f87-4f2e-890b-7a2379f6f9a8",
-  "dessin_de": "Anthus trivialis"
+  "dessin_de": "Anthus trivialis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pipit_spioncelle.svg",
@@ -4870,7 +5422,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/9e79e7f5-10bb-4897-8593-42f588c739e7",
-  "dessin_de": "Motacillidae"
+  "dessin_de": "Motacillidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pisaure_admirable.svg",
@@ -4879,7 +5432,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a1258f2a-bf4c-4cab-8fd3-3e658c237896",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pieride_de_la_rave.svg",
@@ -4888,7 +5442,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a8bd993-9840-489e-8fbf-11286dce856f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pieride_du_chou.svg",
@@ -4897,7 +5452,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a8bd993-9840-489e-8fbf-11286dce856f",
-  "dessin_de": "Pieris rapae"
+  "dessin_de": "Pieris rapae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "porte_queue_de_corse.svg",
@@ -4906,7 +5462,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f21829d7-6dfc-4b2f-991c-e16181c24d29",
-  "dessin_de": "Papilio machaon"
+  "dessin_de": "Papilio machaon",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pouillot_de_bonelli.svg",
@@ -4915,7 +5472,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/37d06854-3e69-41e2-a547-ccc53f898c5a",
-  "dessin_de": "Phylloscopus collybita"
+  "dessin_de": "Phylloscopus collybita",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pouillot_fitis.svg",
@@ -4924,7 +5482,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e82e124c-4c4e-4f14-a067-826820467862",
-  "dessin_de": "Phylloscopus trochilus x collybita"
+  "dessin_de": "Phylloscopus trochilus x collybita",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pouillot_siffleur.svg",
@@ -4933,7 +5492,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/37d06854-3e69-41e2-a547-ccc53f898c5a",
-  "dessin_de": "Phylloscopus collybita"
+  "dessin_de": "Phylloscopus collybita",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pouillot_veloce.svg",
@@ -4942,7 +5502,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/37d06854-3e69-41e2-a547-ccc53f898c5a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "poulpe_commun.svg",
@@ -4951,7 +5512,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f400b519-3564-4183-b4bd-c3b922cc7c5e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "processionnaire_du_pin.svg",
@@ -4960,7 +5522,11 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "",
-  "dessin_de": "dessiné par Claude"
+  "dessin_de": "dessiné par Claude",
+  "ne_montre_pas": [
+   "ailes_visibles",
+   "antennes_forme"
+  ]
  },
  {
   "fichier": "proserpine.svg",
@@ -4969,7 +5535,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/48f87a82-eb10-49ec-bf7e-5812be6a6241",
-  "dessin_de": "Zerynthia polyxena"
+  "dessin_de": "Zerynthia polyxena",
+  "ne_montre_pas": []
  },
  {
   "fichier": "psammodrome_algire.svg",
@@ -4978,7 +5545,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d4c856c6-49b3-4b48-ad1f-1bbbc8cf58fa",
-  "dessin_de": "Podarcis lilfordi"
+  "dessin_de": "Podarcis lilfordi",
+  "ne_montre_pas": []
  },
  {
   "fichier": "psammodrome_d_edwards.svg",
@@ -4987,7 +5555,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bf7d9c5f-83c0-435a-b09f-dc6111ece257",
-  "dessin_de": "Podarcis erhardii"
+  "dessin_de": "Podarcis erhardii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pseudorasbora.svg",
@@ -4996,7 +5565,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/f41d5c66-62d9-494f-a1d9-9a275dae1c4c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "puffin_de_scopoli.svg",
@@ -5005,7 +5575,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a8ecc1e9-f339-4d85-84c3-aa2fff47b2c1",
-  "dessin_de": "Puffinus griseus"
+  "dessin_de": "Puffinus griseus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "puffin_des_anglais.svg",
@@ -5014,7 +5585,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bc4a8806-14e3-454b-8580-7063a5ea76ff",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "puffin_yelkouan.svg",
@@ -5023,7 +5595,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/bc4a8806-14e3-454b-8580-7063a5ea76ff",
-  "dessin_de": "Puffinus puffinus"
+  "dessin_de": "Puffinus puffinus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "punaise_arlequin.svg",
@@ -5032,7 +5605,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/13ba8526-d551-4ca0-a22c-083ff0cb1f8c",
-  "dessin_de": "Pentatoma rufipes"
+  "dessin_de": "Pentatoma rufipes",
+  "ne_montre_pas": []
  },
  {
   "fichier": "putois_d_europe.svg",
@@ -5041,7 +5615,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0070ddbf-fdcd-4a7b-97c3-4670504dc06f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pyrale_du_buis.svg",
@@ -5050,7 +5625,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/741ef6b5-383a-49a6-a1e4-1d2b8e04675f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pelagie.svg",
@@ -5059,7 +5635,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/9ecd443a-dc7f-48f2-8ecf-33d73f24f1b7",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pelobate_cultripede.svg",
@@ -5068,7 +5645,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3fba4e10-4c2a-40ca-8111-24952bb834cd",
-  "dessin_de": "Pelobates varaldii"
+  "dessin_de": "Pelobates varaldii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "pelodyte_ponctue.svg",
@@ -5077,7 +5655,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3fba4e10-4c2a-40ca-8111-24952bb834cd",
-  "dessin_de": "Pelobates varaldii"
+  "dessin_de": "Pelobates varaldii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ragondin.svg",
@@ -5086,7 +5665,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5ee3b11f-9cd8-4aaf-a59e-ac1ddc18d5e8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "raie_bouclee.svg",
@@ -5095,7 +5675,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/99c4dce9-a6dd-44da-8311-59397d03df1b",
-  "dessin_de": "Raja asterias"
+  "dessin_de": "Raja asterias",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rainette_meridionale.svg",
@@ -5104,7 +5685,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c07ce7b7-5fb5-484f-83a0-567bb0795e18",
-  "dessin_de": "Hyla versicolor"
+  "dessin_de": "Hyla versicolor",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rainette_sarde.svg",
@@ -5113,7 +5695,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c07ce7b7-5fb5-484f-83a0-567bb0795e18",
-  "dessin_de": "Hyla versicolor"
+  "dessin_de": "Hyla versicolor",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rainette_verte.svg",
@@ -5122,7 +5705,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/14cabf9a-8f66-47e5-a5f1-9692f65e3619",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rascasse_brune.svg",
@@ -5131,7 +5715,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/aef3d15d-40dd-40ea-b0ac-2006ed3e75e1",
-  "dessin_de": "Scorpaena elongata"
+  "dessin_de": "Scorpaena elongata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rat_des_moissons.svg",
@@ -5140,7 +5725,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/38329b83-d85e-4969-bf65-52f4f51553ee",
-  "dessin_de": "Malacomys verschureni"
+  "dessin_de": "Malacomys verschureni",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rat_musque.svg",
@@ -5149,7 +5735,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/fca1c359-f2cf-4ee5-b90d-97945a737e71",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rat_noir.svg",
@@ -5158,7 +5745,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a460430b-472b-4018-ba03-6b8eeb57fa5c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "raton_laveur.svg",
@@ -5167,7 +5755,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/1ccc967d-4caa-47c5-a346-0e007c2267bd",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "renard_roux.svg",
@@ -5176,7 +5765,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/51b1b6e4-129d-41a6-bbbd-c3fab459c25f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "requin_pelerin.svg",
@@ -5185,7 +5775,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/44d148c3-ee6a-495e-bd60-c113975e2c2c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rhagie_inquisitrice.svg",
@@ -5194,7 +5785,10 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c1f1c636-116e-44d4-b3ba-a0161d829f6b",
-  "dessin_de": "Gaurotes virginea"
+  "dessin_de": "Gaurotes virginea",
+  "ne_montre_pas": [
+   "antennes_forme"
+  ]
  },
  {
   "fichier": "rhinolophe_euryale.svg",
@@ -5203,7 +5797,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0d386ce5-28e2-407c-b985-c1aac350bd1a",
-  "dessin_de": "Rhinolophus hipposideros"
+  "dessin_de": "Rhinolophus hipposideros",
+  "ne_montre_pas": []
  },
  {
   "fichier": "robert_le_diable.svg",
@@ -5212,7 +5807,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/6e796c9a-b7b2-4534-91b8-6f843dce041e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "roitelet_huppe.svg",
@@ -5221,7 +5817,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7a3cb468-5bc2-4f9a-823a-f81aefd3d575",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "roitelet_a_triple_bandeau.svg",
@@ -5230,7 +5827,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7a3cb468-5bc2-4f9a-823a-f81aefd3d575",
-  "dessin_de": "Regulus regulus"
+  "dessin_de": "Regulus regulus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rollier_d_europe.svg",
@@ -5239,7 +5837,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c4ebc0db-6ce0-422f-a42a-8abe2809d6d9",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rorqual_commun.svg",
@@ -5248,7 +5847,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://www.phylopic.org/images/8366482f-d41c-4ab2-8403-3d70fb04ad5f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rosalie_des_alpes.svg",
@@ -5257,7 +5857,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c1f1c636-116e-44d4-b3ba-a0161d829f6b",
-  "dessin_de": "Gaurotes virginea"
+  "dessin_de": "Gaurotes virginea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rossignol_philomele.svg",
@@ -5266,7 +5867,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/46036e45-f30d-4857-8dd4-e9dc57a2bddc",
-  "dessin_de": "Luscinia svecica"
+  "dessin_de": "Luscinia svecica",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rotengle.svg",
@@ -5275,7 +5877,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/16a78855-efb3-4bec-81ec-a48100764404",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rougegorge_familier.svg",
@@ -5284,7 +5887,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b0d54194-4105-4694-b670-b693df1640cf",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rougequeue_noir.svg",
@@ -5293,7 +5897,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/426c4d27-9898-4dbb-ab08-d1f242038f5d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rougequeue_a_front_blanc.svg",
@@ -5302,7 +5907,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/426c4d27-9898-4dbb-ab08-d1f242038f5d",
-  "dessin_de": "Phoenicurus ochruros"
+  "dessin_de": "Phoenicurus ochruros",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rouget_de_roche.svg",
@@ -5311,7 +5917,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/c14901ae-aad3-493d-8f0a-8436207f19f8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rousserolle_effarvatte.svg",
@@ -5320,7 +5927,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/6ebea747-a563-4fd6-b443-99f45d8e2725",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rousserolle_turdoide.svg",
@@ -5329,7 +5937,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/6ebea747-a563-4fd6-b443-99f45d8e2725",
-  "dessin_de": "Acrocephalus scirpaceus"
+  "dessin_de": "Acrocephalus scirpaceus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "rale_des_genets.svg",
@@ -5338,7 +5947,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7a4b472d-93f6-489e-a5e4-b81295a32e29",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "remiz_penduline.svg",
@@ -5347,7 +5957,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/44ca7679-ad00-4c9e-91d5-6414f08f81f2",
-  "dessin_de": "Poecile carolinensis"
+  "dessin_de": "Poecile carolinensis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "saint_pierre.svg",
@@ -5356,7 +5967,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/b554ef96-1672-4ba9-83d7-028f08d542e1",
-  "dessin_de": "Zenopsis nebulosa"
+  "dessin_de": "Zenopsis nebulosa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "salamandre_de_corse.svg",
@@ -5365,7 +5977,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0a948f02-6e35-42d5-a835-b9360f450d39",
-  "dessin_de": "Salamandra salamandra"
+  "dessin_de": "Salamandra salamandra",
+  "ne_montre_pas": []
  },
  {
   "fichier": "salamandre_alpestre.svg",
@@ -5374,7 +5987,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f00121ab-a5c5-4bb4-8b88-51bd16122916",
-  "dessin_de": "Caudata"
+  "dessin_de": "Caudata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "salamandre_tachetee.svg",
@@ -5383,7 +5997,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0a948f02-6e35-42d5-a835-b9360f450d39",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "saltique_chevronne.svg",
@@ -5392,7 +6007,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/35c534a5-24e8-4937-afed-dc9a98bec915",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sandre.svg",
@@ -5401,7 +6017,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/6896f6a0-0fcb-4b2e-a346-cbf0c0de96dd",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sanglier.svg",
@@ -5410,7 +6027,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3d8acaf6-4355-491e-8e86-4a411b53b98b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sangsue_medicinale.svg",
@@ -5419,7 +6037,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f82af611-1d90-4f77-8163-f0ea74a04813",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sar_commun.svg",
@@ -5428,7 +6047,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/639060d9-11df-439b-a8d0-bbea8654eb64",
-  "dessin_de": "Archosargus rhomboidalis"
+  "dessin_de": "Archosargus rhomboidalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sar_a_tete_noire.svg",
@@ -5437,7 +6057,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/639060d9-11df-439b-a8d0-bbea8654eb64",
-  "dessin_de": "Archosargus rhomboidalis"
+  "dessin_de": "Archosargus rhomboidalis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "saumon_atlantique.svg",
@@ -5446,7 +6067,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f6c6590d-8aa1-4d08-a25f-e6c90727c071",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "saupe.svg",
@@ -5455,7 +6077,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ea65474f-4949-4e12-a1ec-8d2371cd5a74",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sauterelle_cymbaliere.svg",
@@ -5464,7 +6087,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/4e8b3091-959c-40c3-9666-2d4939e7f390",
-  "dessin_de": "Tettigonia viridissima"
+  "dessin_de": "Tettigonia viridissima",
+  "ne_montre_pas": []
  },
  {
   "fichier": "scolopendre_ceinturee.svg",
@@ -5473,7 +6097,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ef1127ba-87f7-4fe8-af14-6ae889992fe4",
-  "dessin_de": "Scolopendra gigantea"
+  "dessin_de": "Scolopendra gigantea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "scorpion_languedocien.svg",
@@ -5482,7 +6107,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/eb5e879d-4e92-47af-8818-ad5fef33d3c3",
-  "dessin_de": "Mesobuthus longichelus"
+  "dessin_de": "Mesobuthus longichelus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "scorpion_noir_a_queue_jaune.svg",
@@ -5491,7 +6117,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4133ae32-753e-49eb-bd31-50c67634aca1",
-  "dessin_de": "Heterometrus laoticus"
+  "dessin_de": "Heterometrus laoticus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "scutigere_veloce.svg",
@@ -5500,7 +6127,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ed16bf8d-7512-4af0-a50c-3cf34993b701",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "seiche_commune.svg",
@@ -5509,7 +6137,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/6cbff80e-9537-4130-8397-ebbf77464ea4",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "semi_apollon.svg",
@@ -5518,7 +6147,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/18e306c8-0035-470e-aee4-460586309b46",
-  "dessin_de": "Parnassius"
+  "dessin_de": "Parnassius",
+  "ne_montre_pas": []
  },
  {
   "fichier": "seps_strie.svg",
@@ -5527,7 +6157,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/c669e3e4-1c60-41d1-b5cb-77484e1002ca",
-  "dessin_de": "Lerista viduata"
+  "dessin_de": "Lerista viduata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "serin_cini.svg",
@@ -5536,7 +6167,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a4885cb-2ab5-432d-bed7-db7dc0445018",
-  "dessin_de": "Carduelis"
+  "dessin_de": "Carduelis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "serran_chevrette.svg",
@@ -5545,7 +6177,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/eb6f54bf-3182-4d3a-9f16-602759c76db0",
-  "dessin_de": "Centropristis striata"
+  "dessin_de": "Centropristis striata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "serran_ecriture.svg",
@@ -5554,7 +6187,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/eb6f54bf-3182-4d3a-9f16-602759c76db0",
-  "dessin_de": "Centropristis striata"
+  "dessin_de": "Centropristis striata",
+  "ne_montre_pas": []
  },
  {
   "fichier": "silure_glane.svg",
@@ -5563,7 +6197,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7cb387d7-9b23-4e5c-a007-2d938339cb8a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sittelle_corse.svg",
@@ -5572,7 +6207,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/aadf897b-a2be-44cf-9720-c3610947c991",
-  "dessin_de": "Sitta europaea"
+  "dessin_de": "Sitta europaea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sittelle_torchepot.svg",
@@ -5581,7 +6217,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/aadf897b-a2be-44cf-9720-c3610947c991",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sizerin_cabaret.svg",
@@ -5590,7 +6227,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/2e3770b7-e621-429b-bffc-7a5038aaae1b",
-  "dessin_de": "Linaria cannabina"
+  "dessin_de": "Linaria cannabina",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sole_commune.svg",
@@ -5599,7 +6237,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5dae2b2d-412d-4da0-a5e7-52253a5c7c92",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "solitaire.svg",
@@ -5608,7 +6247,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d3522bc4-14e1-4184-80b0-c979d81e9a01",
-  "dessin_de": "Colias philodice"
+  "dessin_de": "Colias philodice",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sonneur_a_ventre_jaune.svg",
@@ -5617,7 +6257,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/9e1615e2-4fc8-4967-8a3a-baff830fef51",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "souci.svg",
@@ -5626,7 +6267,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/d3522bc4-14e1-4184-80b0-c979d81e9a01",
-  "dessin_de": "Colias philodice"
+  "dessin_de": "Colias philodice",
+  "ne_montre_pas": []
  },
  {
   "fichier": "soucoupe_commune.svg",
@@ -5635,7 +6277,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6ee19bb9-2f22-4c45-89dc-48e82818da7f",
-  "dessin_de": "Helix aspersa"
+  "dessin_de": "Helix aspersa",
+  "ne_montre_pas": []
  },
  {
   "fichier": "souris_grise.svg",
@@ -5644,7 +6287,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/6b2b98f6-f879-445f-9ac2-2c2563157025",
-  "dessin_de": "Mus musculus domesticus"
+  "dessin_de": "Mus musculus domesticus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "spatule_blanche.svg",
@@ -5653,7 +6297,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/9e02fc99-4938-424e-98f8-ef8d42612fad",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sphinx_du_pin.svg",
@@ -5662,7 +6307,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/77e7e4e9-93a5-48d8-a94a-f523260ca211",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "spirlin.svg",
@@ -5671,7 +6317,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/01f82781-789d-484d-9f52-453347e06898",
-  "dessin_de": "Alburnus alburnus"
+  "dessin_de": "Alburnus alburnus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "spirographe.svg",
@@ -5680,7 +6327,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a44247f4-e61f-45a5-b22e-d246ee351f23",
-  "dessin_de": "Sabellida"
+  "dessin_de": "Sabellida",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sterne_caugek.svg",
@@ -5689,7 +6337,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/396fd6fe-05b5-4289-8f29-315db6c83a35",
-  "dessin_de": "Thalasseus maximus"
+  "dessin_de": "Thalasseus maximus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sterne_naine.svg",
@@ -5698,7 +6347,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/80d26dd5-8ad7-4917-af3a-d204f04c737a",
-  "dessin_de": "Sterna hirundo"
+  "dessin_de": "Sterna hirundo",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sterne_pierregarin.svg",
@@ -5707,7 +6357,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/80d26dd5-8ad7-4917-af3a-d204f04c737a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "surmulot.svg",
@@ -5716,7 +6367,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/43bb7956-1630-4ef4-928e-f129c5722f20",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sylvain_azure.svg",
@@ -5725,7 +6377,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/3080da77-7b00-4ff7-901e-60545416461a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "sympetrum_noir.svg",
@@ -5734,7 +6387,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/43086692-0bcb-4ccc-973d-8a71797cb928",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "syneme_globuleux.svg",
@@ -5743,7 +6397,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/dbe53517-3435-41f7-95ad-da28f7f1397c",
-  "dessin_de": "Thomisidae"
+  "dessin_de": "Thomisidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "serotine_bicolore.svg",
@@ -5752,7 +6407,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/336c3c4b-9c57-47ee-af7a-b8a9e0d93cb5",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "serotine_commune.svg",
@@ -5761,7 +6417,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/0e064ff8-6831-4f11-9d7a-728b489446b6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "serotine_de_nilsson.svg",
@@ -5770,7 +6427,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/0e064ff8-6831-4f11-9d7a-728b489446b6",
-  "dessin_de": "Eptesicus serotinus"
+  "dessin_de": "Eptesicus serotinus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tabac_d_espagne.svg",
@@ -5779,7 +6437,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/dc500f07-4ea3-41c6-aad1-f9f1af5c780e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tadorne_de_belon.svg",
@@ -5788,7 +6447,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/23c63b97-e0ab-4b43-89a4-e2358f4f09ec",
-  "dessin_de": "Tadorna ferruginea"
+  "dessin_de": "Tadorna ferruginea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "talitre_sauteur.svg",
@@ -5797,7 +6457,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/b1fa11af-48a2-4af4-a618-d978fe3c4d36",
-  "dessin_de": "Orchestia grillus"
+  "dessin_de": "Orchestia grillus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tanche.svg",
@@ -5806,7 +6467,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/35dac003-e0f9-4f52-970c-2c42d5efb719",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tarente_de_mauretanie.svg",
@@ -5815,7 +6477,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/48273d33-29fa-4f3a-91d5-7ede3d7de26c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tarier_des_pres.svg",
@@ -5824,7 +6487,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/587d6831-267a-40bd-9255-bffdb3391b56",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tarier_patre.svg",
@@ -5833,7 +6497,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/34184506-3a6b-46c3-a628-5692951be52b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tarin_des_aulnes.svg",
@@ -5842,7 +6507,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a4885cb-2ab5-432d-bed7-db7dc0445018",
-  "dessin_de": "Carduelis carduelis"
+  "dessin_de": "Carduelis carduelis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "taupe_d_europe.svg",
@@ -5851,7 +6517,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0465d81c-0def-4478-af15-a075d472e957",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "thomise_variable.svg",
@@ -5860,7 +6527,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/dbe53517-3435-41f7-95ad-da28f7f1397c",
-  "dessin_de": "Thomisidae"
+  "dessin_de": "Thomisidae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tichodrome_echelette.svg",
@@ -5869,7 +6537,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY-SA 2.0",
   "lien_licence": "https://creativecommons.org/licenses/by-sa/2.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Wallcreeper_(Tichodroma_muraria)_(51181111456).jpg",
-  "dessin_de": "silhouette tirée de la photo du jeu par Claude"
+  "dessin_de": "silhouette tirée de la photo du jeu par Claude",
+  "ne_montre_pas": []
  },
  {
   "fichier": "timarque.svg",
@@ -5878,7 +6547,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/f51d5544-56b6-4932-af18-afa50c8674f6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tique_du_mouton.svg",
@@ -5887,7 +6557,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/27e86f16-d3d8-4e6a-9fb6-13014f5153de",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tircis.svg",
@@ -5896,7 +6567,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0c391d43-30a5-4077-bdcb-fbb80f5d13e6",
-  "dessin_de": "Erebia"
+  "dessin_de": "Erebia",
+  "ne_montre_pas": []
  },
  {
   "fichier": "torcol_fourmilier.svg",
@@ -5905,7 +6577,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public (PDM 1.0)",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/701824d2-773f-433e-892c-74cc7846314a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tortue_caouanne.svg",
@@ -5914,7 +6587,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b3e35f7c-af3b-44dc-9680-82bd2d6392fb",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tortue_d_hermann.svg",
@@ -5923,7 +6597,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5170633b-b867-4c98-acc0-fbb823fc0aaa",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tortue_de_floride.svg",
@@ -5932,7 +6607,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/144afc91-06d6-4d8c-84f5-734d5478d58d",
-  "dessin_de": "Trachemys scripta elegans"
+  "dessin_de": "Trachemys scripta elegans",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tortue_luth.svg",
@@ -5941,7 +6617,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/574846f0-48ac-4e37-ae0b-dbe00d37f21e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tournepierre_a_collier.svg",
@@ -5950,7 +6627,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/16c51a06-21bd-4e34-9f71-d7eea73124d8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tourteau.svg",
@@ -5959,7 +6637,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/604d2670-7bf3-4543-b8e3-fbf8e370a530",
-  "dessin_de": "Metacarcinus magister"
+  "dessin_de": "Metacarcinus magister",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tourterelle_des_bois.svg",
@@ -5968,7 +6647,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ca42294f-afc5-40a0-b14b-fd81c5b5557d",
-  "dessin_de": "Streptopelia decaocto"
+  "dessin_de": "Streptopelia decaocto",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tourterelle_turque.svg",
@@ -5977,7 +6657,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ca42294f-afc5-40a0-b14b-fd81c5b5557d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "traquet_motteux.svg",
@@ -5986,7 +6667,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/e9fdd36b-0e3e-43b5-86e5-ba417b1371a5",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "traquet_oreillard.svg",
@@ -5995,7 +6677,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/92e5161b-2f0b-4675-beea-5484a9b51788",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tristan.svg",
@@ -6004,7 +6687,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5a47f798-5a88-4c77-bf01-244367788ded",
-  "dessin_de": "Megisto cymela"
+  "dessin_de": "Megisto cymela",
+  "ne_montre_pas": []
  },
  {
   "fichier": "triton_alpestre.svg",
@@ -6013,7 +6697,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/32f171ae-9919-4bea-8ccd-93667ffecd50",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "triton_crete.svg",
@@ -6022,7 +6707,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/a1d22818-209d-4fef-b378-d314cf54e9ed",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "triton_marbre.svg",
@@ -6031,7 +6717,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/ef8d456b-c2af-4f31-be7d-ad50abbcfc52",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "triton_palme.svg",
@@ -6040,7 +6727,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/97cc5454-915f-4622-aed2-e168665cd11d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "triton_ponctue.svg",
@@ -6049,7 +6737,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/e87de606-fda6-47c7-a0d2-d4f73dcfb0b6",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "troglodyte_mignon.svg",
@@ -6058,7 +6747,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e38c264a-8989-4e69-a6c1-7778b919980d",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "troque_turbine.svg",
@@ -6067,7 +6757,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/3244258c-e93a-497b-8f37-ac008e574c44",
-  "dessin_de": "Littorina littorea"
+  "dessin_de": "Littorina littorea",
+  "ne_montre_pas": []
  },
  {
   "fichier": "truite_fario.svg",
@@ -6076,7 +6767,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/5034d9bf-a395-433d-b967-e335fd7185ca",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "truxale.svg",
@@ -6085,7 +6777,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "",
-  "dessin_de": "dessinée par Claude"
+  "dessin_de": "dessinée par Claude",
+  "ne_montre_pas": []
  },
  {
   "fichier": "typographe.svg",
@@ -6094,7 +6787,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/57848131-5d41-40fa-a254-dadaf1367042",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tegenaire_des_maisons.svg",
@@ -6103,7 +6797,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/bedd622a-4de2-4067-8c70-4aa44326d229",
-  "dessin_de": "Tegenaria domestica"
+  "dessin_de": "Tegenaria domestica",
+  "ne_montre_pas": []
  },
  {
   "fichier": "tetras_lyre.svg",
@@ -6112,7 +6807,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/387fcbe4-af7f-42b7-8e1a-193a5a7c0b1c",
-  "dessin_de": "Centrocercus urophasianus"
+  "dessin_de": "Centrocercus urophasianus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vairon.svg",
@@ -6121,7 +6817,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/d0177225-8273-4355-b124-88c2d30e291c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vandoise.svg",
@@ -6130,7 +6827,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/66674c55-bafe-4dae-ae9a-3f84d7d7fd8a",
-  "dessin_de": "Squalius cephalus"
+  "dessin_de": "Squalius cephalus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vanneau_huppe.svg",
@@ -6139,7 +6837,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/4249a198-4b12-4878-a89b-699e47e95803",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vautour_fauve.svg",
@@ -6148,7 +6847,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/8744819e-6cbb-4acb-9de3-926b7b4afe80",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vautour_moine.svg",
@@ -6157,7 +6857,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e5c982b7-6a84-49cd-bc21-1e76aff6d9a2",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vautour_percnoptere.svg",
@@ -6166,7 +6867,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/284766ad-99e2-477a-bf60-9da687b0bc51",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "venturon_corse.svg",
@@ -6175,7 +6877,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a4885cb-2ab5-432d-bed7-db7dc0445018",
-  "dessin_de": "Carduelis"
+  "dessin_de": "Carduelis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "venturon_montagnard.svg",
@@ -6184,7 +6887,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/4a4885cb-2ab5-432d-bed7-db7dc0445018",
-  "dessin_de": "Carduelis"
+  "dessin_de": "Carduelis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ver_du_fumier.svg",
@@ -6193,7 +6897,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/e6194bfe-ba82-4f79-b3e0-15c9b239e94c",
-  "dessin_de": "Eiseniella tetraedra"
+  "dessin_de": "Eiseniella tetraedra",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ver_luisant.svg",
@@ -6202,7 +6907,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/69144384-1384-4ec9-8787-a0defa5130a5",
-  "dessin_de": "Lampyrinae"
+  "dessin_de": "Lampyrinae",
+  "ne_montre_pas": []
  },
  {
   "fichier": "verdier_d_europe.svg",
@@ -6211,7 +6917,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/0580ee17-1897-4e87-ad2e-0644a36cdce8",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vespere_de_savi.svg",
@@ -6220,7 +6927,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2d65ff06-f7a3-4039-bff9-5cd5a2622d6a",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vieille_commune.svg",
@@ -6229,7 +6937,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/40c41a37-68a4-444a-be52-d8601447eb03",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vipere_aspic.svg",
@@ -6238,7 +6947,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a1cd1814-e0b4-409c-af18-8cb2f841569c",
-  "dessin_de": "Vipera berus"
+  "dessin_de": "Vipera berus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vipere_d_orsini.svg",
@@ -6247,7 +6957,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a1cd1814-e0b4-409c-af18-8cb2f841569c",
-  "dessin_de": "Vipera berus"
+  "dessin_de": "Vipera berus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vipere_de_seoane.svg",
@@ -6256,7 +6967,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a1cd1814-e0b4-409c-af18-8cb2f841569c",
-  "dessin_de": "Vipera berus"
+  "dessin_de": "Vipera berus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vipere_peliade.svg",
@@ -6265,7 +6977,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a1cd1814-e0b4-409c-af18-8cb2f841569c",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vison_d_amerique.svg",
@@ -6274,7 +6987,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/a802f57a-7388-4491-a558-33a5cc4e0ee3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vison_d_europe.svg",
@@ -6283,7 +6997,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/f5e7b7ea-cf7c-4492-93d4-1847e1d66b15",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "vulcain.svg",
@@ -6292,7 +7007,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b0314d29-33aa-404b-b638-e6d3eadf506b",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "velelle.svg",
@@ -6301,7 +7017,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "",
-  "dessin_de": "dessiné par Claude"
+  "dessin_de": "dessiné par Claude",
+  "ne_montre_pas": []
  },
  {
   "fichier": "zoropsis_a_pattes_epineuses.svg",
@@ -6310,7 +7027,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/bedd622a-4de2-4067-8c70-4aa44326d229",
-  "dessin_de": "Tegenaria domestica"
+  "dessin_de": "Tegenaria domestica",
+  "ne_montre_pas": []
  },
  {
   "fichier": "zygene_de_la_filipendule.svg",
@@ -6319,7 +7037,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "Domaine public",
   "lien_licence": "https://creativecommons.org/publicdomain/mark/1.0/",
   "source": "https://www.phylopic.org/images/c66c3c56-a7d9-4299-bbc1-72c80621628a",
-  "dessin_de": "Zygaena"
+  "dessin_de": "Zygaena",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ecaille_chinee.svg",
@@ -6328,7 +7047,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/b4222e37-2272-4813-95ab-7d638d6238fa",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "echasse_blanche.svg",
@@ -6337,7 +7057,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/88df0ec7-555f-498c-8af1-c355778f5a44",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ecrevisse_americaine.svg",
@@ -6346,7 +7067,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/cfd0917f-1fc1-422f-ac80-9c2dc2a85762",
-  "dessin_de": "Procambarus clarkii"
+  "dessin_de": "Procambarus clarkii",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ecrevisse_de_louisiane.svg",
@@ -6355,7 +7077,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/cfd0917f-1fc1-422f-ac80-9c2dc2a85762",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ecrevisse_signal.svg",
@@ -6364,7 +7087,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/eb036303-dd04-4bde-a8a8-c5669cddb405",
-  "dessin_de": "Astacus astacus"
+  "dessin_de": "Astacus astacus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ecrevisse_a_pattes_blanches.svg",
@@ -6373,7 +7097,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/b371c5d0-5e43-4982-ba77-2cf90c7c688d",
-  "dessin_de": "Austropotamobius torrentium"
+  "dessin_de": "Austropotamobius torrentium",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ecureuil_roux.svg",
@@ -6382,7 +7107,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/23c700c9-e695-404a-8d0c-146e1fc4bada",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "elanion_blanc.svg",
@@ -6391,7 +7117,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/30d1e776-caeb-4a8d-9539-e9dc7170eb0e",
-  "dessin_de": "Elanus leucurus"
+  "dessin_de": "Elanus leucurus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "epeire_des_fissures.svg",
@@ -6400,7 +7127,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2f7145fc-002c-40e8-9b35-16f95b05f0e3",
-  "dessin_de": "Araneus diadematus"
+  "dessin_de": "Araneus diadematus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "epeire_diademe.svg",
@@ -6409,7 +7137,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2f7145fc-002c-40e8-9b35-16f95b05f0e3",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "epervier_d_europe.svg",
@@ -6418,7 +7147,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/2cc4c508-2a2e-459d-bcc7-5a40c0ed8ffb",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "ephippigere_des_vignes.svg",
@@ -6427,7 +7157,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/a9a3f688-874d-4ba2-829d-7af2afe5b109",
-  "dessin_de": "Metrioptera brachyptera"
+  "dessin_de": "Metrioptera brachyptera",
+  "ne_montre_pas": []
  },
  {
   "fichier": "epinoche.svg",
@@ -6436,7 +7167,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6963677b-52a4-46f6-a021-9ca86906c4a5",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "epinochette.svg",
@@ -6445,7 +7177,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/6963677b-52a4-46f6-a021-9ca86906c4a5",
-  "dessin_de": "Gasterosteus aculeatus"
+  "dessin_de": "Gasterosteus aculeatus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "etoile_de_mer_rouge.svg",
@@ -6454,7 +7187,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC0 1.0",
   "lien_licence": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://www.phylopic.org/images/7e27ce06-1f4f-45d8-a359-dcba8fc54b9b",
-  "dessin_de": "Tethyaster subinermis"
+  "dessin_de": "Tethyaster subinermis",
+  "ne_montre_pas": []
  },
  {
   "fichier": "etourneau_sansonnet.svg",
@@ -6463,7 +7197,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/4f25df70-f5e0-410b-822c-a229e24d4546",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "etourneau_unicolore.svg",
@@ -6472,7 +7207,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/4f25df70-f5e0-410b-822c-a229e24d4546",
-  "dessin_de": "Sturnus vulgaris"
+  "dessin_de": "Sturnus vulgaris",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oedicneme_criard.svg",
@@ -6481,7 +7217,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 3.0",
   "lien_licence": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://www.phylopic.org/images/b853c7c8-05ba-4f0e-a9ee-5ba7786b5b3e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oedipode_corse.svg",
@@ -6490,7 +7227,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/aac09523-f9f4-4645-b1fe-89743b8c750e",
-  "dessin_de": "Psophus stridulus"
+  "dessin_de": "Psophus stridulus",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oedipode_stridulante.svg",
@@ -6499,7 +7237,8 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/aac09523-f9f4-4645-b1fe-89743b8c750e",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  },
  {
   "fichier": "oedipode_turquoise.svg",
@@ -6508,6 +7247,7 @@ const CREDITS_SILHOUETTES = [
   "licence": "CC BY 4.0",
   "lien_licence": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://www.phylopic.org/images/5d05bcad-1cfd-45a3-a530-a17f2d43543f",
-  "dessin_de": ""
+  "dessin_de": "",
+  "ne_montre_pas": []
  }
 ];

@@ -72,8 +72,17 @@ function demarrerFocus(imposee, options = {}) {
     session.vieMontree = false;
     session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;
   }
+  // Étape R254 (36.34) : la question sur une autre forme, qui prend la place de la 2e question de « Sa vie » (sinon du cri)
+  session.autreFormeQ = null; session.autreFormeMontree = false; session.autreFormeFaite = false;
+  if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE && QUESTION_FORME_ACTIVE) {
+    const f = formeAPoser(espece, expeditionParId(options.expedition.id));
+    if (f && session.vie.length >= 2) { f.remplace = session.vie[session.vie.length - 1]; session.vie = session.vie.slice(0, -1); }
+    else if (f && champsEtape(espece, 1).includes("cri_son") && nbBonnes(espece, "cri_son") === 0) f.remplace = "cri_son";
+    if (f && f.remplace) session.autreFormeQ = f;
+  }
   // Le nombre de questions : 8 au plus, moins s'il y a peu de choses à demander sur cette espèce
   const aDemander = session.physique ? champsEtape(espece, 1).filter(c => c !== IDENTIFICATION && nbBonnes(espece, c) === 0).length + 1 + session.vie.length   // étape 288 ; R132 : seulement ce qui manque, + la photo ; RF1 : + sa vie
+      + (session.autreFormeQ && session.autreFormeQ.remplace !== "cri_son" ? 1 : 0)   // R254 : la question de forme remplace une question de « Sa vie » (déjà retirée)
     : (session.revisite ? [...new Set([...champsAInterroger(espece), ...champsReste(espece)])] : champsAInterroger(espece))   // étape R129
         .filter(c => !estApparence(c)).length + (estIdentifiee(espece) ? 0 : 1);   // (étape 138 : sans l'apparence)
   session.total = Math.max(1, Math.min(QUESTIONS_FOCUS, aDemander));
@@ -109,6 +118,7 @@ function rangRencontre(champ) {
   if (session && session.physique) {                     // étape 288 : du trait le plus parlant au cri et à l'empreinte
     const j = champsEtape(session.focus, 1).indexOf(champ);
     const v = (session.vie || []).indexOf(champ);        // étape RF1 : sa vie après son allure
+    if (champ === FORME_Q) return 50;                    // étape R254 : la forme après l'allure, le cri et l'empreinte, avant sa vie
     return j >= 0 ? j : v >= 0 ? 100 + v : 999;
   }
   const i = ORDRE_RENCONTRE.indexOf(champ);
@@ -120,7 +130,9 @@ function champsFocusRestants() {
   const espece = session.focus;
   if (session.physique) {                                // étape 288 : la Rencontre physique de l'étape 1 d'une expédition
     // étape R132 : une espèce déjà en partie connue (ailleurs) ne repasse que ce qui lui manque
-    return [...champsEtape(espece, 1), ...(session.vie || [])].filter(c => c !== IDENTIFICATION && !session.posees.includes(c) && nbBonnes(espece, c) === 0);   // RF1 : + sa vie
+    return [...champsEtape(espece, 1), ...(session.vie || []), ...(session.autreFormeQ ? [FORME_Q] : [])]   // R254 : + la question de forme
+      .filter(c => !(session.autreFormeQ && c === session.autreFormeQ.remplace))                                   // (à la place du cri, s'il le faut)
+      .filter(c => c !== IDENTIFICATION && !session.posees.includes(c) && nbBonnes(espece, c) === 0);   // RF1 : + sa vie
   }
   const base = session.revisite ? [...new Set([...champsAInterroger(espece), ...champsReste(espece)])] : champsAInterroger(espece);   // étape R129
   return base.filter(c => c !== IDENTIFICATION && !session.posees.includes(c) && !estApparence(c)
@@ -168,7 +180,13 @@ function choisirQuestionFocus() {
   if (!estIdentifiee(espece) && !photoEnAttente && !session.presentee && !session.dejaRejouees.includes(IDENTIFICATION)) return { espece, champ: IDENTIFICATION, estRevision: false };
   // b) Les questions ratées, à la fin : quand les questions prévues sont toutes posées
   //    (ou qu'il n'y a plus rien de nouveau à demander), dans l'ordre où elles ont été ratées
-  const restants = champsFocusRestants();
+  let restants = champsFocusRestants();
+  // Étape R254 : la question de forme attend que la forme ait été montrée ; s'il ne reste qu'elle et qu'elle n'a pas été
+  //   montrée, elle n'est pas posée (jamais avant ; la Rencontre ne s'allonge pas)
+  if (session.autreFormeQ && !session.autreFormeFaite && !session.autreFormeMontree && restants.includes(FORME_Q)) {
+    restants = restants.filter(c => c !== FORME_Q);
+    if (!restants.length) { session.autreFormeQ = null; }
+  }
   // b0) Étapes 243 et 245 : l'encart « À ne pas confondre », une fois par Rencontre, juste après la photo reconnue
   if (phaseNormale && sosieAttend() && session.normalesFaites >= 1) {
     session.sosieFait = true;
@@ -227,6 +245,107 @@ function choisirQuestionFocus() {
 // de voir la même photo, « Laquelle est la martre ? » ne testait rien. C'est un temps d'observation : il ne prend
 // pas de place parmi les questions, ne compte ni pour les médailles ni dans « À revoir », et n'écrit rien dans la fiche.
 // Il arrive juste après la photo reconnue (2e écran de la Rencontre), jamais après une présentation (« Pas encore »).
+// ---- Étape R254 (17/11, Notion 36.34, choix 34C d'Aubin) : une question sur une AUTRE FORME, dans la même Rencontre ----
+//   « Voici une femelle. De quelle espèce est-elle ? » : la photo de la forme et 4 noms (l'espèce rencontrée + 3 espèces de
+//   l'expédition ou de la même famille, jamais une espèce de son groupe « À ne pas confondre »). Règles :
+//   • elle REMPLACE une question prévue (la 2e de « Sa vie », vrai ou faux ; sinon le cri) : la Rencontre ne s'allonge pas ;
+//   • elle ne vient jamais avant que la forme ait été montrée (écran « Bravo ! » ou présentation : session.autreFormeMontree) ;
+//     si la forme n'a pas pu être montrée, elle n'est pas posée ;
+//   • seulement une forme nettement différente (photo_n_differente = oui), jamais une chenille ni une larve (ni le têtard
+//     « jeune » d'un amphibien) ; les questions d'allure restent sur la photo principale ;
+//   • une seule par Rencontre. Elle n'écrit rien dans la fiche (comme « Sa vie ») ; ratée, elle ne revient pas.
+const FORME_Q = "autre_forme";
+const QUESTION_FORME_ACTIVE = true;   // false = plus de question sur les autres formes (la rangée « Ses autres formes » reste)
+const QUESTION_FORME = {
+  "femelle": ["Voici une femelle.", "De quelle espèce est-elle ?"], "mâle": ["Voici un mâle.", "De quelle espèce est-il ?"],
+  "jeune": ["Voici un jeune.", "De quelle espèce est-il ?"],
+  "plumage d'hiver": ["Voici un oiseau en plumage d'hiver.", "De quelle espèce est-il ?"],
+  "plumage d'été": ["Voici un oiseau en plumage d'été.", "De quelle espèce est-il ?"],
+  "pelage d'hiver": ["Voici un animal en pelage d'hiver.", "De quelle espèce est-il ?"],
+  "forme de printemps": ["Voici un papillon de printemps.", "De quelle espèce est-il ?"] };
+// Les formes qu'on peut demander : nettement différentes, reconnaissables (pas chenille, larve ni têtard)
+function formesDemandables(e) {
+  if (typeof formesNettes !== "function") return [];
+  return formesNettes(e).filter(p => QUESTION_FORME[p.sujet] && photoReconnaissable(e, p));
+}
+// Les 3 noms pièges : l'expédition d'abord (même famille de groupe, puis le reste du même groupe), puis la même famille
+//   (nom_affichage_groupe, ordre) dans un territoire commun ; jamais l'espèce elle-même ni un sosie.
+function piegesForme(e, x) {
+  const interdits = new Set([e.nom_courant, ...sosiesDe(e).map(o => o.nom_courant)]);
+  const terr = o => String(o.territoire || "").split(" ; ");
+  const t = terr(e), voisin = o => terr(o).some(v => t.includes(v));
+  const ok = o => o && !interdits.has(o.nom_courant) && estRenseigne(o.nom_courant);
+  const exp = x ? (x.liste || (x.especes || []).map(n => ESPECES.find(o => o.nom_courant === n))).filter(ok) : [];
+  const meme = (o, k) => estRenseigne(e[k]) && o[k] === e[k];
+  const res = [];
+  const ajouter = l => { for (const o of melanger(l)) if (res.length < 3 && !res.includes(o)) res.push(o); };
+  ajouter(exp.filter(o => meme(o, "nom_affichage_groupe")));
+  ajouter(exp.filter(o => o.onglet === e.onglet));
+  ajouter(ESPECES.filter(o => ok(o) && voisin(o) && meme(o, "nom_affichage_groupe")));
+  ajouter(ESPECES.filter(o => ok(o) && voisin(o) && meme(o, "ordre")));
+  ajouter(ESPECES.filter(o => ok(o) && voisin(o) && o.onglet === e.onglet));
+  return res.length === 3 ? res : null;
+}
+// La forme demandée dans cette Rencontre (tirée une fois), avec ses pièges ; null s'il n'y en a pas
+function formeAPoser(e, x) {
+  const formes = formesDemandables(e);
+  if (!formes.length) return null;
+  const p = auHasard(formes), pieges = piegesForme(e, x);
+  return pieges ? { ...p, pieges: pieges.map(o => o.nom_courant) } : null;
+}
+// Appelé quand la rangée « Ses autres formes » est affichée pour l'espèce de la Rencontre
+function noterFormeMontree(espece) { if (session && session.focus === espece) session.autreFormeMontree = true; }
+// La question peut-elle être posée maintenant ?
+function formePosable() { return !!(session && session.autreFormeQ && session.autreFormeMontree && !session.autreFormeFaite); }
+function poserQuestionForme(espece) {
+  const f = session && session.autreFormeQ;
+  enTete(espece, true, false, f ? QUESTION_FORME[f.sujet][0] : "");
+  if (!f) { document.getElementById("question").textContent = ""; return; }
+  session.autreFormeFaite = true;
+  const photo = document.getElementById("photo-rencontre");
+  photo.innerHTML = imagePhoto(f.src, f.etiquette, false);
+  document.getElementById("question").textContent = QUESTION_FORME[f.sujet][1];
+  document.getElementById("revision").textContent = "Une autre forme";
+  const noms = melanger([espece.nom_courant, ...f.pieges]);
+  for (const n of noms) ajouterBouton(n, n === espece.nom_courant);
+  const de = typeof deLEspece === "function" ? deLEspece(espece) : "de " + nomAvecArticle(espece);
+  // « C'est la femelle du canard colvert : … », « C'est l'hermine en pelage d'hiver : … », « C'est la carte géographique, forme de printemps : … »
+  const lab = f.etiquette;
+  const debut = /^(Le |La |L')/.test(lab) ? `C'est ${minuscule(lab)} ${de}` : /^En /.test(lab) ? `C'est ${nomAvecArticle(espece)} ${minuscule(lab)}`
+    : `C'est ${nomAvecArticle(espece)}, ${minuscule(lab)}`;
+  enCours = { espece, champ: FORME_Q, q: null, bonne: espece.nom_courant, forme: f, cacherEspece: true,
+              explication: `${debut}${f.change ? " : " + minuscule(f.change) : ""}.` };
+  if (typeof avantQuestionExpedition === "function") avantQuestionExpedition(espece);
+}
+function repondreQuestionForme(boutonClique, estJuste) {
+  const { espece, explication, forme } = enCours;
+  for (const b of document.querySelectorAll(".reponse")) { b.disabled = true; if (b.dataset.juste === "oui") b.classList.add("juste"); }
+  document.getElementById("nom").textContent = espece.nom_courant + " · " + forme.etiquette;
+  document.getElementById("famille").classList.remove("cache");
+  const retour = document.getElementById("retour");
+  if (estJuste) { retour.textContent = "Bravo ! " + explication; jouerSon(); }
+  else { if (boutonClique) { boutonClique.classList.add("fausse"); jouerSon("mauvaise"); } retour.textContent = explication; }
+  marquerVue(espece);
+  const boutonSuivant = document.getElementById("suivant");
+  if (session) {
+    session.faites += 1;
+    if (session.focus && !session.enRejeu) session.normalesFaites += 1;
+    if (estJuste) session.bonnes += 1;
+    if (session.focus && !session.enBonus && !session.enRejeu) {
+      session.numerotees = (session.numerotees || 0) + 1;
+      if (estJuste) session.bonnesNumerotees = (session.bonnesNumerotees || 0) + 1;
+    }
+    session.autreFormeJuste = !!estJuste;
+    if (session.focus && session.faites < session.total && !resteAQuestionner()) session.total = session.faites;
+    boutonSuivant.textContent = (session.faites >= session.total) ? "Voir le résultat →" : "Question suivante →";
+    session.dernierJuste = !!estJuste;
+  }
+  afficherStats();
+  sauvegarder();
+  boutonSuivant.classList.remove("cache");
+  noterDansHistorique();
+}
+
 const SOSIE = "sosie";
 function sosiePourRencontre(espece) {
   const candidats = sosiesDe(espece).filter(e => estRenseigne(e.photo));
@@ -299,7 +418,7 @@ function majBoutonPrecedente() {
   if (!b) return;
   const h = historiquePartie();
   const n = h ? h.length : 0;
-  b.classList.toggle("cache", n === 0);
+  b.classList.toggle("cache", n === 0 || true);   // étape R245 (36.37, choix 37A du 17/11) : « ← Question précédente » retiré partout
 }
 let indexHistorique = 0;
 function ouvrirHistorique(i) {
@@ -635,6 +754,9 @@ function retourMesures(e) {
 //        (remplace les onglets de la carte et la vignette « Le jeune » du bas) ;
 //   2B + 4A : une seule carte « Pour le reconnaître » : « Sa silhouette » (taille, poids et l'ensemble en tuiles), puis « Ses repères ».
 function vignettesBravo(e) {
+  // Étape R253 (36.34) : une espèce qui a une autre forme nettement différente la montre dans la carte (« Ses autres formes »,
+  //   avec la ligne « ce qui change ») : pas de seconde rangée de vignettes sur la photo (rien de dit deux fois).
+  if (typeof formesNettes === "function" && formesNettes(e).length) return "";
   const r = typeof reperesDe === "function" ? reperesDe(e) : null;
   const photos = photosDe(e).filter((p, i) => i === 0 || etiquetteForme(p.sujet));
   if (photos.length < 2) return "";
@@ -665,9 +787,10 @@ function carteBravo(e) {
     ...(typeof elementsEnsemble === "function" ? elementsEnsemble(e) : []).map(x => tuile(x.dessin, x.texte, echapper(minuscule(x.libelle))))
   ].filter(Boolean);
   const rp = typeof blocReperes === "function" ? blocReperes(e, { sansOnglets: true, sansTitre: true }) : "";
-  return `<div class="carte-bravo"><p class="cb-titre">Pour ${pe(e).la} reconnaître</p>`
+  const formes = typeof blocFormesNettes === "function" ? blocFormesNettes(e) : "";   // étape R253 (36.34) : « Ses autres formes »
+  return `<div class="carte-bravo${formes ? " avec-formes" : ""}"><p class="cb-titre">Pour ${pe(e).la} reconnaître</p>`
     + (tuiles.length ? `<p class="cb-sous">Sa silhouette</p><div class="cb-tuiles">${tuiles.join("")}</div>` : "")
-    + (rp ? `<p class="cb-sous">Ses repères</p>${rp}` : "") + `</div>`;
+    + (rp ? `<p class="cb-sous">Ses repères</p>${rp}` : "") + formes + `</div>`;
 }
 
 function presenterEspece(espece) {
@@ -706,7 +829,10 @@ function presenterEspece(espece) {
   const taille = ligneTaille(espece, ` style="animation-delay:.7s"`).replaceAll('class="trait-taille', 'class="trait-arrive trait-taille');   // étape 310 : la taille d'abord ; R168 : et le poids
   const zone = document.getElementById("reponses");
   zone.className = "";
-  zone.innerHTML = `<div class="presentation"><p class="trait-arrive" style="animation-delay:.5s">Pour ${pe(espece).la} reconnaître :</p><ul class="traits-presentation">${taille}${lignes}</ul>${blocRp}</div>`;
+  // Étape R253 (36.34) : ses autres formes nettement différentes, après les repères (la question sur l'une d'elles viendra ensuite)
+  const formesP = typeof blocFormesNettes === "function" ? blocFormesNettes(espece, { classe: "trait-arrive", style: `animation-delay:${blocRp ? 2.3 : 1.2}s` }) : "";
+  if (formesP && typeof noterFormeMontree === "function") noterFormeMontree(espece);
+  zone.innerHTML = `<div class="presentation"><p class="trait-arrive" style="animation-delay:.5s">Pour ${pe(espece).la} reconnaître :</p><ul class="traits-presentation">${taille}${lignes}</ul>${blocRp}${formesP}</div>`;
   const suivant = document.getElementById("suivant");
   suivant.textContent = "Observer de plus près →";
   // le bouton n'arrive qu'une fois les traits posés (on ne saute pas la présentation par mégarde)
@@ -741,7 +867,12 @@ function afficherFicheSession(s) {
       <div class="fiche-session-medaille">${medaille}</div>
     </div>
     ${dessinJaugeGain(s.ficheAvant, gain, champs.length)}
-    ${blocFaitInsolite(espece)}${ficheRecap(espece)}`;   // étape R101 (Revoir 10) : le fait insolite avant « Pour reconnaître… » ; étape 159 : le compte passe sous le nom, la barre suit la photo ; étape 310 : la fiche récap
+    ${blocFaitInsolite(espece)}${ficheRecap(espece)}`;
+  // Étape R246 (36.31) : sans question « Étonnant » dans cette Rencontre, l'anecdote gagnée (une seule fois) dans « Le saviez-vous ? »
+  if (!s.saviezMontre && typeof anecdoteAMontrer === "function") {
+    const a = anecdoteAMontrer(espece);
+    if (a) { s.saviezMontre = true; noterAnecdoteVue(a.cle); setTimeout(() => ouvrirSaviezVous({ espece, fait: a.texte }), 700); }
+  }   // étape R101 (Revoir 10) : le fait insolite avant « Pour reconnaître… » ; étape 159 : le compte passe sous le nom, la barre suit la photo ; étape 310 : la fiche récap
 }
 // Étape 310 (retour de l'utilisateur, 27/10) : à la fin de la Rencontre, une petite fiche « Pour la reconnaître »,
 // avec les pictos : la taille, puis ses traits d'allure les plus parlants (ceux de l'étape 1 des expéditions, traitsAllure),
@@ -751,6 +882,7 @@ const TRAITS_RECAP = 4;
 //   Il reprend les anecdotes vérifiées (Données\anecdotes.xlsx → ANECDOTES, 2 sources + vérification à l'aveugle) :
 //   la plus récente débloquée par la médaille. Il se retrouve ensuite sur la page de l'espèce (« Le saviez-vous ? »).
 function blocFaitInsolite(espece) {
+  return "";   // étape R246 (36.31) : plus d'encadré « Fait insolite » à la fin ; le fait passe dans la fenêtre « Le saviez-vous ? »
   if (!estIdentifiee(espece) || typeof anecdotesGagnees !== "function") return "";
   const a = anecdotesGagnees(espece)[0];
   if (!a) return "";

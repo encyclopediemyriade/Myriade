@@ -8,6 +8,7 @@
 //     c'est modeChoisi qui dit laquelle des deux on y affiche (étape 45).
 // ==================================================================
 function montrer(vue) {
+  if (typeof noterDepartPage === "function") noterDepartPage(vue);   // R241 (note 2) : la page quittée, pour la touche retour
   if (typeof fermerTiroir === "function") fermerTiroir();   // étape R194 : la fiche en tiroir ne reste pas ouverte sur un autre écran
   arreterCri();                                          // on coupe un cri en cours si l'on change de page
   document.querySelectorAll("audio").forEach(a => a.pause());   // étape 212 : aussi les lecteurs des fiches
@@ -73,6 +74,7 @@ function montrer(vue) {
     if (v && !v.innerHTML.trim()) v.innerHTML = `<p class="pg-attente">Votre carnet s'ouvre…</p>`;
     requestAnimationFrame(() => setTimeout(() => { if (!v || !v.classList.contains("cache")) afficherPageProgression(); }, 0));
   }
+  if (typeof noterArriveePage === "function") noterArriveePage(vue);   // R241 (note 2)
 }
 
 // Le bouton Quitter (étape 73) : on arrête la partie en cours et on revient à l'accueil.
@@ -83,16 +85,27 @@ function quitterJeu() {
   // Étape R188 (11/11, note n° 16 d'Aubin) : dans une partie lancée depuis une expédition, « Quitter » ramène au LIEU
   //   (avant : à l'accueil, on perdait l'endroit où l'on était). Le retour du téléphone fait pareil (14_clavier_menus.js).
   const x = typeof expeditionDuFil === "function" ? expeditionDuFil() : null;
-  const lieu = x && x.chapitre && typeof chapitreParNom === "function" ? chapitreParNom(x.territoire, x.chapitre) : null;
   if (defi) abandonnerDefi();          // les XP déjà gagnés sont gardés
   session = null;                      // la Rencontre en cours ne sera pas reprise
-  if (x && lieu && typeof estLieu === "function" && estLieu(lieu)) { majFilExpedition(null); ouvrirLieu(x.territoire, lieu.nom); window.scrollTo(0, 0); return; }
+  // Étape R241 (note 17 du 16/11) : depuis une expédition, retour direct à la page de l'expédition (avant : au lieu)
+  if (x) { majFilExpedition(null); ouvrirExpedition(x); return; }
+  // R241 : là d'où la partie a été lancée — la page des jeux, sinon l'accueil
+  if (depuisArcade) { montrer("arcade"); return; }
+  if (typeof rencontreDuJour !== "undefined" && rencontreDuJour) { rencontreDuJour = null; montrer(typeof vueAccueil === "function" ? vueAccueil() : "accueil"); window.scrollTo(0, 0); return; }
   montrer("accueil");
 }
 
 // Entrer dans la Rencontre : reprendre la session en cours, ou
 // demander combien de questions si aucune session n'est en cours.
+// Étape R241 : la sortie « ← » en haut d'un jeu lancé hors expédition dit où elle mène
+function majHautJeu() {
+  const b = document.querySelector("#haut-jeu .haut-jeu-retour");
+  if (!b) return;
+  const vers = depuisArcade ? "Jeux" : (typeof rencontreDuJour !== "undefined" && rencontreDuJour) ? "Accueil" : "Retour";
+  b.textContent = "← " + vers;
+}
 function entrerRencontre() {
+  majHautJeu();
   // Une Rencontre commencée (sans chronomètre) se reprend là où elle en était ;
   // sinon, on voit l'écran Jouer (étape 72).
   const enCours = !!session && session.faites < session.total;
@@ -429,8 +442,8 @@ function dessinJaugeGain(avant, gain, total) {
 function casesRencontre(s) {
   if (s.bonnesNumerotees === undefined) return [[`${s.bonnes} / ${s.total}`, "bonnes réponses"]];   // (ancienne Rencontre en cours)
   const cases = [[`${s.bonnesNumerotees} / ${Math.max(s.numerotees, s.bonnesNumerotees)}`, "bonnes réponses"]];
-  if (s.reprisesPosees) cases.push([`${s.reprisesJustes} / ${s.reprisesPosees}`, `au 2e essai`]);
-  if (s.bonusPose) cases.push([s.bonusJuste ? "✓" : "✗", s.bonusJuste ? "bonus réussi" : "bonus manqué"]);
+  // Étape R245 (36.38) : « 1 / 1 au 2e essai » retiré ; (36.31) bonus manqué : rien d'écrit, seulement « bonus ✓ » s'il est réussi
+  if (s.bonusPose && s.bonusJuste) cases.push(["✓", "bonus"]);
   return cases;
 }
 
@@ -448,10 +461,10 @@ function validerEspeceDuJour(nom, delai = 900) {
   const ouverts = typeof territoiresOuverts === "function" ? territoiresOuverts() : [];
   const ici = e ? territoiresJeu(e) : [], ta = territoireActif();
   const t = ici.includes(ta) ? ta : ici.find(x => ouverts.includes(x)) || ta;
-  if (t && typeof ajouterEmpreinteBonus === "function" && typeof GAIN_ESPECE_DU_JOUR !== "undefined") {
-    ajouterEmpreinteBonus(t, GAIN_ESPECE_DU_JOUR);
-    setTimeout(() => afficherBulle(`✓ Espèce du jour rencontrée · +${GAIN_ESPECE_DU_JOUR} empreintes`), delai);
-    if (typeof verifierOuverture === "function") setTimeout(verifierOuverture, delai + 700);
+  if (t && typeof ajouterRecompense === "function" && typeof GAIN_ESPECE_DU_JOUR !== "undefined") {
+    // Étape R248 (36.24) : les 2 empreintes attendent sur l'accueil, sous l'espèce du jour (bouton « +2 »)
+    ajouterRecompense(t, GAIN_ESPECE_DU_JOUR, "Espèce du jour", `jour|${aujourdhui()}`);
+    setTimeout(() => afficherBulle(`✓ Espèce du jour rencontrée · +${GAIN_ESPECE_DU_JOUR} à récupérer sur l'accueil`), delai);
   }
   return true;
 }

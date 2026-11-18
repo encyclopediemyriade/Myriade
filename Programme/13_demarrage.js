@@ -66,6 +66,20 @@ if (profil) montrer(vueAccueil()); else montrerBienvenue();   // étape 255 : on
 //   a besoin de toutes les espèces (Carte, Jeux, une expédition, la première Rencontre), le jeu calculait d'un coup, pour des
 //   centaines d'espèces, les questions possibles et les traits d'allure (jusqu'à 1,5 s sur téléphone). Ces calculs sont
 //   maintenant faits à l'avance, par petits paquets, pendant que le joueur lit l'accueil : les écrans s'ouvrent ensuite sans attente.
+// Étape R239b (36.03) : puis l'étape 2 des expéditions du territoire en cours (ouvrir une expédition la calculait d'un coup)
+let prechauffeExp = false;
+function prechaufferExpeditions() {
+  if (typeof questionsEnsembleExp !== "function" || typeof expeditionsDe !== "function") return;
+  const t = typeof territoireActif === "function" ? territoireActif() : null;
+  const liste = t ? expeditionsDe(t) : [];
+  let i = 0;
+  const pas = () => {
+    const fin = performance.now() + 12;
+    while (i < liste.length && performance.now() < fin) { try { questionsEnsembleExp(liste[i]); } catch (err) { /* rien */ } i++; }
+    if (i < liste.length) (window.requestIdleCallback ? requestIdleCallback(pas, { timeout: 500 }) : setTimeout(pas, 30));
+  };
+  pas();
+}
 function prechaufferCalculs() {
   const liste = ESPECES.slice();
   let i = 0;
@@ -78,6 +92,7 @@ function prechaufferCalculs() {
       if (!echeance && performance.now() >= fin) break;
     }
     if (i < liste.length) attendre(paquet);
+    else if (!prechauffeExp) { prechauffeExp = true; prechaufferExpeditions(); }
   };
   setTimeout(() => attendre(paquet), 600);         // juste après l'affichage de l'accueil
 }

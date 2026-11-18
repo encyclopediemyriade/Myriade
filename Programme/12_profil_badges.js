@@ -569,11 +569,12 @@ function afficherPageProgression() {
   // Étape R183 (maquette G) : la vitrine remplace la carte de naturaliste et l'ancien profil A ; familles et records restent repliés en bas
   const plisBas = `<div class="pg-a pgv-plis"><details class="pg-encart pg-a-pli"${ongletProfil === "familles" ? " open" : ""}><summary>Vos familles</summary><div class="pg-tuiles" id="tuiles-progression"></div></details>
       <details class="pg-encart pg-a-pli"><summary>Jeux et records</summary>${panneauJeux}</details></div>`;
-  const corpsProfil = telA && ongletProfil !== "badges" ? profilVitrine(rc) + plisBas
+  // Étape R248 (36.01, choix 1A ; « Vos familles » retiré, choix B du 17/11) : plus de plis en bas — les familles sont dans
+  //   l'Encyclopédie, les records sous chaque jeu (onglet Jeux), Réglages et à propos derrière la roue dentée en haut à droite.
+  const corpsProfil = telA && ongletProfil !== "badges" ? profilVitrine(rc)
     : telA ? `<button type="button" class="pg-lien pg-a-retour" data-onglet-profil="ensemble">← Votre profil</button><div class="pg-panneau">${panneauBadges}</div>`
     : barreOnglets + `<div class="pg-panneau">${panneau}</div>`;
-  document.getElementById("vue-progression").innerHTML = (telA ? "" : enTeteProfil) + corpsProfil
-    + `<button class="pg-apropos-mobile" id="pg-apropos" type="button">Réglages et à propos <span aria-hidden="true">›</span></button>`;   // étape M6 (téléphone)
+  document.getElementById("vue-progression").innerHTML = (telA ? "" : enTeteProfil) + corpsProfil;   // R248 : la roue dentée remplace « Réglages et à propos » du bas (M6)
   brancherPrenom();   // étape M6
   brancherVitrine();  // étape R183
 
@@ -836,6 +837,8 @@ const PICTOS_PROFIL = {
   coeur: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20S3 14 3 8.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 2.5C21 14 12 20 12 20Z" fill="#b5442e"/></svg>',
   famille: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 11 4 20 4C20 13 14 19 5 19Z" fill="#3E7B55"/><path d="M5 19L14 10" stroke="#FBF8F1" stroke-width="1.6"/></svg>',
   coriace: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18L12 4L20 18Z" fill="none" stroke="#A8652A" stroke-width="2" stroke-linejoin="round"/><path d="M12 9V13M12 15.5V16" stroke="#A8652A" stroke-width="2" stroke-linecap="round"/></svg>',
+  lune: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.5a8.5 8.5 0 1 0 5 14 6.5 6.5 0 0 1-5-14Z" fill="#5b6a8a"/></svg>',   // R239 (36.01) : le soir et la nuit
+  contrib: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="#3E7B55" stroke-width="2.2" stroke-linecap="round"/></svg>',   // R248 (36.01)
   heure: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="#d9a12b"/><path d="M12 2.5V5M12 19V21.5M2.5 12H5M19 12H21.5M5.3 5.3L7 7M17 17L18.7 18.7M5.3 18.7L7 17M17 7L18.7 5.3" stroke="#d9a12b" stroke-width="1.8" stroke-linecap="round"/></svg>',
 };
 function profilVitrine(rc) {
@@ -856,18 +859,19 @@ function profilVitrine(rc) {
   const coeurT = territoireDeCoeur(), coeurF = familleDeCoeur(), coriace = especeCoriace(), heure = votreHeure();
   const meilleureDe = cle => especesRencontrees().filter(e => e.onglet === cle).sort((a, b) => niveauTermine(b) - niveauTermine(a))[0];
   // Étape R238 (note 3, choix 6B) : une étiquette colorée avec son picto dit la nature de l'info, puis le nom, puis le détail
-  const ligneDit = (img, etiq, titre, detail, attr = "") => `<li${attr}>${img}<span class="pgv-dit-t">${etiq}<b>${titre}</b>${detail ? `<small>${detail}</small>` : ""}</span></li>`;
-  const etiq = (cle, texte) => `<span class="pgv-chip pgv-chip-${cle}">${PICTOS_PROFIL[cle] || ""}${texte}</span>`;
+  const ligneDit = (img, etiq, titre, detail, attr = "") => `<li${attr}${attr ? ` class="pgv-touche" role="button" tabindex="0"` : ""}>${img}<span class="pgv-dit-t">${etiq}<b>${titre}</b>${detail ? `<small>${detail}</small>` : ""}</span>${attr ? `<span class="pgv-fleche" aria-hidden="true">›</span>` : ""}</li>`;   // R239 (36.27) : « › » sur les lignes qui s'ouvrent
+  const etiq = (cle, texte, picto) => `<span class="pgv-chip pgv-chip-${cle}">${PICTOS_PROFIL[picto || cle] || ""}${texte}</span>`;
   const vignette = src => src ? `<img class="pgv-vign" src="${src}" alt="">` : `<span class="pgv-vign"></span>`;
   const dits = [
-    coeurT ? ligneDit(vignette(coeurT.lieu && estRenseigne(coeurT.lieu.photo) ? photoMini(coeurT.lieu.photo) : null), etiq("coeur", "Territoire de cœur"), echapper(coeurT.t), coeurT.lieu ? `${echapper(coeurT.lieu.nom)}, votre lieu le plus joué` : "") : "",
-    coeurF ? ligneDit(vignette(meilleureDe(coeurF.cle) ? photoMini(meilleureDe(coeurF.cle).photo) : null), etiq("famille", "Famille de cœur"), echapper(CLASSES[coeurF.cle].nom), `${coeurF.n} espèce${coeurF.n > 1 ? "s" : ""} au carnet, plus que toute autre famille`) : "",
+    coeurT ? ligneDit(vignette(coeurT.lieu && estRenseigne(coeurT.lieu.photo) ? photoMini(coeurT.lieu.photo) : null), etiq("coeur", "Territoire de cœur"), echapper(coeurT.t), coeurT.lieu ? `${echapper(coeurT.lieu.nom)}, votre lieu le plus joué` : "", ` data-territoire-coeur="${echapper(coeurT.t)}"`) : "",
+    coeurF ? ligneDit(vignette(meilleureDe(coeurF.cle) ? photoMini(meilleureDe(coeurF.cle).photo) : null), etiq("famille", "Famille de cœur"), echapper(CLASSES[coeurF.cle].nom), `${coeurF.n} espèce${coeurF.n > 1 ? "s" : ""} au carnet, plus que toute autre famille`, ` data-famille-coeur="${echapper(coeurF.cle)}"`) : "",
     coriace ? ligneDit(vignette(photoMini(coriace.e.photo)), etiq("coriace", "Votre coriace"), echapper(coriace.e.nom_courant), `${pe(coriace.e).elle} vous a résisté ${coriace.n} fois`, ` data-espece="${echapper(coriace.e.nom_courant)}"`) : "",
-    heure ? ligneDit(`<span class="pgv-vign pgv-heure ${heure.cle}" aria-hidden="true"></span>`, etiq("heure", "Votre heure"), echapper(majuscule(heure.texte)), "") : "",
+    heure ? ligneDit(`<span class="pgv-vign pgv-heure ${heure.cle}" aria-hidden="true"></span>`, etiq("heure", "Votre heure", /soir|nuit/.test(heure.cle) ? "lune" : "heure"), echapper(majuscule(heure.texte)), "") : "",
   ].filter(Boolean);
   const rencontres = especesRencontrees().filter(e => decouverte(e)).slice(0, 5);
   return `<div class="pgv">
     <section class="pgv-tete">
+      <button type="button" class="pgv-roue" id="pg-apropos" aria-label="Réglages et à propos" title="Réglages et à propos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.08 9.86 L21.39 10.02 L21.39 13.98 L19.08 14.14 L18.55 15.44 L18.52 15.49 L20.04 17.25 L17.25 20.04 L15.49 18.52 L14.20 19.07 L14.14 19.08 L13.98 21.39 L10.02 21.39 L9.86 19.08 L8.56 18.55 L8.51 18.52 L6.75 20.04 L3.96 17.25 L5.48 15.49 L4.93 14.20 L4.92 14.14 L2.61 13.98 L2.61 10.02 L4.92 9.86 L5.45 8.56 L5.48 8.51 L3.96 6.75 L6.75 3.96 L8.51 5.48 L9.80 4.93 L9.86 4.92 L10.02 2.61 L13.98 2.61 L14.14 4.92 L15.44 5.45 L15.49 5.48 L17.25 3.96 L20.04 6.75 L18.52 8.51 L19.07 9.80Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg></button>
       <button type="button" class="pgv-portrait" id="pg-avatar" title="${portrait ? `Ouvrir la page : ${echapper(portrait.nom_courant)}` : "Ouvrir l'encyclopédie"}">${portrait ? `<img src="${photoMini(portrait.photo)}" alt="${echapper(portrait.nom_courant)}">` : `<svg viewBox="0 0 26 26" aria-hidden="true" class="pgv-logo"><circle cx="6" cy="6" r="3.4"/><circle cx="15" cy="4.5" r="2.6"/><circle cx="22" cy="10" r="2.4"/><circle cx="11" cy="13" r="2.2" class="o"/><circle cx="5" cy="19" r="3.4"/><circle cx="15" cy="21" r="3"/></svg>`}</button>
       <div class="pgv-qui">
         ${prenomEnEdition ? blocPrenom("pg-cn-prenom") : `<span class="pgv-nom">${p ? echapper(p) : "Naturaliste"}</span>`}
@@ -884,9 +888,9 @@ function profilVitrine(rc) {
           <span class="pgv-presque-t"><small>Presque à vous</small><b>${nomBadge(presque.b, presque.palier)}</b> · encore ${nombre(presque.reste)}</span>
           <span class="pgv-voir" aria-hidden="true">Voir</span></button>` : ""}
     </section>
-    ${chiffres.length ? `<section class="pgv-bloc"><h2>Vos chiffres</h2><ul class="pgv-chiffres-lignes">${chiffres.map(c => `<li><span class="pgv-ch-ic">${c[3]}</span><b>${nombre(c[0])}</b><span>${c[1]}${c[2] ? ` <small>· ${c[2]}</small>` : ""}</span></li>`).join("")}</ul></section>` : ""}
+    <section class="pgv-bloc"><h2>Vos chiffres</h2><ul class="pgv-chiffres-lignes">${chiffres.map(c => `<li><span class="pgv-ch-ic">${c[3]}</span><b>${nombre(c[0])}</b><span>${c[1]}${c[2] ? ` <small>· ${c[2]}</small>` : ""}</span></li>`).join("")}
+      <li class="pgv-contrib-ligne"><span class="pgv-ch-ic">${PICTOS_PROFIL.contrib}</span><b>0</b><span>contribution <small>· bientôt : proposer une photo, une observation, une correction</small></span></li></ul></section>
     ${dits.length ? `<section class="pgv-bloc"><h2>Vos préférences</h2><div class="pgv-encart"><ul class="pgv-dits">${dits.join("")}</ul></div></section>` : ""}
-    <section class="pgv-bloc"><div class="pgv-contrib"><b>0</b><span><strong>Vos contributions</strong><small>Bientôt : proposer une photo, une observation, une correction pour enrichir Myriade.</small></span></div></section>
     ${rencontres.length ? `<section class="pgv-bloc"><h2>Vos dernières rencontres</h2><div class="pgv-rencontres">${rencontres.map(e => `<button type="button" data-espece="${echapper(e.nom_courant)}" title="${echapper(e.nom_courant)}"><img src="${photoMini(e.photo)}" alt="${echapper(e.nom_courant)}"></button>`).join("")}</div></section>` : ""}
   </div>`;
 }
@@ -897,6 +901,10 @@ function brancherVitrine() {
     badgeOuvert = b.dataset.badgeVitrine; ongletProfil = "badges"; filtreBadges = "tous"; afficherPageProgression(); window.scrollTo(0, 0);
   });
   vue.querySelectorAll(".pgv [data-espece]").forEach(b => b.onclick = () => { const e = ESPECES.find(x => x.nom_courant === b.dataset.espece); if (e) ouvrirPageEspece(e); });
+  // R239 (36.27) : le territoire de cœur ouvre sa page (onglet Carte), la famille de cœur l'Encyclopédie sur cette famille
+  vue.querySelectorAll(".pgv [data-territoire-coeur]").forEach(b => b.onclick = () => { if (typeof ouvrirAtlas === "function") ouvrirAtlas(b.dataset.territoireCoeur); else montrer("accueil"); window.scrollTo(0, 0); });
+  vue.querySelectorAll(".pgv [data-famille-coeur]").forEach(b => b.onclick = () => { filtreClasse = b.dataset.familleCoeur; montrer("encyclopedie"); window.scrollTo(0, 0); });
+  vue.querySelectorAll(".pgv .pgv-touche").forEach(b => b.onkeydown = ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); b.click(); } });
   const av = document.getElementById("pg-avatar");
   if (av) av.onclick = () => { const e = favorite() || derniereRencontree(); if (e) ouvrirPageEspece(e); else montrer("encyclopedie"); };
 }

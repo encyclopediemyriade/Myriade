@@ -298,7 +298,12 @@ function poserChoixIndices(espece, montres, pieges) {
     if (zone.dataset.repondu) return;
     zone.dataset.repondu = "oui";
     const choisie = especes[Number(b.dataset.i)], juste = choisie === espece;
-    zone.querySelectorAll(".fe-photo").forEach(o => { o.disabled = true; if (especes[Number(o.dataset.i)] === espece) o.classList.add("juste"); });
+    // R239 (36.32) : après la réponse, la bonne photo en grand, les autres en rangée dessous, avec leur nom ; (16b) toucher = agrandir
+    zone.querySelector(".fe-photos").classList.add("agrandir-groupe");
+    zone.querySelectorAll(".fe-photo").forEach(o => { const e = especes[Number(o.dataset.i)]; o.setAttribute("aria-disabled", "true");
+      o.classList.add("agr"); o.dataset.legende = e.nom_courant;
+      if (e === espece) o.classList.add("juste");
+      o.insertAdjacentHTML("beforeend", `<span class="fe-legende">${echapper(e.nom_courant)}</span>${LOUPE_SVG}`); });
     if (!juste) b.classList.add("fausse");
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     const nom = typeof nomAvecArticle === "function" ? nomAvecArticle(espece) : espece.nom_courant;
@@ -376,9 +381,11 @@ function poserSosieEntree(espece, autre) {
     if (zone.dataset.repondu) return;
     zone.dataset.repondu = "oui";
     const juste = especes[Number(b.dataset.i)] === espece;
-    zone.querySelectorAll(".fe-photo").forEach(o => { o.disabled = true; const e = especes[Number(o.dataset.i)];
+    zone.querySelector(".fe-photos").classList.add("agrandir-groupe");   // R239 (36.32, 16b)
+    zone.querySelectorAll(".fe-photo").forEach(o => { o.setAttribute("aria-disabled", "true"); const e = especes[Number(o.dataset.i)];
+      o.classList.add("agr"); o.dataset.legende = e.nom_courant;
       if (e === espece) o.classList.add("juste");
-      o.insertAdjacentHTML("beforeend", `<span class="fe-legende">${echapper(e.nom_courant)}</span>`); });
+      o.insertAdjacentHTML("beforeend", `<span class="fe-legende">${echapper(e.nom_courant)}</span>${LOUPE_SVG}`); });
     if (!juste) b.classList.add("fausse");
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     const critere = critereSosie(espece, autre);
@@ -636,9 +643,21 @@ function ouvrirLienDuLieu(x, lien, apres) {
 //   (une révision, plus tard), et elle garde ainsi toutes ses questions.
 // ==================================================================
 const LIENS_ETAPE2_MAX = 3;
-function sansAccent(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/s\b/g, "").trim(); }
+const memoSansAccent = new Map();   // R239b (lenteurs) : appelée des milliers de fois sur les mêmes noms
+function sansAccent(t) {
+  const k = String(t || "");
+  let r = memoSansAccent.get(k);
+  if (r === undefined) { r = k.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/s\b/g, "").trim(); memoSansAccent.set(k, r); }
+  return r;
+}
 function itemsListe(e, c) { return String(e[c + "_items"] || "").split(";").map(t => t.trim()).filter(t => t && !t.startsWith("NA")); }
+// Étape R243 (36.18b) : un nom d'usage qui désigne une espèce du jeu sous un autre nom. « Couleuvre à collier » : en France, c'est
+//   la couleuvre helvétique (Natrix helvetica, séparée de N. natrix en 2017 ; Wikipédia FR et EN). Les fiches des proies l'écrivent
+//   encore « couleuvre à collier » : le lien avec la couleuvre helvétique de l'expédition n'était pas reconnu.
+const NOMS_EQUIVALENTS = { "couleuvre a collier": "Couleuvre helvétique" };
 function especesDuNom(item, liste) {
+  const eq = NOMS_EQUIVALENTS[sansAccent(item)];
+  if (eq) { const m = liste.filter(b => b.nom_courant === eq); if (m.length) return m; }
   const i = sansAccent(item);
   if (i.length < 4) return [];
   return liste.filter(b => { const n = sansAccent(b.nom_courant); return n === i || n.startsWith(i + " "); });
@@ -729,7 +748,9 @@ function dessinerLienExp() {
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     if (juste) L.justes++;
     if (typeof noterLienConnu === "function") noterLienConnu(cleLienExp(it));   // étape B1 : badge « Leurs liens »
-    document.getElementById("fl-retour").innerHTML = `${juste ? "Bravo ! " : ""}${echapper(explication)}`;
+    // R239 (36.39) : quand la bonne réponse est la phrase même de l'explication (déjà en vert), on ne la recopie pas
+    const repete = explication === bonne;
+    document.getElementById("fl-retour").innerHTML = repete ? (juste ? "Bravo !" : "Pas tout à fait : la bonne réponse est en vert.") : `${juste ? "Bravo ! " : ""}${echapper(explication)}`;
     const s = document.getElementById("fl-suite"); s.classList.remove("cache"); s.focus();
     s.onclick = () => { if (L.i + 1 < L.items.length) { L.i++; dessinerLienExp(); window.scrollTo(0, 0); } else finirLiensExp(); };
   });

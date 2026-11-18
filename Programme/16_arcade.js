@@ -58,6 +58,20 @@ function resumeArcade(T, F) {
   return `${tousT ? "Tous les territoires" : T.join(", ")} · ${toutes ? "toutes les familles" : F.map(f => CLASSES[f].nom).join(", ")}`;
 }
 
+// Étape R248 (36.01, choix 1A) : les records quittent le Profil et viennent sous chaque jeu (rien à zéro n'est écrit)
+function recordsDuJeu(cle) {
+  const st = (statsJeux[cle] || {}), r = [];
+  if (cle === "plus") {
+    if (suivi.recordSerieDuel) r.push(`<b>${nombre(suivi.recordSerieDuel)}</b> à la suite`);
+    if (suivi.recordPartieDuel) r.push(`<b>${nombre(suivi.recordPartieDuel)}</b> sur une partie`);
+  }
+  if (cle === "indices" && st.decouvertes) r.push(`<b>${nombre(st.decouvertes)}</b> espèce${st.decouvertes > 1 ? "s" : ""} découverte${st.decouvertes > 1 ? "s" : ""}`);
+  if (cle === "portrait" && suivi.portraits) r.push(`<b>${nombre(suivi.portraits)}</b> portrait${suivi.portraits > 1 ? "s" : ""} sans erreur`);
+  if (cle === "oreille") { const n = nbEspeces(e => nbBonnes(e, "cri_son") >= 1); if (n) r.push(`<b>${nombre(n)}</b> cri${n > 1 ? "s" : ""} reconnu${n > 1 ? "s" : ""}`); }
+  if (cle === "coupdoeil" && suivi.coupsDoeil) r.push(`<b>${nombre(suivi.coupsDoeil)}</b> photo${suivi.coupsDoeil > 1 ? "s" : ""} reconnue${suivi.coupsDoeil > 1 ? "s" : ""} du premier coup`);
+  if (st.parties) r.push(`${nombre(st.parties)} partie${st.parties > 1 ? "s" : ""}`);
+  return r.length ? `<p class="arc-records"><span>Vos records</span> ${r.join(" · ")}</p>` : "";
+}
 function afficherArcade() {
   const T = territoiresArcade(), F = famillesArcade(T);
   const d = construireDefi(T, F);
@@ -90,6 +104,7 @@ function afficherArcade() {
         <p class="arc-regle">${REGLES_ARCADE[cle] || ""}</p>
         <p class="arc-regle-courte">${REGLES_COURTES[cle] || REGLES_ARCADE[cle] || ""}</p>
         <p class="arc-meta">${etat.possible ? `${JEUX[cle].detail} · ${meta}` : conditionJeu(cle, etat)}</p>
+        ${recordsDuJeu(cle)}
         <button class="arc-jouer" data-jeu="${cle}"${etat.possible ? "" : " disabled"}>Jouer <span aria-hidden="true">▶</span></button>
       </article>`;
   }).join("");

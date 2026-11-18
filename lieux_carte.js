@@ -1,6 +1,6 @@
 // ============================================================
 // LA CARTE DES LIEUX — généré par Code\Outils\gen_lieux_carte.py (étape 335). Ne pas modifier à la main.
-// points : position réelle de chaque lieu (territoire|lieu) ; cadres : la fenêtre de la carte de chaque territoire.
+// points : position réelle de chaque lieu (territoire|lieu ; les lieux trop proches légèrement écartés, R248b) ; cadres : la fenêtre de la carte de chaque territoire.
 // ============================================================
 
 const LIEUX_CARTE = {
@@ -14,16 +14,16 @@ const LIEUX_CARTE = {
    924.3
   ],
   "Corse|Corte et la vallée de la Restonica": [
-   1108.7,
-   966.7
+   1109.2,
+   967.2
   ],
   "Corse|Désert des Agriates": [
    1111.4,
    916.2
   ],
   "Corse|Forêt d'Aïtone": [
-   1084.3,
-   973.0
+   1085.5,
+   973.1
   ],
   "Corse|Cap Corse": [
    1129.3,
@@ -38,20 +38,20 @@ const LIEUX_CARTE = {
    1062.8
   ],
   "Corse|Monte Cinto et le Niolo": [
-   1098.1,
-   957.4
+   1097.6,
+   956.9
   ],
   "Corse|Réserve naturelle de Scandola": [
-   1064.2,
-   958.8
+   1063.9,
+   958.1
   ],
   "Corse|Calanques de Piana": [
-   1070.9,
-   971.7
+   1070.0,
+   972.3
   ],
   "Jura|Pontarlier et le château de Joux": [
-   860.3,
-   464.7
+   861.4,
+   462.5
   ],
   "Jura|Reculée de Baume-les-Messieurs": [
    807.0,
@@ -66,20 +66,20 @@ const LIEUX_CARTE = {
    443.1
   ],
   "Jura|Lacs de Remoray et de Saint-Point": [
-   855.2,
-   478.7
+   851.0,
+   483.9
   ],
   "Jura|Le Mont d'Or": [
-   861.5,
-   484.0
+   869.6,
+   487.1
   ],
   "Jura|Saut du Doubs et lac de Chaillexon": [
    887.1,
    444.6
   ],
   "Jura|Tourbières de Frasne": [
-   846.6,
-   473.5
+   841.6,
+   467.4
   ],
   "Jura|Forêt du Risoux et Les Rousses": [
    841.1,
@@ -102,12 +102,12 @@ const LIEUX_CARTE = {
    437.3
   ],
   "Bassin parisien et Val de Loire|Chambord et la Loire": [
-   493.6,
-   390.0
+   484.5,
+   386.8
   ],
   "Bassin parisien et Val de Loire|Sologne": [
-   522.2,
-   400.0
+   531.3,
+   403.2
   ],
   "Bassin parisien et Val de Loire|Forêt de Fontainebleau": [
    579.1,
@@ -126,12 +126,12 @@ const LIEUX_CARTE = {
    487.9
   ],
   "Bassin parisien et Val de Loire|Estuaire de la Seine": [
-   405.6,
-   183.7
+   406.4,
+   194.1
   ],
   "Bassin parisien et Val de Loire|Falaises d'Étretat": [
-   403.3,
-   155.0
+   402.5,
+   144.6
   ],
   "Bassin parisien et Val de Loire|Parc du Marquenterre": [
    502.9,
@@ -190,44 +190,44 @@ const LIEUX_CARTE = {
    828.5
   ],
   "Bassin aquitain|Marais poitevin": [
-   316.6,
-   527.0
+   317.3,
+   525.3
   ],
   "Bassin aquitain|Vallée de la Dordogne": [
-   458.8,
-   697.6
+   455.8,
+   697.2
   ],
   "Bassin aquitain|Estuaire de la Charente": [
-   289.1,
-   566.8
+   301.6,
+   565.9
   ],
   "Bassin aquitain|Lac de Cazaux-Sanguinet": [
-   273.5,
-   730.6
+   275.1,
+   750.4
   ],
   "Bassin aquitain|Barthes de l'Adour": [
    266.3,
    820.3
   ],
   "Bassin aquitain|Île d'Oléron": [
-   271.9,
-   570.3
+   258.7,
+   573.0
   ],
   "Bassin aquitain|Rocamadour et le causse": [
-   495.9,
-   702.8
+   498.9,
+   703.2
   ],
   "Bassin aquitain|Dune du Pilat": [
-   271.0,
-   718.2
+   256.9,
+   699.9
   ],
   "Bassin aquitain|Réserve ornithologique du Teich": [
-   286.3,
-   713.5
+   298.7,
+   712.0
   ],
   "Massif central|Salers": [
-   565.2,
-   666.0
+   553.6,
+   663.3
   ],
   "Massif central|Brioude et le val d'Allier": [
    635.1,
@@ -238,8 +238,8 @@ const LIEUX_CARTE = {
    604.3
   ],
   "Massif central|Chaîne des Puys": [
-   602.2,
-   595.8
+   603.7,
+   589.2
   ],
   "Massif central|Plateau de Millevaches": [
    531.0,
@@ -250,36 +250,36 @@ const LIEUX_CARTE = {
    718.9
   ],
   "Massif central|Mont Aigoual": [
-   651.6,
-   779.1
+   662.0,
+   784.7
   ],
   "Massif central|Gorges du Tarn et de la Jonte": [
-   621.5,
-   771.3
+   606.8,
+   778.0
   ],
   "Massif central|Causse Méjean": [
-   633.4,
-   766.7
+   637.7,
+   754.4
   ],
   "Massif central|Puy Mary": [
-   579.8,
-   669.4
+   591.4,
+   672.1
   ],
   "Massif central|Vallée de Chaudefour": [
-   596.4,
-   620.5
+   594.9,
+   627.1
   ],
   "Pyrénées|Saint-Jean-Pied-de-Port": [
-   260.3,
-   876.4
+   269.4,
+   870.3
   ],
   "Pyrénées|Vallée de Baïgorry": [
-   252.1,
-   874.1
+   239.8,
+   871.3
   ],
   "Pyrénées|Lac de Lourdes": [
-   354.2,
-   886.7
+   358.2,
+   884.5
   ],
   "Pyrénées|Villefranche-de-Conflent": [
    553.0,
@@ -290,28 +290,28 @@ const LIEUX_CARTE = {
    963.4
   ],
   "Pyrénées|Forêt d'Iraty": [
-   274.8,
-   890.9
+   274.2,
+   899.5
   ],
   "Pyrénées|Vallée d'Aspe": [
-   311.1,
-   900.5
+   303.6,
+   901.9
   ],
   "Pyrénées|Tourbière de Bernadouze": [
    475.6,
    924.8
   ],
   "Pyrénées|Vallée d'Ossau": [
-   325.9,
-   898.9
+   333.2,
+   900.1
   ],
   "Pyrénées|Cirque de Gavarnie": [
-   358.3,
-   929.1
+   353.2,
+   933.7
   ],
   "Pyrénées|Réserve du Néouvielle": [
-   370.1,
-   918.5
+   375.2,
+   913.9
   ],
   "Alpes|Lac d'Annecy": [
    850.9,
@@ -358,36 +358,36 @@ const LIEUX_CARTE = {
    566.5
   ],
   "Méditerranée|Camargue": [
-   732.8,
-   843.6
+   725.0,
+   846.9
   ],
   "Méditerranée|Étang de Thau": [
-   655.3,
-   859.1
+   656.3,
+   860.5
   ],
   "Méditerranée|Gorges du Gardon": [
-   721.4,
-   797.2
+   719.5,
+   796.5
   ],
   "Méditerranée|Les Alpilles": [
-   754.0,
-   817.6
+   754.8,
+   808.7
   ],
   "Méditerranée|La Crau": [
-   754.5,
-   838.7
+   763.3,
+   845.0
   ],
   "Méditerranée|Lac du Salagou": [
-   635.7,
-   831.5
+   619.8,
+   838.8
   ],
   "Méditerranée|Pic Saint-Loup": [
-   670.2,
-   816.8
+   686.2,
+   815.3
   ],
   "Méditerranée|Gorges de l'Hérault": [
-   650.1,
-   822.5
+   648.9,
+   815.3
   ],
   "Méditerranée|Massif des Maures": [
    877.1,
@@ -395,19 +395,19 @@ const LIEUX_CARTE = {
   ],
   "Méditerranée|Les Calanques": [
    804.2,
-   877.4
+   877.5
   ],
   "Méditerranée|Montagne Sainte-Victoire": [
    813.6,
-   841.5
+   841.4
   ],
   "Vosges|Gérardmer et son lac": [
-   893.6,
-   333.3
+   888.7,
+   331.3
   ],
   "Vosges|Riquewihr et le vignoble": [
-   924.4,
-   321.2
+   924.8,
+   320.5
   ],
   "Vosges|Remiremont et la vallée de la Moselle": [
    872.6,
@@ -418,8 +418,8 @@ const LIEUX_CARTE = {
    290.7
   ],
   "Vosges|Vallée de Munster": [
-   912.6,
-   335.9
+   918.2,
+   335.0
   ],
   "Vosges|Plateau des Mille Étangs": [
    874.4,
@@ -438,16 +438,16 @@ const LIEUX_CARTE = {
    361.2
   ],
   "Vosges|Le Grand Ballon": [
-   911.1,
-   351.4
+   911.6,
+   352.4
   ],
   "Vosges|Le Hohneck et le cirque du Frankenthal": [
-   904.2,
-   336.3
+   902.7,
+   339.0
   ],
   "Plaines de l'Est et val de Saône|Strasbourg et le Rhin": [
-   956.7,
-   274.0
+   957.9,
+   264.5
   ],
   "Plaines de l'Est et val de Saône|Dijon et la Côte de Nuits": [
    756.3,
@@ -458,36 +458,36 @@ const LIEUX_CARTE = {
    219.2
   ],
   "Plaines de l'Est et val de Saône|Tournus et le val de Saône": [
-   751.3,
-   506.6
+   740.5,
+   510.4
   ],
   "Plaines de l'Est et val de Saône|Louhans et le bocage bressan": [
-   774.8,
-   498.2
+   785.6,
+   494.4
   ],
   "Plaines de l'Est et val de Saône|L'étang de Lindre": [
    880.3,
    252.9
   ],
   "Plaines de l'Est et val de Saône|Rhinau et la forêt du Rhin": [
-   953.2,
-   302.4
+   952.0,
+   311.9
   ],
   "Plaines de l'Est et val de Saône|Monthermé et la vallée de la Meuse": [
    729.4,
    137.9
   ],
   "Plaines de l'Est et val de Saône|L'Isle Crémieu": [
-   780.0,
-   599.1
+   783.1,
+   604.4
   ],
   "Plaines de l'Est et val de Saône|Langres et son plateau": [
    779.2,
    361.4
   ],
   "Plaines de l'Est et val de Saône|Les étangs de la Dombes": [
-   762.1,
-   568.5
+   759.0,
+   563.2
   ]
  },
  "cadres": {

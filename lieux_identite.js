@@ -1678,7 +1678,7 @@ const LIEUX_IDENTITE = {
   },
   "signature": [
    {
-    "nom": "Ancyle des rivières",
+    "nom": "Patelline des fleuves",
     "part": 0.59
    },
    {

@@ -423,7 +423,7 @@ const EXPEDITIONS = [
   "especes": [
    "Écrevisse à pattes blanches",
    "Gammare",
-   "Ancyle des rivières",
+   "Patelline des fleuves",
    "Chabot",
    "Lamproie de Planer"
   ],
@@ -2229,7 +2229,7 @@ const EXPEDITIONS = [
   "photo": "Images/ecrevisse_a_pattes_blanches.jpg",
   "especes": [
    "Écrevisse à pattes blanches",
-   "Ancyle des rivières",
+   "Patelline des fleuves",
    "Grande mulette",
    "Lamproie de Planer",
    "Crossope aquatique"
@@ -2961,7 +2961,7 @@ const EXPEDITIONS = [
    "Écrevisse à pattes blanches",
    "Écrevisse signal",
    "Gammare",
-   "Ancyle des rivières",
+   "Patelline des fleuves",
    "Moule zébrée",
    "Méduse d'eau douce",
    "Sangsue médicinale"
@@ -4987,7 +4987,7 @@ const EXPEDITIONS = [
    "Discoglosse sarde",
    "Rainette sarde",
    "Libellule déprimée",
-   "Ancyle des rivières",
+   "Patelline des fleuves",
    "Blennie fluviatile"
   ],
   "chapitre": "Plateau du Coscione",
@@ -5800,7 +5800,7 @@ const EXPEDITIONS = [
    "Murin de Daubenton",
    "Grenouille agile",
    "Gammare",
-   "Ancyle des rivières"
+   "Patelline des fleuves"
   ],
   "chapitre": "Vallée de la Loue",
   "carrefour": 3,
@@ -7023,7 +7023,7 @@ const EXPEDITIONS = [
   "especes": [
    "Écrevisse à pattes blanches",
    "Gammare",
-   "Ancyle des rivières",
+   "Patelline des fleuves",
    "Lamproie de Planer",
    "Loche franche",
    "Écrevisse américaine",
@@ -8538,7 +8538,7 @@ const EXPEDITIONS = [
    "Mulette perlière",
    "Écrevisse à pattes blanches",
    "Gammare",
-   "Ancyle des rivières",
+   "Patelline des fleuves",
    "Cordulégastre bidenté",
    "Petite nymphe au corps de feu"
   ],
@@ -10042,7 +10042,7 @@ const EXPEDITIONS = [
   "photo": "Images/gammare.jpg",
   "especes": [
    "Gammare",
-   "Ancyle des rivières",
+   "Patelline des fleuves",
    "Anodonte des cygnes",
    "Anguille européenne",
    "Couleuvre vipérine",
@@ -11846,7 +11846,7 @@ const EXPEDITIONS = [
    "Mulette épaisse",
    "Corbicule asiatique",
    "Gammare",
-   "Ancyle des rivières"
+   "Patelline des fleuves"
   ],
   "chapitre": "Monthermé et la vallée de la Meuse",
   "carrefour": 7,
@@ -13022,7 +13022,7 @@ const EXPEDITIONS = [
    "Écrevisse à pattes blanches",
    "Mulette perlière",
    "Gammare",
-   "Ancyle des rivières"
+   "Patelline des fleuves"
   ],
   "chapitre": "Vallée d'Aspe",
   "carrefour": 6,
@@ -13889,7 +13889,7 @@ const EXPEDITIONS = [
    "Écrevisse signal",
    "Écrevisse à pattes blanches",
    "Rat musqué",
-   "Ancyle des rivières"
+   "Patelline des fleuves"
   ],
   "chapitre": "Remiremont et la vallée de la Moselle",
   "carrefour": 2,

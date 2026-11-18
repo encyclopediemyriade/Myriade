@@ -115,9 +115,13 @@ function repondreOreille(choisie, bouton) {
   if (t.choix) return;
   t.choix = choisie;
   const juste = choisie === t.espece;
+  try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}   // R239 (36.04)
   const zone = document.getElementById("vue-oreille");
+  const grille = zone.querySelector(".ore-photos");
+  if (grille) grille.classList.add("repondu", "agrandir-groupe");   // R239 (36.32) : la bonne en grand, les autres dessous ; (16b) toucher = agrandir
   zone.querySelectorAll(".ore-photo").forEach((b, k) => {
-    b.disabled = true;
+    b.setAttribute("aria-disabled", "true");   // (plus « disabled » : la photo doit rester touchable pour l'agrandir)
+    b.classList.add("agr"); b.dataset.legende = t.noms[k].nom_courant;
     b.querySelector(".ore-nom").textContent = t.noms[k].nom_courant;
     if (t.noms[k] === t.espece) b.classList.add("bon");
     else if (b === bouton) b.classList.add("faux");
@@ -136,7 +140,7 @@ function repondreOreille(choisie, bouton) {
   const ligne = (e, cls, titre) => `<div class="ore-ligne ${cls}">${celluleImage(e, true)}<span><small>${titre}</small><b>${echapper(e.nom_courant)}</b>${texteCri(e) ? `<em>${echapper(texteCri(e))}</em>` : ""}</span>
       <button class="ore-mini" data-nom="${echapper(e.nom_courant)}" aria-label="Écouter ${echapper(e.nom_courant)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></div>`;
   const retour = document.getElementById("ore-retour");
-  if (juste) retour.innerHTML = `<p class="cdo-bravo">${echapper(t.espece.nom_courant)}</p>${texteCri(t.espece) ? `<p class="ore-cri">${echapper(texteCri(t.espece))}</p>` : ""}${suivant}`;
+  if (juste) retour.innerHTML = `${texteCri(t.espece) ? `<p class="ore-cri">${echapper(texteCri(t.espece))}</p>` : ""}${suivant}`;   // R239 (36.09) : le nom est déjà sous la photo
   else retour.innerHTML = `<div class="ore-erreur"><small class="dfx-pas">Pas cette fois</small><b class="dfx-cetait">C'était ${echapper(nomAvecArticle(t.espece))}</b>
       <p class="ore-ecoutez">Écoutez les deux, l'un après l'autre :</p>${ligne(t.espece, "ok", "La bonne réponse")}${aUnCri(choisie) ? ligne(choisie, "ko", "Votre choix") : ""}</div>${suivant}`;
   retour.querySelectorAll(".ore-mini").forEach(b => b.onclick = () => ecouter(ESPECES.find(e => e.nom_courant === b.dataset.nom)));

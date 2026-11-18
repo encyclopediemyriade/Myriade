@@ -49,7 +49,11 @@ function texteVousEtes(t) {
   const a = articleTerritoire(t);
   return a === "en" ? "Vous êtes en" : `Vous êtes dans ${a}`;
 }
-function especeParNom(nom) { return ESPECES.find(e => e.nom_courant === nom); }
+let indexEspeces = null;   // R239b (lenteurs) : une recherche directe au lieu de parcourir les 723 espèces
+function especeParNom(nom) {
+  if (!indexEspeces || indexEspeces.size === 0) { indexEspeces = new Map(); for (const e of ESPECES) if (!indexEspeces.has(e.nom_courant)) indexEspeces.set(e.nom_courant, e); }
+  return indexEspeces.get(nom);
+}
 function echapper(txt) { return String(txt || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 
 // Les chiffres : un calculé par le jeu (espèces du territoire, écrit sous le nom depuis l'étape 264),
@@ -527,10 +531,10 @@ function verifierDefis(t) {
   const reussis = d.liste.filter(x => !x.reussi && avanceeDefi(t, x) >= x.but);
   if (reussis.length) {
     reussis.forEach(x => x.reussi = true);
-    noterJourDeDefi();   // étape R218 : la série des jours
+    noterJourDeDefi();   // étape R218 : la série des jours (R248, cas 4A : elle compte à la réussite, pas au toucher)
     suivi.defisReussis = (suivi.defisReussis || 0) + reussis.length;
-    ajouterEmpreinteBonus(t, POINTS_DEFI * reussis.length);
-    if (typeof verifierOuverture === "function") verifierOuverture();
+    // Étape R248 (36.24, choix 24C) : les empreintes du défi attendent qu'on les récupère (un toucher, jamais perdues)
+    reussis.forEach(x => { x.recompense = ajouterRecompense(t, POINTS_DEFI, texteDefi(x), `defi|${t}|${d.jour}|${d.liste.indexOf(x)}`); });
   }
   return reussis;
 }
@@ -552,9 +556,10 @@ function dessinerDefis(t) {
         const fait = avanceeDefi(t, d), ok = d.reussi || fait >= d.but;
         return `<div class="defi${ok ? " ok" : ""}${(d.exp || d.sorte === "inedites") && !ok ? " cliquable" : ""}" data-i="${i}"><span class="defi-case" aria-hidden="true">${ok ? "✓" : ""}</span>
           <span class="defi-texte">${texteDefi(d)}${d.but > 1 && !ok ? `<small>${fait} sur ${d.but}</small>` : ""}</span>
-          <span class="defi-gain">${ok ? "réussi" : "+" + POINTS_DEFI} ${PAS_SVG}</span></div>`;
+          ${recompenseEnAttente(d.recompense) ? boutonRecup(recompenseEnAttente(d.recompense)) : `<span class="defi-gain">${ok ? "réussi" : "+" + POINTS_DEFI} ${PAS_SVG}</span>`}</div>`;
       }).join("")}</div>` : `<p class="jeu-sous">Tout est déjà découvert ici : bravo !</p>`}
     </div>`;   // étape R188 (11/11, note n° 18 d'Aubin) : « Comment gagner des empreintes ? » n'alourdit plus la page ; il est dans À propos (texteReglesEmpreintes)
+  brancherRecup(zone, () => dessinerDefis(t));   // R248
   zone.querySelectorAll(".defi.cliquable").forEach(b => b.onclick = () => {
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167 (avant, R129 : la Rencontre d'une seule espèce)
@@ -565,7 +570,7 @@ function blocDefisFin() {
   const t = territoireActif();
   if (!suivi || !t) return "";
   const reussis = verifierDefis(t);
-  if (reussis.length) setTimeout(() => afficherBulle(`✓ Défi du jour réussi${reussis.length > 1 ? ` (${reussis.length})` : ""} · +${POINTS_DEFI * reussis.length} empreinte${POINTS_DEFI * reussis.length > 1 ? "s" : ""}`), 900);
+  if (reussis.length) setTimeout(() => afficherBulle(`✓ Défi du jour réussi${reussis.length > 1 ? ` (${reussis.length})` : ""} · +${POINTS_DEFI * reussis.length} à récupérer sur l'accueil`), 900);   // R248
   const liste = suivi.defis && suivi.defis[t] ? suivi.defis[t].liste : [];
   if (!liste.length) return "";
   const lignes = liste.map(d => {
@@ -573,7 +578,7 @@ function blocDefisFin() {
     return `<span class="obj-fin${ok ? " atteint" : ""}">${ok ? "✓ " : ""}${texteDefi(d)}${ok ? "" : ` · ${fait} / ${d.but}`}</span>`;
   });
   return `<div class="objectifs-fin"><div class="quoi">Défis du jour</div><div class="liste-objectifs-fin">${lignes.join("")}</div>`
-    + (reussis.length ? `<small>+${POINTS_DEFI * reussis.length} empreinte${POINTS_DEFI * reussis.length > 1 ? "s" : ""}.</small>` : "") + `</div>`;
+    + (reussis.length ? `<small>+${POINTS_DEFI * reussis.length} empreinte${POINTS_DEFI * reussis.length > 1 ? "s" : ""} à récupérer sur l'accueil.</small>` : "") + `</div>`;
 }
 
 // =====================================================================================================
@@ -703,11 +708,13 @@ function majTerrMobile(t) {
     const finaleIci = !estSite && finaleAJouer(t, c);   // étape R149
     const tag = estSite ? "Le site remarquable" : finaleIci ? "Finale à jouer" : etat === "cours" ? `En cours · ${finies} sur ${liste.length}` : etat === "fini" ? "Terminé" : etat === "ouvert" ? "À découvrir" : pro ? "Le prochain lieu" : "Plus tard";   // R149 : plus « Ouvert » à côté du bouton
     const suite = !estSite && etat === "cours" && x && x.chapitre === c.nom ? `<span class="tm-suite">À suivre : ${echapper(x.titre)}</span>` : "";
+    // Étape R247 (36.14, 14A) : la photo et le texte ouvrent la page du lieu ; le bouton reprend ce qui est à suivre (suiteDuLieu, 17)
+    const sl = ouvert ? suiteDuLieu(t, c) : null;
     const pied = ouvert
-      ? `<button type="button" class="tm-aller">${estSite ? "Réviser le territoire" : finaleIci ? "Jouer la finale" : etat === "cours" ? "Continuer" : etat === "fini" ? "Revoir le lieu" : "Entrer dans le lieu"} ▶</button>`
+      ? `<button type="button" class="tm-aller">${sl ? sl.texte : "Entrer dans le lieu"} ▶</button>`
       : `<div class="tm-ferme"><span class="tm-cadenas" aria-hidden="true"></span>${estSite ? "S'ouvre quand tous les lieux sont terminés" : pro ? `S'ouvre : ${minuscule(texteManqueLieu(t, c))}` : bulleLieuFerme(t, c, "Ce lieu")}</div>`;
     return `<div class="tm-lieu sel ${etat}${pro ? " prochain" : ""}${estSite ? " site" : ""}" data-lieu="${echapper(c.nom)}">
-        <div class="tm-photo">${imgMini(c.photo, "")}<span class="tm-tag">${tag}</span>
+        <div class="tm-photo${ouvert ? " touchable" : ""}"${ouvert ? ` role="button" tabindex="0" aria-label="Ouvrir la page : ${echapper(c.nom)}"` : ""}>${imgMini(c.photo, "")}<span class="tm-tag">${tag}</span>${ouvert ? `<span class="tm-ouvrir" aria-hidden="true">›</span>` : ""}
           <div class="tm-photo-txt"><b>${echapper(c.nom)}</b><small>${echapper(c.pays || "")}${n ? `${c.pays ? " · " : ""}${n} espèces · ${liste.length} expéditions` : ""}</small>${suite}</div></div>
         ${pied}</div>`;
   };
@@ -717,12 +724,17 @@ function majTerrMobile(t) {
   zone.querySelectorAll(".tm-carte .cl-lieu").forEach(g => g.classList.toggle("sel", g.dataset.lieu === sel));
   zone.querySelectorAll(".tm-liste button.tm-lieu").forEach(b => b.onclick = () => selectionnerLieuTerr(t, b.dataset.lieu, false));
   const aller = zone.querySelector(".tm-aller");
-  if (aller) aller.onclick = () => {
-    if (site && sel === site.nom) { ouvrirSite(t); return; }
-    const cs = chapitreParNom(t, sel);
-    if (cs && finaleAJouer(t, cs) && finaleOuverte(t, cs)) { lancerFinale(t, sel); return; }   // étape R149 : le bouton dit « Jouer la finale »
-    ouvrirLieu(t, sel);
+  const cSel = site && sel === site.nom ? site : chapitreParNom(t, sel);
+  if (aller) aller.onclick = () => {   // R247 (36.14) : reprend
+    const sl = suiteDuLieu(t, cSel);
+    if (sl) sl.action(); else if (site && cSel === site) ouvrirSite(t); else ouvrirLieu(t, sel);
   };
+  const ph = zone.querySelector("div.tm-lieu.sel .tm-photo.touchable");   // R247 (36.14) : photo et texte → la page du lieu
+  if (ph) {
+    const ouvrirIci = () => { if (site && cSel === site) ouvrirSite(t); else ouvrirLieu(t, sel); };
+    ph.onclick = ouvrirIci;
+    ph.onkeydown = ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ouvrirIci(); } };
+  }
 }
 // Quand on descend : la bannière se réduit et reste en haut ; la place gagnée est rendue au-dessus (pas de saut)
 function majBanniereTerr() {
@@ -776,60 +788,64 @@ function pastilleNiveau(k, texte, id, couleur) {
 // ouvre une vraie page d'accueil : Bonjour + prénom et date ; le carnet (espèces, rang, dernières découvertes) ;
 // « Reprendre le lieu » ; les défis du jour ; l'espèce du jour ; liens vers le territoire et la carte de France.
 // =====================================================================================================
+// Étape R248 (17/11, 36.23, choix 23B ; cas non prévus 1A à 5A) : l'Accueil plus vivant, dans l'ordre :
+//   « Bonjour », l'espèce du jour EN GRAND (photo, une ligne, « La découvrir », « Écouter »), les défis du jour (repliés en
+//   une ligne quand tout est fait et récupéré), « Reprendre » = un simple bandeau avec la photo du lieu (plus de carte de
+//   France ; le bandeau ouvre la page du lieu, ▶ reprend), puis « En ce moment près de chez vous » (2 ou 3 espèces du
+//   territoire actives en cette saison : les fiches n'ont que des saisons, pas de mois). Remplace la maquette R218 (n° 17, E).
 function dessinerMaison() {
   const zone = document.getElementById("vue-maison");
   if (!zone) return;
   const t = territoireActif();
   const p = typeof prenomJoueur === "function" ? prenomJoueur() : "";
   const date = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
-  // Étape M23 (07/11, idée d'Aubin : « reprendre le territoire plutôt que le lieu, on passe trop rarement sur la page du territoire ») :
-  //   la carte mène à la page du territoire (rang, lieux, récompenses) ; le lieu en cours y est rappelé en petit.
-  const x = typeof expeditionAReprendre === "function" ? expeditionAReprendre(t) : null;
-  const lieu = (typeof lieuDernierJoue === "function" && lieuDernierJoue(t)) || (x && x.chapitre ? chapitreParNom(t, x.chapitre) : null);
-  const couleurT = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
-  let ligneLieu = "", commence = false;
-  if (lieu) {
-    const liste = expeditionsDuChapitre(t, lieu.nom), finies = liste.filter(y => empreintesExp(y) >= NB_ETAPES).length;
-    commence = liste.some(y => expeditionCommencee(y));
-    // Étape R149 : la finale qui attend, et le lieu suivant quand un lieu est terminé
-    const unFini = lieuxDe(t).some(c => etatLieu(t, c) === "fini");
-    ligneLieu = finaleAJouer(t, lieu) ? `${echapper(lieu.nom)} · la finale vous attend`
-      : commence ? `Lieu en cours : ${echapper(lieu.nom)} · ${finies} expédition${finies > 1 ? "s" : ""} sur ${liste.length}`
-      : `${unFini ? "Nouveau lieu" : "Premier lieu"} : ${echapper(lieu.nom)}`;
-    commence = commence || unFini;
-  }
-  // Étape R183b (10/11, choix d'Aubin : maquette E « la carte et la photo côte à côte », sur fond vert ; la carte de France reste
-  //   pour que le joueur se situe) : à gauche la France (le territoire à sa couleur, un point au lieu en cours), à droite la photo du lieu.
-  const photoLieu = lieu && estRenseigne(lieu.photo) ? lieu.photo : "";
-  const finiesL = lieu ? expeditionsDuChapitre(t, lieu.nom).filter(y => empreintesExp(y) >= NB_ETAPES).length : 0;
-  const totalL = lieu ? expeditionsDuChapitre(t, lieu.nom).length : 0;
-  const reprendre = `<button type="button" class="mai-reprendre mai-rep-e" id="mai-reprendre" style="--couleur-territoire:${couleurT}">
-        <span class="mai-e-haut"><span class="mai-e-carte">${miniCarteLieu(t, lieu)}</span>
-          <span class="mai-e-photo">${photoLieu ? `<img src="${photoMini(photoLieu)}" alt="" onerror="this.onerror=null;this.src='${photoLieu}'">` : ""}</span></span>
-        <span class="mai-e-bas"><span class="mai-e-texte"><small>${commence ? "Reprendre" : "Votre territoire"} · ${echapper(t)}</small>
-          <b>${lieu ? echapper(lieu.nom) : echapper(t)}</b>${lieu ? `<em>${finaleAJouer(t, lieu) ? "La finale vous attend" : finiesL || expeditionsDuChapitre(t, lieu.nom).some(y => expeditionCommencee(y)) ? `${finiesL} expédition${finiesL > 1 ? "s" : ""} sur ${totalL}` : lieuxDe(t).some(c => etatLieu(t, c) === "fini") ? "Nouveau lieu" : "Premier lieu"}</em>` : ""}
-          ${lieu && totalL ? `<i class="mai-e-jauge"><b style="width:${Math.round(100 * finiesL / totalL)}%"></b></i>` : ""}</span>
-          <span class="mai-r-go" aria-hidden="true">▶</span></span></button>`;
-  // Étape R183b (choix d'Aubin) : plus de carnet sur l'accueil (il est dans le Profil et l'Encyclopédie) ; l'espèce du jour
-  //   et les défis du jour remontent juste sous la carte, pour ancrer le jeu dans le quotidien.
-  // Étape R189 (note n° 8 d'Aubin) : l'espèce du jour déjà rencontrée passe sous les défis du jour, qui remontent
-  // Étape R218 (n° 17, choix E d'Aubin du 13/11) : entre « Bonjour » et « Reprendre », deux tuiles compactes : l'espèce du jour
-  //   (une vraie photo, en une ligne) puis les défis du jour (avec la série de jours) ; « Reprendre » reste visible sans défiler.
   zone.innerHTML = `<div class="mai-page">
       <div class="mai-bonjour"><h1>Bonjour${p ? ` ${echapper(p)}` : ""}</h1><p>${date.charAt(0).toUpperCase() + date.slice(1)}</p></div>
-      <button type="button" class="mai-tuile-jour" id="mai-jour"></button>
+      <section class="mai-jour-grand" id="mai-jour"></section>
       <section class="mai-defis" id="mai-defis"></section>
-      ${reprendre}
+      ${bandeauReprendre(t)}
+      <section class="mai-moment" id="mai-moment"></section>
       </div>`;   // étape R192 (n° 11.7, choix d'Aubin) : plus de lien « Tous les territoires » ici — la carte a son onglet
-  zone.querySelectorAll(".mai-rond").forEach(b => b.onclick = () => { const e = especeParNom(b.dataset.nom); if (e) ouvrirPageEspece(e); });
-  document.getElementById("mai-reprendre").onclick = () => { montrer("accueil"); if (typeof dessinerCouverture === "function") dessinerCouverture(); window.scrollTo(0, 0); };   // étape M23 : vers la page du territoire
+  brancherBandeauReprendre(t);
   dessinerDefisMaison(t);
-  dessinerTuileJour();   // étape R218
+  dessinerTuileJour();
+  dessinerEnCeMomentMaison(t);
   if (avantProchainTerritoire() === 0) setTimeout(verifierOuverture, 300);   // étape R152 : palier atteint (par ex. règle du premier voyage) → le territoire s'ouvre, avec sa fête
 }
-// Étape R218 (n° 17, choix E) : la tuile de l'espèce du jour, en une ligne : une vraie photo, « Espèce du jour », le nom
-//   (caché tant qu'elle n'est pas rencontrée) et le gain ; un toucher la fait rencontrer (ou ouvre sa fiche une fois rencontrée).
-//   C'est un bonus : elle ne compte pas dans la série des défis.
+// « Reprendre » (cas 5A) : le bandeau ouvre la page du lieu ; le bouton ▶ reprend ce qui est à suivre (même règle 8A, suiteDuLieu)
+function lieuAReprendre(t) {
+  const x = typeof expeditionAReprendre === "function" ? expeditionAReprendre(t) : null;
+  return (typeof lieuDernierJoue === "function" && lieuDernierJoue(t)) || (x && x.chapitre ? chapitreParNom(t, x.chapitre) : null);
+}
+function bandeauReprendre(t) {
+  const lieu = lieuAReprendre(t), couleurT = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
+  const photo = lieu && estRenseigne(lieu.photo) ? lieu.photo : "";
+  const liste = lieu ? expeditionsDuChapitre(t, lieu.nom) : [], finies = liste.filter(y => empreintesExp(y) >= NB_ETAPES).length;
+  const commence = lieu && (liste.some(y => expeditionCommencee(y)) || lieuxDe(t).some(c => etatLieu(t, c) === "fini"));
+  const etat = !lieu ? "" : finaleAJouer(t, lieu) ? "La finale vous attend" : liste.some(y => expeditionCommencee(y)) || finies
+    ? `${finies} expédition${finies > 1 ? "s" : ""} terminée${finies > 1 ? "s" : ""} sur ${liste.length}` : lieuxDe(t).some(c => etatLieu(t, c) === "fini") ? "Nouveau lieu" : "Premier lieu";
+  const sl = lieu ? suiteDuLieu(t, lieu) : null;
+  return `<div class="mai-bandeau" style="--couleur-territoire:${couleurT}">
+      <button type="button" class="mb-lieu" id="mai-reprendre">
+        ${photo ? `<img src="${photoMini(photo)}" alt="" onerror="this.onerror=null;this.src='${photo}'">` : ""}
+        <span class="mb-texte"><small>${commence ? "Reprendre" : "Votre territoire"} · ${echapper(t)}</small><b>${lieu ? echapper(lieu.nom) : echapper(t)}</b>${etat ? `<em>${etat}</em>` : ""}</span></button>
+      <button type="button" class="mb-go" id="mai-reprendre-go" aria-label="${echapper(sl ? `${sl.texte}${sl.quoi ? " : " + sl.quoi : ""}` : "Ouvrir")}"><span aria-hidden="true">▶</span></button></div>`;
+}
+function brancherBandeauReprendre(t) {
+  const lieu = lieuAReprendre(t);
+  const versTerritoire = () => { montrer("accueil"); if (typeof dessinerCouverture === "function") dessinerCouverture(); window.scrollTo(0, 0); };   // étape M23
+  document.getElementById("mai-reprendre").onclick = () => { if (lieu) ouvrirLieu(t, lieu.nom); else versTerritoire(); };
+  document.getElementById("mai-reprendre-go").onclick = () => { const sl = lieu ? suiteDuLieu(t, lieu) : null; if (sl) sl.action(); else if (lieu) ouvrirLieu(t, lieu.nom); else versTerritoire(); };
+}
+// L'espèce du jour en grand (23B ; cas 2A : avant sa Rencontre, une ligne sans fait — où la chercher ; après, le fait gagné)
+function faitGagneDe(e) {
+  const d = typeof donneesInsolites === "function" ? donneesInsolites() : null;
+  const f = d ? d.faits.find(x => x.espece === e.nom_courant && x.fait && insoliteTrouve(x.id)) : null;
+  if (f) return f.fait;
+  const a = typeof anecdotesGagnees === "function" ? anecdotesGagnees(e)[0] : null;
+  return a ? a.texte : "";
+}
+let sonDuJour = null;
 function dessinerTuileJour() {
   const zone = document.getElementById("mai-jour");
   if (!zone) return;
@@ -838,42 +854,228 @@ function dessinerTuileJour() {
   const connue = estReconnue(e), faite = especeDuJourFaite(e);
   const duJour = connue && typeof photoDuJourDe === "function" ? photoDuJourDe(e) : null;
   const src = duJour && duJour.src ? duJour.src : e.photo;
-  const image = estRenseigne(src) ? `<img src="${photoMini(src)}" alt="" onerror="this.onerror=null;this.src='${src}'">` : "";
-  zone.className = "mai-tuile-jour" + (faite ? " faite" : "");
-  zone.setAttribute("aria-label", faite ? `Espèce du jour : ${e.nom_courant}, rencontrée. Voir sa fiche` : connue ? `Espèce du jour : ${e.nom_courant}. La retrouver en Rencontre` : "Espèce du jour : une espèce à découvrir. La rencontrer");
-  zone.innerHTML = `<span class="mai-tj-photo">${image}</span>
-      <span class="mai-tj-texte"><small>Espèce du jour</small>
-        <b>${connue ? echapper(e.nom_courant) : "Une espèce à découvrir"}${faite ? ` <span class="mai-tj-coche" aria-hidden="true">✓</span>` : ""}</b>
-        ${faite ? "" : `<span class="mai-tj-gain">+${GAIN_ESPECE_DU_JOUR} ${PAS_SVG}</span>`}</span>
-      <span class="mai-r-go" aria-hidden="true">▶</span>`;
-  zone.onclick = () => {
-    if (faite && connue) { ouvrirPageEspece(e); return; }
-    lancerRencontreAvec(e); rencontreDuJour = e.nom_courant;
+  const fait = faite && connue ? faitGagneDe(e) : "";
+  const ou = MOTS_TERRAIN[e.milieu_principal] || (estRenseigne(e.milieu_principal) ? e.milieu_principal : "");
+  const ligne = fait ? `<span class="mj-sv">Le saviez-vous ?</span> ${echapper(fait)}` : ou ? `<span class="mj-ou">Où la chercher</span> ${echapper(minuscule(ou))}` : "";
+  const recup = recompenseEnAttente(`jour|${aujourdhui()}`);
+  const cri = typeof aUnCri === "function" && aUnCri(e);
+  zone.className = "mai-jour-grand" + (faite ? " faite" : "");
+  zone.innerHTML = `<button type="button" class="mj-photo" id="mj-photo" aria-label="${faite && connue ? `Voir la fiche : ${echapper(e.nom_courant)}` : "Rencontrer l'espèce du jour"}">
+        ${estRenseigne(src) ? `<img src="${src}" alt="">` : ""}<span class="mj-etiq">Espèce du jour</span></button>
+      <div class="mj-corps">
+        <h2>${connue ? echapper(e.nom_courant) : "Une espèce à découvrir"}${faite ? ` <span class="mai-tj-coche" aria-label="Rencontrée aujourd'hui">✓</span>` : ""}</h2>
+        ${ligne ? `<p class="mj-ligne">${ligne}</p>` : ""}
+        <div class="mj-boutons">
+          <button type="button" class="couv-go petit mj-go" id="mj-go">${faite && connue ? "Sa fiche" : connue ? "La retrouver" : "La découvrir"} <span aria-hidden="true">▶</span></button>
+          ${cri ? `<button type="button" class="mj-ecouter" id="mj-ecouter"><span aria-hidden="true">♪</span> Écouter</button>` : ""}
+          ${recup ? boutonRecup(recup) : !faite ? `<span class="mai-tj-gain">+${GAIN_ESPECE_DU_JOUR} ${PAS_SVG}</span>` : ""}
+        </div></div>`;
+  const aller = () => { if (faite && connue) { ouvrirPageEspece(e); return; } lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };
+  document.getElementById("mj-go").onclick = aller;
+  document.getElementById("mj-photo").onclick = aller;
+  const ec = document.getElementById("mj-ecouter");
+  if (ec) ec.onclick = () => {
+    if (sonDuJour && !sonDuJour.paused) { sonDuJour.pause(); ec.classList.remove("en-lecture"); return; }
+    sonDuJour = new Audio(fichierSon(e)); ec.classList.add("en-lecture");
+    sonDuJour.onended = () => ec.classList.remove("en-lecture");
+    sonDuJour.play().catch(() => { ec.classList.remove("en-lecture"); afficherBulle("Son introuvable"); });
   };
+  brancherRecup(zone, dessinerTuileJour);
 }
 // Les défis du jour du territoire, en liste courte (mêmes défis que la page du territoire)
+// R248 : un bouton « +2 » par défi réussi pas encore récupéré, « Tout récupérer » dès 2 récompenses ; une récompense
+//   d'un jour passé reste en tête (« D'hier ») ; tout fait et tout récupéré → une seule ligne, qui se déplie.
+let defisDeplies = false;
 function dessinerDefisMaison(t) {
   const zone = document.getElementById("mai-defis");
   if (!zone) return;
   verifierDefis(t);
   const liste = (suivi && suivi.defis && suivi.defis[t]) ? suivi.defis[t].liste : [];
-  if (!liste.length) { zone.classList.add("cache"); return; }
-  // Étape R218 (choix E) : à droite du titre, la série « N jours d'affilée » et la plume (jour de grâce) ; un défi réussi est
-  //   coché, pas barré ; le compteur (« 2/5 ») seulement sur le défi en cours (le premier pas encore réussi).
+  const ids = new Set(liste.map(d => d.recompense).filter(Boolean));
+  const anciennes = recompensesEnAttente().filter(r => !ids.has(r.id) && !r.id.startsWith(`jour|${aujourdhui()}`));
+  if (!liste.length && !anciennes.length) { zone.classList.add("cache"); return; }
+  zone.classList.remove("cache");
   const serie = serieDefis();
   const plume = `<span class="mai-plume${serie.plume ? "" : " vide"}" role="img" aria-label="${serie.plume ? "Jour de grâce disponible" : "Jour de grâce déjà utilisé"}" title="${serie.plume ? "Jour de grâce disponible : un jour sans défi ne casse pas la série" : `Jour de grâce utilisé : il revient après ${JOURS_POUR_PLUME} jours`}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4c-8 0-13 5-13 12v4"/><path d="M7 16c5 0 10-3 11-9"/><path d="M4 20h6"/></svg></span>`;
   const droite = serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée${plume}</small>`
                               : `<small>+${POINTS_DEFI} ${PAS_SVG} chacun</small>`;
+  const tousOk = liste.length && liste.every(d => d.reussi || avanceeDefi(t, d) >= d.but);
+  const enAttente = recompensesEnAttente();
+  if (tousOk && !enAttente.length && !defisDeplies) {
+    zone.innerHTML = `<button type="button" class="mai-defis-plie" id="mai-defis-plie"><span class="mai-d-case" aria-hidden="true">✓</span>
+        <span class="mai-d-texte">${liste.length} défi${liste.length > 1 ? "s" : ""} réussi${liste.length > 1 ? "s" : ""} aujourd'hui</span>${serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée</small>` : ""}<span class="mai-d-fleche" aria-hidden="true">⌄</span></button>`;
+    document.getElementById("mai-defis-plie").onclick = () => { defisDeplies = true; dessinerDefisMaison(t); };
+    return;
+  }
   const enCours = liste.findIndex(d => !(d.reussi || avanceeDefi(t, d) >= d.but));
   zone.innerHTML = `<div class="mai-d-haut"><span>Défis du jour</span>${droite}</div>`
+    + anciennes.map(r => `<div class="mai-defi ok ancienne"><span class="mai-d-case" aria-hidden="true">✓</span>
+        <span class="mai-d-texte"><small class="mai-d-hier">${r.jour === hierDefis() ? "D'hier" : "En attente"}</small>${echapper(r.quoi)}</span>${boutonRecup(r)}</div>`).join("")
     + liste.map((d, i) => {
       const fait = avanceeDefi(t, d), ok = d.reussi || fait >= d.but, clic = (d.exp || d.sorte === "inedites") && !ok;
+      const r = recompenseEnAttente(d.recompense);
       return `<${clic ? "button type=\"button\"" : "div"} class="mai-defi${ok ? " ok" : ""}" data-i="${i}"><span class="mai-d-case" aria-hidden="true">${ok ? "✓" : ""}</span>
-        <span class="mai-d-texte">${texteDefi(d)}</span>${i === enCours && d.but > 1 ? `<small>${fait}/${d.but}</small>` : ""}</${clic ? "button" : "div"}>`;
-    }).join("");
-  zone.querySelectorAll("button.mai-defi").forEach(b => b.onclick = () => {
+        <span class="mai-d-texte">${texteDefi(d)}</span>${r ? boutonRecup(r) : i === enCours && d.but > 1 ? `<small>${fait}/${d.but}</small>` : ""}</${clic ? "button" : "div"}>`;
+    }).join("")
+    + (enAttente.length >= 2 ? `<button type="button" class="recup-tout" id="recup-tout">Tout récupérer · +${enAttente.reduce((n, r) => n + r.n, 0)} ${PAS_SVG}</button>` : "")
+    + (tousOk && !enAttente.length ? `<button type="button" class="mai-d-replier" id="mai-d-replier">Replier</button>` : "");
+  zone.querySelectorAll("button.mai-defi").forEach(b => b.onclick = ev => {
+    if (ev.target.closest(".recup")) return;
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167
     const x = expeditionParId(d.exp); if (x) ouvrirExpedition(x);
+  });
+  const rep = document.getElementById("mai-d-replier");
+  if (rep) rep.onclick = () => { defisDeplies = false; dessinerDefisMaison(t); };
+  brancherRecup(zone, () => { dessinerDefisMaison(t); dessinerTuileJour(); });
+  const tout = document.getElementById("recup-tout");
+  if (tout) tout.onclick = () => recupererTout(tout, () => { dessinerDefisMaison(t); dessinerTuileJour(); });
+}
+function hierDefis() { const d = new Date(Date.now() - 30 * 3600 * 1000); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; }
+
+// =====================================================================================================
+// Étape R248 (17/11, 36.24, choix 24C ; cas 4A) : les récompenses à récupérer d'un toucher (défis du jour, espèce du jour).
+//   Une récompense gagnée attend dans suivi.aRecuperer ({ id, t, n, quoi, jour }) : elle n'est JAMAIS perdue (un jour passé
+//   reste en tête des défis). Un toucher sur « +N » : les empreintes s'envolent vers le compteur du haut (court), un petit
+//   son « bois » (s'il est permis), puis ce qu'elles font franchir (médaille d'un lieu, rang, territoire, badge) est fêté à
+//   CE moment. Coupé si le téléphone demande moins d'animations. Les anciennes sauvegardes n'ont rien en attente.
+// =====================================================================================================
+function recompensesEnAttente() { return (suivi && Array.isArray(suivi.aRecuperer)) ? suivi.aRecuperer : []; }
+function recompenseEnAttente(id) { return id ? recompensesEnAttente().find(r => r.id === id) || null : null; }
+function ajouterRecompense(t, n, quoi, id) {
+  if (!suivi || !t || !n) return null;
+  suivi.aRecuperer = recompensesEnAttente();
+  if (!suivi.aRecuperer.some(r => r.id === id)) suivi.aRecuperer.push({ id, t, n, quoi: String(quoi || "").replace(/<[^>]+>/g, ""), jour: jourDefis() });
+  sauvegarder();
+  return id;
+}
+function boutonRecup(r) {
+  return `<button type="button" class="recup" data-recup="${echapper(r.id)}" aria-label="Récupérer ${r.n} empreinte${r.n > 1 ? "s" : ""}">+${r.n} ${PAS_SVG}</button>`;
+}
+function brancherRecup(zone, apres) {
+  zone.querySelectorAll("button.recup[data-recup]").forEach(b => b.onclick = ev => { ev.stopPropagation(); recupererRecompenses([b.dataset.recup], b, apres); });
+}
+function recupererTout(depuis, apres) { recupererRecompenses(recompensesEnAttente().map(r => r.id), depuis, apres); }
+function recupererRecompenses(ids, depuis, apres) {
+  const lot = recompensesEnAttente().filter(r => ids.includes(r.id));
+  if (!lot.length) return;
+  const rangsAvant = {};
+  for (const r of lot) if (!(r.t in rangsAvant)) rangsAvant[r.t] = rangTerritoire(r.t).i;
+  suivi.aRecuperer = recompensesEnAttente().filter(r => !ids.includes(r.id));
+  for (const r of lot) ajouterEmpreinteBonus(r.t, r.n);   // (sauvegarde comprise)
+  const total = lot.reduce((n, r) => n + r.n, 0);
+  envolEmpreintes(depuis, total);
+  if (typeof jouerSon === "function") jouerSon("bonne");   // le son « bois » (R245), coupé par « Petits sons : non »
+  if (typeof afficherStats === "function") afficherStats();
+  if (typeof apres === "function") apres();
+  // ce que ces empreintes font franchir, fêté maintenant
+  setTimeout(() => {
+    for (const t of Object.keys(rangsAvant)) verifierMonteeRang(t, rangTerritoire(t));
+    if (typeof verifierOuverture === "function") verifierOuverture();
+    if (typeof verifierBadgesBientot === "function") verifierBadgesBientot();
+  }, 550);
+}
+// L'envol : « +N » part du bouton et file vers le compteur d'empreintes du haut (un instant, 0,5 s)
+function envolEmpreintes(depuis, n) {
+  if (!depuis || !depuis.getBoundingClientRect) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cible = document.querySelector("#stats .ph-pas") || document.getElementById("stats");
+  const a = depuis.getBoundingClientRect(), b = cible ? cible.getBoundingClientRect() : { left: window.innerWidth - 60, top: 10, width: 40, height: 20 };
+  const el = document.createElement("span");
+  el.className = "envol-pas"; el.innerHTML = `+${n} ${PAS_SVG}`;
+  el.style.left = `${a.left + a.width / 2}px`; el.style.top = `${a.top + a.height / 2}px`;
+  document.body.appendChild(el);
+  const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
+  requestAnimationFrame(() => { el.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(.7)`; el.style.opacity = "0.2"; });
+  setTimeout(() => { el.remove(); const c = document.querySelector("#stats .ph-pas"); if (c) { c.classList.remove("recu"); void c.offsetWidth; c.classList.add("recu"); } }, 560);
+}
+
+// =====================================================================================================
+// Étape R248 (36.23, 23B ; cas 1A, 3A) : « En ce moment près de chez vous » — 2 ou 3 espèces du territoire de « Reprendre »,
+//   avec une ligne VRAIE pour la saison réelle, tirée des colonnes de saison des fiches (saison_reproduction et son nom —
+//   rut, brame, parade, frai —, hiver, saison_observation). Pas de mois : les fiches n'en ont pas (un lot « moment fort »
+//   pourra venir plus tard). D'abord les espèces déjà découvertes ; s'il en manque, celles du lieu en cours, nommées
+//   (exception K3, comme les emblèmes). Un toucher : la fiche (découverte) ou « Vous la rencontrerez … ».
+// =====================================================================================================
+const SAISONS_OBS = { "Toute l'année": ["printemps", "été", "automne", "hiver"], "Du printemps à l'automne": ["printemps", "été", "automne"],
+  "En été": ["été"], "Au printemps": ["printemps"], "De l'automne au printemps": ["automne", "hiver", "printemps"], "De l'été à l'automne": ["été", "automne"] };
+// Étape R248c (lot « moment fort ») : le mois où l'espèce fait quelque chose de remarquable (Données\moments_saison.xlsx →
+//   moments.js) passe avant tout : « En novembre, il chante tout l'hiver pour garder son territoire. »
+// R248f (17/11, validé par Aubin) : aucune erreur, aucune ambiguïté — pas de mot de saison quand la période en traverse deux,
+//   le bon sujet (« le mâle chante », « les femelles pondent »), rien que les deux sources ne disent pas, pas de mot savant.
+const PHRASES_MOMENT = {
+  chant: () => "c'est la saison où le mâle chante.",
+  chant_hiver: p => `${p.elle} continue de chanter pour garder son territoire.`,
+  nidification: p => `c'est la saison où ${p.elle} niche.`,
+  nid: p => `${p.elle} construit son nid.`,
+  parade: () => "les mâles paradent pour attirer une femelle.",
+  arrivee: p => `${p.elle} revient de migration.`,
+  depart: p => `${p.elle} part vers le sud pour l'hiver.`,
+  ponte: () => "c'est la saison de la ponte.",
+  frai: () => "c'est sa saison de reproduction : les femelles pondent leurs œufs.",
+  reproduction: () => "c'est sa saison de reproduction.",
+  hiver_ralenti: (p, m) => m >= 9 && m <= 11 ? `${p.elle} se met à l'abri pour l'hiver et vit au ralenti.` : `${p.elle} reste le plus souvent à l'abri, au ralenti.`,
+  reines: () => "les reines volent et cherchent où installer leur nid.",
+  jeunes_reines: () => "les jeunes reines et les mâles apparaissent.",
+  chenilles: () => "ses chenilles sortent de leur abri d'hiver et se remettent à manger.",
+  naissances: () => "c'est la saison où naissent les petits.",
+  accouplement: () => "c'est la saison des accouplements.",
+  vol: p => `${p.elle} vole : c'est la saison pour l'observer.` };
+const NOMS_MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+function momentDuMois(e, mois = new Date().getMonth() + 1) {
+  const l = typeof MOMENTS_SAISON !== "undefined" ? MOMENTS_SAISON[e.nom_courant] : null;
+  if (!l) return null;
+  const dans = ([, de, a]) => de <= a ? mois >= de && mois <= a : mois >= de || mois <= a;
+  const ici = l.filter(dans).sort((x, y) => ((x[2] - x[1] + 12) % 12) - ((y[2] - y[1] + 12) % 12))[0];   // la période la plus courte d'abord
+  if (!ici || !PHRASES_MOMENT[ici[0]]) return null;
+  return { force: 4, texte: `En ${NOMS_MOIS[mois - 1]}, ${PHRASES_MOMENT[ici[0]](pe(e), mois)}` };
+}
+function ligneEnCeMoment(e, s) {
+  const fort = momentDuMois(e);
+  if (fort) return fort;
+  const obs = SAISONS_OBS[e.saison_observation];
+  if (obs && !obs.includes(s)) return null;                                   // pas visible en cette saison
+  if (s === "hiver" && /^(part|s'endort)/.test(String(e.hiver || ""))) return null;
+  const repro = String(e.saison_reproduction || "").toLowerCase();
+  if (repro && repro !== "na" && repro !== "toute l'année" && repro.split(/ et |, /).includes(s)) {
+    const nom = String(e.periode_reproduction_nom || "");
+    return { force: 3, texte: /^rut/i.test(nom) ? "C'est le moment du rut." : /^brame/i.test(nom) ? "C'est le moment du brame."
+      : /^parade/i.test(nom) ? "C'est la saison de ses parades." : /^frai/i.test(nom) ? "C'est la saison du frai." : /^essaimage/i.test(nom) ? "C'est la saison de l'essaimage."
+      : "C'est sa saison de reproduction." };
+  }
+  if (s === "automne" && /^part/.test(String(e.hiver || "")) && obs) return { force: 2, texte: "Part bientôt passer l'hiver ailleurs." };
+  if (s === "automne" && /^s'endort/.test(String(e.hiver || ""))) return { force: 2, texte: "Se prépare à passer l'hiver au ralenti." };
+  if ((s === "automne" || s === "hiver") && e.saison_observation === "De l'automne au printemps") return { force: 2, texte: "Visible chez nous de l'automne au printemps." };
+  if (s === "hiver" && /^reste actif/.test(String(e.hiver || ""))) return { force: 2, texte: "Reste visible tout l'hiver." };
+  if (e.saison_observation === "Toute l'année") return { force: 1, texte: "Visible en toute saison." };
+  if (obs) return { force: 1, texte: `Visible ${s === "été" ? "cet été" : s === "hiver" ? "cet hiver" : `cet ${s}`}.` };
+  return null;
+}
+function especesEnCeMoment(t) {
+  const s = saisonActuelle(), graine = graineDuJour() + 11;
+  const prendre = liste => melangerFixe(liste.filter(e => estRenseigne(e.photo)).map(e => ({ e, l: ligneEnCeMoment(e, s) })).filter(x => x.l && x.l.force >= 2), graine)   // « Visible en toute saison » ne dit rien du moment : jamais seule
+    .sort((a, b) => b.l.force - a.l.force);
+  const choisis = prendre(especesDe(t).filter(estReconnue)).slice(0, 3);
+  if (choisis.length < 2) {
+    const lieu = lieuAReprendre(t);
+    const ici = lieu ? [...new Set(expeditionsDuChapitre(t, lieu.nom).flatMap(x => x.liste))] : [];
+    for (const x of prendre(ici)) { if (choisis.length >= 3) break; if (!choisis.some(c => c.e === x.e)) choisis.push({ ...x, lieu }); }
+  }
+  return choisis.length >= 2 ? choisis.slice(0, 3) : [];
+}
+function dessinerEnCeMomentMaison(t) {
+  const zone = document.getElementById("mai-moment");
+  if (!zone) return;
+  const l = especesEnCeMoment(t), s = saisonActuelle();
+  if (!l.length) { zone.classList.add("cache"); return; }
+  zone.classList.remove("cache");
+  zone.innerHTML = `<div class="mai-d-haut"><span>En ce moment près de chez vous</span><small>${majuscule(s)}</small></div>
+    <div class="mm-liste">${l.map((x, i) => `<button type="button" class="mm-esp" data-i="${i}">
+        <span class="mm-ph">${imgMini(photoEsp(x.e), "")}</span>
+        <span class="mm-texte"><b>${echapper(x.e.nom_courant)}</b><small>${echapper(x.l.texte)}</small></span></button>`).join("")}</div>`;
+  zone.querySelectorAll(".mm-esp").forEach(b => b.onclick = () => {
+    const x = l[Number(b.dataset.i)];
+    if (estReconnue(x.e)) ouvrirPageEspece(x.e);
+    else afficherBulle(x.lieu ? `Vous ${pe(x.e).la} rencontrerez ${dansLieu(x.lieu)}` : `Vous ${pe(x.e).la} rencontrerez en jouant`);
   });
 }

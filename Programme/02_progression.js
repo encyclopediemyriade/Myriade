@@ -81,7 +81,20 @@ function sauvegarder() {
 }
 
 // Étape R188e : les espèces renommées (ancien nom → nouveau) ; leur carnet est repris sous le nouveau nom au chargement
-const NOMS_CHANGES = { "Goujon": "Goujon occitan" };
+const NOMS_CHANGES = { "Goujon": "Goujon occitan",
+  "Ancyle des rivières": "Patelline des fleuves" };   // étape R244 (17/11) : nom officiel de TAXREF
+// Étape R244 : le même changement dans le suivi (espèces offertes, à reconnaître, reconnues en défi, défis en cours…) :
+// toute valeur ou clé qui est exactement un ancien nom prend le nouveau.
+function renommerDansSuivi(x) {
+  if (Array.isArray(x)) return x.map(renommerDansSuivi);
+  if (typeof x === "string") return NOMS_CHANGES[x] || x;
+  if (x && typeof x === "object") {
+    const r = {};
+    for (const [k, v] of Object.entries(x)) r[NOMS_CHANGES[k] || k] = renommerDansSuivi(v);
+    return r;
+  }
+  return x;
+}
 function charger() {
   try {
     const texte = localStorage.getItem(CLE_SAUVEGARDE);
@@ -129,7 +142,7 @@ function charger() {
       for (const t of TYPES_CARNET) if (typeof donnees.typesCarnet[t] === "boolean") typesCarnet[t] = donnees.typesCarnet[t];
     }
     // Étape 106 : les badges. Object.assign garde les valeurs de base pour ce qu'une ancienne sauvegarde ne connaît pas.
-    if (donnees.suivi && typeof donnees.suivi === "object") Object.assign(suivi, donnees.suivi);
+    if (donnees.suivi && typeof donnees.suivi === "object") Object.assign(suivi, renommerDansSuivi(donnees.suivi));   // R244 : anciens noms
     badgesObtenus = (donnees.badgesObtenus && typeof donnees.badgesObtenus === "object") ? donnees.badgesObtenus : {};
     titreChoisi = typeof donnees.titreChoisi === "string" ? donnees.titreChoisi : null;
     especeFavorite = typeof donnees.especeFavorite === "string" ? donnees.especeFavorite : null;   // étape 109
@@ -284,12 +297,88 @@ function agrandirPhoto(src, legende) {
   voile.innerHTML = `<figure>${imagePhoto(src, legende, false)}${legende ? `<figcaption>${legende}</figcaption>` : ""}<span class="pa-fermer" aria-label="Fermer">×</span></figure>`;
   voile.classList.add("ouvert");
 }
+// Étape R239 (17/11, note 16b du 16/11, tâche 36.16) : plusieurs photos à comparer, en grand ; on glisse de l'une à l'autre
+//   (ou flèches du clavier), un toucher ferme. Toute photo marquée « .agr » dans un bloc « .agrandir-groupe » s'ouvre ainsi
+//   (explication d'une erreur dans le défi, Coup d'œil, À l'oreille ; photos d'une question « trouver parmi 4 photos »).
+let galerieAgrandie = null;
+function agrandirPhotos(liste, k) {
+  if (!liste.length) return;
+  galerieAgrandie = { liste, k: Math.max(0, Math.min(k || 0, liste.length - 1)) };
+  const montrerK = () => {
+    const g = galerieAgrandie, p = g.liste[g.k];
+    agrandirPhoto(p.src, p.legende || "");
+    const voile = document.getElementById("photo-agrandie");
+    voile.classList.toggle("galerie", g.liste.length > 1);
+    if (g.liste.length > 1) voile.querySelector("figure").insertAdjacentHTML("beforeend",
+      `<span class="pa-points" aria-hidden="true">${g.liste.map((x, i) => `<i class="${i === g.k ? "actif" : ""}"></i>`).join("")}</span>`);
+  };
+  montrerK();
+  const voile = document.getElementById("photo-agrandie");
+  if (!voile.dataset.galerie) {
+    voile.dataset.galerie = "oui";
+    let x0 = null, glisse = false;
+    const aller = d => { const g = galerieAgrandie; if (!g || g.liste.length < 2) return; g.k = (g.k + d + g.liste.length) % g.liste.length; montrerKGalerie(); };
+    voile.addEventListener("touchstart", ev => { x0 = ev.touches[0].clientX; glisse = false; }, { passive: true });
+    voile.addEventListener("touchend", ev => {
+      if (x0 === null) return;
+      const dx = ev.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) { glisse = true; aller(dx < 0 ? 1 : -1); }
+    });
+    voile.addEventListener("click", ev => { if (glisse) { ev.stopImmediatePropagation(); glisse = false; voile.classList.add("ouvert"); } }, true);
+    document.addEventListener("keydown", ev => {
+      if (!voile.classList.contains("ouvert") || !galerieAgrandie) return;
+      if (ev.key === "ArrowRight") aller(1); else if (ev.key === "ArrowLeft") aller(-1);
+    });
+  }
+  window.montrerKGalerie = montrerK;
+}
+function sourceGrande(src) { return String(src || "").replace("Images/mini/", "Images/"); }
+document.addEventListener("click", ev => {
+  const it = ev.target && ev.target.closest && ev.target.closest(".agrandir-groupe .agr");
+  if (!it) return;
+  const groupe = it.closest(".agrandir-groupe");
+  const items = [...groupe.querySelectorAll(".agr")].filter(i => i.querySelector("img"));
+  const liste = items.map(i => ({ src: sourceGrande(i.querySelector("img").getAttribute("src")), legende: i.dataset.legende || "" }));
+  const k = items.indexOf(it);
+  if (k < 0) return;
+  ev.preventDefault(); ev.stopPropagation();
+  agrandirPhotos(liste, k);
+}, true);
+const LOUPE_SVG = `<span class="agr-loupe" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg></span>`;
 // Le bloc de la Rencontre (A2) : une ou deux vignettes « La femelle », « Le jeune »… (rien si l'espèce n'a pas d'autre forme)
 function blocAutresFormes(e) {
   const formes = autresFormes(e);
   if (!formes.length) return "";
   return `<div class="retour-formes">${formes.map(p => `<button type="button" class="retour-forme" onclick="event.stopPropagation(); agrandirPhoto('${p.src}', '${String(e.nom_courant + " · " + etiquetteForme(p.sujet)).replace(/'/g, "\\'")}')">`
     + `<span class="rf-ph">${imagePhoto(p.src, etiquetteForme(p.sujet), true)}</span><span class="rf-lib">${etiquetteForme(p.sujet)}</span></button>`).join("")}</div>`;
+}
+// ---- Étape R253 (17/11, Notion 36.34, choix 34C d'Aubin) : les autres formes NETTEMENT différentes, dans la Rencontre ----
+//   Données (lot R252) : photo_2_differente / photo_3_differente (oui / non / NA) et photo_2_change / photo_3_change
+//   (« ce qui change », 10 mots au plus ; NA = pas de ligne confirmée → la forme est montrée sans phrase).
+//   Seules les formes « oui » sont montrées ici (une femelle presque pareille au mâle n'apprend rien) ; deux photos de la même
+//   forme (deux femelles) ne font qu'une vignette. Chenille et larve sont montrées, jamais demandées (R254).
+function formesNettes(e) {
+  if (!e) return [];
+  const res = [];
+  for (const n of [2, 3]) {
+    const src = e["photo_" + n], sujet = e[`photo_${n}_sujet`] ? String(e[`photo_${n}_sujet`]).trim() : "";
+    if (!estRenseigne(src) || !etiquetteForme(sujet) || String(e[`photo_${n}_differente`] || "").trim() !== "oui") continue;
+    if (res.some(p => p.sujet === sujet)) continue;
+    const ch = estRenseigne(e[`photo_${n}_change`]) ? String(e[`photo_${n}_change`]).trim() : "";
+    res.push({ src, sujet, n, etiquette: etiquetteForme(sujet), change: ch });
+  }
+  return res;
+}
+// La rangée « Ses autres formes » : la vignette, l'étiquette (« La femelle ») et la ligne « ce qui change » ; toucher = en grand
+function blocFormesNettes(e, opts = {}) {
+  const formes = formesNettes(e);
+  if (!formes.length) return "";
+  const leg = p => String(e.nom_courant + " · " + p.etiquette + (p.change ? " : " + minuscule(p.change) : "")).replace(/'/g, "\\'").replace(/"/g, "&quot;");
+  return `<div class="cb-formes-bloc${opts.classe ? " " + opts.classe : ""}"${opts.style ? ` style="${opts.style}"` : ""}><p class="cb-sous">Ses autres formes</p><div class="cb-formes">`
+    + formes.map(p => `<button type="button" class="cb-forme" onclick="event.stopPropagation(); agrandirPhoto('${p.src}', '${leg(p)}')">`
+      + `<span class="cbf-ph">${imagePhoto(p.src, p.etiquette, true)}${LOUPE_SVG}</span>`
+      + `<span class="cbf-txt"><b>${echapper(p.etiquette)}</b>${p.change ? `<small>${echapper(p.change)}</small>` : ""}</span></button>`).join("")
+    + `</div></div>`;
 }
 // La photo du jour d'une espèce DÉJÀ reconnue (A3) : une de ses photos, la même toute la journée ; inconnue : la principale
 function photoDuJourDe(e) {
@@ -333,8 +422,15 @@ function motLarve(e) { return /triton|salamandre/i.test(e.nom_courant) ? "larve"
 //   colonne            : la colonne de la bonne réponse (ex : "defense_principale")
 //   colonneSecondaires : facultatif ; une colonne dont les valeurs, séparées par " ; ",
 //                        sont AUSSI vraies pour l'espèce et ne doivent donc pas être proposées
+// Étape R239b (36.03, lenteurs) : les valeurs d'une colonne ne dépendent que des données → calculées une seule fois
+const memoValeursColonne = new Map();
+function valeursColonne(colonne) {
+  let v = memoValeursColonne.get(colonne);
+  if (!v) { v = [...new Set(ESPECES.map(e => e[colonne]).filter(estRenseigne))]; memoValeursColonne.set(colonne, v); }
+  return v;
+}
 function autresDeLaListe(espece, colonne, colonneSecondaires) {
-  const toutes = [...new Set(ESPECES.map(e => e[colonne]).filter(estRenseigne))];
+  const toutes = valeursColonne(colonne);
   const vraies = [espece[colonne]];
   if (colonneSecondaires && estRenseigne(espece[colonneSecondaires])) {
     vraies.push(...String(espece[colonneSecondaires]).split(" ; "));
@@ -623,7 +719,7 @@ const MOTS_BANALS = ["grand", "petit", "commu"];
 // « Où vit-il le plus souvent ? » n'est pas posée. Liste écrite à la main : la règle des débuts de mots (seDevineDuNom)
 // écarterait aussi les campagnols (« Campa… » → « Campagne, haies et jardins »), à tort. Le reste (couleur « cendré »,
 // plantes des papillons…) est gardé : le nom aide aussi à retenir.
-const MILIEU_DANS_LE_NOM = ["Ancyle des rivières", "Loche de rivière", "Bécassine des marais", "Cuivré des marais", "Dolomède des marais",
+const MILIEU_DANS_LE_NOM = ["Patelline des fleuves", "Loche de rivière", "Bécassine des marais", "Cuivré des marais", "Dolomède des marais",
   "Escargot des haies", "Escargot des jardins", "Musaraigne des jardins", "Hirondelle de rochers",
   "Monticole de roche"];   // le monticole : même cas, repéré en R187 (le contrôleur ne l'avait pas vu, « roche » au singulier)
 function seDevineDuNom(espece, valeur) {
@@ -642,6 +738,9 @@ const PIEGES_A_EVITER = {
   activite: { "À l'aube et au crépuscule": ["Surtout la nuit"] },
   danger_homme: { "Inoffensif": ["Pique ou mord, sans danger"], "Pique ou mord, sans danger": ["Inoffensif"] },
   indice_presence: { "Mue (peau abandonnée)": ["Exuvie (enveloppe de la larve)"], "Exuvie (enveloppe de la larve)": ["Mue (peau abandonnée)"] },
+  // Étape AL2 (repéré en AL1 : « Nageoire horizontale » proposée pour la queue du loup gris) : la nageoire des dauphins et
+  //   marsouins n'est jamais un piège pour un mammifère terrestre (hors du « monde » de l'espèce).
+  queue_forme: { Courte: ["Nageoire horizontale"], Touffue: ["Nageoire horizontale"], Longue: ["Nageoire horizontale"], Plate: ["Nageoire horizontale"] },
 };
 // JAMAIS_PIEGES : des réponses trop générales pour servir de piège, quelle que soit la bonne réponse
 // (« troupe » et « bande » se disent de beaucoup d'animaux ; « non évalué » ne s'apprend pas).
@@ -667,6 +766,13 @@ const VOISINES = {
   corps_forme: [["Fuselé", "Allongé"], ["Allongé", "Très allongé"], ["Fuselé", "Très allongé"], ["Fuselé", "Trapu"],
                 ["Trapu", "Bossu"], ["Trapu", "Haut et plat"], ["Bossu", "Haut et plat"], ["Trapu", "Allongé"]],
   ailes_repos: [["Repliées", "En toit"]],
+  // Étape AL2 (Notion 20 rouverte, « problème de liste ») : sur une photo, ces formes de bec se recouvrent (vérification AL1 :
+  //   35 becs posaient problème). Elles ne sont jamais proposées ensemble. Les becs bien à part (croisé, en spatule, retroussé,
+  //   plat et large) restent des pièges pour tous.
+  bec_forme: [["Court et bombé", "Conique"], ["Court et bombé", "Court et courbé"], ["Conique", "Court et courbé"],
+              ["Fort et droit", "Droit et pointu"], ["Fort et droit", "Conique"], ["Fort et droit", "Court et bombé"], ["Fort et droit", "Crochu"],
+              ["Droit et pointu", "Conique"], ["Fin et courbé", "Long et courbé vers le bas"], ["Fin et courbé", "Court et courbé"],
+              ["Crochu", "Court et courbé"]],
   // Étape R189 (notes n° 10 et 16 d'Aubin : moineau « en cavité », bergeronnette grise « Bâtiment » seulement) : les oiseaux qui
   //   nichent dans un trou ou sur une corniche passent souvent de l'un à l'autre ; ces trois endroits ne sont plus opposés.
   //   En attendant la colonne du nid à plusieurs valeurs (3 recherches, plus tard).
@@ -734,9 +840,21 @@ const REGIME_COLLE = {
   coprophage:       g => g.includes("Excréments"),        // étape 192 : géotrupe du fumier
 };
 // Cette réponse est-elle AUSSI vraie (ou défendable) pour cette espèce ? Si oui, elle ne sert jamais de piège.
+// Étape R239b (36.03, lenteurs) : les pièges interdits rangés par espèce (avant : toute la liste relue à chaque réponse possible)
+let piegesInterditsParEspece = null;
+function piegesInterditsDe(espece) {
+  if (!piegesInterditsParEspece) {
+    piegesInterditsParEspece = new Map();
+    for (const p of (typeof PIEGES_INTERDITS === "undefined" ? [] : PIEGES_INTERDITS)) {
+      if (!piegesInterditsParEspece.has(p.nom_courant)) piegesInterditsParEspece.set(p.nom_courant, []);
+      piegesInterditsParEspece.get(p.nom_courant).push(p);
+    }
+  }
+  return piegesInterditsParEspece.get(espece.nom_courant) || [];
+}
 function aussiVraiPour(q, espece, valeur) {
   // 1. L'onglet Pieges_interdits du tableur (ex : « Jaune » pour le bec du faucon pèlerin)
-  const interdit = (typeof PIEGES_INTERDITS === "undefined" ? [] : PIEGES_INTERDITS).some(p =>
+  const interdit = piegesInterditsDe(espece).some(p =>
     p.nom_courant === espece.nom_courant && (p.colonne === q.champ || p.colonne === q.colonnePicto)
     && String(p.reponse_interdite).toLowerCase() === String(valeur).toLowerCase());
   if (interdit) return true;
@@ -967,7 +1085,13 @@ function estItem(espece, q, valeur) { return listeItems(espece, q.champ).include
 // "espece" = l'espèce sur laquelle porte la question.
 // Étape R187 (11/11, contrôleur des questions du jeu) : jamais deux réponses au même texte à l'écran (« Zinzinule » et
 // « zinzinule » ; « Aristoloches » pour la proserpine ET pour la diane). On compare le texte affiché, sans majuscules ni espaces en trop.
-function texteReponse(v) { return String(v == null ? "" : v).normalize("NFC").replace(/\s+/g, " ").trim().toLowerCase(); }
+const memoTexteReponse = new Map();   // R239b (lenteurs)
+function texteReponse(v) {
+  const k = String(v == null ? "" : v);
+  let r = memoTexteReponse.get(k);
+  if (r === undefined) { r = k.normalize("NFC").replace(/\s+/g, " ").trim().toLowerCase(); if (memoTexteReponse.size < 50000) memoTexteReponse.set(k, r); }
+  return r;
+}
 function sansDoublonsDeTexte(liste, bonne) {
   const vus = new Set([texteReponse(bonne)]);
   return liste.filter(v => { const k = texteReponse(v); if (vus.has(k)) return false; vus.add(k); return true; });
@@ -977,6 +1101,16 @@ function sansDoublonsDeTexte(liste, bonne) {
 function piegesDuQcm(q, espece, bonne) {
   return sansDoublonsDeTexte(q.piegesQcm(espece).filter(v => !aussiVraiPour(q, espece, v)), bonne);
 }
+// Étape R239b (36.03) : les valeurs distinctes (renseignées, acceptées) d'une question sur toutes les espèces, une fois pour toutes
+const memoValeursQuestion = new Map();
+function valeursQuestion(q) {
+  let v = memoValeursQuestion.get(q);
+  if (!v) {
+    v = [...new Set(ESPECES.map(autre => valeurDe(autre, q)).filter(x => estRenseigne(x)).filter(x => !q.accepter || q.accepter(x)))];
+    memoValeursQuestion.set(q, v);
+  }
+  return v;
+}
 function autresValeurs(q, bonne, espece) { return sansDoublonsDeTexte(autresValeursBrutes(q, bonne, espece), bonne); }   // étape R187
 function autresValeursBrutes(q, bonne, espece) {
   // Étape 227 : un aliment ou un prédateur seul → ses propres mauvaises réponses
@@ -984,10 +1118,7 @@ function autresValeursBrutes(q, bonne, espece) {
     return q.champ === "proies" ? piegesAliment(espece) : piegesPredateur(espece);
   // Certaines questions fournissent elles-mêmes leurs pièges (voir "pieges", partie 1)
   if (q.pieges) return melanger(q.pieges(espece).filter(v => !piegeInterdit(q, bonne, v, espece) && !aussiVraiPour(q, espece, v)));   // (étapes 135 et 137 ; R185 : l'espèce)
-  const valeurs = ESPECES
-    .map(autre => valeurDe(autre, q))
-    .filter(v => estRenseigne(v))
-    .filter(v => !q.accepter || q.accepter(v))          // pas de valeur générique parmi les pièges
+  const valeurs = valeursQuestion(q)                     // étape R239b (lenteurs) : les valeurs distinctes, calculées une fois par question
     .filter(v => !seRessemblent(v, bonne))
     .filter(v => !piegeInterdit(q, bonne, v, espece))   // étape 135 : rien d'à moitié vrai (R185 : ni voisin)
     .filter(v => !aussiVraiPour(q, espece, v));          // étape 137 : groupes d'aliments, de prédateurs, pièges interdits
@@ -1004,6 +1135,79 @@ function autresValeursBrutes(q, bonne, espece) {
     return [...pieges.filter(deLaFamille), ...pieges.filter(v => !deLaFamille(v))];
   }
   return pieges;
+}
+// ---- Étape VF1 (n° 12.3, notes 3 et 5 du 12/11) : une fausse affirmation reste dans le « monde » de l'espèce ----
+//   Avant : la valeur fausse d'un vrai ou faux venait de n'importe quelle espèce du jeu (« La grémille est suceuse de sang »,
+//   « Elle vit surtout dans les eaux souterraines ») : on la devinait sans rien connaître de l'espèce.
+//   Maintenant, une valeur fausse n'est gardée que si une espèce proche l'a vraiment : une espèce du même ordre
+//   (classification : les carpes, les rapaces de jour, les lézards et serpents…), ou au moins 2 espèces de la même famille
+//   du jeu qui vivent dans le même genre de milieu (sur terre / dans l'eau ; pour le milieu, la valeur fausse doit être
+//   du même genre que le sien). Les saisons gardent leur règle (R166 : jamais une saison en commun).
+//   Les valeurs du même ordre passent en premier. Sans valeur fausse permise, pas de vrai ou faux sur ce sujet.
+const VF_MONDE_LIBRE = ["saison_observation", "saison_reproduction", "saison_frai"];
+const VF_MONDE_MIN = 2;
+function vitDansLEau(milieu) { return MILIEUX_MER.includes(milieu) || MILIEUX_EAU_DOUCE.includes(milieu); }
+const memoPorteurs = new Map();
+function porteursDe(q) {   // valeur → les espèces qui l'ont
+  let m = memoPorteurs.get(q);
+  if (!m) {
+    m = new Map();
+    for (const x of ESPECES) {
+      let vs; try { vs = valeursDe(x, q); } catch (err) { continue; }
+      for (const v of vs || []) {
+        if (!estRenseigne(v) || String(v).startsWith("NA")) continue;
+        if (!m.has(v)) m.set(v, []);
+        m.get(v).push(x);
+      }
+    }
+    memoPorteurs.set(q, m);
+  }
+  return m;
+}
+function memeOrdre(a, b) { return !!a.ordre && a.ordre === b.ordre; }
+function dansSonMonde(q, espece, v) {
+  if (!espece || VF_MONDE_LIBRE.includes(q.champ)) return true;
+  const porteurs = (porteursDe(q).get(v) || []).filter(x => x !== espece);
+  if (porteurs.some(x => memeOrdre(x, espece))) return true;
+  const eau = vitDansLEau(espece.milieu_principal);
+  if (q.champ === "milieu_principal")
+    return vitDansLEau(v) === eau && porteurs.filter(x => x.onglet === espece.onglet).length >= VF_MONDE_MIN;
+  return porteurs.filter(x => x.onglet === espece.onglet && vitDansLEau(x.milieu_principal) === eau).length >= VF_MONDE_MIN;
+}
+// Étape VF2 : des valeurs qui ne servent jamais de fausse affirmation, parce qu'elles sont à moitié vraies pour beaucoup
+//   d'espèces : « se réfugie dans un terrier, dans l'eau… » (le ver du fumier se réfugie aussi dans le sol), « se fond dans
+//   le décor » (le crapaud commun est aussi camouflé), « cherche à intimider son agresseur », « se défend en mordant »
+//   (le carabe mord aussi). La fiche ne donne qu'une défense « principale » : les autres ne sont pas forcément fausses.
+const VF_JAMAIS_FAUX = { defense_principale: ["Refuge (terrier, eau, falaise)", "Camouflage", "Intimidation (se gonfle, siffle)", "Morsure, cornes ou serres"],
+  indice_presence: ["Pelotes de réjection"] };   // beaucoup d'oiseaux en rejettent (faucons, vautours, goélands…)
+//   Et selon l'espèce : « cris nocturnes » n'est faux que pour un animal surtout de jour (ni oiseau ni amphibien : le cerf brame,
+//   la caille chante, les grenouilles appellent la nuit) ; « terriers dans les berges », que pour un animal qui ne vit pas au
+//   bord de l'eau (le castor, la loutre en creusent) ; chez les araignées, « à l'affût » et « bondit » se mêlent : pas de faux.
+function fauxInterdit(q, espece, v) {
+  if ((VF_JAMAIS_FAUX[q.champ] || []).includes(v)) return true;
+  if (!espece) return false;
+  if (q.champ === "indice_presence" && v === "Cris nocturnes")
+    return !(espece.activite === "Surtout le jour" && !["Oiseaux", "Amphibiens"].includes(espece.onglet));
+  if (q.champ === "indice_presence" && v === "Terriers dans les berges")
+    return vitDansLEau(espece.milieu_principal) || /Rivières|Mares|Lacs|Marais|Estuaires/.test(String(espece.milieux_secondaires || ""));
+  if (q.champ === "chasse_principale" && espece.ordre === "Aranéides") return true;
+  return false;
+}
+function affirmationVraieDe(q, bonne, espece) { try { return q.affirmation ? q.affirmation(bonne, espece) : ""; } catch (err) { return ""; } }
+const memoPiegesVF = new Map();
+function piegesVraiFaux(q, bonne, espece) {
+  const cle = q.champ + "|" + (espece ? espece.nom_courant : "") + "|" + bonne;
+  let l = memoPiegesVF.get(cle);
+  if (!l) {
+    // VF2 : pas de vrai ou faux si la phrase vraie ne peut pas s'écrire pour cette espèce (refuge sans indice dans la fiche)
+    l = espece && q.affirmation && !affirmationVraieDe(q, bonne, espece) ? []
+      : autresValeurs(q, bonne, espece).filter(v => dansSonMonde(q, espece, v) && !fauxInterdit(q, espece, v)
+          && (!espece || !q.affirmation || affirmationVraieDe(q, v, espece)));   // VF2 : la fausse aussi doit pouvoir s'écrire pour elle
+    memoPiegesVF.set(cle, l);
+  }
+  const proche = v => !!espece && (porteursDe(q).get(v) || []).some(x => x !== espece && memeOrdre(x, espece));
+  const m = melanger(l.slice());
+  return [...m.filter(proche), ...m.filter(v => !proche(v))];
 }
 
 

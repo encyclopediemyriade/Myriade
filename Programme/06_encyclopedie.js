@@ -573,13 +573,23 @@ function dessinerActionsAPropos(attente) {
   // Étape ML7 : sauvegarder / reprendre la partie dans un fichier, installer l'application (19_application.js)
   const blocApplication = typeof htmlReglagesApplication === "function" ? htmlReglagesApplication(attente) : "";
   const blocEssai = typeof htmlEssaiInsolites === "function" ? htmlEssaiInsolites() : "";   // étape QI3b : essai des questions insolites (21)
-  bloc.innerHTML = `<h2>Réglages de la partie</h2>` + blocPrenomReglage + blocApplication + blocEssai + actions.map(x => `<div class="apropos-action" data-cle="${x.cle}">
+  // Étape R245 (36.12) : « Petits sons : oui / non » (sons de bonne et de mauvaise réponse, de fin, de médaille) ; les cris restent
+  const petits = !(suivi && suivi.petitsSons === false);
+  const blocPetitsSons = `<div class="apropos-action apropos-petits-sons" data-cle="petits-sons">
+      <p>Petits sons : <b>${petits ? "oui" : "non"}</b><br><small>Les petits sons de bonne et de mauvaise réponse et de fin de partie. Les cris des animaux restent.</small></p>
+      <span class="apropos-boutons reglage-oui-non" role="group" aria-label="Petits sons">
+        <button class="bouton-apropos${petits ? " choisi" : ""}" type="button" data-petits-sons="oui" aria-pressed="${petits}">Oui</button><button class="bouton-apropos${petits ? "" : " choisi"}" type="button" data-petits-sons="non" aria-pressed="${!petits}">Non</button></span></div>`;
+  bloc.innerHTML = `<h2>Réglages de la partie</h2>` + blocPetitsSons + blocPrenomReglage + blocApplication + blocEssai + actions.map(x => `<div class="apropos-action" data-cle="${x.cle}">
       <p>${attente === x.cle ? `<b>${x.question}</b>` : x.texte}</p>
       ${attente === x.cle
         ? `<span class="apropos-boutons"><button class="bouton-apropos confirmer" type="button" data-oui="${x.cle}">Oui, ${x.titre.charAt(0).toLowerCase() + x.titre.slice(1)}</button><button class="bouton-apropos annuler" type="button" data-non="1">Annuler</button></span>`
         : `<button class="bouton-apropos" type="button" data-action="${x.cle}">${x.titre}</button>`}
     </div>`).join("");
   bloc.querySelectorAll("[data-action]").forEach(bt => bt.onclick = () => dessinerActionsAPropos(bt.dataset.action));
+  bloc.querySelectorAll("[data-petits-sons]").forEach(bt => bt.onclick = () => {
+    suivi.petitsSons = bt.dataset.petitsSons === "oui"; sauvegarder(); dessinerActionsAPropos();
+    if (suivi.petitsSons) { try { jouerSon("bonne"); } catch (e) {} }   // on l'entend tout de suite
+  });
   bloc.querySelectorAll("[data-non]").forEach(bt => bt.onclick = () => dessinerActionsAPropos());
   if (typeof brancherEssaiInsolites === "function") brancherEssaiInsolites();   // étape QI3b
   const formPrenom = document.getElementById("reglage-prenom");
@@ -784,12 +794,13 @@ function afficherFiltres() {
     if (especes.length) ajouterFiltre(cle, CLASSES[cle].nom, CLASSES[cle].couleur, especes);
   }
   zone.appendChild(liste);
-  // Étape 100 (J6) : l'option « Découvertes uniquement » (interrupteur), sous la liste depuis l'étape 223
-  const option = document.createElement("label");
-  option.className = "interrupteur-chrono option-decouvertes";
-  option.innerHTML = `<span>Découvertes uniquement</span><input type="checkbox"${decouvertesSeules ? " checked" : ""}><span class="glissiere" aria-hidden="true"></span>`;
-  option.querySelector("input").onchange = ev => { decouvertesSeules = ev.target.checked; sauvegarder(); afficherEncyclopedie(); };
-  zone.appendChild(option);
+  // Étape R245 (36.26, choix 26C du 17/11) : deux onglets « Toutes · N | Découvertes · N » sous les familles
+  //   (remplacent l'interrupteur « Découvertes uniquement ») ; le choix est gardé, sans rien afficher à ce sujet.
+  const dansFiltre = especesDuFiltre().filter(e => filtreClasse === "Toutes" || filtreClasse === "planches" || e.onglet === filtreClasse);
+  zone.insertAdjacentHTML("beforeend", ongletsDecouvertes(dansFiltre.length, dansFiltre.filter(e => statut(e) !== "inconnue").length, decouvertesSeules, "ency-onglets-filtres"));
+  zone.querySelectorAll(".ency-onglets-filtres [data-vue]").forEach(b => b.onclick = () => {
+    decouvertesSeules = b.dataset.vue === "decouvertes"; sauvegarder(); afficherEncyclopedie();
+  });
   // Étape 331 : les planches « Tout est lié » des lieux terminés, gardées dans l'encyclopédie.
   // Étape 334 (Revoir 8) : dans un bloc à part, sous les familles, pour ne plus les confondre avec un filtre.
   const pl = planchesDuFiltre();
@@ -813,6 +824,11 @@ function afficherFiltres() {
 //     sans nom ni photo ; toucher la case ouvre une piste (le lieu et l'expédition où la rencontrer).
 //   Règle : une espèce pas encore rencontrée n'est jamais nommée. Ordinateur inchangé ; la recherche garde les cartes habituelles.
 // ==================================================================
+// Étape R245 (36.26) : les deux onglets « Toutes · N | Découvertes · N » (ordinateur et téléphone)
+function ongletsDecouvertes(toutes, decouvertes, seules, classe) {
+  return `<div class="ency-onglets ${classe}" role="tablist" aria-label="Espèces montrées">
+      <button type="button" role="tab" data-vue="toutes" class="${seules ? "" : "actif"}" aria-selected="${!seules}">Toutes · ${toutes}</button><button type="button" role="tab" data-vue="decouvertes" class="${seules ? "actif" : ""}" aria-selected="${seules}">Découvertes · ${decouvertes}</button></div>`;
+}
 let bandeauAlbumOuvert = false;   // sur téléphone, la carte d'identité de la famille est repliée au départ (elle prend tout l'écran)
 function collectionSurTelephone() { return typeof surTelephone === "function" && surTelephone(); }
 const estRencontree = e => statut(e) !== "inconnue";
@@ -851,13 +867,15 @@ function albumFamille(cle) {
     ? `<button type="button" class="alb-case alb-vue${offerte(e) ? " alb-offerte" : ""}" data-nom="${echapper(e.nom_courant)}">${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}${offerte(e) ? "<small>À reconnaître</small>" : ""}</span></button>`
     : `<button type="button" class="alb-case alb-vide" data-piste="${echapper(e.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(e, "alb-sil")}</button>`).join("")
     || `<p class="alb-rien">Aucune espèce découverte ici pour l'instant.</p>`;
-  const bouton = `<button type="button" class="alb-mes-especes" aria-pressed="${albumMesEspeces}">${albumMesEspeces ? "✓ " : ""}Seulement mes espèces découvertes</button>`;
+  const nbDecouvertes = especes.filter(e => estRencontree(e) || offerte(e)).length;
+  const bouton = ongletsDecouvertes(especes.length, nbDecouvertes, albumMesEspeces, "alb-onglets");   // étape R245 (36.26)
   return `<section class="groupe-famille album-famille" style="--couleur-classe:${CLASSES[cle].couleur}">
       <button type="button" class="alb-retour">← Toutes les familles</button>
       <h2 class="titre-famille">${CLASSES[cle].nom}<small>${vues} / ${especes.length}</small></h2>
       <div class="alb-jauge"><i style="width:${especes.length ? Math.round(100 * vues / especes.length) : 0}%"></i></div>
+      ${bouton}
       ${FAMILLES_INFO[cle] ? `<details class="bandeau-famille"${bandeauAlbumOuvert ? " open" : ""}><summary>${FAMILLES_INFO[cle].accroche}</summary>${htmlSignesFamille(cle)}</details>` : ""}
-      ${bouton}<div class="alb-grille">${cases}</div></section>`;
+      <div class="alb-grille">${cases}</div></section>`;
 }
 // Où rencontrer une espèce : les lieux (et l'expédition) qui la contiennent, les lieux ouverts d'abord.
 function pistesEspece(e) {
@@ -918,8 +936,11 @@ function afficherCollectionTelephone(grille) {
   if (retour) retour.onclick = () => { filtreClasse = "Toutes"; afficherEncyclopedie(); window.scrollTo(0, 0); };
   for (const b of grille.querySelectorAll(".alb-vue")) b.onclick = () => ouvrirPageEspece(ESPECES.find(e => e.nom_courant === b.dataset.nom));
   for (const b of grille.querySelectorAll(".alb-vide")) b.onclick = () => ouvrirPiste(ESPECES.find(e => e.nom_courant === b.dataset.piste));
-  const mes = grille.querySelector(".alb-mes-especes");   // étape R180
-  if (mes) mes.onclick = () => { albumMesEspeces = !albumMesEspeces; try { localStorage.setItem("myriade-album-mes-especes", albumMesEspeces ? "oui" : "non"); } catch (e) { /* rien */ } afficherEncyclopedie(); };
+  grille.querySelectorAll(".alb-onglets [data-vue]").forEach(b => b.onclick = () => {   // étape R245 (36.26) : les deux onglets
+    albumMesEspeces = b.dataset.vue === "decouvertes";
+    try { localStorage.setItem("myriade-album-mes-especes", albumMesEspeces ? "oui" : "non"); } catch (e) { /* rien */ }
+    afficherEncyclopedie();
+  });
   const bandeau = grille.querySelector(".bandeau-famille");
   if (bandeau) bandeau.ontoggle = () => { bandeauAlbumOuvert = bandeau.open; };
   // Étape R161 (08/11, choix d'Aubin : sommaire en cartes + album B) : dans l'album, la bande des familles sert de titre

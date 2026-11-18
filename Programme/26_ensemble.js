@@ -344,7 +344,9 @@ const ET_SI = {
   "Arbre ou buisson": { question: "Garder les haies, les buissons et les arbres offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Cavité d'arbre", "Au sol", "Roselière ou végétation dense"] },
   "Roselière ou végétation dense": { question: "Garder les roselières offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Au sol", "Sur l'eau (nid flottant)"],
     milieu: e => /Marais|Mares|Lacs|Estuaires/.test(e.milieu_principal || "") || /rosea|roseli|marais/i.test(String(e.habitat || "")) },
-  "Au sol": { question: "Ne pas faucher les prés avant l'été protège le nid de lesquelles de ces espèces ?", exclus: ["Roselière ou végétation dense"],
+  // Étape R251 (12.6, choix d'Aubin du 17/11) : « avant l'été » était à moitié vrai (une fauche fin juin détruit encore des nichées ;
+  //   LPO Isère, mesures agricoles du râle des genêts) : « avant la mi-juillet ». Les 4 autres phrases sont confirmées à 2 sources (LPO, OFB).
+  "Au sol": { question: "Ne pas faucher les prés avant la mi‑juillet protège le nid de lesquelles de ces espèces ?", exclus: ["Roselière ou végétation dense"],
     milieu: e => /Campagne/.test(e.milieu_principal || "") || /prair|\bprés?\b|champ/i.test(String(e.habitat || "")) },
 };
 const NIDS_NETS = ["Cavité d'arbre", "Bâtiment", "Arbre ou buisson", "Roselière ou végétation dense", "Au sol", "Falaise ou paroi rocheuse", "Terrier", "Sur l'eau (nid flottant)"];
@@ -413,7 +415,7 @@ function questionsEnsemble(x) {
   return q;
 }
 // Une expédition qui n'offre qu'une question, ou aucune : pas d'étape 2 (la question unique se pose à la fin des Rencontres).
-function aUneEtapeEnsemble(x) { return ETAPE2_ENSEMBLE && questionsEnsemble(x).length >= 2; }
+function aUneEtapeEnsemble(x) { return ETAPE2_ENSEMBLE && questionsEnsembleExp(x).length >= 2; }   // R245 : tirage fixe
 
 
 // ==================================================================
@@ -431,8 +433,24 @@ function aUneEtapeEnsemble(x) { return ETAPE2_ENSEMBLE && questionsEnsemble(x).l
 if (ETAPE2_ENSEMBLE && typeof ETAPES !== "undefined")
   ETAPES[2] = { titre: "Ensemble", texte: "Comment ces espèces vivent ensemble ici : qui chasse qui, le jour et la nuit, l'hiver, ce qui les aide" };
 const memoEnsemble = new Map();
+// Étape R245 (point 1 du 17/11) : tirage FIXE par expédition. Le choix des questions se fait avec un hasard « à graine »
+//   tiré du numéro de l'expédition : la même expédition donne toujours les mêmes questions (elle a toujours, ou jamais,
+//   son étape 2). Seul l'ordre des réponses à l'écran est ensuite mélangé au vrai hasard.
+function hasardFixe(graine) {
+  let h = 2166136261;
+  for (const c of String(graine)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+  return () => { h = (h + 0x6D2B79F5) | 0; let t = Math.imul(h ^ (h >>> 15), 1 | h); t ^= t + Math.imul(t ^ (t >>> 7), 61 | t); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+function questionsEnsembleFixes(x) {
+  const vrai = Math.random;
+  let q = [];
+  try { Math.random = hasardFixe("ensemble|" + x.id); q = questionsEnsemble(x); }
+  catch (err) { q = []; }
+  finally { Math.random = vrai; }
+  return q.map(z => ({ ...z, choix: melanger(z.choix.slice()) }));
+}
 function questionsEnsembleExp(x) {
-  if (!memoEnsemble.has(x.id)) { let q = []; try { q = questionsEnsemble(x); } catch (err) { q = []; } memoEnsemble.set(x.id, q); }
+  if (!memoEnsemble.has(x.id)) { let q = []; try { q = questionsEnsembleFixes(x); } catch (err) { q = []; } memoEnsemble.set(x.id, q); }
   return memoEnsemble.get(x.id);
 }
 function ensembleFait(x) { return !!(suivi && suivi.ensembleFait && suivi.ensembleFait[x.id]); }
@@ -489,7 +507,7 @@ function boutonChoixEnsemble(c, i, plusieurs) {
   const e = c.espece ? especeParNom(c.espece) : null;
   const image = e ? `<img src="${photoMini(photoEsp(e))}" alt="">` : "";
   return `<button type="button" class="fl-rep en-rep${e ? " en-avec-photo" : ""}" data-i="${i}" aria-pressed="${plusieurs ? "false" : ""}">
-      ${plusieurs ? `<span class="en-case" aria-hidden="true"></span>` : ""}${image}<span class="en-texte">${echapper(c.texte)}</span></button>`;
+      ${image}<span class="en-texte">${echapper(c.texte)}</span></button>`;
 }
 function dessinerEnsemble() {
   const z = document.getElementById("forme-ecran"), E = ensemble;
@@ -497,11 +515,19 @@ function dessinerEnsemble() {
   const { q, reprise } = E.file[E.i];
   const n = E.file.filter(f => !f.reprise).length, rang = E.file.slice(0, E.i + 1).filter(f => !f.reprise).length;
   const montrees = (q.montrees || []).map(figureEnsemble).filter(Boolean);
-  z.innerHTML = `<div class="fp-carte fl-carte en-carte">
-    <div class="fp-tete"><span class="fp-lib">${PICTO_LIENS}Ensemble, dans ce lieu</span><span class="fp-compte">${reprise ? "À revoir" : n === 1 ? "Une dernière question" : `${rang} / ${n}`}</span></div>
+  // Étape R246 (36.11, choix 11B du 17/11) : le compteur du haut en cases (vert = juste du premier coup, ocre = ratée,
+  //   foncé = la question en cours) ; une question reposée porte l'étiquette « ↻ À revoir » et une ligne douce.
+  E.resultats = E.resultats || {};
+  const enCoursI = reprise ? E.file[E.i].de : E.i;
+  const cases = n > 1 ? `<span class="en-cases" aria-hidden="true">${E.file.slice(0, n).map((f, i) =>
+      `<i class="${E.resultats[i] === "rate" ? "rate" : E.resultats[i] === "ok" ? "ok" : ""}${i === enCoursI ? " encours" : ""}"></i>`).join("")}</span>` : "";
+  const compte = reprise ? "" : n === 1 ? "Une dernière question" : `${rang} / ${n}`;
+  z.innerHTML = `<div class="fp-carte fl-carte en-carte${reprise ? " en-reprise" : ""}">
+    <div class="fp-tete"><span class="fp-lib">${PICTO_LIENS}Ensemble, dans ce lieu</span><span class="fp-compte">${cases}${compte ? `<span class="en-compte-txt">${compte}</span>` : ""}</span></div>
+    ${reprise ? `<p class="en-a-revoir"><span class="etiq-a-revoir">↻ À revoir</span><span>Vous l'aviez manquée tout à l'heure : la voici une seconde fois.</span></p>` : ""}
     ${montrees.length ? `<div class="en-montrees${montrees.length > 2 ? " nombreuses" : ""}">${montrees.join("")}</div>` : ""}
     <h3 class="fl-question">${echapper(q.question)}</h3>
-    ${q.plusieurs ? `<p class="en-consigne">Plusieurs réponses possibles.</p>` : ""}
+    ${q.plusieurs ? `<p class="en-consigne"><span class="etiq-plusieurs">Plusieurs réponses</span></p>` : ""}
     <div class="fl-choix en-choix">${q.choix.map((c, i) => boutonChoixEnsemble(c, i, q.plusieurs)).join("")}</div>
     <p class="fp-retour" id="en-retour"></p>
     <div class="fp-pied">${q.plusieurs ? `<button type="button" class="bouton-accueil principal" id="en-valider" disabled>Valider</button>` : ""}
@@ -521,12 +547,15 @@ function dessinerEnsemble() {
     });
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     if (juste && !reprise) E.premierCoup++;
-    if (!juste && !reprise) E.file.push({ q: { ...q, choix: melanger(q.choix.slice()) }, reprise: true });   // revient une fois, à la fin
+    if (!reprise) { E.resultats = E.resultats || {}; E.resultats[E.i] = juste ? "ok" : "rate"; }   // R246 : la case du compteur
+    if (!juste && !reprise) E.file.push({ q: { ...q, choix: melanger(q.choix.slice()) }, reprise: true, de: E.i });   // revient une fois, à la fin
     if (q.type === "liens" && typeof noterLienConnu === "function") noterLienConnu("ens|" + (q.especes || []).join("|"));   // badge « Leurs liens »
     const v = document.getElementById("en-valider"); if (v) v.classList.add("cache");
     const oubli = q.plusieurs && !juste && bonnes.some(i => !choisis.includes(i)) ? " Les bonnes réponses sont encadrées en vert." : "";
     const debut = partiel ? `Validé : ${trouvees} sur ${bonnes.length}. ` : juste ? "Bravo ! " : "";
     document.getElementById("en-retour").innerHTML = `${debut}${echapper(q.explication || "")}${partiel ? `<br><small>${bonnes.length - trouvees > 1 ? "Les autres sont encadrées" : "L'autre est encadrée"} en vert.</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
+    const caseI = z.querySelectorAll(".en-cases i")[reprise ? E.file[E.i].de : E.i];   // R246 : la case prend sa couleur tout de suite
+    if (caseI && !reprise) caseI.classList.add(juste ? "ok" : "rate");
     const s = document.getElementById("en-suite");
     s.textContent = E.i + 1 < E.file.length ? "Question suivante" : "Continuer";
     s.classList.remove("cache"); s.focus();

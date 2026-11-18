@@ -218,6 +218,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   zone.innerHTML = "";
   zone.className = "";
   if (champ === SOSIE) { poserSosie(espece); return; }   // étapes 243 et 245 : l'encart « À ne pas confondre » (pas une question)
+  if (typeof FORME_Q !== "undefined" && champ === FORME_Q) { poserQuestionForme(espece); return; }   // étape R254 : une autre forme (09)
   if (typeof INSOLITE !== "undefined" && champ === INSOLITE) { poserInsolite(espece); return; }   // étape QI3 : une question insolite (21)
 
   // Quel format ?
@@ -235,7 +236,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   else if (q.type === "nombre")      format = (typeof formatComparaison === "function" && formatComparaison(espece, q)) || "estimation";   // étape R174 : ou une comparaison
   else {
     let formats = ["qcm"];
-    if (autresValeurs(q, bonne, espece).length >= 1)   formats.push("vraifaux");
+    if (piegesVraiFaux(q, bonne, espece).length >= 1)   formats.push("vraifaux");   // VF1 : une valeur fausse de son « monde »
     // "Lequel… ?" parmi 4 photos : pas dans la Rencontre à une espèce, où la réponse serait toujours
     // l'espèce dont le nom est affiché en haut (étape 75)
     // Étape 149 : il faut au moins 3 autres espèces déjà identifiées pour poser la question en photos
@@ -253,7 +254,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
     if (autresFormats.length) formats = autresFormats;
     format = auHasard(formats);
     // Étape RF1 : sa vie, dans la Rencontre complète, toujours en vrai ou faux (même si la question d'avant l'était)
-    if (session && session.vie && session.vie.includes(champ) && autresValeurs(q, bonne, espece).length >= 1
+    if (session && session.vie && session.vie.includes(champ) && piegesVraiFaux(q, bonne, espece).length >= 1
         && (!q.formats || q.formats.includes("vraifaux"))) format = "vraifaux";
   }
   dernierChamp = champ;
@@ -589,7 +590,7 @@ function poserCases(espece, q) {
     enCours.explication = `Sur son plumage, on voit bien : ${c.slice(0, -1).join(", ")} et ${c[c.length - 1]}.`;
   }
   document.getElementById("question").innerHTML = `${QUESTION_CASES[q.champ]}`
-    + `<small class="consigne-cases">Plusieurs réponses possibles.</small>`;   // étape R124 (avant : « à cocher »)
+    + `<small class="consigne-cases"><span class="etiq-plusieurs">Plusieurs réponses</span></small>`;   // étape R124 (avant : « à cocher ») ; R239 (36.05) : étiquette
   const zone = document.getElementById("reponses");
   zone.className = "cases-a-cocher";
   for (const v of melanger([...bonnes, ...choisis])) {
@@ -630,7 +631,7 @@ function poserVraiFaux(espece, q, bonne) {
   enTete(espece, true, true);
   document.getElementById("question").textContent = "Vrai ou faux ?";
   const estVraie = Math.random() < 0.5;                  // une fois sur deux, l'affirmation est vraie
-  const valeur = estVraie ? bonne : autresValeurs(q, bonne, espece)[0];
+  const valeur = estVraie ? bonne : piegesVraiFaux(q, bonne, espece)[0];   // VF1 : la fausse reste dans le « monde » de l'espèce
   const affirmation = document.getElementById("affirmation");
   affirmation.textContent = q.affirmation(valeur, espece);   // étape R184 : l'espèce (« s'accouple » chez les mammifères) ; E2-7 (note 11) : sans guillemets
   affirmationVraie = q.affirmation(bonne, espece);       // étape E2-4 : la phrase vraie, donnée après une erreur dans la rafale
@@ -739,6 +740,88 @@ function piegesEmpreinte(espece) {
   return [...proches, ...lointains].slice(0, 3);
 }
 
+// ==================================================================
+// Étape R246 (36.29, choix 29C du 17/11) : les empreintes en grand, partout où une empreinte est dessinée.
+//   - le dessin remplit sa carte (on garde le cadre du dessin, sans la petite barre d'échelle illisible) ;
+//   - dessous, en gros : « environ 11 cm · taille réelle » (une piste : la barre d'échelle, en gros) ;
+//   - deux empreintes : l'une au-dessus de l'autre ; à la même échelle quand leurs tailles sont à moins de 2 fois d'écart ;
+//   - une loupe bien visible (44 px) dans un coin réservé : toucher ce coin n'est jamais une réponse ; elle ouvre l'empreinte en plein écran.
+//   Les mesures viennent de empreintes_tailles.js (généré par Outils\gen_tailles_empreintes.py, d'après chaque dessin).
+// ==================================================================
+function mesureEmpreinte(espece) {
+  const cle = cleEmpreinte(espece);
+  const m = typeof EMPREINTES_TAILLES !== "undefined" ? EMPREINTES_TAILLES[cle] : null;
+  return m ? { ...m, cle, piste: estPisteEmpreinte(cle) } : null;
+}
+function estPisteEmpreinte(cle) {
+  const d = EMPREINTES[cle];
+  return !!d && (d.groupe === "traces" || /\btrace\b|traînée/.test(d.texte));
+}
+function texteCm(cm) {
+  if (cm >= 100) return `${String(Math.round(cm / 10) / 10).replace(".", ",")} m`;
+  if (cm < 3) return `${String(Math.round(cm * 2) / 2).replace(".", ",")} cm`;
+  return `${Math.round(cm)} cm`;
+}
+// pxParCm : imposé (même échelle pour deux empreintes) ; sinon le dessin remplit la boîte (largeur l, hauteur h)
+function dessinEmpreinte(espece, l, h, pxParCm) {
+  const m = mesureEmpreinte(espece), src = fichierEmpreinte(espece);
+  if (!m) return { html: `<img src="${src}" alt="Une empreinte" style="width:${l}px;height:${h}px;object-fit:contain">`, pxParCm: null };
+  const [x, y, w, hh] = m.cadre;
+  const echelle = pxParCm ? pxParCm / m.upc : Math.min(l / w, h / hh);   // px par unité du dessin
+  const W = Math.round(w * echelle), H = Math.round(hh * echelle);
+  return { html: `<svg class="emp-svg" width="${W}" height="${H}" viewBox="${x} ${y} ${w} ${hh}" role="img" aria-label="Une empreinte"><image href="${src}" x="0" y="0" width="136" height="136"/></svg>`,
+           pxParCm: echelle * m.upc };
+}
+function legendeTaille(espece, pxParCm) {
+  const m = mesureEmpreinte(espece);
+  if (!m) return "";
+  if (m.piste) {   // une piste (serpent, lézard, tortue, triton…) : la barre d'échelle, lisible
+    const cm = [1, 2, 5, 10, 20, 50, 100, 200].find(c => c * pxParCm >= 60) || 200;
+    return `<span class="emp-taille emp-piste"><i style="width:${Math.round(cm * pxParCm)}px"></i><b>${texteCm(cm)}</b></span>`;
+  }
+  return `<span class="emp-taille"><b>environ ${texteCm(m.cm)}</b><small>taille réelle</small></span>`;
+}
+// Une ou deux empreintes à montrer : leurs dessins, à la même échelle si leurs tailles sont proches
+function dessinsEmpreintes(especes, l, h) {
+  const ms = especes.map(mesureEmpreinte);
+  let commun = null;
+  if (especes.length === 2 && ms.every(m => m && !m.piste)) {
+    const [a, b] = ms.map(m => m.cm);
+    if (Math.max(a, b) / Math.min(a, b) < 2) commun = Math.min(...especes.map(e => dessinEmpreinte(e, l, h).pxParCm));
+  }
+  return especes.map(e => { const d = dessinEmpreinte(e, l, h, commun); return { ...d, legende: legendeTaille(e, d.pxParCm || 1), memeEchelle: !!commun }; });
+}
+// La petite empreinte de la fiche (encyclopédie, carte d'identité) : le dessin recadré et sa taille réelle ; un toucher l'agrandit
+function miniEmpreinte(fichier) {
+  const cle = String(fichier).replace("Empreintes/", "").replace(".svg", "");
+  const e = ESPECES.find(x => cleEmpreinte(x) === cle);
+  if (!e) return `<img class="mini-empreinte" src="${fichier}" alt="son empreinte">`;
+  const d = dessinEmpreinte(e, 72, 56), m = mesureEmpreinte(e);
+  return `<span class="mini-empreinte-bloc" role="button" tabindex="0" onclick="event.stopPropagation();agrandirEmpreinte(ESPECES.find(x => x.nom_courant === this.dataset.nom))" data-nom="${echapper(e.nom_courant)}" title="Voir en grand">${d.html}${m && !m.piste ? `<small>environ ${texteCm(m.cm)}</small>` : ""}</span>`;
+}
+const LOUPE_EMP_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.5 15.5 L21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>`;
+function boutonLoupeEmpreinte(espece) {
+  return `<span class="emp-coin" aria-hidden="false"><button type="button" class="emp-loupe" data-loupe="${echapper(espece.nom_courant)}" aria-label="Voir l'empreinte en grand">${LOUPE_EMP_SVG}</button></span>`;
+}
+// Le coin réservé : un toucher dans le coin n'est jamais une réponse ; sur la loupe, l'empreinte s'ouvre en plein écran
+function brancherLoupesEmpreintes(zone) {
+  for (const coin of zone.querySelectorAll(".emp-coin")) {
+    coin.onclick = ev => ev.stopPropagation();   // le coin est à côté du bouton-réponse, jamais dedans : un toucher ici ne répond pas
+    const b = coin.querySelector(".emp-loupe");
+    b.onclick = ev => { ev.stopPropagation(); agrandirEmpreinte(ESPECES.find(e => e.nom_courant === b.dataset.loupe)); };
+  }
+}
+function agrandirEmpreinte(espece) {
+  if (!espece) return;
+  agrandirPhoto("", "");
+  const voile = document.getElementById("photo-agrandie");
+  voile.classList.remove("galerie"); galerieAgrandie = null;
+  const l = Math.min(innerWidth - 32, 560), h = Math.min(innerHeight - 160, 640);
+  const d = dessinEmpreinte(espece, l, h);
+  voile.innerHTML = `<figure class="pa-empreinte">${d.html}<figcaption>${legendeTaille(espece, d.pxParCm || 1)}</figcaption><span class="pa-fermer" aria-label="Fermer">×</span></figure>`;
+  voile.classList.add("ouvert");
+}
+
 // On montre l'empreinte à la place de la photo ; le nom de l'espèce reste caché.
 function poserEmpreinteNom(espece, fichier) {
   if (session && session.focus && !defi) { poserEmpreinteDuo(espece); return; }   // étape 175 : dans la Rencontre
@@ -746,7 +829,11 @@ function poserEmpreinteNom(espece, fichier) {
   document.getElementById("question").textContent = "";       // le titre pose déjà la question
   const cadre = document.getElementById("photo-rencontre");
   cadre.classList.add("cadre-empreinte");
-  cadre.innerHTML = `<img src="${fichier}" alt="Une empreinte">`;
+  // R246 (36.29) : le dessin remplit le cadre, la taille réelle en gros, la loupe dans un coin réservé
+  const largeur = Math.max(200, Math.min((cadre.clientWidth || 340) - 24, 520));
+  const [d] = dessinsEmpreintes([espece], largeur, Math.round(largeur * 0.62));
+  cadre.innerHTML = `<div class="emp-carte emp-seule"><span class="emp-dessin">${d.html}</span>${d.legende}${boutonLoupeEmpreinte(espece)}</div>`;
+  brancherLoupesEmpreintes(cadre);
   for (const e of melanger([espece, ...piegesEmpreinte(espece)])) ajouterBouton(e.nom_courant, e === espece);
   enCours.explication = `C'était : ${espece.nom_courant}. ` + enCours.explication;
 }
@@ -777,16 +864,26 @@ function poserEmpreinteDuo(espece) {
   document.getElementById("question").textContent = "Laquelle de ces deux empreintes est la sienne ?";
   const autre = piegesEmpreinte(espece)[0];
   const zone = document.getElementById("reponses");
-  zone.className = "grille-photos";
-  for (const e of melanger([espece, autre])) {
+  // R246 (36.29, choix 29C) : l'une au-dessus de l'autre, en grand ; même échelle si les tailles sont proches ; loupe dans un coin réservé
+  zone.className = "empreintes-duo";
+  const paire = melanger([espece, autre]);
+  const largeur = Math.max(220, Math.min((zone.clientWidth || 340) - 20, 480));
+  const dessins = dessinsEmpreintes(paire, largeur - 70, 150);
+  paire.forEach((e, i) => {
+    const carte = document.createElement("div");
+    carte.className = "emp-carte emp-choix";
     const bouton = document.createElement("button");
-    bouton.className = "reponse choix-photo";
-    bouton.innerHTML = `<div class="photo cadre-empreinte"><img src="${fichierEmpreinte(e)}" alt="Une empreinte"></div>
+    bouton.className = "reponse choix-photo emp-bouton";
+    bouton.innerHTML = `<span class="emp-dessin">${dessins[i].html}</span>${dessins[i].legende}
                         <div class="legende cache">${e.nom_courant}</div>`;
     if (e === espece) bouton.dataset.juste = "oui";
     bouton.onclick = () => repondre(bouton, e === espece);
-    zone.appendChild(bouton);
-  }
+    carte.appendChild(bouton);
+    carte.insertAdjacentHTML("beforeend", boutonLoupeEmpreinte(e));
+    zone.appendChild(carte);
+  });
+  if (dessins[0].memeEchelle) zone.insertAdjacentHTML("beforeend", `<p class="emp-meme-echelle">Les deux empreintes sont dessinées à la même échelle.</p>`);
+  brancherLoupesEmpreintes(zone);
   enCours.explication = enCours.explication + ` L'autre empreinte était celle de : ${autre.nom_courant}.`;
 }
 
@@ -1095,6 +1192,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
   if (defi && defi.jeu === "revision") { repondreRevision(boutonClique, estJuste, jeNeSaisPas); return; }   // étape 79
   if (defi) { repondreDefi(boutonClique, estJuste); return; }
   if (typeof INSOLITE !== "undefined" && enCours.champ === INSOLITE) { repondreInsoliteRencontre(boutonClique, estJuste); return; }   // étape QI4 (21)
+  if (typeof FORME_Q !== "undefined" && enCours.champ === FORME_Q) { repondreQuestionForme(boutonClique, estJuste); return; }   // étape R254 (09)
   const { espece, champ, explication } = enCours;
   const nom = espece.nom_courant;
   // Étape 136 : « Presque » = une valeur vraie pour l'animal, mais pas son maximum (questions chiffrées)
@@ -1200,6 +1298,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     // Étape R238 (note 7) : la photo reconnue, une seule carte « Pour le reconnaître » + les vignettes de ses photos, photo fixée en haut
     { const ph = document.getElementById("photo-rencontre"); if (ph) ph.insertAdjacentHTML("beforeend", vignettesBravo(espece)); }   // posées sur la photo
     retour.insertAdjacentHTML("beforeend", carteBravo(espece));
+    if (typeof noterFormeMontree === "function" && typeof formesNettes === "function" && formesNettes(espece).length) noterFormeMontree(espece);   // étape R253
     const carteR = document.getElementById("carte-rencontre"); if (carteR) carteR.classList.add("bravo-photo");
   } else if (session && session.focus && champ === IDENTIFICATION && typeof retourMesures === "function") {
     retour.insertAdjacentHTML("beforeend", retourMesures(espece));

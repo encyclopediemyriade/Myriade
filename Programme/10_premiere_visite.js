@@ -71,7 +71,7 @@ function afficherBienvenue() {
   }
   if (etapeBienvenue === ECRAN_NOM) {               // étape M27 : la page du nom (facultatif : Continuer marche même vide)
     document.getElementById("titre-bienvenue").textContent = "Comment voulez-vous qu\u2019on vous appelle\u00a0?";
-    document.getElementById("texte-bienvenue").textContent = "Votre prénom ou un pseudo, si vous le souhaitez. Vous pourrez le changer dans votre Profil.";
+    document.getElementById("texte-bienvenue").textContent = "Votre prénom ou un pseudo, si vous le souhaitez. Vous pourrez le changer dans les Réglages (⚙ en haut du Profil).";
     poserPrenom();
     if (nouveauJoueur && typeof poserReprendreBienvenue === "function") poserReprendreBienvenue();   // étape ML7 : partie sauvegardée dans un fichier
   }

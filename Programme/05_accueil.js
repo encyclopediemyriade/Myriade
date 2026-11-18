@@ -495,9 +495,11 @@ function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans 
       <h2>${connue ? e.nom_courant : "Une espèce à découvrir"}${faite ? ` <span class="ac-jour-coche" title="Rencontrée aujourd'hui" aria-label="Rencontrée aujourd'hui">✓</span>` : ""}</h2>${statut}
       ${anecdote ? `<p class="ac-anecdote"><b>Le saviez-vous ?</b> ${anecdote.texte}</p>` : `<p>${phraseDuJour(e) || (connue ? "" : "Elle n'est pas encore dans votre carnet.")}</p>`}
       <div class="ac-boutons"><button class="ac-bouton${faite ? "" : " plein"}" id="${idR}">${faite ? "La revoir" : connue ? "La retrouver en Rencontre" : "La rencontrer"}</button>
-      ${connue ? `<button class="ac-bouton" id="${idF}">Sa fiche</button>` : ""}</div></div>`;
+      ${connue ? `<button class="ac-bouton" id="${idF}">Sa fiche</button>` : ""}
+      ${typeof recompenseEnAttente === "function" && recompenseEnAttente(`jour|${aujourdhui()}`) ? boutonRecup(recompenseEnAttente(`jour|${aujourdhui()}`)) : ""}</div></div>`;   // R248 (36.24)
   document.getElementById(idR).onclick = () => { lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };
   if (connue) document.getElementById(idF).onclick = () => ouvrirPageEspece(e);
+  if (typeof brancherRecup === "function") brancherRecup(zone, () => dessinerEspeceDuJour(idZone));
 }
 
 // ---- En ce moment ----
