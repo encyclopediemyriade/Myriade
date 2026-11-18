@@ -472,6 +472,22 @@ const SORTES_DEFI = {
                              return n ? { but: Math.min(5, n), depart: casesTrouveesTerritoire(t) } : null; },
                mesure: (t, d) => casesTrouveesTerritoire(t) - d.depart },
 };
+// Étape R259 (série 2, point 4) : « Complétez la fiche du hérisson d'Europe » — une espèce du territoire déjà dans le carnet, à qui il
+//   reste au plus 5 choses à découvrir ; un toucher lance « Compléter sa fiche ». Il passe avant « Découvrir N choses nouvelles ».
+const FICHE_DEFI_MAX = 5;
+function trouveesFiche(e) { return questionsPossibles(e).filter(q => nbBonnes(e, q.champ) >= 1).length; }
+SORTES_DEFI.fiche = {
+  texte: d => { const e = especeParNom(d.espece); return e ? `Complétez la fiche ${deLEspece(e)}` : "Complétez une fiche"; },
+  creer: t => {
+    if (typeof resteCarnet !== "function") return null;
+    const l = especesDe(t).filter(e => estReconnue(e) && estRenseigne(e.photo)).map(e => ({ e, k: resteCarnet([e]) })).filter(x => x.k >= 1 && x.k <= FICHE_DEFI_MAX);
+    if (!l.length) return null;
+    const min = Math.min(...l.map(x => x.k)), c = auHasard(l.filter(x => x.k === min));
+    return { espece: c.e.nom_courant, but: c.k, depart: trouveesFiche(c.e) };
+  },
+  mesure: (t, d) => { const e = especeParNom(d.espece); return e ? trouveesFiche(e) - d.depart : 0; },
+};
+function lancerDefiFiche(d) { const e = especeParNom(d.espece); if (e) lancerFicheEspece(e); }
 function casesTrouveesTerritoire(t) {   // étape R129 : les cases trouvées sur les espèces du territoire
   return especesDe(t).filter(estIdentifiee).reduce((s, e) => s + questionsPossibles(e).filter(q => nbBonnes(e, q.champ) >= 1).length, 0);
 }
@@ -484,7 +500,9 @@ function especeAvecReste(t) {
 }
 function nouveauxDefis(t) {
   const liste = [];
-  for (const sorte of ["etape", "commencer", ...melanger(["decouvrir", "inedites"])]) {
+  // R259 : la fiche à compléter deux fois sur trois avant « Découvrir 3 espèces nouvelles » ; « choses nouvelles » en dernier recours
+  const tirage = Math.random() < 2 / 3 ? ["fiche", "decouvrir"] : ["decouvrir", "fiche"];
+  for (const sorte of ["etape", "commencer", ...tirage, "inedites"]) {
     if (liste.length >= 3) break;
     const d = SORTES_DEFI[sorte].creer(t);
     if (d) liste.push({ sorte, ...d, reussi: false });
@@ -554,7 +572,7 @@ function dessinerDefis(t) {
       <div class="etiq-jeu">Défis du jour</div><p class="jeu-sous">Chaque défi réussi = ${POINTS_DEFI} empreintes · nouveaux défis demain, aucun malus</p>
       ${liste.length ? `<div class="defis">${liste.map((d, i) => {
         const fait = avanceeDefi(t, d), ok = d.reussi || fait >= d.but;
-        return `<div class="defi${ok ? " ok" : ""}${(d.exp || d.sorte === "inedites") && !ok ? " cliquable" : ""}" data-i="${i}"><span class="defi-case" aria-hidden="true">${ok ? "✓" : ""}</span>
+        return `<div class="defi${ok ? " ok" : ""}${(d.exp || d.sorte === "inedites" || d.sorte === "fiche") && !ok ? " cliquable" : ""}" data-i="${i}"><span class="defi-case" aria-hidden="true">${ok ? "✓" : ""}</span>
           <span class="defi-texte">${texteDefi(d)}${d.but > 1 && !ok ? `<small>${fait} sur ${d.but}</small>` : ""}</span>
           ${recompenseEnAttente(d.recompense) ? boutonRecup(recompenseEnAttente(d.recompense)) : `<span class="defi-gain">${ok ? "réussi" : "+" + POINTS_DEFI} ${PAS_SVG}</span>`}</div>`;
       }).join("")}</div>` : `<p class="jeu-sous">Tout est déjà découvert ici : bravo !</p>`}
@@ -563,6 +581,7 @@ function dessinerDefis(t) {
   zone.querySelectorAll(".defi.cliquable").forEach(b => b.onclick = () => {
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167 (avant, R129 : la Rencontre d'une seule espèce)
+    if (d.sorte === "fiche") { lancerDefiFiche(d); return; }       // étape R259
     const x = expeditionParId(d.exp); if (x) ouvrirExpedition(x); });
 }
 // En fin de partie : les défis du jour (remplace « Vos objectifs » depuis l'étape 281)
@@ -859,6 +878,8 @@ function dessinerTuileJour() {
   const ligne = fait ? `<span class="mj-sv">Le saviez-vous ?</span> ${echapper(fait)}` : ou ? `<span class="mj-ou">Où la chercher</span> ${echapper(minuscule(ou))}` : "";
   const recup = recompenseEnAttente(`jour|${aujourdhui()}`);
   const cri = typeof aUnCri === "function" && aUnCri(e);
+  // R259 (série 2, point 4) : déjà dans le carnet et sa fiche à compléter → « Compléter sa fiche · encore N »
+  const resteJour = connue && typeof resteCarnet === "function" && typeof lancerFicheEspece === "function" ? resteCarnet([e]) : 0;
   zone.className = "mai-jour-grand" + (faite ? " faite" : "");
   zone.innerHTML = `<button type="button" class="mj-photo" id="mj-photo" aria-label="${faite && connue ? `Voir la fiche : ${echapper(e.nom_courant)}` : "Rencontrer l'espèce du jour"}">
         ${estRenseigne(src) ? `<img src="${src}" alt="">` : ""}<span class="mj-etiq">Espèce du jour</span></button>
@@ -866,12 +887,12 @@ function dessinerTuileJour() {
         <h2>${connue ? echapper(e.nom_courant) : "Une espèce à découvrir"}${faite ? ` <span class="mai-tj-coche" aria-label="Rencontrée aujourd'hui">✓</span>` : ""}</h2>
         ${ligne ? `<p class="mj-ligne">${ligne}</p>` : ""}
         <div class="mj-boutons">
-          <button type="button" class="couv-go petit mj-go" id="mj-go">${faite && connue ? "Sa fiche" : connue ? "La retrouver" : "La découvrir"} <span aria-hidden="true">▶</span></button>
+          <button type="button" class="couv-go petit mj-go" id="mj-go">${resteJour ? `Compléter sa fiche <small class="mj-reste">encore ${resteJour}</small>` : faite && connue ? "Sa fiche" : connue ? "La retrouver" : "La découvrir"} <span aria-hidden="true">▶</span></button>
           ${cri ? `<button type="button" class="mj-ecouter" id="mj-ecouter"><span aria-hidden="true">♪</span> Écouter</button>` : ""}
           ${recup ? boutonRecup(recup) : !faite ? `<span class="mai-tj-gain">+${GAIN_ESPECE_DU_JOUR} ${PAS_SVG}</span>` : ""}
         </div></div>`;
   const aller = () => { if (faite && connue) { ouvrirPageEspece(e); return; } lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };
-  document.getElementById("mj-go").onclick = aller;
+  document.getElementById("mj-go").onclick = resteJour ? () => lancerFicheEspece(e) : aller;
   document.getElementById("mj-photo").onclick = aller;
   const ec = document.getElementById("mj-ecouter");
   if (ec) ec.onclick = () => {
@@ -912,7 +933,7 @@ function dessinerDefisMaison(t) {
     + anciennes.map(r => `<div class="mai-defi ok ancienne"><span class="mai-d-case" aria-hidden="true">✓</span>
         <span class="mai-d-texte"><small class="mai-d-hier">${r.jour === hierDefis() ? "D'hier" : "En attente"}</small>${echapper(r.quoi)}</span>${boutonRecup(r)}</div>`).join("")
     + liste.map((d, i) => {
-      const fait = avanceeDefi(t, d), ok = d.reussi || fait >= d.but, clic = (d.exp || d.sorte === "inedites") && !ok;
+      const fait = avanceeDefi(t, d), ok = d.reussi || fait >= d.but, clic = (d.exp || d.sorte === "inedites" || d.sorte === "fiche") && !ok;
       const r = recompenseEnAttente(d.recompense);
       return `<${clic ? "button type=\"button\"" : "div"} class="mai-defi${ok ? " ok" : ""}" data-i="${i}"><span class="mai-d-case" aria-hidden="true">${ok ? "✓" : ""}</span>
         <span class="mai-d-texte">${texteDefi(d)}</span>${r ? boutonRecup(r) : i === enCours && d.but > 1 ? `<small>${fait}/${d.but}</small>` : ""}</${clic ? "button" : "div"}>`;
@@ -923,6 +944,7 @@ function dessinerDefisMaison(t) {
     if (ev.target.closest(".recup")) return;
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167
+    if (d.sorte === "fiche") { lancerDefiFiche(d); return; }       // étape R259
     const x = expeditionParId(d.exp); if (x) ouvrirExpedition(x);
   });
   const rep = document.getElementById("mai-d-replier");

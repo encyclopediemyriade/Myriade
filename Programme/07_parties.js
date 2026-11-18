@@ -325,7 +325,7 @@ function dessinPoints(n) {
 //   les espèces (nouvelles, médailles, traits découverts), les familles (rang et part), les badges.
 //   Disparaissent : les lignes Connu / Confirmé, le pourcentage du carnet, le rang de naturaliste.
 function afficherCarnetFin(idZone, { journal, avant, cases, manquees: manqueesFin, origine, parfaite }) {
-  if (typeof verifierFichesCompletes === "function") setTimeout(() => verifierFichesCompletes(), 1400);   // étape R258 (7A)
+  if (typeof bullesFinDePartie === "function") setTimeout(bullesFinDePartie, 1400);   // étape R258 (7A) ; R259 : d'abord « Piste trouvée »
   verifierBadges();                        // étape 106 : les badges de fin de partie (Sans faute, Arpenteur…)
   const zone = document.getElementById(idZone);
   const terr = Object.keys(avant ? avant.territoires : {});
@@ -1945,9 +1945,13 @@ function terminerDefi() {
                    : () => { montrer(depuisArcade ? "arcade" : "accueil"); window.scrollTo(0, 0); };   // comme au démarrage (13)
   if (fe) btT.textContent = "Retour à la fiche";
   const resteFe = fe ? resteCarnet([fe]) : 0;
-  document.getElementById("bouton-rejouer-defi").classList.toggle("cache", !!fe && !resteFe);
+  // R259 : fiche finie → « Fiche suivante : la plus proche d'être complète »
+  const suivanteFe = fe && !resteFe && typeof fichesPresqueCompletes === "function" ? (fichesPresqueCompletes(1, fe)[0] || null) : null;
+  document.getElementById("bouton-rejouer-defi").classList.toggle("cache", !!fe && !resteFe && !suivanteFe);
   if (fe && resteFe) document.getElementById("bouton-rejouer-defi").textContent = "Continuer sa fiche";
+  if (suivanteFe) document.getElementById("bouton-rejouer-defi").textContent = `Fiche suivante : ${suivanteFe.e.nom_courant} · encore ${suivanteFe.k}`;
   document.getElementById("bouton-rejouer-defi").onclick = () => {
+    if (suivanteFe) { lancerFicheEspece(suivanteFe.e); return; }          // étape R259
     if (fe) { lancerFicheEspece(fe); return; }                            // étape R258
     if (d.carnet) { lancerCarnet(d.depuisJeux); return; }                 // étape R167
     if (d.jouer) { lancerJouer(); return; }                               // étape 196 : « Jouer », sur le terrain du moment

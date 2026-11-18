@@ -2027,6 +2027,8 @@ function dessinerEcranExpedition() {
   // montre l'avancée de l'étape en cours sous chaque photo — étapes 1 et 2 : petites cases + « 1/2 » ; étape 3 : petite barre
   // + « 9/14 » ; tout fini : les 3 médailles (bronze, argent, or) — R130 : « ✓ connue » à la place. Les lignes de cases ne sont plus dans les cartes des étapes.
   const kCadre = !etapeFinie(x, 1) ? 1 : !etapeFinie(x, 2) ? 2 : !approfondie(x) ? 4 : 0;
+  if (typeof verifierPiste === "function") verifierPiste();   // étape R259 : la piste trouvée se termine ici aussi
+  const cible = typeof pisteEnCours === "function" && suivi.piste && suivi.piste.exp === x.id ? pisteEnCours() : null;
   const especes = x.liste.map(e => {
     const id = estIdentifiee(e), deja = especeFaite(e, 1) && !estRevue(x, e);   // étape 317
     let marque, fait;
@@ -2046,8 +2048,8 @@ function dessinerEcranExpedition() {
       fait = especeFaite(e, 4);
       marque = `<em class="exp-compte fait">✓ connue</em>`;   // étape R130 : plus de médailles dans l'expédition (pour l'instant)
     }
-    return `<button class="exp-esp${id ? "" : " inconnue"}${fait ? " bien" : ""}${deja && kCadre === 1 ? " deja" : ""}" data-nom="${echapper(e.nom_courant)}" ${id ? "" : "disabled"}>
-        <span class="exp-rond${estRenseigne(e.photo) ? "" : " silh"}"><img src="${photoEsp(e)}" alt="" loading="lazy"></span><small>${id ? e.nom_courant : "À découvrir"}</small>${marque}</button>`;
+    return `<button class="exp-esp${id ? "" : " inconnue"}${fait ? " bien" : ""}${deja && kCadre === 1 ? " deja" : ""}${e === cible ? " piste-cible" : ""}" data-nom="${echapper(e.nom_courant)}" ${id ? "" : "disabled"}>
+        <span class="exp-rond${estRenseigne(e.photo) ? "" : " silh"}"><img src="${photoEsp(e)}" alt="" loading="lazy"></span><small>${id ? e.nom_courant : e === cible ? "Votre piste" : "À découvrir"}</small>${marque}</button>`;
   }).join("");
   const titreCadre = kCadre ? `Étape ${kCadre === 4 ? numApprof : kCadre} · ${ETAPES[kCadre].titre}` : "Expédition terminée";   // R239 (36.18a) : même numéro que la carte   // R131 : sans « Les espèces · » (demande de l'utilisateur)
   const aideCadre = kCadre === 1 ? `Leur nom se découvre à cette étape. Sélectionnez une espèce découverte pour ouvrir sa fiche.${especesARevoirIci(x).length ? " « À revoir ici » : vous la connaissez déjà d'ailleurs, une photo suffit." : ""}`
@@ -2065,10 +2067,12 @@ function dessinerEcranExpedition() {
         <p>${x.liste.length} espèces à découvrir, puis à connaître.</p></div>
       <div class="exp-ban-pas">${dessinGain(x)}<small>empreintes gagnées ici</small></div></div>
     ${encadreEtMaintenant(x)}
+    ${typeof bandeauPiste === "function" ? bandeauPiste(x) : ""}
     <div class="exp-corps-ecran"><div class="exp-etapes">${etapes}${approf}</div>
       <div class="jeu-encart"><div class="etiq-jeu">${titreCadre}</div><p class="jeu-sous">${aideCadre}</p>
         <div class="exp-especes">${especes}</div></div></div></div>`;
   document.getElementById("exp-retour").onclick = () => estLieu(lieuDeX) ? ouvrirLieu(x.territoire, lieuDeX.nom) : montrer("accueil");
+  if (typeof brancherBandeauPiste === "function") brancherBandeauPiste();   // étape R259
   const retourM = document.getElementById("exp-retour-m");   // étape M8 : la pastille du lieu (téléphone)
   if (retourM) retourM.onclick = () => { if (estLieu(lieuDeX)) ouvrirLieu(x.territoire, lieuDeX.nom); else montrer("accueil"); window.scrollTo(0, 0); };
   const suite = suiteExpedition(x) || suiteApresExpedition(x);   // R239 (8A) : le bouton du bandeau suit l'état (avant : « Étape 1 » lançait les Rencontres sans passer par les portes)

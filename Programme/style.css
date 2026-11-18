@@ -5894,3 +5894,185 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
   #ency-piste .ep-ferme { margin: 0; font-size: 13.5px; color: var(--texte-doux); }
   #ency-piste .ep-aller { min-height: 46px; border: 0; border-radius: 8px; background: #1F3A2E; color: #FBF8F1; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; }
 }
+
+/* ==================================================================
+   Étape R259 (18/11/2026, série 2, choix « 2B · 3C ») — bande « À suivre », piste suivie jusqu'à l'expédition.
+   ================================================================== */
+.pistes-suivre .ps-ligne { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 10px; align-items: center; width: 100%; padding: 7px 12px 7px 8px;
+  text-align: left; font: inherit; color: #1F3A2E; background: var(--carte); border: 1px solid var(--trait); border-radius: 8px; cursor: pointer; }
+.pistes-suivre .ps-ligne.ps-piste { border-color: var(--ocre); background: #fbf3e6; }
+.pistes-suivre .ps-ligne > span { min-width: 0; }
+.pistes-suivre .ps-ligne b { display: block; font-weight: 600; font-size: 14px; color: #1F3A2E; }
+.pistes-suivre .ps-piste b { color: var(--ocre-texte); }
+.pistes-suivre .ps-ligne small { display: block; margin: 0; font-size: 13px; line-height: 1.3; color: var(--texte); }
+.pistes-suivre .ps-ligne small.ps-lieu { font-size: 12.5px; color: var(--texte-doux); }
+.pistes-suivre .ps-ligne em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--ocre-texte); white-space: nowrap; }
+.pistes-suivre .ps-photo { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 2px solid var(--carte); box-shadow: 0 0 0 1px var(--trait); box-sizing: border-box; }
+.pistes-suivre .ps-jauge { display: block; height: 5px; margin-top: 5px; border-radius: 3px; background: #E3DBC9; overflow: hidden; }
+.pistes-suivre .ps-jauge b { display: block; height: 100%; background: #3E7B55; border-radius: 3px; }
+/* Le bandeau « Vous suivez une piste » sur la page de l'expédition, et le rond de l'espèce cherchée */
+.exp-piste { display: grid; grid-template-columns: 46px 1fr; gap: 6px 10px; align-items: center; margin: 10px 0; padding: 10px 12px; background: #fbf3e6;
+  border: 1px solid var(--ocre); border-radius: 8px; font-size: 14px; line-height: 1.35; }
+.exp-piste b { color: var(--ocre-texte); margin-right: 4px; }
+.exp-piste .ps-sil { position: relative; display: block; width: 46px; height: 46px; border-radius: 50%; background: #fff; border: 1.5px dashed var(--ocre); box-sizing: border-box; }
+.exp-piste .ps-sil img { position: absolute; inset: 8px; width: 27px; height: 27px; object-fit: contain; opacity: .4; }
+.exp-piste-stop { grid-column: 2; justify-self: start; padding: 0; min-height: 32px; border: 0; background: none; font: inherit; font-size: 13px; color: var(--texte-doux); text-decoration: underline; cursor: pointer; }
+.exp-esp.piste-cible .exp-rond { outline: 2px dashed var(--ocre); outline-offset: 3px; }
+.exp-esp.piste-cible > small { color: var(--ocre-texte); font-weight: 600; }
+.mj-go .mj-reste { font-size: .82em; font-weight: 400; opacity: .85; margin-left: 4px; }
+
+/* ==================================================================
+   Étape R260 (18/11/2026, « Une Encyclopédie plus avenante », choix « 2A · 3A · 4A ») — téléphone seulement.
+   ================================================================== */
+#ency-haut-mobile .ency-ligne { display: none; }
+@media (max-width: 760px) {
+  /* 4A : une seule ligne — titre, territoire en puce, loupe */
+  #ency-haut-mobile { gap: 8px; }
+  #ency-haut-mobile .ency-ligne { display: flex; align-items: center; gap: 8px; }
+  .ency-titre-m { margin: 0; flex: none; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 21px; color: #1F3A2E; }
+  .ency-terr-place { flex: 1; min-width: 0; display: flex; justify-content: flex-end; }
+  .ency-terr-place .menu-territoire select { width: 100%; }
+  .ency-mise { gap: 12px; }
+  .ency-mise.en-sommaire .filtres { display: none; }
+  .ency-terr-place .filtres-territoire { margin: 0; display: block; }
+  .ency-terr-place .titre-filtre { display: none; }
+  .ency-terr-place .menu-territoire { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; height: 34px; padding: 0 10px; border: 1px solid var(--trait); border-radius: 17px; background: #fff; box-sizing: border-box; }
+  .ency-terr-place .menu-territoire i { position: static; transform: none; flex: none; width: 9px; height: 9px; border-radius: 50%; }
+  .ency-terr-place .menu-territoire select { padding: 0 2px; appearance: auto; }
+  .ency-terr-place select { min-width: 0; max-width: 100%; border: 0; background: none; font: inherit; font-size: 13.5px; color: #1F3A2E; padding: 0 2px; text-overflow: ellipsis; }
+  .ency-loupe-bouton { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--trait); border-radius: 50%; background: #fff; cursor: pointer; padding: 0; }
+  #ency-haut-mobile:not(.recherche-ouverte) .ency-recherche { display: none; }
+  #ency-haut-mobile.recherche-ouverte .ency-loupe-bouton { background: #1F3A2E; border-color: #1F3A2E; }
+  #ency-haut-mobile.recherche-ouverte .ency-loupe-bouton .ency-loupe { filter: invert(1); }
+  .ency-mise .filtres .filtres-territoire { display: none; }   /* il est maintenant dans la ligne du haut */
+
+  /* 2A : une couverture par famille */
+  .couv-titre { margin: 6px 0 8px; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 17px; color: #1F3A2E; }
+  .couv-collection { gap: 10px; }
+  .som-famille.couv-famille { position: relative; display: block; height: 118px; padding: 0; overflow: hidden; border: 0; border-radius: 12px; background: #2b3a31; text-align: left; }
+  .couv-famille::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--couleur-classe); z-index: 2; }
+  .couv-famille .couv-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .couv-famille .couv-voile { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18,28,22,.80) 0%, rgba(18,28,22,.38) 55%, rgba(18,28,22,0) 100%); }
+  .couv-famille .couv-texte { position: absolute; left: 16px; top: 13px; right: 14px; color: #fff; z-index: 1; }
+  .couv-famille .couv-texte b { display: block; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 20px; line-height: 1.15; }
+  .couv-famille .couv-texte small { display: block; margin-top: 2px; font-size: 13px; opacity: .92; }
+  .couv-famille .couv-jauge { position: absolute; left: 16px; bottom: 14px; width: 46%; height: 4px; border-radius: 2px; background: rgba(255,255,255,.3); overflow: hidden; z-index: 1; }
+  .couv-famille .couv-jauge i { display: block; height: 100%; border-radius: 2px; background: #fff; }
+  .couv-famille .couv-legende { position: absolute; right: 10px; bottom: 9px; max-width: 45%; font-size: 11px; color: rgba(255,255,255,.88); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 1; }
+  .som-famille.couv-famille.vide { height: 84px; background: #EDE6D6; }
+  .couv-famille.vide .couv-texte { color: #1F3A2E; }
+  .couv-famille.vide .couv-texte small { color: var(--texte-doux); }
+  .couv-famille.vide .couv-jauge { background: #ddd3bf; }
+
+  /* 3A : l'album en 3 colonnes de grandes photos, le nom posé dessus */
+  .alb-grille { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .alb-case { border-radius: 9px; }
+  .alb-vue { position: relative; border: 0; background: #2b3a31; }
+  .alb-vue > img { aspect-ratio: 1 / 1; }
+  .alb-vue > span:last-child { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 6px 5px; color: #fff; font-size: 11.5px; line-height: 1.15;
+    background: linear-gradient(transparent, rgba(15,22,18,.78)); text-align: left; }
+  .alb-vue > span:last-child small { display: block; font-weight: 400; font-size: 10px; color: #f3e1c4; }
+  .alb-vide { border: 1px solid #e3dac6; background: #EFE9DB; }
+  .alb-vide .alb-sil img { opacity: .22; }
+}
+
+/* ==================================================================
+   Étape R260b (18/11/2026, « La fiche de l'espèce plus avenante », choix « 2A · 3A · 4A ») — téléphone seulement.
+   ================================================================== */
+.pe-couv-retour, .pe-couv-fav, .pe-couv-texte, .pe-etiquettes { display: none; }
+@media (max-width: 760px) {
+  /* 2A : la photo en couverture, bord à bord, le nom posé dessus */
+  #vue-espece .pe { gap: 12px; }
+  #vue-espece .pe-retour, #vue-espece .pe-medaille, #vue-espece .pe-cote > h1, #vue-espece .pe-sci, #vue-espece .pe-favori,
+  #vue-espece .pe-groupe, #vue-espece .pe-statut { display: none; }
+  #vue-espece .pe-photo { position: relative; width: 100vw; margin: -8px 0 0 calc(50% - 50vw); height: 300px; border: 0; border-radius: 0; overflow: hidden; background: #2b3a31; }
+  #vue-espece .pe-cote { width: 100%; }
+  #vue-espece .pe-photo > img, #vue-espece .pe-photo .photo-cellule, #vue-espece .pe-photo picture { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #vue-espece .pe-photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(15,22,18,.38) 0%, rgba(15,22,18,0) 26%, rgba(15,22,18,0) 48%, rgba(15,22,18,.84) 100%); }
+  .pe-couv-retour, .pe-couv-fav { display: grid; place-items: center; position: absolute; top: 10px; z-index: 3; width: 40px; height: 40px; padding: 0;
+    border: 0; border-radius: 50%; background: rgba(251,248,241,.9); color: #1F3A2E; font-size: 19px; cursor: pointer; }
+  .pe-couv-retour { left: 12px; }
+  .pe-couv-fav { right: 12px; color: var(--ocre); }
+  .pe-couv-fav.choisie { background: var(--ocre); color: #fff; }
+  .pe-couv-texte { display: block; position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 2; color: #fff; pointer-events: none; }
+  .pe-couv-fam { display: inline-block; max-width: 100%; margin-bottom: 6px; padding: 2px 9px; border-radius: 10px; background: var(--c); font-size: 11.5px; line-height: 1.4;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-sizing: border-box; }
+  .pe-couv-texte b { display: block; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 26px; line-height: 1.1; }
+  .pe-couv-texte i { display: block; margin-top: 2px; font-size: 13px; opacity: .85; }
+  #vue-espece .pe-photo .rarete { z-index: 3; top: 58px; }
+  #vue-espece .pe-forme { top: 58px; bottom: auto; left: 12px; z-index: 3; }
+  #vue-espece .pe-galerie { margin: 8px 0 0; }
+  .pe-etiquettes { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
+  .pe-etiquettes span { padding: 3px 10px; border: 1px solid var(--trait); border-radius: 12px; background: #fff; font-size: 12.5px; color: #1F3A2E; }
+  .pe-etiquettes .pe-et-statut { border-color: #3E7B55; color: #3E7B55; font-weight: 600; }
+  .pe-etiquettes .pe-et-fav { border-color: var(--ocre); color: var(--ocre-texte); }
+  #vue-espece .pe-rencontre { margin-top: 10px; background: #1F3A2E; color: #fff; border: 0; border-radius: 10px; padding: 11px 14px; font-weight: 600; }
+  #vue-espece .pe-rencontre small { color: #e9d9b8; font-weight: 400; padding-left: 30px; }
+  #vue-espece .pe-rencontre .picto { stroke: #e9d9b8; }
+
+  /* 3A : une carte blanche par partie */
+  #vue-espece .pe-partie { margin: 0 0 12px; padding: 12px 12px 10px; background: #fff; border: 1px solid #e5dccb; border-radius: 12px; }
+  #vue-espece .pe-partie .pe-h { margin: 0 0 8px; padding: 0; border: 0; font-size: 17px; }
+  #vue-espece .pe-partie > .reperes { padding: 0; border: 0; background: none; }
+  #vue-espece .pe-p-savoir .pe-anecdotes { margin-top: 12px; padding: 10px 12px 6px; }
+
+  /* 4A : « Ce que vous savez » en tuiles à pictogramme, sur deux colonnes */
+  #vue-espece .pe-page { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 8px 0 0; background: none; border: 0; border-radius: 0; }
+  #vue-espece .pe-ligne { display: grid; grid-template-columns: 30px minmax(0, 1fr); grid-template-areas: "p l" "p v"; column-gap: 8px; align-items: center;
+    position: relative; min-height: 0; padding: 8px 9px; border: 0; border-radius: 9px; background: #f6f1e6; font-size: 14px; }
+  #vue-espece .pe-ligne .lib { grid-area: l; width: auto; font-size: 11.5px; line-height: 1.2; }
+  #vue-espece .pe-ligne .val { display: contents; }
+  #vue-espece .pe-ligne .pe-picto { grid-area: p; align-self: center; }
+  #vue-espece .pe-ligne .val-txt { grid-area: v; font-weight: 600; font-size: 13.5px; line-height: 1.25; color: #1F3A2E; overflow-wrap: anywhere; }
+  #vue-espece .pe-ligne.inconnue { background: #faf7f0; }
+  #vue-espece .pe-ligne.inconnue .val-txt { color: #c2b8a4; font-weight: 400; }
+  #vue-espece .pe-ligne.inconnue .pe-picto { width: 22px; height: 22px; border-radius: 50%; border: 1.5px dashed #d6ccb8; box-sizing: border-box; justify-self: center; }
+  #vue-espece .pe-ligne .points-donnee { position: absolute; top: 5px; right: 6px; margin: 0; transform: scale(.8); transform-origin: top right; }
+  #vue-espece .pe-ligne:has(audio) { grid-column: 1 / -1; }
+  #vue-espece .pe-ligne audio { max-width: 100%; }
+}
+@media (max-width: 760px) {
+  #vue-espece .pe-ligne { align-content: center; row-gap: 2px; }
+  #vue-espece .pe-p-savoir .pe-onglets { flex-wrap: nowrap; overflow-x: auto; margin: 0 -12px; padding: 0 12px 2px; scrollbar-width: none; }
+  #vue-espece .pe-p-savoir .pe-onglets::-webkit-scrollbar { display: none; }
+  #vue-espece .pe-p-savoir .pe-onglet { flex: none; white-space: nowrap; }
+}
+@media (max-width: 760px) {
+  #vue-espece .pe > main, #vue-espece .pe > aside, #vue-espece .pe-partie { min-width: 0; max-width: 100%; }
+}
+
+/* ---- Étape R261 (18/11/2026, choix « 1A · 2A · 3A ») : la page Carte embellie — mer et relief, cartes postales, prochain territoire, grille « Plus tard » ---- */
+.at-carte-france { padding: 0; overflow: hidden; }
+.at-houle { fill: none; stroke: #B7CFCB; stroke-width: 3; stroke-linecap: round; pointer-events: none; }
+.at-cote { fill: #FBF8F1; stroke: #FBF8F1; stroke-width: 14; stroke-linejoin: round; pointer-events: none; }
+.at-relief.ferme { opacity: .5; }
+.at-terr.ferme { cursor: pointer; }
+.at-prochain-halo { fill: none; stroke: #C98A4B; stroke-opacity: .45; stroke-width: 22; stroke-linejoin: round; pointer-events: none; }
+.at-prochain-etiq { pointer-events: none; }
+.at-prochain-etiq rect { fill: #A8652A; }
+.at-prochain-etiq text { fill: #fff; font-family: "Work Sans", system-ui, sans-serif; font-weight: 600; letter-spacing: 1px; }
+.at-ici .at-epingle { fill: #1F3A2E; stroke: #FBF8F1; stroke-width: 4; }
+.at-ici .at-maison { fill: none; stroke: #FBF8F1; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+/* 2A · les cartes postales */
+.at-postale { border: 1px solid var(--trait); border-radius: 14px; overflow: hidden; background: var(--carte); }
+.at-ligne.at-postale-haut { position: relative; display: block; height: 118px; padding: 0; border: 0; border-radius: 0; background: #C9C2B0; overflow: hidden; }
+.at-postale-haut img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.at-postale-haut::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,.6)); }
+.at-postale-haut b { position: absolute; left: 14px; right: 14px; bottom: 10px; z-index: 1; color: #fff; font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 600; line-height: 1.15; }
+.at-ici-etiq { position: absolute; top: 10px; left: 10px; z-index: 1; display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 6px; border-radius: 99px; background: rgba(251,248,241,.94); color: #1F3A2E; font-size: 12px; font-weight: 600; }
+.at-ici-etiq svg { width: 14px; height: 14px; fill: none; stroke: #1F3A2E; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.at-postale-bas { padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 7px; }
+.at-postale-bas > small { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--texte-doux); }
+.at-continuer { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 14px; border: 0; border-radius: 10px; background: var(--couleur-t, #1F3A2E); color: #fff; font: inherit; font-weight: 600; font-size: 14px; text-align: left; cursor: pointer; }
+.at-continuer span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 3A · le prochain territoire, puis les autres en petites formes */
+button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; background: rgba(251,248,241,.6); text-align: left; }
+.at-suivant-ph { width: 74px; height: 74px; flex: none; border-radius: 10px; overflow: hidden; background: #DCD5C4; }
+.at-suivant-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.at-suivant-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.at-suivant-corps b { font-family: Literata, Georgia, serif; font-size: 16px; font-weight: 600; }
+.at-suivant small.at-suivant-etiq { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; font-weight: 600; color: #A8652A; }
+.at-forme { flex: none; display: block; }
+.at-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.at-ligne-ferme.at-case { flex-direction: column; justify-content: flex-start; gap: 4px; min-height: 0; padding: 8px 4px 7px; border: 1px solid var(--trait); border-radius: 10px; background: rgba(251,248,241,.6); text-align: center; font-size: 11.5px; line-height: 1.2; color: var(--texte-doux); }
