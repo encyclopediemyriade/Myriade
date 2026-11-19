@@ -3504,9 +3504,9 @@ button.pastille-carnet:hover { background: #fff; }
 @media (max-width: 760px) {
   /* 4. Pendant une question : tout doit tenir dans l'écran (bannière, espèces, photo, question, réponses).
         Les onglets du bas se retirent le temps de la question (on sort par « ← Expédition » ou « Quitter »). */
-  body:has(#carte-rencontre:not(.cache)) nav.barre .onglet { display: none; }
-  body:has(#carte-rencontre:not(.cache)) { padding-bottom: 0; }
-  body:has(#carte-rencontre:not(.cache)) main, body:has(#carte-rencontre:not(.cache)) #vue-rencontre { padding-bottom: 12px; }
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) nav.barre .onglet { display: none; }
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) { padding-bottom: 0; }
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) main, body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) #vue-rencontre { padding-bottom: 12px; }
   /* la bannière de l'expédition : une seule bande fine */
   #fil-expedition.fil-banniere { height: 50px; margin-bottom: 8px; }
   #fil-expedition.fil-banniere .fil-corps { padding: 0 12px; gap: 10px; }
@@ -3853,7 +3853,7 @@ button.pastille-carnet:hover { background: #fff; }
 
   /* c. Les onglets du bas se retirent aussi pendant « Qui est qui ? » et pendant une question de la finale du lieu
         (comme pendant les autres questions, étape M3) */
-  body:has(#intermede-exp) nav.barre .onglet,
+  body:has(#vue-rencontre:not(.cache) #intermede-exp) nav.barre .onglet,
   body:has(#vue-lieu:not(.cache) .finale-barre) nav.barre .onglet { display: none; }
 }
 
@@ -3863,12 +3863,12 @@ button.pastille-carnet:hover { background: #fff; }
    ========================================================================== */
 @media (max-width: 760px) {
   /* a. Après une réponse (maquette B) : « Continuer » est fixé en bas de l'écran, toujours au même endroit, sous le pouce */
-  body:has(#carte-rencontre:not(.cache)) #suivant:not(.cache) {
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) #suivant:not(.cache) {
     position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 26;
     width: auto; max-width: none; margin: 0; min-height: 52px; font-size: 16px; font-weight: 600; border-radius: 8px;
     box-shadow: 0 0 0 12px var(--papier, #F3EEE2), 0 -12px 0 12px var(--papier, #F3EEE2);
   }
-  body:has(#carte-rencontre:not(.cache)) { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 
   /* b. Fin d'une étape d'expédition (maquette A « Le bilan d'abord ») : le résumé seul, le reste dans « Voir le détail » */
   .fin-courte:not(.detail-ouvert) > :not(.resume-fin-tel) { display: none !important; }
@@ -4507,8 +4507,8 @@ button.pastille-carnet:hover { background: #fff; }
 }
 @media (max-width: 760px) {
   /* R171-R172 : comme pendant les autres questions (M3), les onglets du bas se retirent pendant la planche et le lien du lieu */
-  body:has(#forme-ecran) nav.barre .onglet { display: none; }
-  body:has(#forme-ecran) { padding-bottom: 0; }
+  body:has(#vue-rencontre:not(.cache) #forme-ecran) nav.barre .onglet { display: none; }
+  body:has(#vue-rencontre:not(.cache) #forme-ecran) { padding-bottom: 0; }
 }
 /* R169-R170 : les écrans des formes prennent toute la largeur de la zone de réponses (sur ordinateur, elle est en 2 colonnes) */
 #carte-rencontre #reponses.forme-ecoute, #carte-rencontre #reponses.forme-indices, #carte-rencontre #reponses.forme-choix {
@@ -4934,8 +4934,8 @@ button.pastille-carnet:hover { background: #fff; }
   nav.barre .onglet { width: 20%; }
   #onglet-accueil { left: 0; } #onglet-carte { left: 20%; } #onglet-encyclopedie { left: 40%; } #onglet-jouer { left: 60%; } #onglet-progression { left: 80%; }
   #onglet-carte::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z'/%3E%3Cpath d='M9 4v14M15 6v14'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z'/%3E%3Cpath d='M9 4v14M15 6v14'/%3E%3C/svg%3E"); }
-  body:has(#carte-rencontre:not(.cache)) nav.barre #onglet-carte, body:has(#intermede-exp) nav.barre #onglet-carte,
-  body:has(#vue-lieu:not(.cache) .finale-barre) nav.barre #onglet-carte, body:has(#forme-ecran) nav.barre #onglet-carte { display: none; }
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) nav.barre #onglet-carte, body:has(#vue-rencontre:not(.cache) #intermede-exp) nav.barre #onglet-carte,
+  body:has(#vue-lieu:not(.cache) .finale-barre) nav.barre #onglet-carte, body:has(#vue-rencontre:not(.cache) #forme-ecran) nav.barre #onglet-carte { display: none; }
 }
 
 /* ==================================================================
@@ -5237,8 +5237,8 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
    Après le choix « par les indices », les 4 photos passent sur une seule rangée (moins de hauteur). Rien ne change sur ordinateur.
    ========================================================================== */
 @media (max-width: 760px) {
-  body:has(#carte-rencontre:not(.cache)) #carte-rencontre .fe-go,
-  body:has(#carte-rencontre:not(.cache)) #carte-rencontre #reponses .bouton-annonce {
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) #carte-rencontre .fe-go,
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) #carte-rencontre #reponses .bouton-annonce {
     position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 26;
     width: auto; max-width: none; margin: 0; min-height: 52px; font-size: 16px; font-weight: 600; border-radius: 8px;
     box-shadow: 0 0 0 12px var(--papier, #F3EEE2), 0 -12px 0 12px var(--papier, #F3EEE2);
@@ -5247,7 +5247,7 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
   .carte-rencontre:has(#reponses .bouton-annonce) .vers-fiche { display: none !important; }
   #reponses.forme-choix[data-repondu] .fe-photos { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
   /* le vide sous « Quitter » : la place du bouton fixé suffit */
-  body:has(#carte-rencontre:not(.cache)) { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  body:has(#vue-rencontre:not(.cache) #carte-rencontre:not(.cache)) { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* Étape R234 (suite) — Coup d'œil, À l'oreille et le défi d'une expédition : sur téléphone, le bouton « Photo suivante »,
@@ -6152,7 +6152,7 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
     box-shadow: 0 0 0 12px var(--papier, #F3EEE2), 0 -12px 0 12px var(--papier, #F3EEE2); background: var(--papier, #F3EEE2);
   }
   #forme-ecran .en-carte .fp-pied > button { flex: 1 1 0; min-height: 52px; font-size: 16px; font-weight: 600; border-radius: 8px; margin: 0; }
-  body:has(#forme-ecran .en-carte) { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  body:has(#vue-rencontre:not(.cache) #forme-ecran .en-carte) { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 }
 .apf-affirmation { margin: 0 0 10px; padding: 10px 12px; border-left: 3px solid var(--texte, #1F3A2E); background: #fff; border-radius: 0 6px 6px 0;
   font-style: italic; font-size: 1.02rem; color: var(--texte, #1F3A2E); }
@@ -6166,7 +6166,7 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
   #forme-ecran .en-carte.en-annonce .fp-pied { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 26; margin: 0;
     background: var(--papier, #F3EEE2); box-shadow: 0 0 0 12px var(--papier, #F3EEE2); }
   #forme-ecran .en-carte.en-annonce .fp-pied > .en-non-merci { min-height: 44px; font-size: 15px; font-weight: 400; flex: none; }
-  body:has(#forme-ecran .en-annonce) { padding-bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
+  body:has(#vue-rencontre:not(.cache) #forme-ecran .en-annonce) { padding-bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
 }
 /* R266 · La photo bonus de Me tester (Approfondir) */
 .apf-bonus-etiq { margin: 4px 0 8px; font-size: 13px; color: var(--texte-doux, #5d5a52); }
@@ -6282,3 +6282,50 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
   .arc-jeux.compacte .arc-jeu.ferme .arc-fleche { visibility: hidden; }
   .arc-jeux.compacte .arc-jeu.ferme .arc-ligne { white-space: normal; }
 }
+
+/* ==================================================================
+   Étape R270 (19/11/2026, session T1 du test du 19/11) — corrections sûres (bugs et affichage)
+   ================================================================== */
+/* n° 2 — ordinateur : le bouton de suite reste collé au bas de la fenêtre quand sa place est plus bas que l'écran
+   (comme sur téléphone) ; s'il est déjà visible, il ne bouge pas. La page descend aussi toute seule (09, suiteVisibleSurOrdinateur). */
+@media (min-width: 761px) {
+  #carte-rencontre #suivant:not(.cache), #carte-rencontre #reponses .fe-go, #carte-rencontre #reponses .bouton-annonce {
+    position: sticky; bottom: 14px; z-index: 6; box-shadow: 0 0 0 10px #FBF8F1;
+  }
+  /* « clip » coupe comme « hidden », mais laisse le bouton se coller au bas de la fenêtre */
+  #carte-rencontre { overflow: clip; }
+}
+/* n° 11 — question des deux empreintes : « environ 7 cm · taille réelle » reste sur une ligne, même sur un petit téléphone */
+.emp-taille { white-space: nowrap; }
+@media (max-width: 400px) { .emp-choix .emp-taille b { font-size: 19px; } .emp-choix .emp-taille small { font-size: 12px; } }
+/* n° 17 — fiche : une case déjà montrée par la Rencontre, pas encore trouvée : sa valeur en plus clair (au lieu de « ? ») */
+.pe-ligne.montree .val-txt, .carac.montree { color: var(--texte-doux, #6B6558); }
+.pe-ligne.montree .pe-picto { opacity: .7; }
+/* n° 28 — ordinateur : le petit message (« ✓ Défi du jour réussi… ») se pose en bas à droite : il ne recouvre plus les liens du milieu */
+@media (min-width: 761px) {
+  .bulle { left: auto; right: 24px; bottom: 24px; transform: translateY(20px); max-width: 420px; }
+  .bulle.visible { transform: translateY(0); }
+}
+/* n° 36 — téléphone : petites cibles agrandies sans rien déplacer (la zone qui répond dépasse le texte, jusqu'à 44 px environ) */
+@media (max-width: 760px) {
+  .sig-lien, #fil-expedition .fil-retour, .bouton-silhouette, .cdo-quitter { position: relative; }
+  .sig-lien::after, #fil-expedition .fil-retour::after, .bouton-silhouette::after, .cdo-quitter::after { content: ""; position: absolute; inset: -10px -8px; }
+  .cdo-quitter { min-width: 44px; min-height: 40px; }
+}
+/* n° 36 — les repères de la médaille du lieu (22 · 43 · 86) : 11 px au lieu de 9 */
+.sentier-lieu .sent-jalon small { font-size: 11px; }
+/* n° 36 — petit téléphone (360 px) : la carte de fête (« Nouvelle espèce ») ne dépasse plus de l'écran */
+@media (max-width: 388px) { .carte-fete { width: calc(100% - 80px); } }
+/* n° 36 — après une erreur, l'explication n'est plus serrée dans une colonne étroite à côté de « Pas cette fois » :
+   le texte suit l'étiquette puis reprend toute la largeur */
+.verdict { display: block; }
+.verdict .vd-mot { margin-right: 8px; }
+.verdict .vd-phrase { display: inline; }
+/* n° 37 — ordinateur : le lieu et le territoire du bandeau d'expédition s'écrivent en entier (sur deux lignes s'il le faut) */
+@media (min-width: 761px) {
+  #fil-expedition.fil-banniere .fil-texte small { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.3; }
+}
+/* n° 37 — fiche d'espèce : un nom long sous une vignette se coupe entre deux syllabes (« charbon-nière »), plus au milieu d'une syllabe */
+.pl-rond small { overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
+/* n° 37 — première visite : « Reprendre ma partie » décollé du bouton « Continuer » */
+.bienvenue-reprendre { margin-bottom: 22px; }

@@ -245,7 +245,7 @@ function finCoupDoeil() {
       ${vientDOuvrir ? `<div class="cdo-ouvre"><small>Le niveau ${vientDOuvrir} s'ouvre</small><b>${NIVEAUX_COUP[vientDOuvrir].nom}</b><span>${NIVEAUX_COUP[vientDOuvrir].texte}</span>
         <button class="cdo-ouvre-btn" id="cdo-niveau-suivant">Essayer le niveau ${vientDOuvrir}</button></div>` : ""}
       <div class="cdo-vign">${coup.tours.map(t => `<span class="${t.choix === t.espece ? "" : "ko"}">${imagePhoto(t.photo.src, t.espece.nom_courant, true)}</span>`).join("")}</div>
-      ${ratees.length ? `<div class="cdo-arevoir"><b>À revoir</b><ul>${ratees.map(t => `<li>${echapper(t.espece.nom_courant)}${etiquetteForme(t.photo.sujet) ? ` (${minuscule(etiquetteForme(t.photo.sujet)).replace(/^(la|le|l')\s?/, "")})` : ""}, confondue avec ${echapper(minuscule(t.choix.nom_courant))}</li>`).join("")}</ul></div>` : `<p class="cdo-bravo">Sans faute.</p>`}
+      ${ratees.length ? `<div class="cdo-arevoir"><b>À revoir</b><ul>${ratees.map(t => `<li>${echapper(t.espece.nom_courant)}${etiquetteForme(t.photo.sujet) ? ` (${minuscule(etiquetteForme(t.photo.sujet)).replace(/^(la|le|l')\s?/, "")})` : ""}, confondu${pe(t.espece).e} avec ${echapper(nomAvecArticle(t.choix))}</li>`).join("")}</ul></div>` : `<p class="cdo-bravo">Sans faute.</p>`}
       <button class="${vientDOuvrir ? "cdo-second" : "cdo-suivant"}" id="cdo-rejouer">${coup.revoir ? "Rejouer" : `Rejouer au niveau ${n}`}</button>
       ${ratees.length ? `<button class="cdo-second" id="cdo-revoir">Revoir ${ratees.length > 1 ? `les ${ratees.length} espèces ratées` : "l'espèce ratée"}</button>` : ""}
       <button class="cdo-second" id="cdo-jeux">Retour aux jeux</button>

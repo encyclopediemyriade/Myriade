@@ -305,7 +305,7 @@ function finirManche(trouvee) {
     // déjà trouvée ne bouge pas (lire un indice n'est pas le retrouver).
     for (const indice of defi.indices.slice(0, defi.montres)) {
       if (nbBonnes(espece, indice.q.champ) >= 1) continue;
-      noterAuBilan(espece, indice.q.champ, `${indice.q.libelle} : ${afficherValeur(indice.q, indice.valeur)}`);
+      noterAuBilan(espece, indice.q.champ, `${indice.q.libelle} : ${indice.q.affichageFiche ? indice.q.affichageFiche(espece, indice.valeur) : afficherValeur(indice.q, indice.valeur)}`);   // R270 (n° 23) : comme sur la fiche
       acquerir(espece, indice.q.champ);
     }
     retour.textContent = `Bravo ! +${points} point${points > 1 ? "s" : ""}, avec ${defi.montres} indice${defi.montres > 1 ? "s" : ""}.`;

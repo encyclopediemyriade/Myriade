@@ -94,12 +94,13 @@ function verdictHtml({ juste, deux, phrase, complement, mot }) {
 
 // Les cases qui vont avec une question : la première renseignée (et pas réservée pour plus tard) sert de complément
 const COMPLEMENTS = {
-  regime_alimentaire_type: ["proies", "chasse_principale", "activite"],
-  proies: ["chasse_principale", "activite", "saison_observation"],
-  type_proie_detaille: ["chasse_principale", "activite"],
+  // Étape R270 (test du 19/11, n° 24) : plus de « Il est actif surtout le jour. » après le régime ou les proies (sans rapport)
+  regime_alimentaire_type: ["proies", "chasse_principale"],
+  proies: ["chasse_principale"],
+  type_proie_detaille: ["chasse_principale"],
   chasse_principale: ["proies", "activite"],
   predateurs: ["defense_principale", "technique_defense"],
-  defense_principale: ["predateurs", "activite"],
+  defense_principale: ["predateurs"],
   milieu_principal: ["altitude_max_m", "emplacement_nid", "saison_observation"],
   altitude_max_m: ["milieu_principal", "deplacement_saisonnier"],
   saison_observation: ["deplacement_saisonnier", "hibernation", "qi_hivernage"],
@@ -153,12 +154,24 @@ function phraseDeCase(e, champ) {
 }
 // Un détail de son allure (colonne adaptations_physiques), sur une AUTRE partie du corps que la question
 // (sur la même partie, il pourrait contredire la réponse : « bec rose » / « bec ivoire »)
+// Étape R270 (test du 19/11, n° 24 : « Une grande tolérance au sel. », « La capacité de se passer d'eau. » après la couleur du
+//   bec) : la colonne mêle ce qui se voit (un bec, une tache, des pattes…) et ce qui ne se voit pas (une ouïe fine, un vol,
+//   une capacité, la chenille, le nid…). Après une question d'allure, seul ce qui se voit sur l'animal est ajouté.
+const DETAIL_SE_VOIT = new RegExp("bec|huppe|crête|tête|corne|queue|oreille|patte|doigt|serre|corps|nageoire|épine|barbillon|antenne|aile|plumage|pelage|robe|tache|bande|rayure|"
+  + "coquille|peau|pustule|pupille|yeux|museau|griffe|dent|incisive|canine|moustache|fourrure|poil|plume|écaille|carapace|gorge|ventre|dessous|dessus|langue|pince|"
+  + "mandibule|trompe|collier|masque|sourcil|calotte|joue|sabot|piquant|tentacule|abdomen|élytre|mâchoire|bouche|lèvre|poitrine|croupion|front|nuque|flanc|pied|"
+  + "couleur|ocelle|capuchon|rostre|croissant|reflet|marbrure|nervure|dard|aiguillon|narine|groin|(^|[^a-zà-ÿœ])(cou|dos|nez|bois|face|œil|oeil|ligne|barre|cercle)([^a-zà-ÿœ]|$)", "i");
+const DETAIL_NE_SE_VOIT_PAS = new RegExp("capacit|tol[ée]rance|r[ée]sistance|r[ée]siste|supporte|vitesse|intelligence|m[ée]moire|ou[ïi]e|odorat|vision|venin|tambourinage|endurance|"
+  + "souplesse|agilit|long[ée]vit|digest|m[ée]tabolisme|respir|temp[ée]rature|chaleur|[ée]cholocation|sommeil|flair|[ée]quilibre|orientation|plong[ée]e|apn[ée]e|"
+  + "camouflage|mim[ée]tisme|hibernation|salive|mucus|toxi|poison|chenille|larve|colonie|toile|cocon|fiente|migration|reproduction|r[ée]gime|adulte|femelle|"
+  + "(^|[^a-zà-ÿœ])(vue|vol|nage|sang|sens|cri|chant|odeur|course|saut|force|nid|œufs?|oeufs?|petits|mâle|vie|vit)([^a-zà-ÿœ]|$)", "i");
+function detailSeVoit(t) { return DETAIL_SE_VOIT.test(t) && !DETAIL_NE_SE_VOIT_PAS.test(t); }
 function detailAllure(e, champ) {
   if (!caseSure(e, "adaptations_physiques")) return "";
   const motif = typeof PARTIES_ADAPTATIONS !== "undefined" ? PARTIES_ADAPTATIONS[champ] : null;
   const vus = (typeof session !== "undefined" && session && session.detailsVus) || [];
   const c = String(e.adaptations_physiques).split(";").map(t => t.trim()).filter(Boolean)
-    .find(t => !vus.includes(t) && !complementsVus.has(e.nom_courant + "|" + t) && !(motif && motif.test(t.toLowerCase())));
+    .find(t => detailSeVoit(t) && !vus.includes(t) && !complementsVus.has(e.nom_courant + "|" + t) && !(motif && motif.test(t.toLowerCase())));
   if (!c) return "";
   complementsVus.add(e.nom_courant + "|" + c);
   if (typeof session !== "undefined" && session) session.detailsVus = [...vus, c];

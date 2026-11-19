@@ -38,6 +38,9 @@ function noterNouvelleFamille(espece) {
 function presenterFamillesEnAttente() {
   const zone = document.getElementById("presentation-famille");
   if (zone.classList.contains("visible") || !famillesEnAttente.length) return;
+  // Étape R270 (test du 19/11, n° 28 : « Nouvelle espèce » et « Nouvelle famille » empilées, deux « Continuer ») : la famille
+  //   attend que la fête en cours (et celles qui suivent) soit fermée, au lieu d'arriver par-dessus au bout de 1,4 s.
+  if (typeof feteOuverte !== "undefined" && (feteOuverte || fileFetes.length || document.getElementById("carte-fete").classList.contains("on"))) { setTimeout(presenterFamillesEnAttente, 400); return; }
   const cle = famillesEnAttente.shift();
   const info = FAMILLES_INFO[cle];
   zone.style.setProperty("--couleur-classe", CLASSES[cle].couleur);

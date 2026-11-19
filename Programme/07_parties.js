@@ -60,6 +60,7 @@ function montrer(vue) {
   document.getElementById("onglet-encyclopedie").classList.toggle("actif", vue === "encyclopedie" || vue === "espece");
   fermerFenetre();
   if (vue === "accueil") afficherAccueil();       // stats à jour à chaque retour à l'accueil
+  if (vue === "accueil") window.scrollTo(0, 0);   // étape R270 (test du 19/11, n° 9) : la page du territoire s'ouvre toujours en haut (un retour arrière remet ensuite sa place)
   if (vue === "carte") afficherPageCarte();       // étape 255
   if (vue === "atlas" && typeof afficherAtlas === "function") afficherAtlas();   // étape K2
   if (vue === "arcade") { afficherArcade(); window.scrollTo(0, 0); }   // étape 262
@@ -338,6 +339,8 @@ function afficherCarnetFin(idZone, { journal, avant, cases, manquees: manqueesFi
   const apres = photoFin(terr, avant && avant.terrFamilles);   // étape M20 : la même zone qu'avant la partie
   const nomMedaille = n => CLASSES_PALIER[n];          // étape R144 : classe CSS du palier
   const motPalier = n => nomPalier(n);                 // étape R144 : le mot affiché
+  // Étape R270 (test du 19/11, n° 23) : dans une phrase, le mot s'accorde avec le nom de l'espèce (reconnu, compris, familier)
+  const palierAccorde = (n, e) => e && e.genre_nom === "masculin" ? ["", "reconnu", "compris", "familier"][n] || nomPalier(n) : nomPalier(n);
   const sansMed = typeof enExpedition === "function" && enExpedition();   // étape R130 : pas de médailles dans une expédition
   const scoreTexte = cases.map(([c, t]) => `<b>${c}</b> ${t}`).join(" · ");
   // Étape R101 (Revoir 10) : à la fin d'une Rencontre, le score monte en haut de l'écran, sous le titre
@@ -374,7 +377,7 @@ function afficherCarnetFin(idZone, { journal, avant, cases, manquees: manqueesFi
     const traitsTexte = `+ ${x.traits} trait${x.traits > 1 ? "s" : ""} découvert${x.traits > 1 ? "s" : ""}`;
     const detail = sansMed ? (x.nouvelle ? "nouvelle espèce" : traitsTexte)   // étape R130 : dans une expédition, sans médaille
       : x.nouvelle ? `nouvelle espèce${m1 ? ` · <i class="pt-med ${nomMedaille(m1)}"></i>${motPalier(m1)}` : enVue ? ` · ${enVue}` : ""}${jauge}`
-      : m1 > m0 ? `devient <i class="pt-med ${nomMedaille(m1)}"></i>${motPalier(m1)}`
+      : m1 > m0 ? `devient <i class="pt-med ${nomMedaille(m1)}"></i>${palierAccorde(m1, e)}`   // R270 (n° 23) : « le pinson des arbres devient reconnu »
       : `${enVue || traitsTexte}${jauge}`;
     return { e, detail, poids: (x.nouvelle ? 2 : 0) + (m1 > m0 ? 1 : 0) };
   });

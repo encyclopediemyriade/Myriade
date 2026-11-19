@@ -111,6 +111,9 @@ function carteEncyclopedie(espece, details) {
         const v = valeurDe(espece, q);
         const texte = q.affichageFiche ? q.affichageFiche(espece, v) : afficherValeur(q, v);
         lignes += `<p class="carac"><span>${q.libelle} :</span> ${texte}${pointsDonnee(espece, q.champ)}</p>`;
+      } else if (typeof estMontree === "function" && estMontree(espece, q.champ)) {   // R270 (n° 17) : déjà montrée par la Rencontre
+        const v = valeurDe(espece, q);
+        lignes += `<p class="carac montree" title="Vu pendant la Rencontre"><span>${q.libelle} :</span> ${q.affichageFiche ? q.affichageFiche(espece, v) : afficherValeur(q, v)}</p>`;
       } else {
         lignes += `<p class="carac inconnu"><span>${q.libelle} :</span> ?</p>`;
       }
@@ -346,6 +349,10 @@ function pictoPage(espece, q) {
   return `<span class="pe-picto">${dessinReponse(q.colonnePicto || q.champ, valeurDe(espece, q))}</span>`;
 }
 function lignePage(espece, q) {
+  // Étape R270 (test du 19/11, n° 17) : une case pas encore trouvée, mais déjà montrée par la Rencontre (taille, poids, couleur,
+  //   aspect, bec…) : la fiche écrit sa valeur, en plus clair et sans points ; elle reste « à trouver » pour les compteurs.
+  if (nbBonnes(espece, q.champ) < 1 && typeof estMontree === "function" && estMontree(espece, q.champ))
+    return `<div class="pe-ligne montree" title="Vu pendant la Rencontre"><span class="lib">${q.libelle}</span><span class="val">${pictoPage(espece, q)}<span class="val-txt">${valeurPage(espece, q)}</span></span></div>`;
   if (nbBonnes(espece, q.champ) < 1) return `<div class="pe-ligne inconnue"><span class="lib">${q.libelle}</span><span class="val"><span class="pe-picto"></span><span class="val-txt">?</span></span></div>`;
   return `<div class="pe-ligne"><span class="lib">${q.libelle}</span><span class="val">${pictoPage(espece, q)}<span class="val-txt">${valeurPage(espece, q)}</span></span>${pointsDonnee(espece, q.champ)}</div>`;   // R260b : val-txt (tuiles du téléphone)
 }

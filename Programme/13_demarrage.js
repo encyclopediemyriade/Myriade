@@ -36,7 +36,7 @@ document.getElementById("suivant").onclick = () => {
 document.getElementById("onglet-apropos").onclick = () => montrer("apropos");   // étape 102
 document.getElementById("onglet-progression").onclick = () => montrer("progression");   // étape 106
 document.getElementById("suite-bienvenue").onclick = suiteBienvenue;
-document.getElementById("retour-bienvenue").onclick = () => { etapeBienvenue = ECRANS_BIENVENUE[Math.max(0, ECRANS_BIENVENUE.indexOf(etapeBienvenue) - 1)]; afficherBienvenue(); };   // étape PR4
+document.getElementById("retour-bienvenue").onclick = () => { etapeBienvenue = ECRANS_BIENVENUE[Math.max(0, ECRANS_BIENVENUE.indexOf(etapeBienvenue) - 1)]; afficherBienvenue(); window.scrollTo(0, 0); };   // étape PR4
 // Un rappel affiché dans la console (F12) à chaque ouverture de la page :
 // s'il apparaît, c'est que cette version du jeu connaît bien les commandes de test.
 console.log("Commandes de test :  toutDebloquer()   toutDebloquer(0.5)   restaurerPartie()   changerProfil()\n"
@@ -53,6 +53,11 @@ function rafraichirAccueilVisible() {
 }
 document.addEventListener("visibilitychange", rafraichirAccueilVisible);
 window.addEventListener("pageshow", ev => { if (ev.persisted) rafraichirAccueilVisible(); });
+// Étape R270 (test du 19/11, n° 10 : « 0 expédition terminée sur 9 » à l'ouverture, alors qu'une l'était) : ce fichier dessine
+//   l'accueil avant que les derniers fichiers du programme soient chargés (23 les repères, 27, 29…) ; sans les repères, le
+//   trait demandé à l'étape 1 n'est pas le même pour certaines espèces, et leur expédition paraissait inachevée jusqu'au
+//   prochain passage par l'accueil. On redessine donc l'accueil une fois tout le programme chargé.
+document.addEventListener("DOMContentLoaded", () => { rafraichirAccueilVisible(); if (typeof afficherStats === "function") afficherStats(); });
 document.addEventListener("keydown", auClavier);    // le clavier pendant la Rencontre (partie 7 bis)
 window.addEventListener("scroll", fermerFenetre);   // la fenêtre se ferme si on fait défiler la page
 // Étape R262 (lenteurs) : chaque dessin de page garde en mémoire, le temps du dessin, le statut et l'avancement des espèces

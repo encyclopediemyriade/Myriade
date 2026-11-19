@@ -164,7 +164,7 @@ function finOreille() {
   zone.innerHTML = `<div class="cdo cdo-fin">
       <h2>${oreille.bons} sur ${oreille.tours.length}</h2>
       <p class="cdo-sous">${oreille.revoir ? "Révision des cris ratés" : `À l'oreille${record ? " · <b>nouveau record !</b>" : ` · record ${Math.max(ancien, oreille.bons)} / ${OREILLE_CRIS}`}`}</p>
-      ${ratees.length ? `<div class="cdo-arevoir"><b>À revoir</b><ul>${ratees.map(t => `<li>${echapper(t.espece.nom_courant)}, confondue avec ${echapper(minuscule(t.choix.nom_courant))}</li>`).join("")}</ul></div>` : ""}
+      ${ratees.length ? `<div class="cdo-arevoir"><b>À revoir</b><ul>${ratees.map(t => `<li>${echapper(t.espece.nom_courant)}, confondu${pe(t.espece).e} avec ${echapper(nomAvecArticle(t.choix))}</li>`).join("")}</ul></div>` : ""}
       <button class="cdo-suivant" id="ore-rejouer">Rejouer</button>
       ${ratees.length ? `<button class="cdo-second" id="ore-revoir">Réécouter ${ratees.length > 1 ? `les ${ratees.length} cris ratés` : "le cri raté"}</button>` : ""}
       <button class="cdo-second" id="ore-jeux">Retour aux jeux</button>

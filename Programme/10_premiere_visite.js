@@ -253,7 +253,7 @@ function poserExplication() {
     note.id = "note-depart";
     // "des Alpes" se dit naturellement ; pour un autre territoire, on garde une tournure qui marche avec tous les noms
     const ou = deTerritoire(lieu);   // étape 190 : « des Alpes », « du Massif armoricain », « du Bassin parisien et Val de Loire »
-    note.innerHTML = `Pour bien démarrer, <strong>${brouillon.depart.length} espèces communes</strong> ${ou} sont dans votre carnet, à reconnaître : leur photo et leur carte sont déjà là, et vous pouvez jouer avec tout de suite.`;   // étape E2-12
+    note.innerHTML = `Pour bien démarrer, <strong>${brouillon.depart.length} espèces communes</strong> ${ou} vous sont déjà présentées : leur photo et leur carte sont là, et vous pouvez jouer avec tout de suite. Elles compteront dans votre carnet une fois reconnues.`;   // R270 (n° 32) : avant « sont dans votre carnet », alors que le compteur disait « Carnet : 0 espèce »   // étape E2-12
     corps.appendChild(note);
     // Une vignette par espèce : sa miniature dans un cadre à la couleur de sa famille, puis son nom
     const grille = document.createElement("div");
@@ -341,7 +341,7 @@ function offrirEspeceAncien(espece) {   // l'ancien don (espèce identifiée d'o
 
 // "Continuer" : écran suivant ; au dernier, les réponses deviennent le profil et le jeu s'ouvre
 function suiteBienvenue() {
-  if (etapeBienvenue !== DERNIER_ECRAN) { etapeBienvenue = ECRANS_BIENVENUE[ECRANS_BIENVENUE.indexOf(etapeBienvenue) + 1]; afficherBienvenue(); return; }   // étape PR4
+  if (etapeBienvenue !== DERNIER_ECRAN) { etapeBienvenue = ECRANS_BIENVENUE[ECRANS_BIENVENUE.indexOf(etapeBienvenue) + 1]; afficherBienvenue(); window.scrollTo(0, 0); return; }   // étape PR4 ; R270 (n° 9) : chaque écran s'ouvre en haut
   profil = { niveau: brouillon.niveau, territoires: brouillon.territoires.slice() };
   // Nouveau joueur : ses espèces de départ. (Pas avec changerProfil : la partie existe déjà.)
   // Ce sont celles montrées sur le dernier écran (brouillon.depart, tirées dans poserExplication).

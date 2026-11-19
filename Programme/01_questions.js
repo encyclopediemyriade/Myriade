@@ -17,6 +17,9 @@ for (const espece of ESPECES) {
     if (!COLONNES_IDENTITE.includes(colonne)) espece[colonne] = null;
   }
 }
+// Étape R270 (test du 19/11, n° 23) : « orange » ne prend pas de « s » (des pattes orange). Les classeurs écrivent encore
+//   « Oranges » (8 oiseaux, colonne pattes_aspect) : corrigé ici à la lecture, en attendant de l'être dans les classeurs.
+for (const espece of ESPECES) if (espece.pattes_aspect === "Oranges") espece.pattes_aspect = "Orange";
 
 // ==================================================================
 // 1. LES CARACTÉRISTIQUES SUR LESQUELLES ON POSE DES QUESTIONS
@@ -1361,6 +1364,7 @@ const QUESTIONS_PORTRAIT = [
     explication: (e, v) => v === "Piquants" ? "Son poil forme des piquants." : `Son poil : ${minuscule(v)}.` }),
   // -- Mammifères et oiseaux : la même question, les mauvaises réponses restent dans la famille --
   questionPortrait({ champ: "difference_male_femelle", onglets: ["Mammiferes", "Oiseaux"], niveau: 2, avecPhoto: true, libelle: "Mâle et femelle",
+    affichageFiche: (e, v) => v === "Aucune visible" ? "Aucune différence visible" : majuscule(v),   // R270 (n° 23) : « Mâle et femelle : Aucune visible » ne voulait rien dire
     pieges: piegesSexes,
     question: "Comment distinguer le mâle de la femelle ?",
     explication: (e, v) => ({ "Aucune visible": "Le mâle et la femelle se ressemblent.", "Taille": "Le mâle est plus grand que la femelle.",
@@ -2025,7 +2029,8 @@ const QUESTIONS = [
     explication: (e, v) => {
       const aussi = valeursAutres(e, "emplacement_nid").map(x => NID_AUSSI[x]).filter(Boolean);
       const fin = aussi.length ? ` ${IlElle(e)} peut aussi nicher ${aussi.length > 1 ? aussi.slice(0, -1).join(", ") + ", ou " + aussi[aussi.length - 1] : aussi[0]}.` : "";
-      return `${IlElle(e)} fait son nid ici : ${minuscule(v)}.${fin}`;
+      return AFF_NID[sansPoint(v)] ? `${IlElle(e)} niche ${AFF_NID[sansPoint(v)]}.${fin}`   // R270 (n° 23) : une vraie phrase (avant : « Il fait son nid ici : arbre ou buisson. »)
+        : `${IlElle(e)} fait son nid ici : ${minuscule(v)}.${fin}`;
     } },
 
   { champ: "naissance", pictos: true, niveau: 1, libelle: "Naissance", formats: ["qcm"],

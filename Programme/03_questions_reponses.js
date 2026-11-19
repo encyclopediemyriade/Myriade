@@ -763,13 +763,22 @@ function texteCm(cm) {
   return `${Math.round(cm)} cm`;
 }
 // pxParCm : imposé (même échelle pour deux empreintes) ; sinon le dessin remplit la boîte (largeur l, hauteur h)
+let numeroCacheEmpreinte = 0;   // R270 : un numéro par dessin, pour son cache
 function dessinEmpreinte(espece, l, h, pxParCm) {
   const m = mesureEmpreinte(espece), src = fichierEmpreinte(espece);
   if (!m) return { html: `<img src="${src}" alt="Une empreinte" style="width:${l}px;height:${h}px;object-fit:contain">`, pxParCm: null };
-  const [x, y, w, hh] = m.cadre;
+  let [x, y, w, hh] = m.cadre;
+  // Étape R270 (test du 19/11, n° 11 : « le mot “arrière” est rogné ») : quand le cadre s'arrête à sa limite basse (123), un mot
+  //   écrit tout en bas (« arrière » du ragondin, du castor, du raton laveur) était coupé, et le haut du chiffre de la barre
+  //   d'échelle dépassait. Le cadre descend alors jusqu'à 127 (la barre est à 128) et le chiffre de l'échelle, toujours écrit
+  //   au même endroit (x = 33, y = 126), est caché. Pas pour les pistes (serpents, tortues…) : leur trace touche le bas.
+  const motCoupe = !m.piste && y + hh >= 122.9;
+  if (motCoupe) hh = Math.round((127 - y) * 10) / 10;
   const echelle = pxParCm ? pxParCm / m.upc : Math.min(l / w, h / hh);   // px par unité du dessin
   const W = Math.round(w * echelle), H = Math.round(hh * echelle);
-  return { html: `<svg class="emp-svg" width="${W}" height="${H}" viewBox="${x} ${y} ${w} ${hh}" role="img" aria-label="Une empreinte"><image href="${src}" x="0" y="0" width="136" height="136"/></svg>`,
+  const idCache = motCoupe ? "emp-cache-" + (++numeroCacheEmpreinte) : "";
+  const cache = motCoupe ? `<clipPath id="${idCache}"><path clip-rule="evenodd" d="M${x} ${y}h${w}v${hh}h${-w}z M12 120.2h42v8.8h-42z"/></clipPath>` : "";
+  return { html: `<svg class="emp-svg" width="${W}" height="${H}" viewBox="${x} ${y} ${w} ${hh}" role="img" aria-label="Une empreinte">${cache}<image href="${src}" x="0" y="0" width="136" height="136"${motCoupe ? ` clip-path="url(#${idCache})"` : ""}/></svg>`,
            pxParCm: echelle * m.upc };
 }
 function legendeTaille(espece, pxParCm) {
@@ -1049,7 +1058,7 @@ function poserSonDuo(espece, fichier) {
   // Étape R176 (retour d'Aubin du 09/11 : le « tiou » flûté du petit-duc semblait être celui de la cisticole) :
   // la description du cri vient tout de suite après le bon cri, et l'autre espèce est nommée en dernier.
   const son = SONS[cleEmpreinte(espece)];
-  enCours.explication = `Le cri ${lettre} était bien le sien${son && son.texte ? ` : on entendait ${son.texte}` : ""}. Le cri ${autreLettre} était celui de : ${autre.nom_courant}.`;
+  enCours.explication = `Le cri ${lettre} était bien le sien${son && son.texte ? ` : on entendait ${son.texte}` : ""}. Le cri ${autreLettre} était celui ${typeof deLEspece === "function" ? deLEspece(autre) : "de : " + autre.nom_courant}.`;   // R270 (n° 23) : « celui de la mésange huppée »
 }
 
 // La barre d'espace lance (ou arrête) le cri, pour jouer sans la souris.
@@ -1299,11 +1308,14 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     // Étape R238 (note 7) : la photo reconnue, une seule carte « Pour le reconnaître » + les vignettes de ses photos, photo fixée en haut
     { const ph = document.getElementById("photo-rencontre"); if (ph) ph.insertAdjacentHTML("beforeend", vignettesBravo(espece)); }   // posées sur la photo
     retour.insertAdjacentHTML("beforeend", carteBravo(espece));
+    if (typeof noterMontrees === "function") noterMontrees(espece);   // R270 (n° 17) : taille, poids et ensemble viennent d'être montrés
     if (typeof noterFormeMontree === "function" && typeof formesNettes === "function" && formesNettes(espece).length) noterFormeMontree(espece);   // étape R253
     const carteR = document.getElementById("carte-rencontre"); if (carteR) carteR.classList.add("bravo-photo");
   } else if (session && session.focus && champ === IDENTIFICATION && typeof retourMesures === "function") {
     retour.insertAdjacentHTML("beforeend", retourMesures(espece));
     if (session.physique && typeof pictosEnsemble === "function" && RENCONTRE_COMPLETE) retour.insertAdjacentHTML("beforeend", pictosEnsemble(espece));   // étape RF6
+    if (typeof noterMontrees === "function") { const sil = champsSilhouette(espece);   // R270 (n° 17) : ce qui vient d'être montré
+      noterMontrees(espece, session.physique && RENCONTRE_COMPLETE ? sil : sil.filter(c => c === "taille_max_cm" || c === "poids_max_kg")); }
     // Étape R190 : la photo reconnue, la carte d'identité (repères de terrain) au début de la Rencontre, si elle n'a pas déjà été présentée
     if (estJuste && !session.presentee && typeof blocReperes === "function") retour.insertAdjacentHTML("beforeend", blocReperes(espece, { titre: `Pour ${pe(espece).la} reconnaître` }));
     // Étape PA1 (12/11, choix A2 d'Aubin) : la photo reconnue, son autre forme s'affiche d'elle-même (« La femelle »…),

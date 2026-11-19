@@ -801,6 +801,7 @@ function dessinerRevueGroupee() {
   const z = document.getElementById("intermede-exp"), rv = revue;
   if (!z || !rv) return;
   const photos = melanger(rv.especes.slice()), noms = melanger(rv.especes.slice());
+  if (noms.length > 1 && noms.every((e, i) => e === photos[i])) noms.push(noms.shift());   // R270 (n° 39) : jamais les noms dans l'ordre des photos
   const n = rv.especes.length;
   z.innerHTML = `<div class="im-carte"><div class="im-tete"><span class="im-lib">Révision</span><h2>Déjà rencontrées ailleurs</h2>
       <p>Vous connaissez déjà ${n === 2 ? "ces deux espèces" : `ces ${n} espèces`}. Sélectionnez un nom puis sa photo, ou une photo puis son nom.</p></div>

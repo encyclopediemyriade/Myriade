@@ -61,7 +61,7 @@ function echapper(txt) { return String(txt || "").replace(/&/g, "&amp;").replace
 function chiffresTerritoire(t, id) {
   const ici = especesDe(t);
   // Étape 275 (« Revoir 5 ») : plus le chiffre « qu'on ne croise dans aucun autre territoire du jeu » (peu d'intérêt)
-  const liste = [{ valeur: nombre(ici.length), texte: "espèces à rencontrer" }];
+  const liste = [{ valeur: nombre(ici.length), texte: "espèces dans ce territoire" }];   // R270 (test du 19/11, n° 32) : c'est le total, pas ce qu'il reste (avant : « à rencontrer », à côté de « 441 à découvrir »)
   return liste.concat(id ? id.chiffres : []).slice(0, 4);
 }
 // Étape 278 : les photos de la couverture (onglet photos_territoire) ; la première (ordre 0) reste la photo
@@ -121,9 +121,9 @@ function dessinerCouverture() {
           <div class="couv-vous">${texteVousEtes(t)}</div>
           <h1 class="${t.length > 14 ? "long" : ""}">${t}</h1>
           ${id && id.phrase ? `<p class="couv-phrase">${echapper(id.phrase)}</p>` : ""}
-          <p class="couv-nb">${nombre(especesDe(t).length)} espèces à rencontrer</p>
+          <p class="couv-nb">${nombre(especesDe(t).length)} espèces dans ce territoire</p>
         </div>
-        <div class="couv-jouer">${(x => x ? `<div class="couv-reprise">${x.chapitre ? imgMini(vedetteDe(x).photo, vedetteDe(x).nom_courant, "couv-vedette") : ""}<small>${expeditionCommencee(x) ? "Reprendre" : "Première étape"}${x.chapitre && typeof estLieu === "function" && estLieu(chapitreParNom(t, x.chapitre)) ? ` · ${echapper(x.chapitre)}` : ""} · ${echapper(x.titre)}, étape ${etapeEnCours(x) || 1}</small></div>
+        <div class="couv-jouer">${(x => x ? `<div class="couv-reprise">${x.chapitre ? imgMini(vedetteDe(x).photo, vedetteDe(x).nom_courant, "couv-vedette") : ""}<small>${expeditionCommencee(x) ? "Reprendre" : expeditionsDe(t).some(y => expeditionCommencee(y)) ? "À suivre" : "Première étape"}${x.chapitre && typeof estLieu === "function" && estLieu(chapitreParNom(t, x.chapitre)) ? ` · ${echapper(x.chapitre)}` : ""} · ${echapper(x.titre)}, étape ${etapeEnCours(x) || 1}</small></div>
           <button class="couv-go" id="couv-go" type="button">${expeditionCommencee(x) ? "Continuer l'expédition" : "Commencer l'expédition"} <span aria-hidden="true">▶</span></button>`
           : `<button class="couv-go" id="couv-go" type="button">Jouer <span aria-hidden="true">▶</span></button>`)(expeditionAReprendre(t))}</div>
       </div>

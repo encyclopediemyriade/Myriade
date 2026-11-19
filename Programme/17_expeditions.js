@@ -1231,6 +1231,11 @@ function vieEnVraiFaux(e, c) {
   if (vieTropEvidente(e, c, v)) return false;   // R243
   return estRenseigne(v) && piegesVraiFaux(q, v, e).length >= 1;   // VF1 : une valeur fausse de son « monde »
 }
+// Étape R270 (test du 19/11, n° 25 : « Il mange surtout des insectes. » et « Il se nourrit d'insectes, de larves… » sur la même
+//   carte « Sa vie ») : le régime et les proies disent la même chose ; un seul des deux par Rencontre.
+const SUJETS_VIE_DOUBLES = [["regime_alimentaire_type", "proies", "type_proie_detaille"]];
+function memeSujetVie(a, b) { return a !== b && SUJETS_VIE_DOUBLES.some(g => g.includes(a) && g.includes(b)); }
+function sansDoublesVie(liste) { const garde = []; for (const c of liste) if (!garde.some(d => memeSujetVie(c, d))) garde.push(c); return garde; }
 function vieRencontre(x, e) {
   if (!RENCONTRE_COMPLETE || !x || especeFaite(e, 2)) return [];
   const deja = champsEtape(e, 2).filter(c => nbBonnes(e, c) >= 1).length;   // ce qu'on sait déjà de sa vie compte (RF2 : 3 cartes au plus)
@@ -1245,7 +1250,7 @@ function vieRencontre(x, e) {
   const possibles = melanger(champsEtape(e, 2).filter(c => nbBonnes(e, c) === 0 && vieEnVraiFaux(e, c)
     && !(c === "milieu_principal" && x.milieu && e.milieu_principal === x.milieu)));   // « Au bord du lac » : « vit dans les lacs » se devine
   const rang = c => (memoire.precedente.includes(c) ? 100 : 0) + (vus(c) >= 2 ? 10 : 0) + vus(c);
-  const choix = possibles.map((c, i) => ({ c, r: rang(c), i })).sort((a, b) => a.r - b.r || a.i - b.i).map(o => o.c).slice(0, n);
+  const choix = sansDoublesVie(possibles.map((c, i) => ({ c, r: rang(c), i })).sort((a, b) => a.r - b.r || a.i - b.i).map(o => o.c)).slice(0, n);   // R270 (n° 25)
   sujetsVusExp[x.id] = { precedente: choix, recents: [...memoire.recents, ...choix].slice(-20) };
   return choix;
 }
@@ -1269,7 +1274,8 @@ function faitsSaVie(x, e, nouveaux) {
   // Le régime n'est pas ajouté quand les proies sont demandées (leur valeur est tirée au hasard : « Il se nourrit d'insectes »
   //   à côté de « Il mange surtout des poissons » pour le grèbe). Seulement à lire, les proies sont dites en entier (pas de contradiction).
   const ok = c => !nouveaux.includes(c) && !(c === "milieu_principal" && x && x.milieu && e.milieu_principal === x.milieu) && vieALire(e, c);
-  const ajouter = (c, liste) => { if (reste() > 0 && !(c === "regime_alimentaire_type" && nouveaux.includes("proies"))) liste.push(c); };
+  const ajouter = (c, liste) => { if (reste() > 0 && !(c === "regime_alimentaire_type" && nouveaux.includes("proies"))
+                                      && ![...nouveaux, ...connus, ...plus].some(d => memeSujetVie(c, d))) liste.push(c); };   // R270 (n° 25) : jamais le régime et les proies ensemble
   for (const c of melanger(champsEtape(e, 2).filter(c => nbBonnes(e, c) >= 1 && ok(c)))) ajouter(c, connus);
   for (const c of melanger(champsEtape(e, 2).filter(c => nbBonnes(e, c) === 0 && ok(c)))) ajouter(c, plus);
   // encore moins de 3 : un fait de sa fiche pris plus loin (ce qu'Approfondir demandera), seulement à lire
@@ -1343,7 +1349,7 @@ function elementsEnsemble(e) {
     if (!estRenseigne(v) || v === "NA" || String(v).startsWith("NA")) return null;
     const texte = q.affichageFiche ? q.affichageFiche(e, v) : majuscule(String(v));
     const dessin = q.sansImage || q.format !== "picto" ? "" : dessinReponse(q.colonnePicto, v);
-    return { dessin, libelle: q.libelle || "", texte };
+    return { dessin, libelle: q.libelle || "", texte, champ: q.champ };   // R270 : + le champ (n° 17, ce qui a été montré)
   }).filter(Boolean).slice(0, 3);
 }
 function pictosEnsemble(e) {
@@ -1609,6 +1615,9 @@ function brancherPied() {
 function dessinerQuiEstQui() {
   const z = document.getElementById("intermede-exp"), im = intermede;
   const photos = melanger(im.especes.slice()), noms = melanger(im.especes.slice());
+  // Étape R270 (test du 19/11, n° 39) : les deux listes étaient mélangées chacune de son côté ; une fois sur six (3 espèces),
+  //   les noms tombaient dans le même ordre que les photos. Dans ce cas, le premier nom passe à la fin.
+  if (noms.length > 1 && noms.every((e, i) => e === photos[i])) noms.push(noms.shift());
   im.choix = null;                                   // { sorte: "nom" | "photo", i }
   z.innerHTML = `<div class="im-carte">${enteteIntermede("Qui est qui ?", "Sélectionnez un nom puis sa photo, ou une photo puis son nom.")}
     <div class="im-photos">${photos.map((e, i) => `<button type="button" class="im-photo" data-i="${im.especes.indexOf(e)}">
@@ -2398,7 +2407,7 @@ function cheminDuLieu(t, c, liste, ouvertes, x0) {
         <i class="jauge-jeu"><b style="width:${Math.round(100 * finies / Math.max(1, liste.length))}%"></b></i>
         <small>${etatF}</small></span>
       ${ouverte && !faite ? `<span class="couv-go">Jouer la finale ▶</span>` : ""}</button>`;
-  return `<div class="chemin-lieu"><div class="chemin-tete"><h3>Le chemin du lieu</h3><small>${finies} expédition${finies > 1 ? "s" : ""} terminée${finies > 1 ? "s" : ""} sur ${liste.length} · vous pouvez les faire dans l'ordre que vous voulez</small></div>
+  return `<div class="chemin-lieu"><div class="chemin-tete"><h3>Le chemin du lieu</h3><small>${finies} expédition${finies > 1 ? "s" : ""} terminée${finies > 1 ? "s" : ""} sur ${liste.length} · ${liste.some(x => etatExpedition(x, ouvertes) === "fermee") ? "les expéditions ouvertes se font dans l'ordre que vous voulez ; les autres s'ouvrent en avançant" : "vous pouvez les faire dans l'ordre que vous voulez"}</small></div>
     <div class="chemin-arrets">${arrets}${finale}</div></div>`;
 }
 
@@ -2961,6 +2970,7 @@ function repondreFinale(i) {
   finale.choisi = i;
   const n = finale.file[finale.pos];
   if (!finale.choix[i].bon) finale.rates.push(n);   // étape 303 : proposé en reprise à la fin du tour
+  else { finale.trouvesIci = finale.trouvesIci || []; if (!finale.trouvesIci.includes(n)) finale.trouvesIci.push(n); }   // R270 (n° 34) : les liens vraiment trouvés
   if (finale.choix[i].bon && !finale.essai && typeof noterLienConnu === "function") noterLienConnu(cleLien(finale.liens[n]));   // étape B1 : badge « Leurs liens »
   else if (!finale.essai && suivi && !finaleFaite(finale.t, finale.nom)) {   // étape R149 : gardé, même si l'on sort
     const cle = finale.t + "|" + finale.nom, k = cleLien(finale.liens[n]);
@@ -2994,7 +3004,10 @@ function terminerFinale() {
     if (typeof lieuSelTerr !== "undefined") lieuSelTerr = null;              // étape R149 : la page du territoire montre le lieu suivant
     setTimeout(() => { if (typeof verifierOuverture === "function") verifierOuverture(); }, 2500);   // étape PR4 : un lieu terminé peut ouvrir un territoire
     feter({ etiquette: "La finale du lieu", titre: `+${EMPREINTES_FINALE} empreintes`, son: "badge",
-            detail: `Vous avez découvert les ${finale.liens.length} liens ${echapper(deLieu(nom))}. Leur planche reste sur la page du lieu.`,
+            // Étape R270 (test du 19/11, n° 34 : « Vous avez découvert les 9 liens » avec 3 liens trouvés) : le message dit ce qui a été trouvé
+            detail: ((nt, nl) => nt >= nl ? `Vous avez trouvé les ${nl} liens ${echapper(deLieu(nom))}.`
+              : `Vous avez parcouru les ${nl} liens ${echapper(deLieu(nom))}.`)((finale.trouvesIci || []).length, finale.liens.length)
+              + " Leur planche reste sur la page du lieu.",
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   }
   dessinerFinale(); window.scrollTo(0, 0);
@@ -3239,7 +3252,7 @@ function resumeSessionTelephone(s) {
     etat = RENCONTRE_COMPLETE && etapeFinie(x, 2) ? "Expédition terminée !" : etapeFinie(x, 1) ? "Étape 1 réussie !" : faite ? "Fait !" : `${manques} chose${manques > 1 ? "s" : ""} à revoir`;   // RF1
     // Étape R246 (36.38) : la bande des espèces devient le choix, sous la photo (elle remplace la bande de progression)
     var bandeTel = RENCONTRE_COMPLETE && faite && !etapeFinie(x, 1) ? bandeQuiEnsuite(x, e) : "";
-    corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">${manques > 1 ? "Elles reviendront" : "Elle reviendra"} à la fin de l'étape.</div>` : "")
+    corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">${manques > 1 ? "Ces questions reviendront" : "Cette question reviendra"} à la fin de l'étape.</div>` : "")
       + (bandeTel ? "" : rondsResume(x, 1, RENCONTRE_COMPLETE ? e : null)) + empreintesResume(x, gagnees);
     retour = { texte: "← Expédition", action: () => { session = null; ouvrirExpedition(x); } };
     var quiEnsuiteTel = "";   // étape R246 : la liste « Qui rencontrer ensuite ? » sous le bouton est remplacée par la bande

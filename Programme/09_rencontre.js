@@ -260,6 +260,7 @@ function choisirQuestionFocus() {
 //     « jeune » d'un amphibien) ; les questions d'allure restent sur la photo principale ;
 //   • une seule par Rencontre. Elle n'écrit rien dans la fiche (comme « Sa vie ») ; ratée, elle ne revient pas.
 const FORME_Q = "autre_forme";
+let formeQuestionOuverte = false;   // R270 (n° 5) : vrai entre la question « De quelle espèce est-elle ? » et sa réponse
 const QUESTION_FORME_ACTIVE = true;   // false = plus de question sur les autres formes (la rangée « Ses autres formes » reste)
 const QUESTION_FORME = {
   "femelle": ["Voici une femelle.", "De quelle espèce est-elle ?"], "mâle": ["Voici un mâle.", "De quelle espèce est-il ?"],
@@ -320,10 +321,12 @@ function poserQuestionForme(espece) {
     : `C'est ${nomAvecArticle(espece)}, ${minuscule(lab)}`;
   enCours = { espece, champ: FORME_Q, q: null, bonne: espece.nom_courant, forme: f, cacherEspece: true,
               explication: `${debut}${f.change ? " : " + minuscule(f.change) : ""}.` };
+  formeQuestionOuverte = true; if (session.postit) dessinerPostit();   // R270 (n° 5) : le nom du carnet est flouté le temps de la question
   if (typeof avantQuestionExpedition === "function") avantQuestionExpedition(espece);
 }
 function repondreQuestionForme(boutonClique, estJuste) {
   const { espece, explication, forme } = enCours;
+  if (formeQuestionOuverte) { formeQuestionOuverte = false; if (session && session.postit) dessinerPostit(); }   // R270 (n° 5) : le nom redevient net
   for (const b of document.querySelectorAll(".reponse")) { b.disabled = true; if (b.dataset.juste === "oui") b.classList.add("juste"); }
   document.getElementById("nom").textContent = espece.nom_courant + " · " + forme.etiquette;
   document.getElementById("famille").classList.remove("cache");
@@ -589,6 +592,13 @@ function valeurPostit(espece, champ, q, bonne, etat) {
   if (champ === "empreinte_choix") return etat === "trouve" ? "Retrouvée" : "À revoir";
   return q.affichageFiche ? q.affichageFiche(espece, bonne) : afficherValeur(q, bonne);
 }
+// Étape R270 (test du 19/11, n° 12 : « environ 6 cm"> » écrit avant le dessin de l'empreinte) : le texte d'une valeur sans ses
+//   balises, pour l'infobulle. L'ancienne façon coupait au premier « > » : celui du petit programme du dessin d'empreinte
+//   (« x => … ») fermait l'infobulle trop tôt et le reste s'affichait. Ici le navigateur lit lui-même le texte.
+function texteSeul(html) {
+  const d = document.createElement("div"); d.innerHTML = String(html === undefined || html === null ? "" : html);
+  return d.textContent.replace(/\s+/g, " ").trim().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
 function dessinerPostit() {
   const zone = document.getElementById("postit-fiche");          // étape R138 : la fiche a son propre cadre dans la colonne
   const espece = session.focus;
@@ -596,7 +606,8 @@ function dessinerPostit() {
   const titre = (estIdentifiee(espece) || session.presentee) ? espece.nom_courant : TITRE_CARNET_INCONNUE;
   // Étape 163 : pendant la question photo (« La reconnaîtriez-vous maintenant ? »), le nom déjà écrit dans le carnet
   // (titre et ligne Nom) est flouté : il soufflerait la réponse. Il redevient net après la réponse.
-  const nomCache = session.postit.some(l => l.champ === IDENTIFICATION && l.etat === "encours");
+  // Étape R270 (test du 19/11, n° 5) : pareil pendant la question sur une autre forme (« Voici une femelle. De quelle espèce est-elle ? »)
+  const nomCache = session.postit.some(l => l.champ === IDENTIFICATION && l.etat === "encours") || (formeQuestionOuverte && !!enCours && enCours.champ === FORME_Q);
   // Étape 206 (maquette C2-A) : seules les lignes déjà posées s'écrivent, avec leur picto ; plus de lignes vides.
   const picto = l => {
     const q = QUESTIONS.find(x => x.champ === l.champ);
@@ -605,7 +616,7 @@ function dessinerPostit() {
   };
   const lignes = session.postit.map(l => `<li class="${l.etat}${l.ecrit ? " ecrit" : ""}${l.champ === session.postitDerniere && l.etat === "trouve" ? " neuve" : ""}${nomCache && l.champ === IDENTIFICATION ? " floute" : ""}">`
     + `<span class="ic">${picto(l)}</span><span class="txt"><span class="lib">${l.libelle}</span>`
-    + `<span class="val" title="${String(l.valeur).replace(/<[^>]*>/g, "")}">${l.valeur}</span></span></li>`);
+    + `<span class="val" title="${texteSeul(l.valeur)}">${l.valeur}</span></span></li>`);
   const prevues = Math.max(session.prevues || session.total, session.postit.length);
   const trouvees = session.postit.filter(l => l.etat === "trouve").length;
   const aRevoirIci = session.postit.filter(l => l.etat === "rate" || l.etat === "presque").length;
@@ -784,6 +795,32 @@ function bravoMontrerPhoto(b) {
   const carte = document.querySelector("#carte-rencontre .carte-bravo .reperes");
   if (r && carte) choisirFormeReperes(carte, formePourPhoto(r, b.dataset.sujet || ""));
 }
+// Étape R270 (test du 19/11, n° 17 : la fiche marquait « ? » la taille, le poids, l'aspect, le bec… alors que la Rencontre venait
+//   de les montrer). Ce que la Rencontre montre d'une espèce (carte « Pour la reconnaître », présentation, verdict de la photo)
+//   est noté dans la sauvegarde (suivi.montrees[nom] = liste de cases) ; la fiche écrit alors la valeur au lieu de « ? ».
+//   Ces cases ne comptent pas comme « trouvées » : les compteurs, les médailles et « Compléter sa fiche » ne changent pas.
+//   Parties d'avant R270 : pour les espèces déjà reconnues, la taille, le poids et l'ensemble sont comptés comme montrés (une fois).
+function champsSilhouette(e) {
+  return [tailleRencontre(e) ? "taille_max_cm" : "", poidsRencontre(e) ? "poids_max_kg" : "",
+          ...(typeof elementsEnsemble === "function" ? elementsEnsemble(e) : []).map(x => x.champ)].filter(Boolean);
+}
+function noterMontrees(e, champs) {
+  if (!suivi || !e) return;
+  suivi.montrees = suivi.montrees || {};
+  const l = suivi.montrees[e.nom_courant] = suivi.montrees[e.nom_courant] || [];
+  let neuf = false;
+  for (const c of champs || champsSilhouette(e)) if (c && !l.includes(c)) { l.push(c); neuf = true; }
+  if (neuf) sauvegarder();
+}
+function estMontree(e, champ) {
+  if (!suivi || !e) return false;
+  if (suivi.montreesV !== 270) {
+    suivi.montreesV = 270; suivi.montrees = suivi.montrees || {};
+    for (const o of ESPECES) if (estIdentifiee(o) && !suivi.montrees[o.nom_courant]) { try { suivi.montrees[o.nom_courant] = champsSilhouette(o); } catch (err) { /* rien */ } }
+    sauvegarder();
+  }
+  return (suivi.montrees[e.nom_courant] || []).includes(champ);
+}
 function carteBravo(e) {
   const t = tailleRencontre(e), p = poidsRencontre(e);
   const tuile = (dessin, texte, lib) => `<span class="cb-tuile">${dessin ? `<span class="cb-dessin">${dessin}</span>` : ""}${texte ? `<b>${texte}</b>` : ""}<small>${lib}</small></span>`;
@@ -826,6 +863,7 @@ function presenterEspece(espece) {
   const blocRp = typeof blocReperes === "function" ? blocReperes(espece, { arrivee: 1.3, titre: "Ses repères" }) : "";
   if (blocRp && typeof TRAITS_ENSEMBLE !== "undefined") traits = traits.filter(q => TRAITS_ENSEMBLE.includes(q.champ)).slice(0, 2);
   session.presentes = traits.map(q => q.champ);
+  noterMontrees(espece, [tailleRencontre(espece) ? "taille_max_cm" : "", poidsRencontre(espece) ? "poids_max_kg" : "", ...session.presentes]);   // R270 (n° 17)
   const lignes = traits.map(q => {
     const v = valeurDe(espece, q);
     const texte = q.affichageFiche ? q.affichageFiche(espece, v) : majuscule(v);
@@ -844,7 +882,7 @@ function presenterEspece(espece) {
   // le bouton n'arrive qu'une fois les traits posés (on ne saute pas la présentation par mégarde)
   suivant.classList.add("cache");
   setTimeout(() => { if (session && session.presentee && enCours && enCours.champ === OUVERTURE) suivant.classList.remove("cache"); },
-             (blocRp ? 1.3 + 0.18 * 5 : 0.88 + 0.18 * traits.length) * 1000 + 300);
+             Math.min(900, (blocRp ? 1.3 + 0.18 * 5 : 0.88 + 0.18 * traits.length) * 1000 + 300));   // R270 (test du 19/11, n° 26) : 0,9 s au plus (avant : 2 à 3 s sans rien à toucher) ; assez pour ne pas sauter l'écran par mégarde
   // Étape 161 : une question bonus, à la fin de la Rencontre, sur l'un de ces traits (de mémoire, sans la photo)
   if (traits.length && !session.bonusPrevu) { session.bonusPrevu = true; session.total = session.total + 1; }
 }
@@ -1034,6 +1072,37 @@ function ligneRarete(espece) {
       if (Math.abs(cible - y) > 4) window.scrollTo(0, cible);
     }, 80);
   }).observe(reponses, { childList: true });
+})();
+
+// Étape R270 (19/11/2026, test du 19/11, n° 2) : sur ordinateur aussi, ce qu'il faut pour continuer reste à l'écran.
+// Avant la réponse : la question et toutes ses réponses. Après : le verdict et le bouton de suite (« Question suivante → »,
+// « La découvrir → »…). La page descend juste ce qu'il faut, une seule fois par question (on peut ensuite remonter librement) ;
+// elle ne remonte jamais toute seule. En plus, le bouton de suite reste collé au bas de la fenêtre (style.css, bloc R270).
+(function suiteVisibleSurOrdinateur() {
+  const carte = document.getElementById("carte-rencontre"), reponses = document.getElementById("reponses"), suivant = document.getElementById("suivant");
+  if (!carte || !reponses || !window.matchMedia || typeof MutationObserver === "undefined") return;
+  const ordinateur = window.matchMedia("(min-width: 761px)");
+  const visible = el => !!(el && el.offsetParent && !el.classList.contains("cache"));
+  let attente = null, derniere = "";
+  const placer = () => {
+    if (!ordinateur.matches || !visible(carte)) { derniere = ""; return; }
+    const action = [suivant, ...carte.querySelectorAll("#reponses .fe-go, #reponses .bouton-annonce")].find(visible);
+    if (!action && !reponses.children.length) return;
+    const titre = [document.getElementById("nom"), document.getElementById("question")].find(el => visible(el) && el.textContent.trim());
+    const signature = (action ? "suite" : "question") + "|" + (titre ? titre.textContent : "") + "|" + reponses.children.length;
+    if (signature === derniere) return;
+    derniere = signature;
+    const y = window.scrollY, bord = el => el.getBoundingClientRect();
+    let bas = bord(action || reponses).bottom;
+    const jns = document.getElementById("je-ne-sais-pas");
+    if (!action && visible(jns)) bas = Math.max(bas, bord(jns).bottom);
+    // Ce qui doit rester visible en haut : après la réponse, le verdict ; avant, la question
+    const garde = action ? [...carte.querySelectorAll("#postit-suite .verdict, #retour")].find(el => visible(el) && el.textContent.trim()) : titre;
+    const voulu = Math.min(bas + y + 16 - window.innerHeight, garde ? bord(garde).top + y - 12 : Infinity);
+    if (voulu > y + 4) window.scrollTo({ top: voulu, behavior: "smooth" });
+  };
+  new MutationObserver(() => { clearTimeout(attente); attente = setTimeout(placer, 120); })
+    .observe(carte, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "data-repondu"] });
 })();
 
 // ==================================================================
