@@ -34,6 +34,7 @@ function demarrerFocus(imposee, options = {}) {
   const enJeu = ESPECES.filter(e => estDans(e, territoires) && classes.includes(e.onglet));
   const espece = imposee || choisirEspeceFocus(enJeu);
   dernierFocus = espece;
+  if (espece) prechargerPhotos(photosDe(espece).map(p => p.src));   // R264 (39) : ses autres photos (femelle, jeune…) à l'avance
   noterPartie();                                       // étape 106 : le jour et l'heure de jeu (badges)
   session = { focus: espece, total: QUESTIONS_FOCUS, faites: 0, bonnes: 0, numerotees: 0, bonnesNumerotees: 0, reprisesPosees: 0, reprisesJustes: 0,   // étape R101 : le score par sorte de question
               revisite: !!imposee && !options.expedition,          // étape 176 : lancée depuis la fiche
@@ -65,10 +66,14 @@ function demarrerFocus(imposee, options = {}) {
   if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE) {
     // Étape E2-7 (note 12, choix d'Aubin « 1A · 2B · 3A · 4A · 5A ») : sa vie se DÉCOUVRE d'abord (l'écran « Sa vie », 3 faits),
     //   puis 2 vrai ou faux sur ces faits (VIE_QUESTIONS). La valeur de chaque fait est tirée une fois et resservie à la question.
-    session.vieFaits = vieRencontre(expeditionParId(options.expedition.id), espece);
-    session.vie = session.vieFaits.slice(0, VIE_QUESTIONS);
+    const xVie = expeditionParId(options.expedition.id), nouveauxVie = vieRencontre(xVie, espece);
+    // Étape R263 (Notion 40.09) : toujours 3 faits à l'écran ; seuls les nouveaux sont ensuite demandés
+    const sv = typeof faitsSaVie === "function" ? faitsSaVie(xVie, espece, nouveauxVie) : { faits: nouveauxVie, connus: [] };
+    session.vieFaits = sv.faits; session.vieConnus = sv.connus; session.vieNouveaux = nouveauxVie;
+    session.vie = nouveauxVie.slice(0, VIE_QUESTIONS);
     session.vieBonnes = {};
-    for (const c of session.vieFaits) { const q = QUESTIONS.find(x => x.champ === c); session.vieBonnes[c] = q.tirer ? q.tirer(espece) : valeurDe(espece, q); }
+    // R263 : les faits seulement à lire (déjà connus, ou en plus) sont dits en entier, sans tirage
+    for (const c of session.vieFaits) { const q = QUESTIONS.find(x => x.champ === c); session.vieBonnes[c] = q.tirer && nouveauxVie.includes(c) ? q.tirer(espece) : valeurDe(espece, q); }
     session.vieMontree = false;
     session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;
   }
@@ -325,6 +330,7 @@ function repondreQuestionForme(boutonClique, estJuste) {
   const retour = document.getElementById("retour");
   if (estJuste) { retour.textContent = "Bravo ! " + explication; jouerSon(); }
   else { if (boutonClique) { boutonClique.classList.add("fausse"); jouerSon("mauvaise"); } retour.textContent = explication; }
+  if (typeof verdictHtml === "function") retour.innerHTML = verdictHtml({ juste: !!estJuste, deux: nbChoixAffiches() === 2, phrase: explication });   // R265 (40.12)
   marquerVue(espece);
   const boutonSuivant = document.getElementById("suivant");
   if (session) {
@@ -772,7 +778,7 @@ function bravoMontrerPhoto(b) {
   const e = enCours && enCours.espece;
   if (!e || !b) return;
   const photo = document.getElementById("photo-rencontre");
-  if (photo) { const img = photo.querySelector("img"); if (img) { img.src = b.dataset.src; img.removeAttribute("srcset"); } }
+  if (photo) { const img = photo.querySelector("img"); if (img) { img.src = srcEcran(b.dataset.src); img.removeAttribute("srcset"); } }   // R264 : version téléphone
   b.parentNode.querySelectorAll(".bravo-vign").forEach(o => { const on = o === b; o.classList.toggle("actif", on); o.setAttribute("aria-pressed", on); });
   const r = typeof reperesDe === "function" ? reperesDe(e) : null;
   const carte = document.querySelector("#carte-rencontre .carte-bravo .reperes");
@@ -871,7 +877,11 @@ function afficherFicheSession(s) {
   // Étape R246 (36.31) : sans question « Étonnant » dans cette Rencontre, l'anecdote gagnée (une seule fois) dans « Le saviez-vous ? »
   if (!s.saviezMontre && typeof anecdoteAMontrer === "function") {
     const a = anecdoteAMontrer(espece);
-    if (a) { s.saviezMontre = true; noterAnecdoteVue(a.cle); setTimeout(() => ouvrirSaviezVous({ espece, fait: a.texte }), 700); }
+    // Étape R265 (40.12, 6A) : plus de fenêtre ; l'anecdote s'écrit sur l'écran de fin, dans l'encadré « Le saviez-vous ? »
+    if (a && typeof SAVIEZ_VOUS_FENETRE !== "undefined" && !SAVIEZ_VOUS_FENETRE) { s.saviezMontre = true; noterAnecdoteVue(a.cle);
+      document.getElementById("fiche-session").insertAdjacentHTML("beforeend", `<div class="fait-insolite"><span class="fi-ico" aria-hidden="true">!</span>
+        <div><small>Le saviez-vous ?</small><p>${a.texte}</p></div></div>`); }
+    else if (a) { s.saviezMontre = true; noterAnecdoteVue(a.cle); setTimeout(() => ouvrirSaviezVous({ espece, fait: a.texte }), 700); }
   }   // étape R101 (Revoir 10) : le fait insolite avant « Pour reconnaître… » ; étape 159 : le compte passe sous le nom, la barre suit la photo ; étape 310 : la fiche récap
 }
 // Étape 310 (retour de l'utilisateur, 27/10) : à la fin de la Rencontre, une petite fiche « Pour la reconnaître »,

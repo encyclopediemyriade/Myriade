@@ -486,6 +486,20 @@ function especeDuJour() {
 }
 const GAIN_ESPECE_DU_JOUR = 2;   // étape R183c : 2 empreintes la première fois qu'on la rencontre dans la journée (comme un défi)
 function especeDuJourFaite(e) { return !!(e && suivi.duJour && suivi.duJour.date === aujourdhui() && suivi.duJour.faites.includes(e.nom_courant)); }
+// Étape R269 (Notion 40.07, choix 4A du 19/11) : UN seul bouton pour l'espèce du jour, qui choisit la bonne partie :
+//   pas encore rencontrée → sa Rencontre ; déjà rencontrée → « Compléter sa fiche » (ce qu'on ne sait pas encore d'elle) ;
+//   fiche déjà complète → sa fiche. Les +2 empreintes viennent dans les trois cas, une fois par jour (validerEspeceDuJour,
+//   appelé par la fin de la Rencontre, par lancerFicheEspece et par ouvrirPageEspece). Plus de nouvelle Rencontre d'une
+//   espèce déjà connue depuis l'accueil (elle se refait depuis sa fiche, si l'on veut).
+//   ESPECE_DU_JOUR_UN_BOUTON = false remet les anciens boutons.
+const ESPECE_DU_JOUR_UN_BOUTON = true;
+function choixEspeceDuJour(e) {
+  const connue = estReconnue(e);
+  if (!connue) return { texte: "La rencontrer", reste: 0, action: () => { lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; } };
+  const reste = typeof resteCarnet === "function" && typeof lancerFicheEspece === "function" ? resteCarnet([e]) : 0;
+  if (reste) return { texte: "Compléter sa fiche", reste, action: () => lancerFicheEspece(e) };
+  return { texte: "Sa fiche", reste: 0, action: () => ouvrirPageEspece(e) };
+}
 function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans l'accueil du téléphone (ac-jour-mobile)
   const zone = document.getElementById(idZone), e = especeDuJour();
   const idR = idZone === "ac-jour" ? "ac-rencontrer" : idZone + "-rencontrer", idF = idZone === "ac-jour" ? "ac-fiche" : idZone + "-fiche";
@@ -513,8 +527,16 @@ function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans 
       <div class="ac-boutons"><button class="ac-bouton${faite ? "" : " plein"}" id="${idR}">${faite ? "La revoir" : connue ? "La retrouver en Rencontre" : "La rencontrer"}</button>
       ${connue ? `<button class="ac-bouton" id="${idF}">Sa fiche</button>` : ""}
       ${typeof recompenseEnAttente === "function" && recompenseEnAttente(`jour|${aujourdhui()}`) ? boutonRecup(recompenseEnAttente(`jour|${aujourdhui()}`)) : ""}</div></div>`;   // R248 (36.24)
-  document.getElementById(idR).onclick = () => { lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };
-  if (connue) document.getElementById(idF).onclick = () => ouvrirPageEspece(e);
+  if (ESPECE_DU_JOUR_UN_BOUTON) {   // étape R269 : un seul bouton, qui s'adapte
+    const c = choixEspeceDuJour(e), bR = document.getElementById(idR), bF = document.getElementById(idF);
+    bR.innerHTML = `${c.texte}${c.reste ? ` <small class="ac-reste">encore ${c.reste}</small>` : ""} <span aria-hidden="true">▶</span>`;
+    bR.className = "ac-bouton plein";
+    bR.onclick = c.action;
+    if (bF) bF.remove();
+  } else {
+    document.getElementById(idR).onclick = () => { lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };
+    if (connue) document.getElementById(idF).onclick = () => ouvrirPageEspece(e);
+  }
   if (typeof brancherRecup === "function") brancherRecup(zone, () => dessinerEspeceDuJour(idZone));
 }
 

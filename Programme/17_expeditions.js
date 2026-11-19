@@ -25,7 +25,7 @@ const CHAMPS_REPRODUCTION = ["gestation_jours", "incubation_jours", "nb_oeufs_or
   "saison_frai", "vie_larve"];
 const CHAMPS_APPROFONDIR_PLUS = ["vitesse_max_kmh", "altitude_max_m", "pinces", "cornes_ou_bois", "coquille", "regeneration",
   "venimeux", "danger_homme", "nom_petit", "nom_femelle", "nom_groupe", "nom_logis", "verbe_cri", "periode_reproduction_nom",
-  "statut_conservation"];
+  "statut_conservation", "tendance_france"];   // R268 : la tendance en France (oiseaux)
 // Étape 288 (25/10/2026, décisions de l'utilisateur) :
 //   1. « Faire connaissance » : une Rencontre par espèce, une espèce par partie, sur ses caractéristiques
 //      physiques — sa photo, ses traits d'allure les plus parlants (photo cachée, silhouette en aide),
@@ -220,7 +220,8 @@ function toutesExpeditions() {
 // Étape R239b (36.03, lenteurs) : ces listes ne dépendent que des données ; rangées une fois (copie rendue à chaque appel)
 const memoExpTerr = new Map(), memoExpId = new Map();
 function expeditionsDe(t) {
-  if (!memoExpTerr.has(t)) memoExpTerr.set(t, toutesExpeditions().filter(x => x.territoire === t).sort((a, b) => a.ordre - b.ordre));
+  // Étape R268 (40.02) : dans l'ordre du chemin (rang, sinon ordre) ; l'ordre reste l'identifiant (id = territoire|ordre)
+  if (!memoExpTerr.has(t)) memoExpTerr.set(t, toutesExpeditions().filter(x => x.territoire === t).sort((a, b) => (a.rang || a.ordre) - (b.rang || b.ordre) || a.ordre - b.ordre));
   return memoExpTerr.get(t).slice();
 }
 function expeditionParId(id) {
@@ -585,7 +586,13 @@ function etapeFinieAncienne(x, k) {
 function approfondie(x) { return x.liste.every(e => especeFaite(e, 4)); }   // étape 288
 // Étape R131 (05/11, choix de l'utilisateur, option 1) : « Terminée » dit aussi ce qu'il reste dans Approfondir (facultatif),
 // « Terminée · Approfondir 2/7 », puis « Terminée » tout court quand Approfondir est fini.
+// Étape R267 (Notion 40.17, choix 10A du 19/11) : quand Approfondir est fini aussi, l'expédition est « complète »
+//   (petite étoile sur le chemin du lieu, ✓ sur l'étape 3, petite fête). Approfondir reste facultatif : rien d'autre n'en dépend.
+const EXPEDITION_COMPLETE = true;
+function expeditionComplete(x) { return EXPEDITION_COMPLETE && empreintesExp(x) >= NB_ETAPES && approfondie(x); }
+const ETOILE_COMPLETE = `<span class="exp-etoile" aria-hidden="true">★</span>`;
 function libelleTerminee(x) {
+  if (expeditionComplete(x)) return "Complète";
   if (approfondie(x)) return "Terminée";
   return `Terminée · Approfondir ${x.liste.filter(e => especeFaite(e, 4)).length}/${x.liste.length}`;
 }
@@ -664,7 +671,7 @@ function encadreEtMaintenant(x) {
   if (!a || a.commencee) return "";
   const approf = !approfondie(x);
   return `<section class="exp-maintenant">
-      <div class="em-tete"><span class="em-coche" aria-hidden="true">✓</span><div><small>Expédition terminée</small><b>Et maintenant ?</b></div></div>
+      <div class="em-tete"><span class="em-coche${expeditionComplete(x) ? " complete" : ""}" aria-hidden="true">${expeditionComplete(x) ? "★" : "✓"}</span><div><small>${expeditionComplete(x) ? "Expédition complète" : "Expédition terminée"}</small><b>Et maintenant ?</b></div></div>
       <button class="couv-go em-suite" type="button"><span class="em-suite-txt">${a.texte} <span aria-hidden="true">▶</span></span><small>${echapper(a.quoi)}</small></button>
       ${approf ? `<button class="em-approf" type="button"><span>Approfondir</span><em>Facultatif</em></button>` : ""}
     </section>`;
@@ -1161,7 +1168,7 @@ function bilanEtape(x, info, gagnees, k) {
 // Étape R132 : une espèce déjà rencontrée ici, à qui il manque un trait, ne repasse pas en Rencontre : ses traits manqués
 // reviennent seuls, à la fin de l'étape (lancerRattrapage).
 // ---- Étape RF1 : sa vie dans la Rencontre (vrai ou faux), sujets qui tournent d'une espèce à l'autre ----
-const sujetsVusExp = {};               // en mémoire : les sujets de vie de l'espèce précédente, par expédition (règle S1)
+const sujetsVusExp = {};               // en mémoire : les sujets de vie de l'espèce précédente et des dernières Rencontres, par expédition (règle S1 ; R264)
 // Étape R243 (notes 19, 30 et 35 du 16/11, tâches 36.19 et 36.30) : pas de carte « Sa vie » qui se devine sans rien connaître
 //   de l'espèce, ni de phrase passe-partout (critère : « la réponse n'est pas évidente pour un adulte qui ne connaît pas
 //   l'espèce, et la phrase apprend quelque chose qu'on ne voit pas sur la photo »). Ces faits restent dans les autres jeux.
@@ -1229,12 +1236,45 @@ function vieRencontre(x, e) {
   const deja = champsEtape(e, 2).filter(c => nbBonnes(e, c) >= 1).length;   // ce qu'on sait déjà de sa vie compte (RF2 : 3 cartes au plus)
   const n = Math.max(0, VIE_PAR_RENCONTRE - deja);
   if (!n) return [];
-  const vus = sujetsVusExp[x.id] || [];
+  // Étape R264 (40.15, choix 8B ; note 17b : « toujours régime puis nid pour chaque oiseau ») : avant, seuls les sujets de
+  //   l'espèce précédente étaient évités. Maintenant on garde les sujets des dernières Rencontres de l'expédition (20 au plus) :
+  //   jamais un sujet de l'espèce d'avant, au plus 2 fois le même sujet sur ces 20, et d'abord les sujets les moins vus.
+  const memoire = sujetsVusExp[x.id] || { precedente: [], recents: [] };
+  if (Array.isArray(memoire)) { memoire.precedente = memoire.slice(); memoire.recents = memoire.slice(); }
+  const vus = c => memoire.recents.filter(z => z === c).length;
   const possibles = melanger(champsEtape(e, 2).filter(c => nbBonnes(e, c) === 0 && vieEnVraiFaux(e, c)
     && !(c === "milieu_principal" && x.milieu && e.milieu_principal === x.milieu)));   // « Au bord du lac » : « vit dans les lacs » se devine
-  const choix = [...possibles.filter(c => !vus.includes(c)), ...possibles.filter(c => vus.includes(c))].slice(0, n);
-  sujetsVusExp[x.id] = choix;
+  const rang = c => (memoire.precedente.includes(c) ? 100 : 0) + (vus(c) >= 2 ? 10 : 0) + vus(c);
+  const choix = possibles.map((c, i) => ({ c, r: rang(c), i })).sort((a, b) => a.r - b.r || a.i - b.i).map(o => o.c).slice(0, n);
+  sujetsVusExp[x.id] = { precedente: choix, recents: [...memoire.recents, ...choix].slice(-20) };
   return choix;
+}
+// Étape R263 (Notion 40.09, note 9 du 18/11, choix 11A) : l'écran « Sa vie » montre toujours 3 faits. Les nouveaux d'abord
+//   (ce sont eux qui sont demandés ensuite) ; puis, pour arriver à 3, ce qu'on sait déjà de sa vie (montré sans question,
+//   marqué « déjà noté ») ; s'il en manque encore, d'autres faits nouveaux, seulement à lire. Avant : 3 faits au plus, moins
+//   ceux déjà connus (une espèce qui en avait 2 de connus n'en montrait qu'un).
+// Un fait seulement à lire : une phrase vraie, pas trop évidente (même règle que R243 / VF3), sans besoin d'une fausse valeur
+function vieALire(e, c) {
+  const q = QUESTIONS.find(x => x.champ === c);
+  if (!q || !q.affirmation || q.type === "nombre" || q.format) return false;
+  let v; try { v = valeurDe(e, q); } catch (err) { return false; }
+  if (!estRenseigne(v) || v === "NA" || String(v).startsWith("NA") || vieTropEvidente(e, c, v)) return false;
+  let p = ""; try { p = q.affirmation(v, e); } catch (err) { return false; }
+  return !!p && !/undefined|null/.test(p);
+}
+function faitsSaVie(x, e, nouveaux) {
+  if (!nouveaux.length) return { faits: [], connus: [] };
+  const reste = () => VIE_PAR_RENCONTRE - nouveaux.length - connus.length - plus.length;
+  const connus = [], plus = [];
+  // Le régime n'est pas ajouté quand les proies sont demandées (leur valeur est tirée au hasard : « Il se nourrit d'insectes »
+  //   à côté de « Il mange surtout des poissons » pour le grèbe). Seulement à lire, les proies sont dites en entier (pas de contradiction).
+  const ok = c => !nouveaux.includes(c) && !(c === "milieu_principal" && x && x.milieu && e.milieu_principal === x.milieu) && vieALire(e, c);
+  const ajouter = (c, liste) => { if (reste() > 0 && !(c === "regime_alimentaire_type" && nouveaux.includes("proies"))) liste.push(c); };
+  for (const c of melanger(champsEtape(e, 2).filter(c => nbBonnes(e, c) >= 1 && ok(c)))) ajouter(c, connus);
+  for (const c of melanger(champsEtape(e, 2).filter(c => nbBonnes(e, c) === 0 && ok(c)))) ajouter(c, plus);
+  // encore moins de 3 : un fait de sa fiche pris plus loin (ce qu'Approfondir demandera), seulement à lire
+  if (reste() > 0) for (const c of melanger(champsEtape(e, 4).filter(c => !champsEtape(e, 2).includes(c) && ok(c)))) ajouter(c, nbBonnes(e, c) >= 1 ? connus : plus);
+  return { faits: [...nouveaux, ...plus, ...connus], connus };
 }
 // ---- Étape E2-7 (note 12, choix d'Aubin « 1A · 2B · 3A · 4A · 5A », présentation A « liste à pictos ») ----
 // L'écran « Sa vie » : avant les questions sur sa vie, les faits (3 au plus) sont montrés, chacun avec son picto ;
@@ -1280,13 +1320,14 @@ function phraseFaitVie(espece, champ) {
   if (!q || !q.affirmation) return "";
   return q.affirmation(valeurFaitVie(espece, champ), espece);
 }
-function ligneSaVie(champ, phrase, valeur) {
+function ligneSaVie(champ, phrase, valeur, connu) {
   if (valeur === undefined && session && session.focus) { try { valeur = valeurFaitVie(session.focus, champ); } catch (e) { valeur = null; } }
-  return `<div class="sv-ligne">${pictoVie(champ, valeur)}<span class="sv-texte">${echapper(phrase)}</span></div>`;
+  return `<div class="sv-ligne${connu ? " sv-connu" : ""}">${pictoVie(champ, valeur)}<span class="sv-texte">${echapper(phrase)}${connu ? ` <small class="sv-deja">déjà noté</small>` : ""}</span></div>`;
 }
 function montrerSaVie(tirage) {
   const espece = session.focus;
-  const lignes = (session.vieFaits || []).map(c => { const p = phraseFaitVie(espece, c); return p ? ligneSaVie(c, p) : ""; }).join("");
+  const connus = session.vieConnus || [];   // R263 : ce qu'on savait déjà, montré sans question
+  const lignes = (session.vieFaits || []).map(c => { const p = phraseFaitVie(espece, c); return p ? ligneSaVie(c, p, undefined, connus.includes(c)) : ""; }).join("");
   // R239 (notes 30 et 36) : le titre dit que c'est un moment de lecture ; la phrase « 2 questions sur ces lignes, juste après. » est retirée
   carteAnnonce(espece, espece.nom_courant, "", `<div class="sa-vie">${lignes}</div>`, "Continuer", tirage, false);
   document.getElementById("revision").textContent = "Quelques informations sur sa vie";
@@ -1362,11 +1403,26 @@ function bandeQuiEnsuite(x, arrive) {
   const ronds = x.liste.map(e => {
     const fait = faiteDans(x, e, 1), choix = restent.includes(e);
     const img = `<img src="${photoMini(photoEsp(e))}" alt="" onerror="this.onerror=null;this.src='${photoEsp(e)}'">`;
-    if (choix) return `<button type="button" class="rft-rond qe-choix" data-nom="${echapper(e.nom_courant)}" aria-label="Rencontrer : ${echapper(motTerrain(e))}">${img}</button>`;
-    return `<span class="rft-rond qe-gris${fait ? " fait" : ""}${e === arrive ? " arrive" : ""}">${img}${fait ? `<i aria-hidden="true">✓</i>` : ""}</span>`;
+    if (choix) return `<button type="button" class="rft-rond qe-choix" data-nom="${echapper(e.nom_courant)}" aria-label="Choisir : ${echapper(e.nom_courant)}">${img}</button>`;
+    // Étape R267 (40.10, choix 38C) : grisée sans ✓ = elle reviendra à la fin de l'étape (ratée, ou déjà connue ailleurs)
+    return `<span class="rft-rond qe-gris${fait ? " fait" : " qe-plus-tard"}${e === arrive ? " arrive" : ""}">${img}${fait ? `<i aria-hidden="true">✓</i>` : `<em class="qe-mot">à la fin</em>`}</span>`;
   }).join("");
-  return `<div class="qui-ensuite-bande"><h3>Qui rencontrer ensuite ?</h3><div class="rft-ronds">${ronds}</div>
-      <small class="qe-aide">${restent.length > 1 ? "Touchez une espèce entourée." : "Touchez l'espèce entourée."}</small></div>`;
+  // Étape R267 (40.10, choix 38C) : le vrai bouton fixé en bas fait la suite ; la bande sert à choisir une autre espèce
+  return `<div class="qui-ensuite-bande${RENCONTRE_BOUTON_SUITE ? " qe-avec-bouton" : ""}"><h3>Qui rencontrer ensuite ?</h3><div class="rft-ronds">${ronds}</div>
+      ${RENCONTRE_BOUTON_SUITE ? (restent.length > 1 ? `<small class="qe-aide">Ou touchez une autre espèce entourée.</small>` : "")
+        : `<small class="qe-aide">${restent.length > 1 ? "Touchez une espèce entourée." : "Touchez l'espèce entourée."}</small>`}</div>`;
+}
+// Étape R267 (Notion 40.10, choix 38C du 19/11) : fin de Rencontre — la bande reste, et un vrai bouton fixé en bas
+//   « Rencontrer le verdier ▶ » avec sa vignette. Toucher une autre espèce de la bande la choisit (le bouton change),
+//   sans lancer tout de suite : une seule action pour partir, toujours au même endroit. false = la bande seule (38B).
+const RENCONTRE_BOUTON_SUITE = true;
+function suiteProposee(x) {
+  const restent = restentARencontrer(x);
+  const choisie = prochaineChoisie[x.id] && restent.find(e => e.nom_courant === prochaineChoisie[x.id]);
+  return choisie || restent[0] || null;
+}
+function texteBoutonSuite(e) {
+  return `<img class="rft-vignette" src="${photoMini(photoEsp(e))}" alt="" onerror="this.onerror=null;this.src='${photoEsp(e)}'"><span>Rencontrer ${echapper(nomAvecArticle(e))}&nbsp;▶</span>`;
 }
 function especeAConnaitre(x) {
   const ok = e => !faiteDans(x, e, 1) && !(estTentee(x, e) && manquesEtape1(e).length);
@@ -1829,7 +1885,7 @@ function choisirCartes(t) {
   return [...enCours, ...nouvelles, ...finies, ...fermees].slice(0, 6);
 }
 function carteExpedition(x, etat) {
-  const etiquettes = { finie: [libelleTerminee(x), "fin"], encours: ["En cours", "cours"], nouvelle: ["Nouvelle !", "nouv"], fermee: ["À ouvrir", "ferm"] };   // R131
+  const etiquettes = { finie: [libelleTerminee(x), expeditionComplete(x) ? "fin complete" : "fin"], encours: ["En cours", "cours"], nouvelle: ["Nouvelle !", "nouv"], fermee: ["À ouvrir", "ferm"] };   // R131
   const [lib, cl] = etiquettes[etat];
   return `<button class="exp-carte ${etat}" data-id="${x.id}">
       <span class="exp-ph"><img src="${photoExp(x)}" alt="" loading="lazy"></span>
@@ -1876,7 +1932,7 @@ function vedetteDe(x) { return (x.vedette && x.liste.find(e => e.nom_courant ===
 function photoEsp(e) { return estRenseigne(e.photo) ? e.photo : fichierSilhouette(e); }
 function photoExp(x) { return x.photo || photoEsp(vedetteDe(x)); }
 function carteChapitre(x, etat) {
-  const etiquettes = { finie: [libelleTerminee(x), "fin"], encours: [`En cours · étape ${etapeEnCours(x) || 1}`, "cours"], nouvelle: ["Nouvelle", "nouv"], fermee: ["Bientôt", "ferm"] };   // R131
+  const etiquettes = { finie: [libelleTerminee(x), expeditionComplete(x) ? "fin complete" : "fin"], encours: [`En cours · étape ${etapeEnCours(x) || 1}`, "cours"], nouvelle: ["Nouvelle", "nouv"], fermee: ["Bientôt", "ferm"] };   // R131
   const [lib, cl] = etiquettes[etat];
   const v = vedetteDe(x), connues = dejaConnues(x);
   const detail = etat === "nouvelle" && connues ? `déjà ${connues} sur ${x.liste.length} connues` : `${x.liste.length} espèces`;
@@ -2020,7 +2076,11 @@ function bandeauCollant(zone, hero, o) {
 
 // ---- L'écran d'une expédition (vue-expedition) ----
 let expeditionAffichee = null;
-function ouvrirExpedition(x) { expeditionAffichee = x; montrer("expedition"); dessinerEcranExpedition(); window.scrollTo(0, 0); }
+function ouvrirExpedition(x) { expeditionAffichee = x; montrer("expedition"); dessinerEcranExpedition(); window.scrollTo(0, 0);
+  // R264 (Notion 39) : pendant qu'on lit la page, les photos des espèces de l'expédition se chargent (grandes et petites) :
+  //   la Rencontre ou le défi les montre ensuite tout de suite. Un peu plus tard, pour ne pas ralentir la page elle-même.
+  if (x && x.liste) setTimeout(() => { prechargerEspeces(x.liste, true); prechargerEspeces(x.liste, false); }, 400);
+}
 function dessinerEcranExpedition() {
   const zone = document.getElementById("vue-expedition"), x = expeditionAffichee;
   if (!zone || !x) return;
@@ -2083,7 +2143,7 @@ function dessinerEcranExpedition() {
     return `<button class="exp-esp${id ? "" : " inconnue"}${fait ? " bien" : ""}${deja && kCadre === 1 ? " deja" : ""}${e === cible ? " piste-cible" : ""}" data-nom="${echapper(e.nom_courant)}" ${id ? "" : "disabled"}>
         <span class="exp-rond${estRenseigne(e.photo) ? "" : " silh"}"><img src="${photoEsp(e)}" alt="" loading="lazy"></span><small>${id ? e.nom_courant : e === cible ? "Votre piste" : "À découvrir"}</small>${marque}</button>`;
   }).join("");
-  const titreCadre = kCadre ? `Étape ${kCadre === 4 ? numApprof : kCadre} · ${ETAPES[kCadre].titre}` : "Expédition terminée";   // R239 (36.18a) : même numéro que la carte   // R131 : sans « Les espèces · » (demande de l'utilisateur)
+  const titreCadre = kCadre ? `Étape ${kCadre === 4 ? numApprof : kCadre} · ${ETAPES[kCadre].titre}` : expeditionComplete(x) ? `Expédition complète ${ETOILE_COMPLETE}` : "Expédition terminée";   // R267 (40.17)   // R239 (36.18a) : même numéro que la carte   // R131 : sans « Les espèces · » (demande de l'utilisateur)
   const aideCadre = kCadre === 1 ? `Leur nom se découvre à cette étape. Sélectionnez une espèce découverte pour ouvrir sa fiche.${especesARevoirIci(x).length ? " « À revoir ici » : vous la connaissez déjà d'ailleurs, une photo suffit." : ""}`
     : kCadre === 2 && ens ? "Comment ces espèces vivent ensemble ici : quelques questions qui en réunissent plusieurs. Sélectionnez une espèce pour ouvrir sa fiche."
     : kCadre === 2 ? "Deux choses à découvrir par espèce : où elle vit, ce qu'elle mange, quand la voir… Sélectionnez une espèce pour ouvrir sa fiche."
@@ -2142,7 +2202,7 @@ function carteLieu(t, c) {
   const [lib, cl] = tags[etat];
   const pro = etat === "ferme" && prochainLieu(t) === c && lieuPrecedent(t, c);   // étape R160
   const action = etat === "ferme" ? `<span class="exp-verrou">${PAS_SVG}<span>${pro ? texteManqueLieu(t, c, true) : "Plus tard"}</span></span>`
-    : `<span class="lieu-aller">${finaleAJouer(t, c) ? "Jouer la finale" : etat === "cours" ? "Continuer" : etat === "fini" ? "Revoir" : "Partir ici"} ▶</span>`;   // étape R149
+    : `<span class="lieu-aller">${finaleAJouer(t, c) ? "Jouer la finale" : etat === "cours" ? "Continuer" : etat === "fini" ? "Revoir" : "Partir ici"}&nbsp;▶</span>`;   // étape R149
   return `<button class="lieu-carte ${etat}" data-lieu="${echapper(c.nom)}" type="button">
       <span class="lieu-ph">${imgMini(c.photo, "")}${v ? imgMini(photoEsp(v), v.nom_courant, "lieu-vedette") : ""}${etat === "ouvert" ? "" : `<span class="exp-tag ${cl}">${lib}</span>`}</span>
       <span class="lieu-corps"><small class="lieu-pays">${echapper(c.pays || "")}</small><b>${echapper(c.nom)}</b>
@@ -2319,12 +2379,13 @@ function cheminDuLieu(t, c, liste, ouvertes, x0) {
   const arrets = liste.map((x, i) => {
     const etat = etatExpedition(x, ouvertes), v = vedetteDe(x), prochaine = x0 && x.id === x0.id && etat !== "finie";
     const lib = etat === "encours" ? `En cours · étape ${etapeEnCours(x) || 1}` : etat === "finie" ? libelleTerminee(x) : ETATS_CHEMIN[etat];   // R131
-    return `<button class="chemin-arret ${etat}${prochaine ? " prochaine" : ""}${etat === "fermee" ? " fermee" : ""}" data-id="${x.id}" type="button">
-        <span class="chemin-num">${etat === "finie" ? "✓" : i + 1}</span>
+    const complete = etat === "finie" && expeditionComplete(x);   // R267 (40.17) : la petite étoile
+    return `<button class="chemin-arret ${etat}${complete ? " complete" : ""}${prochaine ? " prochaine" : ""}${etat === "fermee" ? " fermee" : ""}" data-id="${x.id}" type="button">
+        <span class="chemin-num">${complete ? ETOILE_COMPLETE : etat === "finie" ? "✓" : i + 1}</span>
         <span class="chemin-rond${estRenseigne(v.photo) ? "" : " silh"}">${imgMini(x.photo || photoEsp(v), v.nom_courant)}</span>
         <span class="chemin-info"><b>${echapper(x.titre)}</b>
           <small>${pastilleMilieu(x.milieu)}<span>${x.liste.length} espèces</span></small>${typeof libelleForme === "function" ? `<small class="chemin-formes">${libelleForme(x)}</small>` : ""}</span>
-        <span class="chemin-droite">${dessinGain(x)}<span class="exp-tag ${prochaine ? "cours" : ({ finie: "fin", encours: "cours", nouvelle: "nouv", fermee: "ferm" })[etat]}">${prochaine && etat === "nouvelle" ? "À suivre" : lib}</span></span></button>`;   // étape R92 (choix C2) : le bouton reste seulement sur la photo
+        <span class="chemin-droite">${dessinGain(x)}<span class="exp-tag ${prochaine ? "cours" : ({ finie: "fin", encours: "cours", nouvelle: "nouv", fermee: "ferm" })[etat]}${complete ? " complete" : ""}">${prochaine && etat === "nouvelle" ? "À suivre" : lib}</span></span></button>`;   // étape R92 (choix C2) : le bouton reste seulement sur la photo
   }).join("");
   const fini = chapitreFini(t, c), dispo = finaleDisponible(t, c), ouverte = finaleOuverte(t, c), faite = finaleFaite(t, c.nom);
   const n = liensDuLieu(t, c.nom).length, esp = especesDesLiens(t, c.nom, 6);
@@ -3025,6 +3086,13 @@ document.addEventListener("click", ev => {
 // Étape M8 (07/11/2026, maquette B « Trois visages ») : sur téléphone, l'en-tête de l'expédition est une page de carnet
 // (pas de photo de paysage, réservée au lieu) : la pastille du lieu pour revenir, le symbole des jumelles, le titre
 // et les ronds de ses espèces (photo seulement, comme dans le cadre des espèces : le nom reste caché tant qu'elle n'est pas découverte).
+// Étape R263 (Notion 40.17, 19d) : la ligne sous les ronds suit l'avancée (avant : « 7 espèces à rencontrer », toujours)
+function texteEspecesCarnet(x) {
+  const n = x.liste.length, faites = avanceeEtape(x, 1).faites;   // même compte que l'étape 1
+  if (!faites) return `${n} espèces à rencontrer`;
+  if (faites >= n) return `${n} espèces · toutes reconnues`;
+  return `${n} espèces · ${faites} reconnue${faites > 1 ? "s" : ""}`;
+}
 function carnetExpedition(x, lieu) {
   const ic = k => typeof iconeNiveau === "function" ? iconeNiveau(k) : "";
   const retour = typeof pastilleNiveau === "function"
@@ -3034,7 +3102,7 @@ function carnetExpedition(x, lieu) {
       <div class="rep-etiq">${ic("expedition")}Expédition</div>
       <h1>${echapper(x.titre)}</h1>
       <div class="rep-ronds">${ronds}</div>
-      <div class="rep-carnet-bas"><small>${x.liste.length} espèces à rencontrer</small>${dessinGain(x)}</div></div>`;
+      <div class="rep-carnet-bas"><small>${texteEspecesCarnet(x)}</small>${dessinGain(x)}</div></div>`;
 }
 
 
@@ -3195,7 +3263,7 @@ function resumeSessionTelephone(s) {
     const phraseFin = !especeFaite(e, 1) ? "" : especeFaite(e, 2) ? `Vous ${pr} reconnaissez, et vous savez comment ${il} vit avec les autres espèces.`
       : `Vous ${pr} reconnaissez désormais.${!bandeTel && (!ens || aUneEtape2(x)) && !etapeFinie(x, 2) ? " Prochaine étape : sa vie avec les autres espèces de l'expédition." : ""}`;   // R246 : la bande dit déjà la suite
     // Étape R246 (36.38, 38B) : photo plus petite, le choix juste dessous, le score sur une ligne ; tout tient sans descendre
-    tete = `<div class="rft-grande${bandeTel ? " rft-petite" : ""}"><img src="${e.photo}" alt="${echapper(e.nom_courant)}"><div class="rft-grande-bas">
+    tete = `<div class="rft-grande${bandeTel ? " rft-petite" : ""}"><img src="${srcEcran(e.photo)}" alt="${echapper(e.nom_courant)}" onerror="if (this.src.includes('/moy/')) this.src='${e.photo}';"><div class="rft-grande-bas">
         <h2 class="rft-titre">${titre}</h2>${phraseFin ? "" : etat ? `<span class="rft-acquis">${echapper(etat)}</span>` : ""}</div></div>
         ${bandeTel}
         ${phraseFin ? `<p class="rft-phrase-fin">${phraseFin}</p>` : ""}
@@ -3206,13 +3274,38 @@ function resumeSessionTelephone(s) {
     ordinateur: !!x && RENCONTRE_COMPLETE });   // étape R248h : la même fin sur ordinateur (38B)
   if (x && bandeTel) {                                 // étape R246 : la bande choisit l'espèce suivante (elle remplace « Espèce suivante »)
     const zr = document.querySelector("#fin-session > .resume-fin-tel");
-    if (zr) {
+    if (zr && RENCONTRE_BOUTON_SUITE) {                // étape R267 (40.10, 38C) : la bande choisit, le bouton part
+      let p = zr.querySelector(".rft-principal");
+      if (!p) { p = document.createElement("button"); p.type = "button"; p.className = "rft-principal"; zr.querySelector(".rft-actions").prepend(p); }
+      const marquer = e => {
+        p.innerHTML = texteBoutonSuite(e); p.classList.add("rft-avec-vignette");
+        for (const b of zr.querySelectorAll(".qe-choix")) b.classList.toggle("qe-choisi", b.dataset.nom === e.nom_courant);
+      };
+      const depart = suiteProposee(x);
+      if (depart) marquer(depart);
+      for (const b of zr.querySelectorAll(".qe-choix")) b.onclick = () => {
+        prochaineChoisie[x.id] = b.dataset.nom;
+        const e = x.liste.find(f => f.nom_courant === b.dataset.nom);
+        if (e) marquer(e);
+      };
+      p.onclick = () => {
+        const e = suiteProposee(x);
+        if (e) prochaineChoisie[x.id] = e.nom_courant;
+        session = null;
+        if (intermedePret(x)) ouvrirIntermede(x, "Continuer ▶"); else lancerExpedition(x, 1);
+      };
+    } else if (zr) {
       for (const b of zr.querySelectorAll(".qe-choix")) b.onclick = () => {
         prochaineChoisie[x.id] = b.dataset.nom;
         if (intermedePret(x)) ouvrirIntermede(x, "Continuer ▶"); else lancerExpedition(x, 1);
       };
       const p = zr.querySelector(".rft-principal"); if (p) p.remove();
     }
+  }
+  // Étape R267 (40.10) : dans une expédition, le bouton de la suite est fixé en bas sur téléphone (comme « Continuer »)
+  if (x && RENCONTRE_BOUTON_SUITE) {
+    const p = document.querySelector("#fin-session > .resume-fin-tel:not(.rft-ordi) .rft-principal");
+    if (p) p.classList.add("rft-fixe");
   }
   // Étape R246 (36.38) : dernière espèce de l'étape 1 → le bouton dit « Étape 2 ▶ »
   if (x && RENCONTRE_COMPLETE && etapeFinie(x, 1) && !etapeFinie(x, 2) && (typeof aUneEtape2 !== "function" || aUneEtape2(x))) {

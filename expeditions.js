@@ -25,6 +25,27 @@ const EXPEDITIONS = [
   "vedette": "Grèbe huppé"
  },
  {
+  "id": "Alpes|7",
+  "territoire": "Alpes",
+  "ordre": 7,
+  "titre": "Les mammifères du jardin",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/herisson_d_europe.jpg",
+  "especes": [
+   "Hérisson d'Europe",
+   "Mulot sylvestre",
+   "Taupe d'Europe",
+   "Musaraigne musette",
+   "Souris grise",
+   "Surmulot",
+   "Rat noir"
+  ],
+  "rang": 2,
+  "chapitre": "Lac d'Annecy",
+  "carrefour": 0,
+  "vedette": "Hérisson d'Europe"
+ },
+ {
   "id": "Alpes|2",
   "territoire": "Alpes",
   "ordre": 2,
@@ -40,6 +61,7 @@ const EXPEDITIONS = [
    "Gardon",
    "Carpe commune"
   ],
+  "rang": 3,
   "chapitre": "Lac d'Annecy",
   "carrefour": 0,
   "vedette": "Omble chevalier"
@@ -60,6 +82,7 @@ const EXPEDITIONS = [
    "Anodonte des cygnes",
    "Tanche"
   ],
+  "rang": 4,
   "chapitre": "Lac d'Annecy",
   "carrefour": 0,
   "vedette": "Couleuvre helvétique"
@@ -80,6 +103,7 @@ const EXPEDITIONS = [
    "Rat musqué",
    "Écrevisse américaine"
   ],
+  "rang": 5,
   "chapitre": "Lac d'Annecy",
   "carrefour": 0,
   "vedette": "Écrevisse signal"
@@ -100,6 +124,7 @@ const EXPEDITIONS = [
    "Pinson des arbres",
    "Pigeon ramier"
   ],
+  "rang": 6,
   "chapitre": "Lac d'Annecy",
   "carrefour": 0,
   "vedette": "Rougegorge familier"
@@ -120,29 +145,10 @@ const EXPEDITIONS = [
    "Lombric commun",
    "Ver du fumier"
   ],
+  "rang": 7,
   "chapitre": "Lac d'Annecy",
   "carrefour": 0,
   "vedette": "Coccinelle à sept points"
- },
- {
-  "id": "Alpes|7",
-  "territoire": "Alpes",
-  "ordre": 7,
-  "titre": "Les mammifères du jardin",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/herisson_d_europe.jpg",
-  "especes": [
-   "Hérisson d'Europe",
-   "Mulot sylvestre",
-   "Taupe d'Europe",
-   "Musaraigne musette",
-   "Souris grise",
-   "Surmulot",
-   "Rat noir"
-  ],
-  "chapitre": "Lac d'Annecy",
-  "carrefour": 0,
-  "vedette": "Hérisson d'Europe"
  },
  {
   "id": "Alpes|8",
@@ -165,6 +171,27 @@ const EXPEDITIONS = [
   "vedette": "Grand rhinolophe"
  },
  {
+  "id": "Alpes|14",
+  "territoire": "Alpes",
+  "ordre": 14,
+  "titre": "Dans l'herbe des prés",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/rat_des_moissons.jpg",
+  "especes": [
+   "Rat des moissons",
+   "Campagnol agreste",
+   "Musaraigne pygmée",
+   "Crocidure leucode",
+   "Muscardin",
+   "Carte géographique",
+   "Cuivré des marais"
+  ],
+  "rang": 9,
+  "chapitre": "Massif de la Chartreuse",
+  "carrefour": 1,
+  "vedette": "Rat des moissons"
+ },
+ {
   "id": "Alpes|9",
   "territoire": "Alpes",
   "ordre": 9,
@@ -180,6 +207,7 @@ const EXPEDITIONS = [
    "Grande loche",
    "Hélice des bois"
   ],
+  "rang": 10,
   "chapitre": "Massif de la Chartreuse",
   "carrefour": 1,
   "vedette": "Carabe doré"
@@ -198,6 +226,7 @@ const EXPEDITIONS = [
    "Autour des palombes",
    "Épervier d'Europe"
   ],
+  "rang": 11,
   "chapitre": "Massif de la Chartreuse",
   "carrefour": 1,
   "vedette": "Lynx boréal"
@@ -218,6 +247,7 @@ const EXPEDITIONS = [
    "Micrommate émeraude",
    "Musaraigne carrelet"
   ],
+  "rang": 12,
   "chapitre": "Massif de la Chartreuse",
   "carrefour": 1,
   "vedette": "Grenouille agile"
@@ -238,6 +268,7 @@ const EXPEDITIONS = [
    "Sittelle torchepot",
    "Grimpereau des bois"
   ],
+  "rang": 13,
   "chapitre": "Massif de la Chartreuse",
   "carrefour": 1,
   "vedette": "Pic noir"
@@ -256,29 +287,10 @@ const EXPEDITIONS = [
    "Salamandre noire",
    "Salamandre tachetée"
   ],
+  "rang": 14,
   "chapitre": "Massif de la Chartreuse",
   "carrefour": 1,
   "vedette": "Triton alpestre"
- },
- {
-  "id": "Alpes|14",
-  "territoire": "Alpes",
-  "ordre": 14,
-  "titre": "Dans l'herbe des prés",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/rat_des_moissons.jpg",
-  "especes": [
-   "Rat des moissons",
-   "Campagnol agreste",
-   "Musaraigne pygmée",
-   "Crocidure leucode",
-   "Muscardin",
-   "Carte géographique",
-   "Cuivré des marais"
-  ],
-  "chapitre": "Massif de la Chartreuse",
-  "carrefour": 1,
-  "vedette": "Rat des moissons"
  },
  {
   "id": "Alpes|15",
@@ -301,6 +313,27 @@ const EXPEDITIONS = [
   "vedette": "Tourterelle des bois"
  },
  {
+  "id": "Alpes|20",
+  "territoire": "Alpes",
+  "ordre": 20,
+  "titre": "Les mammifères des champs",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/lievre_d_europe.jpg",
+  "especes": [
+   "Lièvre d'Europe",
+   "Lapin de garenne",
+   "Hermine",
+   "Belette",
+   "Chat forestier",
+   "Campagnol des champs",
+   "Campagnol terrestre"
+  ],
+  "rang": 16,
+  "chapitre": "Vercors",
+  "carrefour": 2,
+  "vedette": "Lièvre d'Europe"
+ },
+ {
   "id": "Alpes|16",
   "territoire": "Alpes",
   "ordre": 16,
@@ -316,6 +349,7 @@ const EXPEDITIONS = [
    "Écaille chinée",
    "Éphippigère des vignes"
   ],
+  "rang": 17,
   "chapitre": "Vercors",
   "carrefour": 2,
   "vedette": "Grande sauterelle verte"
@@ -334,6 +368,7 @@ const EXPEDITIONS = [
    "Faucon hobereau",
    "Bondrée apivore"
   ],
+  "rang": 18,
   "chapitre": "Vercors",
   "carrefour": 2,
   "vedette": "Buse variable"
@@ -352,6 +387,7 @@ const EXPEDITIONS = [
    "Bouvreuil pivoine",
    "Pouillot de Bonelli"
   ],
+  "rang": 19,
   "chapitre": "Vercors",
   "carrefour": 2,
   "vedette": "Bec-croisé des sapins"
@@ -370,29 +406,10 @@ const EXPEDITIONS = [
    "Bécasse des bois",
    "Loir gris"
   ],
+  "rang": 20,
   "chapitre": "Vercors",
   "carrefour": 2,
   "vedette": "Chouette hulotte"
- },
- {
-  "id": "Alpes|20",
-  "territoire": "Alpes",
-  "ordre": 20,
-  "titre": "Les mammifères des champs",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/lievre_d_europe.jpg",
-  "especes": [
-   "Lièvre d'Europe",
-   "Lapin de garenne",
-   "Hermine",
-   "Belette",
-   "Chat forestier",
-   "Campagnol des champs",
-   "Campagnol terrestre"
-  ],
-  "chapitre": "Vercors",
-  "carrefour": 2,
-  "vedette": "Lièvre d'Europe"
  },
  {
   "id": "Alpes|21",
@@ -414,6 +431,25 @@ const EXPEDITIONS = [
   "vedette": "Chevesne"
  },
  {
+  "id": "Alpes|26",
+  "territoire": "Alpes",
+  "ordre": 26,
+  "titre": "Les mammifères de la rivière",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/loutre_d_europe.jpg",
+  "especes": [
+   "Loutre d'Europe",
+   "Castor d'Europe",
+   "Murin de Daubenton",
+   "Putois d'Europe",
+   "Crossope aquatique"
+  ],
+  "rang": 22,
+  "chapitre": "Le Diois",
+  "carrefour": 3,
+  "vedette": "Loutre d'Europe"
+ },
+ {
   "id": "Alpes|22",
   "territoire": "Alpes",
   "ordre": 22,
@@ -427,6 +463,7 @@ const EXPEDITIONS = [
    "Chabot",
    "Lamproie de Planer"
   ],
+  "rang": 23,
   "chapitre": "Le Diois",
   "carrefour": 3,
   "vedette": "Écrevisse à pattes blanches"
@@ -446,6 +483,7 @@ const EXPEDITIONS = [
    "Caloptéryx vierge",
    "Caloptéryx éclatant"
   ],
+  "rang": 24,
   "chapitre": "Le Diois",
   "carrefour": 3,
   "vedette": "Cordulégastre annelé"
@@ -465,6 +503,7 @@ const EXPEDITIONS = [
    "Grand cormoran",
    "Petit gravelot"
   ],
+  "rang": 25,
   "chapitre": "Le Diois",
   "carrefour": 3,
   "vedette": "Martin-pêcheur d'Europe"
@@ -483,27 +522,10 @@ const EXPEDITIONS = [
    "Loche franche",
    "Blageon"
   ],
+  "rang": 26,
   "chapitre": "Le Diois",
   "carrefour": 3,
   "vedette": "Truite fario"
- },
- {
-  "id": "Alpes|26",
-  "territoire": "Alpes",
-  "ordre": 26,
-  "titre": "Les mammifères de la rivière",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/loutre_d_europe.jpg",
-  "especes": [
-   "Loutre d'Europe",
-   "Castor d'Europe",
-   "Murin de Daubenton",
-   "Putois d'Europe",
-   "Crossope aquatique"
-  ],
-  "chapitre": "Le Diois",
-  "carrefour": 3,
-  "vedette": "Loutre d'Europe"
  },
  {
   "id": "Alpes|27",
@@ -526,6 +548,27 @@ const EXPEDITIONS = [
   "vedette": "Alouette des champs"
  },
  {
+  "id": "Alpes|60",
+  "territoire": "Alpes",
+  "ordre": 60,
+  "titre": "Autour du lac de Serre-Ponçon",
+  "milieu": "Lacs",
+  "photo": "Images/chevalier_guignette.jpg",
+  "especes": [
+   "Chevalier guignette",
+   "Grèbe castagneux",
+   "Corneille mantelée",
+   "Mésange à longue queue",
+   "Lycose radiée",
+   "Campagnol amphibie",
+   "Mangore petite-bouteille"
+  ],
+  "rang": 28,
+  "chapitre": "Lac de Serre-Ponçon",
+  "carrefour": 4,
+  "vedette": "Chevalier guignette"
+ },
+ {
   "id": "Alpes|28",
   "territoire": "Alpes",
   "ordre": 28,
@@ -539,6 +582,7 @@ const EXPEDITIONS = [
    "Alyte accoucheur",
    "Crapaud calamite"
   ],
+  "rang": 29,
   "chapitre": "Lac de Serre-Ponçon",
   "carrefour": 4,
   "vedette": "Grenouille rousse"
@@ -559,6 +603,7 @@ const EXPEDITIONS = [
    "Gazé",
    "Abeille charpentière"
   ],
+  "rang": 30,
   "chapitre": "Lac de Serre-Ponçon",
   "carrefour": 4,
   "vedette": "Cétoine dorée"
@@ -577,6 +622,7 @@ const EXPEDITIONS = [
    "Anax empereur",
    "Libellule déprimée"
   ],
+  "rang": 31,
   "chapitre": "Lac de Serre-Ponçon",
   "carrefour": 4,
   "vedette": "Aeschne bleue"
@@ -595,6 +641,7 @@ const EXPEDITIONS = [
    "Échasse blanche",
    "Bécassine des marais"
   ],
+  "rang": 32,
   "chapitre": "Lac de Serre-Ponçon",
   "carrefour": 4,
   "vedette": "Rousserolle effarvatte"
@@ -613,29 +660,10 @@ const EXPEDITIONS = [
    "Guêpier d'Europe",
    "Cigogne noire"
   ],
+  "rang": 33,
   "chapitre": "Lac de Serre-Ponçon",
   "carrefour": 4,
   "vedette": "Grue cendrée"
- },
- {
-  "id": "Alpes|33",
-  "territoire": "Alpes",
-  "ordre": 33,
-  "titre": "Dans les prés de fauche",
-  "milieu": "Alpages et pelouses d'altitude",
-  "photo": "Images/azure_des_mouilleres.jpg",
-  "especes": [
-   "Damier de la succise",
-   "Azuré des mouillères",
-   "Criquet ensanglanté",
-   "Limnée tronquée",
-   "Cicindèle champêtre",
-   "Râle des genêts",
-   "Conocéphale gracieux"
-  ],
-  "chapitre": "Lac de Serre-Ponçon",
-  "carrefour": 4,
-  "vedette": "Azuré des mouillères"
  },
  {
   "id": "Alpes|34",
@@ -767,26 +795,6 @@ const EXPEDITIONS = [
   "vedette": "Petit-duc scops"
  },
  {
-  "id": "Alpes|41",
-  "territoire": "Alpes",
-  "ordre": 41,
-  "titre": "Les oiseaux du village",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/hirondelle_rustique.jpg",
-  "especes": [
-   "Hirondelle rustique",
-   "Martinet noir",
-   "Tourterelle turque",
-   "Pie bavarde",
-   "Choucas des tours",
-   "Étourneau sansonnet",
-   "Bergeronnette grise"
-  ],
-  "chapitre": "Gorges du Verdon",
-  "carrefour": 6,
-  "vedette": "Hirondelle rustique"
- },
- {
   "id": "Alpes|42",
   "territoire": "Alpes",
   "ordre": 42,
@@ -802,9 +810,31 @@ const EXPEDITIONS = [
    "Vulcain",
    "Citron"
   ],
+  "rang": 41,
   "chapitre": "Gorges du Verdon",
   "carrefour": 6,
   "vedette": "Machaon"
+ },
+ {
+  "id": "Alpes|41",
+  "territoire": "Alpes",
+  "ordre": 41,
+  "titre": "Les oiseaux du village",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/hirondelle_rustique.jpg",
+  "especes": [
+   "Hirondelle rustique",
+   "Martinet noir",
+   "Tourterelle turque",
+   "Pie bavarde",
+   "Choucas des tours",
+   "Étourneau sansonnet",
+   "Bergeronnette grise"
+  ],
+  "rang": 42,
+  "chapitre": "Gorges du Verdon",
+  "carrefour": 6,
+  "vedette": "Hirondelle rustique"
  },
  {
   "id": "Alpes|43",
@@ -944,25 +974,6 @@ const EXPEDITIONS = [
   "vedette": "Lagopède alpin"
  },
  {
-  "id": "Alpes|50",
-  "territoire": "Alpes",
-  "ordre": 50,
-  "titre": "Les papillons de la forêt",
-  "milieu": "Forêt",
-  "photo": "Images/tabac_d_espagne.jpg",
-  "especes": [
-   "Tabac d'Espagne",
-   "Grand Mars changeant",
-   "Isabelle de France",
-   "Processionnaire du pin",
-   "Semi-Apollon",
-   "Morio"
-  ],
-  "chapitre": "La Vallouise",
-  "carrefour": 8,
-  "vedette": "Tabac d'Espagne"
- },
- {
   "id": "Alpes|51",
   "territoire": "Alpes",
   "ordre": 51,
@@ -978,9 +989,30 @@ const EXPEDITIONS = [
    "Sanglier",
    "Mouflon méditerranéen"
   ],
+  "rang": 50,
   "chapitre": "La Vallouise",
   "carrefour": 8,
   "vedette": "Cerf élaphe"
+ },
+ {
+  "id": "Alpes|50",
+  "territoire": "Alpes",
+  "ordre": 50,
+  "titre": "Les papillons de la forêt",
+  "milieu": "Forêt",
+  "photo": "Images/tabac_d_espagne.jpg",
+  "especes": [
+   "Tabac d'Espagne",
+   "Grand Mars changeant",
+   "Isabelle de France",
+   "Processionnaire du pin",
+   "Semi-Apollon",
+   "Morio"
+  ],
+  "rang": 51,
+  "chapitre": "La Vallouise",
+  "carrefour": 8,
+  "vedette": "Tabac d'Espagne"
  },
  {
   "id": "Alpes|52",
@@ -1139,24 +1171,25 @@ const EXPEDITIONS = [
   "vedette": "Tircis"
  },
  {
-  "id": "Alpes|60",
+  "id": "Alpes|33",
   "territoire": "Alpes",
-  "ordre": 60,
-  "titre": "Autour du lac de Serre-Ponçon",
-  "milieu": "Lacs",
-  "photo": "Images/chevalier_guignette.jpg",
+  "ordre": 33,
+  "titre": "Dans les prés de fauche",
+  "milieu": "Alpages et pelouses d'altitude",
+  "photo": "Images/azure_des_mouilleres.jpg",
   "especes": [
-   "Chevalier guignette",
-   "Grèbe castagneux",
-   "Corneille mantelée",
-   "Mésange à longue queue",
-   "Lycose radiée",
-   "Campagnol amphibie",
-   "Mangore petite-bouteille"
+   "Damier de la succise",
+   "Azuré des mouillères",
+   "Criquet ensanglanté",
+   "Limnée tronquée",
+   "Cicindèle champêtre",
+   "Râle des genêts",
+   "Conocéphale gracieux"
   ],
+  "rang": 60,
   "chapitre": "Lac de Serre-Ponçon",
   "carrefour": 4,
-  "vedette": "Chevalier guignette"
+  "vedette": "Azuré des mouillères"
  },
  {
   "id": "Alpes|61",
@@ -1423,24 +1456,25 @@ const EXPEDITIONS = [
   "vedette": "Rougegorge familier"
  },
  {
-  "id": "Bassin aquitain|2",
+  "id": "Bassin aquitain|4",
   "territoire": "Bassin aquitain",
-  "ordre": 2,
-  "titre": "Les oiseaux du village",
+  "ordre": 4,
+  "titre": "Les mammifères des champs",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/hirondelle_rustique.jpg",
+  "photo": "Images/lievre_d_europe.jpg",
   "especes": [
-   "Hirondelle rustique",
-   "Martinet noir",
-   "Tourterelle turque",
-   "Pie bavarde",
-   "Choucas des tours",
-   "Étourneau sansonnet",
-   "Bergeronnette grise"
+   "Lièvre d'Europe",
+   "Lapin de garenne",
+   "Belette",
+   "Campagnol des champs",
+   "Rat des moissons",
+   "Campagnol agreste",
+   "Campagnol des Pyrénées"
   ],
+  "rang": 2,
   "chapitre": "Moissac, entre Tarn et Garonne",
   "carrefour": 0,
-  "vedette": "Hirondelle rustique"
+  "vedette": "Lièvre d'Europe"
  },
  {
   "id": "Bassin aquitain|3",
@@ -1463,24 +1497,25 @@ const EXPEDITIONS = [
   "vedette": "Effraie des clochers"
  },
  {
-  "id": "Bassin aquitain|4",
+  "id": "Bassin aquitain|2",
   "territoire": "Bassin aquitain",
-  "ordre": 4,
-  "titre": "Les mammifères des champs",
+  "ordre": 2,
+  "titre": "Les oiseaux du village",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/lievre_d_europe.jpg",
+  "photo": "Images/hirondelle_rustique.jpg",
   "especes": [
-   "Lièvre d'Europe",
-   "Lapin de garenne",
-   "Belette",
-   "Campagnol des champs",
-   "Rat des moissons",
-   "Campagnol agreste",
-   "Campagnol des Pyrénées"
+   "Hirondelle rustique",
+   "Martinet noir",
+   "Tourterelle turque",
+   "Pie bavarde",
+   "Choucas des tours",
+   "Étourneau sansonnet",
+   "Bergeronnette grise"
   ],
+  "rang": 4,
   "chapitre": "Moissac, entre Tarn et Garonne",
   "carrefour": 0,
-  "vedette": "Lièvre d'Europe"
+  "vedette": "Hirondelle rustique"
  },
  {
   "id": "Bassin aquitain|5",
@@ -1562,6 +1597,26 @@ const EXPEDITIONS = [
   "vedette": "Lézard des murailles"
  },
  {
+  "id": "Bassin aquitain|12",
+  "territoire": "Bassin aquitain",
+  "ordre": 12,
+  "titre": "Les cigales et leurs voisins",
+  "milieu": "Landes et coteaux secs",
+  "photo": "Images/cigale_rouge.jpg",
+  "especes": [
+   "Cigale rouge",
+   "Cigale plébéienne",
+   "Cigale grise",
+   "Criquet égyptien",
+   "Pachyure étrusque",
+   "Mangore petite-bouteille"
+  ],
+  "rang": 9,
+  "chapitre": "Coteaux du Gers",
+  "carrefour": 1,
+  "vedette": "Cigale rouge"
+ },
+ {
   "id": "Bassin aquitain|9",
   "territoire": "Bassin aquitain",
   "ordre": 9,
@@ -1577,6 +1632,7 @@ const EXPEDITIONS = [
    "Lycose radiée",
    "Philoscie des mousses"
   ],
+  "rang": 10,
   "chapitre": "Coteaux du Gers",
   "carrefour": 1,
   "vedette": "Cloporte des murs"
@@ -1597,6 +1653,7 @@ const EXPEDITIONS = [
    "Zygène de la filipendule",
    "Pacha à deux queues"
   ],
+  "rang": 11,
   "chapitre": "Coteaux du Gers",
   "carrefour": 1,
   "vedette": "Flambé"
@@ -1617,28 +1674,10 @@ const EXPEDITIONS = [
    "Mante religieuse",
    "Synème globuleux"
   ],
+  "rang": 12,
   "chapitre": "Coteaux du Gers",
   "carrefour": 1,
   "vedette": "Fourmilion"
- },
- {
-  "id": "Bassin aquitain|12",
-  "territoire": "Bassin aquitain",
-  "ordre": 12,
-  "titre": "Les cigales et leurs voisins",
-  "milieu": "Landes et coteaux secs",
-  "photo": "Images/cigale_rouge.jpg",
-  "especes": [
-   "Cigale rouge",
-   "Cigale plébéienne",
-   "Cigale grise",
-   "Criquet égyptien",
-   "Pachyure étrusque",
-   "Mangore petite-bouteille"
-  ],
-  "chapitre": "Coteaux du Gers",
-  "carrefour": 1,
-  "vedette": "Cigale rouge"
  },
  {
   "id": "Bassin aquitain|13",
@@ -1700,24 +1739,25 @@ const EXPEDITIONS = [
   "vedette": "Grue cendrée"
  },
  {
-  "id": "Bassin aquitain|16",
+  "id": "Bassin aquitain|20",
   "territoire": "Bassin aquitain",
-  "ordre": 16,
-  "titre": "Les oiseaux des roseaux",
-  "milieu": "Marais",
-  "photo": "Images/bouscarle_de_cetti.jpg",
+  "ordre": 20,
+  "titre": "Les poissons de l'étang",
+  "milieu": "Mares et étangs",
+  "photo": "Images/brochet.jpg",
   "especes": [
-   "Bouscarle de Cetti",
-   "Cisticole des joncs",
-   "Rousserolle effarvatte",
-   "Butor étoilé",
-   "Gorgebleue à miroir",
-   "Busard des roseaux",
-   "Rémiz penduline"
+   "Brochet",
+   "Perche commune",
+   "Gardon",
+   "Carpe commune",
+   "Tanche",
+   "Brème commune",
+   "Brochet aquitain"
   ],
+  "rang": 16,
   "chapitre": "Marais poitevin",
   "carrefour": 2,
-  "vedette": "Bouscarle de Cetti"
+  "vedette": "Brochet"
  },
  {
   "id": "Bassin aquitain|17",
@@ -1738,6 +1778,27 @@ const EXPEDITIONS = [
   "vedette": "Grenouille rousse"
  },
  {
+  "id": "Bassin aquitain|16",
+  "territoire": "Bassin aquitain",
+  "ordre": 16,
+  "titre": "Les oiseaux des roseaux",
+  "milieu": "Marais",
+  "photo": "Images/bouscarle_de_cetti.jpg",
+  "especes": [
+   "Bouscarle de Cetti",
+   "Cisticole des joncs",
+   "Rousserolle effarvatte",
+   "Butor étoilé",
+   "Gorgebleue à miroir",
+   "Busard des roseaux",
+   "Rémiz penduline"
+  ],
+  "rang": 18,
+  "chapitre": "Marais poitevin",
+  "carrefour": 2,
+  "vedette": "Bouscarle de Cetti"
+ },
+ {
   "id": "Bassin aquitain|18",
   "territoire": "Bassin aquitain",
   "ordre": 18,
@@ -1752,6 +1813,7 @@ const EXPEDITIONS = [
    "Guifette moustac",
    "Mouette rieuse"
   ],
+  "rang": 19,
   "chapitre": "Marais poitevin",
   "carrefour": 2,
   "vedette": "Grèbe huppé"
@@ -1772,29 +1834,10 @@ const EXPEDITIONS = [
    "Crabier chevelu",
    "Ibis falcinelle"
   ],
+  "rang": 20,
   "chapitre": "Marais poitevin",
   "carrefour": 2,
   "vedette": "Héron garde-bœufs"
- },
- {
-  "id": "Bassin aquitain|20",
-  "territoire": "Bassin aquitain",
-  "ordre": 20,
-  "titre": "Les poissons de l'étang",
-  "milieu": "Mares et étangs",
-  "photo": "Images/brochet.jpg",
-  "especes": [
-   "Brochet",
-   "Perche commune",
-   "Gardon",
-   "Carpe commune",
-   "Tanche",
-   "Brème commune",
-   "Brochet aquitain"
-  ],
-  "chapitre": "Marais poitevin",
-  "carrefour": 2,
-  "vedette": "Brochet"
  },
  {
   "id": "Bassin aquitain|21",
@@ -1835,6 +1878,26 @@ const EXPEDITIONS = [
   "vedette": "Petit rhinolophe"
  },
  {
+  "id": "Bassin aquitain|25",
+  "territoire": "Bassin aquitain",
+  "ordre": 25,
+  "titre": "Les habitants du potager",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/coccinelle_a_sept_points.jpg",
+  "especes": [
+   "Coccinelle à sept points",
+   "Escargot de Bourgogne",
+   "Petit-gris",
+   "Escargot des haies",
+   "Limace léopard",
+   "Escargot des jardins"
+  ],
+  "rang": 23,
+  "chapitre": "Vallée de la Dordogne",
+  "carrefour": 3,
+  "vedette": "Coccinelle à sept points"
+ },
+ {
   "id": "Bassin aquitain|23",
   "territoire": "Bassin aquitain",
   "ordre": 23,
@@ -1850,6 +1913,7 @@ const EXPEDITIONS = [
    "Pic épeichette",
    "Grimpereau des bois"
   ],
+  "rang": 24,
   "chapitre": "Vallée de la Dordogne",
   "carrefour": 3,
   "vedette": "Pic noir"
@@ -1869,28 +1933,10 @@ const EXPEDITIONS = [
    "Cigogne noire",
    "Bergeronnette des ruisseaux"
   ],
+  "rang": 25,
   "chapitre": "Vallée de la Dordogne",
   "carrefour": 3,
   "vedette": "Cincle plongeur"
- },
- {
-  "id": "Bassin aquitain|25",
-  "territoire": "Bassin aquitain",
-  "ordre": 25,
-  "titre": "Les habitants du potager",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/coccinelle_a_sept_points.jpg",
-  "especes": [
-   "Coccinelle à sept points",
-   "Escargot de Bourgogne",
-   "Petit-gris",
-   "Escargot des haies",
-   "Limace léopard",
-   "Escargot des jardins"
-  ],
-  "chapitre": "Vallée de la Dordogne",
-  "carrefour": 3,
-  "vedette": "Coccinelle à sept points"
  },
  {
   "id": "Bassin aquitain|26",
@@ -2278,6 +2324,25 @@ const EXPEDITIONS = [
   "vedette": "Patelle commune"
  },
  {
+  "id": "Bassin aquitain|50",
+  "territoire": "Bassin aquitain",
+  "ordre": 50,
+  "titre": "Les grands animaux de la mer",
+  "milieu": "Mer et océan",
+  "photo": "Images/dauphin_commun.jpg",
+  "especes": [
+   "Dauphin commun",
+   "Grand dauphin",
+   "Dauphin bleu et blanc",
+   "Marsouin commun",
+   "Tortue luth"
+  ],
+  "rang": 46,
+  "chapitre": "Île d'Oléron",
+  "carrefour": 7,
+  "vedette": "Dauphin commun"
+ },
+ {
   "id": "Bassin aquitain|46",
   "territoire": "Bassin aquitain",
   "ordre": 46,
@@ -2291,6 +2356,7 @@ const EXPEDITIONS = [
    "Arénicole",
    "Crabe vert"
   ],
+  "rang": 47,
   "chapitre": "Île d'Oléron",
   "carrefour": 7,
   "vedette": "Huître creuse"
@@ -2311,6 +2377,7 @@ const EXPEDITIONS = [
    "Avocette élégante",
    "Échasse blanche"
   ],
+  "rang": 48,
   "chapitre": "Île d'Oléron",
   "carrefour": 7,
   "vedette": "Barge à queue noire"
@@ -2329,6 +2396,7 @@ const EXPEDITIONS = [
    "Sole commune",
    "Crevette grise"
   ],
+  "rang": 49,
   "chapitre": "Île d'Oléron",
   "carrefour": 7,
   "vedette": "Bar commun"
@@ -2348,27 +2416,10 @@ const EXPEDITIONS = [
    "Goéland marin",
    "Goéland argenté"
   ],
+  "rang": 50,
   "chapitre": "Île d'Oléron",
   "carrefour": 7,
   "vedette": "Fou de Bassan"
- },
- {
-  "id": "Bassin aquitain|50",
-  "territoire": "Bassin aquitain",
-  "ordre": 50,
-  "titre": "Les grands animaux de la mer",
-  "milieu": "Mer et océan",
-  "photo": "Images/dauphin_commun.jpg",
-  "especes": [
-   "Dauphin commun",
-   "Grand dauphin",
-   "Dauphin bleu et blanc",
-   "Marsouin commun",
-   "Tortue luth"
-  ],
-  "chapitre": "Île d'Oléron",
-  "carrefour": 7,
-  "vedette": "Dauphin commun"
  },
  {
   "id": "Bassin aquitain|51",
@@ -2871,24 +2922,25 @@ const EXPEDITIONS = [
   "vedette": "Rougegorge familier"
  },
  {
-  "id": "Bassin parisien et Val de Loire|2",
+  "id": "Bassin parisien et Val de Loire|5",
   "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 2,
-  "titre": "Les oiseaux du village",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/hirondelle_rustique.jpg",
+  "ordre": 5,
+  "titre": "Les nouveaux venus",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/ragondin.jpg",
   "especes": [
-   "Hirondelle rustique",
-   "Martinet noir",
-   "Tourterelle turque",
-   "Pie bavarde",
-   "Choucas des tours",
-   "Étourneau sansonnet",
-   "Bergeronnette grise"
+   "Ragondin",
+   "Rat musqué",
+   "Frelon asiatique",
+   "Écrevisse de Louisiane",
+   "Tortue de Floride",
+   "Silure glane",
+   "Sandre"
   ],
+  "rang": 2,
   "chapitre": "Paris, ses bois et ses parcs",
   "carrefour": 0,
-  "vedette": "Hirondelle rustique"
+  "vedette": "Ragondin"
  },
  {
   "id": "Bassin parisien et Val de Loire|3",
@@ -2911,6 +2963,27 @@ const EXPEDITIONS = [
   "vedette": "Lézard des murailles"
  },
  {
+  "id": "Bassin parisien et Val de Loire|2",
+  "territoire": "Bassin parisien et Val de Loire",
+  "ordre": 2,
+  "titre": "Les oiseaux du village",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/hirondelle_rustique.jpg",
+  "especes": [
+   "Hirondelle rustique",
+   "Martinet noir",
+   "Tourterelle turque",
+   "Pie bavarde",
+   "Choucas des tours",
+   "Étourneau sansonnet",
+   "Bergeronnette grise"
+  ],
+  "rang": 4,
+  "chapitre": "Paris, ses bois et ses parcs",
+  "carrefour": 0,
+  "vedette": "Hirondelle rustique"
+ },
+ {
   "id": "Bassin parisien et Val de Loire|4",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 4,
@@ -2926,29 +2999,10 @@ const EXPEDITIONS = [
    "Lombric commun",
    "Ver du fumier"
   ],
+  "rang": 5,
   "chapitre": "Paris, ses bois et ses parcs",
   "carrefour": 0,
   "vedette": "Coccinelle à sept points"
- },
- {
-  "id": "Bassin parisien et Val de Loire|5",
-  "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 5,
-  "titre": "Les nouveaux venus",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/ragondin.jpg",
-  "especes": [
-   "Ragondin",
-   "Rat musqué",
-   "Frelon asiatique",
-   "Écrevisse de Louisiane",
-   "Tortue de Floride",
-   "Silure glane",
-   "Sandre"
-  ],
-  "chapitre": "Paris, ses bois et ses parcs",
-  "carrefour": 0,
-  "vedette": "Ragondin"
  },
  {
   "id": "Bassin parisien et Val de Loire|6",
@@ -3031,25 +3085,6 @@ const EXPEDITIONS = [
   "vedette": "Tourterelle des bois"
  },
  {
-  "id": "Bassin parisien et Val de Loire|10",
-  "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 10,
-  "titre": "Les oiseaux des vergers",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/pie_grieche_a_tete_rousse.jpg",
-  "especes": [
-   "Pie-grièche à tête rousse",
-   "Loriot d'Europe",
-   "Huppe fasciée",
-   "Torcol fourmilier",
-   "Rougequeue à front blanc",
-   "Grive draine"
-  ],
-  "chapitre": "Chinon et la Vienne",
-  "carrefour": 1,
-  "vedette": "Pie-grièche à tête rousse"
- },
- {
   "id": "Bassin parisien et Val de Loire|11",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 11,
@@ -3064,9 +3099,30 @@ const EXPEDITIONS = [
    "Couleuvre verte et jaune",
    "Couleuvre d'Esculape"
   ],
+  "rang": 10,
   "chapitre": "Chinon et la Vienne",
   "carrefour": 1,
   "vedette": "Circaète Jean-le-Blanc"
+ },
+ {
+  "id": "Bassin parisien et Val de Loire|10",
+  "territoire": "Bassin parisien et Val de Loire",
+  "ordre": 10,
+  "titre": "Les oiseaux des vergers",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/pie_grieche_a_tete_rousse.jpg",
+  "especes": [
+   "Pie-grièche à tête rousse",
+   "Loriot d'Europe",
+   "Huppe fasciée",
+   "Torcol fourmilier",
+   "Rougequeue à front blanc",
+   "Grive draine"
+  ],
+  "rang": 11,
+  "chapitre": "Chinon et la Vienne",
+  "carrefour": 1,
+  "vedette": "Pie-grièche à tête rousse"
  },
  {
   "id": "Bassin parisien et Val de Loire|12",
@@ -3146,6 +3202,26 @@ const EXPEDITIONS = [
   "vedette": "Sterne pierregarin"
  },
  {
+  "id": "Bassin parisien et Val de Loire|18",
+  "territoire": "Bassin parisien et Val de Loire",
+  "ordre": 18,
+  "titre": "Les mammifères de la rivière",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/loutre_d_europe.jpg",
+  "especes": [
+   "Loutre d'Europe",
+   "Castor d'Europe",
+   "Putois d'Europe",
+   "Campagnol amphibie",
+   "Crossope aquatique",
+   "Murin de Daubenton"
+  ],
+  "rang": 16,
+  "chapitre": "Chambord et la Loire",
+  "carrefour": 2,
+  "vedette": "Loutre d'Europe"
+ },
+ {
   "id": "Bassin parisien et Val de Loire|16",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 16,
@@ -3159,6 +3235,7 @@ const EXPEDITIONS = [
    "Grande alose",
    "Milan noir"
   ],
+  "rang": 17,
   "chapitre": "Chambord et la Loire",
   "carrefour": 2,
   "vedette": "Saumon atlantique"
@@ -3177,28 +3254,10 @@ const EXPEDITIONS = [
    "Guêpier d'Europe",
    "Hirondelle de rivage"
   ],
+  "rang": 18,
   "chapitre": "Chambord et la Loire",
   "carrefour": 2,
   "vedette": "Martin-pêcheur d'Europe"
- },
- {
-  "id": "Bassin parisien et Val de Loire|18",
-  "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 18,
-  "titre": "Les mammifères de la rivière",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/loutre_d_europe.jpg",
-  "especes": [
-   "Loutre d'Europe",
-   "Castor d'Europe",
-   "Putois d'Europe",
-   "Campagnol amphibie",
-   "Crossope aquatique",
-   "Murin de Daubenton"
-  ],
-  "chapitre": "Chambord et la Loire",
-  "carrefour": 2,
-  "vedette": "Loutre d'Europe"
  },
  {
   "id": "Bassin parisien et Val de Loire|19",
@@ -3260,6 +3319,26 @@ const EXPEDITIONS = [
   "vedette": "Brochet"
  },
  {
+  "id": "Bassin parisien et Val de Loire|24",
+  "territoire": "Bassin parisien et Val de Loire",
+  "ordre": 24,
+  "titre": "Les grands animaux de la forêt",
+  "milieu": "Forêt",
+  "photo": "Images/cerf_elaphe.jpg",
+  "especes": [
+   "Cerf élaphe",
+   "Chevreuil",
+   "Écureuil roux",
+   "Renard roux",
+   "Blaireau européen",
+   "Sanglier"
+  ],
+  "rang": 22,
+  "chapitre": "Sologne",
+  "carrefour": 3,
+  "vedette": "Cerf élaphe"
+ },
+ {
   "id": "Bassin parisien et Val de Loire|22",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 22,
@@ -3274,6 +3353,7 @@ const EXPEDITIONS = [
    "Guifette moustac",
    "Grèbe castagneux"
   ],
+  "rang": 23,
   "chapitre": "Sologne",
   "carrefour": 3,
   "vedette": "Grèbe huppé"
@@ -3292,28 +3372,10 @@ const EXPEDITIONS = [
    "Aigrette garzette",
    "Ibis falcinelle"
   ],
+  "rang": 24,
   "chapitre": "Sologne",
   "carrefour": 3,
   "vedette": "Bihoreau gris"
- },
- {
-  "id": "Bassin parisien et Val de Loire|24",
-  "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 24,
-  "titre": "Les grands animaux de la forêt",
-  "milieu": "Forêt",
-  "photo": "Images/cerf_elaphe.jpg",
-  "especes": [
-   "Cerf élaphe",
-   "Chevreuil",
-   "Écureuil roux",
-   "Renard roux",
-   "Blaireau européen",
-   "Sanglier"
-  ],
-  "chapitre": "Sologne",
-  "carrefour": 3,
-  "vedette": "Cerf élaphe"
  },
  {
   "id": "Bassin parisien et Val de Loire|25",
@@ -3494,6 +3556,27 @@ const EXPEDITIONS = [
   "vedette": "Lucane cerf-volant"
  },
  {
+  "id": "Bassin parisien et Val de Loire|36",
+  "territoire": "Bassin parisien et Val de Loire",
+  "ordre": 36,
+  "titre": "Les mammifères du jardin",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/herisson_d_europe.jpg",
+  "especes": [
+   "Hérisson d'Europe",
+   "Mulot sylvestre",
+   "Taupe d'Europe",
+   "Musaraigne musette",
+   "Souris grise",
+   "Surmulot",
+   "Campagnol souterrain"
+  ],
+  "rang": 34,
+  "chapitre": "Forêt de Compiègne",
+  "carrefour": 5,
+  "vedette": "Hérisson d'Europe"
+ },
+ {
   "id": "Bassin parisien et Val de Loire|34",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 34,
@@ -3508,6 +3591,7 @@ const EXPEDITIONS = [
    "Barbastelle d'Europe",
    "Oreillard roux"
   ],
+  "rang": 35,
   "chapitre": "Forêt de Compiègne",
   "carrefour": 5,
   "vedette": "Grand rhinolophe"
@@ -3526,29 +3610,10 @@ const EXPEDITIONS = [
    "Muscardin",
    "Campagnol roussâtre"
   ],
+  "rang": 36,
   "chapitre": "Forêt de Compiègne",
   "carrefour": 5,
   "vedette": "Rat des moissons"
- },
- {
-  "id": "Bassin parisien et Val de Loire|36",
-  "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 36,
-  "titre": "Les mammifères du jardin",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/herisson_d_europe.jpg",
-  "especes": [
-   "Hérisson d'Europe",
-   "Mulot sylvestre",
-   "Taupe d'Europe",
-   "Musaraigne musette",
-   "Souris grise",
-   "Surmulot",
-   "Campagnol souterrain"
-  ],
-  "chapitre": "Forêt de Compiègne",
-  "carrefour": 5,
-  "vedette": "Hérisson d'Europe"
  },
  {
   "id": "Bassin parisien et Val de Loire|37",
@@ -3630,6 +3695,27 @@ const EXPEDITIONS = [
   "vedette": "Barge à queue noire"
  },
  {
+  "id": "Bassin parisien et Val de Loire|64",
+  "territoire": "Bassin parisien et Val de Loire",
+  "ordre": 64,
+  "titre": "Dans les haies, les bois et les roselières du Der",
+  "milieu": "Marais",
+  "photo": "Images/fauvette_des_jardins.jpg",
+  "especes": [
+   "Fauvette des jardins",
+   "Grimpereau des jardins",
+   "Pouillot fitis",
+   "Bruant des roseaux",
+   "Blongios nain",
+   "Grillon des bois",
+   "Sonneur à ventre jaune"
+  ],
+  "rang": 41,
+  "chapitre": "Lac du Der",
+  "carrefour": 6,
+  "vedette": "Fauvette des jardins"
+ },
+ {
   "id": "Bassin parisien et Val de Loire|41",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 41,
@@ -3645,29 +3731,10 @@ const EXPEDITIONS = [
    "Busard des roseaux",
    "Bécassine des marais"
   ],
+  "rang": 42,
   "chapitre": "Lac du Der",
   "carrefour": 6,
   "vedette": "Bouscarle de Cetti"
- },
- {
-  "id": "Bassin parisien et Val de Loire|42",
-  "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 42,
-  "titre": "Les oiseaux de la plaine",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/perdrix_grise.jpg",
-  "especes": [
-   "Perdrix grise",
-   "Perdrix rouge",
-   "Caille des blés",
-   "Busard cendré",
-   "Vanneau huppé",
-   "Œdicnème criard",
-   "Alouette des champs"
-  ],
-  "chapitre": "Lac du Der",
-  "carrefour": 6,
-  "vedette": "Perdrix grise"
  },
  {
   "id": "Bassin parisien et Val de Loire|43",
@@ -4033,6 +4100,27 @@ const EXPEDITIONS = [
   "vedette": "Troglodyte mignon"
  },
  {
+  "id": "Bassin parisien et Val de Loire|42",
+  "territoire": "Bassin parisien et Val de Loire",
+  "ordre": 42,
+  "titre": "Les oiseaux de la plaine",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/perdrix_grise.jpg",
+  "especes": [
+   "Perdrix grise",
+   "Perdrix rouge",
+   "Caille des blés",
+   "Busard cendré",
+   "Vanneau huppé",
+   "Œdicnème criard",
+   "Alouette des champs"
+  ],
+  "rang": 63,
+  "chapitre": "Lac du Der",
+  "carrefour": 6,
+  "vedette": "Perdrix grise"
+ },
+ {
   "id": "Bassin parisien et Val de Loire|63",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 63,
@@ -4047,29 +4135,10 @@ const EXPEDITIONS = [
    "Fauvette babillarde",
    "Rousserolle turdoïde"
   ],
+  "rang": 64,
   "chapitre": "Lac du Der",
   "carrefour": 6,
   "vedette": "Harle bièvre"
- },
- {
-  "id": "Bassin parisien et Val de Loire|64",
-  "territoire": "Bassin parisien et Val de Loire",
-  "ordre": 64,
-  "titre": "Dans les haies, les bois et les roselières du Der",
-  "milieu": "Marais",
-  "photo": "Images/fauvette_des_jardins.jpg",
-  "especes": [
-   "Fauvette des jardins",
-   "Grimpereau des jardins",
-   "Pouillot fitis",
-   "Bruant des roseaux",
-   "Blongios nain",
-   "Grillon des bois",
-   "Sonneur à ventre jaune"
-  ],
-  "chapitre": "Lac du Der",
-  "carrefour": 6,
-  "vedette": "Fauvette des jardins"
  },
  {
   "id": "Bassin parisien et Val de Loire|65",
@@ -4240,22 +4309,25 @@ const EXPEDITIONS = [
   "vedette": "Tarier pâtre"
  },
  {
-  "id": "Corse|2",
+  "id": "Corse|4",
   "territoire": "Corse",
-  "ordre": 2,
-  "titre": "Dans les champs autour de la ville",
+  "ordre": 4,
+  "titre": "Dans les herbes du jardin",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/guepier_d_europe.jpg",
+  "photo": "Images/argiope_frelon.jpg",
   "especes": [
-   "Guêpier d'Europe",
-   "Héron garde-bœufs",
-   "Bruant proyer",
-   "Œdicnème criard",
-   "Vanneau huppé"
+   "Argiope frelon",
+   "Épeire diadème",
+   "Pisaure admirable",
+   "Synème globuleux",
+   "Gendarme",
+   "Coccinelle asiatique",
+   "Mangore petite-bouteille"
   ],
+  "rang": 2,
   "chapitre": "Ajaccio et les îles Sanguinaires",
   "carrefour": 0,
-  "vedette": "Guêpier d'Europe"
+  "vedette": "Argiope frelon"
  },
  {
   "id": "Corse|3",
@@ -4278,24 +4350,23 @@ const EXPEDITIONS = [
   "vedette": "Machaon"
  },
  {
-  "id": "Corse|4",
+  "id": "Corse|2",
   "territoire": "Corse",
-  "ordre": 4,
-  "titre": "Dans les herbes du jardin",
+  "ordre": 2,
+  "titre": "Dans les champs autour de la ville",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/argiope_frelon.jpg",
+  "photo": "Images/guepier_d_europe.jpg",
   "especes": [
-   "Argiope frelon",
-   "Épeire diadème",
-   "Pisaure admirable",
-   "Synème globuleux",
-   "Gendarme",
-   "Coccinelle asiatique",
-   "Mangore petite-bouteille"
+   "Guêpier d'Europe",
+   "Héron garde-bœufs",
+   "Bruant proyer",
+   "Œdicnème criard",
+   "Vanneau huppé"
   ],
+  "rang": 4,
   "chapitre": "Ajaccio et les îles Sanguinaires",
   "carrefour": 0,
-  "vedette": "Argiope frelon"
+  "vedette": "Guêpier d'Europe"
  },
  {
   "id": "Corse|5",
@@ -4375,6 +4446,46 @@ const EXPEDITIONS = [
   "vedette": "Rousserolle effarvatte"
  },
  {
+  "id": "Corse|58",
+  "territoire": "Corse",
+  "ordre": 58,
+  "titre": "Autour de l'étang de Biguglia",
+  "milieu": "Mares et étangs",
+  "photo": "Images/nette_rousse.jpg",
+  "especes": [
+   "Nette rousse",
+   "Fuligule milouin",
+   "Grèbe à cou noir",
+   "Bruant des roseaux",
+   "Conocéphale gracieux"
+  ],
+  "rang": 9,
+  "chapitre": "Étang de Biguglia",
+  "carrefour": 1,
+  "vedette": "Nette rousse"
+ },
+ {
+  "id": "Corse|14",
+  "territoire": "Corse",
+  "ordre": 14,
+  "titre": "Autour de l'étang",
+  "milieu": "Marais",
+  "photo": "Images/busard_des_roseaux.jpg",
+  "especes": [
+   "Busard des roseaux",
+   "Pipit farlouse",
+   "Anax empereur",
+   "Limnée tronquée",
+   "Mulet porc",
+   "Crabe bleu",
+   "Tortue de Floride"
+  ],
+  "rang": 10,
+  "chapitre": "Étang de Biguglia",
+  "carrefour": 1,
+  "vedette": "Busard des roseaux"
+ },
+ {
   "id": "Corse|9",
   "territoire": "Corse",
   "ordre": 9,
@@ -4389,6 +4500,7 @@ const EXPEDITIONS = [
    "Crabier chevelu",
    "Ibis falcinelle"
   ],
+  "rang": 11,
   "chapitre": "Étang de Biguglia",
   "carrefour": 1,
   "vedette": "Héron pourpré"
@@ -4408,6 +4520,7 @@ const EXPEDITIONS = [
    "Grèbe huppé",
    "Grand cormoran"
   ],
+  "rang": 12,
   "chapitre": "Étang de Biguglia",
   "carrefour": 1,
   "vedette": "Foulque macroule"
@@ -4427,6 +4540,7 @@ const EXPEDITIONS = [
    "Tadorne de Belon",
    "Grue cendrée"
   ],
+  "rang": 13,
   "chapitre": "Étang de Biguglia",
   "carrefour": 1,
   "vedette": "Flamant rose"
@@ -4447,48 +4561,10 @@ const EXPEDITIONS = [
    "Grand gravelot",
    "Bécassine des marais"
   ],
+  "rang": 14,
   "chapitre": "Étang de Biguglia",
   "carrefour": 1,
   "vedette": "Bécasseau variable"
- },
- {
-  "id": "Corse|13",
-  "territoire": "Corse",
-  "ordre": 13,
-  "titre": "Sur la plage du cordon",
-  "milieu": "Dunes et plages",
-  "photo": "Images/petit_gravelot.jpg",
-  "especes": [
-   "Petit gravelot",
-   "Gravelot à collier interrompu",
-   "Bécasseau sanderling",
-   "Mouette rieuse",
-   "Sterne pierregarin",
-   "Guifette moustac"
-  ],
-  "chapitre": "Étang de Biguglia",
-  "carrefour": 1,
-  "vedette": "Petit gravelot"
- },
- {
-  "id": "Corse|14",
-  "territoire": "Corse",
-  "ordre": 14,
-  "titre": "Autour de l'étang",
-  "milieu": "Marais",
-  "photo": "Images/busard_des_roseaux.jpg",
-  "especes": [
-   "Busard des roseaux",
-   "Pipit farlouse",
-   "Anax empereur",
-   "Limnée tronquée",
-   "Mulet porc",
-   "Crabe bleu",
-   "Tortue de Floride"
-  ],
-  "chapitre": "Étang de Biguglia",
-  "carrefour": 1,
-  "vedette": "Busard des roseaux"
  },
  {
   "id": "Corse|15",
@@ -4604,6 +4680,25 @@ const EXPEDITIONS = [
   "vedette": "Fauvette sarde"
  },
  {
+  "id": "Corse|26",
+  "territoire": "Corse",
+  "ordre": 26,
+  "titre": "Au crépuscule dans le maquis",
+  "milieu": "Garrigue et maquis",
+  "photo": "Images/engoulevent_d_europe.jpg",
+  "especes": [
+   "Engoulevent d'Europe",
+   "Effraie des clochers",
+   "Renard roux",
+   "Lapin de garenne",
+   "Grillon champêtre"
+  ],
+  "rang": 21,
+  "chapitre": "Désert des Agriates",
+  "carrefour": 3,
+  "vedette": "Engoulevent d'Europe"
+ },
+ {
   "id": "Corse|21",
   "territoire": "Corse",
   "ordre": 21,
@@ -4617,6 +4712,7 @@ const EXPEDITIONS = [
    "Tarente de Maurétanie",
    "Hémidactyle verruqueux"
   ],
+  "rang": 22,
   "chapitre": "Désert des Agriates",
   "carrefour": 3,
   "vedette": "Lézard tyrrhénien"
@@ -4636,6 +4732,7 @@ const EXPEDITIONS = [
    "Bourdon terrestre",
    "Myrtil"
   ],
+  "rang": 23,
   "chapitre": "Désert des Agriates",
   "carrefour": 3,
   "vedette": "Pacha à deux queues"
@@ -4654,6 +4751,7 @@ const EXPEDITIONS = [
    "Œdipode turquoise",
    "Punaise arlequin"
   ],
+  "rang": 24,
   "chapitre": "Désert des Agriates",
   "carrefour": 3,
   "vedette": "Cigale grise"
@@ -4672,6 +4770,7 @@ const EXPEDITIONS = [
    "Lycose radiée",
    "Cloporte commun"
   ],
+  "rang": 25,
   "chapitre": "Désert des Agriates",
   "carrefour": 3,
   "vedette": "Mante religieuse"
@@ -4691,27 +4790,10 @@ const EXPEDITIONS = [
    "Bruant zizi",
    "Busard Saint-Martin"
   ],
+  "rang": 26,
   "chapitre": "Désert des Agriates",
   "carrefour": 3,
   "vedette": "Pie-grièche à tête rousse"
- },
- {
-  "id": "Corse|26",
-  "territoire": "Corse",
-  "ordre": 26,
-  "titre": "Au crépuscule dans le maquis",
-  "milieu": "Garrigue et maquis",
-  "photo": "Images/engoulevent_d_europe.jpg",
-  "especes": [
-   "Engoulevent d'Europe",
-   "Effraie des clochers",
-   "Renard roux",
-   "Lapin de garenne",
-   "Grillon champêtre"
-  ],
-  "chapitre": "Désert des Agriates",
-  "carrefour": 3,
-  "vedette": "Engoulevent d'Europe"
  },
  {
   "id": "Corse|27",
@@ -4733,6 +4815,44 @@ const EXPEDITIONS = [
   "vedette": "Sittelle corse"
  },
  {
+  "id": "Corse|32",
+  "territoire": "Corse",
+  "ordre": 32,
+  "titre": "La nuit sous les arbres",
+  "milieu": "Forêt",
+  "photo": "Images/salamandre_de_corse.jpg",
+  "especes": [
+   "Salamandre de Corse",
+   "Bécasse des bois",
+   "Grand rhinolophe",
+   "Petit rhinolophe",
+   "Pipistrelle commune"
+  ],
+  "rang": 28,
+  "chapitre": "Forêt d'Aïtone",
+  "carrefour": 4,
+  "vedette": "Salamandre de Corse"
+ },
+ {
+  "id": "Corse|31",
+  "territoire": "Corse",
+  "ordre": 31,
+  "titre": "Les chauves-souris de la forêt",
+  "milieu": "Forêt",
+  "photo": "Images/barbastelle_d_europe.jpg",
+  "especes": [
+   "Barbastelle d'Europe",
+   "Noctule de Leisler",
+   "Murin à oreilles échancrées",
+   "Murin de Bechstein",
+   "Murin du Maghreb"
+  ],
+  "rang": 29,
+  "chapitre": "Forêt d'Aïtone",
+  "carrefour": 4,
+  "vedette": "Barbastelle d'Europe"
+ },
+ {
   "id": "Corse|28",
   "territoire": "Corse",
   "ordre": 28,
@@ -4746,6 +4866,7 @@ const EXPEDITIONS = [
    "Pinson des arbres",
    "Pouillot véloce"
   ],
+  "rang": 30,
   "chapitre": "Forêt d'Aïtone",
   "carrefour": 4,
   "vedette": "Mésange charbonnière"
@@ -4764,6 +4885,7 @@ const EXPEDITIONS = [
    "Pic épeiche",
    "Loriot d'Europe"
   ],
+  "rang": 31,
   "chapitre": "Forêt d'Aïtone",
   "carrefour": 4,
   "vedette": "Grive musicienne"
@@ -4782,45 +4904,10 @@ const EXPEDITIONS = [
    "Faucon hobereau",
    "Hibou moyen-duc"
   ],
+  "rang": 32,
   "chapitre": "Forêt d'Aïtone",
   "carrefour": 4,
   "vedette": "Autour des palombes"
- },
- {
-  "id": "Corse|31",
-  "territoire": "Corse",
-  "ordre": 31,
-  "titre": "Les chauves-souris de la forêt",
-  "milieu": "Forêt",
-  "photo": "Images/barbastelle_d_europe.jpg",
-  "especes": [
-   "Barbastelle d'Europe",
-   "Noctule de Leisler",
-   "Murin à oreilles échancrées",
-   "Murin de Bechstein",
-   "Murin du Maghreb"
-  ],
-  "chapitre": "Forêt d'Aïtone",
-  "carrefour": 4,
-  "vedette": "Barbastelle d'Europe"
- },
- {
-  "id": "Corse|32",
-  "territoire": "Corse",
-  "ordre": 32,
-  "titre": "La nuit sous les arbres",
-  "milieu": "Forêt",
-  "photo": "Images/salamandre_de_corse.jpg",
-  "especes": [
-   "Salamandre de Corse",
-   "Bécasse des bois",
-   "Grand rhinolophe",
-   "Petit rhinolophe",
-   "Pipistrelle commune"
-  ],
-  "chapitre": "Forêt d'Aïtone",
-  "carrefour": 4,
-  "vedette": "Salamandre de Corse"
  },
  {
   "id": "Corse|33",
@@ -4861,25 +4948,6 @@ const EXPEDITIONS = [
   "vedette": "Moineau cisalpin"
  },
  {
-  "id": "Corse|35",
-  "territoire": "Corse",
-  "ordre": 35,
-  "titre": "Les chanteurs des haies",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/rossignol_philomele.jpg",
-  "especes": [
-   "Rossignol philomèle",
-   "Fauvette à tête noire",
-   "Merle noir",
-   "Chardonneret élégant",
-   "Verdier d'Europe",
-   "Serin cini"
-  ],
-  "chapitre": "Cap Corse",
-  "carrefour": 5,
-  "vedette": "Rossignol philomèle"
- },
- {
   "id": "Corse|36",
   "territoire": "Corse",
   "ordre": 36,
@@ -4895,9 +4963,30 @@ const EXPEDITIONS = [
    "Pholque phalangide",
    "Zoropsis à pattes épineuses"
   ],
+  "rang": 35,
   "chapitre": "Cap Corse",
   "carrefour": 5,
   "vedette": "Petit-duc scops"
+ },
+ {
+  "id": "Corse|35",
+  "territoire": "Corse",
+  "ordre": 35,
+  "titre": "Les chanteurs des haies",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/rossignol_philomele.jpg",
+  "especes": [
+   "Rossignol philomèle",
+   "Fauvette à tête noire",
+   "Merle noir",
+   "Chardonneret élégant",
+   "Verdier d'Europe",
+   "Serin cini"
+  ],
+  "rang": 36,
+  "chapitre": "Cap Corse",
+  "carrefour": 5,
+  "vedette": "Rossignol philomèle"
  },
  {
   "id": "Corse|37",
@@ -5052,24 +5141,6 @@ const EXPEDITIONS = [
   "vedette": "Goéland leucophée"
  },
  {
-  "id": "Corse|45",
-  "territoire": "Corse",
-  "ordre": 45,
-  "titre": "Les oiseaux du large",
-  "milieu": "Mer et océan",
-  "photo": "Images/puffin_de_scopoli.jpg",
-  "especes": [
-   "Puffin de Scopoli",
-   "Puffin yelkouan",
-   "Fou de Bassan",
-   "Goéland brun",
-   "Sterne caugek"
-  ],
-  "chapitre": "Bouches de Bonifacio",
-  "carrefour": 7,
-  "vedette": "Puffin de Scopoli"
- },
- {
   "id": "Corse|46",
   "territoire": "Corse",
   "ordre": 46,
@@ -5083,6 +5154,7 @@ const EXPEDITIONS = [
    "Scutigère véloce",
    "Rat noir"
   ],
+  "rang": 45,
   "chapitre": "Bouches de Bonifacio",
   "carrefour": 7,
   "vedette": "Phyllodactyle d'Europe"
@@ -5102,9 +5174,29 @@ const EXPEDITIONS = [
    "Seiche commune",
    "Vélelle"
   ],
+  "rang": 46,
   "chapitre": "Bouches de Bonifacio",
   "carrefour": 7,
   "vedette": "Crabe marbré"
+ },
+ {
+  "id": "Corse|45",
+  "territoire": "Corse",
+  "ordre": 45,
+  "titre": "Les oiseaux du large",
+  "milieu": "Mer et océan",
+  "photo": "Images/puffin_de_scopoli.jpg",
+  "especes": [
+   "Puffin de Scopoli",
+   "Puffin yelkouan",
+   "Fou de Bassan",
+   "Goéland brun",
+   "Sterne caugek"
+  ],
+  "rang": 47,
+  "chapitre": "Bouches de Bonifacio",
+  "carrefour": 7,
+  "vedette": "Puffin de Scopoli"
  },
  {
   "id": "Corse|48",
@@ -5144,22 +5236,23 @@ const EXPEDITIONS = [
   "vedette": "Gypaète barbu"
  },
  {
-  "id": "Corse|50",
+  "id": "Corse|52",
   "territoire": "Corse",
-  "ordre": 50,
-  "titre": "Les oiseaux des rochers",
-  "milieu": "Falaises et rochers",
-  "photo": "Images/tichodrome_echelette.jpg",
+  "ordre": 52,
+  "titre": "Les habitants de la haute montagne",
+  "milieu": "Alpages et pelouses d'altitude",
+  "photo": "Images/mouflon_mediterraneen.jpg",
   "especes": [
-   "Tichodrome échelette",
-   "Crave à bec rouge",
-   "Monticole de roche",
-   "Rougequeue noir",
-   "Accenteur alpin"
+   "Mouflon méditerranéen",
+   "Lézard de Bedriaga",
+   "Porte-queue de Corse",
+   "Œdipode de Corse",
+   "Aurore"
   ],
+  "rang": 50,
   "chapitre": "Monte Cinto et le Niolo",
   "carrefour": 8,
-  "vedette": "Tichodrome échelette"
+  "vedette": "Mouflon méditerranéen"
  },
  {
   "id": "Corse|51",
@@ -5180,22 +5273,23 @@ const EXPEDITIONS = [
   "vedette": "Martinet à ventre blanc"
  },
  {
-  "id": "Corse|52",
+  "id": "Corse|50",
   "territoire": "Corse",
-  "ordre": 52,
-  "titre": "Les habitants de la haute montagne",
-  "milieu": "Alpages et pelouses d'altitude",
-  "photo": "Images/mouflon_mediterraneen.jpg",
+  "ordre": 50,
+  "titre": "Les oiseaux des rochers",
+  "milieu": "Falaises et rochers",
+  "photo": "Images/tichodrome_echelette.jpg",
   "especes": [
-   "Mouflon méditerranéen",
-   "Lézard de Bedriaga",
-   "Porte-queue de Corse",
-   "Œdipode de Corse",
-   "Aurore"
+   "Tichodrome échelette",
+   "Crave à bec rouge",
+   "Monticole de roche",
+   "Rougequeue noir",
+   "Accenteur alpin"
   ],
+  "rang": 52,
   "chapitre": "Monte Cinto et le Niolo",
   "carrefour": 8,
-  "vedette": "Mouflon méditerranéen"
+  "vedette": "Tichodrome échelette"
  },
  {
   "id": "Corse|53",
@@ -5216,24 +5310,6 @@ const EXPEDITIONS = [
   "vedette": "Mérou brun"
  },
  {
-  "id": "Corse|54",
-  "territoire": "Corse",
-  "ordre": 54,
-  "titre": "Les poissons des rochers",
-  "milieu": "Mer et océan",
-  "photo": "Images/girelle_commune.jpg",
-  "especes": [
-   "Girelle commune",
-   "Crénilabre paon",
-   "Serran écriture",
-   "Rascasse brune",
-   "Rouget de roche"
-  ],
-  "chapitre": "Réserve naturelle de Scandola",
-  "carrefour": 9,
-  "vedette": "Girelle commune"
- },
- {
   "id": "Corse|55",
   "territoire": "Corse",
   "ordre": 55,
@@ -5248,9 +5324,29 @@ const EXPEDITIONS = [
    "Grand dauphin",
    "Dauphin bleu et blanc"
   ],
+  "rang": 54,
   "chapitre": "Réserve naturelle de Scandola",
   "carrefour": 9,
   "vedette": "Saupe"
+ },
+ {
+  "id": "Corse|54",
+  "territoire": "Corse",
+  "ordre": 54,
+  "titre": "Les poissons des rochers",
+  "milieu": "Mer et océan",
+  "photo": "Images/girelle_commune.jpg",
+  "especes": [
+   "Girelle commune",
+   "Crénilabre paon",
+   "Serran écriture",
+   "Rascasse brune",
+   "Rouget de roche"
+  ],
+  "rang": 55,
+  "chapitre": "Réserve naturelle de Scandola",
+  "carrefour": 9,
+  "vedette": "Girelle commune"
  },
  {
   "id": "Corse|56",
@@ -5289,22 +5385,24 @@ const EXPEDITIONS = [
   "vedette": "Balbuzard pêcheur"
  },
  {
-  "id": "Corse|58",
+  "id": "Corse|13",
   "territoire": "Corse",
-  "ordre": 58,
-  "titre": "Autour de l'étang de Biguglia",
-  "milieu": "Mares et étangs",
-  "photo": "Images/nette_rousse.jpg",
+  "ordre": 13,
+  "titre": "Sur la plage du cordon",
+  "milieu": "Dunes et plages",
+  "photo": "Images/petit_gravelot.jpg",
   "especes": [
-   "Nette rousse",
-   "Fuligule milouin",
-   "Grèbe à cou noir",
-   "Bruant des roseaux",
-   "Conocéphale gracieux"
+   "Petit gravelot",
+   "Gravelot à collier interrompu",
+   "Bécasseau sanderling",
+   "Mouette rieuse",
+   "Sterne pierregarin",
+   "Guifette moustac"
   ],
+  "rang": 58,
   "chapitre": "Étang de Biguglia",
   "carrefour": 1,
-  "vedette": "Nette rousse"
+  "vedette": "Petit gravelot"
  },
  {
   "id": "Corse|59",
@@ -5363,26 +5461,6 @@ const EXPEDITIONS = [
   "vedette": "Rougegorge familier"
  },
  {
-  "id": "Jura|2",
-  "territoire": "Jura",
-  "ordre": 2,
-  "titre": "Les oiseaux de la ville",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/hirondelle_de_fenetre.jpg",
-  "especes": [
-   "Hirondelle de fenêtre",
-   "Moineau domestique",
-   "Martinet noir",
-   "Rougequeue noir",
-   "Pigeon biset",
-   "Tourterelle turque",
-   "Étourneau sansonnet"
-  ],
-  "chapitre": "Pontarlier et le château de Joux",
-  "carrefour": 0,
-  "vedette": "Hirondelle de fenêtre"
- },
- {
   "id": "Jura|3",
   "territoire": "Jura",
   "ordre": 3,
@@ -5398,6 +5476,7 @@ const EXPEDITIONS = [
    "Ver luisant",
    "Petit paon de nuit"
   ],
+  "rang": 2,
   "chapitre": "Pontarlier et le château de Joux",
   "carrefour": 0,
   "vedette": "Hérisson d'Europe"
@@ -5418,9 +5497,31 @@ const EXPEDITIONS = [
    "Surmulot",
    "Moineau friquet"
   ],
+  "rang": 3,
   "chapitre": "Pontarlier et le château de Joux",
   "carrefour": 0,
   "vedette": "Hirondelle rustique"
+ },
+ {
+  "id": "Jura|2",
+  "territoire": "Jura",
+  "ordre": 2,
+  "titre": "Les oiseaux de la ville",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/hirondelle_de_fenetre.jpg",
+  "especes": [
+   "Hirondelle de fenêtre",
+   "Moineau domestique",
+   "Martinet noir",
+   "Rougequeue noir",
+   "Pigeon biset",
+   "Tourterelle turque",
+   "Étourneau sansonnet"
+  ],
+  "rang": 4,
+  "chapitre": "Pontarlier et le château de Joux",
+  "carrefour": 0,
+  "vedette": "Hirondelle de fenêtre"
  },
  {
   "id": "Jura|5",
@@ -5500,6 +5601,27 @@ const EXPEDITIONS = [
   "vedette": "Martinet à ventre blanc"
  },
  {
+  "id": "Jura|12",
+  "territoire": "Jura",
+  "ordre": 12,
+  "titre": "Sur les pelouses sèches",
+  "milieu": "Landes et coteaux secs",
+  "photo": "Images/ascalaphe_soufre.jpg",
+  "especes": [
+   "Ascalaphe soufré",
+   "Mante religieuse",
+   "Œdipode turquoise",
+   "Éphippigère des vignes",
+   "Flambé",
+   "Punaise arlequin",
+   "Lapin de garenne"
+  ],
+  "rang": 9,
+  "chapitre": "Reculée de Baume-les-Messieurs",
+  "carrefour": 1,
+  "vedette": "Ascalaphe soufré"
+ },
+ {
   "id": "Jura|9",
   "territoire": "Jura",
   "ordre": 9,
@@ -5513,6 +5635,7 @@ const EXPEDITIONS = [
    "Murin à oreilles échancrées",
    "Oreillard gris"
   ],
+  "rang": 10,
   "chapitre": "Reculée de Baume-les-Messieurs",
   "carrefour": 1,
   "vedette": "Grand rhinolophe"
@@ -5533,6 +5656,7 @@ const EXPEDITIONS = [
    "Bruant fou",
    "Engoulevent d'Europe"
   ],
+  "rang": 11,
   "chapitre": "Reculée de Baume-les-Messieurs",
   "carrefour": 1,
   "vedette": "Huppe fasciée"
@@ -5553,29 +5677,10 @@ const EXPEDITIONS = [
    "Orvet fragile",
    "Coronelle lisse"
   ],
+  "rang": 12,
   "chapitre": "Reculée de Baume-les-Messieurs",
   "carrefour": 1,
   "vedette": "Lézard vert occidental"
- },
- {
-  "id": "Jura|12",
-  "territoire": "Jura",
-  "ordre": 12,
-  "titre": "Sur les pelouses sèches",
-  "milieu": "Landes et coteaux secs",
-  "photo": "Images/ascalaphe_soufre.jpg",
-  "especes": [
-   "Ascalaphe soufré",
-   "Mante religieuse",
-   "Œdipode turquoise",
-   "Éphippigère des vignes",
-   "Flambé",
-   "Punaise arlequin",
-   "Lapin de garenne"
-  ],
-  "chapitre": "Reculée de Baume-les-Messieurs",
-  "carrefour": 1,
-  "vedette": "Ascalaphe soufré"
  },
  {
   "id": "Jura|13",
@@ -5656,6 +5761,25 @@ const EXPEDITIONS = [
   "vedette": "Grèbe huppé"
  },
  {
+  "id": "Jura|18",
+  "territoire": "Jura",
+  "ordre": 18,
+  "titre": "Sur les rives du lac",
+  "milieu": "Lacs",
+  "photo": "Images/castor_d_europe.jpg",
+  "especes": [
+   "Castor d'Europe",
+   "Couleuvre vipérine",
+   "Grenouille rieuse",
+   "Ragondin",
+   "Rat musqué"
+  ],
+  "rang": 17,
+  "chapitre": "Lac de Nantua",
+  "carrefour": 2,
+  "vedette": "Castor d'Europe"
+ },
+ {
   "id": "Jura|17",
   "territoire": "Jura",
   "ordre": 17,
@@ -5670,27 +5794,10 @@ const EXPEDITIONS = [
    "Vespère de Savi",
    "Pipistrelle pygmée"
   ],
+  "rang": 18,
   "chapitre": "Lac de Nantua",
   "carrefour": 2,
   "vedette": "Noctule commune"
- },
- {
-  "id": "Jura|18",
-  "territoire": "Jura",
-  "ordre": 18,
-  "titre": "Sur les rives du lac",
-  "milieu": "Lacs",
-  "photo": "Images/castor_d_europe.jpg",
-  "especes": [
-   "Castor d'Europe",
-   "Couleuvre vipérine",
-   "Grenouille rieuse",
-   "Ragondin",
-   "Rat musqué"
-  ],
-  "chapitre": "Lac de Nantua",
-  "carrefour": 2,
-  "vedette": "Castor d'Europe"
  },
  {
   "id": "Jura|19",
@@ -5750,6 +5857,26 @@ const EXPEDITIONS = [
   "vedette": "Ombre commun"
  },
  {
+  "id": "Jura|24",
+  "territoire": "Jura",
+  "ordre": 24,
+  "titre": "Au bord de la Loue",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/ecrevisse_a_pattes_blanches.jpg",
+  "especes": [
+   "Écrevisse à pattes blanches",
+   "Crossope aquatique",
+   "Murin de Daubenton",
+   "Grenouille agile",
+   "Gammare",
+   "Patelline des fleuves"
+  ],
+  "rang": 22,
+  "chapitre": "Vallée de la Loue",
+  "carrefour": 3,
+  "vedette": "Écrevisse à pattes blanches"
+ },
+ {
   "id": "Jura|22",
   "territoire": "Jura",
   "ordre": 22,
@@ -5763,6 +5890,7 @@ const EXPEDITIONS = [
    "Petit gravelot",
    "Hirondelle de rivage"
   ],
+  "rang": 23,
   "chapitre": "Vallée de la Loue",
   "carrefour": 3,
   "vedette": "Cincle plongeur"
@@ -5783,28 +5911,10 @@ const EXPEDITIONS = [
    "Agrion de Mercure",
    "Pennipatte bleuâtre"
   ],
+  "rang": 24,
   "chapitre": "Vallée de la Loue",
   "carrefour": 3,
   "vedette": "Caloptéryx vierge"
- },
- {
-  "id": "Jura|24",
-  "territoire": "Jura",
-  "ordre": 24,
-  "titre": "Au bord de la Loue",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/ecrevisse_a_pattes_blanches.jpg",
-  "especes": [
-   "Écrevisse à pattes blanches",
-   "Crossope aquatique",
-   "Murin de Daubenton",
-   "Grenouille agile",
-   "Gammare",
-   "Patelline des fleuves"
-  ],
-  "chapitre": "Vallée de la Loue",
-  "carrefour": 3,
-  "vedette": "Écrevisse à pattes blanches"
  },
  {
   "id": "Jura|25",
@@ -5867,6 +5977,46 @@ const EXPEDITIONS = [
   "vedette": "Butor étoilé"
  },
  {
+  "id": "Jura|33",
+  "territoire": "Jura",
+  "ordre": 33,
+  "titre": "Sur les berges et dans la vase",
+  "milieu": "Marais",
+  "photo": "Images/putois_d_europe.jpg",
+  "especes": [
+   "Putois d'Europe",
+   "Couleuvre helvétique",
+   "Tortue de Floride",
+   "Écrevisse américaine",
+   "Grande limnée",
+   "Limnée tronquée"
+  ],
+  "rang": 28,
+  "chapitre": "Lacs de Remoray et de Saint-Point",
+  "carrefour": 4,
+  "vedette": "Putois d'Europe"
+ },
+ {
+  "id": "Jura|30",
+  "territoire": "Jura",
+  "ordre": 30,
+  "titre": "Les poissons des lacs",
+  "milieu": "Lacs",
+  "photo": "Images/lote.jpg",
+  "especes": [
+   "Lote",
+   "Brochet",
+   "Perche commune",
+   "Tanche",
+   "Gardon",
+   "Rotengle"
+  ],
+  "rang": 29,
+  "chapitre": "Lacs de Remoray et de Saint-Point",
+  "carrefour": 4,
+  "vedette": "Lote"
+ },
+ {
   "id": "Jura|28",
   "territoire": "Jura",
   "ordre": 28,
@@ -5880,6 +6030,7 @@ const EXPEDITIONS = [
    "Aigrette garzette",
    "Martin-pêcheur d'Europe"
   ],
+  "rang": 30,
   "chapitre": "Lacs de Remoray et de Saint-Point",
   "carrefour": 4,
   "vedette": "Balbuzard pêcheur"
@@ -5900,28 +6051,10 @@ const EXPEDITIONS = [
    "Cygne tuberculé",
    "Grèbe à cou noir"
   ],
+  "rang": 31,
   "chapitre": "Lacs de Remoray et de Saint-Point",
   "carrefour": 4,
   "vedette": "Harle bièvre"
- },
- {
-  "id": "Jura|30",
-  "territoire": "Jura",
-  "ordre": 30,
-  "titre": "Les poissons des lacs",
-  "milieu": "Lacs",
-  "photo": "Images/lote.jpg",
-  "especes": [
-   "Lote",
-   "Brochet",
-   "Perche commune",
-   "Tanche",
-   "Gardon",
-   "Rotengle"
-  ],
-  "chapitre": "Lacs de Remoray et de Saint-Point",
-  "carrefour": 4,
-  "vedette": "Lote"
  },
  {
   "id": "Jura|31",
@@ -5939,6 +6072,7 @@ const EXPEDITIONS = [
    "Crapaud commun",
    "Rainette verte"
   ],
+  "rang": 32,
   "chapitre": "Lacs de Remoray et de Saint-Point",
   "carrefour": 4,
   "vedette": "Triton crêté"
@@ -5959,28 +6093,10 @@ const EXPEDITIONS = [
    "Agrion élégant",
    "Libellule à quatre taches"
   ],
+  "rang": 33,
   "chapitre": "Lacs de Remoray et de Saint-Point",
   "carrefour": 4,
   "vedette": "Anax empereur"
- },
- {
-  "id": "Jura|33",
-  "territoire": "Jura",
-  "ordre": 33,
-  "titre": "Sur les berges et dans la vase",
-  "milieu": "Marais",
-  "photo": "Images/putois_d_europe.jpg",
-  "especes": [
-   "Putois d'Europe",
-   "Couleuvre helvétique",
-   "Tortue de Floride",
-   "Écrevisse américaine",
-   "Grande limnée",
-   "Limnée tronquée"
-  ],
-  "chapitre": "Lacs de Remoray et de Saint-Point",
-  "carrefour": 4,
-  "vedette": "Putois d'Europe"
  },
  {
   "id": "Jura|34",
@@ -6002,6 +6118,46 @@ const EXPEDITIONS = [
   "vedette": "Mésange huppée"
  },
  {
+  "id": "Jura|39",
+  "territoire": "Jura",
+  "ordre": 39,
+  "titre": "Les papillons des clairières",
+  "milieu": "Forêt",
+  "photo": "Images/grand_sylvain.jpg",
+  "especes": [
+   "Grand Sylvain",
+   "Petit Mars changeant",
+   "Grand Mars changeant",
+   "Tabac d'Espagne",
+   "Bacchante",
+   "Tircis",
+   "Grande Tortue"
+  ],
+  "rang": 35,
+  "chapitre": "Le Mont d'Or",
+  "carrefour": 5,
+  "vedette": "Grand Sylvain"
+ },
+ {
+  "id": "Jura|38",
+  "territoire": "Jura",
+  "ordre": 38,
+  "titre": "Les chauves-souris de la forêt",
+  "milieu": "Forêt",
+  "photo": "Images/barbastelle_d_europe.jpg",
+  "especes": [
+   "Barbastelle d'Europe",
+   "Murin de Bechstein",
+   "Oreillard roux",
+   "Murin de Natterer",
+   "Murin à moustaches"
+  ],
+  "rang": 36,
+  "chapitre": "Le Mont d'Or",
+  "carrefour": 5,
+  "vedette": "Barbastelle d'Europe"
+ },
+ {
   "id": "Jura|35",
   "territoire": "Jura",
   "ordre": 35,
@@ -6015,6 +6171,7 @@ const EXPEDITIONS = [
    "Pic mar",
    "Sittelle torchepot"
   ],
+  "rang": 37,
   "chapitre": "Le Mont d'Or",
   "carrefour": 5,
   "vedette": "Pic noir"
@@ -6035,6 +6192,7 @@ const EXPEDITIONS = [
    "Pouillot de Bonelli",
    "Gobemouche noir"
   ],
+  "rang": 38,
   "chapitre": "Le Mont d'Or",
   "carrefour": 5,
   "vedette": "Grive musicienne"
@@ -6053,47 +6211,10 @@ const EXPEDITIONS = [
    "Chouette hulotte",
    "Hibou moyen-duc"
   ],
+  "rang": 39,
   "chapitre": "Le Mont d'Or",
   "carrefour": 5,
   "vedette": "Autour des palombes"
- },
- {
-  "id": "Jura|38",
-  "territoire": "Jura",
-  "ordre": 38,
-  "titre": "Les chauves-souris de la forêt",
-  "milieu": "Forêt",
-  "photo": "Images/barbastelle_d_europe.jpg",
-  "especes": [
-   "Barbastelle d'Europe",
-   "Murin de Bechstein",
-   "Oreillard roux",
-   "Murin de Natterer",
-   "Murin à moustaches"
-  ],
-  "chapitre": "Le Mont d'Or",
-  "carrefour": 5,
-  "vedette": "Barbastelle d'Europe"
- },
- {
-  "id": "Jura|39",
-  "territoire": "Jura",
-  "ordre": 39,
-  "titre": "Les papillons des clairières",
-  "milieu": "Forêt",
-  "photo": "Images/grand_sylvain.jpg",
-  "especes": [
-   "Grand Sylvain",
-   "Petit Mars changeant",
-   "Grand Mars changeant",
-   "Tabac d'Espagne",
-   "Bacchante",
-   "Tircis",
-   "Grande Tortue"
-  ],
-  "chapitre": "Le Mont d'Or",
-  "carrefour": 5,
-  "vedette": "Grand Sylvain"
  },
  {
   "id": "Jura|40",
@@ -6234,6 +6355,27 @@ const EXPEDITIONS = [
   "vedette": "Solitaire"
  },
  {
+  "id": "Jura|52",
+  "territoire": "Jura",
+  "ordre": 52,
+  "titre": "Les mammifères des prés",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/hermine.jpg",
+  "especes": [
+   "Hermine",
+   "Belette",
+   "Campagnol terrestre",
+   "Campagnol des champs",
+   "Campagnol agreste",
+   "Taupe d'Europe",
+   "Crocidure leucode"
+  ],
+  "rang": 47,
+  "chapitre": "Tourbières de Frasne",
+  "carrefour": 7,
+  "vedette": "Hermine"
+ },
+ {
   "id": "Jura|47",
   "territoire": "Jura",
   "ordre": 47,
@@ -6249,6 +6391,7 @@ const EXPEDITIONS = [
    "Aeschne subarctique",
    "Petite nymphe au corps de feu"
   ],
+  "rang": 48,
   "chapitre": "Tourbières de Frasne",
   "carrefour": 7,
   "vedette": "Cordulie arctique"
@@ -6269,6 +6412,7 @@ const EXPEDITIONS = [
    "Caille des blés",
    "Bruant des roseaux"
   ],
+  "rang": 49,
   "chapitre": "Tourbières de Frasne",
   "carrefour": 7,
   "vedette": "Courlis cendré"
@@ -6289,6 +6433,7 @@ const EXPEDITIONS = [
    "Miramelle alpestre",
    "Timarque"
   ],
+  "rang": 50,
   "chapitre": "Tourbières de Frasne",
   "carrefour": 7,
   "vedette": "Sauterelle cymbalière"
@@ -6307,6 +6452,7 @@ const EXPEDITIONS = [
    "Sonneur à ventre jaune",
    "Crapaud calamite"
   ],
+  "rang": 51,
   "chapitre": "Tourbières de Frasne",
   "carrefour": 7,
   "vedette": "Vipère péliade"
@@ -6327,29 +6473,10 @@ const EXPEDITIONS = [
    "Élanion blanc",
    "Bruant ortolan"
   ],
+  "rang": 52,
   "chapitre": "Tourbières de Frasne",
   "carrefour": 7,
   "vedette": "Milan royal"
- },
- {
-  "id": "Jura|52",
-  "territoire": "Jura",
-  "ordre": 52,
-  "titre": "Les mammifères des prés",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/hermine.jpg",
-  "especes": [
-   "Hermine",
-   "Belette",
-   "Campagnol terrestre",
-   "Campagnol des champs",
-   "Campagnol agreste",
-   "Taupe d'Europe",
-   "Crocidure leucode"
-  ],
-  "chapitre": "Tourbières de Frasne",
-  "carrefour": 7,
-  "vedette": "Hermine"
  },
  {
   "id": "Jura|53",
@@ -6682,6 +6809,27 @@ const EXPEDITIONS = [
   "vedette": "Patelle commune"
  },
  {
+  "id": "Massif armoricain|5",
+  "territoire": "Massif armoricain",
+  "ordre": 5,
+  "titre": "Au pied de la haie",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/orvet_fragile.jpg",
+  "especes": [
+   "Orvet fragile",
+   "Lézard vert occidental",
+   "Épeire diadème",
+   "Muscardin",
+   "Crapaud épineux",
+   "Campagnol roussâtre",
+   "Ver luisant"
+  ],
+  "rang": 2,
+  "chapitre": "Golfe du Morbihan",
+  "carrefour": 0,
+  "vedette": "Orvet fragile"
+ },
+ {
   "id": "Massif armoricain|2",
   "territoire": "Massif armoricain",
   "ordre": 2,
@@ -6697,6 +6845,7 @@ const EXPEDITIONS = [
    "Spirographe",
    "Crabe verruqueux"
   ],
+  "rang": 3,
   "chapitre": "Golfe du Morbihan",
   "carrefour": 0,
   "vedette": "Crabe vert"
@@ -6716,6 +6865,7 @@ const EXPEDITIONS = [
    "Avocette élégante",
    "Échasse blanche"
   ],
+  "rang": 4,
   "chapitre": "Golfe du Morbihan",
   "carrefour": 0,
   "vedette": "Barge à queue noire"
@@ -6735,29 +6885,10 @@ const EXPEDITIONS = [
    "Grand cormoran",
    "Bernard-l'ermite"
   ],
+  "rang": 5,
   "chapitre": "Golfe du Morbihan",
   "carrefour": 0,
   "vedette": "Bernache cravant"
- },
- {
-  "id": "Massif armoricain|5",
-  "territoire": "Massif armoricain",
-  "ordre": 5,
-  "titre": "Au pied de la haie",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/orvet_fragile.jpg",
-  "especes": [
-   "Orvet fragile",
-   "Lézard vert occidental",
-   "Épeire diadème",
-   "Muscardin",
-   "Crapaud épineux",
-   "Campagnol roussâtre",
-   "Ver luisant"
-  ],
-  "chapitre": "Golfe du Morbihan",
-  "carrefour": 0,
-  "vedette": "Orvet fragile"
  },
  {
   "id": "Massif armoricain|6",
@@ -6799,6 +6930,27 @@ const EXPEDITIONS = [
   "vedette": "Bouscarle de Cetti"
  },
  {
+  "id": "Massif armoricain|10",
+  "territoire": "Massif armoricain",
+  "ordre": 10,
+  "titre": "Les nouveaux venus",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/ecrevisse_signal.jpg",
+  "especes": [
+   "Écrevisse signal",
+   "Écrevisse de Louisiane",
+   "Tortue de Floride",
+   "Moule zébrée",
+   "Méduse d'eau douce",
+   "Vison d'Amérique",
+   "Rat musqué"
+  ],
+  "rang": 8,
+  "chapitre": "Marais de Brière",
+  "carrefour": 1,
+  "vedette": "Écrevisse signal"
+ },
+ {
   "id": "Massif armoricain|8",
   "territoire": "Massif armoricain",
   "ordre": 8,
@@ -6814,6 +6966,7 @@ const EXPEDITIONS = [
    "Saltique chevronné",
    "Rougequeue noir"
   ],
+  "rang": 9,
   "chapitre": "Marais de Brière",
   "carrefour": 1,
   "vedette": "Lézard des murailles"
@@ -6834,29 +6987,10 @@ const EXPEDITIONS = [
    "Accenteur mouchet",
    "Fauvette à tête noire"
   ],
+  "rang": 10,
   "chapitre": "Marais de Brière",
   "carrefour": 1,
   "vedette": "Tourterelle des bois"
- },
- {
-  "id": "Massif armoricain|10",
-  "territoire": "Massif armoricain",
-  "ordre": 10,
-  "titre": "Les nouveaux venus",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/ecrevisse_signal.jpg",
-  "especes": [
-   "Écrevisse signal",
-   "Écrevisse de Louisiane",
-   "Tortue de Floride",
-   "Moule zébrée",
-   "Méduse d'eau douce",
-   "Vison d'Amérique",
-   "Rat musqué"
-  ],
-  "chapitre": "Marais de Brière",
-  "carrefour": 1,
-  "vedette": "Écrevisse signal"
  },
  {
   "id": "Massif armoricain|11",
@@ -6917,26 +7051,6 @@ const EXPEDITIONS = [
   "vedette": "Rougegorge familier"
  },
  {
-  "id": "Massif armoricain|14",
-  "territoire": "Massif armoricain",
-  "ordre": 14,
-  "titre": "Les oiseaux du village",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/hirondelle_rustique.jpg",
-  "especes": [
-   "Hirondelle rustique",
-   "Martinet noir",
-   "Tourterelle turque",
-   "Pie bavarde",
-   "Choucas des tours",
-   "Étourneau sansonnet",
-   "Bergeronnette grise"
-  ],
-  "chapitre": "Suisse normande",
-  "carrefour": 2,
-  "vedette": "Hirondelle rustique"
- },
- {
   "id": "Massif armoricain|15",
   "territoire": "Massif armoricain",
   "ordre": 15,
@@ -6951,6 +7065,7 @@ const EXPEDITIONS = [
    "Petit rhinolophe",
    "Lérot"
   ],
+  "rang": 14,
   "chapitre": "Suisse normande",
   "carrefour": 2,
   "vedette": "Effraie des clochers"
@@ -6971,9 +7086,31 @@ const EXPEDITIONS = [
    "Vulcain",
    "Citron"
   ],
+  "rang": 15,
   "chapitre": "Suisse normande",
   "carrefour": 2,
   "vedette": "Machaon"
+ },
+ {
+  "id": "Massif armoricain|14",
+  "territoire": "Massif armoricain",
+  "ordre": 14,
+  "titre": "Les oiseaux du village",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/hirondelle_rustique.jpg",
+  "especes": [
+   "Hirondelle rustique",
+   "Martinet noir",
+   "Tourterelle turque",
+   "Pie bavarde",
+   "Choucas des tours",
+   "Étourneau sansonnet",
+   "Bergeronnette grise"
+  ],
+  "rang": 16,
+  "chapitre": "Suisse normande",
+  "carrefour": 2,
+  "vedette": "Hirondelle rustique"
  },
  {
   "id": "Massif armoricain|17",
@@ -7071,6 +7208,26 @@ const EXPEDITIONS = [
   "vedette": "Bihoreau gris"
  },
  {
+  "id": "Massif armoricain|25",
+  "territoire": "Massif armoricain",
+  "ordre": 25,
+  "titre": "Les chauves-souris de la forêt",
+  "milieu": "Forêt",
+  "photo": "Images/grand_rhinolophe.jpg",
+  "especes": [
+   "Grand rhinolophe",
+   "Sérotine commune",
+   "Murin de Bechstein",
+   "Grand murin",
+   "Oreillard roux",
+   "Noctule commune"
+  ],
+  "rang": 22,
+  "chapitre": "Lac de Grand-Lieu",
+  "carrefour": 3,
+  "vedette": "Grand rhinolophe"
+ },
+ {
   "id": "Massif armoricain|22",
   "territoire": "Massif armoricain",
   "ordre": 22,
@@ -7085,6 +7242,7 @@ const EXPEDITIONS = [
    "Canard colvert",
    "Héron cendré"
   ],
+  "rang": 23,
   "chapitre": "Lac de Grand-Lieu",
   "carrefour": 3,
   "vedette": "Grèbe huppé"
@@ -7105,6 +7263,7 @@ const EXPEDITIONS = [
    "Vanneau huppé",
    "Œdicnème criard"
   ],
+  "rang": 24,
   "chapitre": "Lac de Grand-Lieu",
   "carrefour": 3,
   "vedette": "Perdrix grise"
@@ -7124,28 +7283,10 @@ const EXPEDITIONS = [
    "Faucon hobereau",
    "Bondrée apivore"
   ],
+  "rang": 25,
   "chapitre": "Lac de Grand-Lieu",
   "carrefour": 3,
   "vedette": "Buse variable"
- },
- {
-  "id": "Massif armoricain|25",
-  "territoire": "Massif armoricain",
-  "ordre": 25,
-  "titre": "Les chauves-souris de la forêt",
-  "milieu": "Forêt",
-  "photo": "Images/grand_rhinolophe.jpg",
-  "especes": [
-   "Grand rhinolophe",
-   "Sérotine commune",
-   "Murin de Bechstein",
-   "Grand murin",
-   "Oreillard roux",
-   "Noctule commune"
-  ],
-  "chapitre": "Lac de Grand-Lieu",
-  "carrefour": 3,
-  "vedette": "Grand rhinolophe"
  },
  {
   "id": "Massif armoricain|26",
@@ -7477,6 +7618,27 @@ const EXPEDITIONS = [
   "vedette": "Fauvette pitchou"
  },
  {
+  "id": "Massif armoricain|45",
+  "territoire": "Massif armoricain",
+  "ordre": 45,
+  "titre": "Les mammifères des champs",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/lievre_d_europe.jpg",
+  "especes": [
+   "Lièvre d'Europe",
+   "Lapin de garenne",
+   "Hermine",
+   "Belette",
+   "Rat des moissons",
+   "Campagnol agreste",
+   "Campagnol souterrain"
+  ],
+  "rang": 43,
+  "chapitre": "Monts d'Arrée",
+  "carrefour": 7,
+  "vedette": "Lièvre d'Europe"
+ },
+ {
   "id": "Massif armoricain|43",
   "territoire": "Massif armoricain",
   "ordre": 43,
@@ -7490,6 +7652,7 @@ const EXPEDITIONS = [
    "Dolomède des marais",
    "Petit paon de nuit"
   ],
+  "rang": 44,
   "chapitre": "Monts d'Arrée",
   "carrefour": 7,
   "vedette": "Lézard vivipare"
@@ -7510,29 +7673,10 @@ const EXPEDITIONS = [
    "Crossope aquatique",
    "Ragondin"
   ],
+  "rang": 45,
   "chapitre": "Monts d'Arrée",
   "carrefour": 7,
   "vedette": "Loutre d'Europe"
- },
- {
-  "id": "Massif armoricain|45",
-  "territoire": "Massif armoricain",
-  "ordre": 45,
-  "titre": "Les mammifères des champs",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/lievre_d_europe.jpg",
-  "especes": [
-   "Lièvre d'Europe",
-   "Lapin de garenne",
-   "Hermine",
-   "Belette",
-   "Rat des moissons",
-   "Campagnol agreste",
-   "Campagnol souterrain"
-  ],
-  "chapitre": "Monts d'Arrée",
-  "carrefour": 7,
-  "vedette": "Lièvre d'Europe"
  },
  {
   "id": "Massif armoricain|46",
@@ -7705,26 +7849,6 @@ const EXPEDITIONS = [
   "vedette": "Dauphin commun"
  },
  {
-  "id": "Massif armoricain|55",
-  "territoire": "Massif armoricain",
-  "ordre": 55,
-  "titre": "Les oiseaux des falaises",
-  "milieu": "Falaises et rochers",
-  "photo": "Images/cormoran_huppe.jpg",
-  "especes": [
-   "Cormoran huppé",
-   "Goéland marin",
-   "Goéland argenté",
-   "Mouette tridactyle",
-   "Faucon pèlerin",
-   "Crave à bec rouge",
-   "Grand corbeau"
-  ],
-  "chapitre": "Les Sept-Îles",
-  "carrefour": 9,
-  "vedette": "Cormoran huppé"
- },
- {
   "id": "Massif armoricain|56",
   "territoire": "Massif armoricain",
   "ordre": 56,
@@ -7740,9 +7864,31 @@ const EXPEDITIONS = [
    "Écaille chinée",
    "Éphippigère des vignes"
   ],
+  "rang": 55,
   "chapitre": "Les Sept-Îles",
   "carrefour": 9,
   "vedette": "Grande sauterelle verte"
+ },
+ {
+  "id": "Massif armoricain|55",
+  "territoire": "Massif armoricain",
+  "ordre": 55,
+  "titre": "Les oiseaux des falaises",
+  "milieu": "Falaises et rochers",
+  "photo": "Images/cormoran_huppe.jpg",
+  "especes": [
+   "Cormoran huppé",
+   "Goéland marin",
+   "Goéland argenté",
+   "Mouette tridactyle",
+   "Faucon pèlerin",
+   "Crave à bec rouge",
+   "Grand corbeau"
+  ],
+  "rang": 56,
+  "chapitre": "Les Sept-Îles",
+  "carrefour": 9,
+  "vedette": "Cormoran huppé"
  },
  {
   "id": "Massif armoricain|57",
@@ -8033,25 +8179,6 @@ const EXPEDITIONS = [
   "vedette": "Hirondelle rustique"
  },
  {
-  "id": "Massif central|3",
-  "territoire": "Massif central",
-  "ordre": 3,
-  "titre": "Les rapaces des prairies",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/milan_royal.jpg",
-  "especes": [
-   "Milan royal",
-   "Buse variable",
-   "Faucon crécerelle",
-   "Milan noir",
-   "Faucon hobereau",
-   "Bondrée apivore"
-  ],
-  "chapitre": "Salers",
-  "carrefour": 0,
-  "vedette": "Milan royal"
- },
- {
   "id": "Massif central|4",
   "territoire": "Massif central",
   "ordre": 4,
@@ -8067,9 +8194,30 @@ const EXPEDITIONS = [
    "Demi-deuil",
    "Machaon"
   ],
+  "rang": 3,
   "chapitre": "Salers",
   "carrefour": 0,
   "vedette": "Paon-du-jour"
+ },
+ {
+  "id": "Massif central|3",
+  "territoire": "Massif central",
+  "ordre": 3,
+  "titre": "Les rapaces des prairies",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/milan_royal.jpg",
+  "especes": [
+   "Milan royal",
+   "Buse variable",
+   "Faucon crécerelle",
+   "Milan noir",
+   "Faucon hobereau",
+   "Bondrée apivore"
+  ],
+  "rang": 4,
+  "chapitre": "Salers",
+  "carrefour": 0,
+  "vedette": "Milan royal"
  },
  {
   "id": "Massif central|5",
@@ -8131,25 +8279,6 @@ const EXPEDITIONS = [
   "vedette": "Martin-pêcheur d'Europe"
  },
  {
-  "id": "Massif central|8",
-  "territoire": "Massif central",
-  "ordre": 8,
-  "titre": "Les poissons de l'Allier",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/saumon_atlantique.jpg",
-  "especes": [
-   "Saumon atlantique",
-   "Chevesne",
-   "Spirlin",
-   "Lamproie de Planer",
-   "Anguille européenne",
-   "Ombre commun"
-  ],
-  "chapitre": "Brioude et le val d'Allier",
-  "carrefour": 1,
-  "vedette": "Saumon atlantique"
- },
- {
   "id": "Massif central|9",
   "territoire": "Massif central",
   "ordre": 9,
@@ -8165,9 +8294,30 @@ const EXPEDITIONS = [
    "Frelon asiatique",
    "Vison d'Amérique"
   ],
+  "rang": 8,
   "chapitre": "Brioude et le val d'Allier",
   "carrefour": 1,
   "vedette": "Ragondin"
+ },
+ {
+  "id": "Massif central|8",
+  "territoire": "Massif central",
+  "ordre": 8,
+  "titre": "Les poissons de l'Allier",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/saumon_atlantique.jpg",
+  "especes": [
+   "Saumon atlantique",
+   "Chevesne",
+   "Spirlin",
+   "Lamproie de Planer",
+   "Anguille européenne",
+   "Ombre commun"
+  ],
+  "rang": 9,
+  "chapitre": "Brioude et le val d'Allier",
+  "carrefour": 1,
+  "vedette": "Saumon atlantique"
  },
  {
   "id": "Massif central|10",
@@ -8250,6 +8400,48 @@ const EXPEDITIONS = [
   "vedette": "Canard colvert"
  },
  {
+  "id": "Massif central|18",
+  "territoire": "Massif central",
+  "ordre": 18,
+  "titre": "Les poissons de la Loire",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/silure_glane.jpg",
+  "especes": [
+   "Silure glane",
+   "Sandre",
+   "Barbeau fluviatile",
+   "Hotu",
+   "Ablette",
+   "Épinoche",
+   "Ombre commun"
+  ],
+  "rang": 14,
+  "chapitre": "Étangs du Forez",
+  "carrefour": 2,
+  "vedette": "Silure glane"
+ },
+ {
+  "id": "Massif central|16",
+  "territoire": "Massif central",
+  "ordre": 16,
+  "titre": "Les poissons de l'étang",
+  "milieu": "Mares et étangs",
+  "photo": "Images/carpe_commune.jpg",
+  "especes": [
+   "Carpe commune",
+   "Tanche",
+   "Gardon",
+   "Brochet",
+   "Perche commune",
+   "Brème commune",
+   "Bouvière"
+  ],
+  "rang": 15,
+  "chapitre": "Étangs du Forez",
+  "carrefour": 2,
+  "vedette": "Carpe commune"
+ },
+ {
   "id": "Massif central|14",
   "territoire": "Massif central",
   "ordre": 14,
@@ -8265,6 +8457,7 @@ const EXPEDITIONS = [
    "Busard des roseaux",
    "Gorgebleue à miroir"
   ],
+  "rang": 16,
   "chapitre": "Étangs du Forez",
   "carrefour": 2,
   "vedette": "Rousserolle effarvatte"
@@ -8285,29 +8478,10 @@ const EXPEDITIONS = [
    "Grande aigrette",
    "Cigogne blanche"
   ],
+  "rang": 17,
   "chapitre": "Étangs du Forez",
   "carrefour": 2,
   "vedette": "Héron pourpré"
- },
- {
-  "id": "Massif central|16",
-  "territoire": "Massif central",
-  "ordre": 16,
-  "titre": "Les poissons de l'étang",
-  "milieu": "Mares et étangs",
-  "photo": "Images/carpe_commune.jpg",
-  "especes": [
-   "Carpe commune",
-   "Tanche",
-   "Gardon",
-   "Brochet",
-   "Perche commune",
-   "Brème commune",
-   "Bouvière"
-  ],
-  "chapitre": "Étangs du Forez",
-  "carrefour": 2,
-  "vedette": "Carpe commune"
  },
  {
   "id": "Massif central|17",
@@ -8325,29 +8499,10 @@ const EXPEDITIONS = [
    "Spatule blanche",
    "Échasse blanche"
   ],
+  "rang": 18,
   "chapitre": "Étangs du Forez",
   "carrefour": 2,
   "vedette": "Barge à queue noire"
- },
- {
-  "id": "Massif central|18",
-  "territoire": "Massif central",
-  "ordre": 18,
-  "titre": "Les poissons de la Loire",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/silure_glane.jpg",
-  "especes": [
-   "Silure glane",
-   "Sandre",
-   "Barbeau fluviatile",
-   "Hotu",
-   "Ablette",
-   "Épinoche",
-   "Ombre commun"
-  ],
-  "chapitre": "Étangs du Forez",
-  "carrefour": 2,
-  "vedette": "Silure glane"
  },
  {
   "id": "Massif central|19",
@@ -8880,24 +9035,25 @@ const EXPEDITIONS = [
   "vedette": "Vautour fauve"
  },
  {
-  "id": "Massif central|46",
+  "id": "Massif central|48",
   "territoire": "Massif central",
-  "ordre": 46,
-  "titre": "Les oiseaux des falaises",
-  "milieu": "Falaises et rochers",
-  "photo": "Images/tichodrome_echelette.jpg",
+  "ordre": 48,
+  "titre": "La rivière des gorges",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/cincle_plongeur.jpg",
   "especes": [
-   "Tichodrome échelette",
-   "Hirondelle de rochers",
-   "Martinet à ventre blanc",
-   "Faucon pèlerin",
-   "Grand-duc d'Europe",
-   "Crave à bec rouge",
-   "Monticole de roche"
+   "Cincle plongeur",
+   "Bergeronnette des ruisseaux",
+   "Couleuvre vipérine",
+   "Castor d'Europe",
+   "Vandoise",
+   "Petit Mars changeant",
+   "Cygne tuberculé"
   ],
+  "rang": 46,
   "chapitre": "Gorges du Tarn et de la Jonte",
   "carrefour": 7,
-  "vedette": "Tichodrome échelette"
+  "vedette": "Cincle plongeur"
  },
  {
   "id": "Massif central|47",
@@ -8918,24 +9074,25 @@ const EXPEDITIONS = [
   "vedette": "Molosse de Cestoni"
  },
  {
-  "id": "Massif central|48",
+  "id": "Massif central|46",
   "territoire": "Massif central",
-  "ordre": 48,
-  "titre": "La rivière des gorges",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/cincle_plongeur.jpg",
+  "ordre": 46,
+  "titre": "Les oiseaux des falaises",
+  "milieu": "Falaises et rochers",
+  "photo": "Images/tichodrome_echelette.jpg",
   "especes": [
-   "Cincle plongeur",
-   "Bergeronnette des ruisseaux",
-   "Couleuvre vipérine",
-   "Castor d'Europe",
-   "Vandoise",
-   "Petit Mars changeant",
-   "Cygne tuberculé"
+   "Tichodrome échelette",
+   "Hirondelle de rochers",
+   "Martinet à ventre blanc",
+   "Faucon pèlerin",
+   "Grand-duc d'Europe",
+   "Crave à bec rouge",
+   "Monticole de roche"
   ],
+  "rang": 48,
   "chapitre": "Gorges du Tarn et de la Jonte",
   "carrefour": 7,
-  "vedette": "Cincle plongeur"
+  "vedette": "Tichodrome échelette"
  },
  {
   "id": "Massif central|49",
@@ -9388,6 +9545,48 @@ const EXPEDITIONS = [
   "vedette": "Héron garde-bœufs"
  },
  {
+  "id": "Méditerranée|5",
+  "territoire": "Méditerranée",
+  "ordre": 5,
+  "titre": "Les mammifères de la rivière",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/loutre_d_europe.jpg",
+  "especes": [
+   "Loutre d'Europe",
+   "Castor d'Europe",
+   "Murin de Daubenton",
+   "Putois d'Europe",
+   "Campagnol amphibie",
+   "Ragondin",
+   "Rat musqué"
+  ],
+  "rang": 2,
+  "chapitre": "Camargue",
+  "carrefour": 0,
+  "vedette": "Loutre d'Europe"
+ },
+ {
+  "id": "Méditerranée|69",
+  "territoire": "Méditerranée",
+  "ordre": 69,
+  "titre": "Autour des marais de Camargue",
+  "milieu": "Marais",
+  "photo": "Images/gallinule_poule_d_eau.jpg",
+  "especes": [
+   "Gallinule poule-d'eau",
+   "Chevalier guignette",
+   "Crocothémis écarlate",
+   "Hirondelle de fenêtre",
+   "Faucon d'Éléonore",
+   "Corneille mantelée",
+   "Fauvette grisette"
+  ],
+  "rang": 3,
+  "chapitre": "Camargue",
+  "carrefour": 0,
+  "vedette": "Gallinule poule-d'eau"
+ },
+ {
   "id": "Méditerranée|2",
   "territoire": "Méditerranée",
   "ordre": 2,
@@ -9403,6 +9602,7 @@ const EXPEDITIONS = [
    "Busard des roseaux",
    "Rémiz penduline"
   ],
+  "rang": 4,
   "chapitre": "Camargue",
   "carrefour": 0,
   "vedette": "Bouscarle de Cetti"
@@ -9423,6 +9623,7 @@ const EXPEDITIONS = [
    "Avocette élégante",
    "Échasse blanche"
   ],
+  "rang": 5,
   "chapitre": "Camargue",
   "carrefour": 0,
   "vedette": "Barge à queue noire"
@@ -9443,49 +9644,10 @@ const EXPEDITIONS = [
    "Grand cormoran",
    "Goéland d'Audouin"
   ],
+  "rang": 6,
   "chapitre": "Camargue",
   "carrefour": 0,
   "vedette": "Flamant rose"
- },
- {
-  "id": "Méditerranée|5",
-  "territoire": "Méditerranée",
-  "ordre": 5,
-  "titre": "Les mammifères de la rivière",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/loutre_d_europe.jpg",
-  "especes": [
-   "Loutre d'Europe",
-   "Castor d'Europe",
-   "Murin de Daubenton",
-   "Putois d'Europe",
-   "Campagnol amphibie",
-   "Ragondin",
-   "Rat musqué"
-  ],
-  "chapitre": "Camargue",
-  "carrefour": 0,
-  "vedette": "Loutre d'Europe"
- },
- {
-  "id": "Méditerranée|6",
-  "territoire": "Méditerranée",
-  "ordre": 6,
-  "titre": "Les rapaces des champs",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/buse_variable.jpg",
-  "especes": [
-   "Buse variable",
-   "Faucon crécerelle",
-   "Élanion blanc",
-   "Busard Saint-Martin",
-   "Faucon hobereau",
-   "Bondrée apivore",
-   "Milan noir"
-  ],
-  "chapitre": "Camargue",
-  "carrefour": 0,
-  "vedette": "Buse variable"
  },
  {
   "id": "Méditerranée|7",
@@ -10262,6 +10424,26 @@ const EXPEDITIONS = [
   "vedette": "Circaète Jean-le-Blanc"
  },
  {
+  "id": "Méditerranée|51",
+  "territoire": "Méditerranée",
+  "ordre": 51,
+  "titre": "La forêt la nuit",
+  "milieu": "Forêt",
+  "photo": "Images/loir_gris.jpg",
+  "especes": [
+   "Loir gris",
+   "Chouette hulotte",
+   "Salamandre tachetée",
+   "Bécasse des bois",
+   "Hibou moyen-duc",
+   "Bouton commun"
+  ],
+  "rang": 47,
+  "chapitre": "Gorges de l'Hérault",
+  "carrefour": 7,
+  "vedette": "Loir gris"
+ },
+ {
   "id": "Méditerranée|47",
   "territoire": "Méditerranée",
   "ordre": 47,
@@ -10276,6 +10458,7 @@ const EXPEDITIONS = [
    "Grande limnée",
    "Limnée tronquée"
   ],
+  "rang": 48,
   "chapitre": "Gorges de l'Hérault",
   "carrefour": 7,
   "vedette": "Triton palmé"
@@ -10296,6 +10479,7 @@ const EXPEDITIONS = [
    "Crapaud calamite",
    "Grenouille rieuse"
   ],
+  "rang": 49,
   "chapitre": "Gorges de l'Hérault",
   "carrefour": 7,
   "vedette": "Rainette méridionale"
@@ -10316,6 +10500,7 @@ const EXPEDITIONS = [
    "Hirondelle de rochers",
    "Martinet à ventre blanc"
   ],
+  "rang": 50,
   "chapitre": "Gorges de l'Hérault",
   "carrefour": 7,
   "vedette": "Faucon pèlerin"
@@ -10336,28 +10521,10 @@ const EXPEDITIONS = [
    "Roitelet huppé",
    "Grosbec casse-noyaux"
   ],
+  "rang": 51,
   "chapitre": "Gorges de l'Hérault",
   "carrefour": 7,
   "vedette": "Geai des chênes"
- },
- {
-  "id": "Méditerranée|51",
-  "territoire": "Méditerranée",
-  "ordre": 51,
-  "titre": "La forêt la nuit",
-  "milieu": "Forêt",
-  "photo": "Images/loir_gris.jpg",
-  "especes": [
-   "Loir gris",
-   "Chouette hulotte",
-   "Salamandre tachetée",
-   "Bécasse des bois",
-   "Hibou moyen-duc",
-   "Bouton commun"
-  ],
-  "chapitre": "Gorges de l'Hérault",
-  "carrefour": 7,
-  "vedette": "Loir gris"
  },
  {
   "id": "Méditerranée|52",
@@ -10687,24 +10854,25 @@ const EXPEDITIONS = [
   "vedette": "Citron de Provence"
  },
  {
-  "id": "Méditerranée|69",
+  "id": "Méditerranée|6",
   "territoire": "Méditerranée",
-  "ordre": 69,
-  "titre": "Autour des marais de Camargue",
-  "milieu": "Marais",
-  "photo": "Images/gallinule_poule_d_eau.jpg",
+  "ordre": 6,
+  "titre": "Les rapaces des champs",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/buse_variable.jpg",
   "especes": [
-   "Gallinule poule-d'eau",
-   "Chevalier guignette",
-   "Crocothémis écarlate",
-   "Hirondelle de fenêtre",
-   "Faucon d'Éléonore",
-   "Corneille mantelée",
-   "Fauvette grisette"
+   "Buse variable",
+   "Faucon crécerelle",
+   "Élanion blanc",
+   "Busard Saint-Martin",
+   "Faucon hobereau",
+   "Bondrée apivore",
+   "Milan noir"
   ],
+  "rang": 69,
   "chapitre": "Camargue",
   "carrefour": 0,
-  "vedette": "Gallinule poule-d'eau"
+  "vedette": "Buse variable"
  },
  {
   "id": "Méditerranée|70",
@@ -10863,6 +11031,26 @@ const EXPEDITIONS = [
   "vedette": "Cigogne blanche"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|7",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 7,
+  "titre": "Le grand hamster et les champs d'Alsace",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/grand_hamster.jpg",
+  "especes": [
+   "Grand hamster",
+   "Lapin de garenne",
+   "Belette",
+   "Rat des moissons",
+   "Surmulot",
+   "Campagnol terrestre"
+  ],
+  "rang": 2,
+  "chapitre": "Strasbourg et le Rhin",
+  "carrefour": 0,
+  "vedette": "Grand hamster"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|2",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 2,
@@ -10876,6 +11064,7 @@ const EXPEDITIONS = [
    "Moro-sphinx",
    "Écaille chinée"
   ],
+  "rang": 3,
   "chapitre": "Strasbourg et le Rhin",
   "carrefour": 0,
   "vedette": "Paon-du-jour"
@@ -10894,6 +11083,7 @@ const EXPEDITIONS = [
    "Abeille mellifère",
    "Abeille charpentière"
   ],
+  "rang": 4,
   "chapitre": "Strasbourg et le Rhin",
   "carrefour": 0,
   "vedette": "Bourdon terrestre"
@@ -10914,6 +11104,7 @@ const EXPEDITIONS = [
    "Carabe doré",
    "Grand capricorne"
   ],
+  "rang": 5,
   "chapitre": "Strasbourg et le Rhin",
   "carrefour": 0,
   "vedette": "Coccinelle à sept points"
@@ -10934,6 +11125,7 @@ const EXPEDITIONS = [
    "Philoscie des mousses",
    "Zoropsis à pattes épineuses"
   ],
+  "rang": 6,
   "chapitre": "Strasbourg et le Rhin",
   "carrefour": 0,
   "vedette": "Escargot de Bourgogne"
@@ -10952,28 +11144,10 @@ const EXPEDITIONS = [
    "Faucon crécerelle",
    "Busard Saint-Martin"
   ],
+  "rang": 7,
   "chapitre": "Strasbourg et le Rhin",
   "carrefour": 0,
   "vedette": "Buse variable"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|7",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 7,
-  "titre": "Le grand hamster et les champs d'Alsace",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/grand_hamster.jpg",
-  "especes": [
-   "Grand hamster",
-   "Lapin de garenne",
-   "Belette",
-   "Rat des moissons",
-   "Surmulot",
-   "Campagnol terrestre"
-  ],
-  "chapitre": "Strasbourg et le Rhin",
-  "carrefour": 0,
-  "vedette": "Grand hamster"
  },
  {
   "id": "Plaines de l'Est et val de Saône|8",
@@ -11015,22 +11189,25 @@ const EXPEDITIONS = [
   "vedette": "Bruant zizi"
  },
  {
-  "id": "Plaines de l'Est et val de Saône|10",
+  "id": "Plaines de l'Est et val de Saône|14",
   "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 10,
-  "titre": "Les rochers des combes",
-  "milieu": "Falaises et rochers",
-  "photo": "Images/faucon_pelerin.jpg",
+  "ordre": 14,
+  "titre": "La nuit dans les vignes",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/cheveche_d_athena.jpg",
   "especes": [
-   "Faucon pèlerin",
-   "Circaète Jean-le-Blanc",
-   "Engoulevent d'Europe",
-   "Hirondelle de rochers",
-   "Traquet motteux"
+   "Chevêche d'Athéna",
+   "Petit-duc scops",
+   "Alyte accoucheur",
+   "Renard roux",
+   "Orvet fragile",
+   "Lérot",
+   "Ver luisant"
   ],
+  "rang": 10,
   "chapitre": "Dijon et la Côte de Nuits",
   "carrefour": 1,
-  "vedette": "Faucon pèlerin"
+  "vedette": "Chevêche d'Athéna"
  },
  {
   "id": "Plaines de l'Est et val de Saône|11",
@@ -11052,6 +11229,25 @@ const EXPEDITIONS = [
   "vedette": "Ascalaphe soufré"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|10",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 10,
+  "titre": "Les rochers des combes",
+  "milieu": "Falaises et rochers",
+  "photo": "Images/faucon_pelerin.jpg",
+  "especes": [
+   "Faucon pèlerin",
+   "Circaète Jean-le-Blanc",
+   "Engoulevent d'Europe",
+   "Hirondelle de rochers",
+   "Traquet motteux"
+  ],
+  "rang": 12,
+  "chapitre": "Dijon et la Côte de Nuits",
+  "carrefour": 1,
+  "vedette": "Faucon pèlerin"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|12",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 12,
@@ -11066,6 +11262,7 @@ const EXPEDITIONS = [
    "Citron",
    "Aurore"
   ],
+  "rang": 13,
   "chapitre": "Dijon et la Côte de Nuits",
   "carrefour": 1,
   "vedette": "Demi-deuil"
@@ -11084,29 +11281,10 @@ const EXPEDITIONS = [
    "Lièvre d'Europe",
    "Pipit farlouse"
   ],
+  "rang": 14,
   "chapitre": "Dijon et la Côte de Nuits",
   "carrefour": 1,
   "vedette": "Alouette des champs"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|14",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 14,
-  "titre": "La nuit dans les vignes",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/cheveche_d_athena.jpg",
-  "especes": [
-   "Chevêche d'Athéna",
-   "Petit-duc scops",
-   "Alyte accoucheur",
-   "Renard roux",
-   "Orvet fragile",
-   "Lérot",
-   "Ver luisant"
-  ],
-  "chapitre": "Dijon et la Côte de Nuits",
-  "carrefour": 1,
-  "vedette": "Chevêche d'Athéna"
  },
  {
   "id": "Plaines de l'Est et val de Saône|15",
@@ -11166,22 +11344,23 @@ const EXPEDITIONS = [
   "vedette": "Mésange bleue"
  },
  {
-  "id": "Plaines de l'Est et val de Saône|18",
+  "id": "Plaines de l'Est et val de Saône|23",
   "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 18,
-  "titre": "Les oiseaux des grands arbres",
+  "ordre": 23,
+  "titre": "La nuit en ville",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/pigeon_ramier.jpg",
+  "photo": "Images/pipistrelle_commune.jpg",
   "especes": [
-   "Pigeon ramier",
-   "Corneille noire",
-   "Corbeau freux",
-   "Bouvreuil pivoine",
-   "Tourterelle turque"
+   "Pipistrelle commune",
+   "Fouine",
+   "Murin à moustaches",
+   "Murin de Natterer",
+   "Sérotine commune"
   ],
+  "rang": 18,
   "chapitre": "Metz et la vallée de la Moselle",
   "carrefour": 2,
-  "vedette": "Pigeon ramier"
+  "vedette": "Pipistrelle commune"
  },
  {
   "id": "Plaines de l'Est et val de Saône|19",
@@ -11203,6 +11382,25 @@ const EXPEDITIONS = [
   "vedette": "Épeire diadème"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|18",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 18,
+  "titre": "Les oiseaux des grands arbres",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/pigeon_ramier.jpg",
+  "especes": [
+   "Pigeon ramier",
+   "Corneille noire",
+   "Corbeau freux",
+   "Bouvreuil pivoine",
+   "Tourterelle turque"
+  ],
+  "rang": 20,
+  "chapitre": "Metz et la vallée de la Moselle",
+  "carrefour": 2,
+  "vedette": "Pigeon ramier"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|20",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 20,
@@ -11216,6 +11414,7 @@ const EXPEDITIONS = [
    "Gloméris",
    "Saltique chevronné"
   ],
+  "rang": 21,
   "chapitre": "Metz et la vallée de la Moselle",
   "carrefour": 2,
   "vedette": "Cloporte rugueux"
@@ -11234,6 +11433,7 @@ const EXPEDITIONS = [
    "Mante religieuse",
    "Dectique verrucivore"
   ],
+  "rang": 22,
   "chapitre": "Metz et la vallée de la Moselle",
   "carrefour": 2,
   "vedette": "Grande sauterelle verte"
@@ -11252,27 +11452,10 @@ const EXPEDITIONS = [
    "Amaryllis",
    "Fadet commun"
   ],
+  "rang": 23,
   "chapitre": "Metz et la vallée de la Moselle",
   "carrefour": 2,
   "vedette": "Petite tortue"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|23",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 23,
-  "titre": "La nuit en ville",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/pipistrelle_commune.jpg",
-  "especes": [
-   "Pipistrelle commune",
-   "Fouine",
-   "Murin à moustaches",
-   "Murin de Natterer",
-   "Sérotine commune"
-  ],
-  "chapitre": "Metz et la vallée de la Moselle",
-  "carrefour": 2,
-  "vedette": "Pipistrelle commune"
  },
  {
   "id": "Plaines de l'Est et val de Saône|24",
@@ -11311,6 +11494,27 @@ const EXPEDITIONS = [
   "vedette": "Courlis cendré"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|30",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 30,
+  "titre": "Sur les grèves de la Saône",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/chevalier_guignette.jpg",
+  "especes": [
+   "Chevalier guignette",
+   "Petit gravelot",
+   "Hirondelle de rivage",
+   "Ragondin",
+   "Écrevisse américaine",
+   "Crossope aquatique",
+   "Musaraigne pygmée"
+  ],
+  "rang": 26,
+  "chapitre": "Tournus et le val de Saône",
+  "carrefour": 3,
+  "vedette": "Chevalier guignette"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|26",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 26,
@@ -11324,6 +11528,7 @@ const EXPEDITIONS = [
    "Chevesne",
    "Goujon commun"
   ],
+  "rang": 27,
   "chapitre": "Tournus et le val de Saône",
   "carrefour": 3,
   "vedette": "Silure glane"
@@ -11342,6 +11547,7 @@ const EXPEDITIONS = [
    "Loche franche",
    "Écrevisse à pattes blanches"
   ],
+  "rang": 28,
   "chapitre": "Tournus et le val de Saône",
   "carrefour": 3,
   "vedette": "Chabot"
@@ -11361,6 +11567,7 @@ const EXPEDITIONS = [
    "Cordulie à corps fin",
    "Cordulégastre annelé"
   ],
+  "rang": 29,
   "chapitre": "Tournus et le val de Saône",
   "carrefour": 3,
   "vedette": "Caloptéryx éclatant"
@@ -11379,29 +11586,10 @@ const EXPEDITIONS = [
    "Martin-pêcheur d'Europe",
    "Milan noir"
   ],
+  "rang": 30,
   "chapitre": "Tournus et le val de Saône",
   "carrefour": 3,
   "vedette": "Bihoreau gris"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|30",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 30,
-  "titre": "Sur les grèves de la Saône",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/chevalier_guignette.jpg",
-  "especes": [
-   "Chevalier guignette",
-   "Petit gravelot",
-   "Hirondelle de rivage",
-   "Ragondin",
-   "Écrevisse américaine",
-   "Crossope aquatique",
-   "Musaraigne pygmée"
-  ],
-  "chapitre": "Tournus et le val de Saône",
-  "carrefour": 3,
-  "vedette": "Chevalier guignette"
  },
  {
   "id": "Plaines de l'Est et val de Saône|31",
@@ -11460,25 +11648,6 @@ const EXPEDITIONS = [
   "vedette": "Pie-grièche écorcheur"
  },
  {
-  "id": "Plaines de l'Est et val de Saône|34",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 34,
-  "titre": "Les chanteurs du bocage",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/rossignol_philomele.jpg",
-  "especes": [
-   "Rossignol philomèle",
-   "Fauvette à tête noire",
-   "Fauvette babillarde",
-   "Coucou gris",
-   "Pipit des arbres",
-   "Caille des blés"
-  ],
-  "chapitre": "Louhans et le bocage bressan",
-  "carrefour": 4,
-  "vedette": "Rossignol philomèle"
- },
- {
   "id": "Plaines de l'Est et val de Saône|35",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 35,
@@ -11494,9 +11663,30 @@ const EXPEDITIONS = [
    "Courtilière",
    "Cuivré commun"
   ],
+  "rang": 34,
   "chapitre": "Louhans et le bocage bressan",
   "carrefour": 4,
   "vedette": "Huppe fasciée"
+ },
+ {
+  "id": "Plaines de l'Est et val de Saône|34",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 34,
+  "titre": "Les chanteurs du bocage",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/rossignol_philomele.jpg",
+  "especes": [
+   "Rossignol philomèle",
+   "Fauvette à tête noire",
+   "Fauvette babillarde",
+   "Coucou gris",
+   "Pipit des arbres",
+   "Caille des blés"
+  ],
+  "rang": 35,
+  "chapitre": "Louhans et le bocage bressan",
+  "carrefour": 4,
+  "vedette": "Rossignol philomèle"
  },
  {
   "id": "Plaines de l'Est et val de Saône|36",
@@ -11555,6 +11745,46 @@ const EXPEDITIONS = [
   "vedette": "Fuligule milouin"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|43",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 43,
+  "titre": "Au fond et au bord de l'étang",
+  "milieu": "Mares et étangs",
+  "photo": "Images/agrion_elegant.jpg",
+  "especes": [
+   "Agrion élégant",
+   "Épinoche",
+   "Grande limnée",
+   "Limnée tronquée",
+   "Anodonte des cygnes"
+  ],
+  "rang": 39,
+  "chapitre": "L'étang de Lindre",
+  "carrefour": 5,
+  "vedette": "Agrion élégant"
+ },
+ {
+  "id": "Plaines de l'Est et val de Saône|42",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 42,
+  "titre": "Les poissons de l'étang",
+  "milieu": "Lacs",
+  "photo": "Images/brochet.jpg",
+  "especes": [
+   "Brochet",
+   "Gardon",
+   "Rotengle",
+   "Perche commune",
+   "Tanche",
+   "Carpe commune",
+   "Loche de rivière"
+  ],
+  "rang": 40,
+  "chapitre": "L'étang de Lindre",
+  "carrefour": 5,
+  "vedette": "Brochet"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|39",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 39,
@@ -11568,6 +11798,7 @@ const EXPEDITIONS = [
    "Gallinule poule-d'eau",
    "Guifette moustac"
   ],
+  "rang": 41,
   "chapitre": "L'étang de Lindre",
   "carrefour": 5,
   "vedette": "Grèbe huppé"
@@ -11586,6 +11817,7 @@ const EXPEDITIONS = [
    "Butor étoilé",
    "Blongios nain"
   ],
+  "rang": 42,
   "chapitre": "L'étang de Lindre",
   "carrefour": 5,
   "vedette": "Grande aigrette"
@@ -11605,47 +11837,10 @@ const EXPEDITIONS = [
    "Bécassine des marais",
    "Échasse blanche"
   ],
+  "rang": 43,
   "chapitre": "L'étang de Lindre",
   "carrefour": 5,
   "vedette": "Rousserolle turdoïde"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|42",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 42,
-  "titre": "Les poissons de l'étang",
-  "milieu": "Lacs",
-  "photo": "Images/brochet.jpg",
-  "especes": [
-   "Brochet",
-   "Gardon",
-   "Rotengle",
-   "Perche commune",
-   "Tanche",
-   "Carpe commune",
-   "Loche de rivière"
-  ],
-  "chapitre": "L'étang de Lindre",
-  "carrefour": 5,
-  "vedette": "Brochet"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|43",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 43,
-  "titre": "Au fond et au bord de l'étang",
-  "milieu": "Mares et étangs",
-  "photo": "Images/agrion_elegant.jpg",
-  "especes": [
-   "Agrion élégant",
-   "Épinoche",
-   "Grande limnée",
-   "Limnée tronquée",
-   "Anodonte des cygnes"
-  ],
-  "chapitre": "L'étang de Lindre",
-  "carrefour": 5,
-  "vedette": "Agrion élégant"
  },
  {
   "id": "Plaines de l'Est et val de Saône|44",
@@ -11704,6 +11899,26 @@ const EXPEDITIONS = [
   "vedette": "Anguille européenne"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|49",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 49,
+  "titre": "Les mammifères de la forêt alluviale",
+  "milieu": "Forêt",
+  "photo": "Images/sanglier.jpg",
+  "especes": [
+   "Sanglier",
+   "Mulot à collier",
+   "Campagnol roussâtre",
+   "Putois d'Europe",
+   "Rat musqué",
+   "Murin de Daubenton"
+  ],
+  "rang": 47,
+  "chapitre": "Rhinau et la forêt du Rhin",
+  "carrefour": 6,
+  "vedette": "Sanglier"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|47",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 47,
@@ -11717,6 +11932,7 @@ const EXPEDITIONS = [
    "Robert-le-diable",
    "Petit Sylvain"
   ],
+  "rang": 48,
   "chapitre": "Rhinau et la forêt du Rhin",
   "carrefour": 6,
   "vedette": "Petit Mars changeant"
@@ -11735,28 +11951,10 @@ const EXPEDITIONS = [
    "Hanneton commun",
    "Cétoine dorée"
   ],
+  "rang": 49,
   "chapitre": "Rhinau et la forêt du Rhin",
   "carrefour": 6,
   "vedette": "Lucane cerf-volant"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|49",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 49,
-  "titre": "Les mammifères de la forêt alluviale",
-  "milieu": "Forêt",
-  "photo": "Images/sanglier.jpg",
-  "especes": [
-   "Sanglier",
-   "Mulot à collier",
-   "Campagnol roussâtre",
-   "Putois d'Europe",
-   "Rat musqué",
-   "Murin de Daubenton"
-  ],
-  "chapitre": "Rhinau et la forêt du Rhin",
-  "carrefour": 6,
-  "vedette": "Sanglier"
  },
  {
   "id": "Plaines de l'Est et val de Saône|50",
@@ -11834,6 +12032,25 @@ const EXPEDITIONS = [
   "vedette": "Grand-duc d'Europe"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|55",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 55,
+  "titre": "Les grandes forêts ardennaises",
+  "milieu": "Forêt",
+  "photo": "Images/cigogne_noire.jpg",
+  "especes": [
+   "Cigogne noire",
+   "Pic noir",
+   "Martre des pins",
+   "Écureuil roux",
+   "Mésange à longue queue"
+  ],
+  "rang": 54,
+  "chapitre": "Monthermé et la vallée de la Meuse",
+  "carrefour": 7,
+  "vedette": "Cigogne noire"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|54",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 54,
@@ -11848,27 +12065,10 @@ const EXPEDITIONS = [
    "Gammare",
    "Patelline des fleuves"
   ],
+  "rang": 55,
   "chapitre": "Monthermé et la vallée de la Meuse",
   "carrefour": 7,
   "vedette": "Truite fario"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|55",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 55,
-  "titre": "Les grandes forêts ardennaises",
-  "milieu": "Forêt",
-  "photo": "Images/cigogne_noire.jpg",
-  "especes": [
-   "Cigogne noire",
-   "Pic noir",
-   "Martre des pins",
-   "Écureuil roux",
-   "Mésange à longue queue"
-  ],
-  "chapitre": "Monthermé et la vallée de la Meuse",
-  "carrefour": 7,
-  "vedette": "Cigogne noire"
  },
  {
   "id": "Plaines de l'Est et val de Saône|56",
@@ -12112,6 +12312,26 @@ const EXPEDITIONS = [
   "vedette": "Pic épeiche"
  },
  {
+  "id": "Plaines de l'Est et val de Saône|72",
+  "territoire": "Plaines de l'Est et val de Saône",
+  "ordre": 72,
+  "titre": "Les chauves-souris des forêts",
+  "milieu": "Forêt",
+  "photo": "Images/barbastelle_d_europe.jpg",
+  "especes": [
+   "Barbastelle d'Europe",
+   "Noctule commune",
+   "Noctule de Leisler",
+   "Pipistrelle de Nathusius",
+   "Pipistrelle pygmée",
+   "Murin de Bechstein"
+  ],
+  "rang": 69,
+  "chapitre": "Langres et son plateau",
+  "carrefour": 9,
+  "vedette": "Barbastelle d'Europe"
+ },
+ {
   "id": "Plaines de l'Est et val de Saône|69",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 69,
@@ -12126,6 +12346,7 @@ const EXPEDITIONS = [
    "Troglodyte mignon",
    "Mésange charbonnière"
   ],
+  "rang": 70,
   "chapitre": "Langres et son plateau",
   "carrefour": 9,
   "vedette": "Pinson des arbres"
@@ -12144,6 +12365,7 @@ const EXPEDITIONS = [
    "Pigeon colombin",
    "Loriot d'Europe"
   ],
+  "rang": 71,
   "chapitre": "Langres et son plateau",
   "carrefour": 9,
   "vedette": "Geai des chênes"
@@ -12162,28 +12384,10 @@ const EXPEDITIONS = [
    "Épervier d'Europe",
    "Hibou moyen-duc"
   ],
+  "rang": 72,
   "chapitre": "Langres et son plateau",
   "carrefour": 9,
   "vedette": "Chouette hulotte"
- },
- {
-  "id": "Plaines de l'Est et val de Saône|72",
-  "territoire": "Plaines de l'Est et val de Saône",
-  "ordre": 72,
-  "titre": "Les chauves-souris des forêts",
-  "milieu": "Forêt",
-  "photo": "Images/barbastelle_d_europe.jpg",
-  "especes": [
-   "Barbastelle d'Europe",
-   "Noctule commune",
-   "Noctule de Leisler",
-   "Pipistrelle de Nathusius",
-   "Pipistrelle pygmée",
-   "Murin de Bechstein"
-  ],
-  "chapitre": "Langres et son plateau",
-  "carrefour": 9,
-  "vedette": "Barbastelle d'Europe"
  },
  {
   "id": "Plaines de l'Est et val de Saône|73",
@@ -12242,26 +12446,6 @@ const EXPEDITIONS = [
   "vedette": "Rougegorge familier"
  },
  {
-  "id": "Pyrénées|2",
-  "territoire": "Pyrénées",
-  "ordre": 2,
-  "titre": "Les habitants du potager",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/coccinelle_a_sept_points.jpg",
-  "especes": [
-   "Coccinelle à sept points",
-   "Petit-gris",
-   "Escargot de Bourgogne",
-   "Escargot des haies",
-   "Limace léopard",
-   "Lombric commun",
-   "Cloporte commun"
-  ],
-  "chapitre": "Saint-Jean-Pied-de-Port",
-  "carrefour": 0,
-  "vedette": "Coccinelle à sept points"
- },
- {
   "id": "Pyrénées|3",
   "territoire": "Pyrénées",
   "ordre": 3,
@@ -12277,9 +12461,31 @@ const EXPEDITIONS = [
    "Souris grise",
    "Surmulot"
   ],
+  "rang": 2,
   "chapitre": "Saint-Jean-Pied-de-Port",
   "carrefour": 0,
   "vedette": "Hérisson d'Europe"
+ },
+ {
+  "id": "Pyrénées|2",
+  "territoire": "Pyrénées",
+  "ordre": 2,
+  "titre": "Les habitants du potager",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/coccinelle_a_sept_points.jpg",
+  "especes": [
+   "Coccinelle à sept points",
+   "Petit-gris",
+   "Escargot de Bourgogne",
+   "Escargot des haies",
+   "Limace léopard",
+   "Lombric commun",
+   "Cloporte commun"
+  ],
+  "rang": 3,
+  "chapitre": "Saint-Jean-Pied-de-Port",
+  "carrefour": 0,
+  "vedette": "Coccinelle à sept points"
  },
  {
   "id": "Pyrénées|4",
@@ -12321,26 +12527,6 @@ const EXPEDITIONS = [
   "vedette": "Hirondelle rustique"
  },
  {
-  "id": "Pyrénées|6",
-  "territoire": "Pyrénées",
-  "ordre": 6,
-  "titre": "Les habitants des vieux murs",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/lezard_des_murailles.jpg",
-  "especes": [
-   "Lézard des murailles",
-   "Tégénaire des maisons",
-   "Saltique chevronné",
-   "Scutigère véloce",
-   "Cloporte des murs",
-   "Scorpion noir à queue jaune",
-   "Faucheux"
-  ],
-  "chapitre": "Villefranche-de-Conflent",
-  "carrefour": 3,
-  "vedette": "Lézard des murailles"
- },
- {
   "id": "Pyrénées|7",
   "territoire": "Pyrénées",
   "ordre": 7,
@@ -12356,9 +12542,31 @@ const EXPEDITIONS = [
    "Oreillard gris",
    "Pipistrelle de Nathusius"
   ],
+  "rang": 6,
   "chapitre": "Villefranche-de-Conflent",
   "carrefour": 3,
   "vedette": "Pipistrelle commune"
+ },
+ {
+  "id": "Pyrénées|6",
+  "territoire": "Pyrénées",
+  "ordre": 6,
+  "titre": "Les habitants des vieux murs",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/lezard_des_murailles.jpg",
+  "especes": [
+   "Lézard des murailles",
+   "Tégénaire des maisons",
+   "Saltique chevronné",
+   "Scutigère véloce",
+   "Cloporte des murs",
+   "Scorpion noir à queue jaune",
+   "Faucheux"
+  ],
+  "rang": 7,
+  "chapitre": "Villefranche-de-Conflent",
+  "carrefour": 3,
+  "vedette": "Lézard des murailles"
  },
  {
   "id": "Pyrénées|8",
@@ -12381,24 +12589,25 @@ const EXPEDITIONS = [
   "vedette": "Alouette des champs"
  },
  {
-  "id": "Pyrénées|9",
+  "id": "Pyrénées|59",
   "territoire": "Pyrénées",
-  "ordre": 9,
-  "titre": "Les rapaces des champs",
+  "ordre": 59,
+  "titre": "Les habitants des grands espaces",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/faucon_crecerelle.jpg",
+  "photo": "Images/bruant_proyer.jpg",
   "especes": [
-   "Buse variable",
-   "Faucon crécerelle",
-   "Milan royal",
-   "Élanion blanc",
-   "Busard Saint-Martin",
-   "Faucon hobereau",
-   "Bondrée apivore"
+   "Bruant proyer",
+   "Pipit rousseline",
+   "Grive litorne",
+   "Pigeon colombin",
+   "Pigeon biset",
+   "Faucon d'Éléonore",
+   "Mouflon méditerranéen"
   ],
+  "rang": 9,
   "chapitre": "Cerdagne",
   "carrefour": 4,
-  "vedette": "Faucon crécerelle"
+  "vedette": "Bruant proyer"
  },
  {
   "id": "Pyrénées|10",
@@ -12480,24 +12689,25 @@ const EXPEDITIONS = [
   "vedette": "Grande sauterelle verte"
  },
  {
-  "id": "Pyrénées|14",
+  "id": "Pyrénées|9",
   "territoire": "Pyrénées",
-  "ordre": 14,
-  "titre": "Les habitants du sol",
+  "ordre": 9,
+  "titre": "Les rapaces des champs",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/carabe_dore.jpg",
+  "photo": "Images/faucon_crecerelle.jpg",
   "especes": [
-   "Carabe doré",
-   "Nécrophore fossoyeur",
-   "Géotrupe du fumier",
-   "Ver du fumier",
-   "Iule à pattes blanches",
-   "Gloméris",
-   "Fourmilion"
+   "Buse variable",
+   "Faucon crécerelle",
+   "Milan royal",
+   "Élanion blanc",
+   "Busard Saint-Martin",
+   "Faucon hobereau",
+   "Bondrée apivore"
   ],
+  "rang": 14,
   "chapitre": "Cerdagne",
   "carrefour": 4,
-  "vedette": "Carabe doré"
+  "vedette": "Faucon crécerelle"
  },
  {
   "id": "Pyrénées|15",
@@ -12539,24 +12749,25 @@ const EXPEDITIONS = [
   "vedette": "Lézard vert occidental"
  },
  {
-  "id": "Pyrénées|17",
+  "id": "Pyrénées|14",
   "territoire": "Pyrénées",
-  "ordre": 17,
-  "titre": "Les mangeurs de graines",
+  "ordre": 14,
+  "titre": "Les habitants du sol",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/chardonneret_elegant.jpg",
+  "photo": "Images/carabe_dore.jpg",
   "especes": [
-   "Chardonneret élégant",
-   "Verdier d'Europe",
-   "Bruant zizi",
-   "Moineau friquet",
-   "Linotte mélodieuse",
-   "Bruant ortolan",
-   "Tarin des aulnes"
+   "Carabe doré",
+   "Nécrophore fossoyeur",
+   "Géotrupe du fumier",
+   "Ver du fumier",
+   "Iule à pattes blanches",
+   "Gloméris",
+   "Fourmilion"
   ],
+  "rang": 17,
   "chapitre": "Cerdagne",
   "carrefour": 4,
-  "vedette": "Chardonneret élégant"
+  "vedette": "Carabe doré"
  },
  {
   "id": "Pyrénées|18",
@@ -12579,6 +12790,26 @@ const EXPEDITIONS = [
   "vedette": "Huppe fasciée"
  },
  {
+  "id": "Pyrénées|22",
+  "territoire": "Pyrénées",
+  "ordre": 22,
+  "titre": "Les rongeurs de la forêt",
+  "milieu": "Forêt",
+  "photo": "Images/ecureuil_roux.jpg",
+  "especes": [
+   "Écureuil roux",
+   "Loir gris",
+   "Muscardin",
+   "Campagnol roussâtre",
+   "Mulot à collier",
+   "Campagnol des Pyrénées"
+  ],
+  "rang": 19,
+  "chapitre": "Forêt d'Iraty",
+  "carrefour": 5,
+  "vedette": "Écureuil roux"
+ },
+ {
   "id": "Pyrénées|19",
   "territoire": "Pyrénées",
   "ordre": 19,
@@ -12594,29 +12825,10 @@ const EXPEDITIONS = [
    "Pouillot de Bonelli",
    "Accenteur mouchet"
   ],
+  "rang": 20,
   "chapitre": "Forêt d'Iraty",
   "carrefour": 5,
   "vedette": "Mésange huppée"
- },
- {
-  "id": "Pyrénées|20",
-  "territoire": "Pyrénées",
-  "ordre": 20,
-  "titre": "Les pics et les grimpeurs",
-  "milieu": "Forêt",
-  "photo": "Images/pic_epeiche.jpg",
-  "especes": [
-   "Pic épeiche",
-   "Pic épeichette",
-   "Pic mar",
-   "Pic noir",
-   "Pic à dos blanc",
-   "Sittelle torchepot",
-   "Grimpereau des bois"
-  ],
-  "chapitre": "Forêt d'Iraty",
-  "carrefour": 5,
-  "vedette": "Pic épeiche"
  },
  {
   "id": "Pyrénées|21",
@@ -12638,23 +12850,25 @@ const EXPEDITIONS = [
   "vedette": "Cerf élaphe"
  },
  {
-  "id": "Pyrénées|22",
+  "id": "Pyrénées|20",
   "territoire": "Pyrénées",
-  "ordre": 22,
-  "titre": "Les rongeurs de la forêt",
+  "ordre": 20,
+  "titre": "Les pics et les grimpeurs",
   "milieu": "Forêt",
-  "photo": "Images/ecureuil_roux.jpg",
+  "photo": "Images/pic_epeiche.jpg",
   "especes": [
-   "Écureuil roux",
-   "Loir gris",
-   "Muscardin",
-   "Campagnol roussâtre",
-   "Mulot à collier",
-   "Campagnol des Pyrénées"
+   "Pic épeiche",
+   "Pic épeichette",
+   "Pic mar",
+   "Pic noir",
+   "Pic à dos blanc",
+   "Sittelle torchepot",
+   "Grimpereau des bois"
   ],
+  "rang": 22,
   "chapitre": "Forêt d'Iraty",
   "carrefour": 5,
-  "vedette": "Écureuil roux"
+  "vedette": "Pic épeiche"
  },
  {
   "id": "Pyrénées|23",
@@ -12793,24 +13007,25 @@ const EXPEDITIONS = [
   "vedette": "Grenouille rousse"
  },
  {
-  "id": "Pyrénées|30",
+  "id": "Pyrénées|44",
   "territoire": "Pyrénées",
-  "ordre": 30,
-  "titre": "Les oiseaux de l'étang",
-  "milieu": "Mares et étangs",
-  "photo": "Images/canard_colvert.jpg",
+  "ordre": 44,
+  "titre": "Les nouveaux venus",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/ragondin.jpg",
   "especes": [
-   "Canard colvert",
-   "Foulque macroule",
-   "Grèbe huppé",
-   "Héron cendré",
-   "Grande aigrette",
-   "Goéland leucophée",
-   "Gallinule poule-d'eau"
+   "Ragondin",
+   "Rat musqué",
+   "Vison d'Amérique",
+   "Écrevisse de Louisiane",
+   "Écrevisse signal",
+   "Tortue de Floride",
+   "Frelon asiatique"
   ],
+  "rang": 30,
   "chapitre": "Lac de Lourdes",
   "carrefour": 2,
-  "vedette": "Canard colvert"
+  "vedette": "Ragondin"
  },
  {
   "id": "Pyrénées|31",
@@ -12833,6 +13048,27 @@ const EXPEDITIONS = [
   "vedette": "Anax empereur"
  },
  {
+  "id": "Pyrénées|30",
+  "territoire": "Pyrénées",
+  "ordre": 30,
+  "titre": "Les oiseaux de l'étang",
+  "milieu": "Mares et étangs",
+  "photo": "Images/canard_colvert.jpg",
+  "especes": [
+   "Canard colvert",
+   "Foulque macroule",
+   "Grèbe huppé",
+   "Héron cendré",
+   "Grande aigrette",
+   "Goéland leucophée",
+   "Gallinule poule-d'eau"
+  ],
+  "rang": 32,
+  "chapitre": "Lac de Lourdes",
+  "carrefour": 2,
+  "vedette": "Canard colvert"
+ },
+ {
   "id": "Pyrénées|32",
   "territoire": "Pyrénées",
   "ordre": 32,
@@ -12848,6 +13084,7 @@ const EXPEDITIONS = [
    "Ibis falcinelle",
    "Grèbe castagneux"
   ],
+  "rang": 33,
   "chapitre": "Lac de Lourdes",
   "carrefour": 2,
   "vedette": "Rousserolle effarvatte"
@@ -12867,6 +13104,7 @@ const EXPEDITIONS = [
    "Perche commune",
    "Gambusie"
   ],
+  "rang": 34,
   "chapitre": "Lac de Lourdes",
   "carrefour": 2,
   "vedette": "Carpe commune"
@@ -12887,29 +13125,10 @@ const EXPEDITIONS = [
    "Anodonte des cygnes",
    "Chevalier guignette"
   ],
+  "rang": 35,
   "chapitre": "Lac de Lourdes",
   "carrefour": 2,
   "vedette": "Couleuvre helvétique"
- },
- {
-  "id": "Pyrénées|35",
-  "territoire": "Pyrénées",
-  "ordre": 35,
-  "titre": "Dans les prairies du marais",
-  "milieu": "Mares et étangs",
-  "photo": "Images/cuivre_des_marais.jpg",
-  "especes": [
-   "Cuivré des marais",
-   "Fadet des laîches",
-   "Azuré des mouillères",
-   "Cuivré de la bistorte",
-   "Damier de la succise",
-   "Micrommate émeraude",
-   "Crocothémis écarlate"
-  ],
-  "chapitre": "Lac de Lourdes",
-  "carrefour": 2,
-  "vedette": "Cuivré des marais"
  },
  {
   "id": "Pyrénées|37",
@@ -13048,43 +13267,46 @@ const EXPEDITIONS = [
   "vedette": "Saumon atlantique"
  },
  {
-  "id": "Pyrénées|44",
+  "id": "Pyrénées|35",
   "territoire": "Pyrénées",
-  "ordre": 44,
-  "titre": "Les nouveaux venus",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/ragondin.jpg",
+  "ordre": 35,
+  "titre": "Dans les prairies du marais",
+  "milieu": "Mares et étangs",
+  "photo": "Images/cuivre_des_marais.jpg",
   "especes": [
-   "Ragondin",
-   "Rat musqué",
-   "Vison d'Amérique",
-   "Écrevisse de Louisiane",
-   "Écrevisse signal",
-   "Tortue de Floride",
-   "Frelon asiatique"
+   "Cuivré des marais",
+   "Fadet des laîches",
+   "Azuré des mouillères",
+   "Cuivré de la bistorte",
+   "Damier de la succise",
+   "Micrommate émeraude",
+   "Crocothémis écarlate"
   ],
+  "rang": 44,
   "chapitre": "Lac de Lourdes",
   "carrefour": 2,
-  "vedette": "Ragondin"
+  "vedette": "Cuivré des marais"
  },
  {
-  "id": "Pyrénées|45",
+  "id": "Pyrénées|17",
   "territoire": "Pyrénées",
-  "ordre": 45,
-  "titre": "Les oiseaux des landes",
-  "milieu": "Landes et coteaux secs",
-  "photo": "Images/fauvette_pitchou.jpg",
+  "ordre": 17,
+  "titre": "Les mangeurs de graines",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/chardonneret_elegant.jpg",
   "especes": [
-   "Fauvette pitchou",
-   "Alouette lulu",
-   "Pipit farlouse",
-   "Bruant fou",
-   "Perdrix rouge",
-   "Engoulevent d'Europe"
+   "Chardonneret élégant",
+   "Verdier d'Europe",
+   "Bruant zizi",
+   "Moineau friquet",
+   "Linotte mélodieuse",
+   "Bruant ortolan",
+   "Tarin des aulnes"
   ],
+  "rang": 45,
   "chapitre": "Cerdagne",
   "carrefour": 4,
-  "vedette": "Fauvette pitchou"
+  "vedette": "Chardonneret élégant"
  },
  {
   "id": "Pyrénées|46",
@@ -13145,24 +13367,24 @@ const EXPEDITIONS = [
   "vedette": "Flambé"
  },
  {
-  "id": "Pyrénées|49",
+  "id": "Pyrénées|45",
   "territoire": "Pyrénées",
-  "ordre": 49,
-  "titre": "Les insectes des coteaux",
+  "ordre": 45,
+  "titre": "Les oiseaux des landes",
   "milieu": "Landes et coteaux secs",
-  "photo": "Images/ascalaphe_soufre.jpg",
+  "photo": "Images/fauvette_pitchou.jpg",
   "especes": [
-   "Ascalaphe soufré",
-   "Cicindèle champêtre",
-   "Œdipode turquoise",
-   "Œdipode stridulante",
-   "Dectique verrucivore",
-   "Punaise arlequin",
-   "Criquet ensanglanté"
+   "Fauvette pitchou",
+   "Alouette lulu",
+   "Pipit farlouse",
+   "Bruant fou",
+   "Perdrix rouge",
+   "Engoulevent d'Europe"
   ],
+  "rang": 49,
   "chapitre": "Cerdagne",
   "carrefour": 4,
-  "vedette": "Ascalaphe soufré"
+  "vedette": "Fauvette pitchou"
  },
  {
   "id": "Pyrénées|50",
@@ -13224,6 +13446,26 @@ const EXPEDITIONS = [
   "vedette": "Gypaète barbu"
  },
  {
+  "id": "Pyrénées|54",
+  "territoire": "Pyrénées",
+  "ordre": 54,
+  "titre": "Insectes et lézards des alpages",
+  "milieu": "Falaises et rochers",
+  "photo": "Images/apollon.jpg",
+  "especes": [
+   "Apollon",
+   "Moiré de Lefèbvre",
+   "Bourdon des Pyrénées",
+   "Miramelle pyrénéenne",
+   "Lézard vivipare",
+   "Lézard de Bonnal"
+  ],
+  "rang": 53,
+  "chapitre": "Cirque de Gavarnie",
+  "carrefour": 9,
+  "vedette": "Apollon"
+ },
+ {
   "id": "Pyrénées|53",
   "territoire": "Pyrénées",
   "ordre": 53,
@@ -13239,28 +13481,10 @@ const EXPEDITIONS = [
    "Merle à plastron",
    "Grand-duc d'Europe"
   ],
+  "rang": 54,
   "chapitre": "Cirque de Gavarnie",
   "carrefour": 9,
   "vedette": "Tichodrome échelette"
- },
- {
-  "id": "Pyrénées|54",
-  "territoire": "Pyrénées",
-  "ordre": 54,
-  "titre": "Insectes et lézards des alpages",
-  "milieu": "Falaises et rochers",
-  "photo": "Images/apollon.jpg",
-  "especes": [
-   "Apollon",
-   "Moiré de Lefèbvre",
-   "Bourdon des Pyrénées",
-   "Miramelle pyrénéenne",
-   "Lézard vivipare",
-   "Lézard de Bonnal"
-  ],
-  "chapitre": "Cirque de Gavarnie",
-  "carrefour": 9,
-  "vedette": "Apollon"
  },
  {
   "id": "Pyrénées|56",
@@ -13303,6 +13527,27 @@ const EXPEDITIONS = [
   "vedette": "Sylvain azuré"
  },
  {
+  "id": "Pyrénées|49",
+  "territoire": "Pyrénées",
+  "ordre": 49,
+  "titre": "Les insectes des coteaux",
+  "milieu": "Landes et coteaux secs",
+  "photo": "Images/ascalaphe_soufre.jpg",
+  "especes": [
+   "Ascalaphe soufré",
+   "Cicindèle champêtre",
+   "Œdipode turquoise",
+   "Œdipode stridulante",
+   "Dectique verrucivore",
+   "Punaise arlequin",
+   "Criquet ensanglanté"
+  ],
+  "rang": 58,
+  "chapitre": "Cerdagne",
+  "carrefour": 4,
+  "vedette": "Ascalaphe soufré"
+ },
+ {
   "id": "Pyrénées|58",
   "territoire": "Pyrénées",
   "ordre": 58,
@@ -13318,29 +13563,10 @@ const EXPEDITIONS = [
    "Nacré de la sanguisorbe",
    "Cuivré de la verge-d'or"
   ],
+  "rang": 59,
   "chapitre": "Cerdagne",
   "carrefour": 4,
   "vedette": "Azuré de la bugrane"
- },
- {
-  "id": "Pyrénées|59",
-  "territoire": "Pyrénées",
-  "ordre": 59,
-  "titre": "Les habitants des grands espaces",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/bruant_proyer.jpg",
-  "especes": [
-   "Bruant proyer",
-   "Pipit rousseline",
-   "Grive litorne",
-   "Pigeon colombin",
-   "Pigeon biset",
-   "Faucon d'Éléonore",
-   "Mouflon méditerranéen"
-  ],
-  "chapitre": "Cerdagne",
-  "carrefour": 4,
-  "vedette": "Bruant proyer"
  },
  {
   "id": "Pyrénées|60",
@@ -13552,26 +13778,6 @@ const EXPEDITIONS = [
   "vedette": "Rougegorge familier"
  },
  {
-  "id": "Vosges|2",
-  "territoire": "Vosges",
-  "ordre": 2,
-  "titre": "Les oiseaux de la ville",
-  "milieu": "Campagne, haies et jardins",
-  "photo": "Images/rougequeue_noir.jpg",
-  "especes": [
-   "Rougequeue noir",
-   "Moineau domestique",
-   "Martinet noir",
-   "Hirondelle de fenêtre",
-   "Pie bavarde",
-   "Étourneau sansonnet",
-   "Corneille noire"
-  ],
-  "chapitre": "Gérardmer et son lac",
-  "carrefour": 0,
-  "vedette": "Rougequeue noir"
- },
- {
   "id": "Vosges|3",
   "territoire": "Vosges",
   "ordre": 3,
@@ -13585,6 +13791,7 @@ const EXPEDITIONS = [
    "Petit paon de nuit",
    "Lérot"
   ],
+  "rang": 2,
   "chapitre": "Gérardmer et son lac",
   "carrefour": 0,
   "vedette": "Hérisson d'Europe"
@@ -13603,9 +13810,31 @@ const EXPEDITIONS = [
    "Cincle plongeur",
    "Perche commune"
   ],
+  "rang": 3,
   "chapitre": "Gérardmer et son lac",
   "carrefour": 0,
   "vedette": "Canard colvert"
+ },
+ {
+  "id": "Vosges|2",
+  "territoire": "Vosges",
+  "ordre": 2,
+  "titre": "Les oiseaux de la ville",
+  "milieu": "Campagne, haies et jardins",
+  "photo": "Images/rougequeue_noir.jpg",
+  "especes": [
+   "Rougequeue noir",
+   "Moineau domestique",
+   "Martinet noir",
+   "Hirondelle de fenêtre",
+   "Pie bavarde",
+   "Étourneau sansonnet",
+   "Corneille noire"
+  ],
+  "rang": 4,
+  "chapitre": "Gérardmer et son lac",
+  "carrefour": 0,
+  "vedette": "Rougequeue noir"
  },
  {
   "id": "Vosges|5",
@@ -13706,6 +13935,46 @@ const EXPEDITIONS = [
   "vedette": "Bruant zizi"
  },
  {
+  "id": "Vosges|14",
+  "territoire": "Vosges",
+  "ordre": 14,
+  "titre": "Dans les prés secs du vignoble",
+  "milieu": "Landes et coteaux secs",
+  "photo": "Images/azure_de_la_bugrane.jpg",
+  "especes": [
+   "Azuré de la bugrane",
+   "Écaille chinée",
+   "Vulcain",
+   "Paon-du-jour",
+   "Lapin de garenne",
+   "Piéride de la rave",
+   "Coccinelle asiatique"
+  ],
+  "rang": 10,
+  "chapitre": "Riquewihr et le vignoble",
+  "carrefour": 1,
+  "vedette": "Azuré de la bugrane"
+ },
+ {
+  "id": "Vosges|12",
+  "territoire": "Vosges",
+  "ordre": 12,
+  "titre": "Les reptiles des murets",
+  "milieu": "Landes et coteaux secs",
+  "photo": "Images/lezard_vert_occidental.jpg",
+  "especes": [
+   "Lézard vert occidental",
+   "Lézard des murailles",
+   "Coronelle lisse",
+   "Orvet fragile",
+   "Lézard des souches"
+  ],
+  "rang": 11,
+  "chapitre": "Riquewihr et le vignoble",
+  "carrefour": 1,
+  "vedette": "Lézard vert occidental"
+ },
+ {
   "id": "Vosges|10",
   "territoire": "Vosges",
   "ordre": 10,
@@ -13721,6 +13990,7 @@ const EXPEDITIONS = [
    "Pic vert",
    "Grimpereau des jardins"
   ],
+  "rang": 12,
   "chapitre": "Riquewihr et le vignoble",
   "carrefour": 1,
   "vedette": "Huppe fasciée"
@@ -13741,27 +14011,10 @@ const EXPEDITIONS = [
    "Tourterelle turque",
    "Martinet à ventre blanc"
   ],
+  "rang": 13,
   "chapitre": "Riquewihr et le vignoble",
   "carrefour": 1,
   "vedette": "Cigogne blanche"
- },
- {
-  "id": "Vosges|12",
-  "territoire": "Vosges",
-  "ordre": 12,
-  "titre": "Les reptiles des murets",
-  "milieu": "Landes et coteaux secs",
-  "photo": "Images/lezard_vert_occidental.jpg",
-  "especes": [
-   "Lézard vert occidental",
-   "Lézard des murailles",
-   "Coronelle lisse",
-   "Orvet fragile",
-   "Lézard des souches"
-  ],
-  "chapitre": "Riquewihr et le vignoble",
-  "carrefour": 1,
-  "vedette": "Lézard vert occidental"
  },
  {
   "id": "Vosges|13",
@@ -13779,29 +14032,10 @@ const EXPEDITIONS = [
    "Timarque",
    "Fourmilion"
   ],
+  "rang": 14,
   "chapitre": "Riquewihr et le vignoble",
   "carrefour": 1,
   "vedette": "Mante religieuse"
- },
- {
-  "id": "Vosges|14",
-  "territoire": "Vosges",
-  "ordre": 14,
-  "titre": "Dans les prés secs du vignoble",
-  "milieu": "Landes et coteaux secs",
-  "photo": "Images/azure_de_la_bugrane.jpg",
-  "especes": [
-   "Azuré de la bugrane",
-   "Écaille chinée",
-   "Vulcain",
-   "Paon-du-jour",
-   "Lapin de garenne",
-   "Piéride de la rave",
-   "Coccinelle asiatique"
-  ],
-  "chapitre": "Riquewihr et le vignoble",
-  "carrefour": 1,
-  "vedette": "Azuré de la bugrane"
  },
  {
   "id": "Vosges|15",
@@ -13841,6 +14075,25 @@ const EXPEDITIONS = [
   "vedette": "Ombre commun"
  },
  {
+  "id": "Vosges|19",
+  "territoire": "Vosges",
+  "ordre": 19,
+  "titre": "Au bord de la Moselle",
+  "milieu": "Rivières et torrents",
+  "photo": "Images/castor_d_europe.jpg",
+  "especes": [
+   "Castor d'Europe",
+   "Écrevisse signal",
+   "Écrevisse à pattes blanches",
+   "Rat musqué",
+   "Patelline des fleuves"
+  ],
+  "rang": 17,
+  "chapitre": "Remiremont et la vallée de la Moselle",
+  "carrefour": 2,
+  "vedette": "Castor d'Europe"
+ },
+ {
   "id": "Vosges|17",
   "territoire": "Vosges",
   "ordre": 17,
@@ -13854,6 +14107,7 @@ const EXPEDITIONS = [
    "Ablette",
    "Lote"
   ],
+  "rang": 18,
   "chapitre": "Remiremont et la vallée de la Moselle",
   "carrefour": 2,
   "vedette": "Chevesne"
@@ -13873,27 +14127,10 @@ const EXPEDITIONS = [
    "Petite nymphe au corps de feu",
    "Pennipatte bleuâtre"
   ],
+  "rang": 19,
   "chapitre": "Remiremont et la vallée de la Moselle",
   "carrefour": 2,
   "vedette": "Caloptéryx vierge"
- },
- {
-  "id": "Vosges|19",
-  "territoire": "Vosges",
-  "ordre": 19,
-  "titre": "Au bord de la Moselle",
-  "milieu": "Rivières et torrents",
-  "photo": "Images/castor_d_europe.jpg",
-  "especes": [
-   "Castor d'Europe",
-   "Écrevisse signal",
-   "Écrevisse à pattes blanches",
-   "Rat musqué",
-   "Patelline des fleuves"
-  ],
-  "chapitre": "Remiremont et la vallée de la Moselle",
-  "carrefour": 2,
-  "vedette": "Castor d'Europe"
  },
  {
   "id": "Vosges|20",
@@ -13970,6 +14207,27 @@ const EXPEDITIONS = [
   "vedette": "Cerf élaphe"
  },
  {
+  "id": "Vosges|26",
+  "territoire": "Vosges",
+  "ordre": 26,
+  "titre": "Sous la mousse et les feuilles",
+  "milieu": "Forêt",
+  "photo": "Images/escargot_des_haies.jpg",
+  "especes": [
+   "Escargot des haies",
+   "Hélice des bois",
+   "Clausilie commune",
+   "Cloporte commun",
+   "Scutigère véloce",
+   "Épeire des fissures",
+   "Grande loche"
+  ],
+  "rang": 24,
+  "chapitre": "Mont Sainte-Odile",
+  "carrefour": 3,
+  "vedette": "Escargot des haies"
+ },
+ {
   "id": "Vosges|24",
   "territoire": "Vosges",
   "ordre": 24,
@@ -13985,6 +14243,7 @@ const EXPEDITIONS = [
    "Sittelle torchepot",
    "Grimpereau des bois"
   ],
+  "rang": 25,
   "chapitre": "Mont Sainte-Odile",
   "carrefour": 3,
   "vedette": "Pic noir"
@@ -14005,29 +14264,10 @@ const EXPEDITIONS = [
    "Fauvette babillarde",
    "Pouillot fitis"
   ],
+  "rang": 26,
   "chapitre": "Mont Sainte-Odile",
   "carrefour": 3,
   "vedette": "Fauvette à tête noire"
- },
- {
-  "id": "Vosges|26",
-  "territoire": "Vosges",
-  "ordre": 26,
-  "titre": "Sous la mousse et les feuilles",
-  "milieu": "Forêt",
-  "photo": "Images/escargot_des_haies.jpg",
-  "especes": [
-   "Escargot des haies",
-   "Hélice des bois",
-   "Clausilie commune",
-   "Cloporte commun",
-   "Scutigère véloce",
-   "Épeire des fissures",
-   "Grande loche"
-  ],
-  "chapitre": "Mont Sainte-Odile",
-  "carrefour": 3,
-  "vedette": "Escargot des haies"
  },
  {
   "id": "Vosges|27",
@@ -14204,24 +14444,6 @@ const EXPEDITIONS = [
   "vedette": "Libellule à quatre taches"
  },
  {
-  "id": "Vosges|36",
-  "territoire": "Vosges",
-  "ordre": 36,
-  "titre": "Les échassiers et les plongeurs",
-  "milieu": "Mares et étangs",
-  "photo": "Images/grande_aigrette.jpg",
-  "especes": [
-   "Grande aigrette",
-   "Grèbe castagneux",
-   "Gallinule poule-d'eau",
-   "Petit gravelot",
-   "Vanneau huppé"
-  ],
-  "chapitre": "Plateau des Mille Étangs",
-  "carrefour": 5,
-  "vedette": "Grande aigrette"
- },
- {
   "id": "Vosges|37",
   "territoire": "Vosges",
   "ordre": 37,
@@ -14237,9 +14459,29 @@ const EXPEDITIONS = [
    "Conocéphale gracieux",
    "Bruant des roseaux"
   ],
+  "rang": 36,
   "chapitre": "Plateau des Mille Étangs",
   "carrefour": 5,
   "vedette": "Rousserolle effarvatte"
+ },
+ {
+  "id": "Vosges|36",
+  "territoire": "Vosges",
+  "ordre": 36,
+  "titre": "Les échassiers et les plongeurs",
+  "milieu": "Mares et étangs",
+  "photo": "Images/grande_aigrette.jpg",
+  "especes": [
+   "Grande aigrette",
+   "Grèbe castagneux",
+   "Gallinule poule-d'eau",
+   "Petit gravelot",
+   "Vanneau huppé"
+  ],
+  "rang": 37,
+  "chapitre": "Plateau des Mille Étangs",
+  "carrefour": 5,
+  "vedette": "Grande aigrette"
  },
  {
   "id": "Vosges|38",
@@ -14301,6 +14543,25 @@ const EXPEDITIONS = [
   "vedette": "Grand murin"
  },
  {
+  "id": "Vosges|43",
+  "territoire": "Vosges",
+  "ordre": 43,
+  "titre": "Les petits mammifères du sous-bois",
+  "milieu": "Forêt",
+  "photo": "Images/ecureuil_roux.jpg",
+  "especes": [
+   "Écureuil roux",
+   "Martre des pins",
+   "Campagnol roussâtre",
+   "Mulot à collier",
+   "Hermine"
+  ],
+  "rang": 41,
+  "chapitre": "Le Donon et la vallée de la Bruche",
+  "carrefour": 6,
+  "vedette": "Écureuil roux"
+ },
+ {
   "id": "Vosges|41",
   "territoire": "Vosges",
   "ordre": 41,
@@ -14314,6 +14575,7 @@ const EXPEDITIONS = [
    "Oreillard gris",
    "Sérotine commune"
   ],
+  "rang": 42,
   "chapitre": "Le Donon et la vallée de la Bruche",
   "carrefour": 6,
   "vedette": "Petit rhinolophe"
@@ -14333,27 +14595,10 @@ const EXPEDITIONS = [
    "Carabe à reflets dorés",
    "Géotrupe du fumier"
   ],
+  "rang": 43,
   "chapitre": "Le Donon et la vallée de la Bruche",
   "carrefour": 6,
   "vedette": "Rhagie inquisitrice"
- },
- {
-  "id": "Vosges|43",
-  "territoire": "Vosges",
-  "ordre": 43,
-  "titre": "Les petits mammifères du sous-bois",
-  "milieu": "Forêt",
-  "photo": "Images/ecureuil_roux.jpg",
-  "especes": [
-   "Écureuil roux",
-   "Martre des pins",
-   "Campagnol roussâtre",
-   "Mulot à collier",
-   "Hermine"
-  ],
-  "chapitre": "Le Donon et la vallée de la Bruche",
-  "carrefour": 6,
-  "vedette": "Écureuil roux"
  },
  {
   "id": "Vosges|44",
@@ -14509,6 +14754,25 @@ const EXPEDITIONS = [
   "vedette": "Cassenoix moucheté"
  },
  {
+  "id": "Vosges|54",
+  "territoire": "Vosges",
+  "ordre": 54,
+  "titre": "La forêt la nuit",
+  "milieu": "Forêt",
+  "photo": "Images/chouette_hulotte.jpg",
+  "especes": [
+   "Chouette hulotte",
+   "Salamandre tachetée",
+   "Grillon des bois",
+   "Sphinx du pin",
+   "Mulot sylvestre"
+  ],
+  "rang": 52,
+  "chapitre": "Ballon d'Alsace",
+  "carrefour": 8,
+  "vedette": "Chouette hulotte"
+ },
+ {
   "id": "Vosges|52",
   "territoire": "Vosges",
   "ordre": 52,
@@ -14524,6 +14788,7 @@ const EXPEDITIONS = [
    "Cygne tuberculé",
    "Fuligule milouin"
   ],
+  "rang": 53,
   "chapitre": "Ballon d'Alsace",
   "carrefour": 8,
   "vedette": "Grèbe huppé"
@@ -14544,27 +14809,10 @@ const EXPEDITIONS = [
    "Grande Tortue",
    "Petit Sylvain"
   ],
+  "rang": 54,
   "chapitre": "Ballon d'Alsace",
   "carrefour": 8,
   "vedette": "Grand Mars changeant"
- },
- {
-  "id": "Vosges|54",
-  "territoire": "Vosges",
-  "ordre": 54,
-  "titre": "La forêt la nuit",
-  "milieu": "Forêt",
-  "photo": "Images/chouette_hulotte.jpg",
-  "especes": [
-   "Chouette hulotte",
-   "Salamandre tachetée",
-   "Grillon des bois",
-   "Sphinx du pin",
-   "Mulot sylvestre"
-  ],
-  "chapitre": "Ballon d'Alsace",
-  "carrefour": 8,
-  "vedette": "Chouette hulotte"
  },
  {
   "id": "Vosges|55",

@@ -9334,9 +9334,9 @@ const CREDITS_SONS = {
   "origine": "xeno-canto"
  },
  "linotte_melodieuse": {
-  "auteur": "Adrien Peillon",
+  "auteur": "Gerard OLIVIER",
   "licence": "CC BY-NC-SA 4.0",
-  "source": "https://xeno-canto.org/1151728",
+  "source": "https://xeno-canto.org/1089490",
   "origine": "xeno-canto"
  },
  "geai_des_chenes": {

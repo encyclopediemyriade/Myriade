@@ -62,6 +62,11 @@ function resumeArcade(T, F) {
 
 // Étape R248 (36.01, choix 1A) : les records quittent le Profil et viennent sous chaque jeu (rien à zéro n'est écrit)
 function recordsDuJeu(cle) {
+  const r = recordsListe(cle);
+  return r.length ? `<p class="arc-records"><span>Vos records</span> ${r.join(" · ")}</p>` : "";
+}
+// Étape R269 : la liste des vrais records d'un jeu (servait seulement à recordsDuJeu ; sert aussi à la ligne du téléphone)
+function recordsListe(cle) {
   const st = (statsJeux[cle] || {}), r = [];
   if (cle === "plus") {
     if (suivi.recordSerieDuel) r.push(`<b>${nombre(suivi.recordSerieDuel)}</b> à la suite`);
@@ -69,10 +74,11 @@ function recordsDuJeu(cle) {
   }
   if (cle === "indices" && st.decouvertes) r.push(`<b>${nombre(st.decouvertes)}</b> espèce${st.decouvertes > 1 ? "s" : ""} découverte${st.decouvertes > 1 ? "s" : ""}`);
   if (cle === "portrait" && suivi.portraits) r.push(`<b>${nombre(suivi.portraits)}</b> portrait${suivi.portraits > 1 ? "s" : ""} sans erreur`);
-  if (cle === "oreille") { const n = nbEspeces(e => nbBonnes(e, "cri_son") >= 1); if (n) r.push(`<b>${nombre(n)}</b> cri${n > 1 ? "s" : ""} reconnu${n > 1 ? "s" : ""}`); }
-  if (cle === "coupdoeil" && suivi.coupsDoeil) r.push(`<b>${nombre(suivi.coupsDoeil)}</b> photo${suivi.coupsDoeil > 1 ? "s" : ""} reconnue${suivi.coupsDoeil > 1 ? "s" : ""} du premier coup`);
-  if (st.parties) r.push(`${nombre(st.parties)} partie${st.parties > 1 ? "s" : ""}`);
-  return r.length ? `<p class="arc-records"><span>Vos records</span> ${r.join(" · ")}</p>` : "";
+  // Étape R263 (Notion 40.06b) : seulement les vrais records des parties de ce jeu. Avant, À l'oreille comptait les cris reconnus
+  //   partout (Rencontres comprises : « Pas encore joué » à côté de « 9 cris reconnus ») et Coup d'œil les photos reconnues du premier
+  //   coup partout (le compteur du badge « Œil de lynx », à côté du vrai record « 4 / 10 ») ; leur record est déjà dans la ligne du dessus.
+  //   Le nombre de parties n'est plus répété ici (la ligne du dessus le dit quand il n'y a pas encore de record).
+  return r;
 }
 function afficherArcade() {
   const T = territoiresArcade(), F = famillesArcade(T);
@@ -90,6 +96,7 @@ function afficherArcade() {
   }
   // ---- Les jeux ----
   const zone = document.getElementById("arc-jeux");
+  zone.classList.toggle("compacte", ARCADE_LISTE_COMPACTE);
   zone.innerHTML = JEUX_ARCADE.filter(c => JEUX[c]).map(cle => {
     const etat = d ? possibiliteJeu(cle, d) : { possible: false, raison: "aucune espèce avec ce choix" };
     const record = d ? records[cleRecord(cle, d.cle, false)] : null;
@@ -107,7 +114,9 @@ function afficherArcade() {
         <p class="arc-regle-courte">${REGLES_COURTES[cle] || REGLES_ARCADE[cle] || ""}</p>
         <p class="arc-meta">${etat.possible ? `${JEUX[cle].detail} · ${meta}` : conditionJeu(cle, etat)}</p>
         ${recordsDuJeu(cle)}
+        <p class="arc-ligne">${etat.possible ? ligneTelephone(cle, meta) : conditionJeu(cle, etat)}</p>
         <button class="arc-jouer" data-jeu="${cle}"${etat.possible ? "" : " disabled"}>Jouer <span aria-hidden="true">▶</span></button>
+        <span class="arc-fleche" aria-hidden="true">›</span>
       </article>`;
   }).join("");
   zone.querySelectorAll(".arc-jouer").forEach(b => b.onclick = ev => { ev.stopPropagation(); lancerArcade(b.dataset.jeu); });
@@ -162,6 +171,16 @@ function afficherArcade() {
   };
 }
 
+// Étape R269 (Notion 40.06c, choix 12B du 19/11) : sur téléphone, la page Jeux devient une liste compacte : une ligne par jeu
+//   (icône, nom, phrase courte, une seule ligne de record, flèche à droite) ; toute la ligne lance le jeu (déjà en R163).
+//   Une seule ligne de record : les vrais records du jeu s'il y en a, sinon l'état (« Niveau 2 sur 3 », « Pas encore joué »…).
+//   Ordinateur inchangé (cartes 2 × 2). ARCADE_LISTE_COMPACTE = false remet l'ancienne ligne.
+const ARCADE_LISTE_COMPACTE = true;
+function ligneTelephone(cle, meta) {
+  const r = recordsListe(cle);
+  if (r.length) return `Record : ${r.join(" · ")}`;
+  return /Pas encore joué|parties? jouées?/.test(meta) && JEUX[cle] && JEUX[cle].detail ? `${JEUX[cle].detail} · ${meta}` : meta;
+}
 function lancerArcade(cle) {
   if (cle === "carnet") { lancerCarnet(true); return; }    // étape R167
   if (cle === "coupdoeil") { lancerCoupDoeil(); return; }   // étape R191

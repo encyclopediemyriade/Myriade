@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V101.xlsx, especes_bassin_aquitain_V44.xlsx, especes_bassin_parisien_V49.xlsx, especes_corse_V55.xlsx, especes_grand_est_V42.xlsx, especes_jura_V46.xlsx, especes_massif_armoricain_V55.xlsx, especes_massif_central_V47.xlsx, especes_mediterranee_V56.xlsx, especes_pyrenees_V52.xlsx, especes_vosges_V39.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V102.xlsx, especes_bassin_aquitain_V45.xlsx, especes_bassin_parisien_V50.xlsx, especes_corse_V56.xlsx, especes_grand_est_V43.xlsx, especes_jura_V47.xlsx, especes_massif_armoricain_V56.xlsx, especes_massif_central_V48.xlsx, especes_mediterranee_V57.xlsx, especes_pyrenees_V53.xlsx, especes_vosges_V40.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -3001,6 +3001,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "oui",
     photo_3_change: "Grandes taches blanches aux ailes, queue blanche bout noir",
+    tendance_france: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3116,6 +3117,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -3230,6 +3232,7 @@ const ESPECES = [
     photo_2_change: "Plumage tout blanc, sauf la queue noire",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3344,6 +3347,7 @@ const ESPECES = [
     photo_2_change: "Couvert de duvet gris rayé",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -3458,6 +3462,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -3572,6 +3577,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun sombre, dessous chamois strié en long",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -3686,6 +3692,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -3800,6 +3807,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -3914,6 +3922,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -4028,6 +4037,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -4142,6 +4152,7 @@ const ESPECES = [
     photo_2_change: "Brun-roux barré de noir, queue peu fourchue",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -4256,6 +4267,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -4370,6 +4382,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -4484,6 +4497,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["aspect_robe", "queue_vol"]
   },
   {
@@ -4598,6 +4612,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["bec_couleur", "pattes_aspect", "queue_vol"]
   },
   {
@@ -4712,6 +4727,7 @@ const ESPECES = [
     photo_2_change: "Gris-brun écaillé de pâle, sans plastron blanc pur",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4826,6 +4842,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -4940,6 +4957,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -5054,6 +5072,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -5168,6 +5187,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire", "queue_vol"]
   },
   {
@@ -5282,6 +5302,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: ["motif_robe"]
   },
   {
@@ -5396,6 +5417,7 @@ const ESPECES = [
     photo_2_change: "Tête gris-bleu, queue grise à bout noir",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -5510,6 +5532,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["bec_couleur", "difference_male_femelle"]
   },
   {
@@ -5624,6 +5647,7 @@ const ESPECES = [
     photo_2_change: "Plumage brun sombre, croissant terne",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -5738,6 +5762,7 @@ const ESPECES = [
     photo_2_change: "Olive grisâtre, poitrine jaunâtre, sans rouge",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["pattes_aspect"]
   },
   {
@@ -5852,6 +5877,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -5966,6 +5992,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: ["queue_vol"]
   },
   {
@@ -13926,6 +13953,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -14041,6 +14069,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -14155,6 +14184,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -14269,6 +14299,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -14384,6 +14415,7 @@ const ESPECES = [
     photo_2_change: "Gris-brun uni, sans roux ni barres noires",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -14499,6 +14531,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: ["territoire"]
   },
   {
@@ -14613,6 +14646,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -14727,6 +14761,7 @@ const ESPECES = [
     photo_2_change: "Plumage brun strié et tacheté, bec noir",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -14841,6 +14876,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -14956,6 +14992,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -15071,6 +15108,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -15185,6 +15223,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -15299,6 +15338,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -15413,6 +15453,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -15528,6 +15569,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -15642,6 +15684,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -15757,6 +15800,7 @@ const ESPECES = [
     photo_2_change: "Gris pâle finement écaillé, sans calotte rousse",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -19604,6 +19648,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -19718,6 +19763,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun, croupion blanc, dessous roussâtre strié",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -19832,6 +19878,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -19946,6 +19993,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -20060,6 +20108,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -20174,6 +20223,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -20288,6 +20338,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -20402,6 +20453,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -20516,6 +20568,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -20630,6 +20683,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -20744,6 +20798,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -20859,6 +20914,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -20973,6 +21029,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -21088,6 +21145,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -21203,6 +21261,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -21317,6 +21376,7 @@ const ESPECES = [
     photo_2_change: "Tête et cou rayés de noir et blanc",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -21431,6 +21491,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -21545,6 +21606,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -21659,6 +21721,7 @@ const ESPECES = [
     photo_2_change: "Poussin noir à tête rouge orangé",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: ["territoire"]
   },
   {
@@ -21773,6 +21836,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -21887,6 +21951,7 @@ const ESPECES = [
     photo_2_change: "Dessus vert olive, dessous clair finement strié",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -22001,6 +22066,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -22115,6 +22181,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -22229,6 +22296,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -22343,6 +22411,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -22457,6 +22526,7 @@ const ESPECES = [
     photo_2_change: "Tête brun-gris sans noir, sourcil clair",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -22571,6 +22641,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -22685,6 +22756,7 @@ const ESPECES = [
     photo_2_change: "Gris-brun uni, sans reflets ni points",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -22799,6 +22871,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -22913,6 +22986,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -23027,6 +23101,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -23141,6 +23216,7 @@ const ESPECES = [
     photo_2_change: "Dos brun terne, ventre écaillé, masque peu marqué",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -26339,6 +26415,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -26453,6 +26530,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -26567,6 +26645,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -26681,6 +26760,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -26796,6 +26876,7 @@ const ESPECES = [
     photo_2_change: "Calotte noire et sourcil blanc",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -26910,6 +26991,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -27025,6 +27107,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -27139,6 +27222,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -27253,6 +27337,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -27367,6 +27452,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -27481,6 +27567,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -27595,6 +27682,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -27709,6 +27797,7 @@ const ESPECES = [
     photo_2_change: "Brun-gris terne, bec sombre sans rouge",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -27823,6 +27912,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -27937,6 +28027,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -28051,6 +28142,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -28165,6 +28257,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -28280,6 +28373,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -28394,6 +28488,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -28508,6 +28603,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun, dessous clair écaillé de sombre",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -28622,6 +28718,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -28737,6 +28834,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -28851,6 +28949,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -28965,6 +29064,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -33718,6 +33818,7 @@ const ESPECES = [
     photo_2_change: "Plumage gris-brun, bec gris rosâtre sans bosse",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -33832,6 +33933,7 @@ const ESPECES = [
     photo_2_change: "Corps brun uni, calotte brune, joues blanchâtres",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -33947,6 +34049,7 @@ const ESPECES = [
     photo_2_change: "Corps gris-brun terne, tête brunâtre, cercle pâle",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -34061,6 +34164,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -34176,6 +34280,7 @@ const ESPECES = [
     photo_2_change: "Calotte et dos noirs",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -34291,6 +34396,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -34406,6 +34512,7 @@ const ESPECES = [
     photo_2_change: "Tête brune à sourcil pâle, sans noir",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -34520,6 +34627,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun grisâtre, collier presque absent",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -37408,6 +37516,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -37523,6 +37632,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -37638,6 +37748,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: ["ornement_tete"]
   },
   {
@@ -37753,6 +37864,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -37867,6 +37979,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -37982,6 +38095,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun, front sans blanc",
     photo_3_differente: "oui",
     photo_3_change: "Dessus brun, front sans blanc",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -38096,6 +38210,7 @@ const ESPECES = [
     photo_2_change: "Tête vert foncé, dos noir, flancs blancs",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -38210,6 +38325,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: ["bec_couleur"]
   },
   {
@@ -38324,6 +38440,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -38438,6 +38555,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -38553,6 +38671,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -38667,6 +38786,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -42858,6 +42978,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -42972,6 +43093,7 @@ const ESPECES = [
     photo_2_change: "Brun sombre pointillé de blanc",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -43087,6 +43209,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -43202,6 +43325,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -43316,6 +43440,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -43431,6 +43556,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -43546,6 +43672,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -43661,6 +43788,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -43775,6 +43903,7 @@ const ESPECES = [
     photo_2_change: "Plumage brun tacheté, bec noir, queue sombre",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -43889,6 +44018,7 @@ const ESPECES = [
     photo_2_change: "Brun sombre bigarré, queue blanche à bande noire",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -44003,6 +44133,7 @@ const ESPECES = [
     photo_2_change: "Brun foncé, ailes sombres, sans gris",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -44117,6 +44248,7 @@ const ESPECES = [
     photo_2_change: "Tête blanche, point noir derrière l'œil",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -44231,6 +44363,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -44345,6 +44478,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -44459,6 +44593,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun, ventre et poitrine blanchâtres",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -44573,6 +44708,7 @@ const ESPECES = [
     photo_2_change: "Plumage brun, menton blanc",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -44687,6 +44823,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -44802,6 +44939,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -44916,6 +45054,7 @@ const ESPECES = [
     photo_2_change: "Dessus gris-brun uni, dessous blanc",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -45031,6 +45170,7 @@ const ESPECES = [
     photo_2_change: "Collier brun souvent incomplet, bec tout sombre",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -45145,6 +45285,7 @@ const ESPECES = [
     photo_2_change: "Dos roux tacheté de noir, tête blanche dessinée",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -45259,6 +45400,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -45373,6 +45515,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -45487,6 +45630,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -45601,6 +45745,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -45715,6 +45860,7 @@ const ESPECES = [
     photo_2_change: "Gris-brun terne, face blanchâtre, sans ceinture rousse",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -45829,6 +45975,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["yeux_couleur"]
   },
   {
@@ -45943,6 +46090,7 @@ const ESPECES = [
     photo_2_change: "Gorge blanchâtre sans bleu, collier sombre",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -46057,6 +46205,7 @@ const ESPECES = [
     photo_2_change: "Brun chocolat, calotte et gorge crème",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -46172,6 +46321,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -46286,6 +46436,7 @@ const ESPECES = [
     photo_2_change: "Brune tachetée de beige, bec brun-orangé",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -46400,6 +46551,7 @@ const ESPECES = [
     photo_2_change: "Plumage gris-bleu, bouts des ailes noirs",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -46514,6 +46666,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -46629,6 +46782,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -46743,6 +46897,7 @@ const ESPECES = [
     photo_2_change: "Tête et dos bruns, sans noir ni blanc au cou",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -46787,7 +46942,7 @@ const ESPECES = [
     liens_autres_especes: "Bandes mixtes avec pinsons, verdiers et chardonnerets",
     moyen_communication: "Sonore (gazouillis mélodieux), visuel (poitrine rouge du mâle)",
     verbe_cri: "NA",
-    cri_son: "Cris de vol secs et répétés « tett-tett-tett »",
+    cri_son: "Gazouillis rapide et varié, notes tintées mêlées de trilles",
     technique_defense: "NA",
     nom_logis: "Nid",
     nom_trace_indice: null,
@@ -46858,6 +47013,7 @@ const ESPECES = [
     photo_2_change: "Sans rouge, poitrine striée",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -46972,6 +47128,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -47086,6 +47243,7 @@ const ESPECES = [
     photo_2_change: "Tout le plumage tacheté et rayé",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -47200,6 +47358,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: ["yeux_couleur"]
   },
   {
@@ -47314,6 +47473,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -47428,6 +47588,7 @@ const ESPECES = [
     photo_2_change: "Brun moucheté de clair, sans plastron orange",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -47542,6 +47703,7 @@ const ESPECES = [
     photo_2_change: "Brun sombre, gorge claire striée",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -47656,6 +47818,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: ["bec_forme"]
   },
   {
@@ -47770,6 +47933,7 @@ const ESPECES = [
     photo_2_change: "Dessus gris-brun, dessous gris pâle, sans rose",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -47884,6 +48048,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -47998,6 +48163,7 @@ const ESPECES = [
     photo_2_change: "Tête et poitrine striées, sans noir ni jaune vif",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -48112,6 +48278,7 @@ const ESPECES = [
     photo_2_change: "Brun-roux barré de sombre, tache blanche à la nuque",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -48226,6 +48393,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -53668,6 +53836,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -53783,6 +53952,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -53897,6 +54067,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -54011,6 +54182,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -54125,6 +54297,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -54239,6 +54412,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -54353,6 +54527,7 @@ const ESPECES = [
     photo_2_change: "Duvet gris clair laineux, face noirâtre",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -54468,6 +54643,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -54583,6 +54759,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -54698,6 +54875,7 @@ const ESPECES = [
     photo_2_change: "Joues brunes, poitrine chamois pâle, sans masque noir",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -54812,6 +54990,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun pâle, sans masque noir",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -54927,6 +55106,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -55041,6 +55221,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -55156,6 +55337,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -55270,6 +55452,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: ["territoire"]
   },
   {
@@ -55384,6 +55567,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -55498,6 +55682,7 @@ const ESPECES = [
     photo_2_change: "Tête grise, sans calotte ni bavette noires",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -55612,6 +55797,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -55727,6 +55913,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -55841,6 +56028,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -55955,6 +56143,7 @@ const ESPECES = [
     photo_2_change: "Dessus brun clair, sans noir ni orange vif",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -56069,6 +56258,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: ["yeux_couleur"]
   },
   {
@@ -56184,6 +56374,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -56298,6 +56489,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: ["territoire", "bec_forme"]
   },
   {
@@ -56412,6 +56604,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: ["territoire"]
   },
   {
@@ -56526,6 +56719,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -56640,6 +56834,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -56754,6 +56949,7 @@ const ESPECES = [
     photo_2_change: "Calotte rousse au lieu de noire",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -56868,6 +57064,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -56983,6 +57180,7 @@ const ESPECES = [
     photo_2_change: "Tête beige, sans rouge ni noir",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -57098,6 +57296,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -57213,6 +57412,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -61218,6 +61418,7 @@ const ESPECES = [
     photo_2_change: "Plumage terne sans rose, pattes sombres",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -61333,6 +61534,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -61447,6 +61649,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -61562,6 +61765,7 @@ const ESPECES = [
     photo_2_change: "Cou noir à colliers blancs, tête grise",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -61677,6 +61881,7 @@ const ESPECES = [
     photo_2_change: "Tête et dos bruns striés, sans gris-bleu",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -61792,6 +61997,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -61907,6 +62113,7 @@ const ESPECES = [
     photo_2_change: "Plumage brun chocolat",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -62021,6 +62228,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -62135,6 +62343,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -62249,6 +62458,7 @@ const ESPECES = [
     photo_2_change: "Calotte noirâtre, plumes du bout de l'aile rousses",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -62364,6 +62574,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -62478,6 +62689,7 @@ const ESPECES = [
     photo_2_change: "Tête grise sans capuchon noir, dessus brun",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -62593,6 +62805,7 @@ const ESPECES = [
     photo_2_change: "Plumage terne brunâtre, sans masque noir",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -62708,6 +62921,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -62822,6 +63036,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -69297,6 +69512,7 @@ const ESPECES = [
     photo_2_change: "Brun roux barré de noir, poitrine rousse",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: ["territoire"]
   },
   {
@@ -69412,6 +69628,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -69527,6 +69744,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -69641,6 +69859,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -69755,6 +69974,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -69869,6 +70089,7 @@ const ESPECES = [
     photo_2_change: "Gris-noir, tache blanche sur l'aile",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: []
   },
   {
@@ -69983,6 +70204,7 @@ const ESPECES = [
     photo_2_change: "Corps brun moucheté, sans bleu ni orange",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -70097,6 +70319,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -70211,6 +70434,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -70325,6 +70549,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -70439,6 +70664,7 @@ const ESPECES = [
     photo_2_change: "Brun strié, sans jaune",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "NA",
     a_confirmer: []
   },
   {
@@ -70554,6 +70780,7 @@ const ESPECES = [
     photo_2_change: "Dessous gris-beige au lieu de rouge",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -70668,6 +70895,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -70782,6 +71010,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -70896,6 +71125,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: ["territoire"]
   },
   {
@@ -73886,6 +74116,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "augmente",
     a_confirmer: []
   },
   {
@@ -74000,6 +74231,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -74114,6 +74346,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: []
   },
   {
@@ -74228,6 +74461,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "stable",
     a_confirmer: ["yeux_couleur"]
   },
   {
@@ -74342,6 +74576,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
+    tendance_france: "diminue",
     a_confirmer: ["territoire"]
   },
   {

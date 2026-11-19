@@ -95,6 +95,7 @@ const ONDES_OREILLE = [10, 22, 30, 14, 26, 8, 18, 28, 12, 20, 6];
 function afficherTourOreille() {
   const zone = document.getElementById("vue-oreille");
   const t = oreille.tours[oreille.i];
+  const suivant = oreille.tours[oreille.i + 1]; if (suivant) prechargerEspeces(suivant.noms, true);   // R264 (39)
   zone.innerHTML = `<div class="cdo ore">${enteteOreille()}
       <div class="ore-ecoute"><button class="ore-play" id="ore-play" aria-label="Écouter le cri">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
@@ -108,6 +109,7 @@ function afficherTourOreille() {
   zone.querySelectorAll(".ore-photo").forEach(b => b.onclick = () => repondreOreille(t.noms[+b.dataset.k], b));
   document.getElementById("ore-quitter").onclick = () => { oreille = null; montrer("arcade"); };
   window.scrollTo(0, 0);
+  if (typeof calerJeuSousPouce === "function") calerJeuSousPouce(zone, ".ore-photos");   // étape R265 (40.03)
   ecouter(t.espece);   // le cri se lance tout seul (le navigateur peut l'empêcher : le bouton reste là)
 }
 function repondreOreille(choisie, bouton) {
@@ -134,13 +136,14 @@ function repondreOreille(choisie, bouton) {
   else if (estReconnue(t.espece)) noterEchec(t.espece, "cri_son");
   sauvegarder();
   const aide = document.getElementById("ore-aide");
-  if (aide) aide.remove();
+  if (aide) aide.style.visibility = "hidden";   // R265 : la place reste, les photos ne bougent pas
   const fin = oreille.i >= oreille.tours.length - 1;
   const suivant = `<button class="cdo-suivant" id="ore-suivant">${fin ? "Voir le résultat" : "Cri suivant"}</button>`;
   const ligne = (e, cls, titre) => `<div class="ore-ligne ${cls}">${celluleImage(e, true)}<span><small>${titre}</small><b>${echapper(e.nom_courant)}</b>${texteCri(e) ? `<em>${echapper(texteCri(e))}</em>` : ""}</span>
       <button class="ore-mini" data-nom="${echapper(e.nom_courant)}" aria-label="Écouter ${echapper(e.nom_courant)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></div>`;
   const retour = document.getElementById("ore-retour");
-  if (juste) retour.innerHTML = `${texteCri(t.espece) ? `<p class="ore-cri">${echapper(texteCri(t.espece))}</p>` : ""}${suivant}`;   // R239 (36.09) : le nom est déjà sous la photo
+  if (juste && typeof verdictHtml === "function") retour.innerHTML = `<p class="apf-verdict">${verdictHtml({ juste: true, complement: texteCri(t.espece) || "" })}</p>${suivant}`;   // R265 (40.12)
+  else if (juste) retour.innerHTML = `${texteCri(t.espece) ? `<p class="ore-cri">${echapper(texteCri(t.espece))}</p>` : ""}${suivant}`;   // R239 (36.09) : le nom est déjà sous la photo
   else retour.innerHTML = `<div class="ore-erreur"><small class="dfx-pas">Pas cette fois</small><b class="dfx-cetait">C'était ${echapper(nomAvecArticle(t.espece))}</b>
       <p class="ore-ecoutez">Écoutez les deux, l'un après l'autre :</p>${ligne(t.espece, "ok", "La bonne réponse")}${aUnCri(choisie) ? ligne(choisie, "ko", "Votre choix") : ""}</div>${suivant}`;
   retour.querySelectorAll(".ore-mini").forEach(b => b.onclick = () => ecouter(ESPECES.find(e => e.nom_courant === b.dataset.nom)));

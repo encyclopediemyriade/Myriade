@@ -6,7 +6,7 @@
 // ce point reste donc toujours dans le cadre, quelle que soit sa forme.
 (function () {
   if (typeof CADRAGE === "undefined") return;
-  const RE = /(?:^|\/)Images\/(?:mini\/)?([^\/?#]+)$/;
+  const RE = /(?:^|\/)Images\/(?:mini\/|moy\/)?([^\/?#]+)$/;   // R264 : + les photos du téléphone (moy)
   function cadrer(img) {
     if (!img || img.tagName !== "IMG") return;
     const m = RE.exec(decodeURIComponent(String(img.getAttribute("src") || "").split("?")[0]));

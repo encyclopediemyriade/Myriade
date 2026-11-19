@@ -1238,12 +1238,10 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     progression[nom].acquis[champ] = nbBonnes(espece, champ) + 1;
     noterRevue(espece, champ);                   // étape 150
     xp = xp + 10;
-    retour.textContent = (session && session.enBonus ? "Bravo, vous vous en souveniez ! " : "Bravo ! ") + explication;   // étape 161
-    // Étape RF2 : après un trait d'allure trouvé dans une Rencontre d'expédition, un détail de plus (« apprendre à chaque question »)
-    if (session && session.physique && typeof detailPhysique === "function" && enCours.q && enCours.q.format === "picto") {
-      const d = detailPhysique(espece, champ);
-      if (d) retour.insertAdjacentHTML("beforeend", `<span class="et-aussi"><b>Et aussi :</b> ${echapper(d)}.</span>`);
-    }
+    // Étape R265 (40.12, choix 6A) : « Oui » + la phrase de la réponse + un complément de sa fiche (remplace « Bravo ! » et « Et aussi : »)
+    if (typeof verdictHtml === "function") retour.innerHTML = verdictHtml({ juste: true, deux: nbChoixAffiches() === 2, phrase: explication,
+      mot: session && session.enBonus ? "Oui, vous vous en souveniez" : "", complement: questionDeVie(champ) ? "" : complementRencontre(espece, champ) });
+    else retour.textContent = (session && session.enBonus ? "Bravo, vous vous en souveniez ! " : "Bravo ! ") + explication;   // étape 161
     jouerSon();
   } else {
     if (presque) {
@@ -1251,6 +1249,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
       // Dans les deux cas, la question revient plus tard (plus bas), pour trouver le maximum exact.
       boutonClique.classList.add("presque");
       retour.textContent = textePresque(boutonClique, explication);
+      if (typeof verdictHtml === "function") retour.innerHTML = verdictHtml({ juste: false, mot: "Presque", phrase: textePresque(boutonClique, explication).replace(/^Presque ! /, "") });   // R265
       if (nbBonnes(espece, champ) === 0) {
         noterAuBilan(espece, champ);
         progression[nom].acquis[champ] = 1;
@@ -1263,6 +1262,8 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     if (boutonClique) boutonClique.classList.add("fausse");
     if (boutonClique && !jeNeSaisPas) jouerSon("mauvaise");                               // étape 170 : le hou-hou de chouette
     retour.textContent = explication;
+    if (typeof verdictHtml === "function") retour.innerHTML = verdictHtml({ juste: false, deux: nbChoixAffiches() === 2, phrase: explication,
+      complement: questionDeVie(champ) ? "" : complementRencontre(espece, champ) });   // étape R265 (40.12) : « C'était l'autre » / « Pas cette fois » + complément
     noterEchec(espece, champ);                   // étape 106 : pour les badges
     }
     // On la programme pour plus tard (sauf si elle y est déjà)
@@ -1381,13 +1382,32 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     // Étape R189 (note n° 13 d'Aubin) : plus de « Juste. » (le bouton vert suffit) ; une erreur donne tout de suite la vraie information
     // Étape E2-7 (note 12, choix 4A) : après une erreur, la ligne de l'écran « Sa vie » revient (« Sur sa carte ») ; plus de bilan à la fin
     const c = session.rafale[session.rafale.length - 1];
-    retour.innerHTML = estJuste ? "" : (typeof rappelSaVie === "function" ? rappelSaVie(champ, c.expl || "")
+    // Étape R265 (40.12, choix 6A) : juste ou faux, tout de suite « Oui » / « C'était l'autre » ; la phrase vraie n'est redite
+    //   que si elle n'est pas déjà écrite à l'écran (l'affirmation montrée était fausse, ou la réponse est fausse) ; + un complément.
+    if (typeof verdictHtml === "function") {
+      const memeTexte = (a, b) => String(a || "").replace(/[\s.]+$/g, "").trim().toLowerCase() === String(b || "").replace(/[\s.]+$/g, "").trim().toLowerCase();
+      const dejaEcrite = estJuste && (!vf || memeTexte(c.texte, c.expl));
+      retour.innerHTML = verdictHtml({ juste: !!estJuste, deux: nbChoixAffiches() === 2, phrase: dejaEcrite ? "" : c.expl || "",
+        complement: complementRencontre(espece, champ) });
+    } else retour.innerHTML = estJuste ? "" : (typeof rappelSaVie === "function" ? rappelSaVie(champ, c.expl || "")
       : `<span class="rafale-vraie">${echapper(c.expl || "")}</span>`);
     if (restent.length) boutonSuivant.textContent = "Question suivante →";
   }
   if (session) session.dernierJuste = !!estJuste;      // étape RF2 : « avancer d'un toucher » après une bonne réponse
   boutonSuivant.classList.remove("cache");
   noterDansHistorique();                           // étape 247 : pour pouvoir la revoir avec « ← Question précédente »
+}
+// Étape R265 (40.12) : le nombre de réponses à l'écran (deux = « C'était l'autre ») et le complément d'une Rencontre :
+//   jamais une case qui sera demandée plus loin dans cette Rencontre, ni une case lue sur l'écran « Sa vie ».
+function questionDeVie(champ) { return !!(session && session.focus && session.vie && session.vie.includes(champ) && !session.enRejeu); }   // (la ligne s'écrit plus bas)
+function nbChoixAffiches() { return document.querySelectorAll("#reponses button.reponse, #reponses .reponse").length; }
+function complementRencontre(espece, champ) {
+  if (typeof complementFiche !== "function" || champ === IDENTIFICATION || champ === OUVERTURE) return "";
+  let exclus = [];
+  try {
+    if (session && session.focus === espece) exclus = [...champsFocusRestants(), ...(session.vieFaits || []), ...(session.vie || []), ...(session.posees || [])];
+  } catch (err) { exclus = []; }
+  return complementFiche(espece, champ, exclus);
 }
 // Étape RF2 : le bilan de la rafale — chaque affirmation, juste ou non, et la phrase à retenir
 function bilanRafale(cartes) {

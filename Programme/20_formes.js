@@ -309,6 +309,7 @@ function poserChoixIndices(espece, montres, pieges) {
     const nom = typeof nomAvecArticle === "function" ? nomAvecArticle(espece) : espece.nom_courant;
     // Étape R234 (note 15 du 15/11) : une phrase courte ; les indices restent affichés juste au-dessus
     document.getElementById("retour").textContent = juste ? `C'est ${nom}.` : `C'était cette photo-ci : ${nom}.`;
+    if (typeof verdictHtml === "function") document.getElementById("retour").innerHTML = verdictHtml({ juste, phrase: juste ? `C'est ${nom}.` : `C'était cette photo-ci : ${nom}.` });   // R265 (40.12)
     document.getElementById("nom").textContent = espece.nom_courant;
     const suite = document.createElement("button");
     suite.type = "button"; suite.className = "suivant bouton-annonce fe-go"; suite.textContent = "La découvrir →";
@@ -390,6 +391,8 @@ function poserSosieEntree(espece, autre) {
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     const critere = critereSosie(espece, autre);
     document.getElementById("retour").textContent = `${juste ? "Bien vu. " : ""}C'est ${juste ? "elle" : "l'autre photo"} : ${nom}.${critere ? ` Le repère : ${critere}.` : ""}`;
+    if (typeof verdictHtml === "function") document.getElementById("retour").innerHTML = verdictHtml({ juste, deux: true,   // R265 (40.12) : le repère en complément
+      phrase: `C'est ${juste ? "elle" : "l'autre photo"} : ${nom}.`, complement: critere ? `Le repère : ${critere}.` : "" });
     document.getElementById("nom").textContent = espece.nom_courant;
     const suite = document.createElement("button");
     suite.type = "button"; suite.className = "suivant bouton-annonce fe-go"; suite.textContent = "La découvrir →";

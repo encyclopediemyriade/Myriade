@@ -226,6 +226,32 @@ function entreAuHasard(min, max) {
 // le texte "photo à venir". onerror = si l'image ne charge pas (fichier
 // manquant), on la remplace par le texte de secours plutôt que d'afficher
 // une icône d'image cassée.
+// ---- Étape R264 (Notion 39, note 21 du 18/11 : « les photos prennent un peu de temps à chaque écran ») ----
+//   Sur téléphone, les grandes photos viennent du dossier Images/moy : 720 px de large au lieu de 960, compressées pour
+//   le téléphone (≈ 35 Ko au lieu de ≈ 100 Ko : 2 à 3 fois plus légères ; nettes sur un écran de téléphone). La liste des
+//   photos prêtes est dans photos_moyennes.js (écrit par Outils\gen_photos_moyennes.py) : une photo absente de la liste
+//   garde la grande version (jamais d'image cassée). Sur ordinateur, ou pour voir une photo en grand : la version 960 px.
+const PHOTOS_MOY = typeof PHOTOS_MOYENNES === "undefined" ? new Set() : new Set(PHOTOS_MOYENNES);
+const ECRAN_TELEPHONE = typeof matchMedia === "function" ? matchMedia("(max-width: 760px)") : { matches: false };
+function srcEcran(src) {
+  const s = String(src || "");
+  const m = /^Images\/([^\/]+\.jpg)$/i.exec(s);
+  return m && ECRAN_TELEPHONE.matches && PHOTOS_MOY.has(m[1]) ? "Images/moy/" + m[1] : s;
+}
+// Charger à l'avance (pendant qu'on lit ou qu'on répond) les photos qui vont venir : elles s'affichent alors tout de suite.
+const dejaPrecharges = new Set();
+function prechargerPhotos(srcs, petite) {
+  for (const brut of srcs || []) {
+    if (!brut || !estRenseigne(brut)) continue;
+    const src = petite ? String(brut).replace("Images/", "Images/mini/") : srcEcran(brut);
+    if (dejaPrecharges.has(src)) continue;
+    dejaPrecharges.add(src);
+    const im = new Image(); im.decoding = "async"; im.src = src;
+  }
+}
+function prechargerEspeces(especes, petite) {
+  prechargerPhotos((especes || []).filter(Boolean).map(e => e.photo), petite);
+}
 function celluleImage(espece, petite) {
   // Étape 293 : sans photo libre, la silhouette s'affiche à la place, avec la mention « photo à venir »
   if (!estRenseigne(espece.photo)) {
@@ -238,9 +264,9 @@ function celluleImage(espece, petite) {
   // facteur 4, le résultat peut être granuleux. La miniature est déjà à la
   // bonne taille, donc nette. Si elle manque, on retombe sur la grande photo.
   const grande = espece.photo;
-  const src = petite ? grande.replace("Images/", "Images/mini/") : grande;
+  const src = petite ? grande.replace("Images/", "Images/mini/") : srcEcran(grande);   // R264 : version téléphone
   return `<img src="${src}" alt="${espece.nom_courant}"${petite ? ' loading="lazy" decoding="async"' : ""}
-               onerror="if (this.src.includes('/mini/')) this.src='${grande}'; else if (this.parentNode) this.outerHTML='photo à venir';">`;
+               onerror="if (this.src.includes('/mini/') || this.src.includes('/moy/')) this.src='${grande}'; else if (this.parentNode) this.outerHTML='photo à venir';">`;
 }
 
 // ==================================================================
@@ -280,9 +306,9 @@ function etiquetteForme(sujet) { return ETIQUETTES_FORME[sujet] || ""; }
 // Les photos d'une AUTRE FORME (pas « autre vue ») : ce qu'on montre dans la Rencontre (A2)
 function autresFormes(e) { return photosDe(e).slice(1).filter(p => etiquetteForme(p.sujet)); }
 // Une photo d'espèce donnée par son fichier (comme celluleImage, mais pour n'importe laquelle des 3)
-function imagePhoto(src, alt, petite) {
-  const s = petite ? src.replace("Images/", "Images/mini/") : src;
-  return `<img src="${s}" alt="${String(alt || "").replace(/"/g, "&quot;")}"${petite ? ' loading="lazy" decoding="async"' : ""} onerror="if (this.src.includes('/mini/')) this.src='${src}';">`;
+function imagePhoto(src, alt, petite, pleine) {   // R264 : « pleine » = la version 960 px (photo vue en grand)
+  const s = petite ? src.replace("Images/", "Images/mini/") : pleine ? src : srcEcran(src);
+  return `<img src="${s}" alt="${String(alt || "").replace(/"/g, "&quot;")}"${petite ? ' loading="lazy" decoding="async"' : ""} onerror="if (this.src.includes('/mini/') || this.src.includes('/moy/')) this.src='${src}';">`;
 }
 // Voir une photo en grand (toucher la vignette) : un voile sombre, la photo, sa légende ; toucher n'importe où ferme.
 function agrandirPhoto(src, legende) {
@@ -295,7 +321,7 @@ function agrandirPhoto(src, legende) {
     document.addEventListener("keydown", ev => { if (ev.key === "Escape") voile.classList.remove("ouvert"); });
     document.body.appendChild(voile);
   }
-  voile.innerHTML = `<figure>${imagePhoto(src, legende, false)}${legende ? `<figcaption>${legende}</figcaption>` : ""}<span class="pa-fermer" aria-label="Fermer">×</span></figure>`;
+  voile.innerHTML = `<figure>${imagePhoto(sourceGrande(src), legende, false, true)}${legende ? `<figcaption>${legende}</figcaption>` : ""}<span class="pa-fermer" aria-label="Fermer">×</span></figure>`;
   voile.classList.add("ouvert");
 }
 // Étape R239 (17/11, note 16b du 16/11, tâche 36.16) : plusieurs photos à comparer, en grand ; on glisse de l'une à l'autre
@@ -333,7 +359,7 @@ function agrandirPhotos(liste, k) {
   }
   window.montrerKGalerie = montrerK;
 }
-function sourceGrande(src) { return String(src || "").replace("Images/mini/", "Images/"); }
+function sourceGrande(src) { return String(src || "").replace("Images/mini/", "Images/").replace("Images/moy/", "Images/"); }
 document.addEventListener("click", ev => {
   const it = ev.target && ev.target.closest && ev.target.closest(".agrandir-groupe .agr");
   if (!it) return;
@@ -485,6 +511,11 @@ function calculerQuestionsPossibles(espece) {
     // réponse était possible, par exemple la saison de reproduction de 13 espèces)
     // Étape R185 : une question d'allure que la photo de l'espèce ne montre pas (ou contredit) n'est pas posée (VERIF_PHOTOS)
     if (verdictPhoto(espece, q.champ) === "pas_posee") return false;
+    // Étape R264 (40.14) : les prédateurs ne se demandent plus qu'en « Lequel de ces animaux est un de ses prédateurs ? »
+    //   (un vrai prédateur nommé parmi des chasseurs crédibles de son monde qui ne la mangent pas). Les listes des autres
+    //   espèces (« Qui sont ses prédateurs ? ») donnaient des pièges faciles (« Guêpes parasites » pour un moineau) ou à
+    //   moitié vrais (« Loutre » pour l'ablette) : sans pièges sûrs, la question n'est pas posée.
+    if (q.champ === "predateurs" && !modeItems(espece, "predateurs")) return false;
     if (q.pieges && !q.format && q.type !== "nombre" && autresValeurs(q, v, espece).length === 0
         && !(q.piegesQcm && piegesDuQcm(q, espece, v).length)) return false;   // étape R187 : sans les pièges interdits
     // Étape R184 (10/11, retour d'Aubin : « Comment sont ses oreilles ? » de la fouine, une seule réponse, « Moyennes ») :
@@ -925,7 +956,14 @@ const GROUPES_INVERTEBRES = ["Insectes", "Araignées et petites bêtes", "Vers e
 const GROUPES_VERTEBRES = ["Poissons", "Amphibiens et reptiles", "Oiseaux et œufs", "Petits mammifères", "Grands mammifères"];
 // Les groupes qu'une espèce mange (ou peut manger) : ceux du tableur, ceux de ses aliments, leurs voisins,
 // et ceux que couvre un mot large de sa liste (« végétaux », « invertébrés », « petits animaux »…).
+// Étape R264 : gardé en mémoire (appelé pour chaque chasseur possible de chaque espèce : trop lent sinon)
+const memoGroupesDefendus = new Map();
 function groupesDefendus(espece) {
+  let g = memoGroupesDefendus.get(espece);
+  if (!g) { g = calculerGroupesDefendus(espece); memoGroupesDefendus.set(espece, g); }
+  return g;
+}
+function calculerGroupesDefendus(espece) {
   const g = new Set(listeGroupes(espece.proies_groupes));
   for (const i of listeItems(espece, "proies")) if (ALIMENTS[i]) g.add(ALIMENTS[i]);
   for (const x of [...g]) (GROUPES_VOISINS[x] || []).forEach(v => g.add(v));
@@ -1049,24 +1087,85 @@ function piegesPredateur(espece) {
   const milieu = typeMilieu(espece);
   const candidats = ESPECES.filter(p => {
     if (p === espece || !estRenseigne(p.proies_groupes)) return false;
-    const g = [...groupesDefendus(p)].filter(x => listeGroupes(p.proies_groupes).includes(x) || listeItems(p, "proies").some(i => ALIMENTS[i] === x));
-    const vegetarien = g.every(x => GROUPES_PLANTES.includes(x) || x === "Algues et plancton" || x === "Débris et matière morte");
-    if (debutsDeMots(p.nom_courant).some(m => m.length >= 4 && texte.includes(m))) return false;   // déjà cité
-    if (vegetarien) return true;                                                     // un mangeur de plantes n'est le prédateur de personne
-    if (prudent || classes.has(p.onglet) || chasseurGeneraliste(p)) return false;
+    // Étape R264 (40.14, note 14a du 18/11 : « corb, brochet, anodonte » proposés pour un moineau) : une mauvaise réponse
+    //   doit être un chasseur crédible de son monde. Avant, un mangeur de plantes servait toujours de piège (« le prédateur
+    //   de personne ») : la bonne réponse se devinait. Maintenant : un chasseur (carnivore, insectivore, piscivore) qui mange
+    //   des animaux, du même monde (voir mondeProie), pas nettement plus petit qu'elle (60 % de sa taille au moins), un
+    //   vertébré pour un vertébré ; et toujours aucun qui pourrait la manger (règles d'avant, plus bas).
+    if (!REGIMES_CHASSEURS.includes(String(p.regime_alimentaire_type || "").trim())) return false;   // un tétras ou un grosbec ne chasse pas
+    if (ONGLETS_VERTEBRES.includes(espece.onglet) && !ONGLETS_VERTEBRES.includes(p.onglet)) return false;   // une limace ne chasse pas un lézard
     if (p.onglet === espece.onglet) return false;            // un poisson, une grenouille, un insecte mangent souvent leurs cousins
+    if (!memeMondeChasse(espece, p)) return false;
+    if (tropPetitPourChasser(p, espece)) return false;
+    if (!listeGroupes(p.proies_groupes).some(x => GROUPES_ANIMAUX.includes(x) && x !== "Charognes et os")) return false;   // il doit chasser des animaux
+    if (prudent || classes.has(p.onglet) || chasseurGeneraliste(p)) return false;
+    if (debutsDeMots(p.nom_courant).some(m => m.length >= 4 && texte.includes(m))) return false;   // déjà cité
     if ([...groupesDefendus(p)].some(x => nourriture.includes(x))) return false;     // il pourrait le manger
     if (/invertébrés|petits animaux|vertébrés|arthropodes|animaux morts|cadavres|déchets/i.test(p.proies || "")) return false;
     return true;
   }).map(p => p.nom_courant);
   const territoires = String(espece.territoire).split(" ; ");
+  const parNom = nom => especeParNom(nom);   // (15_territoire.js)
   const score = nom => {
-    const p = ESPECES.find(x => x.nom_courant === nom);
+    const p = parNom(nom);
+    const tp = tailleMax(p), tq = tailleMax(espece);   // R264 : un chasseur au moins aussi grand qu'elle est plus crédible
     return (typeMilieu(p) === milieu ? 2 : 0) + (String(p.territoire).split(" ; ").some(t => territoires.includes(t)) ? 1 : 0)
+         + (tp != null && tq != null && tp >= tq ? 1.5 : 0)
          + (["Mammiferes", "Oiseaux", "Reptiles", "Amphibiens", "Poissons"].includes(p.onglet) ? 1 : 0)
          + Math.random() * 2;                                                         // un peu de hasard, pour varier
   };
-  return parScore(candidats, score);
+  // R264 : d'abord des chasseurs de son territoire (pas l'hémidactyle de Méditerranée pour une mésange de Paris), s'il y en a assez
+  const chezElle = candidats.filter(nom => String(parNom(nom).territoire).split(" ; ").some(t => territoires.includes(t)));
+  return parScore(chezElle.length >= 3 ? chezElle : candidats, score);
+}
+// Étape R264 (40.14) : le monde de chasse et la taille d'un prédateur crédible
+// Le monde où l'on chasse. Comme proie : un oiseau, un mammifère terrestre, un papillon, une sauterelle, une grenouille
+//   hors de l'eau vivent sur terre même au bord de l'eau (le canard colvert ne croise pas le sandre, le puffin pas la sole ;
+//   une grenouille n'a pas de poisson comme faux prédateur : un gros poisson en mange) ; un poisson, une moule, une
+//   écrevisse vivent dans l'eau (douce ou de mer). Comme chasseur : là où il chasse (la sterne en mer, le héron en eau
+//   douce, le triton dans la mare, la salamandre tachetée en forêt).
+const ORDRES_TOUJOURS_TERRE = ["Lépidoptères", "Orthoptères", "Hyménoptères", "Odonates", "Mantoptères", "Névroptères"];
+function mondeProie(e) {
+  const t = typeMilieu(e);
+  if (e.onglet === "Oiseaux" || e.onglet === "Amphibiens" || ORDRES_TOUJOURS_TERRE.includes(e.ordre)) return "terre";
+  if (e.onglet === "Poissons") return t === "terre" ? "eau douce" : t;
+  return t;
+}
+function mondeChasseur(p) {
+  if (ORDRES_TOUJOURS_TERRE.includes(p.ordre)) return "terre";
+  const t = typeMilieu(p);
+  return p.onglet === "Poissons" && t === "terre" ? "eau douce" : t;
+}
+function memeMondeChasse(proie, p) {
+  if (proie.onglet === "Amphibiens" && p.onglet === "Poissons") return false;
+  return mondeProie(proie) === mondeChasseur(p);
+}
+// Les classes de ses vrais prédateurs, d'après les groupes du tableur et les éléments de sa liste
+const CLASSES_DES_GROUPES = { "Rapaces": "Oiseaux", "Autres oiseaux": "Oiseaux", "Mammifères carnivores": "Mammiferes", "Autres mammifères": "Mammiferes",
+  "Serpents et lézards": "Reptiles", "Poissons": "Poissons", "Insectes et araignées": ["Insectes", "Araignees_mille_pattes"], "Amphibiens": "Amphibiens",
+  "Crustacés": "Crustaces", "Mollusques": "Mollusques", "Invertébrés marins": ["Crustaces", "Mollusques"] };
+function classesDesPredateurs(e) {
+  const c = new Set();
+  for (const g of listeGroupes(e.predateurs_groupes)) [].concat(CLASSES_DES_GROUPES[g] || []).forEach(x => c.add(x));
+  for (const i of listeItems(e, "predateurs")) (classesDe(i) || []).forEach(x => c.add(x));
+  for (const i of String(e.predateurs || "").split(/[,;]| et /)) (classesDe(i.trim()) || []).forEach(x => c.add(x));
+  return c;
+}
+const REGIMES_CHASSEURS = ["carnivore", "insectivore", "piscivore"];
+const ONGLETS_VERTEBRES = ["Mammiferes", "Oiseaux", "Reptiles", "Amphibiens", "Poissons"];
+function tailleMax(e) {
+  const v = [e.taille_max_cm, e.taille_max_cm_male, e.taille_max_cm_femelle].map(Number).filter(x => x > 0);
+  return v.length ? Math.max(...v) : null;
+}
+function poidsMax(e) {
+  const v = [e.poids_max_kg, e.poids_max_kg_male, e.poids_max_kg_femelle].map(Number).filter(x => x > 0);
+  return v.length ? Math.max(...v) : null;
+}
+function tropPetitPourChasser(p, proie) {
+  const tp = tailleMax(p), tq = tailleMax(proie), pp = poidsMax(p), pq = poidsMax(proie);
+  if (tp == null && pp == null && (tq != null || pq != null)) return true;   // sa taille n'est pas connue : prudence
+  return (tp != null && tq != null && tp < tq * 0.6)
+      || (pp != null && pq != null && pp < pq / 20);   // une fauvette pour un chevreuil (la belette pèse 1/10 du lapin qu'elle chasse)
 }
 // La question en éléments est-elle possible ? (un élément posable, et au moins 3 mauvaises réponses sûres)
 const memoModeItems = new Map();
@@ -1134,7 +1233,30 @@ function autresValeursBrutes(q, bonne, espece) {
   // des prédateurs de mammifère pour un mammifère), puis les autres. La difficulté reste celle d'avant.
   if (q.champ === "proies" || q.champ === "predateurs") {
     const deLaFamille = v => ESPECES.some(e => e.onglet === espece.onglet && e[q.champ] === v);
-    return [...pieges.filter(deLaFamille), ...pieges.filter(v => !deLaFamille(v))];
+    // Étape R264 (40.14) : des listes de prédateurs de son monde (sur terre, en eau douce, en mer) : pas « Brochet » (le
+    //   prédateur d'un poisson) pour un moineau, s'il reste assez de listes ; jamais « Aucun connu » ni « Peu de prédateurs »
+    let liste = pieges;
+    if (q.champ === "predateurs") {
+      const monde = mondeProie(espece);
+      liste = liste.filter(v => !/^(aucun|peu de|très peu|pas de prédateur|rares?\b)|humain|homme|menac|chasseur|persécution|pilleur|braconn|pêche|parasit|champignon/i.test(String(v).trim()));
+      // … et aucune liste où figure un chasseur de la même classe que ses vrais prédateurs (« Grand corbeau, chouette
+      //   hulotte, martre » pour un moineau mangé par les rapaces et les chats : à moitié vrai)
+      const siennes = classesDesPredateurs(espece);
+      const nourriture = NOURRITURE_DE[espece.onglet] || [], surTerre = monde === "terre";
+      liste = liste.filter(v => !String(v).split(/[,;]| et /).some(brut => {
+        const i = brut.trim().toLowerCase(); if (!i) return false;
+        const c = classesDe(i);
+        if (c && c.some(x => siennes.has(x))) return true;
+        if (surTerre && c && c.includes("Poissons")) return true;                   // pas de poisson pour un animal de la terre ferme
+        const p = ESPECES.find(x => { const n = x.nom_courant.toLowerCase(); return i === n || i.startsWith(n + " "); });
+        return !!p && [...groupesDefendus(p)].some(x => nourriture.includes(x));      // une espèce du jeu qui pourrait la manger
+      }));
+      // un vertébré n'a comme fausses listes que celles d'autres vertébrés (pas « Guêpes parasites » pour un moineau : trop facile)
+      if (ONGLETS_VERTEBRES.includes(espece.onglet)) liste = liste.filter(v => ESPECES.some(e => e.predateurs === v && ONGLETS_VERTEBRES.includes(e.onglet)));
+      const duMonde = liste.filter(v => ESPECES.some(e => e.predateurs === v && mondeProie(e) === monde));
+      if (duMonde.length >= 3) liste = duMonde;
+    }
+    return [...liste.filter(deLaFamille), ...liste.filter(v => !deLaFamille(v))];
   }
   // Étape 275 (« Revoir 5 ») : le cri — d'abord les verbes de la même famille (un oiseau n'« aboie » pas, il « cacabe »)
   if (q.champ === "verbe_cri" && espece) {
@@ -1265,4 +1387,60 @@ function calculerStatut(espece) {
   if (niveau === NB_NIVEAUX)       return "fiche complète"; // les 3 niveaux terminés
   if (niveau >= 1)                 return "fiche partielle"; // niveau 1 (ou 2) terminé
   return "identifiée";                                       // reconnue sur photo
+}
+
+// ---- Étape R264 (Notion 40.15, note 17 du 18/11, choix 8B du 19/11) : « jamais deux fois le même sujet à la suite » ----
+//   Une série de questions (Me tester, Approfondir…) : jamais deux fois de suite le même sujet, au plus 2 fois le même
+//   sujet par série de 20, et jamais deux fois de suite la même espèce. « besoins » = combien de questions pour chaque
+//   espèce (Map espèce → nombre) ; sujetsDe(espèce, rang, déjàPris) = les sujets possibles pour sa question n° rang
+//   (un seul quand le sujet est imposé). On essaie plusieurs tirages et on garde le meilleur (le moins de répétitions).
+//   « derniere » : une espèce dont la dernière question doit fermer la série (la coriace du défi).
+//   Rend une liste de { e, sujet }.
+function enchainerVarie(besoins, sujetsDe, { max = 2, fenetre = 20, essais = 40, derniere = null, genre = null } = {}) {
+  const especes = [...besoins.keys()];
+  let meilleure = null, pireMeilleure = Infinity;
+  for (let essai = 0; essai < essais && pireMeilleure > 0; essai++) {
+    const reste = new Map(besoins), pris = new Map(especes.map(e => [e, []])), suite = [];
+    let fin = null;
+    if (derniere && reste.get(derniere) > 0) {
+      const k = reste.get(derniere);
+      reste.set(derniere, k - 1);
+      fin = { e: derniere, rang: k };   // son sujet est choisi à la fin, avec ce qui reste
+    }
+    const total = [...reste.values()].reduce((a, b) => a + b, 0);
+    for (let n = 0; n < total; n++) {
+      const prec = suite[suite.length - 1], recents = suite.slice(-(fenetre - 1)).map(z => z.sujet);
+      let choixMin = null, pMin = Infinity;
+      for (const e of melanger(especes.filter(x => reste.get(x) > 0))) {
+        for (const s of melanger(sujetsDe(e, pris.get(e).length + 1, pris.get(e)).slice())) {
+          let p = 0;
+          if (prec && prec.e === e) p += 1000;
+          if (prec && prec.sujet === s) p += 100;
+          const vus = recents.filter(x => x === s).length;
+          if (vus >= max) p += 10 * (vus - max + 1);
+          if (genre && prec && genre(prec.sujet) === genre(s)) p += 1;
+          p -= reste.get(e) * 0.5;                     // d'abord les espèces qui ont le plus de questions à venir
+          if (p < pMin) { pMin = p; choixMin = { e, sujet: s }; }
+        }
+      }
+      if (!choixMin) break;
+      suite.push(choixMin); pris.get(choixMin.e).push(choixMin.sujet); reste.set(choixMin.e, reste.get(choixMin.e) - 1);
+    }
+    if (fin) {
+      const prec = suite[suite.length - 1];
+      const options = sujetsDe(fin.e, pris.get(fin.e).length + 1, pris.get(fin.e)).slice();
+      const s = options.find(x => !prec || x !== prec.sujet) || options[0];
+      if (s !== undefined) suite.push({ e: fin.e, sujet: s });
+    }
+    // la vraie mesure : répétitions à la suite, et sujets au-delà de « max » dans une fenêtre
+    let score = 0;
+    for (let i = 1; i < suite.length; i++) {
+      if (suite[i].e === suite[i - 1].e) score += 1000;
+      if (suite[i].sujet === suite[i - 1].sujet) score += 100;
+      const avant = suite.slice(Math.max(0, i - fenetre + 1), i).filter(z => z.sujet === suite[i].sujet).length;
+      if (avant >= max) score += 10;
+    }
+    if (!meilleure || score < pireMeilleure) { meilleure = suite; pireMeilleure = score; }
+  }
+  return meilleure || [];
 }

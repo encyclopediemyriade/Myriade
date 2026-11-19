@@ -464,6 +464,9 @@ function validerEspeceDuJour(nom, delai = 900) {
   if (!suivi.duJour || suivi.duJour.date !== aujourdhui()) suivi.duJour = { date: aujourdhui(), faites: [] };
   if (suivi.duJour.faites.includes(nom)) return false;
   suivi.duJour.faites.push(nom);
+  // Étape R269 : les jours où l'espèce du jour a été retrouvée (badge « Espèce du jour », jamais d'affilée)
+  suivi.joursDuJour = suivi.joursDuJour || [];
+  if (!suivi.joursDuJour.includes(aujourdhui())) suivi.joursDuJour.push(aujourdhui());
   // Étape R183c : la première Rencontre du jour avec l'espèce du jour rapporte 2 empreintes, dans le territoire actif
   //   s'il l'abrite, sinon dans le premier territoire ouvert où elle vit (aucun défi ne la compte : pas de double gain)
   const e = typeof especeParNom === "function" ? especeParNom(nom) : null;
@@ -484,6 +487,8 @@ function terminerSession() {
   if (s) s.duJour = !!rencontreDuJour;                     // étape R187 : la fin de la Rencontre du jour a sa propre suite
   // Étape R236 (note 9) : la photo n'a pas été reconnue à la fin de la Rencontre → l'espèce entre au carnet « à reconnaître »
   if (s && s.focus && typeof mettreAReconnaitre === "function") mettreAReconnaitre(s.focus);
+  // Étape R263 (Notion 40.17, 19c) : une Rencontre d'expédition faite est notée (une question ratée ne la rend pas « à faire »)
+  if (s && s.focus && s.expedition && s.expedition.etape === 1 && suivi) { suivi.rencontresFaites = suivi.rencontresFaites || {}; suivi.rencontresFaites[s.focus.nom_courant] = 1; }
   if (rencontreDuJour) {
     validerEspeceDuJour(rencontreDuJour);
     rencontreDuJour = null;

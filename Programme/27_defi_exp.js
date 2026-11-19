@@ -219,7 +219,14 @@ function lancerDefiExp(x) {
   // R242 (choix 10A) : chaque espèce par plusieurs chemins — 1re : sa photo, « Quelle est cette espèce ? » ;
   //   2e : « Laquelle est … ? » (le nom est donné, 4 photos) ; 3e : son cri (4 photos), sinon une autre forme (femelle, jeune…),
   //   sinon de nouveau « Laquelle est … ? ». Jamais larve ni chenille (photosJeu).
-  const questions = ordreDefi(x, nb).map(e => {
+  // Étape R264 (40.15, choix 8B) : les questions de chaque espèce sont préparées dans l'ordre (1re photo, 2e « Laquelle
+  //   est… ? », 3e cri ou autre forme), puis enchaînées pour que jamais deux questions de suite ne soient du même genre
+  //   (avant : un tour entier de « Quelle est cette espèce ? », puis un tour de « Laquelle est… ? »), ni sur la même
+  //   espèce ; la coriace reste la dernière.
+  const prevues = new Map();
+  for (const e of x.liste) for (let k = 0; k < (nb ? nb.get(e) : 2); k++) prevues.set(e, (prevues.get(e) || 0) + 1);
+  const parEspece = new Map([...prevues.keys()].map(e => [e, []]));
+  const preparer = e => {
     const k = rang[e.nom_courant] = (rang[e.nom_courant] || 0) + 1;
     const deja = vues[e.nom_courant] || [];
     const ph = photosDefi(e);
@@ -239,7 +246,12 @@ function lancerDefiExp(x) {
     }
     const noms = melanger([e, ...pieges]);
     return { espece: e, type, photo: photo || null, noms, choix: null, retires: [] };
-  });
+  };
+  for (const [e, n] of prevues) for (let k = 0; k < n; k++) parEspece.get(e).push(preparer(e));
+  const genreQ = q => q.type === "photo" && q.photo && etiquetteForme(q.photo.sujet) ? "forme" : q.type;
+  const suite = enchainerVarie(prevues, (e, r) => [genreQ(parEspece.get(e)[r - 1])], { derniere: coriaceExp(x), max: 99 });
+  const vuesRang = new Map();
+  const questions = suite.map(z => { const r = vuesRang.get(z.e) || 0; vuesRang.set(z.e, r + 1); return parEspece.get(z.e)[r]; });
   defiExp = { x, questions, i: 0, aides: { retirer: true, silhouettes: true }, silhouettesVisibles: false, prevues: nb,
               avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues };
   montrer("defiexp");
@@ -269,6 +281,11 @@ function boutonPhotoDefi(e, k, q) {
 function afficherQuestionDefiExp() {
   const d = defiExp, q = qCouranteDefi(d), enRep = !!(d.rep && d.rep.lance);   // R249 : aussi les questions du repêchage
   arreterSonDefi();
+  // R264 (39) : les photos des 2 questions suivantes se chargent pendant qu'on répond à celle-ci
+  if (!enRep) for (const s of d.questions.slice(d.i + 1, d.i + 3)) {
+    if (s.photo) prechargerPhotos([s.photo.src]);
+    if (s.type !== "photo") prechargerEspeces(s.noms, true);
+  }
   const zone = document.getElementById("vue-defiexp");
   const etiquette = q.photo ? etiquetteForme(q.photo.sujet) : "";
   const enPhotos = q.type === "laquelle" || q.type === "cri";
@@ -295,6 +312,7 @@ function afficherQuestionDefiExp() {
   const retirer = document.getElementById("dfx-retirer"); if (retirer) retirer.onclick = () => aideRetirer(q);
   const silh = document.getElementById("dfx-silh"); if (silh) silh.onclick = () => aideSilhouettes();
   window.scrollTo(0, 0);
+  if (typeof calerJeuSousPouce === "function") calerJeuSousPouce(zone);   // étape R265 (40.03)
 }
 function boutonNomDefi(e, k, q) {
   const silh = defiExp.silhouettesVisibles && typeof fichierSilhouette === "function" ? fichierSilhouette(e) : "";
@@ -346,13 +364,15 @@ function repondreDefiExp(choisie, bouton) {
   sauverDefiExp();   // R241 : le défi en cours est gardé à chaque réponse
   d.silhouettesVisibles = false;
   const aides = document.getElementById("dfx-aides");
-  if (aides) aides.remove();
+  if (aides) aides.style.visibility = "hidden";   // R265 : la place reste, les réponses ne bougent pas
   // R249 : au repêchage, c'est fini à la dernière question, ou dès que les erreurs effacées suffisent
   const fin = enRep ? (d.rep.i >= d.rep.questions.length - 1 || erreursDefi(d) <= erreursPermisesDefi(d.questions.length)) : d.i >= d.questions.length - 1;
   const suivant = `<button class="cdo-suivant" id="dfx-suivant">${fin ? "Voir le résultat" : "Question suivante"}</button>`;
   const retour = document.getElementById("dfx-retour");
-  if (juste && enRep) retour.innerHTML = `<p class="dfx-efface">Une erreur effacée.</p>${suivant}`;   // R249
-  else if (juste) retour.innerHTML = suivant;   // R239 (36.09) : plus de ligne verte qui répète la réponse
+  // R265 (40.12, 6A) : une bonne réponse a sa ligne « Oui » et un repère de terrain (le nom n'est pas redit, R239)
+  const oui = typeof verdictHtml === "function" ? `<p class="apf-verdict">${verdictHtml({ juste: true, complement: complementReconnaissance(q.espece, q.photo && q.photo.sujet) })}</p>` : "";
+  if (juste && enRep) retour.innerHTML = `<p class="dfx-efface">Une erreur effacée.</p>${oui}${suivant}`;   // R249
+  else if (juste) retour.innerHTML = `${oui}${suivant}`;
   else retour.innerHTML = `${erreurCoteACote(q.espece, choisie, q.photo && q.photo.sujet)}${q.type === "cri" && typeof aUnCri === "function" && aUnCri(choisie)
       ? `<div class="dfx-ecouter"><small>Écoutez les deux :</small><button class="cdo-second" data-ecoute="${echapper(q.espece.nom_courant)}">${PLAY_SVG}${echapper(q.espece.nom_courant)}</button><button class="cdo-second" data-ecoute="${echapper(choisie.nom_courant)}">${PLAY_SVG}${echapper(choisie.nom_courant)}</button></div>` : ""}${suivant}`;
   retour.querySelectorAll("[data-ecoute]").forEach(b => b.onclick = () => ecouter(especeParNom(b.dataset.ecoute)));
@@ -481,7 +501,15 @@ function finDefiExp() {
   const c = comptesDefiExp(d);
   const aRevoir = x.liste.filter(e => !faiteDans(x, e, 1));
   const vignette = e => `<img src="${photoMini(photoEsp(e))}" alt="${echapper(e.nom_courant)}">`;
-  if (reussi) {
+  if (reussi && FIN_TEST_VIVANTE) {                   // étape R267 (40.16) : la fin « comme les autres »
+    const ensuite = typeof aUneEtape2 === "function" && aUneEtape2(x) && !etapeFinie(x, 2);
+    zone.innerHTML = `<div class="cdo dfx dfx-fin dft">${ecranFinTest({ x, etiq: `${x.titre} · Me tester`, titre: "Défi réussi",
+        bons, total, sous: `bonnes réponses${repechage ? " · repêché" : ""}`, empreintes,
+        ronds: x.liste.map(e => ({ e, ok: faiteDans(x, e, 1) })), motOk: "reconnues", ratees: rateesDefi(d),
+        pied: `${ensuite ? `<p class="dft-suite">Prochaine étape : <b>Ensemble</b>, comment elles vivent ici.</p>` : ""}
+          <button class="cdo-suivant dft-principal" id="dfx-voir">Revenir à l'expédition</button>` })}</div>`;
+    animerGainFinTest(empreintes);
+  } else if (reussi) {
     const ensuite = typeof aUneEtape2 === "function" && aUneEtape2(x) && !etapeFinie(x, 2);
     zone.innerHTML = `<div class="cdo dfx dfx-fin">
         <div class="dfx-medaille" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
@@ -503,8 +531,11 @@ function finDefiExp() {
       return l.length ? `${forme ? `${forme} : ` : ""}${forme ? minusculeTexte(l[0].texte) : l[0].texte}` : ""; };
     const n = aRevoir.length;
     zone.innerHTML = `<div class="cdo dfx dfx-fin">
-        <h2>${erreursDefi(d) <= erreursPermisesDefi(total) + 2 ? "Presque" : "Pas encore"}</h2>
-        <p class="cdo-sous">${bons} bonnes réponses sur ${total} · il en faut ${total - erreursPermisesDefi(total)}</p>
+        ${FIN_TEST_VIVANTE ? `<div class="dft-carte dft-court"><div class="dft-etiq">${echapper(x.titre)} · Me tester</div>
+          <h2 class="dft-titre">${erreursDefi(d) <= erreursPermisesDefi(total) + 2 ? "Presque" : "Pas encore"}</h2>
+          <div class="dft-score"><b>${bons}</b><span>/ ${total}</span></div><p class="dft-sous">bonnes réponses · il en faut ${total - erreursPermisesDefi(total)}</p></div>`
+        : `<h2>${erreursDefi(d) <= erreursPermisesDefi(total) + 2 ? "Presque" : "Pas encore"}</h2>
+        <p class="cdo-sous">${bons} bonnes réponses sur ${total} · il en faut ${total - erreursPermisesDefi(total)}</p>`}
         ${gardees.length ? `<div class="dfx-groupe ok"><small>Reconnues · gardées</small><div class="dfx-pastilles">${gardees.map(e => `<span>${vignette(e)}${echapper(e.nom_courant)}</span>`).join("")}</div></div>` : ""}
         ${n ? `<div class="dfx-groupe"><small>À revoir</small><ul class="dfx-revoir">${aRevoir.map(e => `<li>${vignette(e)}<span><b>${echapper(e.nom_courant)}</b>${repere(e) ? `<small>${echapper(repere(e))}</small>` : ""}</span></li>`).join("")}</ul></div>` : ""}
         <p class="dfx-deux">Deux façons de finir l'expédition :</p>
@@ -523,6 +554,57 @@ function finDefiExp() {
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (empreintes) setTimeout(() => afficherBulle(`+${empreintes} empreinte${empreintes > 1 ? "s" : ""}`), 600);
   if (empreintes) verifierOuverture();
+}
+
+// ==================================================================
+// Étape R267 (Notion 40.16, choix 9B du 19/11 ; note 18 d'Aubin : « faire comme les autres, mettre un score en avant,
+//   mettre les empreintes gagnées… rendre les choses un peu plus vivantes ») : la fin d'un « Me tester » (étape 1 et
+//   Approfondir). En un coup d'œil : le score en très gros, « +N » empreintes qui s'envolent vers le compteur, une petite
+//   marque ✓ sous chaque photo, la jauge du lieu qui monte (la part gagnée en vert), les questions ratées repliées, et le
+//   bouton de la suite fixé en bas (téléphone). La grande fête reste réservée à la première fois (étape finie).
+//   o = { x, etiq, titre, bons, total, sous, ronds: [{ e, ok }], motOk, empreintes, ratees: [{ nom, detail }], pied (HTML) }
+// ==================================================================
+const FIN_TEST_VIVANTE = true;   // false = l'ancien écran (rond vert, lignes)
+function jaugeLieuFinTest(x, gain) {
+  const c = x && x.chapitre && chapitreParNom(x.territoire, x.chapitre);
+  if (!c || !estLieu(c) || toutDebloque()) return "";
+  const max = empreintesMaxLieu(x.territoire, c), apres = Math.min(empreintesDuLieu(x.territoire, c), max), avant = Math.max(0, apres - (gain || 0));
+  return `<div class="dft-lieu"><div class="dft-lieu-texte"><span>${echapper(c.nom)}</span><b>${apres} sur ${max}</b></div>${dessinJaugeGain(avant, apres - avant, max)}</div>`;
+}
+function ecranFinTest(o) {
+  const n = o.ronds.filter(r => r.ok).length;
+  const ronds = o.ronds.map(r => `<span class="dft-rond${r.ok ? " ok" : ""}"><img src="${photoMini(photoEsp(r.e))}" alt="${echapper(r.e.nom_courant)}" onerror="this.onerror=null;this.src='${photoEsp(r.e)}'">${r.ok ? `<i aria-hidden="true">✓</i>` : ""}</span>`).join("");
+  const ratees = (o.ratees || []).length ? `<details class="dft-ratees"><summary>${o.ratees.length > 1 ? `Les ${o.ratees.length} questions ratées` : "La question ratée"}</summary>
+      <ul>${o.ratees.map(r => `<li><b>${echapper(r.nom)}</b>${r.detail ? `<small>${echapper(r.detail)}</small>` : ""}</li>`).join("")}</ul></details>` : "";
+  return `<div class="dft-carte">
+      <div class="dft-etiq">${echapper(o.etiq || "")}</div>
+      <h2 class="dft-titre">${o.titre}</h2>
+      <div class="dft-score"><b>${o.bons}</b><span>/ ${o.total}</span></div>
+      <p class="dft-sous">${o.sous}</p>
+      ${o.empreintes ? `<div class="dft-gain" id="dft-gain">+${o.empreintes} ${PAS_SVG}</div>` : ""}
+      <div class="dft-ronds">${ronds}</div>
+      ${n ? `<p class="dft-mot">${n === o.ronds.length ? `Les ${n} espèces sont <b>${o.motOk}</b>.` : `${n} espèce${n > 1 ? "s" : ""} sur ${o.ronds.length} ${n > 1 ? "sont" : "est"} <b>${o.motOk}</b>.`}</p>` : ""}
+      ${jaugeLieuFinTest(o.x, o.empreintes)}
+      ${ratees}
+    </div>${o.pied || ""}`;
+}
+// « +N » : il apparaît, puis s'envole vers le compteur d'empreintes du haut (comme « Tout récupérer » sur l'accueil)
+function animerGainFinTest(n) {
+  const el = document.getElementById("dft-gain");
+  if (!el || !n) return;
+  let essais = 0;   // pendant la grande fête (la 1re fois), on attend qu'elle se ferme : l'envol se voit ensuite
+  const partir = () => {
+    if (!document.body.contains(el)) return;
+    if (typeof feteOuverte !== "undefined" && feteOuverte && essais++ < 30) { setTimeout(partir, 300); return; }
+    if (typeof envolEmpreintes === "function") envolEmpreintes(el, n);
+  };
+  setTimeout(partir, 900);
+}
+function rateesDefi(d) {
+  const nom = e => e ? e.nom_courant : "";
+  const forme = { photo: "sa photo", laquelle: "« Laquelle est… ? »", cri: "son cri" };
+  return d.questions.filter(q => q.choix && q.choix !== q.espece).map(q => ({ nom: nom(q.espece),
+    detail: `${q.photo && etiquetteForme(q.photo.sujet) ? etiquetteForme(q.photo.sujet) : forme[q.type] || "sa photo"} · votre choix : ${nom(q.choix)}` }));
 }
 
 // (R241, note 33 : la feuille « Quitter le défi ? » est retirée ; sortir met le défi de côté, voir mettreDefiDeCote.
@@ -593,8 +675,15 @@ function brancherPortes(zone, x) {
   zone.querySelectorAll("[data-rencontrer]").forEach(b => b.onclick = () => { const e = especesSansRencontre(x)[0]; if (e) rencontrerEspeceExp(x, e); });
 }
 // Les espèces reconnues par un défi dont la Rencontre n'a pas été faite (photo, sa vie, Étonnant restent à voir)
+// Étape R263 (Notion 40.17, 19c, « Rencontrer les 4 espèces restantes » alors que tout était fait) : une espèce dont la Rencontre
+//   a été faite n'y entre plus, même avec une question ratée (elle reviendra au rattrapage). Rencontre faite = notée à la fin
+//   (suivi.rencontresFaites, depuis R263) ou, pour les parties d'avant, une chose de sa vie déjà trouvée (le défi n'en demande pas).
+function rencontreDejaFaite(e) {
+  if (suivi && suivi.rencontresFaites && suivi.rencontresFaites[e.nom_courant]) return true;
+  return typeof champsEtape === "function" && champsEtape(e, 2).some(c => nbBonnes(e, c) >= 1);
+}
 function especesSansRencontre(x) {
-  return x.liste.filter(e => reconnueParDefi(e) && estRenseigne(e.photo) && trouvesEspece(e, 1) < butEspece(e, 1));
+  return x.liste.filter(e => reconnueParDefi(e) && estRenseigne(e.photo) && trouvesEspece(e, 1) < butEspece(e, 1) && !rencontreDejaFaite(e));
 }
 function rencontrerEspeceExp(x, e) {
   rencontreDuJour = null; session = null;

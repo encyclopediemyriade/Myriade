@@ -406,7 +406,7 @@ function brancherGaleriePhotos(zone, e) {
   zone.querySelectorAll(".pe-vignette").forEach(b => b.onclick = () => {
     courante = Number(b.dataset.i);
     const img = cadre.querySelector("img");
-    if (img) img.src = ph[courante].src;
+    if (img) img.src = srcEcran(ph[courante].src);   // R264
     const lib = etiquetteForme(ph[courante].sujet);
     etiquette.textContent = lib;
     etiquette.classList.toggle("cache", !lib);

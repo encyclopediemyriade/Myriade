@@ -106,6 +106,23 @@ const MOTIFS_BADGES = {            // dessins à traits, dans un carré de 48
   saisons: `<circle cx="24" cy="24" r="17"/><path d="M24 7v34M7 24h34"/><circle cx="15.5" cy="15.5" r="2"/><path d="M15.5 11v2M15.5 18v2M11 15.5h2M18 15.5h2"/><circle cx="32.5" cy="15.5" r="3"/><path d="M32.5 10v1.5M38 15.5h-1.5M28.5 11.5l1 1M36.5 11.5l-1 1"/><path d="M12 35c0-5 3-8 8-8 0 5-3 8-8 8zM12 35l4-4"/><path d="M32.5 28v9M28.5 30.5l8 4M28.5 34.5l8-4"/>`,
   levetot: `<path d="M4 37h40"/><path d="M12 37a12 12 0 0 1 24 0"/><path d="M24 16v5M11 22l3.5 3.5M37 22l-3.5 3.5"/><path d="M29 9l3 2 3-2M35 13l2.5 1.6L40 13"/>`,
   nuit: `<path d="M13 41c-3-6-3-18 2-24l-2-8 7 5h6l7-5-2 8c5 6 5 18 2 24-6 3-14 3-20 0z"/><circle cx="19.5" cy="22" r="4"/><circle cx="28.5" cy="22" r="4"/><circle cx="19.5" cy="22" r="1.3" fill="#1F3A2E"/><circle cx="28.5" cy="22" r="1.3" fill="#1F3A2E"/><path d="M24 26l-1.6 3.4h3.2z"/><path d="M45 9a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z"/>`,
+  // Étape R269 (choix d'Aubin du 19/11) : les 16 nouveaux dessins, même trait
+  famillecomplete: `<rect x="5" y="9" width="38" height="30" rx="2"/><circle cx="14" cy="18" r="3.4"/><circle cx="24" cy="18" r="3.4"/><circle cx="34" cy="18" r="3.4"/><circle cx="14" cy="30" r="3.4"/><circle cx="24" cy="30" r="3.4"/><circle cx="34" cy="30" r="3.4"/><path d="M32 30l1.6 1.6 3-3.2"/>`,
+  ailleurs: `<circle cx="20" cy="26" r="15"/><path d="M5 26h30M20 11c-5 5-5 25 0 30M20 11c5 5 5 25 0 30"/><path d="M33 9c4 0 8 3 9 8"/><path d="M42 11.5l0 5.5-5.2-1.6"/>`,
+  declin: `<path d="M6 40h36M6 40V8"/><path d="M10 14l8 6 7-3 7 11 8 6"/><path d="M40 28.5V34h-5.6"/><path d="M14 33c0-4 3-6 6-6 0 4-3 6-6 6zM14 33l3-3"/>`,
+  mondenuit: `<path d="M24 21c-3-4-9-5-13-2l-6-3c2 5 1 9-1 12 4-1 8 1 10 4 2-3 5-5 10-5 5 0 8 2 10 5 2-3 6-5 10-4-2-3-3-7-1-12l-6 3c-4-3-10-2-13 2z"/><circle cx="24" cy="23" r="1.4" fill="#1F3A2E"/><path d="M10 8l.8 1.8 1.9.2-1.4 1.3.4 1.9-1.7-1-1.7 1 .4-1.9-1.4-1.3 1.9-.2zM38 6l.6 1.3 1.4.2-1 .9.3 1.4-1.3-.7-1.3.7.3-1.4-1-.9 1.4-.2z"/>`,
+  migrateurs: `<path d="M6 34c4-4 8-4 11 0 3-4 7-4 11 0"/><path d="M20 20c3-3 6-3 8 0 2-3 5-3 8 0"/><path d="M30 10c2-2 4-2 5.5 0 1.5-2 3.5-2 5.5 0"/><path d="M5 43c12-2 24-10 34-24" stroke-dasharray="2.5 3"/>`,
+  petitesbetes: `<ellipse cx="24" cy="28" rx="11" ry="13"/><path d="M24 15v26"/><circle cx="24" cy="12" r="4"/><path d="M21 9l-4-5M27 9l4-5"/><path d="M13 22l-7-3M13 29H5M14 36l-6 4M35 22l7-3M35 29h8M34 36l6 4"/><circle cx="19" cy="24" r="1.8" fill="#1F3A2E"/><circle cx="29" cy="31" r="1.8" fill="#1F3A2E"/><circle cx="18.5" cy="33" r="1.5" fill="#1F3A2E"/>`,
+  fichecomplete: `<path d="M11 5h20l8 8v30H11z"/><path d="M31 5v8h8"/><path d="M16 17h11M16 23h17M16 29h17"/><circle cx="33" cy="37" r="7"/><path d="M29.8 37l2.2 2.2 4-4.4"/>`,
+  sosies: `<path d="M8 40c0-10 4-17 10-17s10 7 10 17"/><circle cx="18" cy="15" r="6"/><path d="M20 40c0-10 4-17 10-17s10 7 10 17"/><circle cx="30" cy="15" r="6"/><path d="M14 43h20"/>`,
+  expcomplete: `<path d="M8 43c0-8 18-7 18-15S12 21 14 13"/><path d="M33 4l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6-4.5-4.1 6-.7z"/><circle cx="8" cy="43" r="1.6" fill="#1F3A2E"/>`,
+  lieuxor: `<path d="M16 4l6 14M32 4l-6 14"/><circle cx="24" cy="30" r="13"/><circle cx="24" cy="30" r="8.5"/><path d="M24 25.5l1.4 3 3.2.4-2.4 2.2.6 3.2-2.8-1.6-2.8 1.6.6-3.2-2.4-2.2 3.2-.4z"/>`,
+  emblemes: `<path d="M24 4l16 6v12c0 11-7 18-16 22C15 40 8 33 8 22V10z"/><path d="M14 31l7-10 4 5 3-3 6 8z"/><circle cx="31" cy="15" r="2.5"/>`,
+  coupaguerri: `<path d="M3 24s8-12 21-12 21 12 21 12-8 12-21 12S3 24 3 24z"/><circle cx="24" cy="24" r="7"/><circle cx="24" cy="24" r="2.5" fill="#1F3A2E"/><path d="M24 3v5M24 40v5M41 7l-3 3M7 7l3 3"/>`,
+  portraitiste: `<rect x="7" y="5" width="34" height="38" rx="2"/><rect x="12" y="10" width="24" height="28" rx="1"/><circle cx="24" cy="20" r="5"/><path d="M15 38c1-6 5-9 9-9s8 3 9 9"/><path d="M38 10l4-4"/>`,
+  detective: `<circle cx="20" cy="20" r="13"/><path d="M29.5 29.5L42 42"/><path d="M16 16.5a4 4 0 1 1 5.5 3.7c-1.2.5-1.5 1.3-1.5 2.6"/><circle cx="20" cy="27" r="1.2" fill="#1F3A2E"/>`,
+  duJour: `<circle cx="24" cy="15" r="6"/><path d="M24 3v2.5M24 24.5V27M12 15h2.5M33.5 15H36M15.5 6.5l1.8 1.8M32.5 6.5l-1.8 1.8"/><path d="M10 44c0-10 6-16 14-16 0 10-6 16-14 16zM10 44l8-8"/><path d="M38 44c0-9-5-14-12-14 0 9 5 14 12 14z"/>`,
+  defisjour: `<rect x="8" y="5" width="32" height="38" rx="3"/><path d="M14 15l2.5 2.5 4.5-5M25 15h10M14 25l2.5 2.5 4.5-5M25 25h10"/><rect x="14" y="31.5" width="6" height="6" rx="1"/><path d="M25 35h10"/>`,
   duel: `<rect x="5" y="12" width="17" height="24" rx="2" transform="rotate(-8 13.5 24)"/><rect x="26" y="12" width="17" height="24" rx="2" transform="rotate(8 34.5 24)"/><circle cx="13.5" cy="21" r="3"/><path d="M8.5 31c1.5-3 8.5-3 10 0"/><circle cx="34.5" cy="21" r="3"/><path d="M29.5 31c1.5-3 8.5-3 10 0"/>`,
 };
 function dessinBadge(b, palier = palierDe(b)) {
@@ -155,7 +172,33 @@ function unSpecialiste() {
   }
   return 0;
 }
-// Étape B1 : les liens découverts (étape « Leurs liens » et bonnes réponses des finales), une fois chacun
+// Étape R269 (choix d'Aubin du 19/11 : « 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 17, 18 · R1A · R2A ») : les mesures
+//   des nouveaux badges. Toutes partent de ce que le jeu sait déjà (rien ne recule), sauf « Espèce du jour » (jours notés
+//   à partir du 19/11, suivi.joursDuJour, 07).
+const PETITES_BETES = ["Insectes", "Araignees_mille_pattes", "Mollusques", "Crustaces", "Vers_meduses_compagnie"];
+function famillesCompletes() {   // familles d'au moins 5 espèces dans un territoire, toutes au carnet
+  let n = 0;
+  for (const t of tousLesTerritoires()) {
+    const especes = especesDe(t);
+    for (const cle in CLASSES) {
+      const f = especes.filter(e => e.onglet === cle);
+      if (f.length >= MINI_BADGE_FAMILLE && f.every(estReconnue)) n++;
+    }
+  }
+  return n;
+}
+function sosiesAuCarnet() {      // groupes de sosies dont au moins deux espèces sont au carnet
+  if (typeof CONFUSIONS === "undefined") return 0;
+  return CONFUSIONS.filter(g => g.especes.map(especeParNom).filter(e => e && estReconnue(e)).length >= 2).length;
+}
+const nbFichesCompletes = () => {
+  if (typeof verifierFichesCompletes === "function" && suivi && !suivi.fichesCompletesR258) verifierFichesCompletes();
+  return Object.keys((suivi && suivi.fichesCompletes) || {}).length;
+};
+const nbExpCompletes = () => typeof toutesExpeditions === "function" && typeof expeditionComplete === "function" ? toutesExpeditions().filter(expeditionComplete).length : 0;
+const lieuxEnOr = () => typeof CHAPITRES === "undefined" || typeof medailleLieu !== "function" ? 0 : CHAPITRES.filter(c => estLieu(c) && medailleLieu(c.territoire, c) >= 3).length;
+const emblemesComplets = () => typeof emblemesTerritoire !== "function" ? 0 : tousLesTerritoires().filter(t => { const l = emblemesTerritoire(t); return l.length && l.every(estReconnue); }).length;
+// Étape B1 : les liens découverts// Étape B1 : les liens découverts (étape « Leurs liens » et bonnes réponses des finales), une fois chacun
 function noterLienConnu(cle) {
   if (!suivi || !cle) return;
   suivi.liensConnus = suivi.liensConnus || {};
@@ -201,6 +244,13 @@ const BADGES_TOUT_LE_JEU = [
     mesure: nbFinales },
   { cle: "leurs-liens", cat: "E", nom: "Leurs liens", cond: "Découvrir des liens entre les espèces", icone: "ensemble", motif: "liens", paliers: [10, 50, 150],   // étape B1
     mesure: nbLiensConnus },
+  // Étape R269 : les nouveaux badges du chemin
+  { cle: "exp-completes", cat: "E", nom: "Expéditions complètes", cond: "Rendre des expéditions complètes ★ (avec Approfondir)", motif: "expcomplete", paliers: [1, 10, 50],
+    mesure: nbExpCompletes },
+  { cle: "lieux-or", cat: "E", nom: "Lieux en or", cond: "Obtenir la médaille d'or de lieux", motif: "lieuxor", paliers: [1, 5, 20],
+    mesure: lieuxEnOr },
+  { cle: "emblemes", cat: "E", nom: "Ils font le territoire", cond: "Connaître les emblèmes d'un territoire", motif: "emblemes", paliers: [1, 3, 11],
+    mesure: emblemesComplets },
   // Le carnet
   { cle: "carnet", cat: "C", nom: "Carnet", cond: "Réunir des espèces dans votre carnet", icone: "fiche", motif: "carnet", paliers: [50, 200, 500],
     mesure: () => nbEspeces(estReconnue) },
@@ -212,10 +262,27 @@ const BADGES_TOUT_LE_JEU = [
     mesure: () => nbEspeces(e => niveauTermine(e) === NB_NIVEAUX) },
   { cle: "raretes", cat: "C", nom: "Raretés", cond: "Découvrir des espèces rares", icone: "oeil", motif: "raretes", paliers: [5, 15, 30],
     mesure: () => nbEspeces(e => estReconnue(e) && e.rarete_observation === "Rare") },
-  { cle: "proteger", cat: "C", nom: "À protéger", cond: "Connaître 10 espèces menacées en France", icone: "main", motif: "proteger", but: 10,
+  { cle: "proteger", cat: "C", nom: "À protéger", cond: "Connaître des espèces menacées en France", icone: "main", motif: "proteger", paliers: [10, 30, 75],   // R269 (R2A) : avant, but 10
     mesure: () => nbEspeces(e => estReconnue(e) && ["Vulnérable", "En danger", "En danger critique"].includes(e.statut_conservation_france)) },
   { cle: "etonnant", cat: "C", nom: "Étonnant !", cond: "Trouver des faits insolites", icone: "oeil", motif: "etonnant", paliers: [10, 50, 150],   // étape B1
     mesure: () => Object.keys((suivi && suivi.insolites) || {}).length },
+  // Étape R269 : les nouveaux badges du carnet
+  { cle: "famille-complete", cat: "C", nom: "Une famille au complet", cond: "Réunir au carnet toutes les espèces d'une famille dans un territoire", motif: "famillecomplete", paliers: [1, 5, 15],
+    mesure: famillesCompletes },
+  { cle: "venues-ailleurs", cat: "C", nom: "Venues d'ailleurs", cond: "Connaître des espèces introduites par l'homme", motif: "ailleurs", paliers: [3, 10, 25],
+    mesure: () => nbEspeces(e => estReconnue(e) && e.origine === "Introduite") },
+  { cle: "en-declin", cat: "C", nom: "En déclin", cond: "Connaître des oiseaux dont la population diminue en France", motif: "declin", paliers: [5, 15, 40],
+    mesure: () => nbEspeces(e => estReconnue(e) && e.tendance_france === "diminue") },
+  { cle: "monde-nuit", cat: "C", nom: "Monde de la nuit", cond: "Connaître des espèces surtout actives la nuit", motif: "mondenuit", paliers: [10, 40, 100],
+    mesure: () => nbEspeces(e => estReconnue(e) && e.activite === "Surtout la nuit") },
+  { cle: "migrateurs", cat: "C", nom: "Grands migrateurs", cond: "Connaître des espèces qui migrent selon la saison", motif: "migrateurs", paliers: [10, 40, 100],
+    mesure: () => nbEspeces(e => estReconnue(e) && e.deplacement_saisonnier === "Migre selon la saison") },
+  { cle: "petites-betes", cat: "C", nom: "Petites bêtes", cond: "Connaître des insectes, araignées, escargots et autres petites bêtes", motif: "petitesbetes", paliers: [10, 50, 150],
+    mesure: () => nbEspeces(e => estReconnue(e) && PETITES_BETES.includes(e.onglet)) },
+  { cle: "fiche-complete", cat: "C", nom: "Fiche complète", cond: "Compléter toute la fiche d'une espèce", motif: "fichecomplete", paliers: [1, 10, 50],
+    mesure: nbFichesCompletes },
+  { cle: "sosies", cat: "C", nom: "Sosies démêlés", cond: "Avoir au carnet une espèce et son sosie", motif: "sosies", paliers: [5, 15, 40],
+    mesure: sosiesAuCarnet },
   // L'œil et l'oreille
   { cle: "oreille-fine", cat: "S", nom: "Oreille fine", cond: "Reconnaître des cris", icone: "son", motif: "oreille", paliers: [10, 30, 60],
     mesure: () => nbEspeces(e => nbBonnes(e, "cri_son") >= 1) },
@@ -225,6 +292,13 @@ const BADGES_TOUT_LE_JEU = [
     mesure: () => suivi.coupsDoeil || 0 },
   { cle: "tenacite", cat: "S", nom: "Ténacité", cond: "Retrouver une réponse ratée trois fois auparavant", icone: "bouclier", motif: "tenacite", but: 1,
     mesure: () => suivi.tenacite ? 1 : 0 },
+  // Étape R269 : les petits jeux
+  { cle: "coup-aguerri", cat: "S", nom: "Coup d'œil aguerri", cond: "Ouvrir le niveau 3 de Coup d'œil (« Sosies et autres formes »)", motif: "coupaguerri", but: 1,
+    mesure: () => typeof niveauCoupOuvert === "function" && niveauCoupOuvert() >= 3 ? 1 : 0 },
+  { cle: "portraitiste", cat: "S", nom: "Portraitiste", cond: "Réussir des portraits sans erreur (Portrait-robot)", motif: "portraitiste", paliers: [5, 20, 50],
+    mesure: () => (suivi && suivi.portraits) || 0 },
+  { cle: "detective", cat: "S", nom: "Détective", cond: "Retrouver des espèces à Espèce mystère", motif: "detective", paliers: [10, 50, 150],
+    mesure: () => (typeof statsJeux !== "undefined" && statsJeux.indices && statsJeux.indices.decouvertes) || 0 },
   // Les rendez-vous (aucune série à tenir)
   { cle: "fidele", cat: "R", nom: "Fidèle", cond: "Jouer des jours différents (pas besoin de jours d'affilée)", icone: "calendrier", motif: "fidele", paliers: [7, 30],
     mesure: () => suivi.jours.length },
@@ -234,8 +308,17 @@ const BADGES_TOUT_LE_JEU = [
     mesure: () => suivi.leveTot ? 1 : 0 },
   { cle: "oiseau-de-nuit", cat: "R", nom: "Oiseau de nuit", cond: "Jouer après 23 h", icone: "lune", motif: "nuit", but: 1,
     mesure: () => suivi.nuit ? 1 : 0 },
-  { cle: "duel", cat: "R", nom: "Champion du Duel", cond: "20 bonnes réponses à la suite au Duel (Plus de jeux)", icone: "portrait", motif: "duel", but: 20,
-    mesure: () => suivi.recordSerieDuel || 0 },
+  // Étape R269 (R1A) : « Champion du Duel » ne demande plus une série à la suite, mais des bonnes réponses sur une partie
+  //   (3 vies) ; même clé (le badge déjà gagné reste) ; une série déjà faite compte (elle tenait dans une partie)
+  { cle: "duel", cat: "R", nom: "Champion du Duel", cond: "Bonnes réponses sur une partie de Duel (Plus de jeux)", icone: "portrait", motif: "duel", paliers: [10, 20, 30],
+    mesure: () => Math.max(suivi.recordPartieDuel || 0, suivi.recordSerieDuel || 0) },
+  // Étape R269 : les rendez-vous du jour (jamais d'affilée)
+  { cle: "espece-du-jour", cat: "R", nom: "Espèce du jour", cond: "Retrouver l'espèce du jour, des jours différents (pas besoin d'affilée)", motif: "duJour", paliers: [7, 30, 100],
+    mesure: () => { const j = new Set((suivi && suivi.joursDuJour) || []);
+      if (suivi && suivi.duJour && suivi.duJour.date === aujourdhui() && suivi.duJour.faites.length) j.add(aujourdhui());   // aujourd'hui, déjà fait avant R269
+      return j.size; } },
+  { cle: "defis-jour", cat: "R", nom: "Défis du jour", cond: "Réussir des défis du jour", motif: "defisjour", paliers: [10, 50, 150],
+    mesure: () => (suivi && suivi.defisReussis) || 0 },
 ];
 const GROUPES_BADGES = [["E", "En chemin"], ["C", "Le carnet"], ["S", "L'œil et l'oreille"], ["R", "Les rendez-vous"]];
 // Règle n°12 (11/10) : une famille ne compte (rang Spécialiste) dans un territoire que si elle y compte au moins 5 espèces

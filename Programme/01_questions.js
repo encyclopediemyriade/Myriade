@@ -1481,6 +1481,15 @@ function sansPoint(t) { return String(t || "").trim().replace(/[.\s]+$/, ""); }
 const AFF_H_ASPIRES = /^(h[ée]risson|hanneton|hareng|hibou|homard|haricot|hêtre|héron|hamster|harle|hulotte|huchon|harfang)/i;   // VF5 : huchon, harfang
 function deElide(mot) { return /^[aeiouyéèêàâîïôûœ]/i.test(mot) || (/^h/i.test(mot) && !AFF_H_ASPIRES.test(mot)) ? "d'" : "de "; }
 const AFF_REGIME_F = { "suceur de sang": "suceuse de sang", "filtreur": "filtreuse" };
+// Étape R263 (Notion 40.09, note 9 du 18/11, choix 11A) : le régime dit en mots simples, pour toutes les espèces
+//   (« Il est granivore » → « Il mange surtout des graines »). Sert à « Sa vie », au vrai ou faux et à l'explication.
+const AFF_REGIME_SIMPLE = {
+  "insectivore": "mange surtout des insectes", "carnivore": "mange d'autres animaux", "herbivore": "se nourrit de plantes",
+  "omnivore": "mange de tout, plantes comme animaux", "granivore": "mange surtout des graines", "piscivore": "mange surtout des poissons",
+  "filtreur": "se nourrit en filtrant l'eau", "détritivore": "se nourrit de débris : feuilles mortes, restes d'animaux",
+  "coprophage": "se nourrit de bouses et de crottes", "suceur de sang": "se nourrit de sang"
+};
+function regimeSimple(v) { return AFF_REGIME_SIMPLE[minuscule(sansPoint(v))] || ""; }
 const AFF_MILIEU = { "Falaises et rochers": "parmi les falaises et les rochers", "Alpages et pelouses d'altitude": "dans les alpages et les pelouses d'altitude",
   "Forêt": "en forêt", "Campagne, haies et jardins": "dans la campagne, les haies et les jardins", "Rivières et torrents": "dans les rivières et les torrents",
   "Landes et coteaux secs": "dans les landes et sur les coteaux secs", "Mares et étangs": "dans les mares et les étangs", "Lacs": "dans les lacs",
@@ -1710,9 +1719,10 @@ function affTable(table, v, faire, repli) { const p = table[sansPoint(v)] || tab
 const QUESTIONS = [
   { champ: "regime_alimentaire_type", pictos: true, niveau: 1, libelle: "Régime",
     question: "Quel est son régime alimentaire ?",
-    affirmation: (v, e) => `${IlElle(e)} est ${ilElle(e) === "elle" && AFF_REGIME_F[minuscule(v)] ? AFF_REGIME_F[minuscule(v)] : minuscule(v)}.`,   // E2-4
+    affirmation: (v, e) => regimeSimple(v) ? `${IlElle(e)} ${regimeSimple(v)}.`   // R263 : en mots simples
+      : `${IlElle(e)} est ${ilElle(e) === "elle" && AFF_REGIME_F[minuscule(v)] ? AFF_REGIME_F[minuscule(v)] : minuscule(v)}.`,   // E2-4
     inverse: v => `Lequel est ${v} ?`,
-    explication: e => `Son régime : ${e.regime_alimentaire_type}.` },
+    explication: e => regimeSimple(e.regime_alimentaire_type) ? `${IlElle(e)} ${regimeSimple(e.regime_alimentaire_type)} (régime : ${e.regime_alimentaire_type}).` : `Son régime : ${e.regime_alimentaire_type}.` },
 
   // Étape R166 (Revoir 13) : comme pour le petit, la question n'est posée que si le groupe a un nom propre à peu d'espèces
   // (harde, compagnie, meute, clan). « Bande », « troupe », « colonie », « banc », « volée » se disent de beaucoup d'animaux :
@@ -1828,10 +1838,26 @@ const QUESTIONS = [
   // "ignorer" : valeurs sur lesquelles on ne pose pas de question.
   // "formats" : limite les formats autorisés. Ici, seulement le QCM
   // (pas de vrai/faux ni de choix parmi 4 photos pour le risque d'extinction).
-  { champ: "statut_conservation", pictos: true, niveau: 2, libelle: "Niveau d'extinction",
+  // Étape R264 (40.13, choix 7B du 19/11) : la question porte sur le statut EN FRANCE (liste rouge de France,
+  //   statut_conservation_france) ; le statut mondial vient en complément dans l'explication quand il diffère, avec la
+  //   cause du déclin si la fiche la donne. Plus de « niveau d'extinction ». La clé reste « statut_conservation »
+  //   (sauvegardes des parties). Sans statut français utilisable (espèce introduite, pas encore évaluée…), on demande le
+  //   statut mondial (« dans le monde »).
+  { champ: "statut_conservation", pictos: true, niveau: 2, libelle: "Statut de menace",
     ignorer: ["Non évalué", "Données insuffisantes", "Non applicable", "NA"], formats: ["qcm"],   // étape 193 : « Données insuffisantes » n'est pas un niveau de menace
-    question: "Quel est son niveau d'extinction ?",
-    explication: (e, v) => `Son niveau d'extinction : ${minuscule(v)}.` },
+    valeur: e => statutFranceUtile(e) ? e.statut_conservation_france : e.statut_conservation,
+    question: e => statutFranceUtile(e) ? "Quel est son statut de menace en France ?" : "Quel est son statut de menace dans le monde ?",
+    explication: (e, v) => explicationStatut(e, v) },
+
+  // Étape R268 (40.13, note 17a d'Aubin : « augmente / stable / diminue ? ») : la tendance de sa population en France,
+  //   d'abord pour les oiseaux (colonne tendance_france, liste fermée augmente / stable / diminue / NA). Source : le suivi
+  //   national des oiseaux communs (STOC, Muséum et LPO), tendance 2001-2023 (Fontaine et al., C. R. Biologies 2025) ;
+  //   « incertain » = NA ; une hausse qui contredit la liste rouge de France = NA. Une seule forme : le QCM à 3 choix.
+  { champ: "tendance_france", niveau: 2, libelle: "Tendance en France", formats: ["qcm"],
+    ignorer: ["NA"],
+    question: "Depuis une vingtaine d'années en France, sa population…",
+    pieges: e => ["augmente", "stable", "diminue"].filter(v => v !== String(e.tendance_france).trim()),
+    explication: (e, v) => TENDANCES_PHRASES[String(v).trim().toLowerCase()] || "" },
 
   // Étape 135 : "fourchette" = du plus petit au plus grand chiffre connu pour l'espèce (mâles et femelles
   // compris). Les mauvaises réponses sont choisies EN DEHORS de cette fourchette : proposer « 175 kg »
@@ -2213,3 +2239,24 @@ const QUESTIONS = [
 // La toute première question sur une espèce : la reconnaître sur sa photo.
 // On la note dans le carnet sous ce nom de champ spécial.
 const IDENTIFICATION = "identification";
+
+// Étape R268 (40.13) : les phrases de la tendance (suivi national des oiseaux communs, depuis 2001)
+const TENDANCES_PHRASES = {
+  augmente: "En France, sa population augmente depuis une vingtaine d'années.",
+  stable: "En France, sa population reste à peu près stable depuis une vingtaine d'années.",
+  diminue: "En France, sa population diminue depuis une vingtaine d'années."
+};
+// Étape R264 (40.13) : le statut de menace en France, le monde en complément quand il diffère
+const STATUTS_INUTILES = ["Non évalué", "Données insuffisantes", "Non applicable", "NA"];
+function statutUtile(v) { return estRenseigne(v) && !STATUTS_INUTILES.includes(String(v).trim()); }
+function statutFranceUtile(e) { return statutUtile(e.statut_conservation_france); }
+function explicationStatut(e, v) {
+  if (!statutFranceUtile(e)) return `Dans le monde : ${minuscule(v)} (pas de classement sur la liste rouge de France).`;
+  let t = `En France : ${minuscule(v)}.`;
+  if (statutUtile(e.statut_conservation) && String(e.statut_conservation).trim() !== String(v).trim())
+    t += ` Dans le monde : ${minuscule(e.statut_conservation)}.`;
+  if (STATUTS_MENACES_FR.includes(String(v).trim()) && estRenseigne(e.cause_declin) && e.cause_declin !== "NA")
+    t += ` En cause surtout : ${minuscule(String(e.cause_declin).trim().replace(/\.$/, ""))}.`;
+  return t;
+}
+const STATUTS_MENACES_FR = ["Quasi menacée", "Vulnérable", "En danger", "En danger critique"];

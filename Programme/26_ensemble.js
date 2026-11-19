@@ -316,7 +316,8 @@ const STATUTS_MENACES = ["Vulnérable", "En danger", "En danger critique"];
 function statutNet(e) { if (!confirme(e, "statut_conservation_france")) return null; const v = String(e.statut_conservation_france).trim(); return STATUTS_MENACES.includes(v) ? "menacee" : v === "Préoccupation mineure" ? "non" : null; }
 function fragilesPossible(x) { const l = x.liste.filter(statutNet); return l.length >= 3 && l.some(e => statutNet(e) === "menacee") && l.some(e => statutNet(e) === "non"); }
 function fragilesPermis(x) {   // la première expédition du lieu (dans l'ordre) où la question est possible
-  const premiere = expeditionsDe(x.territoire).filter(y => y.chapitre === x.chapitre).find(fragilesPossible);
+  // R268 : dans l'ordre d'origine (ordre), pas celui du chemin (rang) : le tirage de l'étape 2 reste le même
+  const premiere = expeditionsDe(x.territoire).filter(y => y.chapitre === x.chapitre).sort((a, b) => a.ordre - b.ordre).find(fragilesPossible);
   return !!premiere && premiere.id === x.id;
 }
 function questionFragiles(x) {
@@ -412,7 +413,26 @@ function questionsEnsemble(x) {
   // deux questions de suite à une seule réponse sur la même espèce : on retire la seconde (sauf « Et si… ? »)
   const uneBonne = z => !z.plusieurs ? (z.choix.find(c => c.bonne) || {}).espece : null;
   for (let i = 1; i < q.length; i++) if (uneBonne(q[i]) && uneBonne(q[i]) === uneBonne(q[i - 1])) { q.splice(q[i].cle === "etsi" ? i - 1 : i, 1); i--; }
-  return q;
+  return varierEnsemble(q);
+}
+// Étape R264 (40.15, choix 8B : « même règle aux étapes 1 et 2 ») : jamais deux questions du même genre à la suite. Les deux
+//   questions de liens (« Laquelle est mangée par… ? ») et celle du chasseur commun parlent toutes de « qui mange qui » :
+//   elles sont séparées par une autre question quand il y en a une (l'ordre des 8 types est gardé pour le reste ;
+//   « Et si… ? » reste la dernière).
+function genreEnsemble(z) { return z.type === "liens" || z.type === "chasseur" ? "manger" : z.type; }
+function varierEnsemble(q) {
+  const fin = q.length && q[q.length - 1].cle === "etsi" ? [q[q.length - 1]] : [];
+  const reste = q.slice(0, q.length - fin.length), suite = [];
+  while (reste.length) {
+    const prec = suite[suite.length - 1];
+    const bonneUnique = z => !z.plusieurs ? (z.choix.find(c => c.bonne) || {}).espece : null;
+    const memeEspece = z => prec && bonneUnique(z) && bonneUnique(z) === bonneUnique(prec);   // (règle d'avant, gardée)
+    let i = reste.findIndex(z => !prec || (genreEnsemble(z) !== genreEnsemble(prec) && !memeEspece(z)));
+    if (i < 0) i = reste.findIndex(z => !memeEspece(z));
+    if (i < 0) i = 0;
+    suite.push(reste.splice(i, 1)[0]);
+  }
+  return [...suite, ...fin];
 }
 // Une expédition qui n'offre qu'une question, ou aucune : pas d'étape 2 (la question unique se pose à la fin des Rencontres).
 function aUneEtapeEnsemble(x) { return ETAPE2_ENSEMBLE && questionsEnsembleExp(x).length >= 2; }   // R245 : tirage fixe
@@ -528,7 +548,7 @@ function dessinerEnsemble() {
     ${montrees.length ? `<div class="en-montrees${montrees.length > 2 ? " nombreuses" : ""}">${montrees.join("")}</div>` : ""}
     <h3 class="fl-question">${echapper(q.question)}</h3>
     ${q.plusieurs ? `<p class="en-consigne"><span class="etiq-plusieurs">Plusieurs réponses</span></p>` : ""}
-    <div class="fl-choix en-choix">${q.choix.map((c, i) => boutonChoixEnsemble(c, i, q.plusieurs)).join("")}</div>
+    <div class="fl-choix en-choix${typeof classeNombreChoix === "function" ? classeNombreChoix(q.choix.length) : ""}">${q.choix.map((c, i) => boutonChoixEnsemble(c, i, q.plusieurs)).join("")}</div>
     <p class="fp-retour" id="en-retour"></p>
     <div class="fp-pied">${q.plusieurs ? `<button type="button" class="bouton-accueil principal" id="en-valider" disabled>Valider</button>` : ""}
       <button type="button" class="bouton-accueil principal cache" id="en-suite">${E.i + 1 < E.file.length ? "Question suivante" : "Continuer"}</button></div></div>`;
@@ -553,13 +573,22 @@ function dessinerEnsemble() {
     const v = document.getElementById("en-valider"); if (v) v.classList.add("cache");
     const oubli = q.plusieurs && !juste && bonnes.some(i => !choisis.includes(i)) ? " Les bonnes réponses sont encadrées en vert." : "";
     const debut = partiel ? `Validé : ${trouvees} sur ${bonnes.length}. ` : juste ? "Bravo ! " : "";
-    document.getElementById("en-retour").innerHTML = `${debut}${echapper(q.explication || "")}${partiel ? `<br><small>${bonnes.length - trouvees > 1 ? "Les autres sont encadrées" : "L'autre est encadrée"} en vert.</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
+    // Étape R265 (40.12, 6A) : « Oui » / « C'était l'autre » / « Pas cette fois » (« Validé · 2 sur 3 »), puis l'explication
+    const ligneEns = typeof verdictHtml === "function"
+      ? verdictHtml({ juste, deux: q.choix.length === 2, mot: partiel ? `Validé · ${trouvees} sur ${bonnes.length}` : "", phrase: q.explication || "" })
+      : `${debut}${echapper(q.explication || "")}`;
+    document.getElementById("en-retour").innerHTML = `${ligneEns}${partiel ? `<br><small>${bonnes.length - trouvees > 1 ? "Les autres sont encadrées" : "L'autre est encadrée"} en vert.</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
     const caseI = z.querySelectorAll(".en-cases i")[reprise ? E.file[E.i].de : E.i];   // R246 : la case prend sa couleur tout de suite
     if (caseI && !reprise) caseI.classList.add(juste ? "ok" : "rate");
     const s = document.getElementById("en-suite");
     s.textContent = E.i + 1 < E.file.length ? "Question suivante" : "Continuer";
     s.classList.remove("cache"); s.focus();
-    s.onclick = () => { if (E.i + 1 < E.file.length) { E.i++; dessinerEnsemble(); window.scrollTo(0, 0); } else finirEnsemble(); };
+    s.onclick = () => {
+      if (E.i + 1 >= E.file.length) { finirEnsemble(); return; }
+      // Étape R265 (40.05, choix 3A) : avant les questions à revoir, une page courte, avec « Non merci » pour ne pas les imposer
+      if (PAGE_A_REVOIR && E.file[E.i + 1].reprise && !E.file[E.i].reprise) { annonceARevoirEnsemble(E); return; }
+      E.i++; dessinerEnsemble(); window.scrollTo(0, 0);
+    };
   };
   if (q.plusieurs) {
     const v = document.getElementById("en-valider");
@@ -571,6 +600,30 @@ function dessinerEnsemble() {
     v.onclick = () => corriger(boutons.filter(b => b.getAttribute("aria-pressed") === "true").map(b => Number(b.dataset.i)));
   } else boutons.forEach(b => b.onclick = () => corriger([Number(b.dataset.i)]));
   window.scrollTo(0, 0);
+  // Étape R265 (40.03, 2A) : sur téléphone, la ligne de retour au-dessus des réponses, les réponses calées en bas, le bouton fixé
+  if (typeof calerSousPouce === "function" && SOUS_LE_POUCE && surTelephone()) {
+    const choixZ = z.querySelector(".en-choix"), ret = document.getElementById("en-retour");
+    if (choixZ && ret) { choixZ.before(ret); calerSousPouce(ret, choixZ, RESERVE_POUCE.rencontre); }
+  }
+}
+// Étape R265 (40.05, choix 3A du 19/11, + remarque d'Aubin : « il faut mettre une option "Non merci" ou autre chose pour ne pas
+//   l'imposer au joueur ») : « Deux questions à reprendre, maintenant que vous en savez plus. » — « Les reprendre ▶ » ou
+//   « Non merci, terminer » : l'étape se termine alors comme si elles avaient été reprises (elles comptent, rien n'est perdu).
+const PAGE_A_REVOIR = true;
+const NOMBRES_EN_LETTRES = ["Aucune", "Une", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit"];
+function annonceARevoirEnsemble(E) {
+  const z = document.getElementById("forme-ecran");
+  const n = E.file.length - E.i - 1, une = n === 1;
+  z.innerHTML = `<div class="fp-carte fl-carte en-carte en-annonce">
+    <div class="fp-tete"><span class="fp-lib">${PICTO_LIENS}Ensemble, dans ce lieu</span></div>
+    <div class="en-annonce-corps"><span class="etiq-a-revoir">↻ À revoir</span>
+      <h3 class="fl-question">${NOMBRES_EN_LETTRES[n] || n} question${une ? "" : "s"} à reprendre, maintenant que vous en savez plus.</h3></div>
+    <div class="fp-pied en-annonce-pied"><button type="button" class="bouton-accueil principal" id="en-reprendre">${une ? "La reprendre" : "Les reprendre"} ▶</button>
+      <button type="button" class="en-non-merci" id="en-non-merci">Non merci, terminer</button></div></div>`;
+  document.getElementById("en-reprendre").onclick = () => { E.i++; dessinerEnsemble(); window.scrollTo(0, 0); };
+  document.getElementById("en-non-merci").onclick = () => finirEnsemble();
+  window.scrollTo(0, 0);
+  document.getElementById("en-reprendre").focus();
 }
 function finirEnsemble() {
   const E = ensemble, x = E.x;

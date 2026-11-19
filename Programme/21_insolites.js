@@ -308,7 +308,11 @@ function repondreInsoliteRencontre(boutonClique, estJuste) {
   }
   // Étape R246 (36.31, choix 31C du 17/11) : « Étonnant » → la fenêtre « Le saviez-vous ? » juste après la réponse
   //   (le fait + son complément) ; l'explication sous les réponses reste courte (le complément est dans la fenêtre).
-  if (insolite.etonnant) retour.textContent = estJuste ? "Bravo !" : "Pas tout à fait : c'était l'autre.";
+  // Étape R265 (40.12, choix 6A du 19/11) : plus de fenêtre « Le saviez-vous ? ». Tout de suite, sous les deux cartes :
+  //   « Oui » / « C'était l'autre » (la phrase vraie est déjà en vert à l'écran : pas redite), puis son complément.
+  if (insolite.etonnant && typeof verdictHtml === "function" && SAVIEZ_VOUS_FENETRE === false)
+    retour.innerHTML = verdictHtml({ juste: !!estJuste, deux: true, complement: insolite.item.explication || "" });
+  else if (insolite.etonnant) retour.textContent = estJuste ? "Bravo !" : "Pas tout à fait : c'était l'autre.";
   if (insolite.etonnant) noterEtonnantVu(insolite.item.id);   // étape CQ7 : un « Étonnant » lu (trouvé ou non) peut revenir dans « Reliez »
   const boutonSuivant = document.getElementById("suivant");
   if (session) {
@@ -324,7 +328,8 @@ function repondreInsoliteRencontre(boutonClique, estJuste) {
   boutonSuivant.classList.remove("cache");
   noterDansHistorique();
   // le bouton de la suite attend la fenêtre (c'est elle qui mène à la suite) : pas de course entre les deux
-  if (insolite.etonnant) { if (session) session.saviezMontre = true; boutonSuivant.classList.add("cache");
+  if (insolite.etonnant && session) session.saviezMontre = true;   // un seul fait par Rencontre (R246)
+  if (insolite.etonnant && SAVIEZ_VOUS_FENETRE) { boutonSuivant.classList.add("cache");
     setTimeout(() => ouvrirSaviezVous({ espece, fait: insolite.item.fait, complement: insolite.item.explication, viaSuivant: true }), 650); }
 }
 
@@ -334,6 +339,7 @@ function repondreInsoliteRencontre(boutonClique, estJuste) {
 //   (anecdotes vérifiées), montrée une seule fois, à la fin de la Rencontre. Plus d'encadré « Fait insolite » sur l'écran de fin.
 //   Le bouton de la fenêtre mène directement à la suite (un seul toucher).
 // ==================================================================
+const SAVIEZ_VOUS_FENETRE = false;   // étape R265 (40.12, 6A) : la fenêtre n'est plus ouverte (true = la remettre, comme en R246)
 function ouvrirSaviezVous({ espece, fait, complement, suite, viaSuivant }) {
   let f = document.getElementById("saviez-vous");
   if (!f) {

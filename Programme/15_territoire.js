@@ -230,7 +230,7 @@ function dessinerEnjeu(t, id) {
       ${id.sources.length ? `<details class="enj-sources"><summary>Sources</summary><ul>${id.sources.map(s =>
         `<li>${s.url ? `<a href="${echapper(s.url)}" target="_blank" rel="noopener">${echapper(s.source)}</a>` : echapper(s.source)}</li>`).join("")}</ul></details>` : ""}
     </div>
-    ${ph && ph.photo ? `<figure class="enj-photo"><img src="${ph.photo}" alt="${echapper(ph.nom_courant)}">`
+    ${ph && ph.photo ? `<figure class="enj-photo"><img src="${srcEcran(ph.photo)}" alt="${echapper(ph.nom_courant)}" onerror="if (this.src.includes('/moy/')) this.src='${ph.photo}';">`
       + `${ej.legende_photo ? `<figcaption>${echapper(ej.legende_photo)}</figcaption>` : ""}</figure>` : ""}`;
 }
 
@@ -892,8 +892,16 @@ function dessinerTuileJour() {
           ${recup ? boutonRecup(recup) : !faite ? `<span class="mai-tj-gain">+${GAIN_ESPECE_DU_JOUR} ${PAS_SVG}</span>` : ""}
         </div></div>`;
   const aller = () => { if (faite && connue) { ouvrirPageEspece(e); return; } lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; };
-  document.getElementById("mj-go").onclick = resteJour ? () => lancerFicheEspece(e) : aller;
-  document.getElementById("mj-photo").onclick = aller;
+  if (typeof ESPECE_DU_JOUR_UN_BOUTON !== "undefined" && ESPECE_DU_JOUR_UN_BOUTON) {
+    // Étape R269 (40.07, 4A) : un seul bouton qui s'adapte (choixEspeceDuJour, 05) ; la photo fait la même chose que le bouton
+    const c = choixEspeceDuJour(e), go = document.getElementById("mj-go"), ph = document.getElementById("mj-photo");
+    go.innerHTML = `${c.texte}${c.reste ? ` <small class="mj-reste">encore ${c.reste}</small>` : ""} <span aria-hidden="true">▶</span>`;
+    go.onclick = c.action; ph.onclick = c.action;
+    ph.setAttribute("aria-label", `${c.texte} : espèce du jour`);
+  } else {
+    document.getElementById("mj-go").onclick = resteJour ? () => lancerFicheEspece(e) : aller;
+    document.getElementById("mj-photo").onclick = aller;
+  }
   const ec = document.getElementById("mj-ecouter");
   if (ec) ec.onclick = () => {
     if (sonDuJour && !sonDuJour.paused) { sonDuJour.pause(); ec.classList.remove("en-lecture"); return; }

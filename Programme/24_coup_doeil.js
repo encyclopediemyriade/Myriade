@@ -84,6 +84,7 @@ function piegesCoupDoeil(e, pool, niveau) {
 //   Ailleurs (ordinateur), comme avant : le bouton est ramené à l'écran s'il en sort. Sert aussi à À l'oreille et au défi.
 function montrerSuiteJeu(btn, r) {
   if (!btn) return;
+  if (typeof recalerPouceMaintenant === "function") { recalerPouceMaintenant(); r = btn.getBoundingClientRect(); }   // R265 : la ligne a pu passer sous les réponses
   if (getComputedStyle(btn).position !== "fixed") {
     r = r || btn.getBoundingClientRect();
     if (r.bottom > window.innerHeight - 80 || r.top < 0) btn.scrollIntoView({ block: "end", behavior: "smooth" });
@@ -154,6 +155,7 @@ function afficherTourCoupDoeil() {
   const zone = document.getElementById("vue-coupdoeil");
   const t = coup.tours[coup.i];
   const etiquette = etiquetteForme(t.photo.sujet);
+  prechargerPhotos(coup.tours.slice(coup.i + 1, coup.i + 3).map(s => s.photo && s.photo.src));   // R264 (39) : les suivantes à l'avance
   zone.innerHTML = `<div class="cdo">${enteteCoupDoeil()}
       <div class="cdo-photo">${imagePhoto(t.photo.src, "Qui est-ce ?", false)}${etiquette ? `<small class="cdo-forme">${etiquette.replace(/^(La|Le|L')\s?/, "").replace(/^./, c => c.toUpperCase())}</small>` : ""}</div>
       <p class="cdo-q">Qui est-ce ?</p>
@@ -163,6 +165,7 @@ function afficherTourCoupDoeil() {
   zone.querySelectorAll(".cdo-nom").forEach(b => b.onclick = () => repondreCoupDoeil(t.noms[+b.dataset.k], b));
   document.getElementById("cdo-quitter").onclick = () => { coup = null; montrer("arcade"); };
   window.scrollTo(0, 0);
+  if (typeof calerJeuSousPouce === "function") calerJeuSousPouce(zone);   // étape R265 (40.03)
 }
 function repondreCoupDoeil(choisie, bouton) {
   const t = coup.tours[coup.i];
@@ -190,7 +193,8 @@ function repondreCoupDoeil(choisie, bouton) {
   const retour = document.getElementById("cdo-retour");
   const fin = coup.i >= coup.tours.length - 1;
   const suivant = `<button class="cdo-suivant" id="cdo-suivant">${fin ? "Voir le résultat" : "Photo suivante →"}</button>`;
-  if (juste) retour.innerHTML = `${coup.serie >= 3 ? `<p class="cdo-serie">${coup.serie} d'affilée</p>` : ""}${suivant}`;   // R239 (36.09) : le nom n'est plus répété
+  const oui = typeof verdictHtml === "function" ? `<p class="apf-verdict">${verdictHtml({ juste: true, complement: complementReconnaissance(t.espece, t.photo && t.photo.sujet) })}</p>` : "";   // R265 (40.12)
+  if (juste) retour.innerHTML = `${oui}${coup.serie >= 3 ? `<p class="cdo-serie">${coup.serie} d'affilée</p>` : ""}${suivant}`;   // R239 (36.09) : le nom n'est plus répété
   else retour.innerHTML = `<div class="cdo-erreur"><b>C'est ${echapper(nomAvecArticle(t.espece))}.</b>
       <div class="cdo-duo agrandir-groupe"><figure class="agr" data-legende="${echapper(t.espece.nom_courant)}"><span class="agr-cadre">${celluleImage(t.espece, true)}${LOUPE_SVG}</span><figcaption>${echapper(t.espece.nom_courant)}</figcaption></figure>`
     + `<figure class="agr" data-legende="Votre choix · ${echapper(choisie.nom_courant)}"><span class="agr-cadre">${celluleImage(choisie, true)}${LOUPE_SVG}</span><figcaption>${echapper(choisie.nom_courant)}<small>votre choix</small></figcaption></figure></div>`
@@ -333,4 +337,5 @@ function ouvrirNiveauxCoupDoeil() {
   document.getElementById("cdo-jouer").onclick = () => lancerCoupDoeil(null, niveauCoupChoisi);
   document.getElementById("cdo-quitter").onclick = () => { coup = null; montrer("arcade"); };
   window.scrollTo(0, 0);
+  if (typeof calerJeuSousPouce === "function") calerJeuSousPouce(zone);   // étape R265 (40.03)
 }
