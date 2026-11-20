@@ -310,7 +310,7 @@ const BADGES_TOUT_LE_JEU = [
     mesure: () => suivi.nuit ? 1 : 0 },
   // Étape R269 (R1A) : « Champion du Duel » ne demande plus une série à la suite, mais des bonnes réponses sur une partie
   //   (3 vies) ; même clé (le badge déjà gagné reste) ; une série déjà faite compte (elle tenait dans une partie)
-  { cle: "duel", cat: "R", nom: "Champion du Duel", cond: "Bonnes réponses sur une partie de Duel (Plus de jeux)", icone: "portrait", motif: "duel", paliers: [10, 20, 30],
+  { cle: "duel", cat: "R", nom: "Champion du Duel", cond: "Bonnes réponses sur une partie de Duel (Jeux)", icone: "portrait", motif: "duel", paliers: [10, 20, 30],
     mesure: () => Math.max(suivi.recordPartieDuel || 0, suivi.recordSerieDuel || 0) },
   // Étape R269 : les rendez-vous du jour (jamais d'affilée)
   { cle: "espece-du-jour", cat: "R", nom: "Espèce du jour", cond: "Retrouver l'espèce du jour, des jours différents (pas besoin d'affilée)", motif: "duJour", paliers: [7, 30, 100],
@@ -397,7 +397,7 @@ function verifierRangCarnet() {
   if (i <= avant) return;
   sauvegarder();
   const r = infoRangCarnet();
-  feter({ etiquette: "Votre carnet", titre: r.nom, son: "badge",
+  feter({ etiquette: "Nouveau rang du carnet", titre: r.nom, son: "badge",
           detail: `${nombre(r.n)} espèces au carnet.${r.suivant ? ` Prochain rang : ${r.suivant.nom}, à ${nombre(r.suivant.seuil)} espèces.` : " Toutes les espèces du jeu !"}`,
           visuel: `<div class="fete-visuel dessin">${dessinTampon(i)}</div>` });
 }
@@ -553,7 +553,7 @@ function afficherPageProgression() {
   const enTeteProfil = carteNaturaliste(rc) + `<div class="pg-encart pg-profil">
       <div class="pg-profil-texte">
         ${blocPrenom("pg-prenom")}
-        <div class="rang">${rc.nom}</div>
+        <div class="rang">Rang du carnet : ${rc.nom}</div>
         <div class="pg-rang-carnet"><i class="jauge-jeu"><b style="width:${Math.round(100 * rc.part)}%"></b></i>
           <small>Carnet : ${nombre(rc.n)} espèces${rc.suivant ? ` · prochain rang : ${rc.suivant.nom}, à ${nombre(rc.suivant.seuil)}` : " · toutes les espèces du jeu !"}</small></div>
         <small>${(() => { const m = [0, 0, 0, 0]; for (const e of ESPECES.filter(estReconnue)) m[niveauTermine(e)]++;

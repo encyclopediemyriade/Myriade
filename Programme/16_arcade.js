@@ -31,9 +31,21 @@ var depuisArcade = false;                 // la partie en cours a-t-elle été l
 // Étape 274 (« Revoir 4 ») : dans « Plus de jeux », toutes les espèces sont jouables, même celles pas encore découvertes
 // (avant : Espèce mystère et Portrait-robot ne prenaient que les espèces identifiées). Vrai sur l'écran des jeux
 // et pendant une partie lancée depuis lui.
-function accesTout() {
+// Étape R274 (19/11, test du 19/11, n° 19 ; choix 12A d'Aubin, qui REMPLACE l'étape 274) : critère « un jeu annexe fait jouer avec
+//   ce que le joueur connaît ». Espèce mystère et Portrait-robot ne prennent par défaut que les espèces du carnet (reconnues) ;
+//   sous 6 espèces du carnet dans le choix, ils sont grisés. Toutes les espèces seulement avec le Mode Caddie.
+//   • surPageJeux() : on est sur la page Jeux, ou dans une partie lancée depuis elle (l'ancien accesTout) ;
+//   • accesTout()   : toutes les espèces, découvertes ou non = page Jeux ET Mode Caddie.
+const MINIMUM_CARNET_JEUX = 6;
+function surPageJeux() {
   const vue = document.getElementById("vue-arcade");
   return depuisArcade || !!(vue && !vue.classList.contains("cache"));
+}
+function accesTout() { return surPageJeux() && modeCaddie(); }
+// Combien d'espèces du carnet (reconnues, avec une photo) il manque dans ce choix pour ouvrir ces deux jeux ; 0 en Mode Caddie
+function manqueCarnetJeux(especes) {
+  if (accesTout()) return 0;
+  return Math.max(0, MINIMUM_CARNET_JEUX - especes.filter(e => estRenseigne(e.photo) && estIdentifiee(e)).length);
 }
 // Étape E2-6 (15/11, demande d'Aubin) : le « Mode Caddie » de la page Jeux : tous les jeux de la page avec toutes les espèces,
 //   de tous les territoires (même pas encore ouverts), et Coup d'œil avec les espèces pas encore rencontrées.
@@ -130,7 +142,7 @@ function afficherArcade() {
   inter.innerHTML = `<button type="button" class="arc-caddie-bouton${caddie ? " on" : ""}" id="arc-caddie" aria-pressed="${caddie}">`
     + `<span class="arc-caddie-etat" aria-hidden="true">${caddie ? "✓" : ""}</span>Mode Caddie${caddie ? " · activé" : ""}</button>`
     + `<small>${caddie ? "Tous les jeux de cette page prennent toutes les espèces, de tous les territoires. Elles ne comptent pas comme rencontrées."
-                        : "Pour jouer avec toutes les espèces, de tous les territoires, dans tous les jeux de cette page."}</small>`;
+                        : "Espèce mystère et Portrait-robot se jouent avec les espèces de votre carnet. Le Mode Caddie : toutes les espèces, de tous les territoires, dans tous les jeux de cette page."}</small>`;
   document.getElementById("arc-caddie").onclick = () => {
     suivi.modeCaddie = !caddie; suivi.coupToutes = false;   // l'ancien interrupteur ne compte plus à part
     suivi.territoiresLibres = null;                        // en Mode Caddie : tous les territoires ; sinon : celui où l'on est

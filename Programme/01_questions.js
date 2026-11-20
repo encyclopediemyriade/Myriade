@@ -17,9 +17,8 @@ for (const espece of ESPECES) {
     if (!COLONNES_IDENTITE.includes(colonne)) espece[colonne] = null;
   }
 }
-// Étape R270 (test du 19/11, n° 23) : « orange » ne prend pas de « s » (des pattes orange). Les classeurs écrivent encore
-//   « Oranges » (8 oiseaux, colonne pattes_aspect) : corrigé ici à la lecture, en attendant de l'être dans les classeurs.
-for (const espece of ESPECES) if (espece.pattes_aspect === "Oranges") espece.pattes_aspect = "Orange";
+// Étape R270 (test du 19/11, n° 23) : « orange » ne prend pas de « s » (des pattes orange). Étape R271 : les 11 classeurs
+//   écrivent maintenant « Orange » (8 oiseaux, colonne pattes_aspect) ; la correction à la lecture n'est plus nécessaire.
 
 // ==================================================================
 // 1. LES CARACTÉRISTIQUES SUR LESQUELLES ON POSE DES QUESTIONS
@@ -904,7 +903,7 @@ const CONFUSIONS = [
   { especes: ["Goujon occitan", "Barbeau fluviatile"], critere: "petit (12 cm), avec deux barbillons, pour le goujon ; grand, avec quatre barbillons, pour le barbeau" },
   { especes: ["Semi-Apollon", "Apollon", "Gazé"], critere: "ailes blanches transparentes avec deux taches noires, sans rouge, pour le semi-Apollon ; taches rouges cerclées de noir pour l'apollon ; ailes blanches veinées de noir, sans taches, pour le gazé" },
   { especes: ["Cordulégastre bidenté", "Cordulégastre annelé"], critere: "derrière les yeux, une tache noire pour le bidenté ; jaune pour l'annelé" },
-  { especes: ["Bourdon des Pyrénées", "Bourdon terrestre"], critere: "trois bandes jaune-gris (collier, arrière du thorax, début de l'abdomen) pour le bourdon des Pyrénées ; deux bandes jaune vif et le bout de l'abdomen blanc pour le bourdon terrestre" },
+  { especes: ["Bourdon des Pyrénées", "Bourdon terrestre"], critere: "trois bandes jaune-gris (collier, milieu du corps, début de l'abdomen) pour le bourdon des Pyrénées ; deux bandes jaune vif et le bout de l'abdomen blanc pour le bourdon terrestre" },
   { especes: ["Abeille charpentière", "Bourdon terrestre", "Abeille mellifère"], critere: "toute noire aux reflets bleus, ailes violettes pour l'abeille charpentière ; rayé jaune et noir, au bout blanc, pour le bourdon ; fine et brune pour l'abeille mellifère" },
   { especes: ["Dectique verrucivore", "Grande sauterelle verte"], critere: "trapu, ailes à peine plus longues que le corps et souvent taché de brun pour le dectique ; plus fine, toute verte, ailes bien plus longues que le corps pour la grande sauterelle" },
   { especes: ["Miramelle pyrénéenne", "Miramelle alpestre"], critere: "presque identiques : la miramelle pyrénéenne ne vit que dans les Pyrénées, l'alpestre dans les Alpes" },
@@ -1089,12 +1088,12 @@ const CONFUSIONS = [
   { especes: ["Moiré de la canche", "Moiré franconien"], critere: "petit, avec des points noirs sans centre blanc dans des taches orange, sur les hautes chaumes, pour le moiré de la canche ; ocelles plus grands, au centre blanc, pour le moiré franconien" },
   { especes: ["Tristan", "Myrtil"], critere: "dessus brun sombre uni, dessous à ocelles cerclés de jaune sur les deux ailes pour le tristan ; une plage orange et un seul ocelle sur l'aile de devant pour le myrtil" },
   { especes: ["Fadet commun", "Fadet des tourbières"], critere: "petit, orange ocre, un petit ocelle au bout de l'aile de devant, dans les prés, pour le fadet commun ; plus grand, dessous plus gris, dans les tourbières, pour le fadet des tourbières" },
-  { especes: ["Aeschne subarctique", "Aeschne bleue"], critere: "bandes du thorax jaunes très fines et petites taches bleues, dans les tourbières à sphaignes, pour l'aeschne subarctique ; larges bandes vert pomme sur le thorax pour l'aeschne bleue" },
+  { especes: ["Aeschne subarctique", "Aeschne bleue"], critere: "bandes jaunes très fines à l'avant du corps et petites taches bleues, dans les tourbières à sphaignes, pour l'aeschne subarctique ; larges bandes vert pomme à l'avant du corps pour l'aeschne bleue" },
   { especes: ["Libellule à quatre taches", "Libellule déprimée"], critere: "une petite tache sombre au milieu du bord de chaque aile et abdomen brun qui s'affine pour la libellule à quatre taches ; abdomen très large et aplati, bleu chez le mâle, pour la déprimée" },
   { especes: ["Grillon des bois", "Grillon champêtre"], critere: "petit (environ 1 cm), brun, dans les feuilles mortes des bois pour le grillon des bois ; gros, noir luisant à grosse tête, devant son terrier dans les prés, pour le grillon champêtre" },
   { especes: ["Carabe à reflets dorés", "Carabe doré"], critere: "côtes noires sur des élytres dorés à reflets cuivrés, dans les forêts de montagne, pour le carabe à reflets dorés ; côtes vertes comme le reste des élytres et pattes rousses, dans les champs et jardins, pour le carabe doré" },
   { especes: ["Géotrupe des bois", "Géotrupe du fumier"], critere: "élytres presque lisses, dessous bleu-violet métallique, dans les forêts, pour le géotrupe des bois ; élytres creusés de sillons profonds pour le géotrupe du fumier" },
-  { especes: ["Bourdon des champs", "Bourdon terrestre"], critere: "thorax roux fauve et pas de bout blanc pour le bourdon des champs ; noir à bandes jaunes et bout de l'abdomen blanc pour le bourdon terrestre" },
+  { especes: ["Bourdon des champs", "Bourdon terrestre"], critere: "dos roux fauve et pas de bout blanc pour le bourdon des champs ; noir à bandes jaunes et bout de l'abdomen blanc pour le bourdon terrestre" },
   { especes: ["Pholque phalangide", "Faucheux"], critere: "une vraie araignée en deux parties, très longues pattes fines, qui tisse une toile dans les coins des maisons, pour le pholque ; corps rond d'un seul bloc, sans toile, pour le faucheux" },
   { especes: ["Épeire des fissures", "Épeire diadème"], critere: "abdomen plat brun sombre à dessin en feuille, cachée le jour dans les fentes d'écorce, pour l'épeire des fissures ; une croix blanche sur l'abdomen pour l'épeire diadème" },
   { especes: ["Cloporte rugueux", "Cloporte des murs"], critere: "dos gris mat couvert de petits grains rugueux pour le cloporte rugueux ; dos lisse et luisant à taches jaunâtres en rangées pour le cloporte des murs" },
@@ -1112,8 +1111,8 @@ const CONFUSIONS = [
   { especes: ["Loche de rivière", "Loche franche"], critere: "corps aplati sur les côtés, rangées de taches sombres et petite épine sous l'œil pour la loche de rivière ; corps arrondi et marbré, sans épine, pour la loche franche" },
   { especes: ["Épinochette", "Épinoche"], critere: "une rangée de 7 à 12 petites épines sur le dos pour l'épinochette ; seulement 3 grandes épines pour l'épinoche" },
   { especes: ["Pseudorasbora", "Goujon commun"], critere: "bouche tournée vers le haut, sans barbillons, et une bande sombre le long du flanc pour le pseudorasbora ; bouche en dessous avec deux barbillons pour le goujon" },
-  { especes: ["Petite biche", "Lucane cerf-volant"], critere: "toute noire et mate, tête presque aussi large que le corselet, pour la petite biche ; élytres brun-rouge luisants et, chez le mâle, grandes mâchoires en bois de cerf pour le lucane" },
-  { especes: ["Coccinelle asiatique", "Coccinelle à sept points"], critere: "couleurs et nombre de points très variables, souvent un dessin noir en M sur un corselet blanc pour l'asiatique ; toujours rouge à 7 points noirs, corselet noir à deux taches blanches pour celle à sept points" },
+  { especes: ["Petite biche", "Lucane cerf-volant"], critere: "toute noire et mate, tête presque aussi large que l'avant du dos, pour la petite biche ; élytres brun-rouge luisants et, chez le mâle, grandes mâchoires en bois de cerf pour le lucane" },
+  { especes: ["Coccinelle asiatique", "Coccinelle à sept points"], critere: "couleurs et nombre de points très variables, souvent un dessin noir en M sur fond blanc, derrière la tête, pour l'asiatique ; toujours rouge à 7 points noirs, avec deux taches blanches sur fond noir derrière la tête, pour celle à sept points" },
   { especes: ["Zoropsis à pattes épineuses", "Tégénaire des maisons"], critere: "pattes épaisses garnies d'épines et dessins bruns sur le dos, sans toile (elle chasse à l'affût) pour la zoropsis ; longues pattes fines et toile en nappe dans un coin pour la tégénaire" },
   { especes: ["Philoscie des mousses", "Cloporte des murs"], critere: "petite (environ 1 cm), brun luisant marbré, tête foncée, très rapide pour la philoscie ; plus grande, grise avec des taches jaunâtres en rangées pour le cloporte des murs" },
   { especes: ["Mulette épaisse", "Anodonte des cygnes"], critere: "coquille épaisse et petite, avec des dents à la charnière, pour la mulette ; très grande coquille mince et fragile, sans dents, pour l'anodonte" },
@@ -1257,12 +1256,12 @@ const QUESTIONS_PORTRAIT = [
   // Étape 135 : ni couleur voisine, ni couleur citée dans sa description parmi les mauvaises réponses
   // Étape 204 (18/10) : plus de question de couleur pour les poissons (sous l'eau, la lumière et les reflets
   // changent trop la couleur sur la photo : brun, gris et argenté se confondent)
-  questionPortrait({ champ: "couleur_dominante", libelle: "Couleur", proches: COULEURS_PROCHES,
+  questionPortrait({ champ: "couleur_dominante", libelle: "Couleur principale", proches: COULEURS_PROCHES,
     onglets: ["Mammiferes", "Oiseaux", "Amphibiens", "Reptiles", "Insectes", "Araignees_mille_pattes", "Crustaces", "Mollusques", "Vers_meduses_compagnie"],
     pieges: e => piegesPortrait(e, e.couleur_dominante, LIRE_COULEUR_DOMINANTE, COULEURS_PROCHES, [...couleursCitees(e), ...listeCouleursPlumage(e)]),   // R135 : ni ses couleurs bien visibles
-    question: e => couleurVariable(e) ? "Quelle couleur peut-il avoir ?" : "Quelle est sa couleur dominante ?",
+    question: e => couleurVariable(e) ? "Quelle couleur peut-il avoir ?" : "Quelle est sa couleur principale ?",
     explication: (e, v) => couleurVariable(e) ? `Sa couleur varie d'un individu à l'autre : ${minuscule(v)}, entre autres.`
-                                              : `Sa couleur dominante : ${minuscule(v)}.` }),
+                                              : `Sa couleur principale : ${minuscule(v)}.` }),
 
   // -- Mammifères --
   questionPortrait({ champ: "cornes_bois_forme", onglets: ["Mammiferes"], libelle: "Forme des cornes",
@@ -1293,7 +1292,11 @@ const QUESTIONS_PORTRAIT = [
   questionPortrait({ champ: "bec_forme", onglets: ["Oiseaux"], libelle: "Bec",   // étape 311 : « Fin et droit » fusionné dans « Droit et pointu » (décision de l'utilisateur, 27/10)
     question: "Quelle est la forme de son bec ?",
     explication: (e, v) => `Son bec : ${minuscule(v)}.` }),
+  // Étape R271 (test du 19/11, n° 7 : pigeon ramier, bec « Multicolore », « Rose » et « Jaune » comptés faux) : un bec de
+  //   plusieurs couleurs n'est demandé que si la fiche dit lesquelles (au moins 2 couleurs dans l'onglet Pieges_interdits) :
+  //   elles et leurs voisines ne sont alors jamais des pièges (aussiVraiPour, 02). Sinon, pas de question (5 oiseaux).
   questionPortrait({ champ: "bec_couleur", onglets: ["Oiseaux"], libelle: "Couleur du bec", proches: BECS_PROCHES,
+    valeur: e => { const v = valeurPortrait(e, "bec_couleur"); return v === "Multicolore" && couleursDuBecAussi(e).length < 2 ? "NA" : v; },
     question: "De quelle couleur est son bec ?",
     explication: (e, v) => `Son bec : ${minuscule(v)}.` }),
   questionPortrait({ champ: "ornement_tete", onglets: ["Oiseaux"], libelle: "Sur la tête",
@@ -1494,6 +1497,15 @@ const AFF_REGIME_SIMPLE = {
   "coprophage": "se nourrit de bouses et de crottes", "suceur de sang": "se nourrit de sang"
 };
 function regimeSimple(v) { return AFF_REGIME_SIMPLE[minuscule(sansPoint(v))] || ""; }
+// Étape R271 (test du 19/11, n° 22 : « Carnivore / Omnivore / Granivore », « Lequel est insectivore ? ») : les réponses de la
+//   question du régime sont elles aussi en mots simples. La question devient « Que mange-t-il ? » ; le mot savant reste
+//   dans l'explication et sur la fiche, entre parenthèses, pour qui veut l'apprendre.
+const REGIME_REPONSE = {
+  "insectivore": "Surtout des insectes", "carnivore": "D'autres animaux", "herbivore": "Des plantes", "omnivore": "De tout",
+  "granivore": "Surtout des graines", "piscivore": "Surtout des poissons", "filtreur": "Ce qu'il filtre dans l'eau",
+  "détritivore": "Des débris et des restes", "coprophage": "Des bouses et des crottes", "suceur de sang": "Du sang"
+};
+function regimeReponse(v) { return REGIME_REPONSE[minuscule(sansPoint(v))] || ""; }
 const AFF_MILIEU = { "Falaises et rochers": "parmi les falaises et les rochers", "Alpages et pelouses d'altitude": "dans les alpages et les pelouses d'altitude",
   "Forêt": "en forêt", "Campagne, haies et jardins": "dans la campagne, les haies et les jardins", "Rivières et torrents": "dans les rivières et les torrents",
   "Landes et coteaux secs": "dans les landes et sur les coteaux secs", "Mares et étangs": "dans les mares et les étangs", "Lacs": "dans les lacs",
@@ -1722,10 +1734,11 @@ function affTable(table, v, faire, repli) { const p = table[sansPoint(v)] || tab
 
 const QUESTIONS = [
   { champ: "regime_alimentaire_type", pictos: true, niveau: 1, libelle: "Régime",
-    question: "Quel est son régime alimentaire ?",
+    question: "Que mange-t-il ?",   // R271 (avant : « Quel est son régime alimentaire ? »)
+    affichageFiche: (e, v) => regimeSimple(v) ? `${majuscule(regimeSimple(v))} (${minuscule(sansPoint(v))})` : majuscule(v),   // R271
     affirmation: (v, e) => regimeSimple(v) ? `${IlElle(e)} ${regimeSimple(v)}.`   // R263 : en mots simples
       : `${IlElle(e)} est ${ilElle(e) === "elle" && AFF_REGIME_F[minuscule(v)] ? AFF_REGIME_F[minuscule(v)] : minuscule(v)}.`,   // E2-4
-    inverse: v => `Lequel est ${v} ?`,
+    inverse: v => regimeSimple(v) ? `Lequel ${regimeSimple(v)} ?` : `Lequel est ${v} ?`,   // R271 : « Lequel mange surtout des insectes ? »
     explication: e => regimeSimple(e.regime_alimentaire_type) ? `${IlElle(e)} ${regimeSimple(e.regime_alimentaire_type)} (régime : ${e.regime_alimentaire_type}).` : `Son régime : ${e.regime_alimentaire_type}.` },
 
   // Étape R166 (Revoir 13) : comme pour le petit, la question n'est posée que si le groupe a un nom propre à peu d'espèces
@@ -1837,7 +1850,8 @@ const QUESTIONS = [
     question: "Comment s'appelle son abri ?",
     affirmation: v => `On appelle son abri « ${minuscule(sansPoint(v))} ».`,   // E2-4
     inverse: v => `Lequel a pour abri : ${minuscule(v)} ?`,
-    explication: (e, v) => `Son abri : ${minuscule(v)}.` },
+    // R271 (n° 22) : « aire » est le mot juste, mais peu connu : l'explication dit ce que c'est
+    explication: (e, v) => /^aire$/i.test(sansPoint(v)) ? "Son abri : une aire, le grand nid des rapaces." : `Son abri : ${minuscule(v)}.` },
 
   // "ignorer" : valeurs sur lesquelles on ne pose pas de question.
   // "formats" : limite les formats autorisés. Ici, seulement le QCM
@@ -1850,7 +1864,11 @@ const QUESTIONS = [
   { champ: "statut_conservation", pictos: true, niveau: 2, libelle: "Statut de menace",
     ignorer: ["Non évalué", "Données insuffisantes", "Non applicable", "NA"], formats: ["qcm"],   // étape 193 : « Données insuffisantes » n'est pas un niveau de menace
     valeur: e => statutFranceUtile(e) ? e.statut_conservation_france : e.statut_conservation,
-    question: e => statutFranceUtile(e) ? "Quel est son statut de menace en France ?" : "Quel est son statut de menace dans le monde ?",
+    // Étape R273 (19/11, choix 14A d'Aubin, test du 19/11 n° 22 ; complète 7B) : les réponses sont en mots simples
+    //   (« Pas menacée · Presque menacée · Menacée · Très menacée · Au bord de la disparition », motStatut) ; le terme
+    //   officiel vient après la réponse (« Sur la liste rouge de France : Vulnérable. ») et sur la fiche.
+    question: e => statutFranceUtile(e) ? "En France, cette espèce est-elle menacée ?" : "Dans le monde, cette espèce est-elle menacée ?",
+    affichageFiche: (e, v) => STATUTS_SIMPLES[String(v).trim()] ? `${motStatut(v)} (liste rouge ${statutFranceUtile(e) ? "de France" : "mondiale"} : ${String(v).trim()})` : majuscule(String(v)),
     explication: (e, v) => explicationStatut(e, v) },
 
   // Étape R268 (40.13, note 17a d'Aubin : « augmente / stable / diminue ? ») : la tendance de sa population en France,
@@ -2053,7 +2071,7 @@ const QUESTIONS = [
     pieges: e => autresDeLaListe(e, "deplacement_saisonnier"),
     explication: (e, v) => `Il ${minuscule(v)}.` },   // étape R149 (avant : « Au fil des saisons, il migre selon la saison »)
 
-  { champ: "saison_frai", pictos: true, niveau: 3, libelle: "Frai", formats: ["qcm", "vraifaux"],
+  { champ: "saison_frai", pictos: true, niveau: 3, libelle: "Ponte",   // R271 (n° 22) : « Ponte » (avant : « Frai ») formats: ["qcm", "vraifaux"],
     question: "À quelle saison pond-il ses œufs ?",
     affirmation: (v, e) => `${IlElle(e)} pond ses œufs ${saisonEnPhrase(v)}.`,   // E2-7 : il / elle (note 8)                     // étape R166 (avant : « à cette saison : … »)
     pieges: e => sansSaisonCommune(e, "saison_frai"),                               // étape R166 : jamais une saison en commun
@@ -2255,11 +2273,15 @@ const TENDANCES_PHRASES = {
 const STATUTS_INUTILES = ["Non évalué", "Données insuffisantes", "Non applicable", "NA"];
 function statutUtile(v) { return estRenseigne(v) && !STATUTS_INUTILES.includes(String(v).trim()); }
 function statutFranceUtile(e) { return statutUtile(e.statut_conservation_france); }
+// Étape R273 (14A) : le statut en mots simples (les réponses de la question) ; le terme officiel de la liste rouge après la réponse
+const STATUTS_SIMPLES = { "Préoccupation mineure": "Pas menacée", "Quasi menacée": "Presque menacée", "Vulnérable": "Menacée",
+  "En danger": "Très menacée", "En danger critique": "Au bord de la disparition" };
+function motStatut(v) { return STATUTS_SIMPLES[String(v).trim()] || majuscule(String(v)); }
 function explicationStatut(e, v) {
-  if (!statutFranceUtile(e)) return `Dans le monde : ${minuscule(v)} (pas de classement sur la liste rouge de France).`;
-  let t = `En France : ${minuscule(v)}.`;
+  if (!statutFranceUtile(e)) return `Sur la liste rouge mondiale : ${String(v).trim()} (pas de classement sur la liste rouge de France).`;
+  let t = `Sur la liste rouge de France : ${String(v).trim()}.`;
   if (statutUtile(e.statut_conservation) && String(e.statut_conservation).trim() !== String(v).trim())
-    t += ` Dans le monde : ${minuscule(e.statut_conservation)}.`;
+    t += ` Dans le monde : ${minuscule(motStatut(e.statut_conservation))} (${String(e.statut_conservation).trim()}).`;
   if (STATUTS_MENACES_FR.includes(String(v).trim()) && estRenseigne(e.cause_declin) && e.cause_declin !== "NA")
     t += ` En cause surtout : ${minuscule(String(e.cause_declin).trim().replace(/\.$/, ""))}.`;
   return t;

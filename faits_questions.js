@@ -1464,7 +1464,7 @@ const QUESTIONS_INSOLITES = {
    "espece": "Escargot des jardins",
    "format": "lequel",
    "etape": "3",
-   "fait": "Cet escargot vit jusqu'en Islande, tout au nord de son aire de répartition.",
+   "fait": "Cet escargot vit jusqu'en Islande, tout au nord de sa zone de présence.",
    "question": "Lequel de ces escargots vit jusqu'en Islande, tout au nord de l'Europe ?",
    "pieges": [
     "Escargot de Bourgogne",
@@ -3867,7 +3867,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Ses pattes arrière sont parfaitement droites, comme chez les autres nécrophores.",
-   "explication": "Avec les poils dorés à l'avant de son thorax, ces pattes courbées aident à le reconnaître.",
+   "explication": "Avec les poils dorés à l'avant de son dos, ces pattes courbées aident à le reconnaître.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -6882,7 +6882,7 @@ const QUESTIONS_INSOLITES = {
     "Couleuvre d'Esculape"
    ],
    "faux": "Elle craint le froid : on ne la trouve qu'au sud de l'Europe, autour de la Méditerranée.",
-   "explication": "Son aire s'étend du Royaume-Uni jusqu'à la côte pacifique de l'Asie.",
+   "explication": "On la trouve du Royaume-Uni jusqu'à la côte pacifique de l'Asie.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -6933,13 +6933,13 @@ const QUESTIONS_INSOLITES = {
    "espece": "Pipistrelle de Kuhl",
    "format": "lequel",
    "etape": "3",
-   "fait": "Depuis 1980, son aire en Europe s'est fortement agrandie, probablement grâce à des hivers plus doux.",
-   "question": "Lequel de ces animaux a vu son aire de répartition en Europe fortement s'agrandir depuis 1980 ?",
+   "fait": "Depuis 1980, sa zone de présence en Europe s'est fortement agrandie, probablement grâce à des hivers plus doux.",
+   "question": "Lequel de ces animaux a vu sa zone de présence en Europe fortement s'agrandir depuis 1980 ?",
    "pieges": [
     "Lérot",
     "Grand murin"
    ],
-   "faux": "Depuis 1980, son aire de répartition en Europe a fortement rétréci, à cause des hivers plus doux.",
+   "faux": "Depuis 1980, sa zone de présence en Europe a fortement rétréci, à cause des hivers plus doux.",
    "explication": "D'abord limitée au pourtour méditerranéen, elle a gagné la Pologne, l'Ukraine et le Royaume-Uni.",
    "apresAnecdote": true,
    "medaille": "bronze"
@@ -6966,13 +6966,13 @@ const QUESTIONS_INSOLITES = {
    "espece": "Lérot",
    "format": "lequel",
    "etape": "3",
-   "fait": "En quelques décennies, son aire de répartition en Europe a diminué de moitié environ.",
-   "question": "Lequel de ces animaux a perdu environ la moitié de son aire de répartition en Europe, en quelques décennies ?",
+   "fait": "En quelques décennies, sa zone de présence en Europe a diminué de moitié environ.",
+   "question": "Lequel de ces animaux a perdu environ la moitié de sa zone de présence en Europe, en quelques décennies ?",
    "pieges": [
     "Pipistrelle de Kuhl",
     "Fouine"
    ],
-   "faux": "En quelques décennies, son aire de répartition en Europe a presque doublé.",
+   "faux": "En quelques décennies, sa zone de présence en Europe a presque doublé.",
    "explication": "Il a surtout disparu d'Europe centrale et de l'Est ; la France reste un de ses bastions.",
    "apresAnecdote": true,
    "medaille": "bronze"
@@ -8868,7 +8868,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Les œufs éclosent dans l'eau : la femelle les pond au fond de la mare.",
-   "explication": "Dans le nord de son aire, ces petits sortent du nid entre fin février et mai.",
+   "explication": "Dans le nord de sa zone de présence, ces petits sortent du nid entre fin février et mai.",
    "apresAnecdote": false,
    "medaille": ""
   },
@@ -10464,7 +10464,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Au moment de la reproduction, les nageoires du mâle deviennent rouge vif.",
-   "explication": "Ces boutons apparaissent au frai, quand le mâle défend un petit territoire dans les herbiers où les femelles viennent pondre.",
+   "explication": "Ces boutons apparaissent à la saison de la ponte, quand le mâle défend un petit territoire dans les herbiers où les femelles viennent pondre.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -10877,7 +10877,7 @@ const QUESTIONS_INSOLITES = {
    "question": "",
    "pieges": [],
    "faux": "Un proche cousin de l'est lui ressemble, mais on les distingue facilement à la couleur vive de leur plumage.",
-   "explication": "Le cri de notre pouillot est un « hu-it » à deux syllabes, celui du cousin de l'est (Pouillot oriental) un « tchup » sec ; leurs aires de nidification ne se touchent pas.",
+   "explication": "Le cri de notre pouillot est un « hu-it » à deux syllabes, celui du cousin de l'est (Pouillot oriental) un « tchup » sec ; les régions où ils nichent ne se touchent pas.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -11020,10 +11020,10 @@ const QUESTIONS_INSOLITES = {
    "espece": "Petite nymphe au corps de feu",
    "format": "vrai_faux",
    "etape": "1",
-   "fait": "Jeune adulte, elle a deux bandes jaunes sur le dessus du thorax, qui deviennent rouges en mûrissant.",
+   "fait": "Jeune adulte, elle a deux bandes jaunes sur le dos, derrière la tête, qui deviennent rouges en mûrissant.",
    "question": "",
    "pieges": [],
-   "faux": "Jeune adulte, elle a deux bandes rouges sur le dessus du thorax, qui deviennent jaunes en vieillissant.",
+   "faux": "Jeune adulte, elle a deux bandes rouges sur le dos, derrière la tête, qui deviennent jaunes en vieillissant.",
    "explication": "Ce changement de couleur trahit l'âge de la demoiselle, chez le mâle comme chez la femelle.",
    "apresAnecdote": false,
    "medaille": ""
@@ -13477,7 +13477,7 @@ const QUESTIONS_INSOLITES = {
     "Sole commune"
    ],
    "faux": "",
-   "explication": "Il fraie sur les fonds de sable propre où il vit ; selon les populations, la ponte a lieu à la fin de l'hiver ou en automne.",
+   "explication": "La ponte se fait sur les fonds de sable propre où il vit ; selon les populations, elle a lieu à la fin de l'hiver ou en automne.",
    "apresAnecdote": true,
    "medaille": "bronze"
   },
@@ -15597,7 +15597,7 @@ const QUESTIONS_INSOLITES = {
    "espece": "Truxale",
    "format": "vrai_faux",
    "etape": "3",
-   "fait": "Au nord de son aire, en Europe centrale, on l'observe de plus en plus souvent : les chercheurs y voient peut-être un effet du réchauffement.",
+   "fait": "Au nord de sa zone de présence, en Europe centrale, on l'observe de plus en plus souvent : les chercheurs y voient peut-être un effet du réchauffement.",
    "question": "",
    "pieges": [],
    "faux": "En Europe centrale, elle a disparu depuis les années 1950 : les chercheurs y voient un effet du froid.",

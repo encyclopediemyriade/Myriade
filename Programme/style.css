@@ -6329,3 +6329,131 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 .pl-rond small { overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
 /* n° 37 — première visite : « Reprendre ma partie » décollé du bouton « Continuer » */
 .bienvenue-reprendre { margin-bottom: 22px; }
+
+/* ============================================================
+   Étape R272 (19/11, session T3 du test du 19/11 : choix 1A, 3A)
+   ============================================================ */
+/* 1A · fin de Rencontre : une espèce pas encore rencontrée est une silhouette dans un rond clair (ni photo ni nom) */
+.resume-fin-tel .rft-rond.qe-silh { background: #E6DFCF; border-radius: 50%; }
+.resume-fin-tel .rft-rond.qe-silh img, .resume-fin-tel .qui-ensuite-bande .rft-rond.qe-silh img,
+.rft-ordi .rft-rond.qe-silh img, .rft-ordi .qui-ensuite-bande .rft-rond.qe-silh img {
+  object-fit: contain; padding: 6px; box-sizing: border-box; border-radius: 50%; opacity: 1; filter: none; background: #E6DFCF; }
+.resume-fin-tel .qe-choix.qe-silh { box-shadow: 0 0 0 3px #A8652A; }
+.resume-fin-tel .qe-choix.qe-silh img { box-shadow: none; }
+.resume-fin-tel .qe-avec-bouton .qe-choix.qe-silh.qe-choisi { box-shadow: 0 0 0 3px #FBF8F1, 0 0 0 5px var(--texte, #1F3A2E); }
+.resume-fin-tel .qe-avec-bouton .qe-choix.qe-choisi img { box-shadow: none; }
+.rft-ordi .qe-choix.qe-silh:hover img, .rft-ordi .qe-choix.qe-silh:focus-visible img { box-shadow: none; }
+/* 3A · « Voici son cri » et « Voici son empreinte » : un écran de lecture juste avant la question des deux cris / des deux empreintes */
+#reponses .avant-question { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 4px 0 10px; padding: 16px 14px 12px;
+  background: var(--carte); border: 1px solid var(--trait); border-radius: 14px; }
+#reponses .avant-cri .anneau-ecoute { position: static; width: 104px; height: 104px; margin: 0; filter: none; }
+#reponses .avant-cri .anneau-ecoute .piste  { fill: var(--papier); stroke: var(--trait); }
+#reponses .avant-cri .anneau-ecoute .arc    { stroke: var(--territoire); }
+#reponses .avant-cri .anneau-ecoute .disque { fill: #fff; stroke: var(--trait); stroke-width: 1; }
+#reponses .avant-question .aq-lib { font-size: 14px; color: var(--texte-doux); }
+#reponses .avant-question .aq-texte { margin: 4px 0 0; font-size: 15.5px; line-height: 1.4; color: var(--texte); text-align: center; }
+#reponses .avant-empreinte { position: relative; background: #efe8da; }
+#reponses .avant-empreinte .emp-seule { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; padding-right: 0; }
+@media (min-width: 761px) {
+  /* sur ordinateur : l'anneau à gauche, le texte à droite — l'écran tient sans descendre */
+  #reponses .avant-cri { flex-direction: row; justify-content: center; gap: 18px; padding: 14px 18px; }
+  #reponses .avant-cri .anneau-ecoute { width: 84px; height: 84px; flex: none; }
+  #reponses .avant-cri .aq-lib { display: none; }
+  #reponses .avant-cri .aq-texte { margin: 0; text-align: left; }
+  #reponses .avant-question { margin-bottom: 14px; }
+}
+
+/* ============================================================
+   Étape R273 (19/11/2026, soir, session T4 du test du 19/11 ; choix 7A, 8A, 9A, 11A, 13A, 14A, 15A d'Aubin)
+   ============================================================ */
+/* 7A · première visite : la carte de l'onglet « Carte » (noms sur la carte), le territoire choisi et la liste dessous */
+#vue-bienvenue .bv-carte { margin: 0 0 8px; background: #DCE8E4; }
+#vue-bienvenue .bv-carte svg { display: block; width: 100%; height: auto; max-height: none; margin: 0; }
+#carte-bienvenue path.bv-terr { transform: none; filter: none; cursor: default; }
+#carte-bienvenue path.bv-terr.jouable { cursor: pointer; }
+#carte-bienvenue path.bv-terr.choisi { stroke: #14221B; stroke-width: 6; filter: drop-shadow(0 6px 6px rgba(20,34,27,.35)); transform: none; }
+#carte-bienvenue .bv-nom-choisi { stroke-width: 9px; }
+#vue-bienvenue #noms-bienvenue { min-height: 0; margin: 10px 0 12px; }
+#vue-bienvenue #noms-bienvenue.vide { padding-top: 0; }
+.bv-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0 0 14px; }
+.bv-case { display: flex; align-items: center; gap: 8px; min-height: 46px; padding: 6px 10px; text-align: left; font: inherit; font-size: 13.5px; line-height: 1.2;
+  color: var(--texte); background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; cursor: pointer; }
+.bv-case .at-forme, .bv-case .at-pastille { flex: none; }
+.bv-case.choisi { border-color: var(--couleur-t); box-shadow: 0 0 0 2px var(--couleur-t); font-weight: 600; }
+@media (hover: hover) { .bv-case:hover { border-color: var(--couleur-t); } }
+@media (min-width: 761px) {
+  /* ordinateur : la carte à gauche, le nom choisi et la liste à droite — « Continuer » reste dans l'écran */
+  #vue-bienvenue .accueil:has(.bv-choix) { max-width: 880px; margin-top: 18px; margin-bottom: 20px; }
+  #vue-bienvenue .accueil:has(.bv-choix) .logo-bienvenue { width: 48px; height: 48px; margin-bottom: 4px; }
+  #vue-bienvenue .accueil:has(.bv-choix) .intro-jeu { margin-bottom: 12px; }
+  .bv-choix { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; margin-bottom: 14px; }
+  #vue-bienvenue .bv-carte { margin: 0; }
+  #vue-bienvenue .bv-carte svg { max-height: max(300px, calc(100vh - 290px)); }
+  #vue-bienvenue #noms-bienvenue { min-height: 5.2em; margin: 0 0 10px; }
+  .bv-liste { margin: 0; }
+  .bv-case { min-height: 38px; padding: 4px 10px; }
+}
+/* 9A · ordinateur : « Accueil » = la page du territoire ; l'onglet « Territoires » ; l'espèce du jour à côté des défis du jour */
+#onglet-carte .oc-ordi { display: none; }
+@media (min-width: 761px) {
+  #onglet-carte { display: inline-block; }
+  #onglet-carte .oc-tel { display: none; }
+  #onglet-carte .oc-ordi { display: inline; }
+  .ac-quotidien { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: stretch; margin: 0 0 30px; }
+  .ac-quotidien > .ac-defis { display: block; margin: 0; }
+  .ac-quotidien > .ac-defis > .jeu-encart { height: 100%; box-sizing: border-box; }
+  .ac-quotidien > .ac-jour { grid-template-columns: 1fr; grid-template-rows: 150px 1fr; margin: 0; }
+  .ac-quotidien > .ac-jour .ph { min-height: 0; }
+  .ac-quotidien > .ac-jour .corps { padding: 14px 20px 16px; }
+  .ac-quotidien > .ac-jour h2 { font-size: 24px; }
+  .ac-quotidien > .ac-jour p { font-size: 15px; margin-bottom: 10px; }
+  .ac-quotidien:has(> .ac-jour.cache) { grid-template-columns: minmax(0, 1fr); }
+  .ac-quotidien .recup-tout { margin-top: 12px; }
+  /* un seul chemin vers l'accueil en fin de partie : « Retour au territoire » y mène déjà */
+  #bouton-autre-defi, #bouton-fin-accueil { display: none !important; }
+}
+.jeu-encart .defis + .defis { margin-top: 8px; }
+/* 8A · Accueil du téléphone, le premier jour : « Votre première expédition » en tête */
+.mai-premiere { margin: 0; }
+.mp-carte { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; width: 100%; min-height: 190px; padding: 16px;
+  border: 0; border-radius: 14px; overflow: hidden; background: #1F3A2E; color: #FBF8F1; font: inherit; text-align: left; cursor: pointer; }
+.mp-carte img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mp-carte::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,34,27,.25), rgba(20,34,27,.88) 62%); }
+.mp-texte, .mp-go { position: relative; z-index: 1; }
+.mp-texte { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mp-texte small { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #E9C9A0; }
+.mp-texte b { font-family: Literata, Georgia, serif; font-size: 23px; line-height: 1.2; }
+.mp-texte em { font-style: normal; font-size: 14px; color: #DCD5C4; }
+.mp-go { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; border-radius: 10px; background: #E9C9A0; color: #1F3A2E; font-size: 17px; font-weight: 600; }
+.mp-carte:active .mp-go { filter: brightness(.93); }
+/* 13A · « Quitter le Duel ? » : une feuille en bas de l'écran (au milieu sur ordinateur) */
+.quitter-voile .dfx-feuille .bouton-accueil { width: 100%; margin: 0; }
+@media (min-width: 761px) { .quitter-voile { align-items: center; } .quitter-voile .dfx-feuille { max-width: 420px; border-radius: 16px; padding: 24px; } }
+/* 15A · « Rang dans ce territoire » sur la bannière du téléphone */
+.tm-rang .tm-rang-etiq { font-weight: 400; }
+
+/* ==================================================================
+   Étape R274 (19/11/2026, session T5 du test du 19/11 : Me tester, Duel, jeux annexes — choix 4A, 5A, 6A, 12A d'Aubin)
+   ================================================================== */
+/* 6A · les deux portes : même style clair pour les deux ; « Découvrir » pleine tant que l'expédition n'a jamais été jouée */
+.dfx-p.tester { background: #fff; border: 1.5px solid var(--trait); color: var(--texte); }
+.dfx-p.tester svg { color: var(--bon); }
+.dfx-p.decouvrir.pleine { background: var(--territoire, #1f3a2e); border: 0; color: #fbf8f1; }
+.dfx-p.decouvrir.pleine svg { color: #f3d9b0; }
+/* 5A · Me tester : le compte discret des erreurs, sous la barre */
+.dfx-erreurs { margin: 6px 0 0; font-size: 12.5px; line-height: 1.3; color: var(--texte-doux, #6b655b); text-align: right; }
+.dfx-erreurs.trop { color: var(--texte, #2b2a26); }
+/* 5A · le défi ne peut plus être réussi : continuer ou arrêter */
+.dfx-perdu { margin: 14px 0 0; padding: 14px; border: 1.5px solid var(--trait); border-radius: 12px; background: #fff; text-align: left; }
+.dfx-perdu b { display: block; font-family: var(--titre, Literata, Georgia, serif); font-size: 1.08rem; line-height: 1.3; }
+.dfx-perdu p { margin: 6px 0 12px; font-size: .92rem; line-height: 1.45; color: var(--texte-doux, #6b655b); }
+.dfx-perdu .dfx-boutons button { min-height: 52px; line-height: 1.25; padding: 8px 10px; white-space: normal; }
+.dfx-rep .dfx-perdu { margin-top: 18px; }
+.dfx-perdu { scroll-margin-bottom: 16px; }
+@media (max-width: 760px) {
+  /* les deux choix remplacent le bouton fixé : la page garde la place de la barre du bas */
+  body:has(#vue-defiexp:not(.cache) #dfx-perdu) { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  #vue-defiexp .dfx-perdu #dfx-arreter { position: static; box-shadow: none; width: 100%; }
+  #vue-defiexp .dfx-perdu { scroll-margin-bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 380px) { .dfx-perdu .dfx-boutons { grid-template-columns: 1fr; } }

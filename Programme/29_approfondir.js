@@ -88,9 +88,10 @@ function questionApprof(e, champ, dur) {
   pieges = dur ? piegesProches(e, q, pieges) : melanger(pieges.slice());
   pieges = pieges.slice(0, 3);
   if (pieges.length < 2) return null;
-  const choix = melanger([bonne, ...pieges]).map(v => majuscule(String(v)));
+  const ecrire = v => champ === "statut_conservation" && typeof motStatut === "function" ? motStatut(v) : majuscule(String(v));   // R273 (14A) : le statut en mots simples
+  const choix = melanger([bonne, ...pieges]).map(ecrire);
   if (new Set(choix.map(t => t.toLowerCase())).size < choix.length) return null;
-  return { espece: e, champ, texte, bonne: majuscule(String(bonne)), choix, ligne: ligneApprof(e, champ, bonne), fausses: pieges.slice() };
+  return { espece: e, champ, texte, bonne: ecrire(bonne), choix, ligne: ligneApprof(e, champ, bonne), fausses: pieges.slice() };
 }
 // Pièges « plus proches » : d'abord les valeurs que portent d'autres espèces de la même famille (le même « monde »)
 function piegesProches(e, q, pieges) {
@@ -207,7 +208,7 @@ function portesApprofondir(x, num) {
   return `<div class="dfx-portes apf-portes${toutes ? " finie" : ""}"><div class="etiq-jeu">Étape ${num} · Approfondir <em class="exp-facultatif">Facultatif</em></div>
       ${bandeau}
       <div class="dfx-deux-portes">${decouvrir}${tester}</div>
-      <small class="dfx-gain">+${gainEtape(x, 4)} ${PAS_SVG} · 1 par espèce connue par cœur, par l'une ou l'autre porte</small></div>`;
+      <small class="dfx-gain">+${gainEtape(x, 4)} ${PAS_SVG} · 1 par espèce connue par cœur, quelle que soit la façon</small></div>`;
 }
 function brancherPortesApprof(zone, x) {
   zone.querySelectorAll("[data-apf]").forEach(b => b.onclick = () => {
@@ -284,7 +285,7 @@ function afficherQuestionApprof() {
   const enRep = test && a.rep && a.rep.lance;
   const haut = test ? enteteTestApprof() : enteteDecouvrir(e);
   prechargerEspeces((test ? a.questions.slice(a.i + 1, a.i + 3) : (a.aPoser || []).slice(a.j + 1, a.j + 3)).map(z => z && z.espece), true);   // R264 (39)
-  zone.innerHTML = `<div class="cdo dfx apf">${haut}
+  zone.innerHTML = `<div class="cdo dfx apf">${haut}${test && !enRep ? ligneCompteErreurs(erreursTestApprof(a), erreursPermisesDefi(a.questions.length)) : ""}
       ${APPROF_BANDEAU ? bandeauApprof(e, test ? (enRep ? "Repêchage" : "Me tester") : `Question ${a.j + 1} sur ${a.aPoser.length}`)
         : `<div class="apf-espece petite"><span class="apf-ph">${celluleImage(e, true)}</span><span><small>${test ? (enRep ? "Repêchage" : "Me tester") : `Question ${a.j + 1} sur ${a.aPoser.length}`}</small><b>${echapper(e.nom_courant)}</b></span></div>`}
       <p class="cdo-q apf-q">${echapper(q.texte)}</p>${q.affirmation ? `<p class="apf-affirmation">${echapper(q.affirmation)}</p>` : ""}
@@ -323,7 +324,10 @@ function repondreApprof(choisie, bouton) {
     fin = a.j >= a.aPoser.length - 1;
     texteSuite = !fin ? "Question suivante" : a.k >= a.especes.length - 1 ? "Voir le bilan" : "Espèce suivante";
   }
-  const suivant = `<button class="cdo-suivant" id="dfx-suivant">${texteSuite}</button>`;
+  // R274 (5A, 27_defi_exp.js) : le compte des erreurs suit ; test perdu (même repêché) → le choix, une seule fois
+  if (test && !enRep) majCompteErreurs(erreursTestApprof(a), erreursPermisesDefi(a.questions.length));
+  const perdu = test && !enRep && !fin && !juste && !a.perduVu && defiPerdu(erreursTestApprof(a), erreursPermisesDefi(a.questions.length));
+  const suivant = perdu ? blocDefiPerdu("test", "Arrêter et découvrir ces espèces") : `<button class="cdo-suivant" id="dfx-suivant">${texteSuite}</button>`;
   const retour = document.getElementById("dfx-retour");
   // Étape R265 (40.12, choix 6A) : juste ou faux, une ligne « Oui » / « Pas cette fois » + la phrase de sa fiche + un complément
   //   (une autre case de sa fiche, jamais une case demandée plus loin dans la partie) ; « Sur sa fiche » ne répète plus la réponse.
@@ -338,7 +342,7 @@ function repondreApprof(choisie, bouton) {
   else retour.innerHTML = `${ligneOui}${suivant}`;
   if (test) { const barre = zone.querySelector(".dfx-barre"); if (barre) barre.outerHTML = enteteTestApprof().match(/<div class="dfx-barre[^"]*"[^>]*>.*<\/div>$/s)[0]; }
   else { const r = zone.querySelector(".apf-ronds"); if (r) r.outerHTML = ronds(a.x, e); }
-  document.getElementById("dfx-suivant").onclick = () => {
+  const avancer = () => {
     if (test) {
       if (fin) { finTestApprof(); return; }
       if (enRep) a.rep.i++; else a.i++;
@@ -350,6 +354,13 @@ function repondreApprof(choisie, bouton) {
     else if (a.k < a.especes.length - 1) { a.k++; preparerEspeceDecouvrir(); }
     else finDecouvrirApprof();
   };
+  if (perdu) {   // R274 : les deux choix sont dans la page, sous l'explication (pas de bouton fixé)
+    brancherChoixTestPerdu(avancer);
+    const bloc = document.getElementById("dfx-perdu");
+    setTimeout(() => { if (document.body.contains(bloc)) bloc.scrollIntoView({ block: "end", behavior: "smooth" }); }, 60);
+    return;
+  }
+  document.getElementById("dfx-suivant").onclick = avancer;
   const btn = document.getElementById("dfx-suivant");
   if (typeof montrerSuiteJeu === "function") montrerSuiteJeu(btn, btn.getBoundingClientRect());
 }
@@ -527,7 +538,7 @@ function sauverTestApprof() {
   const a = apf;
   if (!a || a.mode !== "tester" || !suivi) return;
   suivi.approfTestsEnCours = suivi.approfTestsEnCours || {};
-  suivi.approfTestsEnCours[a.x.id] = { i: a.i, aide: a.aide, questions: a.questions.map(plateQ), bA: a.bonusApres, bF: !!a.bonusFait,
+  suivi.approfTestsEnCours[a.x.id] = { i: a.i, aide: a.aide, pv: !!a.perduVu, questions: a.questions.map(plateQ), bA: a.bonusApres, bF: !!a.bonusFait,
     rep: a.rep ? { i: a.rep.i, lance: !!a.rep.lance, questions: a.rep.questions.map(plateQ) } : null };
   sauvegarder();
 }
@@ -545,12 +556,40 @@ function reprendreTestApprof(x) {
   if (questions.some(q => !q) || (repQ && repQ.some(q => !q))) { delete suivi.approfTestsEnCours[x.id]; lancerTestApprof(x); return; }   // données changées
   const i = questions.findIndex(q => q.choisi === null);
   apf = { mode: "tester", x, questions, i: i < 0 ? questions.length - 1 : i, aide: s.aide !== false, rep: null, avantGain: gainExp(x), avantApprofondie: approfondie(x),
-          bonusApres: s.bA === undefined ? -1 : s.bA, bonusFait: !!s.bF };
+          bonusApres: s.bA === undefined ? -1 : s.bA, bonusFait: !!s.bF, perduVu: !!s.pv };
   if (repQ) { const j = repQ.findIndex(q => q.choisi === null); apf.rep = { questions: repQ, i: j < 0 ? repQ.length - 1 : j, lance: !!s.rep.lance }; }
   montrer("defiexp");
   if (apf.rep && !apf.rep.lance) { annonceRepechageApprof(); return; }
   if (i < 0 && !apf.rep) { finTestApprof(); return; }
+  if (!apf.rep && !apf.perduVu && i > 0 && defiPerdu(erreursTestApprof(apf), erreursPermisesDefi(questions.length))) { afficherChoixTestPerdu(); return; }   // R274 (5A)
   afficherQuestionApprof();
+}
+// R274 (5A) : « Arrêter et découvrir ces espèces » — le test s'arrête là : les espèces dont toutes les questions sont justes
+//   sont gardées (comme à la fin d'un test pas réussi), il compte comme un test joué, puis « Découvrir » d'Approfondir commence.
+function arreterTestApprof() {
+  const a = apf; if (!a) return;
+  const x = a.x, c = new Map();
+  for (const q of a.questions) { const k = c.get(q.espece) || { poses: 0, bons: 0 }; k.poses++; if (q.choisi === q.bonne) k.bons++; c.set(q.espece, k); }
+  suivi.approfondiesDefi = suivi.approfondiesDefi || [];
+  for (const e of c.keys()) if (c.get(e).bons === c.get(e).poses && !suivi.approfondiesDefi.includes(e.nom_courant)) suivi.approfondiesDefi.push(e.nom_courant);
+  if (suivi.approfTestsEnCours) delete suivi.approfTestsEnCours[x.id];
+  const poses = a.questions.filter(q => q.choisi !== null).length, bons = a.questions.filter(q => q.choisi === q.bonne).length;
+  suivi.approfTests = suivi.approfTests || {};
+  const st = suivi.approfTests[x.id] = suivi.approfTests[x.id] || { joues: 0, reussi: false, meilleur: 0 };
+  st.joues++; st.meilleur = Math.max(st.meilleur || 0, bons); st.dernier = { bons, total: poses };
+  sauvegarder();
+  lancerDecouvrirApprof(x);
+}
+function brancherChoixTestPerdu(continuer) {
+  document.getElementById("dfx-continuer").onclick = () => { apf.perduVu = true; sauverTestApprof(); continuer(); };
+  document.getElementById("dfx-arreter").onclick = arreterTestApprof;
+}
+function afficherChoixTestPerdu() {
+  const a = apf, zone = document.getElementById("vue-defiexp");
+  zone.innerHTML = ecranDefiPerdu(`Approfondir · ${a.x.titre}`, "test", "Arrêter et découvrir ces espèces", erreursTestApprof(a), erreursPermisesDefi(a.questions.length));
+  document.getElementById("dfx-quitter").onclick = mettreTestApprofDeCote;
+  brancherChoixTestPerdu(afficherQuestionApprof);
+  window.scrollTo(0, 0);
 }
 // R249 : le repêchage, « par un autre chemin » = un autre sujet de la même espèce (sinon le même sujet, d'autres réponses)
 function lancerRepechageApprof(a) {

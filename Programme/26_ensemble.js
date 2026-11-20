@@ -100,6 +100,30 @@ function sensGardeManger(k, A, B) {
   if (ib >= 0 && ib < j && ia < 0) return { mangeur: A, ressource: B };
   return null;
 }
+// Étape R271 : cette espèce pourrait-elle, elle aussi, être en concurrence avec le sujet pour la même chose ?
+//   - les trous et les nichoirs : elle niche en cavité (nid principal, autres nids de la fiche, pièges interdits) ou d'abord
+//     dans les bâtiments ; une autre place pour nicher (îlots, roselières…) : elle niche au même endroit que l'une des deux ;
+//   - la nourriture (« proies », « plantes », « campagnols »…) : elle partage un groupe d'aliments avec les deux ;
+//   - le reste (une place, un territoire) : elle est du même ordre que le sujet (deux lézards, deux rongeurs).
+function nidsPossibles(e) {
+  const n = estRenseigne(e.emplacement_nid) && e.emplacement_nid !== "NA" ? [String(e.emplacement_nid).trim()] : [];
+  return [...n, ...nidsAussi(e)];
+}
+function concurrentPossible(r, o) {
+  const phrase = sansAccent(String(r.explication || ""));
+  if (/trou|nichoir|cavite/.test(phrase))   // les trous et les nichoirs : tout oiseau qui niche en cavité, ou d'abord dans les bâtiments
+    return nidsPossibles(o).includes("Cavité d'arbre") || nidsPossibles(o)[0] === "Bâtiment";
+  if (/nich|\bnid|ilot|colonie|roseli|roseau/.test(phrase)) {   // une autre place pour nicher : le même endroit que l'une des deux
+    const lieux = [nidsPossibles(r.sujet)[0], nidsPossibles(r.reponse)[0]].filter(Boolean);
+    return nidsPossibles(o).some(v => lieux.includes(v));
+  }
+  if (/proie|nourriture|plante|campagnol|rongeur|poisson|mange|chass/.test(phrase)) {
+    const g = k => listeGroupes(k.proies_groupes);
+    const communs = g(r.sujet).filter(v => g(r.reponse).includes(v));
+    return communs.length ? g(o).some(v => communs.includes(v)) : (!!o.regime_alimentaire_type && o.regime_alimentaire_type === r.sujet.regime_alimentaire_type);
+  }
+  return !!o.ordre && o.ordre === r.sujet.ordre;   // une place, un territoire : deux lézards, deux rats, deux libellules
+}
 function candidatsLiensEnsemble(x) {
   const res = [], noms = new Set(x.liste.map(e => e.nom_courant)), vus = new Set();
   const cle = (a, b) => [a.nom_courant, b.nom_courant].sort().join("|");
@@ -125,7 +149,10 @@ function candidatsLiensEnsemble(x) {
     res.push({ role: "Garde-manger", sujet: a, reponse: b, explication: `${LeNom(a)} se nourrit notamment ${deNom(b)}.` });
   }
   // les pièges : espèces de l'expédition sans aucun lien avec le sujet
-  for (const r of res) r.pieges = x.liste.filter(o => o !== r.sujet && o !== r.reponse && !ontUnLien(r.sujet, o));
+  // Étape R271 (test du 19/11, n° 7 : le moineau domestique compté faux pour « en concurrence avec la mésange charbonnière »,
+  //   alors qu'il dispute aussi les nichoirs) : pour une concurrence, un piège ne doit pas pouvoir disputer la même chose.
+  for (const r of res) r.pieges = x.liste.filter(o => o !== r.sujet && o !== r.reponse && !ontUnLien(r.sujet, o)
+    && !(r.role === "Concurrents" && concurrentPossible(r, o)));
   return res.filter(r => r.pieges.length >= 2);
 }
 function questionLien(r) {
@@ -340,16 +367,32 @@ const ET_SI = {
 // Étape R236 (note 17 du 15/11) : « profite à » était à moitié vrai (le rougegorge, qui niche au sol, profite aussi des haies :
 //   abri, nourriture). La question dit maintenant ce qu'elle juge : le lieu du nid. Et un nid au sol n'est plus montré comme « non »
 //   pour les haies (souvent au pied d'une haie ou d'un buisson).
-  "Cavité d'arbre": { question: "Garder les vieux arbres creux offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Arbre ou buisson", "Bâtiment"] },
-  "Bâtiment": { question: "Laisser des accès sous les toits et dans les vieux bâtiments offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Cavité d'arbre"] },
-  "Arbre ou buisson": { question: "Garder les haies, les buissons et les arbres offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Cavité d'arbre", "Au sol", "Roselière ou végétation dense"] },
-  "Roselière ou végétation dense": { question: "Garder les roselières offre un lieu de nid à lesquelles de ces espèces ?", exclus: ["Au sol", "Sur l'eau (nid flottant)"],
+  "Cavité d'arbre": { question: "Garder les vieux arbres creux offre un lieu de nid auxquelles de ces espèces ?", exclus: ["Arbre ou buisson", "Bâtiment"] },
+  "Bâtiment": { question: "Laisser des accès sous les toits et dans les vieux bâtiments offre un lieu de nid auxquelles de ces espèces ?", exclus: ["Cavité d'arbre"] },
+  "Arbre ou buisson": { question: "Garder les haies, les buissons et les arbres offre un lieu de nid auxquelles de ces espèces ?", exclus: ["Cavité d'arbre", "Au sol", "Roselière ou végétation dense"] },
+  "Roselière ou végétation dense": { question: "Garder les roselières offre un lieu de nid auxquelles de ces espèces ?", exclus: ["Au sol", "Sur l'eau (nid flottant)"],
     milieu: e => /Marais|Mares|Lacs|Estuaires/.test(e.milieu_principal || "") || /rosea|roseli|marais/i.test(String(e.habitat || "")) },
   // Étape R251 (12.6, choix d'Aubin du 17/11) : « avant l'été » était à moitié vrai (une fauche fin juin détruit encore des nichées ;
   //   LPO Isère, mesures agricoles du râle des genêts) : « avant la mi-juillet ». Les 4 autres phrases sont confirmées à 2 sources (LPO, OFB).
-  "Au sol": { question: "Ne pas faucher les prés avant la mi‑juillet protège le nid de lesquelles de ces espèces ?", exclus: ["Roselière ou végétation dense"],
-    milieu: e => /Campagne/.test(e.milieu_principal || "") || /prair|\bprés?\b|champ/i.test(String(e.habitat || "")) },
+  // Étape R271 (test du 19/11, n° 18) : (a) « desquelles », « auxquelles » (avant : « de lesquelles », « à lesquelles ») ;
+  //   (c) le rougegorge niche au sol, mais pas dans un pré de fauche (talus, pied de haie, sous-bois) : il était montré comme
+  //   bonne réponse parce que son milieu est « Campagne, haies et jardins ». Maintenant, seule une espèce dont la fiche cite
+  //   les prairies ou les prés (hors « prés salés », et hors mention d'hiver ou de nuit : la grue, la bécasse) est une bonne
+  //   réponse ; les autres oiseaux qui nichent au sol ne sont montrés ni comme « oui » ni comme « non ».
+  "Au sol": { question: "Ne pas faucher les prés avant la mi‑juillet protège le nid desquelles de ces espèces ?", exclus: ["Roselière ou végétation dense"],
+    milieu: e => nicheDansLesPres(e) },
 };
+// Les trois oiseaux des prés dont la case « habitat » est vide (râle des genêts : LPO, mesures de fauche tardive ; tarier des prés
+// et bruant proyer : nid au sol dans les prairies de fauche et les friches herbeuses). À retirer quand la case sera remplie.
+const NICHE_DANS_LES_PRES = ["Râle des genêts", "Tarier des prés", "Bruant proyer"];
+function nicheDansLesPres(e) {
+  if (NICHE_DANS_LES_PRES.includes(e.nom_courant)) return true;
+  return String(e.habitat || "").split(/[;,]/).some(m => /prairi|\bprés?\b/i.test(m) && !/prés? salés?|hiver|nuit/i.test(m));
+}
+// (b) une seule bonne réponse : la question le dit (« à laquelle », « de laquelle ») et l'étiquette « Plusieurs réponses » disparaît
+function questionEtSiAuNombre(question, n) {
+  return n > 1 ? question : question.replace("auxquelles de ces espèces", "à laquelle de ces espèces").replace("desquelles de ces espèces", "de laquelle de ces espèces");
+}
 const NIDS_NETS = ["Cavité d'arbre", "Bâtiment", "Arbre ou buisson", "Roselière ou végétation dense", "Au sol", "Falaise ou paroi rocheuse", "Terrier", "Sur l'eau (nid flottant)"];
 const NIDS_DITS = { "Cavité d'arbre": "dans un arbre creux", "Bâtiment": "dans un bâtiment", "Arbre ou buisson": "dans un arbre ou un buisson",
   "Roselière ou végétation dense": "dans une roselière ou une végétation dense", "Au sol": "au sol", "Falaise ou paroi rocheuse": "dans une falaise",
@@ -383,8 +426,8 @@ function questionEtSi(x) {
   for (const e of l) { const n = nidNet(e); if (!groupes.has(n)) groupes.set(n, []); groupes.get(n).push(e); }
   const explication = majuscule([...groupes].filter(([, g]) => g.length)
     .map(([n, g]) => `${listeEt(g.map(leNom))} ${g.length > 1 ? "nichent" : "niche"} ${NIDS_DITS[n]}`).join(" ; ")) + ".";
-  return { type: "etsi", question: r.question, montrees: [], choix: melanger(l.map(e => choixEspece(e, bonnes.includes(e)))),
-           plusieurs: true, explication, especes: l.map(e => e.nom_courant) };
+  return { type: "etsi", question: questionEtSiAuNombre(r.question, bonnes.length), montrees: [], choix: melanger(l.map(e => choixEspece(e, bonnes.includes(e)))),
+           plusieurs: bonnes.length > 1, explication, especes: l.map(e => e.nom_courant) };   // R271 (n° 18 b)
 }
 
 // ---- L'assemblage ----

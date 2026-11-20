@@ -336,9 +336,77 @@ function calculerPartiesDeLaCarte(e) {
 const MOTS_DES_PARTIES = [[/\bbois\b|corne/i, "tete"], [/huppe|aigrette|crête|plumet/i, "tete"], [/oreille/i, "oreilles"], [/\bœil|\byeux|\boeil|iris|pupille/i, "oeil"],
   [/patte|doigt/i, "pattes"], [/queue/i, "queue"], [/\bbec\b/i, "bec"], [/\bailes?\b|élytre/i, "ailes"], [/antenne/i, "antennes"],
   [/ventre|dessous/i, "ventre"], [/barbillon/i, "bouche"], [/nageoire dorsale/i, "nageoire_dos"]];
+// ---- Étape R272 (test du 19/11, n° 6, choix 2A d'Aubin) : la question de détail n'est posée que si la carte « Pour la
+//   reconnaître » le dit, avec les mots de la réponse (« Bec jaune » sur la carte → « De quelle couleur est son bec ? Jaune »).
+//   Avant : il suffisait que la carte parle de la même partie du corps (pigeon ramier : carte « Bec rosé, bout jaune »,
+//   réponse attendue « Multicolore »), et sans carte on gardait l'ancien choix. Maintenant, sinon : pas de question de détail.
+//   Rien ne recule : une espèce dont l'étape 1 était faite avant R272 le reste (etape1AvantR272, especeFaite).
+const TRAIT_MEMES_MOTS = true;
+let traitMotsEteint = false;   // vrai pendant le calcul de la liste « rien ne recule » (règle d'avant R272)
+// Le mot qui doit figurer dans le repère pour qu'il parle bien de ce trait (« pattes courtes » ne dit rien du poil)
+const NOMS_DES_TRAITS = { cornes_bois_forme: /\bbois\b|corne/, queue_forme: /queue/, oreilles_forme: /oreille/, oreilles_taille: /oreille/,
+  poil_longueur: /poil|pelage|piquant|fourrure/, pattes_aspect: /patte/, pattes_type: /patte|doigt|griffe|sabot/, pattes_arriere: /patte/,
+  doigts_disposition: /doigt/, bec_couleur: /\bbec\b/, yeux_couleur: /\boeil|\byeux|iris/, pupille_forme: /pupille/, ventre_couleur: /ventre|dessous/,
+  peau_texture: /peau/, ecailles_corps: /ecaille/, ecailles_taille: /ecaille/, tete_ecailles: /ecaille|plaque/, nageoires_dos: /nageoire/,
+  queue_poisson: /queue/, bouche_position: /bouche/, bouche_type: /bouche/, barbillons: /barbillon/, antennes_forme: /antenne/,
+  ailes_visibles: /\bailes?\b|elytre/, ailes_repos: /\bailes?\b|elytre/ };
+const TRAITS_DE_COULEUR = ["bec_couleur", "yeux_couleur", "ventre_couleur", "pattes_aspect"];
+const MOTS_VIDES_TRAIT = new Set(["en", "et", "a", "de", "du", "des", "la", "le", "les", "un", "une", "ou", "au", "aux", "sur"]);
+function sansAccentMin(t) { return String(t).replace(/œ/g, "oe").replace(/Œ/g, "oe").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+function racineMot(m) { return m.replace(/(es|e|s|x)$/, ""); }
+// Le repère dit-il la réponse ? Tous les mots de la réponse s'y retrouvent (au pluriel ou au féminin près), sans négation
+//   (« sans huppe »), et pas dans un mot composé (« gris-bleu » ne dit pas « Gris ») ni dans une fourchette de couleurs (« jaune à orange »).
+function repereDitLaReponse(texte, reponse, champ) {
+  const t = sansAccentMin(texte);
+  const nom = NOMS_DES_TRAITS[champ];
+  if (nom && !nom.test(t)) return false;
+  if (/\b(sans|pas de|pas d|ni|aucun|aucune)\b/.test(t)) return false;
+  const C = "(jaune|orange|rouge|brun|noir|gris|blanc|rose|vert|bleu|roux|sombre|clair)";
+  if (TRAITS_DE_COULEUR.includes(champ) && new RegExp(C + "[a-z]*\\s+(a|ou)\\s+" + C).test(t)) return false;
+  const simples = t.split(/[^a-z-]+/).filter(m => m && !m.includes("-")).map(racineMot);
+  const mots = sansAccentMin(reponse).split(/[^a-z-]+/).filter(m => m && !MOTS_VIDES_TRAIT.has(m)).map(racineMot);
+  if (!mots.length) return false;
+  return mots.every(r => simples.some(s => s === r || (r.length >= 4 && s.length >= 4 && (s.startsWith(r) || r.startsWith(s)) && Math.abs(s.length - r.length) <= 1)));
+}
+// Le premier détail parlant que la carte dit avec les mots de la réponse (ou rien)
+const memoTraitDit = new Map();
+function traitDitParLaCarte(e) {
+  if (typeof reperesDe !== "function") return null;   // repères pas encore chargés (23 vient après) : rien en mémoire
+  const cle = (typeof modeTestReperes === "function" && modeTestReperes() ? "t|" : "j|") + e.nom_courant;
+  if (memoTraitDit.has(cle)) return memoTraitDit.get(cle);
+  let res = null;
+  const r = reperesDe(e);
+  if (r) {
+    const l = typeof reperesPourForme === "function" ? reperesPourForme(r, formePourPhoto(r, "")) : r.reperes;
+    for (const c of traitsAllure(e)) {
+      if (TRAITS_ENSEMBLE.includes(c) || c === "museau_forme" || !PARTIES_DES_TRAITS[c]) continue;
+      const q = QUESTIONS.find(x => x.champ === c), ps = PARTIES_DES_TRAITS[c];
+      const v = q ? q.valeur(e) : null;
+      if (!estRenseigne(v) || String(v).startsWith("NA")) continue;
+      const surLaPartie = l.filter(x => ps.includes(x.partie) || MOTS_DES_PARTIES.some(([re, p]) => ps.includes(p) && re.test(String(x.texte || ""))));
+      if (surLaPartie.some(x => repereDitLaReponse(x.texte, v, c))) { res = c; break; }
+    }
+  }
+  memoTraitDit.set(cle, res);
+  return res;
+}
+function etape1AvantR272() {
+  if (!suivi) return new Set();
+  // Tant que les repères ne sont pas chargés, la liste ne peut pas être calculée juste (et la nouvelle règle ne demande alors aucun détail)
+  if (!suivi.etape1R272 && typeof reperesDe !== "function") return new Set();
+  if (!suivi.etape1R272) {
+    traitMotsEteint = true;
+    try { suivi.etape1R272 = ESPECES.filter(e => estIdentifiee(e) && calculerEspeceFaite(e, 1)).map(e => e.nom_courant); }
+    finally { traitMotsEteint = false; }
+    sauvegarder();
+  }
+  if (!etape1AvantR272.cache || etape1AvantR272.cache.src !== suivi.etape1R272) { etape1AvantR272.cache = new Set(suivi.etape1R272); etape1AvantR272.cache.src = suivi.etape1R272; }
+  return etape1AvantR272.cache;
+}
 function traitDetail(e) {
   const ancien = traitDetailAncien(e);
   if (!TRAIT_SUIT_CARTE || traitCarteEteint || !ancien) return ancien;
+  if (TRAIT_MEMES_MOTS && !traitMotsEteint) return traitDitParLaCarte(e);   // R272 (choix 2A)
   const parties = partiesDeLaCarte(e);
   if (!parties || !parties.size) return ancien;
   const surLaCarte = traitsAllure(e).find(c => !TRAITS_ENSEMBLE.includes(c) && c !== "museau_forme" && (PARTIES_DES_TRAITS[c] || []).some(p => parties.has(p)));
@@ -367,7 +435,7 @@ function traitsEtape1(e) {
 const memoChampsEtape = new Map();
 function champsEtape(e, k) {
   if (k === 4 || typeof reperesDe !== "function") return calculerChampsEtape(e, k);   // repères pas encore chargés : rien en mémoire
-  const cle = k + "|" + (sonActif ? 1 : 0) + (avecCriQuandMeme ? 1 : 0) + (traitCarteEteint ? 1 : 0)
+  const cle = k + "|" + (sonActif ? 1 : 0) + (avecCriQuandMeme ? 1 : 0) + (traitCarteEteint ? 1 : 0) + (traitMotsEteint ? 1 : 0)
             + (typeof modeTestReperes === "function" && modeTestReperes() ? 1 : 0) + "|" + e.nom_courant;
   let l = memoChampsEtape.get(cle);
   if (!l) { l = calculerChampsEtape(e, k); memoChampsEtape.set(cle, l); }
@@ -470,7 +538,7 @@ function etape1AvantRF6() {
 // Étape R262 (lenteurs) : pendant le dessin d'une page (memoPage, 02_progression.js), la réponse est gardée : une page
 //   la demandait plusieurs fois pour chaque espèce. Hors dessin d'une page (pendant une partie), toujours recalculée.
 function especeFaite(e, k) {
-  if (!memoPage || traitCarteEteint) return calculerEspeceFaite(e, k);
+  if (!memoPage || traitCarteEteint || traitMotsEteint) return calculerEspeceFaite(e, k);
   const cle = "f" + k + "|" + e.nom_courant;
   let v = memoPage.get(cle);
   if (v === undefined) { v = calculerEspeceFaite(e, k); memoPage.set(cle, v); }
@@ -480,6 +548,7 @@ function calculerEspeceFaite(e, k) {
   if (k === 2 && typeof especeComprise === "function" && especeComprise(e)) return true;   // étape E2-3 : comprise à l'étape 2 « Ensemble »
   if (k === 1 && RENCONTRE_COMPLETE && estIdentifiee(e) && etape1AvantRF6().has(e.nom_courant)) return true;   // étape RF6 : rien ne recule
   if (k === 1 && TRAIT_SUIT_CARTE && !traitCarteEteint && estIdentifiee(e) && etape1AvantE25().has(e.nom_courant)) return true;   // étape E2-5 : rien ne recule
+  if (k === 1 && TRAIT_MEMES_MOTS && !traitMotsEteint && !traitCarteEteint && estIdentifiee(e) && etape1AvantR272().has(e.nom_courant)) return true;   // étape R272 : rien ne recule
   if (k === 1 && estIdentifiee(e) && etape1Acquises().has(e.nom_courant)) return true;   // étape R132 : rien ne recule
   if (k === 4 && approfondiesAvantR167().has(e.nom_courant)) return true;                // étape R167 : rien ne recule
   if (k === 1 && estIdentifiee(e) && suivi && suivi.etape1Passees && suivi.etape1Passees.includes(e.nom_courant)) return true;   // étape R146
@@ -545,7 +614,7 @@ function compterRattrapage(x, especes) {
   return passees;
 }
 function aRattraper(x) { return x.liste.filter(e => !faiteDans(x, e, 1) && estTentee(x, e) && manquesEtape1(e).length); }
-function texteARevoir(x) { const n = nbTraitsARevoir(x); return `${n === 1 ? "la chose manquée" : `les ${n} choses manquées`}`; }
+function texteARevoir(x) { const n = nbTraitsARevoir(x); return n === 1 ? "la question manquée" : "les questions manquées"; }   // R273 (11A) : sans chiffre, et « question » partout
 function nbTraitsARevoir(x) { return aRattraper(x).reduce((n, e) => n + manquesEtape1(e).length, 0); }
 // Étape 316 (27/10, choix de l'utilisateur « option 2 ») : ce qu'on sait d'une espèce compte dans tout le jeu, mais une
 // expédition ne donne ses empreintes que si le joueur l'a parcourue. Une espèce déjà connue ailleurs (autre territoire,
@@ -920,7 +989,7 @@ function majFilExpedition(x, k) {
       <div class="fil-texte"><small>${echapper(x.chapitre ? `${x.chapitre} · ${x.territoire}` : x.territoire)}</small>
         <b>${echapper(x.titre)}</b><span>${etape}</span></div></div>`;
   majBandeExpedition(x, fil, k);
-  fil.querySelector(".fil-retour").onclick = () => { session = null; majFilExpedition(null); ouvrirExpedition(x); };
+  fil.querySelector(".fil-retour").onclick = () => { if (k === 1 && typeof mettreRencontreDeCote === "function") mettreRencontreDeCote(true); session = null; majFilExpedition(null); ouvrirExpedition(x); };   // R273 (13A)
 }
 // Étape R188 : l'expédition de la partie en cours (celle du bandeau), ou null hors expédition
 function expeditionDuFil() {
@@ -963,9 +1032,10 @@ function majBandeExpedition(x, fil, k) {
       const titre = st === "trouve" ? e.nom_courant : st === "ici" ? "En cours" : "À découvrir";
       // Étape RF4 : l'espèce en cours, tant qu'elle n'est pas reconnue, garde sa silhouette (sa photo donnerait la réponse
       //   aux jumelles, au sosie et aux indices)
-      const cachee = RENCONTRE_COMPLETE && st === "ici" && !estIdentifiee(e) && !(session && session.presentee);
+      // Étape R272 (choix 1A) : comme dans la bande de fin, une espèce pas encore rencontrée reste en silhouette
+      const cachee = RENCONTRE_COMPLETE && ((st === "ici" && !estIdentifiee(e) && !(session && session.presentee)) || (st === "reste" && pasEncoreRencontree(x, e)));
       return `<span class="be-rond ${st}${estRenseigne(e.photo) && !cachee ? "" : " silh"}" title="${echapper(titre)}"><img src="${cachee ? fichierSilhouette(e) : photoEsp(e)}" alt=""></span>`; }).join("")}</span>
-    <span class="be-texte">${reste ? `${trouvees} trouvée${trouvees > 1 ? "s" : ""} · encore ${reste} à découvrir` : "Toutes trouvées"}</span>`;
+    <span class="be-texte"></span>`;   // R273 (11A) : plus de « 1 trouvée · encore 6 à découvrir » au-dessus de la question (les ronds le montrent)
 }
 // Étape M19 (07/11, choix B « Une seule ligne ») : sur téléphone, aux étapes 2 et 3, un seul repère au-dessus de la question :
 //   les ronds des espèces (l'anneau se remplit, ocre pour l'espèce de la question) et la question de la partie au bout de la ligne.
@@ -1018,7 +1088,8 @@ function piegesDuo(espece, q, bonne) {
   return ici.filter(e => surs.has(e));
 }
 const QUESTIONS_DUO = {
-  regime_alimentaire_type: v => `Laquelle est ${({ filtreur: "filtreuse", "suceur de sang": "suceuse de sang" })[minuscule(v)] || minuscule(v)} ?`,   // étape R145 : « filtreuse », pas « filtreur »
+  regime_alimentaire_type: v => regimeSimple(v) ? `Laquelle ${regimeSimple(v)} ?`   // R271 (n° 22) : en mots simples
+    : `Laquelle est ${({ filtreur: "filtreuse", "suceur de sang": "suceuse de sang" })[minuscule(v)] || minuscule(v)} ?`,   // étape R145 : « filtreuse », pas « filtreur »
   activite: v => /^(surtout|à|de jour|au)/i.test(v) ? `Laquelle est active ${minuscule(v)} ?` : null,
   hibernation: v => `Laquelle ${minuscule(v)} ?`,
   deplacement_saisonnier: v => `Laquelle ${minuscule(v)} ?`,
@@ -1409,13 +1480,14 @@ function bandeQuiEnsuite(x, arrive) {
   const ronds = x.liste.map(e => {
     const fait = faiteDans(x, e, 1), choix = restent.includes(e);
     const img = `<img src="${photoMini(photoEsp(e))}" alt="" onerror="this.onerror=null;this.src='${photoEsp(e)}'">`;
-    if (choix) return `<button type="button" class="rft-rond qe-choix" data-nom="${echapper(e.nom_courant)}" aria-label="Choisir : ${echapper(e.nom_courant)}">${img}</button>`;
+    // Étape R272 (test du 19/11, n° 3, choix 1A) : une espèce pas encore rencontrée est en silhouette, sans son nom
+    if (choix) return `<button type="button" class="rft-rond qe-choix qe-silh" data-nom="${echapper(e.nom_courant)}" aria-label="Choisir cette espèce">${imgSilhouetteRond(e)}</button>`;
     // Étape R267 (40.10, choix 38C) : grisée sans ✓ = elle reviendra à la fin de l'étape (ratée, ou déjà connue ailleurs)
     return `<span class="rft-rond qe-gris${fait ? " fait" : " qe-plus-tard"}${e === arrive ? " arrive" : ""}">${img}${fait ? `<i aria-hidden="true">✓</i>` : `<em class="qe-mot">à la fin</em>`}</span>`;
   }).join("");
   // Étape R267 (40.10, choix 38C) : le vrai bouton fixé en bas fait la suite ; la bande sert à choisir une autre espèce
   return `<div class="qui-ensuite-bande${RENCONTRE_BOUTON_SUITE ? " qe-avec-bouton" : ""}"><h3>Qui rencontrer ensuite ?</h3><div class="rft-ronds">${ronds}</div>
-      ${RENCONTRE_BOUTON_SUITE ? (restent.length > 1 ? `<small class="qe-aide">Ou touchez une autre espèce entourée.</small>` : "")
+      ${RENCONTRE_BOUTON_SUITE ? (restent.length > 1 ? `<small class="qe-aide">Ou touchez une autre silhouette pour la choisir.</small>` : "")
         : `<small class="qe-aide">${restent.length > 1 ? "Touchez une espèce entourée." : "Touchez l'espèce entourée."}</small>`}</div>`;
 }
 // Étape R267 (Notion 40.10, choix 38C du 19/11) : fin de Rencontre — la bande reste, et un vrai bouton fixé en bas
@@ -1427,9 +1499,16 @@ function suiteProposee(x) {
   const choisie = prochaineChoisie[x.id] && restent.find(e => e.nom_courant === prochaineChoisie[x.id]);
   return choisie || restent[0] || null;
 }
+// Étape R272 (test du 19/11, n° 3, choix 1A d'Aubin, remplace 38C sur ce point) : le bouton ne nomme plus et ne montre plus
+//   l'espèce suivante (« Rencontrer le merle noir ▶ » donnait la réponse de la première question de sa Rencontre).
 function texteBoutonSuite(e) {
-  return `<img class="rft-vignette" src="${photoMini(photoEsp(e))}" alt="" onerror="this.onerror=null;this.src='${photoEsp(e)}'"><span>Rencontrer ${echapper(nomAvecArticle(e))}&nbsp;▶</span>`;
+  return `Rencontrer l'espèce suivante&nbsp;▶`;
 }
+// La silhouette d'une espèce pas encore rencontrée, dans un rond (bande de fin de Rencontre). Dessin absent : le rond reste vide.
+function imgSilhouetteRond(e) {
+  return `<img src="${fichierSilhouette(e)}" alt="" onerror="this.remove()">`;
+}
+function pasEncoreRencontree(x, e) { return !faiteDans(x, e, 1) && !estIdentifiee(e) && !estTentee(x, e); }
 function especeAConnaitre(x) {
   const ok = e => !faiteDans(x, e, 1) && !(estTentee(x, e) && manquesEtape1(e).length);
   const choisie = prochaineChoisie[x.id] && x.liste.find(e => e.nom_courant === prochaineChoisie[x.id]);   // étape RF1
@@ -1437,9 +1516,14 @@ function especeAConnaitre(x) {
   return x.liste.find(ok) || null;
 }
 function lancerRencontreExpedition(x) {
+  // Étape R273 (13A) : la Rencontre quittée se reprend où elle en était (aussi quand on en est sorti par un onglet)
+  if (session && session.focus && session.expedition && session.expedition.id === x.id && !rencontreEnPause && typeof mettreRencontreDeCote === "function") mettreRencontreDeCote(false);
+  const pause = typeof rencontreAReprendre === "function" ? rencontreAReprendre(null, x) : null;
+  if (pause) { reprendreRencontre(pause); return; }
   const e = especeAConnaitre(x);
   if (!e) { if (aRattraper(x).length) lancerRattrapage(x); else if (etapeFinie(x, 2)) { if (typeof questionFinaleExp === "function" && questionFinaleExp(x)) ouvrirEnsembleExp(x); else ouvrirExpedition(x); } else lancerExpedition(x, 2); return; }   // E2-3
   if (especeFaite(e, 1)) { lancerRevueExpedition(x); return; }   // étape 316 : déjà connue ailleurs → la courte révision
+  rencontreEnPause = null;             // une autre Rencontre remplace celle mise de côté
   rencontreDuJour = null;
   session = null;
   modeLibre = false; depuisArcade = false;
@@ -1528,7 +1612,7 @@ function finRencontreExpedition(s) {
   zone.innerHTML = `<div class="exp-fin">
       <div class="exp-fin-pas">${dessinGain(x)}</div>
       <div class="exp-fin-texte">${etapeFinie(x, 1) ? `<b>Étape 1 réussie !</b> Vous avez fait connaissance avec les ${av.total} espèces.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`
-        : `<b>${faite ? `${e.nom_courant} : fait !` : `${e.nom_courant} : ${manquesEtape1(e).length} ${manquesEtape1(e).length > 1 ? "choses" : "chose"} à revoir`}</b>${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""} · ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}.${faite ? "" : " Seul ce qui manque reviendra, à la fin de l'étape."}`}</div>
+        : `<b>${faite ? `${e.nom_courant} : fait !` : `${e.nom_courant} : ${manquesEtape1(e).length > 1 ? "des questions" : "une question"} à revoir`}</b>${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}.${faite ? "" : " Seul ce qui manque reviendra, à la fin de l'étape."}`}</div>
       <button class="ac-bouton" id="exp-fin-ecran-r">Voir l'expédition</button></div>${quiEnsuite}${blocFinLieu(x, gagnees)}`;
   document.getElementById("exp-fin-ecran-r").onclick = () => { session = null; ouvrirExpedition(x); };
   if (quiEnsuite) brancherQuiEnsuite(x, zone);
@@ -1835,11 +1919,11 @@ function finExpedition(d) {
   zone.classList.remove("cache");
   zone.innerHTML = `<div class="exp-fin">
       <div class="exp-fin-pas">${dessinGain(x)}</div>
-      <div class="exp-fin-texte">${finie ? `${k < NB_ETAPES && apres >= NB_ETAPES ? `<b>Expédition terminée !</b> Vous connaissiez déjà leur vie.` : resteApprofondir ? `<b>Étape ${k} terminée !</b>` : `<b>Étape ${k} réussie !</b>`} ${gagnees && !(etapeGagnee && apres >= NB_ETAPES) ? `+${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}${resteApprofondir ? ` ${resteApprofondir === 1 ? "La chose qui vous a échappé reviendra" : `Les ${resteApprofondir} choses qui vous ont échappé reviendront`} dans Approfondir.` : ""}`   // étape R146
+      <div class="exp-fin-texte">${finie ? `${k < NB_ETAPES && apres >= NB_ETAPES ? `<b>Expédition terminée !</b> Vous connaissiez déjà leur vie.` : resteApprofondir ? `<b>Étape ${k} terminée !</b>` : `<b>Étape ${k} réussie !</b>`} ${gagnees && !(etapeGagnee && apres >= NB_ETAPES) ? `+${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}${resteApprofondir ? ` ${resteApprofondir === 1 ? "La question qui vous a échappé reviendra" : "Les questions qui vous ont échappé reviendront"} dans Approfondir.` : ""}`   // étape R146
         : k === 4 ? bilanApprofondir(x, info, gagnees)
-        : info.rattrapage ? (nbTraitsARevoir(x) ? `<b>Encore ${nbTraitsARevoir(x)} chose${nbTraitsARevoir(x) > 1 ? "s" : ""} à revoir</b> · ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}. La prochaine fois, 2 réponses seulement.`
-          : resteApprofondir ? `<b>Étape 1 terminée !</b> ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}. ${resteApprofondir === 1 ? "La chose qui vous a échappé reviendra" : `Les ${resteApprofondir} choses qui vous ont échappé reviendront`} dans Approfondir.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`   // étape R146
-          : `<b>Tout est rattrapé !</b> ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} connue${av.faites > 1 ? "s" : ""}.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`)   // étape R132
+        : info.rattrapage ? (nbTraitsARevoir(x) ? `<b>Il reste ${nbTraitsARevoir(x) > 1 ? "des questions" : "une question"} à revoir.</b> La prochaine fois, deux réponses au choix seulement.`   // R273 (11A, 15A) : le compte des espèces est dans le titre
+          : resteApprofondir ? `<b>Étape 1 terminée !</b> ${resteApprofondir === 1 ? "La question qui vous a échappé reviendra" : "Les questions qui vous ont échappé reviendront"} dans Approfondir.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`   // étape R146
+          : `<b>Tout est rattrapé !</b>${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : ""}`)   // étape R132
         : info.revue ? `<b>Révision</b> : vous connaissiez déjà ${(info.especesRevue || []).length > 1 ? "ces espèces" : "cette espèce"} ailleurs. ${av.faites} sur ${av.total} reconnue${av.faites > 1 ? "s" : ""} ici.${gagnees ? ` +${gagnees} empreinte${gagnees > 1 ? "s" : ""}.` : ""}${d.revuesPassees ? ` ${d.revuesPassees > 1 ? "Celles qui vous ont échappé comptent quand même ici ; leur photo reviendra" : "Celle qui vous a échappé compte quand même ici ; sa photo reviendra"} dans vos prochaines parties.` : ""}`   // étape R184
         : k === 2 ? bilanEtape(x, info, gagnees, 2)   // étape R126
         : `<b>Étape ${k} · ${ETAPES[k].titre}</b> : ${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total}.`}</div>
@@ -1878,6 +1962,12 @@ function finExpedition(d) {
   if (gagnees) verifierOuverture();
   if (typeof proposerFinInsolite === "function") proposerFinInsolite(x, k, info, apres);   // étape QI5 : « Reliez » puis « Et si… ? », après le lien du lieu
   if (typeof proposerLienDuLieu === "function") proposerLienDuLieu(x, k, info, apres);   // étape R172 : « Un lien du lieu » d'abord
+  // Étape R271 (test du 19/11, n° 13 : en fin d'étape 1, le gros titre « 1 / 3 bonnes réponses » ne comptait que la dernière
+  //   série de rattrapage, après une quarantaine de questions) : le titre dit où en est l'étape — les espèces reconnues.
+  if (k === 1) {
+    const sc = document.querySelector("#carnet-fin-defi .score-fin3");
+    if (sc) sc.innerHTML = `<b>${av.faites}</b> espèce${av.faites > 1 ? "s" : ""} reconnue${av.faites > 1 ? "s" : ""} sur ${av.total}`;   // R273 (11A) : « 5 espèces reconnues sur 7 »
+  }
   resumeFinTelephone({ x, d, k, gagnees, avantEmp: info.avant, apres });   // étape M15 : sur téléphone, la fin tient sur un écran
 }
 
@@ -3145,13 +3235,15 @@ function nbManqueesAffichees(carnetId) {   // les questions à revoir, d'après 
 function rondsResume(x, k, arrive) {   // étape RF2 : arrive = l'espèce qui vient d'être rencontrée (sa photo rejoint la bande)
   return `<div class="rft-ronds">${x.liste.map(e => {
     const fait = faiteDans(x, e, k), connu = estIdentifiee(e);
+    if (k === 1 && pasEncoreRencontree(x, e)) return `<span class="rft-rond qe-silh">${imgSilhouetteRond(e)}</span>`;   // R272 (choix 1A)
     return `<span class="rft-rond${fait ? " fait" : ""}${e === arrive && fait ? " arrive" : ""}"><img src="${photoMini(photoEsp(e))}" alt="${connu ? echapper(e.nom_courant) : ""}" onerror="this.onerror=null;this.src='${photoEsp(e)}'">${fait ? `<i aria-hidden="true">✓</i>` : ""}</span>`;
   }).join("")}</div>`;
 }
 function empreintesResume(x, gagnees) {
+  // Étape R273 (11A) : plus de « Paris, ses bois et ses parcs : 6 sur 86 » sur l'écran de fin (un seul compte par écran ;
+  //   la page du lieu montre sa médaille). Il reste le gain, quand il y en a un.
   const c = x && x.chapitre && chapitreParNom(x.territoire, x.chapitre);
-  const lieuTxt = c && estLieu(c) && !toutDebloque() ? `${echapper(c.nom)} : <span class="rft-insec">${Math.min(empreintesDuLieu(x.territoire, c), empreintesMaxLieu(x.territoire, c))} sur ${empreintesMaxLieu(x.territoire, c)}</span>` : "";
-  return gagnees || lieuTxt ? `<div class="rft-emp">${PAS_SVG}<span>${gagnees ? `<b>+${gagnees} empreinte${gagnees > 1 ? "s" : ""}</b>` : ""}${gagnees && lieuTxt ? " · " : ""}${lieuTxt}</span></div>` : "";
+  return gagnees ? `<div class="rft-emp">${PAS_SVG}<span><b>+${gagnees} empreinte${gagnees > 1 ? "s" : ""}</b>${c && estLieu(c) && !toutDebloque() ? ` · ${echapper(c.nom)}` : ""}</span></div>` : "";
 }
 // Le résumé commun. o = { fin, carnet, etiq, titre, tete (photo + nom, facultatif), score, corps, principal (id du bouton
 // de la suite), aide, retour: { texte, action } }
@@ -3182,7 +3274,7 @@ function construireResume(o) {
     <div class="rft-actions">
       ${avecPrincipal ? `<button type="button" class="rft-principal">${echapper(principal.textContent)}</button>` : ""}
       ${o.aide ? `<div class="rft-aide">${o.aide}</div>` : ""}
-      ${nManquees ? `<button type="button" class="rft-second">Revoir ${nManquees > 1 ? `les ${nManquees} questions manquées` : "la question manquée"}</button>` : ""}
+      ${nManquees && !(avecPrincipal && /^Revoir (la|les) questions? manquée/.test(principal.textContent)) ? `<button type="button" class="rft-second">${nManquees > 1 ? "Essayer à nouveau ces questions" : "Essayer à nouveau cette question"}</button>` : ""}
       <div class="rft-liens">${o.retour ? `<button type="button" class="rft-lien rft-retour">${echapper(o.retour.texte)}</button>` : "<span></span>"}
         <button type="button" class="rft-lien rft-detail" aria-expanded="false">Voir le détail ▾</button></div>
     </div>`;
@@ -3218,19 +3310,23 @@ function resumeFinTelephone(ctx) {
   if (!ctx || !ctx.x) { retirerResumeFin("fin-defi"); return; }
   const { x, d, k, gagnees, avantEmp, apres } = ctx;
   const finie = etapeFinie(x, k), av = avanceeEtape(x, Math.min(k, NB_ETAPES));
+  // Étape R273 (11A) : à la fin de l'étape 1, le titre EST le compte (« 5 espèces reconnues sur 7 ») ; rien d'autre n'est chiffré
   const titre = apres >= NB_ETAPES && avantEmp < NB_ETAPES ? "Expédition terminée"
     : finie ? `Étape ${k} réussie`
+    : k === 1 ? `${av.faites} espèce${av.faites > 1 ? "s" : ""} reconnue${av.faites > 1 ? "s" : ""} sur ${av.total}`
     : d.expedition && d.expedition.rattrapage ? (nbTraitsARevoir(x) ? "À revoir" : "Tout est rattrapé")
     : k === 4 ? "Approfondir" : `Étape ${k} · ${ETAPES[k].titre}`;
   const phrase = k === 4 ? texteResteApprofondir(x)
-    : finie && k === 2 ? `Vous savez comment vivent ces ${av.total} espèces.`
+    : finie && k === 2 ? "Vous savez comment vivent ces espèces."
     : finie && k === 1 ? `Vous avez fait connaissance avec les ${av.total} espèces.`
+    : k === 1 ? (nbTraitsARevoir(x) ? `Il reste ${nbTraitsARevoir(x) > 1 ? "des questions" : "une question"} à revoir. La prochaine fois, deux réponses au choix seulement.` : "")   // R273 (11A, 15A)
     : `${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total} : c'est fait.`;
   const principal = document.getElementById("bouton-rejouer-defi");
   const c = x.chapitre && chapitreParNom(x.territoire, x.chapitre), dansUnLieu = c && estLieu(c);
   construireResume({ fin: "fin-defi", carnet: "carnet-fin-defi", etiq: x.titre, titre,   // étape R189 (note n° 9) : « Étape 2 » n'est plus écrit dans le bandeau
    
-    score: d.faites ? `<b>${d.bonnes}</b> bonne${d.bonnes > 1 ? "s" : ""} réponse${d.bonnes > 1 ? "s" : ""} sur ${d.faites}` : "",
+    score: k === 1 || (k === 2 && !finie) ? ""   // R273 (11A) : étape 1, le compte est dans le titre ou la phrase ; étape 2 en cours, dans la phrase
+      : d.faites ? `<b>${d.bonnes}</b> bonne${d.bonnes > 1 ? "s" : ""} réponse${d.bonnes > 1 ? "s" : ""} sur ${d.faites}` : "",
     corps: `${rondsResume(x, k)}<div class="rft-phrase">${phrase}</div>${empreintesResume(x, apres >= NB_ETAPES && avantEmp < NB_ETAPES ? 0 : gagnees)}`,   // R153 : la fête a dit « +N »
     principal: "bouton-rejouer-defi",
     aide: principal && /Approfondir/.test(principal.textContent) ? `Facultatif · ${minuscule(texteResteApprofondir(x))}`
@@ -3249,10 +3345,14 @@ function resumeSessionTelephone(s) {
   if (x) {
     const faite = especeFaite(e, 1), manques = faite ? 0 : manquesEtape1(e).length, av = avanceeEtape(x, 1);
     const gagnees = Math.max(0, gainExp(x) - (s.expedition.avantGain || 0));
-    etat = RENCONTRE_COMPLETE && etapeFinie(x, 2) ? "Expédition terminée !" : etapeFinie(x, 1) ? "Étape 1 réussie !" : faite ? "Fait !" : `${manques} chose${manques > 1 ? "s" : ""} à revoir`;   // RF1
+    etat = RENCONTRE_COMPLETE && etapeFinie(x, 2) ? "Expédition terminée !" : etapeFinie(x, 1) ? "Étape 1 réussie !" : faite ? "Fait !" : "";   // RF1 ; R273 (11A) : « N questions à revoir » est dit une seule fois, sous la photo
+    if (!faite && manques) {   // (une question manquée dans une Rencontre d'avant : le compte la reprend)
+      const sc = document.getElementById("score-session");
+      if (sc && !sc.textContent.trim()) sc.innerHTML = `<b>${manques}</b> question${manques > 1 ? "s" : ""} à revoir`;
+    }
     // Étape R246 (36.38) : la bande des espèces devient le choix, sous la photo (elle remplace la bande de progression)
     var bandeTel = RENCONTRE_COMPLETE && faite && !etapeFinie(x, 1) ? bandeQuiEnsuite(x, e) : "";
-    corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">${manques > 1 ? "Ces questions reviendront" : "Cette question reviendra"} à la fin de l'étape.</div>` : "")
+    corps = (!faite && !etapeFinie(x, 1) ? `<div class="rft-phrase">Ce qui manque reviendra à la fin de l'étape.</div>` : "")
       + (bandeTel ? "" : rondsResume(x, 1, RENCONTRE_COMPLETE ? e : null)) + empreintesResume(x, gagnees);
     retour = { texte: "← Expédition", action: () => { session = null; ouvrirExpedition(x); } };
     var quiEnsuiteTel = "";   // étape R246 : la liste « Qui rencontrer ensuite ? » sous le bouton est remplacée par la bande
@@ -3291,7 +3391,7 @@ function resumeSessionTelephone(s) {
       let p = zr.querySelector(".rft-principal");
       if (!p) { p = document.createElement("button"); p.type = "button"; p.className = "rft-principal"; zr.querySelector(".rft-actions").prepend(p); }
       const marquer = e => {
-        p.innerHTML = texteBoutonSuite(e); p.classList.add("rft-avec-vignette");
+        p.innerHTML = texteBoutonSuite(e); p.classList.remove("rft-avec-vignette");   // R272 : plus de vignette
         for (const b of zr.querySelectorAll(".qe-choix")) b.classList.toggle("qe-choisi", b.dataset.nom === e.nom_courant);
       };
       const depart = suiteProposee(x);

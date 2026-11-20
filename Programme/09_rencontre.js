@@ -565,10 +565,23 @@ function lignePostit(champ) {
   return ligne;
 }
 // Une question est posée : sa ligne apparaît (ou se rallume), avec « ? »
+// Étape R271 (test du 19/11, n° 4 : la question ratée était reposée avec sa réponse écrite dans le panneau, « Pattes : Grises ») :
+//   quand une question revient, sa ligne repasse à « ? » le temps de la question (avant : seul le dessin était retiré). Ce
+//   qui était écrit est gardé de côté : si la question est quittée sans réponse, la ligne retrouve son texte.
+function postitQuitterLigne(l) {
+  if (l.etat !== "encours") return;
+  l.etat = "";
+  if (l.avant) { l.valeur = l.avant.valeur; l.brute = l.avant.brute; l.etat = l.avant.etat; }
+  delete l.avant;
+}
 function postitQuestion(champ) {
   if (!session || !session.focus || defi || !session.postit) return;
-  for (const l of session.postit) if (l.etat === "encours") l.etat = "";
+  for (const l of session.postit) postitQuitterLigne(l);
   const ligne = lignePostit(champ);
+  if (champ !== IDENTIFICATION && ligne.valeur !== "?" && ligne.etat !== "encours") {   // le nom, lui, est flouté (étape 163)
+    ligne.avant = { valeur: ligne.valeur, brute: ligne.brute, etat: ligne.etat };
+    ligne.valeur = "?"; ligne.brute = undefined;
+  }
   ligne.etat = "encours";
   ligne.ecrit = false;
   dessinerPostit();
@@ -577,6 +590,7 @@ function postitQuestion(champ) {
 function postitReponse(champ, etat) {
   if (!session || !session.focus || defi || !session.postit) return;
   const ligne = lignePostit(champ);
+  delete ligne.avant;                                          // R271 : la question a sa réponse, plus rien à remettre
   ligne.etat = etat;
   ligne.ecrit = true;
   ligne.valeur = valeurPostit(enCours.espece, champ, enCours.q, enCours.bonne, etat);
@@ -630,8 +644,7 @@ function dessinerPostit() {
   majVersFiche(trouvees, prevues, connu ? espece : null);   // R236 : « de lui » / « d'elle » une fois le nom connu
   zone.innerHTML = `<div class="postit"><div class="tt-postit">Ce que vous savez ${pe(connu ? espece : null).dElle}</div><h2${nomCache ? ' class="floute"' : ""}>${titre}</h2>`
     + `<p class="sci-postit${nomCache ? " floute" : ""}">${connu ? espece.nom_scientifique || "" : ""}</p><ul>${lignes.join("")}</ul>`
-    + `<div class="legende-postit">${trouvees} / ${prevues} trouvée${trouvees > 1 ? "s" : ""}${aRevoirIci ? ` · ${aRevoirIci} à revoir` : ""}${reste ? ` · encore ${reste} à découvrir` : ""}`
-    + `<div class="points-postit">${points}</div></div>`
+    + `<div class="legende-postit"><div class="points-postit">${points}</div></div>`   // R273 (11A) : plus de « 2 / 3 trouvées · 1 à revoir » (un seul compte par écran : « Question n / N »)
     + `<button type="button" class="retour-question" onclick="revenirQuestion()">↓ Revenir à la question</button></div>`;
   for (const l of session.postit) l.ecrit = false;              // l'animation d'écriture ne joue qu'une fois
 }

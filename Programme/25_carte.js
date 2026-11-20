@@ -184,7 +184,7 @@ function dansTerritoire(t) { const a = articleTerritoire(t); return a === "en" ?
 // Ce qui ouvre un territoire fermé, en une phrase
 function phraseOuverture(t) {
   const suivant = prochainTerritoire(), m = avantProchainTerritoire();
-  if (t === suivant) return m === null ? "C'est le prochain territoire." : m ? `C'est le prochain territoire : encore ${texteManque(m)}.` : "C'est le prochain territoire : il s'ouvre maintenant.";
+  if (t === suivant) return m === null ? "C'est le prochain territoire." : m ? `C'est le prochain territoire, le plus différent des vôtres : encore ${texteManque(m)}, n'importe ${m > 1 ? "lesquels" : "lequel"}.` : "C'est le prochain territoire : il s'ouvre maintenant.";
   return `Ce territoire s'ouvrira plus tard.${suivant ? ` Prochain territoire : ${suivant}.` : ""}`;
 }
 // Les espèces emblématiques du territoire (carte d'identité, IDENTITE) : photo et nom (choix « 2A »), 8 au plus (« 3C »)

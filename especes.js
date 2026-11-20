@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V102.xlsx, especes_bassin_aquitain_V45.xlsx, especes_bassin_parisien_V50.xlsx, especes_corse_V56.xlsx, especes_grand_est_V43.xlsx, especes_jura_V47.xlsx, especes_massif_armoricain_V56.xlsx, especes_massif_central_V48.xlsx, especes_mediterranee_V57.xlsx, especes_pyrenees_V53.xlsx, especes_vosges_V40.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V103.xlsx, especes_bassin_aquitain_V46.xlsx, especes_bassin_parisien_V51.xlsx, especes_corse_V57.xlsx, especes_grand_est_V44.xlsx, especes_jura_V48.xlsx, especes_massif_armoricain_V57.xlsx, especes_massif_central_V49.xlsx, especes_mediterranee_V58.xlsx, especes_pyrenees_V54.xlsx, especes_vosges_V41.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -2129,7 +2129,7 @@ const ESPECES = [
     nom_trace_indice: "Empreintes, crottes",
     nom_periode_reproduction: "Accouplement (avril-juillet)",
     type_revetement: "Poils/fourrure",
-    pelage_saisonnier: "Blanc en hiver seulement dans le nord de son aire",
+    pelage_saisonnier: "Blanc en hiver seulement dans les régions les plus au nord",
     adaptations_physiques: "un corps assez fin pour passer dans les galeries de campagnols ; une queue courte sans pinceau noir ; une grande souplesse",
     defense_principale: "Fuite",
     defenses_secondaires: "Refuge (terrier, eau, falaise)",
@@ -3274,7 +3274,7 @@ const ESPECES = [
     regime_alimentaire_type: "carnivore",
     proies: "Rongeurs, musaraignes, oiseaux, amphibiens, gros insectes",
     predateurs: "Grand-duc d'Europe, autour des palombes, renard (jeunes)",
-    liens_autres_especes: "Harcelée le jour par les corvidés",
+    liens_autres_especes: "Harcelée le jour par les corneilles",
     moyen_communication: "Hululements nocturnes, claquements de bec",
     verbe_cri: "Hulule",
     cri_son: "Hululement grave et modulé, porte loin la nuit",
@@ -4498,7 +4498,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     tendance_france: "NA",
-    a_confirmer: ["aspect_robe", "queue_vol"]
+    a_confirmer: ["aspect_robe", "bec_couleur", "queue_vol"]
   },
   {
     onglet: "Oiseaux",
@@ -5343,8 +5343,8 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
     proies: "Campagnols, mulots, insectes, lézards, petits oiseaux",
-    predateurs: "Buse variable, autres rapaces ; corvidés (œufs)",
-    liens_autres_especes: "Réutilise les anciens nids de corvidés",
+    predateurs: "Buse variable, autres rapaces ; corneilles et corbeaux (œufs)",
+    liens_autres_especes: "Réutilise les anciens nids de corneilles",
     moyen_communication: "Sonore (réclame : « ki-ki-ki »)",
     verbe_cri: "Réclame",
     cri_son: "Série rapide de « ki-ki-ki » aigus",
@@ -5376,7 +5376,7 @@ const ESPECES = [
     type_proie_detaille: "Campagnols repérés en vol sur place",
     parade_nuptiale: null,
     type_chant: null,
-    nid_type: "Ancien nid de corvidé, cavité de falaise ou de bâtiment, nichoir",
+    nid_type: "Ancien nid de corneille, cavité de falaise ou de bâtiment, nichoir",
     statut_conservation_france: "Quasi menacée",
     aspect_robe: "À motif",
     motif_robe: "Taches",
@@ -7240,7 +7240,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
     proies: "Lézards, micromammifères, oisillons, serpents, grenouilles",
-    predateurs: "Rapaces, corvidés, belette, volailles",
+    predateurs: "Rapaces, corneilles et corbeaux, belette, volailles",
     liens_autres_especes: "Mange vipères et couleuvres ; concurrence la couleuvre de Montpellier",
     moyen_communication: "Sifflement défensif",
     verbe_cri: "NA",
@@ -7541,7 +7541,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "insectivore",
     proies: "Mouches, araignées, chenilles, fourmis, coléoptères",
-    predateurs: "Coronelle lisse, vipère péliade, rapaces, corvidés",
+    predateurs: "Coronelle lisse, vipère péliade, rapaces, corneilles et corbeaux",
     liens_autres_especes: "Proie documentée de la coronelle lisse",
     moyen_communication: "Olfactif (phéromones), visuel",
     verbe_cri: "NA",
@@ -7741,7 +7741,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
     proies: "Crapauds, grenouilles, poissons, petits mammifères",
-    predateurs: "Rapaces, corvidés, cigognes, chouettes, renard, chat",
+    predateurs: "Rapaces, corneilles et corbeaux, cigognes, chouettes, renard, chat",
     liens_autres_especes: "Prédatrice de la grenouille rousse et du crapaud commun",
     moyen_communication: "Sifflement défensif",
     verbe_cri: "Siffle",
@@ -8117,7 +8117,7 @@ const ESPECES = [
     sous_groupe: null,
     photo: "Images/omble_chevalier.jpg",
     photo_source: "https://commons.wikimedia.org/wiki/File:Salvelinus_alpinus_Kaiyukan.jpg",
-    couleur: "Dos vert sombre à gris-brun, flancs argentés, ventre orangé au frai",
+    couleur: "Dos vert sombre à gris-brun, flancs argentés, ventre orangé à la reproduction",
     taille_min_cm: 20,
     taille_max_cm: 76,
     poids_min_kg: 0.2,
@@ -8525,7 +8525,7 @@ const ESPECES = [
     milieux_secondaires: "Rivières et torrents ; Mares et étangs",
     altitude_min_m: null,
     altitude_max_m: null,
-    periode_observation: "Toute l'année, frai printanier",
+    periode_observation: "Toute l'année, ponte au printemps",
     longevite_max_annees: 30,
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Peu commun",
@@ -8797,7 +8797,7 @@ const ESPECES = [
     photo_3_source: null,
     photo_3_sujet: null,
     hiver: "reste actif",
-    cause_declin: "disparition des zones de frai et réchauffement des eaux",
+    cause_declin: "disparition des zones de ponte et réchauffement des eaux",
     photo_2_differente: "NA",
     photo_2_change: "NA",
     photo_3_differente: "NA",
@@ -13878,7 +13878,7 @@ const ESPECES = [
     nom_groupe: null,
     regime_alimentaire_type: "omnivore",
     proies: "Maïs, glands, graines, pousses, insectes, vers, escargots",
-    predateurs: "Grand corbeau et corvidés (œufs), aigles",
+    predateurs: "Grand corbeau et corneilles (œufs), aigles",
     liens_autres_especes: null,
     moyen_communication: "Cris trompettants, danse nuptiale",
     verbe_cri: "NA",
@@ -15033,7 +15033,7 @@ const ESPECES = [
     nom_groupe: null,
     regime_alimentaire_type: "granivore",
     proies: "Graines sauvages, céréales, graines de conifères, bourgeons",
-    predateurs: "Corvidés, rapaces, mustélidés, rongeurs, chats domestiques",
+    predateurs: "Corneilles et corbeaux, rapaces, mustélidés, rongeurs, chats domestiques",
     liens_autres_especes: "Mange les graines de fumeterre",
     moyen_communication: "Sonore (roucoulement), visuel (vol de parade)",
     verbe_cri: "Roucoule",
@@ -15936,7 +15936,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "omnivore",
     proies: "Plantes aquatiques, invertébrés, petits vertébrés",
-    predateurs: "Serpents, corneilles, ratons laveurs, loutres, poissons (aire d'origine)",
+    predateurs: "Serpents, corneilles, ratons laveurs, loutres, poissons (dans sa région d'origine)",
     liens_autres_especes: "Prend les postes d'insolation de la cistude",
     moyen_communication: "Visuel, tactile, vibrations des griffes (parade)",
     verbe_cri: "NA",
@@ -19689,7 +19689,7 @@ const ESPECES = [
     nom_groupe: "Colonie",
     regime_alimentaire_type: "carnivore",
     proies: "Campagnols, petits oiseaux et œufs, lézards, gros insectes",
-    predateurs: "Renards, corvidés, grands rapaces (surtout nichées)",
+    predateurs: "Renards, corneilles et corbeaux, grands rapaces (surtout nichées)",
     liens_autres_especes: "Dépend surtout des pullulations de campagnols",
     moyen_communication: "Sonore (cris), visuel (parades aériennes)",
     verbe_cri: null,
@@ -20840,13 +20840,13 @@ const ESPECES = [
     regime_alimentaire_type: "piscivore",
     proies: "Poissons : carpes, tanches, brochets, brèmes, gardons",
     predateurs: "Rapaces nocturnes et aigles au nid ; corneilles parasites",
-    liens_autres_especes: "Corvidés et autres rapaces lui volent ses poissons",
+    liens_autres_especes: "Corneilles et autres rapaces lui volent ses poissons",
     moyen_communication: "Sonore (sifflements aigus), visuel (vols nuptiaux)",
     verbe_cri: "NA",
     cri_son: "Sifflements aigus « piou piou », alarme « kia kia »",
-    technique_defense: "Aire hors de portée au sommet des arbres, cris d'alarme",
+    technique_defense: "Nid hors de portée au sommet des arbres, cris d'alarme",
     nom_logis: "Aire",
-    nom_trace_indice: "Énorme aire de branches à la cime d'un arbre",
+    nom_trace_indice: "Énorme nid de branches à la cime d'un arbre",
     nom_periode_reproduction: "Ponte fin avril",
     type_revetement: "Plumes",
     adaptations_physiques: "un doigt externe réversible ; des narines qui se ferment en plongée ; de longues serres courbes",
@@ -20870,9 +20870,9 @@ const ESPECES = [
     migrateur_resident: "Migrateur, hiverne en Afrique de l'Ouest",
     vitesse_pique_kmh: null,
     type_proie_detaille: "Poissons de 25-35 cm saisis en piqué, pattes en avant",
-    parade_nuptiale: "Vol nuptial du mâle, piqués et cris au-dessus de l'aire",
+    parade_nuptiale: "Vol nuptial du mâle, piqués et cris au-dessus du nid",
     type_chant: "NA",
-    nid_type: "Énorme aire de branches à la cime d'un pin",
+    nid_type: "Énorme nid de branches à la cime d'un pin",
     statut_conservation_france: "Vulnérable",
     aspect_robe: "À motif",
     motif_robe: "Masque",
@@ -22452,7 +22452,7 @@ const ESPECES = [
     nom_groupe: "Bande",
     regime_alimentaire_type: "granivore",
     proies: "Graines, insectes, araignées, bourgeons, restes alimentaires",
-    predateurs: "Chats, fouine, épervier, effraie, faucon crécerelle, corvidés",
+    predateurs: "Chats, fouine, épervier, effraie, faucon crécerelle, corneilles et corbeaux",
     liens_autres_especes: "Évince le moineau friquet de ses sites de nid",
     moyen_communication: "Sonore (pépiements), visuel (bavette noire en parade)",
     verbe_cri: "Pépie",
@@ -22527,7 +22527,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     tendance_france: "augmente",
-    a_confirmer: []
+    a_confirmer: ["bec_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -22757,7 +22757,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     tendance_france: "augmente",
-    a_confirmer: []
+    a_confirmer: ["bec_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -26646,7 +26646,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     tendance_france: "NA",
-    a_confirmer: []
+    a_confirmer: ["bec_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -33900,7 +33900,7 @@ const ESPECES = [
     bec_forme: null,
     bec_couleur: "Rouge",
     ornement_tete: "Huppe",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: null,
     yeux_couleur: "Rouge",
     difference_male_femelle: "Plumage différent",
@@ -37442,7 +37442,7 @@ const ESPECES = [
     nom_groupe: "Bande",
     regime_alimentaire_type: "omnivore",
     proies: "Vers de terre, escargots, insectes, araignées, baies, pommes tombées",
-    predateurs: "Rapaces et corvidés (nid, œufs, poussins)",
+    predateurs: "Rapaces et corneilles (nid, œufs, poussins)",
     liens_autres_especes: null,
     moyen_communication: null,
     verbe_cri: "Glousse",
@@ -42944,7 +42944,7 @@ const ESPECES = [
     bec_forme: "Court et bombé",
     bec_couleur: "Multicolore",
     ornement_tete: "NA",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: "Arrondie",
     yeux_couleur: "Brun",
     difference_male_femelle: "Aucune visible",
@@ -45136,7 +45136,7 @@ const ESPECES = [
     bec_forme: "Court et bombé",
     bec_couleur: "Orange",
     ornement_tete: "NA",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: "Arrondie",
     yeux_couleur: "Noir",
     difference_male_femelle: "Mâle plus coloré",
@@ -45252,7 +45252,7 @@ const ESPECES = [
     bec_forme: "Retroussé",
     bec_couleur: "Noir",
     ornement_tete: "NA",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: "Carrée",
     yeux_couleur: "Noir",
     difference_male_femelle: "Mâle plus coloré",
@@ -46403,7 +46403,7 @@ const ESPECES = [
     bec_forme: "Plat et large",
     bec_couleur: "Jaune",
     ornement_tete: "NA",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: "Arrondie",
     yeux_couleur: "Brun",
     difference_male_femelle: "Plumage différent",
@@ -46477,7 +46477,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
     proies: "Campagnols, petits passereaux, grenouilles, lézards, gros insectes",
-    predateurs: "Autour des palombes, renard, blaireau, corvidés, chiens, hiboux",
+    predateurs: "Autour des palombes, renard, blaireau, corneilles et corbeaux, chiens, hiboux",
     liens_autres_especes: "Dortoirs d'hiver partagés avec busard des roseaux et émerillon",
     moyen_communication: "Sonore (cris « kek-kek-kek »), visuel (parade aérienne, passage de proie)",
     verbe_cri: "NA",
@@ -46592,7 +46592,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "insectivore",
     proies: "Papillons de nuit, coléoptères, mouches, libellules",
-    predateurs: "Renard, martre, hérisson, corvidés, rapaces, vipère péliade",
+    predateurs: "Renard, martre, hérisson, corneilles et corbeaux, rapaces, vipère péliade",
     liens_autres_especes: null,
     moyen_communication: "Sonore (long ronronnement nocturne), visuel (claquements d'ailes)",
     verbe_cri: "Ronronne",
@@ -47629,7 +47629,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "omnivore",
     proies: "Vers de terre, insectes, larves, araignées, escargots, fruits, graines",
-    predateurs: "Chat, renard, fouine, hermine, épervier, autour, corvidés",
+    predateurs: "Chat, renard, fouine, hermine, épervier, autour, corneilles et corbeaux",
     liens_autres_especes: "Rarement parasité par le coucou, rejette ses œufs",
     moyen_communication: "Sonore (chant flûté, « tjuk » d'alarme), visuel (bec jaune)",
     verbe_cri: "Siffle",
@@ -47744,7 +47744,7 @@ const ESPECES = [
     nom_groupe: "Bande",
     regime_alimentaire_type: "insectivore",
     proies: "Chenilles, pucerons, araignées, larves, graines, fruits",
-    predateurs: "Épervier, chouettes, pics, corvidés, chats, écureuils, belettes",
+    predateurs: "Épervier, chouettes, pics, corneilles et corbeaux, chats, écureuils, belettes",
     liens_autres_especes: "Rondes mixtes d'hiver ; concurrence avec la mésange charbonnière",
     moyen_communication: "Sonore (zinzinule : « tsi-tsi-tsi »), visuel (calotte bleue)",
     verbe_cri: "Zinzinule",
@@ -47934,7 +47934,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     tendance_france: "stable",
-    a_confirmer: []
+    a_confirmer: ["bec_couleur"]
   },
   {
     onglet: "Oiseaux",
@@ -48632,7 +48632,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "insectivore",
     proies: "Insectes volants, araignées, limaces",
-    predateurs: "Héron, cigogne, corvidés, chouettes, poissons, larves de libellules",
+    predateurs: "Héron, cigogne, corneilles et corbeaux, chouettes, poissons, larves de libellules",
     liens_autres_especes: "Pontes et têtards décimés par les poissons introduits",
     moyen_communication: "Sonore (« krè-krè-krè » puissant, gros sac vocal)",
     verbe_cri: "Coasse",
@@ -49116,7 +49116,7 @@ const ESPECES = [
     milieux_secondaires: "Mer et océan ; Estuaires et lagunes",
     altitude_min_m: null,
     altitude_max_m: null,
-    periode_observation: "Remontée février à octobre, frai novembre à janvier",
+    periode_observation: "Remontée février à octobre, ponte novembre à janvier",
     longevite_max_annees: 13,
     statut_conservation: "Vulnérable",
     rarete_observation: "Peu commun",
@@ -49415,7 +49415,7 @@ const ESPECES = [
     milieux_secondaires: "Estuaires et lagunes ; Mer et océan",
     altitude_min_m: null,
     altitude_max_m: null,
-    periode_observation: "Remontée avril à juin, frai la nuit en mai",
+    periode_observation: "Remontée avril à juin, ponte la nuit en mai",
     longevite_max_annees: 10,
     statut_conservation: "En danger critique",
     rarete_observation: "Rare",
@@ -53992,7 +53992,7 @@ const ESPECES = [
     comportement_social: null,
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
-    proies: "Pigeons, corvidés, grives, gibier à plumes, écureuils, lièvres, lapins",
+    proies: "Pigeons, corneilles et corbeaux, grives, gibier à plumes, écureuils, lièvres, lapins",
     predateurs: "Grand-duc d'Europe, martres, aigles, autres rapaces",
     liens_autres_especes: null,
     moyen_communication: null,
@@ -54229,7 +54229,7 @@ const ESPECES = [
     verbe_cri: null,
     cri_son: "« kikiki » aigu en longues séries",
     technique_defense: null,
-    nom_logis: "Nid (ancien nid de corvidés)",
+    nom_logis: "Nid (ancien nid de corneille)",
     nom_trace_indice: null,
     nom_periode_reproduction: "Parades aériennes acrobatiques et cris nuptiaux",
     type_revetement: null,
@@ -54459,7 +54459,7 @@ const ESPECES = [
     verbe_cri: null,
     cri_son: "« Hou hou hou » grave, répété",
     technique_defense: null,
-    nom_logis: "Ancien nid de corvidé",
+    nom_logis: "Ancien nid de corneille",
     nom_trace_indice: null,
     nom_periode_reproduction: "Ponte de fin février à avril",
     type_revetement: null,
@@ -54684,7 +54684,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
     proies: "Campagnols, gros insectes, petits oiseaux, lézards",
-    predateurs: "Rapaces, chouette chevêche ; corvidés (œufs, poussins)",
+    predateurs: "Rapaces, chouette chevêche ; corneilles et corbeaux (œufs, poussins)",
     liens_autres_especes: null,
     moyen_communication: null,
     verbe_cri: null,
@@ -55262,7 +55262,7 @@ const ESPECES = [
     nom_groupe: null,
     regime_alimentaire_type: "granivore",
     proies: "Graines, céréales ; chenilles, araignées, coléoptères, sauterelles",
-    predateurs: "Épervier d'Europe, autour, faucon hobereau ; corvidés et rongeurs (nids)",
+    predateurs: "Épervier d'Europe, autour, faucon hobereau ; corneilles et rongeurs (nids)",
     liens_autres_especes: null,
     moyen_communication: null,
     verbe_cri: "NA",
@@ -55419,7 +55419,7 @@ const ESPECES = [
     bec_forme: null,
     bec_couleur: "Gris",
     ornement_tete: "NA",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: null,
     yeux_couleur: null,
     difference_male_femelle: "Mâle plus coloré",
@@ -55723,7 +55723,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "omnivore",
     proies: "Vers de terre, insectes, larves, mollusques, baies de gui, fruits",
-    predateurs: "Aigle royal, buses, autour, chouette hulotte, chats et corvidés",
+    predateurs: "Aigle royal, buses, autour, chouette hulotte, chats et corneilles",
     liens_autres_especes: null,
     moyen_communication: null,
     verbe_cri: "Siffle",
@@ -56801,7 +56801,7 @@ const ESPECES = [
     bec_forme: "Droit et pointu",
     bec_couleur: "Noir",
     ornement_tete: "NA",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: null,
     yeux_couleur: "Brun",
     difference_male_femelle: "Aucune visible",
@@ -61616,7 +61616,7 @@ const ESPECES = [
     bec_forme: "Droit et pointu",
     bec_couleur: "Multicolore",
     ornement_tete: "Aigrettes",
-    pattes_aspect: "Oranges",
+    pattes_aspect: "Orange",
     queue_vol: null,
     yeux_couleur: null,
     difference_male_femelle: null,
@@ -61921,13 +61921,13 @@ const ESPECES = [
     comportement_social: "Couple",
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
-    proies: "Lapins, perdrix, pigeons, goélands, corvidés",
+    proies: "Lapins, perdrix, pigeons, goélands, corneilles et corbeaux",
     predateurs: "Grand-duc, grand corbeau (œufs, poussins)",
-    liens_autres_especes: "Aigle royal (concurrent), vautour fauve (prend ses aires)",
+    liens_autres_especes: "Aigle royal (concurrent), vautour fauve (prend ses nids)",
     moyen_communication: "Sonore (cris aigus en parade), visuel (vols acrobatiques)",
     verbe_cri: "Glatit",
     cri_son: "« Kyak » sonores répétés, « iuuuh » puissants",
-    technique_defense: "Serres puissantes, aire en falaise",
+    technique_defense: "Serres puissantes, nid en falaise",
     nom_logis: "Aire",
     nom_trace_indice: null,
     nom_periode_reproduction: "Parade nuptiale",
@@ -61953,7 +61953,7 @@ const ESPECES = [
     migrateur_resident: "Sédentaire",
     vitesse_pique_kmh: null,
     type_proie_detaille: "Oiseaux et lapins de 300 g à 1,5 kg",
-    parade_nuptiale: "Vol nuptial du mâle, piqués et cris au-dessus de l'aire",
+    parade_nuptiale: "Vol nuptial du mâle, piqués et cris au-dessus du nid",
     type_chant: null,
     nid_type: "Plateforme de branchages sur corniche rocheuse",
     statut_conservation_france: "En danger",
@@ -69670,7 +69670,7 @@ const ESPECES = [
     regime_alimentaire_type: "carnivore",
     proies: "Charognes, campagnols, lapins, mulots, oiseaux",
     predateurs: "Autour des palombes (poussins)",
-    liens_autres_especes: "Vole les proies d'autres rapaces et des corvidés",
+    liens_autres_especes: "Vole les proies d'autres rapaces et des corneilles",
     moyen_communication: "Sonore (sifflement modulé), visuel (vols de parade)",
     verbe_cri: "NA",
     cri_son: "Long sifflement aigu, « wiiieeh »",
@@ -69791,7 +69791,7 @@ const ESPECES = [
     verbe_cri: "Siffle",
     cri_son: "Sifflement aigu modulé « uiiuuuh », surtout en vol",
     technique_defense: "Défend un territoire de nidification d'environ 10 km²",
-    nom_logis: "Aire dans un arbre",
+    nom_logis: "Aire",
     nom_trace_indice: null,
     nom_periode_reproduction: "Ponte dans la première quinzaine de juin",
     type_revetement: "Plumes",
@@ -71748,7 +71748,7 @@ const ESPECES = [
     milieux_secondaires: "Lacs ; Mares et étangs",
     altitude_min_m: 0,
     altitude_max_m: 3205,
-    periode_observation: "Toute l'année ; frai sur graviers peu profonds en automne",
+    periode_observation: "Toute l'année ; ponte sur graviers peu profonds en automne",
     longevite_max_annees: 24,
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Peu commun",
@@ -75925,7 +75925,7 @@ const ESPECES = [
     nom_groupe: "NA",
     regime_alimentaire_type: "carnivore",
     proies: "Escargots, vers, insectes",
-    predateurs: "Oiseaux (grives, corvidés), petits mammifères, sangliers",
+    predateurs: "Oiseaux (grives, corneilles et corbeaux), petits mammifères, sangliers",
     liens_autres_especes: null,
     moyen_communication: null,
     verbe_cri: "NA",
@@ -77027,6 +77027,21 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Au sol"
   },
   {
+    "nom_courant": "Niverolle alpine",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Accenteur alpin",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Lérot",
+    "colonne": "queue_forme",
+    "reponse_interdite": "Touffue"
+  },
+  {
     "nom_courant": "Bruant ortolan",
     "colonne": "emplacement_nid",
     "reponse_interdite": "Arbre ou buisson"
@@ -77040,6 +77055,16 @@ const PIEGES_INTERDITS = [
     "nom_courant": "Bouscarle de Cetti",
     "colonne": "emplacement_nid",
     "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Goéland leucophée",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rouge"
+  },
+  {
+    "nom_courant": "Goéland leucophée",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
   },
   {
     "nom_courant": "Gendarme",
@@ -77132,6 +77157,56 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Falaise ou paroi rocheuse"
   },
   {
+    "nom_courant": "Œdicnème criard",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Œdicnème criard",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Sterne naine",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Sterne naine",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Pigeon ramier",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rose"
+  },
+  {
+    "nom_courant": "Pigeon ramier",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Moineau domestique",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Brun"
+  },
+  {
+    "nom_courant": "Moineau domestique",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Ivoire"
+  },
+  {
+    "nom_courant": "Étourneau sansonnet",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Étourneau sansonnet",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Brun"
+  },
+  {
     "nom_courant": "Moineau cisalpin",
     "colonne": "emplacement_nid",
     "reponse_interdite": "Arbre ou buisson"
@@ -77207,9 +77282,54 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Falaise ou paroi rocheuse"
   },
   {
+    "nom_courant": "Étourneau unicolore",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Étourneau unicolore",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Brun"
+  },
+  {
+    "nom_courant": "Gallinule poule-d'eau",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Gallinule poule-d'eau",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Pigeon biset",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Ivoire"
+  },
+  {
     "nom_courant": "Fuligule milouin",
     "colonne": "emplacement_nid",
     "reponse_interdite": "Cavité d'arbre"
+  },
+  {
+    "nom_courant": "Cygne tuberculé",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Cygne tuberculé",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Gris"
+  },
+  {
+    "nom_courant": "Cygne tuberculé",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rose"
+  },
+  {
+    "nom_courant": "Nette rousse",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
   },
   {
     "nom_courant": "Grive litorne",
@@ -77260,6 +77380,16 @@ const PIEGES_INTERDITS = [
     "nom_courant": "Pigeon colombin",
     "colonne": "emplacement_nid",
     "reponse_interdite": "Arbre ou buisson"
+  },
+  {
+    "nom_courant": "Pigeon colombin",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rose"
+  },
+  {
+    "nom_courant": "Pigeon colombin",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
   },
   {
     "nom_courant": "Putois d'Europe",
@@ -78467,6 +78597,111 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Falaise ou paroi rocheuse"
   },
   {
+    "nom_courant": "Goéland argenté",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rouge"
+  },
+  {
+    "nom_courant": "Goéland argenté",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Goéland marin",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rouge"
+  },
+  {
+    "nom_courant": "Goéland brun",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rouge"
+  },
+  {
+    "nom_courant": "Macareux moine",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rouge"
+  },
+  {
+    "nom_courant": "Macareux moine",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Orange"
+  },
+  {
+    "nom_courant": "Macareux moine",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Gris"
+  },
+  {
+    "nom_courant": "Macareux moine",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Pinson des arbres",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Brun"
+  },
+  {
+    "nom_courant": "Pinson des arbres",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rose"
+  },
+  {
+    "nom_courant": "Pinson des arbres",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Ivoire"
+  },
+  {
+    "nom_courant": "Sterne caugek",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Sterne pierregarin",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Grand cormoran",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Cormoran huppé",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Grand gravelot",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Spatule blanche",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Jaune"
+  },
+  {
+    "nom_courant": "Spatule blanche",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Rose"
+  },
+  {
+    "nom_courant": "Martin-pêcheur d'Europe",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Orange"
+  },
+  {
+    "nom_courant": "Canard colvert",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Brun"
+  },
+  {
+    "nom_courant": "Canard colvert",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Orange"
+  },
+  {
     "nom_courant": "Mésange nonnette",
     "colonne": "bec_forme",
     "reponse_interdite": "Conique"
@@ -78587,6 +78822,11 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Au sol"
   },
   {
+    "nom_courant": "Surmulot",
+    "colonne": "queue_forme",
+    "reponse_interdite": "Courte"
+  },
+  {
     "nom_courant": "Puffin de Scopoli",
     "colonne": "emplacement_nid",
     "reponse_interdite": "Terrier"
@@ -78637,6 +78877,16 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Roselière ou végétation dense"
   },
   {
+    "nom_courant": "Flamant rose",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
+    "nom_courant": "Puffin de Scopoli",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Noir"
+  },
+  {
     "nom_courant": "Mésange noire",
     "colonne": "bec_forme",
     "reponse_interdite": "Conique"
@@ -78682,9 +78932,24 @@ const PIEGES_INTERDITS = [
     "reponse_interdite": "Bâtiment"
   },
   {
+    "nom_courant": "Desman des Pyrénées",
+    "colonne": "queue_forme",
+    "reponse_interdite": "Plate"
+  },
+  {
+    "nom_courant": "Campagnol roussâtre",
+    "colonne": "queue_forme",
+    "reponse_interdite": "Longue"
+  },
+  {
     "nom_courant": "Pouillot fitis",
     "colonne": "pattes_aspect",
     "reponse_interdite": "Brunes"
+  },
+  {
+    "nom_courant": "Corbeau freux",
+    "colonne": "bec_couleur",
+    "reponse_interdite": "Ivoire"
   }
 ];
 
@@ -79253,7 +79518,7 @@ const ANECDOTES = {
   "bronze": "Les jeunes de la première couvée peuvent aider leurs parents à nourrir leurs petits frères et sœurs de la couvée suivante."
  },
  "Escargot des jardins": {
-  "bronze": "Cet escargot vit jusqu'en Islande, tout au nord de son aire de répartition."
+  "bronze": "Cet escargot vit jusqu'en Islande, tout au nord de sa zone de présence."
  },
  "Synème globuleux": {
   "bronze": "Le mâle, environ deux fois plus petit que la femelle, est aussi bien plus sombre, avec très peu de couleur sur l'abdomen."
@@ -79292,13 +79557,13 @@ const ANECDOTES = {
   "bronze": "Elle a une quasi-jumelle, la pipistrelle pygmée : on les distingue surtout à la hauteur de leurs ultrasons, plus graves chez la commune."
  },
  "Pipistrelle de Kuhl": {
-  "bronze": "Depuis 1980, son aire de répartition en Europe s'est fortement agrandie, probablement grâce à des hivers devenus plus doux."
+  "bronze": "Depuis 1980, sa zone de présence en Europe s'est fortement agrandie, probablement grâce à des hivers devenus plus doux."
  },
  "Fouine": {
   "bronze": "Accouplée en été, la femelle garde ses œufs fécondés « en pause » pendant des mois : les petits ne naissent qu'au printemps suivant."
  },
  "Lérot": {
-  "bronze": "En quelques décennies, son aire de répartition en Europe a diminué de moitié environ."
+  "bronze": "En quelques décennies, sa zone de présence en Europe a diminué de moitié environ."
  },
  "Grand murin": {
   "bronze": "Pour trouver les carabes, il compte moins sur ses ultrasons que sur son ouïe : il écoute le bruissement de leurs pas au sol."
@@ -79922,7 +80187,7 @@ const ANECDOTES = {
   "bronze": "Pour rentrer dans son gîte, il a besoin d'une entrée assez large : il y pénètre en plein vol, puis se suspend par les pieds."
  },
  "Lézard vivipare": {
-  "bronze": "Malgré son nom, dans les Pyrénées et le sud-ouest de son aire, il pond des œufs au lieu de donner naissance à des petits."
+  "bronze": "Malgré son nom, dans les Pyrénées et le sud-ouest de sa zone de présence, il pond des œufs au lieu de donner naissance à des petits."
  },
  "Damier de la succise": {
   "bronze": "Au printemps, ses chenilles noires se serrent en groupe au soleil : leur couleur sombre capte la chaleur et leur permet de s'activer malgré le froid."
@@ -80778,7 +81043,7 @@ const ANECDOTES = {
   "bronze": "Sous l'écorce, le mâle creuse une petite chambre où une à quatre femelles le rejoignent ; chacune y commence sa propre galerie de ponte."
  },
  "Truxale": {
-  "bronze": "Au nord de son aire, en Europe centrale, on l'observe de plus en plus souvent : les chercheurs y voient peut-être un effet du réchauffement."
+  "bronze": "Au nord de sa zone de présence, en Europe centrale, on l'observe de plus en plus souvent : les chercheurs y voient peut-être un effet du réchauffement."
  },
  "Pie-grièche méridionale": {
   "bronze": "Pour ses poussins, réclamer à manger en criant beaucoup a un prix : même mieux nourris, leurs défenses contre les maladies s'affaiblissent."

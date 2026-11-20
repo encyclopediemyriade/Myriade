@@ -8,6 +8,8 @@
 //     c'est modeChoisi qui dit laquelle des deux on y affiche (étape 45).
 // ==================================================================
 function montrer(vue) {
+  // R273 (13A) : quitter le Duel en cours par un onglet demande aussi « Quitter ? »
+  if (vue !== "jouer" && typeof duelEnCours === "function" && duelEnCours()) { demanderQuitterDuel(() => montrer(vue)); return; }
   if (typeof noterDepartPage === "function") noterDepartPage(vue);   // R241 (note 2) : la page quittée, pour la touche retour
   if (typeof fermerTiroir === "function") fermerTiroir();   // étape R194 : la fiche en tiroir ne reste pas ouverte sur un autre écran
   arreterCri();                                          // on coupe un cri en cours si l'on change de page
@@ -29,7 +31,7 @@ function montrer(vue) {
   const vueAtlas = document.getElementById("vue-atlas");                                // étape K2 : l'espace Carte du téléphone
   if (vueAtlas) vueAtlas.classList.toggle("cache", vue !== "atlas");
   const ongletCarte = document.getElementById("onglet-carte");
-  if (ongletCarte) ongletCarte.classList.toggle("actif", vue === "atlas");
+  if (ongletCarte) ongletCarte.classList.toggle("actif", vue === "atlas" || vue === "carte");   // R273 (9A) : « carte » = l'onglet « Territoires » de l'ordinateur
   const vueMaison = document.getElementById("vue-maison");                              // étape M9 : l'accueil du téléphone
   if (vueMaison) vueMaison.classList.toggle("cache", vue !== "maison");
   if (vue === "maison" && typeof dessinerMaison === "function") dessinerMaison();
@@ -54,7 +56,7 @@ function montrer(vue) {
   document.getElementById("vue-espece").classList.toggle("cache", vue !== "espece");     // étape 103
   document.getElementById("vue-progression").classList.toggle("cache", vue !== "progression");   // étape 106
   document.getElementById("onglet-progression").classList.toggle("actif", vue === "progression");
-  document.getElementById("onglet-accueil").classList.toggle("actif", vue === "accueil" || vue === "maison" || vue === "carte" || vue === "expedition" || vue === "lieu");
+  document.getElementById("onglet-accueil").classList.toggle("actif", vue === "accueil" || vue === "maison" || vue === "expedition" || vue === "lieu");
   document.getElementById("onglet-jouer").classList.toggle("actif", vue === "arcade" || vue === "coupdoeil" || vue === "oreille" || (jeu && modeLibre));   // étape 262 : l'Arcade
   document.body.classList.toggle("ecran-jouer", jeu);   // étape 91 : la barre du haut s'élargit comme le carnet
   document.getElementById("onglet-encyclopedie").classList.toggle("actif", vue === "encyclopedie" || vue === "espece");
@@ -81,14 +83,91 @@ function montrer(vue) {
 // Le bouton Quitter (étape 73) : on arrête la partie en cours et on revient à l'accueil.
 // Rien n'est perdu de ce qui a déjà été trouvé : chaque bonne réponse est enregistrée sur le moment.
 // (montrer() arrête aussi un jeu en cours ; on l'écrit ici pour que ce soit clair.)
+// Étape R273 (19/11, choix 13A d'Aubin, test du 19/11 n° 38 ; critère : « ne rien perdre sans prévenir, sans question inutile ») :
+//   • LA RENCONTRE QUITTÉE SE REPREND où elle en était : en sortant (« ← », touche retour, un onglet), la Rencontre en cours est
+//     mise de côté telle quelle ; relancée (même espèce, même expédition, ou depuis sa fiche / l'espèce du jour), elle reprend
+//     à la même question, avec son panneau « Ce que vous savez ». Une Rencontre d'une autre espèce la remplace.
+//     Elle est gardée tant que le jeu reste ouvert (recharger la page la fait repartir du début ; les réponses déjà données
+//     sont enregistrées de toute façon).
+//   • LE DUEL DEMANDE « Quitter ? » (ses vies et sa série seraient perdues), seulement si une réponse a déjà été donnée.
+let rencontreEnPause = null;
+function cleRencontre(s) { return s && s.focus ? `${s.expedition ? "exp|" + s.expedition.id : "libre"}|${s.focus.nom_courant}` : ""; }
+function mettreRencontreDeCote(annoncer) {
+  if (defi || !session || !session.focus || !session.tirageEnCours) return false;
+  if (session.expedition && session.expedition.etape !== 1) return false;
+  rencontreEnPause = { session, cle: cleRencontre(session), duJour: typeof rencontreDuJour !== "undefined" ? rencontreDuJour : null };
+  if (annoncer && typeof afficherBulle === "function") setTimeout(() => afficherBulle("Rencontre mise de côté · vous la reprendrez où vous en étiez"), 250);
+  return true;
+}
+// La Rencontre mise de côté pour cette espèce (dans cette expédition, ou hors expédition), sinon null
+//   Dans une expédition, c'est elle qui revient d'abord, quelle que soit l'espèce « suivante » : une espèce déjà reconnue
+//   à la première question garde ainsi la suite de sa Rencontre (sa vie, « Étonnant »).
+function rencontreAReprendre(espece, x) {
+  const p = rencontreEnPause;
+  if (!p) return null;
+  if (x) return p.session.expedition && p.session.expedition.id === x.id ? p : null;
+  return espece && p.cle === `libre|${espece.nom_courant}` ? p : null;
+}
+function reprendreRencontre(p) {
+  rencontreEnPause = null;
+  const s = p.session, x = s.expedition ? expeditionParId(s.expedition.id) : null;
+  session = null;
+  modeLibre = false; depuisArcade = false;
+  jeuChoisi = "rencontre";
+  lancementDirect = true;
+  montrer("jouer");
+  lancementDirect = false;
+  rencontreDuJour = p.duJour || null;
+  session = s;
+  document.getElementById("fin-session").classList.add("cache");
+  document.getElementById("fin-defi").classList.add("cache");
+  document.getElementById("choix-longueur").classList.add("cache");
+  document.getElementById("carte-rencontre").classList.remove("cache");
+  if (x) majFilExpedition(x, 1);
+  if (typeof majHautJeu === "function") majHautJeu();
+  const t = s.tirageEnCours;
+  if (s.faites > s.faitesAuTirage) {          // la question avait déjà sa réponse : la suite, comme « Continuer »
+    if (s.faites < s.total && !resteAQuestionner()) s.total = s.faites;
+    if (s.faites >= s.total) terminerSession(); else nouvelleRencontre();
+  } else {
+    if (!s.tiragePose) {                      // quittée sur un écran de lecture (« Sa vie », « Voici son cri »…) : il revient
+      if ((s.vie || []).includes(t.champ)) s.vieMontree = false;
+      if (t.bonus) s.bonusAnnonce = false; else if (t.rejeu) s.reprisesAnnoncees = false;
+      if (s.montresAvant) delete s.montresAvant[t.champ];
+    }
+    presenterTirage(t);
+  }
+  window.scrollTo(0, 0);
+}
+// « Quitter ? » pour le Duel en cours (une feuille en bas de l'écran ; « Continuer le Duel » par défaut)
+let quitterDuelConfirme = false;
+function duelEnCours() { return !!(defi && defi.jeu === "plus" && defi.vies !== undefined && (defi.faites || 0) > 0 && !quitterDuelConfirme); }
+function demanderQuitterDuel(suite) {
+  document.querySelectorAll(".quitter-voile").forEach(v => v.remove());
+  const voile = document.createElement("div");
+  voile.className = "dfx-voile quitter-voile";
+  voile.innerHTML = `<div class="dfx-feuille" role="dialog" aria-modal="true" aria-labelledby="quitter-titre">
+      <h2 id="quitter-titre">Quitter le Duel ?</h2>
+      <p>La partie en cours s'arrêtera ici. Ce que vous avez déjà trouvé reste dans votre carnet.</p>
+      <button type="button" class="bouton-accueil principal" id="quitter-non">Continuer le Duel</button>
+      <button type="button" class="bouton-accueil secondaire" id="quitter-oui">Quitter</button></div>`;
+  document.body.appendChild(voile);
+  const fermer = () => voile.remove();
+  voile.onclick = ev => { if (ev.target === voile) fermer(); };
+  voile.querySelector("#quitter-non").onclick = fermer;
+  voile.querySelector("#quitter-oui").onclick = () => { fermer(); quitterDuelConfirme = true; try { suite(); } finally { quitterDuelConfirme = false; } };
+  voile.querySelector("#quitter-non").focus();
+}
 function quitterJeu() {
+  if (duelEnCours()) { demanderQuitterDuel(quitterJeu); return; }   // R273 (13A)
   arreterCri();
   // Étape R188 (11/11, note n° 16 d'Aubin) : dans une partie lancée depuis une expédition, « Quitter » ramène au LIEU
   //   (avant : à l'accueil, on perdait l'endroit où l'on était). Le retour du téléphone fait pareil (14_clavier_menus.js).
   const x = typeof expeditionDuFil === "function" ? expeditionDuFil() : null;
   const fe = defi && defi.ficheEspece ? especeParNom(defi.ficheEspece) : null;   // étape R258 : « Compléter sa fiche » → retour à la fiche
   if (defi) abandonnerDefi();          // les XP déjà gagnés sont gardés
-  session = null;                      // la Rencontre en cours ne sera pas reprise
+  else mettreRencontreDeCote(true);    // R273 (13A) : la Rencontre en cours est mise de côté, elle se reprendra
+  session = null;
   // Étape R241 (note 17 du 16/11) : depuis une expédition, retour direct à la page de l'expédition (avant : au lieu)
   if (x) { majFilExpedition(null); ouvrirExpedition(x); return; }
   if (fe) { ouvrirPageEspece(fe); window.scrollTo(0, 0); return; }   // étape R258
@@ -173,7 +252,7 @@ function noterAuBilan(espece, champ, texteImpose) {
   const { q, bonne } = enCours || {};                  // (pas de question classique en Plus ou moins)
   const texte = texteImpose ? texteImpose
               : (champ === IDENTIFICATION) ? "reconnue sur photo"
-                                           : `${q.libelle} : ${afficherValeur(q, bonne)}`;
+                                           : `${q.libelle} : ${q.affichageFiche && espece ? q.affichageFiche(espece, bonne) : afficherValeur(q, bonne)}`;   // R273 (14A) : comme sur la fiche
   // Pas de doublon : la même information n'apparaît qu'une fois dans le bilan
   const dejaNotee = journal.some(l => l.nom === espece.nom_courant && l.texte === texte);
   if (!dejaNotee) journal.push({ liste: liste, nom: espece.nom_courant, texte: texte, champ: texteImpose ? null : champ });   // (champ : étape 145)
@@ -345,7 +424,10 @@ function afficherCarnetFin(idZone, { journal, avant, cases, manquees: manqueesFi
   const scoreTexte = cases.map(([c, t]) => `<b>${c}</b> ${t}`).join(" · ");
   // Étape R101 (Revoir 10) : à la fin d'une Rencontre, le score monte en haut de l'écran, sous le titre
   const scoreHaut = idZone === "carnet-fin-session" ? document.getElementById("score-session") : null;
-  if (scoreHaut) scoreHaut.innerHTML = scoreTexte;
+  // Étape R273 (11A) : à la fin d'une Rencontre, un seul compte — les questions à revoir (rien s'il n'y en a pas) ;
+  //   plus de « 2 / 3 bonnes réponses · ✓ bonus ».
+  const nRevoir = (manqueesFin || []).filter(m => m.espece && m.champ).length;
+  if (scoreHaut) scoreHaut.innerHTML = nRevoir ? `<b>${nRevoir}</b> question${nRevoir > 1 ? "s" : ""} à revoir` : "";
   let html = cases.length && !scoreHaut ? `<p class="score-fin3">${scoreTexte}</p>` : "";
   // 0) Étape 98 : les questions qui ont échappé au joueur, à reprendre tout de suite
   //    Étape 275 (« Revoir 5 ») : juste après le score, avant les espèces, familles et badges
@@ -479,7 +561,7 @@ function validerEspeceDuJour(nom, delai = 900) {
   if (t && typeof ajouterRecompense === "function" && typeof GAIN_ESPECE_DU_JOUR !== "undefined") {
     // Étape R248 (36.24) : les 2 empreintes attendent sur l'accueil, sous l'espèce du jour (bouton « +2 »)
     ajouterRecompense(t, GAIN_ESPECE_DU_JOUR, "Espèce du jour", `jour|${aujourdhui()}`);
-    setTimeout(() => afficherBulle(`✓ Espèce du jour rencontrée · +${GAIN_ESPECE_DU_JOUR} à récupérer sur l'accueil`), delai);
+    setTimeout(() => afficherBulle(`✓ Espèce du jour rencontrée · +${GAIN_ESPECE_DU_JOUR} à récupérer ${ouRecuperer()}`), delai);   // R271 (n° 21)
   }
   return true;
 }
@@ -1016,7 +1098,9 @@ function possibiliteJeuCalcul(jeu, choisi) {
   if (jeu === "rencontre") return especes.length ? { possible: true } : { possible: false, raison: "aucune espèce ici" };
   const pluriel = (n, mot) => `${n} ${mot}${n > 1 ? "s" : ""}`;
   if (jeu === "indices") {
-    const manqueTotal = accesTout() ? 0 : manqueAvantIndices();   // étape 274 : pas de seuil dans « Plus de jeux »
+    // R274 (12A) : sur la page Jeux, un seul seuil — 6 espèces du carnet dans le choix (aucun en Mode Caddie)
+    if (surPageJeux()) { const m = manqueCarnetJeux(especes); if (m > 0) return { possible: false, raison: `encore ${pluriel(m, "espèce")} à rencontrer` }; }
+    const manqueTotal = surPageJeux() ? 0 : manqueAvantIndices();   // étape 274 : pas de seuil général sur la page Jeux
     if (manqueTotal > 0) return { possible: false, raison: `encore ${pluriel(manqueTotal, "espèce")} à découvrir` };
     // Étape 258 : il suffit d'UNE espèce à faire deviner (avant : on les cherchait toutes, jusqu'à 1 s de calcul)
     const montrables = especesPlateau(especes);
@@ -1039,7 +1123,10 @@ function possibiliteJeuCalcul(jeu, choisi) {
     const manque = MINIMUM_RAPIDITE - casesDuDefi(especes, "revision").length;
     return manque > 0 ? { possible: false, raison: `encore ${pluriel(manque, "réponse")} à trouver` } : { possible: true };
   }
-  if (jeu === "portrait")  return ciblesPortrait(especes).length ? { possible: true } : { possible: false, raison: "aucune espèce découverte ici" };
+  if (jeu === "portrait") {
+    if (surPageJeux()) { const m = manqueCarnetJeux(especes); if (m > 0) return { possible: false, raison: `encore ${pluriel(m, "espèce")} à rencontrer` }; }   // R274 (12A)
+    return ciblesPortrait(especes).length ? { possible: true } : { possible: false, raison: "aucune espèce découverte ici" };
+  }
   return { possible: true };
 }
 
@@ -1064,6 +1151,8 @@ function calculerOrdreJeux() {
 function conditionJeu(cle, etat) {
   const m = /encore (\d+) espèces? à découvrir/.exec(etat.raison || "");
   if (cle === "indices" && m) return `Découvrez au moins ${m[1]} espèce${m[1] > 1 ? "s" : ""} de plus pour y jouer.`;
+  const r = /encore (\d+) espèces? à rencontrer/.exec(etat.raison || "");   // R274 (12A) : la page Jeux dit aussi l'autre chemin
+  if (r) return `Encore ${r[1]} espèce${r[1] > 1 ? "s" : ""} à rencontrer, ou le Mode Caddie.`;
   return majuscule(etat.raison || "pas encore possible") + ".";
 }
 // La longueur de la partie, telle qu'elle s'écrit sous le nom du jeu dans la note de droite
@@ -1699,7 +1788,7 @@ function demarrerDefi(d, options = {}) {
     defi.aDecouvrir = [];                                 // étape 174 (13/10) : plus d'espèce à découvrir au Duel
   } else {
     // Étape 274 : depuis « Plus de jeux », toutes les espèces sont déjà en jeu : pas de découverte glissée en plus
-    defi.aDecouvrir = accesTout() ? [] : especesADecouvrir(d.especes, NOUVELLES_PAR_PARTIE);
+    defi.aDecouvrir = surPageJeux() ? [] : especesADecouvrir(d.especes, NOUVELLES_PAR_PARTIE);   // R274 : jamais d'espèce glissée depuis la page Jeux (avec ou sans Mode Caddie)
     defi.prochaineDecouverte = RYTHME_DECOUVERTE[defi.jeu];
   }
   if (defi.jeu === "indices") { demarrerIndices(); return; }

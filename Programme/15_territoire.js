@@ -155,6 +155,7 @@ function dessinerCouverture() {
   dessinerProgressionTerritoire(t, couleur);   // étape 262
   dessinerExpeditions(t);                        // étape 282 : « Vos expéditions » (la Rencontre de l'accueil est fondue dedans)
   dessinerDefis(t);                              // étape 281 : défis du jour + prochaines récompenses
+  dessinerJourTerritoire();                      // R273 (9A) : l'espèce du jour, sur ordinateur
   dessinerEmblemes(t, id);
   dessinerEnjeu(t, id);
   dessinerAccueilMobile(t);                      // étape M4 : l'accueil du téléphone (caché sur ordinateur)
@@ -175,7 +176,7 @@ function dessinerProgressionTerritoire(t, couleur) {
   zone.style.setProperty("--couleur-territoire", couleur);
   zone.innerHTML = `
     <div class="rang-empreintes">${PAS_SVG}<b>${r.empreintes}</b><small>empreinte${r.empreintes > 1 ? "s" : ""}</small></div>
-    <div class="rang-nom"><div class="etiq-jeu">Votre rang</div><b>${r.nom}</b></div>
+    <div class="rang-nom"><div class="etiq-jeu">Rang dans ce territoire</div><b>${r.nom}</b></div>
     <div class="rang-recompense">${rec ? `<div class="rang-ligne"><span>${rec.cle === "rang" ? "Prochain rang" : "Prochaine récompense"} : <b>${rec.cle === "rang" ? rec.titre.replace(/^Rang /, "") : rec.titre}</b></span><small>${rec.reste}</small></div>
       <i class="jauge-jeu"><b style="width:${Math.round(100 * rec.part)}%"></b></i>${rec.cle === "rang" ? ligneProchainTerritoire() : ""}` : `<span>Toutes les récompenses de ce territoire sont gagnées. Bravo !</span>`}</div>`;
 }
@@ -185,7 +186,7 @@ function ligneProchainTerritoire(cl) {
   const m = avantProchainTerritoire();
   if (m === null) return "";
   const t2 = prochainTerritoire(), c2 = TERRITOIRES[t2] ? TERRITOIRES[t2].couleur : "";
-  return `<div class="prochain-terr${cl ? " " + cl : ""}"><span class="rec-pastille"${c2 ? ` style="background:${c2}"` : ""}></span><span>Prochain territoire : <b>${echapper(t2)}</b>, ${m ? "encore " + texteManque(m) : "c'est pour maintenant !"}</span></div>`;
+  return `<div class="prochain-terr${cl ? " " + cl : ""}"><span class="rec-pastille"${c2 ? ` style="background:${c2}"` : ""}></span><span>Prochain territoire : <b>${echapper(t2)}</b>, le plus différent des vôtres · ${m ? `encore ${texteManque(m)}, n'importe ${m > 1 ? "lesquels" : "lequel"}` : "c'est pour maintenant !"}</span></div>`;   // R273 (15A) : la règle PR4 dite en clair, sur la page (plus seulement en infobulle)
 }
 
 // ---- Les emblèmes : 8 vignettes ; inconnues = photo floutée (le nom reste : on apprend qui fait le territoire) ----
@@ -245,7 +246,7 @@ function afficherPageCarte() {
   // (étape 270 : l'encadré « Reprendre votre exploration » est remplacé par la grande carte du territoire, dans le bandeau)
   document.getElementById("carte-reprendre").classList.add("cache");
   dessinerTerritoiresAccueil();          // étape 266
-  dessinerEspeceDuJour();                // étape 265 : l'espèce du jour, seulement sur cette page
+  // (R273, 9A : l'espèce du jour n'est plus ici ; elle est sur l'Accueil, à côté des défis du jour)
   afficherDefile();
   afficherStats();
   if (avantProchainTerritoire() === 0) setTimeout(verifierOuverture, 300);
@@ -566,30 +567,49 @@ function dessinerDefis(t) {
   if (!zone) return;
   verifierDefis(t);
   const liste = (suivi && suivi.defis && suivi.defis[t]) ? suivi.defis[t].liste : [];
+  // R273 (9A) : comme sur le téléphone — une récompense d'un jour passé reste en tête, « Tout récupérer » dès 2 récompenses
+  const idsListe = new Set(liste.map(d => d.recompense).filter(Boolean));
+  const anciennes = recompensesEnAttente().filter(r => !idsListe.has(r.id) && !r.id.startsWith(`jour|${aujourdhui()}`));
+  const enAttente = recompensesEnAttente();
+  const redessiner = () => { dessinerDefis(t); dessinerJourTerritoire(); };
   zone.classList.remove("cache");
   zone.innerHTML = `
     <div class="jeu-encart">
       <div class="etiq-jeu">Défis du jour</div><p class="jeu-sous">Chaque défi réussi = ${POINTS_DEFI} empreintes · nouveaux défis demain, aucun malus</p>
+      ${anciennes.length ? `<div class="defis">${anciennes.map(r => `<div class="defi ok"><span class="defi-case" aria-hidden="true">✓</span>
+          <span class="defi-texte">${echapper(r.quoi)}<small>${r.jour === hierDefis() ? "D'hier" : "En attente"}</small></span>${boutonRecup(r)}</div>`).join("")}</div>` : ""}
       ${liste.length ? `<div class="defis">${liste.map((d, i) => {
         const fait = avanceeDefi(t, d), ok = d.reussi || fait >= d.but;
         return `<div class="defi${ok ? " ok" : ""}${(d.exp || d.sorte === "inedites" || d.sorte === "fiche") && !ok ? " cliquable" : ""}" data-i="${i}"><span class="defi-case" aria-hidden="true">${ok ? "✓" : ""}</span>
           <span class="defi-texte">${texteDefi(d)}${d.but > 1 && !ok ? `<small>${fait} sur ${d.but}</small>` : ""}</span>
           ${recompenseEnAttente(d.recompense) ? boutonRecup(recompenseEnAttente(d.recompense)) : `<span class="defi-gain">${ok ? "réussi" : "+" + POINTS_DEFI} ${PAS_SVG}</span>`}</div>`;
       }).join("")}</div>` : `<p class="jeu-sous">Tout est déjà découvert ici : bravo !</p>`}
+      ${enAttente.length >= 2 ? `<button type="button" class="recup-tout" id="recup-tout-terr">Tout récupérer · +${enAttente.reduce((n, r) => n + r.n, 0)} ${PAS_SVG}</button>` : ""}
     </div>`;   // étape R188 (11/11, note n° 18 d'Aubin) : « Comment gagner des empreintes ? » n'alourdit plus la page ; il est dans À propos (texteReglesEmpreintes)
-  brancherRecup(zone, () => dessinerDefis(t));   // R248
+  brancherRecup(zone, redessiner);   // R248
+  const tout = document.getElementById("recup-tout-terr");
+  if (tout) tout.onclick = () => recupererTout(tout, redessiner);
   zone.querySelectorAll(".defi.cliquable").forEach(b => b.onclick = () => {
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167 (avant, R129 : la Rencontre d'une seule espèce)
     if (d.sorte === "fiche") { lancerDefiFiche(d); return; }       // étape R259
     const x = expeditionParId(d.exp); if (x) ouvrirExpedition(x); });
 }
+// Étape R273 (9A) : sur ordinateur, l'espèce du jour est sur l'Accueil (la page du territoire), à côté des défis du jour.
+//   Sur téléphone, elle est déjà en tête de l'Accueil (dessinerMaison) : rien ici.
+function dessinerJourTerritoire() {
+  const zone = document.getElementById("ac-jour-terr");
+  if (!zone) return;
+  if (typeof surTelephone === "function" && surTelephone()) { zone.classList.add("cache"); return; }
+  dessinerEspeceDuJour("ac-jour-terr");
+  if (typeof brancherRecup === "function") brancherRecup(zone, () => { dessinerJourTerritoire(); dessinerDefis(territoireActif()); });
+}
 // En fin de partie : les défis du jour (remplace « Vos objectifs » depuis l'étape 281)
 function blocDefisFin() {
   const t = territoireActif();
   if (!suivi || !t) return "";
   const reussis = verifierDefis(t);
-  if (reussis.length) setTimeout(() => afficherBulle(`✓ Défi du jour réussi${reussis.length > 1 ? ` (${reussis.length})` : ""} · +${POINTS_DEFI * reussis.length} à récupérer sur l'accueil`), 900);   // R248
+  if (reussis.length) setTimeout(() => afficherBulle(`✓ Défi du jour réussi${reussis.length > 1 ? ` (${reussis.length})` : ""} · +${POINTS_DEFI * reussis.length} à récupérer ${ouRecuperer()}`), 900);   // R248
   const liste = suivi.defis && suivi.defis[t] ? suivi.defis[t].liste : [];
   if (!liste.length) return "";
   const lignes = liste.map(d => {
@@ -597,7 +617,7 @@ function blocDefisFin() {
     return `<span class="obj-fin${ok ? " atteint" : ""}">${ok ? "✓ " : ""}${texteDefi(d)}${ok ? "" : ` · ${fait} / ${d.but}`}</span>`;
   });
   return `<div class="objectifs-fin"><div class="quoi">Défis du jour</div><div class="liste-objectifs-fin">${lignes.join("")}</div>`
-    + (reussis.length ? `<small>+${POINTS_DEFI * reussis.length} empreinte${POINTS_DEFI * reussis.length > 1 ? "s" : ""} à récupérer sur l'accueil.</small>` : "") + `</div>`;
+    + (reussis.length ? `<small>+${POINTS_DEFI * reussis.length} empreinte${POINTS_DEFI * reussis.length > 1 ? "s" : ""} à récupérer ${ouRecuperer()}.</small>` : "") + `</div>`;   // R271 (n° 21)
 }
 
 // =====================================================================================================
@@ -681,7 +701,7 @@ function dessinerTerrMobile(t) {
       <div class="tm-gauche">
         <div class="tm-plein"><div class="tm-etiq">${typeof miniFrance === "function" ? miniFrance(t) : ""}<span>Territoire</span></div>
           <h2>${echapper(t)}</h2><small>${lieux.length} lieux · ${nombre(especesDe(t).length)} espèces</small>
-          <div class="tm-rang"><b>${echapper(r.nom)}</b>${r.suivant ? ` · ${echapper(r.suivant.nom)} à ${nombre(r.suivant.seuil)}` : ""}</div>
+          <div class="tm-rang"><span class="tm-rang-etiq">Rang dans ce territoire : </span><b>${echapper(r.nom)}</b>${r.suivant ? ` · ${echapper(r.suivant.nom)} à ${nombre(r.suivant.seuil)}` : ""}</div>
           <i class="tm-jauge"><b style="width:${Math.round(100 * (r.suivant ? r.suivant.part : 1))}%"></b></i></div>
         <div class="tm-reduit"><div class="tm-etiq"><span>Sur la carte</span></div><h2 class="tm-sel-nom"></h2><small>${echapper(t)}</small></div>
       </div>
@@ -818,18 +838,55 @@ function dessinerMaison() {
   const t = territoireActif();
   const p = typeof prenomJoueur === "function" ? prenomJoueur() : "";
   const date = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+  const premiere = blocPremiereExpedition(t);   // R273 (8A) : le premier jour, par où commencer, en tête
   zone.innerHTML = `<div class="mai-page">
       <div class="mai-bonjour"><h1>Bonjour${p ? ` ${echapper(p)}` : ""}</h1><p>${date.charAt(0).toUpperCase() + date.slice(1)}</p></div>
+      ${premiere}
       <section class="mai-jour-grand" id="mai-jour"></section>
       <section class="mai-defis" id="mai-defis"></section>
-      ${bandeauReprendre(t)}
+      ${premiere ? "" : bandeauReprendre(t)}
       <section class="mai-moment" id="mai-moment"></section>
       </div>`;   // étape R192 (n° 11.7, choix d'Aubin) : plus de lien « Tous les territoires » ici — la carte a son onglet
-  brancherBandeauReprendre(t);
+  if (premiere) brancherPremiereExpedition(t); else brancherBandeauReprendre(t);
   dessinerDefisMaison(t);
   dessinerTuileJour();
   dessinerEnCeMomentMaison(t);
   if (avantProchainTerritoire() === 0) setTimeout(verifierOuverture, 300);   // étape R152 : palier atteint (par ex. règle du premier voyage) → le territoire s'ouvre, avec sa fête
+}
+// Étape R273 (19/11, choix 8A d'Aubin, test du 19/11 n° 35 ; complète 23B) : tant qu'AUCUNE expédition n'est terminée,
+//   « Votre première expédition » est en tête de l'Accueil du téléphone (le premier écran montre d'abord par où commencer) ;
+//   elle remplace alors le bandeau « Reprendre », qui dirait la même chose plus bas. Dès qu'une expédition est terminée
+//   (ses deux étapes, par « Découvrir » ou par « Me tester »), l'ordre de 23B revient : l'espèce du jour en tête.
+function aucuneExpeditionTerminee() {
+  if (!suivi) return false;
+  if (suivi.uneExpTerminee) return false;                       // retenu une fois pour toutes (rien à recalculer ensuite)
+  if (typeof toutDebloque === "function" && toutDebloque()) return false;
+  const finie = territoiresOuverts().some(t => expeditionsDe(t).some(x => empreintesExp(x) >= NB_ETAPES));
+  if (finie) { suivi.uneExpTerminee = true; return false; }
+  return true;
+}
+function blocPremiereExpedition(t) {
+  if (!aucuneExpeditionTerminee()) return "";
+  const x = typeof expeditionAReprendre === "function" ? expeditionAReprendre(t) : null;
+  if (!x) return "";
+  const lieu = x.chapitre ? chapitreParNom(t, x.chapitre) : null;
+  const photo = lieu && estRenseigne(lieu.photo) ? lieu.photo : "", couleurT = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
+  const commencee = expeditionCommencee(x), n = (x.especes || []).length;
+  return `<section class="mai-premiere" style="--couleur-territoire:${couleurT}">
+      <button type="button" class="mp-carte" id="mai-premiere">
+        ${photo ? `<img src="${photoMini(photo)}" alt="" onerror="this.onerror=null;this.src='${photo}'">` : ""}
+        <span class="mp-texte"><small>Votre première expédition</small><b>${echapper(x.titre)}</b>
+          <em>${lieu ? echapper(lieu.nom) + " · " : ""}${n} espèce${n > 1 ? "s" : ""} à rencontrer</em></span>
+        <span class="mp-go">${commencee ? "Reprendre" : "Commencer"} <span aria-hidden="true">▶</span></span>
+      </button></section>`;
+}
+function brancherPremiereExpedition(t) {
+  const b = document.getElementById("mai-premiere"), x = expeditionAReprendre(t);
+  if (!b || !x) return;
+  b.onclick = () => {   // même règle que le bandeau « Reprendre » : « Commencer » ouvre la page de l'expédition, « Reprendre » reprend
+    const s = expeditionCommencee(x) && typeof suiteExpedition === "function" ? suiteExpedition(x) : null;
+    if (s && !s.choisir && typeof s.action === "function") s.action(); else ouvrirExpedition(x);
+  };
 }
 // « Reprendre » (cas 5A) : le bandeau ouvre la page du lieu ; le bouton ▶ reprend ce qui est à suivre (même règle 8A, suiteDuLieu)
 function lieuAReprendre(t) {
@@ -1070,7 +1127,7 @@ function ligneEnCeMoment(e, s) {
   if (repro && repro !== "na" && repro !== "toute l'année" && repro.split(/ et |, /).includes(s)) {
     const nom = String(e.periode_reproduction_nom || "");
     return { force: 3, texte: /^rut/i.test(nom) ? "C'est le moment du rut." : /^brame/i.test(nom) ? "C'est le moment du brame."
-      : /^parade/i.test(nom) ? "C'est la saison de ses parades." : /^frai/i.test(nom) ? "C'est la saison du frai." : /^essaimage/i.test(nom) ? "C'est la saison de l'essaimage."
+      : /^parade/i.test(nom) ? "C'est la saison de ses parades." : /^frai/i.test(nom) ? "C'est la saison de la ponte." : /^essaimage/i.test(nom) ? "C'est la saison de l'essaimage."
       : "C'est sa saison de reproduction." };
   }
   if (s === "automne" && /^part/.test(String(e.hiver || "")) && obs) return { force: 2, texte: "Part bientôt passer l'hiver ailleurs." };

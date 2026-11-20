@@ -1207,7 +1207,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "Noir",
-    "texte": "Corselet noir velouté",
+    "texte": "Milieu du corps noir velouté",
     "pour": "tous"
    },
    {
@@ -3140,7 +3140,7 @@ const REPERES = {
    {
     "partie": "NA",
     "couleur": "NA",
-    "texte": "Corps brun, corselet poilu",
+    "texte": "Corps brun, poilu derrière la tête",
     "pour": "tous"
    },
    {
@@ -3315,7 +3315,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet noir rayé de jaune",
+    "texte": "Avant du corps noir et jaune",
     "pour": "tous"
    }
   ]
@@ -3341,7 +3341,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "Vert",
-    "texte": "Corselet vert métallique",
+    "texte": "Avant du corps vert métallique",
     "pour": "tous"
    },
    {
@@ -4623,7 +4623,7 @@ const REPERES = {
    {
     "partie": "tete",
     "couleur": "NA",
-    "texte": "Tête cachée sous le corselet",
+    "texte": "Tête cachée sous un bouclier",
     "pour": "mâle"
    }
   ]
@@ -4646,7 +4646,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "Noir",
-    "texte": "Tête et corselet noirs",
+    "texte": "Tête et avant du dos noirs",
     "pour": "adulte"
    },
    {
@@ -7191,7 +7191,7 @@ const REPERES = {
    {
     "partie": "tete",
     "couleur": "NA",
-    "texte": "Tête plus large que le corselet",
+    "texte": "Tête plus large que le dos",
     "pour": "tous"
    },
    {
@@ -7305,7 +7305,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "Noir",
-    "texte": "Tête et corselet noirs",
+    "texte": "Tête et avant du dos noirs",
     "pour": "tous"
    },
    {
@@ -7352,7 +7352,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet noir, fortement ridé",
+    "texte": "Avant du dos noir, très ridé",
     "pour": "tous"
    },
    {
@@ -7378,7 +7378,7 @@ const REPERES = {
    {
     "partie": "NA",
     "couleur": "NA",
-    "texte": "Corselet noir marqué de roux",
+    "texte": "Milieu du corps noir et roux",
     "pour": "tous"
    },
    {
@@ -7445,13 +7445,13 @@ const REPERES = {
    {
     "partie": "NA",
     "couleur": "NA",
-    "texte": "Corselet roux, arrière brun-noir",
+    "texte": "Milieu du corps roux, arrière brun-noir",
     "pour": "tous"
    },
    {
     "partie": "NA",
     "couleur": "NA",
-    "texte": "Taches sombres sur tête et corselet",
+    "texte": "Taches sombres sur tête et dos",
     "pour": "tous"
    },
    {
@@ -10539,7 +10539,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Ligne claire sur le corselet",
+    "texte": "Ligne claire à l'avant du corps",
     "pour": "femelle"
    }
   ]
@@ -13786,7 +13786,7 @@ const REPERES = {
    {
     "partie": "NA",
     "couleur": "NA",
-    "texte": "Dessus du corselet roux",
+    "texte": "Dos roux, derrière la tête",
     "pour": "tous"
    },
    {
@@ -14242,7 +14242,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Dessus du corselet plus clair",
+    "texte": "Avant du dos plus clair",
     "pour": "tous"
    },
    {
@@ -14295,7 +14295,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet et yeux bleu et noir",
+    "texte": "Avant du corps bleu et noir",
     "pour": "mâle"
    },
    {
@@ -14324,7 +14324,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet noir à bandes rouges",
+    "texte": "Avant du corps noir, bandes rouges",
     "pour": "tous"
    },
    {
@@ -14353,7 +14353,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "Vert",
-    "texte": "Corselet vert pomme",
+    "texte": "Avant du corps vert pomme",
     "pour": "tous"
    },
    {
@@ -14904,7 +14904,7 @@ const REPERES = {
    {
     "partie": "corps",
     "couleur": "NA",
-    "texte": "Corselet gris à deux bandes sombres",
+    "texte": "Dos gris à deux bandes sombres",
     "pour": "adulte"
    },
    {
@@ -15279,7 +15279,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet à épine latérale pointue",
+    "texte": "Épines pointues derrière la tête",
     "pour": "tous"
    },
    {
@@ -15375,7 +15375,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "Rouge",
-    "texte": "Corselet rouge cuivré",
+    "texte": "Avant du dos rouge cuivré",
     "pour": "tous"
    },
    {
@@ -15404,13 +15404,13 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "Blanc",
-    "texte": "Bords du corselet blancs",
+    "texte": "Bords blancs derrière la tête",
     "pour": "adulte"
    },
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet souvent marqué d'un M noir",
+    "texte": "M noir fréquent derrière la tête",
     "pour": "adulte"
    },
    {
@@ -15466,7 +15466,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Double trait clair sur le corselet",
+    "texte": "Double trait clair, avant du corps",
     "pour": "tous"
    },
    {
@@ -15498,7 +15498,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet en cœur, rétréci à l'arrière",
+    "texte": "Avant du dos en cœur",
     "pour": "tous"
    }
   ]
@@ -15524,7 +15524,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Carènes du corselet presque parallèles",
+    "texte": "Derrière la tête, lignes presque parallèles",
     "pour": "tous"
    },
    {
@@ -18424,7 +18424,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet vert métallique, reflets bronze",
+    "texte": "Avant du corps vert métallique bronzé",
     "pour": "tous"
    },
    {
@@ -19793,7 +19793,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Corselet bombé à haute crête",
+    "texte": "Haute crête bombée derrière la tête",
     "pour": "tous"
    },
    {
@@ -22784,7 +22784,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Ligne orangée sur le corselet",
+    "texte": "Ligne orangée derrière la tête",
     "pour": "tous"
    },
    {
@@ -23253,7 +23253,7 @@ const REPERES = {
    {
     "partie": "ventre",
     "couleur": "NA",
-    "texte": "Ventre rouge orangé au frai",
+    "texte": "Ventre rouge orangé à la reproduction",
     "pour": "tous"
    },
    {
@@ -24647,7 +24647,7 @@ const REPERES = {
    {
     "partie": "thorax",
     "couleur": "NA",
-    "texte": "Larges bandes noires sur le thorax",
+    "texte": "Larges bandes noires, avant du corps",
     "pour": "tous"
    }
   ]

@@ -67,6 +67,10 @@ function presenterFamillesEnAttente() {
 }
 
 let minuteurBulle;
+// Étape R271 (test du 19/11, n° 21 : sur ordinateur, « à récupérer sur l'accueil » renvoyait à l'onglet « Accueil », qui ouvre
+//   « Vos territoires », alors que les défis sont sur la page du territoire) : le message dit le bon endroit selon l'appareil.
+//   À simplifier en T4, quand « Accueil » ouvrira la page du territoire sur ordinateur aussi (choix 9A du 19/11).
+function ouRecuperer() { return "sur l'accueil"; }   // R273 (9A) : sur ordinateur aussi, « Accueil » est la page où l'on récupère
 function afficherBulle(texte, duree = 2200) {   // étape R258 : durée au choix
   const bulle = document.getElementById("bulle");
   bulle.textContent = texte;

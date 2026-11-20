@@ -77,7 +77,7 @@ function afficherBienvenue() {
   }
   if (etapeBienvenue === 1) {
     document.getElementById("titre-bienvenue").textContent = "Quel territoire pour commencer\u00a0?";
-    document.getElementById("texte-bienvenue").textContent = "Sélectionnez un territoire sur la carte.";
+    document.getElementById("texte-bienvenue").textContent = "Touchez-le sur la carte ou dans la liste.";
     poserCarteBienvenue();
   }
   if (etapeBienvenue === 2) {
@@ -141,6 +141,73 @@ function poserTuilesProfil(choix, cle) {
 // Un autre territoire cliqué remplace celui qui était choisi.
 // Étape 62 : seuls les territoires qui ont des espèces se cliquent ("jouable").
 function poserCarteBienvenue() {
+  // Étape R273 (19/11/2026, choix 7A d'Aubin, test du 19/11 n° 15 ; remplace M27 « rien n'est écrit sur la carte ») :
+  // la première visite reprend la carte de l'onglet « Carte » (25) : la mer autour, chaque territoire à sa couleur,
+  // son nom écrit dessus, et la liste des territoires dessous. On choisit en touchant la carte ou la liste.
+  // La carte est dessinée dans son cadre entier (CARTE_CADRE) : la Corse n'est plus rognée au bord de l'écran.
+  if (typeof ATLAS_NOMS === "undefined") return poserCarteBienvenueM27();
+  const corps = document.getElementById("corps-bienvenue");
+  const choisi = brouillon.territoires[0] || "";
+  const couleur = t => (TERRITOIRES[t] || {}).couleur || "#7a736a";
+  const jouable = t => especesDe(t).length > 0;
+  const teinte = t => !jouable(t) ? "#d6ccba" : couleur(t);
+  const [vx, vy, vw0, vh] = CARTE_CADRE.split(" ").map(Number), vw = vw0 + 45;   // un peu de mer à droite de la Corse
+  let svg = `<defs><radialGradient id="bv-mer" cx="45%" cy="45%" r="75%"><stop offset="0" stop-color="#E9F0EC"/><stop offset="1" stop-color="#CFE0DD"/></radialGradient></defs>`
+    + `<rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="url(#bv-mer)"/>`
+    + ATLAS_HOULE.map(([x, y]) => `<path d="M${x} ${y}q14-9 28 0t28 0" class="at-houle"/>`).join("")
+    + CARTE_TERRITOIRES.map(k => `<path d="${k.contour}" class="at-cote"/>`).join("");
+  let noms = "";
+  // le territoire choisi est dessiné en dernier : son contour foncé n'est pas rogné par un voisin
+  for (const k of CARTE_TERRITOIRES.slice().sort((a, b) => (a.nom === choisi) - (b.nom === choisi))) {
+    const c = teinte(k.nom);
+    svg += `<path d="${k.contour}" class="at-terr bv-terr${jouable(k.nom) ? " jouable" : ""}${k.nom === choisi ? " choisi" : ""}" data-t="${echapper(k.nom)}" style="fill:${c};stroke:${k.nom === choisi ? "" : c}"/>`;
+    const n = ATLAS_NOMS[k.nom];
+    if (n) {
+      const [x, y, z, lignes, ancre] = n;
+      noms += `<text x="${x}" y="${y}" font-size="${z}" class="at-nom${k.nom === choisi ? " bv-nom-choisi" : ""}"${ancre ? ` text-anchor="${ancre}"` : ""} style="stroke:${k.nom === choisi ? couleur(k.nom) : c}">`
+        + lignes.map((l, i) => `<tspan x="${x}" dy="${i ? Math.round(z * 1.14) : 0}">${echapper(l)}</tspan>`).join("") + `</text>`;
+    }
+  }
+  // Les petits territoires (bandes étroites ou île) : une zone invisible plus large autour d'eux, pour le doigt
+  for (const [nom, marge] of Object.entries(MARGE_DOIGT_BIENVENUE)) {
+    const t = CARTE_TERRITOIRES.find(x => x.nom === nom);
+    if (t && jouable(nom)) svg += `<path d="${t.contour}" class="zone-doigt" data-t="${echapper(nom)}" style="stroke-width:${marge}"/>`;
+  }
+  const cadre = document.createElement("div");
+  cadre.className = "at-carte-france bv-carte";
+  cadre.innerHTML = `<svg id="carte-bienvenue" viewBox="${vx} ${vy} ${vw} ${vh}" role="img" aria-label="Carte de France des territoires">${svg}${noms}</svg>`;
+  // Sous la carte : le territoire choisi, en grand, avec la phrase de sa carte d'identité
+  const dessous = document.createElement("p");
+  dessous.id = "noms-bienvenue";
+  if (!choisi) { dessous.className = "vide"; dessous.textContent = "Aucun territoire sélectionné"; }
+  else {
+    const phrase = typeof IDENTITE !== "undefined" && IDENTITE[choisi] && IDENTITE[choisi].phrase ? IDENTITE[choisi].phrase : "";
+    dessous.innerHTML = `<strong style="color:${couleur(choisi)}">${echapper(choisi)}</strong>${phrase ? `<small>${phrase}</small>` : ""}`;
+  }
+  // La liste des territoires (la petite forme de chacun, à sa couleur, et son nom)
+  const liste = document.createElement("div");
+  liste.className = "bv-liste";
+  liste.setAttribute("role", "list");
+  liste.innerHTML = Object.keys(ATLAS_NOMS).concat(tousLesTerritoires().filter(t => !ATLAS_NOMS[t])).filter(jouable).map(t =>
+    `<button type="button" role="listitem" class="bv-case${t === choisi ? " choisi" : ""}" data-t="${echapper(t)}" aria-pressed="${t === choisi}" style="--couleur-t:${couleur(t)}">${formeTerritoire(t, 26, couleur(t))}<span>${echapper(t === "Plaines de l'Est et val de Saône" ? "Plaines de l’Est et val de Saône" : t)}</span></button>`).join("");
+  const choisir = nom => {
+    if (!nom || !jouable(nom)) return;
+    brouillon.territoires = brouillon.territoires.includes(nom) ? [] : [nom];   // un second toucher le retire
+    afficherBienvenue();
+  };
+  cadre.querySelectorAll("[data-t]").forEach(p => p.addEventListener("click", () => choisir(p.dataset.t)));
+  liste.querySelectorAll("[data-t]").forEach(b => b.onclick = () => choisir(b.dataset.t));
+  const bloc = document.createElement("div");   // sur ordinateur : la carte à gauche, le nom choisi et la liste à droite
+  bloc.className = "bv-choix";
+  const cote = document.createElement("div");
+  cote.className = "bv-cote";
+  cote.appendChild(dessous); cote.appendChild(liste);
+  bloc.appendChild(cadre); bloc.appendChild(cote);
+  corps.appendChild(bloc);
+}
+
+// L'ancienne carte de la première visite (M27 : rien d'écrit sur la carte), gardée si la carte de l'onglet « Carte » manque
+function poserCarteBienvenueM27() {
   const corps = document.getElementById("corps-bienvenue");
   const SVG = "http://www.w3.org/2000/svg";
   const carte = document.createElementNS(SVG, "svg");
@@ -238,7 +305,8 @@ function poserExplication() {
   corps.appendChild(zone);
   const rassure = document.createElement("p");
   rassure.className = "ej-rassure";
-  rassure.textContent = "Pas de chrono, pas de punition : une erreur est toujours expliquée.";
+  // R274 (test du 19/11, n° 14 ; choix 4A) : la promesse est vraie dans tout le jeu — elle parle des expéditions (le Duel garde ses 3 vies)
+  rassure.textContent = "Dans les expéditions, pas de chrono, pas de punition : une erreur est toujours expliquée.";
   corps.appendChild(rassure);
   // Les espèces de départ : seulement pour un nouveau joueur
   if (nouveauJoueur && ESPECES_OFFERTES) {

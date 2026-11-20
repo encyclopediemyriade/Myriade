@@ -15880,7 +15880,7 @@ const CHAPITRES = [
    "chiffre_valeur": "118 m",
    "chiffre_legende": "de falaise à la Roche d'Oëtre",
    "pourquoi_ici": "Au fond de gorges boisées, l'Orne et la Rouvre alternent courants vifs et fonds de cailloux. Truites et chabots y vivent, les saumons y remontent pondre, et la loutre fréquente la Rouvre.",
-   "menace": "Pollutions, envasement et anciens barrages dégradent les rivières où fraient saumons et truites ; la mulette perlière de la Rouvre est menacée.",
+   "menace": "Pollutions, envasement et anciens barrages dégradent les rivières où pondent saumons et truites ; la mulette perlière de la Rouvre est menacée.",
    "ce_qui_marche": "Depuis 2018, d'anciens seuils en ruine sont retirés de l'Orne pour recréer des courants vifs, favorables aux saumons et aux truites."
   }
  },
@@ -16365,7 +16365,7 @@ const CHAPITRES = [
   "identite": {
    "milieu_principal": "Dunes et marais",
    "protection": "Réserve naturelle",
-   "protection_detail": "nationale de la baie de Somme, depuis 1994 ; PNR Baie de Somme Picardie maritime (2020)",
+   "protection_detail": "nationale de la baie de Somme, depuis 1994 ; parc naturel régional Baie de Somme Picardie maritime (2020)",
    "taille_valeur": "200 ha",
    "taille_legende": "de dunes, marais et pinède",
    "chiffre_valeur": "Plus de 300",
@@ -16967,7 +16967,7 @@ const CHAPITRES = [
    "protection": "Natura 2000",
    "protection_detail": "îles Sanguinaires et golfe d'Ajaccio",
    "taille_valeur": "47 400 ha",
-   "taille_legende": "d'aire protégée, surtout en mer",
+   "taille_legende": "de zone protégée, surtout en mer",
    "pourquoi_ici": "À l'entrée du golfe, les îlots rocheux des Sanguinaires sont un refuge pour les oiseaux marins : cormorans huppés et goélands leucophées. Le puffin yelkouan fréquente le golfe.",
    "menace": "Les rats noirs introduits mangent les œufs et les poussins des oiseaux marins ; sans surveillance, ils peuvent revenir sur les îlots.",
    "ce_qui_marche": "Fin 2025, une opération a débarrassé les îlots des rats noirs : aucun n'a été revu depuis."
@@ -17921,7 +17921,7 @@ const CHAPITRES = [
   "identite": {
    "milieu_principal": "Bocage et étangs",
    "protection": "Aucune",
-   "protection_detail": "Natura 2000 sur la basse vallée de la Seille ; projet de PNR de la Bresse",
+   "protection_detail": "Natura 2000 sur la basse vallée de la Seille ; projet de parc naturel régional de la Bresse",
    "chiffre_valeur": "88",
    "chiffre_legende": "communes en Bresse bourguignonne",
    "pourquoi_ici": "Son sol d'argile retient l'eau : depuis le Moyen Âge, on y creuse étangs et mares, au milieu des prairies et des haies. Le blongios nain, petit héron discret, y élève ses petits.",
@@ -23490,7 +23490,7 @@ const LIENS = [
   "question": "Quel est leur lien ?",
   "phrase": "La couleuvre verte et jaune nourrit souvent le circaète.",
   "pieges": [
-   "La couleuvre verte et jaune dort dans l'aire du circaète.",
+   "La couleuvre verte et jaune dort dans le nid du circaète.",
    "La couleuvre verte et jaune garde le nid du circaète."
   ]
  },
@@ -23504,7 +23504,7 @@ const LIENS = [
   "question": "Quel est leur lien ?",
   "phrase": "La couleuvre d'Esculape nourrit souvent le circaète.",
   "pieges": [
-   "La couleuvre d'Esculape dort sous l'aire du circaète.",
+   "La couleuvre d'Esculape dort sous le nid du circaète.",
    "La couleuvre d'Esculape garde les œufs du circaète."
   ]
  },
@@ -24429,7 +24429,7 @@ const LIENS = [
   "phrase": "La couleuvre verte et jaune nourrit souvent le circaète.",
   "pieges": [
    "Ils passent l'hiver ensemble dans les mêmes rochers.",
-   "La couleuvre verte et jaune pond dans l'aire du circaète."
+   "La couleuvre verte et jaune pond dans le nid du circaète."
   ]
  },
  {
@@ -24442,7 +24442,7 @@ const LIENS = [
   "question": "Quel est leur lien ?",
   "phrase": "Le lézard ocellé nourrit souvent le circaète en Méditerranée.",
   "pieges": [
-   "Le lézard ocellé passe l'hiver dans l'aire du circaète.",
+   "Le lézard ocellé passe l'hiver dans le nid du circaète.",
    "Le lézard ocellé suit le circaète pour trouver des insectes."
   ]
  },
@@ -30140,7 +30140,7 @@ const LIENS = [
   "question": "Quel est leur lien ?",
   "phrase": "Le pigeon biset nourrit le grand-duc d'Europe.",
   "pieges": [
-   "Le pigeon biset niche dans l'aire du grand-duc.",
+   "Le pigeon biset niche dans le nid du grand-duc.",
    "Le grand-duc d'Europe couve les œufs du pigeon."
   ]
  },

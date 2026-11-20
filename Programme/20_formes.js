@@ -121,6 +121,8 @@ function descriptionCri(e) {
 }
 function poserEcoute(espece) {
   const zone = carteForme(espece, "Un cri", "Écoutez-le, puis découvrez l'espèce.", "forme-ecoute");
+  // Étape R272 (choix 3A) : le cri vient d'être écouté ici ; l'écran « Voici son cri » ne revient pas avant la question des deux cris
+  if (session) { session.montresAvant = session.montresAvant || {}; session.montresAvant.cri_son = true; }
   enTete(espece, true, false, "Un cri");                    // la photo revient, mais très floue (cadre-son)
   const cadre = document.getElementById("photo-rencontre");
   cadre.classList.remove("cache", "devoile");
@@ -405,7 +407,7 @@ function poserSosieEntree(espece, autre) {
 // R171 · LA PLANCHE — au début de l'étape 2, relier des phrases aux espèces
 // ==================================================================
 const PHRASES_PLANCHE = {
-  regime_alimentaire_type: v => `Régime : ${minuscule(v)}`,
+  regime_alimentaire_type: v => regimeSimple(v) ? majuscule(regimeSimple(v)) : `Régime : ${minuscule(v)}`,   // R271 (n° 22)
   activite: v => /^(surtout|à|de jour)/i.test(v) ? `Active ${minuscule(v)}` : null,
   hibernation: v => /^oui/i.test(v) ? "Hiberne" : null,
   deplacement_saisonnier: v => majuscule(v),

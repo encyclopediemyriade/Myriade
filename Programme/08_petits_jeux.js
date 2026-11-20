@@ -158,7 +158,8 @@ function choisirIndices(espece, autres) {
 }
 
 // Les espèces qu'on peut montrer sur un plateau : identifiées, et avec une photo (étape 57)
-// Étape 274 : dans « Plus de jeux » (accesTout), toutes les espèces avec une photo, découvertes ou non
+// Étape 274, ajustée en R274 (choix 12A) : toutes les espèces avec une photo, découvertes ou non, seulement en Mode Caddie
+//   sur la page Jeux (accesTout, 16) ; sinon les espèces du carnet.
 function especesPlateau(especes) {
   const tout = accesTout();
   return especes.filter(e => estRenseigne(e.photo) && (tout || estIdentifiee(e)));
@@ -759,7 +760,7 @@ const TRAITS_PORTRAIT = 5;                     // traits au plus par espèce
 // Les traits d'une espèce qu'on peut demander : ceux du portrait physique (avec un dessin),
 // dans les niveaux ouverts, et qui ont au moins 2 mauvaises réponses possibles
 function traitsPortrait(espece) {
-  const niveau = accesTout() ? NB_NIVEAUX : niveauOuvert(espece);   // étape 274 : dans « Plus de jeux », tous les traits
+  const niveau = surPageJeux() ? NB_NIVEAUX : niveauOuvert(espece);   // étape 274 : sur la page Jeux, tous les traits (R274 : pour les espèces du carnet aussi)
   return questionsPossibles(espece).filter(q => q.format === "picto" && !q.sansImage && niveauMedaille(espece, q) <= niveau
     && assezDePiegesPortrait(espece, q));
 }
@@ -771,7 +772,7 @@ function assezDePiegesPortrait(espece, q) {
   return memoPiegesPortrait.get(cle);
 }
 function ciblesPortrait(especes) {
-  const tout = accesTout();                                   // étape 274 : « Plus de jeux » prend toutes les espèces
+  const tout = accesTout();                                   // R274 (12A) : toutes les espèces seulement en Mode Caddie
   return especes.filter(e => estRenseigne(e.photo) && (tout || estIdentifiee(e)) && traitsPortrait(e).length >= 3);
 }
 

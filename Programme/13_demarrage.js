@@ -6,7 +6,10 @@
 // ==================================================================
 // Étape M4 : sur téléphone, l'accueil est la page du territoire (maquette A) ; sur ordinateur, la page carte (étape 255)
 // Étape M9 (07/11) : sur téléphone, l'onglet Accueil ouvre une vraie page d'accueil (« maison ») ; la page du territoire s'ouvre depuis elle
-function vueAccueil() { return window.matchMedia && window.matchMedia("(max-width: 760px)").matches ? "maison" : "carte"; }
+// Étape R273 (19/11, choix 9A d'Aubin, test du 19/11 n° 21 : « deux Accueil sur ordinateur ») : un mot désigne un seul écran.
+//   Sur ordinateur, « Accueil » ouvre la page du territoire (les défis du jour, l'espèce du jour, les lieux) ;
+//   l'ancienne page « Vos territoires » a son propre onglet, « Territoires » (le bouton « Carte » du téléphone, renommé).
+function vueAccueil() { return window.matchMedia && window.matchMedia("(max-width: 760px)").matches ? "maison" : "accueil"; }
 document.getElementById("onglet-accueil").onclick = () => { const v = vueAccueil(); montrer(v); if (v !== "carte") window.scrollTo(0, 0); };
 document.getElementById("onglet-jouer").onclick = () => ouvrirPlusDeJeux();   // étape 253 : l'onglet « Plus de jeux »
 document.getElementById("je-ne-sais-pas").onclick = () => {   // étape 76 ; R155 : sur la 1re photo d'une espèce, « Je ne la connais pas encore »
@@ -15,7 +18,9 @@ document.getElementById("je-ne-sais-pas").onclick = () => {   // étape 76 ; R15
 document.querySelectorAll("[data-quitter]").forEach(bouton => bouton.onclick = quitterJeu);   // étape 73
 if (document.getElementById("revoir-precedente")) document.getElementById("revoir-precedente").onclick = () => ouvrirHistorique((historiquePartie() || []).length - 1);   // étapes 247-248
 document.getElementById("onglet-encyclopedie").onclick = () => montrer("encyclopedie");
-if (document.getElementById("onglet-carte")) document.getElementById("onglet-carte").onclick = () => { atlasTerritoire = null; atlasLieu = null; montrer("atlas"); };   // étape K2 : l'espace Carte (téléphone)
+if (document.getElementById("onglet-carte")) document.getElementById("onglet-carte").onclick = () => {
+  if (vueAccueil() !== "maison") { montrer("carte"); window.scrollTo(0, 0); return; }   // R273 (9A) : sur ordinateur, l'onglet « Territoires »
+  atlasTerritoire = null; atlasLieu = null; montrer("atlas"); };   // étape K2 : l'espace Carte (téléphone)
 document.getElementById("bouton-jouer-accueil").onclick = () => lancerJouer();   // étape 196 : un seul bouton
 document.getElementById("bouton-encyclopedie-accueil").onclick = () => montrer("encyclopedie");
 // Étape 274 (« Revoir 4 ») : fin de Rencontre — une autre Rencontre au hasard, le territoire, ou l'accueil

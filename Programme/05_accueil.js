@@ -23,7 +23,7 @@ function basculerDetailCarnet(forcer) {
   const pas = typeof empreintesTotal === "function" ? empreintesTotal() : 0;
   const rc = infoRangCarnet();   // étape PR2
   d.innerHTML = `<b class="dc-titre">Votre carnet : ${nombre(ESPECES.filter(estReconnue).length)} espèces</b>
-    <div class="dc-ligne dc-rang"><span>Rang : <b>${rc.nom}</b></span><small>${rc.suivant ? `${rc.suivant.nom} à ${nombre(rc.suivant.seuil)}` : "le plus haut"}</small></div>
+    <div class="dc-ligne dc-rang"><span>Rang du carnet : <b>${rc.nom}</b></span><small>${rc.suivant ? `${rc.suivant.nom} à ${nombre(rc.suivant.seuil)}` : "le plus haut"}</small></div>
     ${ligne("Communes", "commune", jeu.filter(e => e.rarete_observation === "Commun"))}
     ${ligne("Peu communes", "peu", jeu.filter(e => e.rarete_observation === "Peu commun"))}
     ${ligne("Rares", "rare", jeu.filter(e => e.rarete_observation === "Rare"))}
@@ -509,7 +509,7 @@ function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans 
   // Étape 239 : si une anecdote est débloquée (médaille gagnée), elle remplace la phrase de chiffres — la plus récente
   const anecdote = connue && typeof anecdotesGagnees === "function" ? anecdotesGagnees(e)[0] : null;
   const statut = estRenseigne(e.statut_conservation_france) && !/mineure|non évalué|insuffisantes/i.test(e.statut_conservation_france)
-    ? `<span class="ac-statut">${e.statut_conservation_france} en France</span>` : "";
+    ? `<span class="ac-statut">${typeof motStatut === "function" ? motStatut(e.statut_conservation_france) : e.statut_conservation_france} en France</span>` : "";   // R273 (14A)
   const faite = especeDuJourFaite(e);
   zone.className = "ac-jour" + (connue ? "" : " inconnue") + (faite ? " rencontree" : "");
   // Étape R189 (note n° 8 d'Aubin) : une fois rencontrée, plus de phrase « Une autre espèce vous attend demain » ni d'étiquette

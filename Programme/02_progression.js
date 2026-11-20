@@ -778,7 +778,16 @@ const PIEGES_A_EVITER = {
   indice_presence: { "Mue (peau abandonnée)": ["Exuvie (enveloppe de la larve)"], "Exuvie (enveloppe de la larve)": ["Mue (peau abandonnée)"] },
   // Étape AL2 (repéré en AL1 : « Nageoire horizontale » proposée pour la queue du loup gris) : la nageoire des dauphins et
   //   marsouins n'est jamais un piège pour un mammifère terrestre (hors du « monde » de l'espèce).
-  queue_forme: { Courte: ["Nageoire horizontale"], Touffue: ["Nageoire horizontale"], Longue: ["Nageoire horizontale"], Plate: ["Nageoire horizontale"] },
+  // Étape R271 (test du 19/11, n° 7 : rat musqué, queue « Plate », « Longue » compté faux) : la colonne mélange la forme
+  //   (plate, touffue) et la longueur (courte, longue). Une queue plate ou touffue peut aussi être longue (rat musqué, écureuil,
+  //   renard) ; une queue courte est souvent touffue aussi (lapin, lièvre, blaireau) : ces réponses ne sont plus opposées.
+  //   Pour une queue « longue », « touffue » et « plate » restent de vrais pièges (souris, rats, musaraignes : queue nue et ronde) ;
+  //   les exceptions (desman, lérot, surmulot, campagnol roussâtre) sont dans l'onglet Pieges_interdits.
+  // Étape R271 : un terrier est creusé dans le sol ou dans une berge abrupte (guêpier, martin-pêcheur, hirondelle de rivage) :
+  //   « au sol » et « falaise » ne sont pas des pièges pour lui. Dans l'autre sens, « terrier » reste faux pour un aigle ou une alouette.
+  emplacement_nid: { Terrier: ["Au sol", "Falaise ou paroi rocheuse"] },
+  queue_forme: { Courte: ["Nageoire horizontale", "Touffue"], Touffue: ["Nageoire horizontale", "Longue"], Longue: ["Nageoire horizontale"],
+                 Plate: ["Nageoire horizontale", "Longue"] },
 };
 // JAMAIS_PIEGES : des réponses trop générales pour servir de piège, quelle que soit la bonne réponse
 // (« troupe » et « bande » se disent de beaucoup d'animaux ; « non évalué » ne s'apprend pas).
@@ -795,8 +804,11 @@ const COULEURS_VOISINES = [["Brun", "Beige"], ["Brun", "Roux"], ["Brun", "Orange
   ["Orange", "Jaune"], ["Orange", "Rouge"], ["Rouge", "Rose"], ["Rose", "Violet"], ["Rose", "Orange"], ["Gris", "Noir"],
   ["Gris", "Blanc"], ["Gris", "Argenté"], ["Blanc", "Argenté"], ["Blanc", "Ivoire"], ["Ivoire", "Jaune"], ["Bleu", "Violet"],
   ["Bleu", "Vert"], ["Vert", "Jaune"], ["Noir", "Bleu"], ["Gris clair", "Blanc"], ["Gris clair", "Gris"]];
+// Étape R271 (test du 19/11, n° 7) : le bec a ses voisines en plus — un bec rose pâle ou couleur corne se dit aussi « ivoire »
+//   (chardonneret, verdier), un bec gris clair aussi (pic mar, grosbec).
+const BECS_VOISINS = [...COULEURS_VOISINES, ["Rose", "Ivoire"], ["Ivoire", "Gris"]];
 const VOISINES = {
-  couleur_dominante: COULEURS_VOISINES, bec_couleur: COULEURS_VOISINES, yeux_couleur: COULEURS_VOISINES,
+  couleur_dominante: COULEURS_VOISINES, bec_couleur: BECS_VOISINS, yeux_couleur: COULEURS_VOISINES,
   robe: [["Uni", "Points"], ["Uni", "Marbrures"], ["Uni", "Bicolore"], ["Taches", "Points"], ["Taches", "Ocelles (faux yeux)"],
          ["Taches", "Marbrures"], ["Taches", "Damier"], ["Points", "Ocelles (faux yeux)"], ["Rayures", "Barres"], ["Rayures", "Zigzag"],
          ["Rayures", "Marbrures"], ["Rayures", "Nervures"], ["Barres", "Zigzag"], ["Masque", "Bavette"], ["Masque", "Plastron"],
@@ -816,7 +828,11 @@ const VOISINES = {
   //   En attendant la colonne du nid à plusieurs valeurs (3 recherches, plus tard).
   emplacement_nid: [["Bâtiment", "Cavité d'arbre"], ["Bâtiment", "Falaise ou paroi rocheuse"], ["Cavité d'arbre", "Falaise ou paroi rocheuse"],
   //   Étape R237 : un nid flottant est presque toujours amarré dans les roseaux (grèbes, foulque, mouette rieuse) : jamais opposés.
-    ["Roselière ou végétation dense", "Sur l'eau (nid flottant)"]],
+    ["Roselière ou végétation dense", "Sur l'eau (nid flottant)"],
+  //   Étape R271 (test du 19/11, n° 7 : « Le merle niche dans une roselière ou une végétation dense » compté faux, alors qu'un
+  //   buisson est une végétation dense) : un buisson touffu, un nid au sol caché dans les herbes hautes (canards, busards) et
+  //   la « végétation dense » se recouvrent. (Le terrier, creusé dans le sol ou dans une berge abrupte : voir PIEGES_A_EVITER.)
+    ["Arbre ou buisson", "Roselière ou végétation dense"], ["Au sol", "Roselière ou végétation dense"]],
 };
 function sontVoisines(champ, a, b) { return (VOISINES[champ] || []).some(([x, y]) => (x === a && y === b) || (x === b && y === a)); }
 // ---- Étape R237 (16/11, notes 10 et 16 d'Aubin : « Où fait-elle son nid ? ») ----
@@ -890,12 +906,22 @@ function piegesInterditsDe(espece) {
   }
   return piegesInterditsParEspece.get(espece.nom_courant) || [];
 }
+function couleursDuBecAussi(espece) {
+  return piegesInterditsDe(espece).filter(p => p.colonne === "bec_couleur" && p.reponse_interdite !== "Multicolore").map(p => String(p.reponse_interdite));
+}
 function aussiVraiPour(q, espece, valeur) {
   // 1. L'onglet Pieges_interdits du tableur (ex : « Jaune » pour le bec du faucon pèlerin)
   const interdit = piegesInterditsDe(espece).some(p =>
     p.nom_courant === espece.nom_courant && (p.colonne === q.champ || p.colonne === q.colonnePicto)
     && String(p.reponse_interdite).toLowerCase() === String(valeur).toLowerCase());
   if (interdit) return true;
+  // 1a. Étape R271 (test du 19/11, n° 7 : bec du pigeon ramier, du moineau, du pinson) : pour la couleur du bec, l'onglet
+  //     Pieges_interdits liste les autres couleurs du bec (bout, base, femelle, jeune, hiver). Leurs voisines ne sont pas des
+  //     pièges non plus, ni « Multicolore » (un bec noir à pointe jaune est déjà de deux couleurs).
+  if (q.champ === "bec_couleur") {
+    const autres = couleursDuBecAussi(espece);
+    if (autres.length && (valeur === "Multicolore" || autres.some(x => sontVoisines("bec_couleur", x, valeur)))) return true;
+  }
   // 1b. Étape R237 : une valeur de la colonne « autres » (le nid : « Bâtiment » ET « Falaise » pour le moineau friquet)
   //     ou une de ses voisines (dans l'autre sens aussi : « Laquelle des deux niche dans un bâtiment ? »)
   if (valeursAutres(espece, q.champ).some(x => x === valeur || sontVoisines(q.champ, x, valeur))) return true;

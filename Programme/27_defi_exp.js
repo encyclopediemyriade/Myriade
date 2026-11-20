@@ -37,6 +37,40 @@ function erreursPermisesDefi(total) { return Math.max(2, Math.round(total * 3 / 
 const REPECHAGE_MAX = 2;   // questions de repêchage au plus (et erreurs de trop au plus)
 // Combien d'erreurs il faut effacer pour réussir : 1 ou 2 ; 0 = pas de repêchage (défi réussi, ou trop d'erreurs)
 function repechageNecessaire(erreurs, permises) { const n = erreurs - permises; return n >= 1 && n <= REPECHAGE_MAX ? n : 0; }
+// ==================================================================
+// Étape R274 (19/11, session T5 du test du 19/11, n° 8 ; choix 5A d'Aubin, qui complète « la partie va au bout » du 17/11) :
+//   critère « le joueur sait où il en est, et n'est jamais retenu dans un défi qu'il ne peut plus réussir ».
+//   • un compte discret sous la barre : « 2 erreurs sur 3 permises » (au-delà : « 4 erreurs · 3 permises · repêchage à la fin ») ;
+//   • le défi est PERDU quand même le repêchage ne peut plus le sauver (plus de 2 erreurs de trop : la 6e quand 3 sont
+//     permises). À ce moment, une seule fois : « Continuer quand même » ou « Arrêter et découvrir ces espèces ».
+//   Commun aux deux défis (étape 1 ici, « Me tester » d'Approfondir dans 29_approfondir.js).
+// ==================================================================
+function defiPerdu(erreurs, permises) { return erreurs > permises + REPECHAGE_MAX; }
+function texteCompteErreurs(erreurs, permises) {
+  const s = n => n > 1 ? "s" : "";
+  if (!erreurs) return `Aucune erreur · ${permises} permise${s(permises)}`;
+  if (erreurs <= permises) return `${erreurs} erreur${s(erreurs)} sur ${permises} permise${s(permises)}`;
+  return `${erreurs} erreurs · ${permises} permise${s(permises)}${defiPerdu(erreurs, permises) ? "" : " · repêchage à la fin"}`;
+}
+function ligneCompteErreurs(erreurs, permises) {
+  return `<p class="dfx-erreurs${erreurs > permises ? " trop" : ""}" id="dfx-erreurs">${texteCompteErreurs(erreurs, permises)}</p>`;
+}
+function majCompteErreurs(erreurs, permises) {
+  const l = document.getElementById("dfx-erreurs");
+  if (l) { l.textContent = texteCompteErreurs(erreurs, permises); l.classList.toggle("trop", erreurs > permises); }
+}
+// Le choix, quand le défi est perdu. mot = « défi » ou « test » ; arreter = le texte du bouton d'arrêt
+function blocDefiPerdu(mot, arreter) {
+  return `<div class="dfx-perdu" id="dfx-perdu"><b>Ce ${mot} ne sera pas réussi cette fois.</b>
+      <p>Il y a trop d'erreurs pour le repêchage. Vous pouvez aller au bout pour vous entraîner, ou vous arrêter là : ce qui est réussi est gardé.</p>
+      <div class="dfx-boutons"><button class="cdo-second" id="dfx-continuer">Continuer quand même</button><button class="cdo-suivant" id="dfx-arreter">${arreter}</button></div></div>`;
+}
+// Le même choix en plein écran : quand on reprend un défi mis de côté juste à ce moment-là
+function ecranDefiPerdu(titre, mot, arreter, erreurs, permises) {
+  return `<div class="cdo dfx dfx-rep"><div class="dfx-haut"><button class="cdo-quitter dfx-sortir" id="dfx-quitter" aria-label="Revenir à l'expédition (le ${mot} est gardé)">←</button>
+      <span class="cdo-titre">${echapper(titre)}</span></div>
+      <p class="cdo-sous">${texteCompteErreurs(erreurs, permises)}</p>${blocDefiPerdu(mot, arreter)}</div>`;
+}
 // Les espèces du repêchage : une par espèce manquée, les plus manquées d'abord (à égalité, la dernière manquée), 2 au plus.
 //   questions = [{ espece, juste }] dans l'ordre où elles ont été posées.
 function especesRepechage(questions) {
@@ -160,7 +194,7 @@ function sauverDefiExp() {
   suivi.defisEnCours = suivi.defisEnCours || {};
   const plat = q => ({ e: q.espece.nom_courant, t: q.type || "photo", p: q.photo ? q.photo.src : null, s: q.photo ? q.photo.sujet || "" : "",
       n: q.noms.map(o => o.nom_courant), c: q.choix ? q.choix.nom_courant : null, r: q.retires.map(o => o.nom_courant) });
-  suivi.defisEnCours[d.x.id] = { i: d.i, aides: { ...d.aides }, questions: d.questions.map(plat),
+  suivi.defisEnCours[d.x.id] = { i: d.i, aides: { ...d.aides }, pv: !!d.perduVu, questions: d.questions.map(plat),
     rep: d.rep ? { i: d.rep.i, lance: !!d.rep.lance, questions: d.rep.questions.map(plat) } : null };   // R249 : le repêchage aussi
   sauvegarder();
 }
@@ -184,10 +218,11 @@ function reprendreDefiExp(x) {
   if (questions.some(q => !q || q.noms.length < 2) || (repQ && repQ.some(q => !q || q.noms.length < 2))) { oublierDefiExp(x); lancerDefiExp(x); return; }   // données changées : on repart
   const i = questions.findIndex(q => !q.choix);
   defiExp = { x, questions, i: i < 0 ? questions.length - 1 : i, aides: { retirer: true, silhouettes: true, ...(s.aides || {}) }, silhouettesVisibles: false,
-              avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: new Set(x.liste.filter(estReconnue).map(e => e.nom_courant)) };
+              avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: new Set(x.liste.filter(estReconnue).map(e => e.nom_courant)), perduVu: !!s.pv };
   if (repQ) { repQ.forEach(q => q.rep = true); const j = repQ.findIndex(q => !q.choix); defiExp.rep = { questions: repQ, i: j < 0 ? repQ.length - 1 : j, lance: !!s.rep.lance }; }
   montrer("defiexp");
   if (defiExp.rep && !defiExp.rep.lance) { afficherAnnonceRepechage(); return; }   // R249 : repris sur l'écran « Vous y êtes presque »
+  if (!defiExp.rep && !defiExp.perduVu && i > 0 && defiPerdu(erreursDefi(defiExp), erreursPermisesDefi(questions.length))) { afficherChoixDefiPerdu(); return; }   // R274 (5A)
   afficherQuestionDefiExp();
 }
 // Sortir du défi : il est mis de côté (ce qui est réussi 2 fois sur 2 est gardé tout de suite, comme avant), retour à l'expédition
@@ -201,6 +236,37 @@ function mettreDefiDeCote() {
   defiExp = null;
   ouvrirExpedition(x);
   setTimeout(() => afficherBulle("Défi mis de côté · vous pourrez le reprendre"), 250);
+}
+// R274 (5A) : « Arrêter et découvrir ces espèces » — le défi s'arrête là : ce qui est réussi est gardé (comme « ← »),
+//   il compte comme un défi joué, puis les Rencontres (Découvrir) commencent pour les espèces qui restent.
+function arreterDefiExp() {
+  const d = defiExp;
+  if (!d) return;
+  const x = d.x, k = d.questions.findIndex(q => !q.choix), poses = k < 0 ? d.questions.length : k;
+  arreterSonDefi(); oublierDefiExp(x);
+  const gardees = especesGagneesDefi(d, false, poses);
+  if (gardees.length) reconnaitreParDefi(x, gardees);
+  const bons = d.questions.filter(q => q.choix && q.choix === q.espece).length;
+  suivi.defisExp = suivi.defisExp || {};
+  const st = suivi.defisExp[x.id] = suivi.defisExp[x.id] || { joues: 0, reussi: false, meilleur: 0 };
+  st.joues++; st.meilleur = Math.max(st.meilleur || 0, bons); st.dernier = { bons, total: poses };
+  sauvegarder();
+  defiExp = null;
+  if (x.liste.every(e => faiteDans(x, e, 1))) { ouvrirExpedition(x); return; }   // (ne devrait pas arriver : rien ne reste à découvrir)
+  lancerExpedition(x, 1);
+  if (gardees.length) setTimeout(() => afficherBulle(gardees.length > 1 ? `${gardees.length} espèces déjà reconnues · gardées` : "1 espèce déjà reconnue · gardée"), 400);
+}
+function brancherChoixDefiPerdu(continuer) {
+  document.getElementById("dfx-continuer").onclick = () => { defiExp.perduVu = true; sauverDefiExp(); continuer(); };
+  document.getElementById("dfx-arreter").onclick = arreterDefiExp;
+}
+function afficherChoixDefiPerdu() {
+  const d = defiExp, zone = document.getElementById("vue-defiexp");
+  arreterSonDefi();
+  zone.innerHTML = ecranDefiPerdu(`Me tester · ${d.x.titre}`, "défi", "Arrêter et découvrir ces espèces", erreursDefi(d), erreursPermisesDefi(d.questions.length));
+  document.getElementById("dfx-quitter").onclick = mettreDefiDeCote;
+  brancherChoixDefiPerdu(afficherQuestionDefiExp);
+  window.scrollTo(0, 0);
 }
 function lancerDefiExp(x) {
   if (!x) return;
@@ -298,7 +364,7 @@ function afficherQuestionDefiExp() {
     : `<div class="cdo-photo">${imageQuestionDefi(q)}${etiquette ? `<small class="cdo-forme">${echapper(etiquette.replace(/^(La|Le|L')\s?/, "").replace(/^./, c => c.toUpperCase()))}</small>` : ""}</div>
        <p class="cdo-q">Quelle est cette espèce ?</p>
        <div class="cdo-noms">${q.noms.map((e, k) => boutonNomDefi(e, k, q)).join("")}</div>`;
-  zone.innerHTML = `<div class="cdo dfx">${enteteDefiExp()}
+  zone.innerHTML = `<div class="cdo dfx">${enteteDefiExp()}${enRep ? "" : ligneCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length))}
       ${corps}
       <div class="cdo-retour" id="dfx-retour"></div>
       ${enRep ? "" : `<div class="dfx-aides" id="dfx-aides"><small>Vos aides</small>
@@ -367,7 +433,11 @@ function repondreDefiExp(choisie, bouton) {
   if (aides) aides.style.visibility = "hidden";   // R265 : la place reste, les réponses ne bougent pas
   // R249 : au repêchage, c'est fini à la dernière question, ou dès que les erreurs effacées suffisent
   const fin = enRep ? (d.rep.i >= d.rep.questions.length - 1 || erreursDefi(d) <= erreursPermisesDefi(d.questions.length)) : d.i >= d.questions.length - 1;
-  const suivant = `<button class="cdo-suivant" id="dfx-suivant">${fin ? "Voir le résultat" : "Question suivante"}</button>`;
+  // R274 (5A) : le compte des erreurs suit ; avec l'erreur qui rend le défi impossible à réussir (même repêché), le choix
+  //   « Continuer quand même » / « Arrêter et découvrir ces espèces » remplace « Question suivante », une seule fois.
+  if (!enRep) majCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length));
+  const perdu = !enRep && !fin && !juste && !d.perduVu && defiPerdu(erreursDefi(d), erreursPermisesDefi(d.questions.length));
+  const suivant = perdu ? blocDefiPerdu("défi", "Arrêter et découvrir ces espèces") : `<button class="cdo-suivant" id="dfx-suivant">${fin ? "Voir le résultat" : "Question suivante"}</button>`;
   const retour = document.getElementById("dfx-retour");
   // R265 (40.12, 6A) : une bonne réponse a sa ligne « Oui » et un repère de terrain (le nom n'est pas redit, R239)
   const oui = typeof verdictHtml === "function" ? `<p class="apf-verdict">${verdictHtml({ juste: true, complement: complementReconnaissance(q.espece, q.photo && q.photo.sujet) })}</p>` : "";
@@ -377,7 +447,14 @@ function repondreDefiExp(choisie, bouton) {
       ? `<div class="dfx-ecouter"><small>Écoutez les deux :</small><button class="cdo-second" data-ecoute="${echapper(q.espece.nom_courant)}">${PLAY_SVG}${echapper(q.espece.nom_courant)}</button><button class="cdo-second" data-ecoute="${echapper(choisie.nom_courant)}">${PLAY_SVG}${echapper(choisie.nom_courant)}</button></div>` : ""}${suivant}`;
   retour.querySelectorAll("[data-ecoute]").forEach(b => b.onclick = () => ecouter(especeParNom(b.dataset.ecoute)));
   zone.querySelector(".dfx-barre").outerHTML = enteteDefiExp().match(/<div class="dfx-barre[^"]*"[^>]*>.*<\/div>$/s)[0];
-  document.getElementById("dfx-suivant").onclick = () => { if (fin) finDefiExp(); else { if (enRep) d.rep.i++; else d.i++; sauverDefiExp(); afficherQuestionDefiExp(); } };
+  const avancer = () => { if (fin) finDefiExp(); else { if (enRep) d.rep.i++; else d.i++; sauverDefiExp(); afficherQuestionDefiExp(); } };
+  if (perdu) {   // R274 : pas de bouton fixé ici, les deux choix sont dans la page, sous l'explication
+    brancherChoixDefiPerdu(avancer);
+    const bloc = document.getElementById("dfx-perdu");
+    setTimeout(() => { if (document.body.contains(bloc)) bloc.scrollIntoView({ block: "end", behavior: "smooth" }); }, 60);
+    return;
+  }
+  document.getElementById("dfx-suivant").onclick = avancer;
   const btn = document.getElementById("dfx-suivant"), r = btn.getBoundingClientRect();
   montrerSuiteJeu(btn, r);   // R234 (notes 15-16) : bouton fixé en bas sur téléphone, un seul défilement doux vers l'explication
   const ph = zone.querySelector(".cdo-photo"); if (ph) ph.onclick = () => document.getElementById("dfx-suivant").click();
@@ -621,22 +698,31 @@ function rateesDefi(d) {
 // ==================================================================
 const PICTO_DECOUVRIR = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="14" r="3.5"/><circle cx="17" cy="14" r="3.5"/><path d="M10.5 14h3M3.5 14l2-7h3l1 4M20.5 14l-2-7h-3l-1 4"/></svg>`;
 const PICTO_TESTER = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8"/></svg>`;
-function minutesRencontres(n) { return Math.max(2, Math.round(n * 2)); }
+// Étape R271 (test du 19/11, n° 20 : « Environ 14 min » annoncé pour 7 espèces, 25 à 30 min en vrai) : une Rencontre, c'est
+//   une demi-douzaine de questions et deux écrans à lire, soit 3 à 4 minutes par espèce. On annonce une fourchette honnête.
+function minutesRencontres(n) {
+  if (n <= 1) return "3 à 4";
+  const arrondi = v => v >= 10 ? Math.round(v / 5) * 5 : Math.round(v);
+  return `${arrondi(n * 3)} à ${arrondi(n * 4)}`;
+}
 function minutesDefi(nq) { return Math.max(3, Math.round(nq * 0.3)); }   // R242 (13A) : d'après le nombre de questions (20 → environ 6 min)
-function porteDecouvrir(titre, texte, bas) {
-  return `<button class="dfx-p decouvrir" data-porte="decouvrir">${PICTO_DECOUVRIR}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
+// R274 (test du 19/11, n° 8 ; choix 6A, qui ajuste « deux portes égales » du 16/11) : critère « un nouveau joueur comprend par
+//   où commencer ». Tant que l'expédition n'a jamais été jouée, « Découvrir » est la porte pleine (vert foncé) et « Me tester »
+//   la porte claire ; ensuite les deux portes ont le même style (claires). Avant : « Me tester » toujours pleine.
+function porteDecouvrir(titre, texte, bas, pleine) {
+  return `<button class="dfx-p decouvrir${pleine ? " pleine" : ""}" data-porte="decouvrir">${PICTO_DECOUVRIR}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
 }
 function porteTester(titre, texte, bas) {
   return `<button class="dfx-p tester" data-porte="tester">${PICTO_TESTER}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
 }
 function portesEtape1(x) {
   const n = x.liste.length, av = avanceeEtape(x, 1), st = etatDefiExp(x);
-  const gain = `<small class="dfx-gain">+${gainEtape(x, 1)} ${PAS_SVG} · 1 par espèce, par l'une ou l'autre porte</small>`;
+  const gain = `<small class="dfx-gain">+${gainEtape(x, 1)} ${PAS_SVG} · 1 par espèce, quelle que soit la façon</small>`;
   const reste = n - av.faites;
   if (defiEnPause(x)) {                     // R241 (36.17) : un défi mis de côté — « Reprendre le défi » d'abord (comme « Continuer les Rencontres », 2B)
     const s = suivi.defisEnCours[x.id], total = s.questions.length, faites = s.questions.filter(q => q.c).length;
     const erreurs = s.questions.filter(q => q.c && q.c !== q.e).length;
-    return `<div class="dfx-portes encours"><div class="etiq-jeu">Étape 1 · Reconnaître</div>
+    return `<div class="dfx-portes encours"><div class="etiq-jeu">Étape 1 · Rencontres</div>
         <div class="dfx-encours"><div class="dfx-encours-haut"><b>Me tester · en cours</b><small>${faites} sur ${total}</small></div>
           <i class="jauge-jeu"><b style="width:${Math.round(100 * faites / Math.max(1, total))}%"></b></i>
           <div class="dfx-prochaine"><span>${erreurs ? `${erreurs} erreur${erreurs > 1 ? "s" : ""} jusqu'ici` : "Aucune erreur jusqu'ici"} · ${erreursPermisesDefi(total)} permise${erreursPermisesDefi(total) > 1 ? "s" : ""}</span></div>
@@ -645,9 +731,9 @@ function portesEtape1(x) {
         <small class="dfx-note">Le défi reste de côté : vous pourrez le reprendre plus tard.</small>${gain}</div>`;
   }
   if (st && st.dernier && !st.reussi) {     // après un défi pas réussi
-    return `<div class="dfx-portes"><div class="etiq-jeu">Étape 1 · Reconnaître</div>
+    return `<div class="dfx-portes"><div class="etiq-jeu">Étape 1 · Rencontres</div>
         <p class="dfx-bandeau">Dernier défi : <b>${st.dernier.bons} sur ${st.dernier.total}</b>.${av.faites ? ` ${av.faites} espèce${av.faites > 1 ? "s sont" : " est"} déjà reconnue${av.faites > 1 ? "s" : ""} ;` : ""} il en reste ${reste}. Continuez comme vous préférez.</p>
-        <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", `Rencontrer ${reste > 1 ? `les ${reste} espèces` : "l'espèce"} à revoir.`, `Environ ${minutesRencontres(reste)} min`)}
+        <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", `Rencontrer ${reste > 1 ? `les ${reste} espèces` : "l'espèce"} à revoir.`, `${minutesRencontres(reste)} min`)}
           ${porteTester("Me tester", `Rejouer le défi sur les ${n} espèces.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min`)}</div>${gain}</div>`;
   }
   const commencees = av.faites > 0 || x.liste.some(e => estTentee(x, e));
@@ -657,7 +743,7 @@ function portesEtape1(x) {
       : especeFaite(p, 1) ? `À revoir ici : ${especesARevoirIci(x).length} espèce${especesARevoirIci(x).length > 1 ? "s" : ""} déjà rencontrée${especesARevoirIci(x).length > 1 ? "s" : ""} ailleurs (une photo chacune)`
       : `Prochaine rencontre : ${estIdentifiee(p) ? echapper(p.nom_courant) : "une espèce inconnue"}`;
     const vign = p && !especeFaite(p, 1) ? `<span class="dfx-vign${estIdentifiee(p) ? "" : " inconnue"}"><img src="${photoMini(photoEsp(p))}" alt=""></span>` : "";
-    return `<div class="dfx-portes encours"><div class="etiq-jeu">Étape 1 · Reconnaître</div>
+    return `<div class="dfx-portes encours"><div class="etiq-jeu">Étape 1 · Rencontres</div>
         <div class="dfx-encours"><div class="dfx-encours-haut"><b>Découvrir · en cours</b><small>${av.faites} sur ${n}</small></div>
           <i class="jauge-jeu"><b style="width:${Math.round(100 * av.faites / n)}%"></b></i>
           ${prochaine ? `<div class="dfx-prochaine">${vign}<span>${prochaine}</span></div>` : ""}
@@ -665,9 +751,9 @@ function portesEtape1(x) {
         <button class="dfx-plutot" data-porte="tester">${PICTO_TESTER}Me tester plutôt</button>
         <small class="dfx-note">Le défi porte sur les ${n} espèces.${av.faites ? ` ${av.faites > 1 ? `Les ${av.faites} déjà reconnues le restent` : "Celle déjà reconnue le reste"}, quoi qu'il arrive.` : ""}</small>${gain}</div>`;
   }
-  return `<div class="dfx-portes"><div class="etiq-jeu">Étape 1 · Reconnaître</div>
+  return `<div class="dfx-portes"><div class="etiq-jeu">Étape 1 · Rencontres</div>
       <p class="dfx-phrase">Deux façons de reconnaître ces ${n} espèces : les découvrir une à une, ou vous tester tout de suite. Vous pourrez changer en route.</p>
-      <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `Environ ${minutesRencontres(n)} min`)}
+      <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues))}
         ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${erreursPermisesDefi(nbQuestionsDefi(x))} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 2 aides`)}</div>${gain}</div>`;
 }
 function brancherPortes(zone, x) {

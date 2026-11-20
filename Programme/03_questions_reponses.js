@@ -94,6 +94,12 @@ function nouvelleRencontre() {
   document.getElementById("carte-pop").classList.remove("visible");   // la carte de la question précédente s'efface (étape 40)
   // En défi, on pioche seulement dans ce que le joueur a déjà trouvé (partie 11 bis)
   const tirage = defi ? choisirQuestionDefi() : choisirQuestion();
+  // Étape R273 (13A) : la question tirée est notée — une Rencontre quittée la retrouvera (reprendreRencontre, 07)
+  if (session && session.focus && !defi) { session.tirageEnCours = tirage; session.faitesAuTirage = session.faites; session.tiragePose = false; }
+  presenterTirage(tirage);
+}
+// La suite de nouvelleRencontre : les écrans qui précèdent la question (« Sa vie », annonces), puis la question
+function presenterTirage(tirage) {
   // Étape 51 : avant le premier cri d'une Rencontre, on demande si le son est disponible.
   // La question tirée attend ; elle sera posée (ou remplacée) selon la réponse.
   // Étape 140 : pareil au premier cri d'une partie du Carnet de terrain
@@ -109,7 +115,70 @@ function nouvelleRencontre() {
 }
 function lancerTirage(tirage) {
   if (tirage.champ === "cri_son" && !sonDemande && (!defi || defi.jeu === "revision")) { demanderSon(tirage); return; }
+  if (montrerAvantQuestion(tirage)) return;              // étape R272 (choix 3A) : d'abord écouter son cri, ou voir son empreinte
   poserQuestion(tirage);
+}
+// ---- Étape R272 (test du 19/11, n° 16, choix 3A d'Aubin ; critère : « apprendre avant d'être interrogé ») ----
+// Dans la Rencontre, « Lequel de ces deux cris est le sien ? » arrivait sans que le cri ait été entendu, et « Laquelle de
+// ces deux empreintes… ? » sans que l'empreinte ait été vue. Juste avant, un écran de lecture : « Voici son cri » (un anneau
+// d'écoute, autant de fois qu'on veut) ou « Voici son empreinte » (le dessin en grand, sa taille). Une seule fois par
+// Rencontre et par sujet ; la question suit. Pas dans les défis (« Me tester », révision) : là, on se teste.
+const MONTRER_AVANT_QUESTION = true;
+function montrerAvantQuestion(tirage) {
+  if (!MONTRER_AVANT_QUESTION || !session || !session.focus || defi) return false;
+  if (tirage.champ !== "cri_son" && tirage.champ !== "empreinte_nom") return false;
+  session.montresAvant = session.montresAvant || {};
+  if (session.montresAvant[tirage.champ]) return false;
+  session.montresAvant[tirage.champ] = true;
+  if (tirage.champ === "cri_son") montrerSonCri(tirage); else montrerSonEmpreinte(tirage);
+  return true;
+}
+// Sur ordinateur, le bouton « Continuer » est collé au bas de la fenêtre : la page descend pour que l'encadré soit vu en entier, au-dessus de lui
+function montrerEncadreEntier() {
+  if (typeof surTelephone === "function" && surTelephone()) return;
+  setTimeout(() => {
+    const z = document.querySelector("#reponses .avant-question");
+    if (!z) return;
+    const dy = z.getBoundingClientRect().bottom + 80 - window.innerHeight;
+    if (dy > 4) window.scrollBy({ top: dy, behavior: "smooth" });
+  }, 80);
+}
+function montrerSonCri(tirage) {
+  const e = tirage.espece, son = SONS[cleEmpreinte(e)];
+  arreterCri();
+  carteAnnonce(e, e.nom_courant, "Écoutez-le autant de fois que vous le souhaitez. Juste après, vous le retrouverez parmi deux cris.",
+    `<div class="avant-question avant-cri">
+      <button id="bouton-ecouter" class="anneau-ecoute" aria-label="Écouter son cri" title="Écouter (barre d'espace)">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="piste" cx="50" cy="50" r="40"/>
+          <circle class="arc" id="arc-ecoute" cx="50" cy="50" r="40" stroke-dasharray="0 ${TOUR_ECOUTE}" transform="rotate(-90 50 50)"/>
+          <circle class="disque" cx="50" cy="50" r="24"/>
+          <path class="triangle" d="M44 38 L62 50 L44 62 Z"/>
+          <rect class="carre" x="41" y="41" width="18" height="18" rx="3"/>
+        </svg>
+      </button>
+      <span class="aq-lib">Écouter</span>
+      ${son && son.texte ? `<p class="aq-texte">On entend ${echapper(son.texte)}.</p>` : ""}
+    </div>`, "Continuer", tirage, false);
+  document.getElementById("revision").textContent = "Voici son cri";
+  cri = new Audio(fichierSon(e));
+  cri.onended = () => { const b = document.getElementById("bouton-ecouter"); if (b) b.classList.remove("en-lecture"); };
+  document.getElementById("bouton-ecouter").onclick = ecouterCri;
+  montrerEncadreEntier();
+}
+function montrerSonEmpreinte(tirage) {
+  const e = tirage.espece, emp = EMPREINTES[cleEmpreinte(e)];
+  carteAnnonce(e, e.nom_courant, "Regardez-la bien. Juste après, vous la retrouverez parmi deux empreintes.",
+    `<div class="avant-question avant-empreinte"></div>`, "Continuer", tirage, false);
+  document.getElementById("revision").textContent = "Voici son empreinte";
+  const zone = document.querySelector("#reponses .avant-empreinte");
+  const largeur = Math.max(200, Math.min((zone.clientWidth || 340) - 24, 440));
+  const [d] = dessinsEmpreintes([e], largeur - 60, 150);
+  const texte = emp && emp.texte ? majuscule(String(emp.texte).split(". ")[0].replace(/\.$/, "")) + "." : "";
+  zone.innerHTML = `<div class="emp-carte emp-seule"><span class="emp-dessin">${d.html}</span>${d.legende}${boutonLoupeEmpreinte(e)}</div>
+    ${texte ? `<p class="aq-texte">${echapper(texte)}</p>` : ""}`;
+  brancherLoupesEmpreintes(zone);
+  montrerEncadreEntier();
 }
 
 // ---- Étape 164 : les deux petites annonces de fin de Rencontre ----
@@ -137,7 +206,7 @@ function carteAnnonce(espece, titre, phrase, contenu, texteBouton, tirage, floue
   bouton.textContent = texteBouton;
   bouton.onclick = () => lancerTirage(tirage);
   zone.appendChild(bouton);
-  for (const l of (session.postit || [])) if (l.etat === "encours") l.etat = "";
+  for (const l of (session.postit || [])) postitQuitterLigne(l);   // R271 (n° 4) : une ligne remise à « ? » retrouve son texte
   if (session.postit) dessinerPostit();
 }
 function annoncerReprises(tirage) {
@@ -167,7 +236,11 @@ function annoncerBonus(tirage) {
 // les questions ratées reprises à la fin de l'autre (« À revoir · 1 / 2 »).
 function texteCompteur(champ) {
   if (!session) return "";
-  if (session.focus && session.enBonus) return session.etonnant ? "Étonnant" : "Bonus";   // étape RF1
+  // Étape R273 (19/11, choix 11A d'Aubin, test du 19/11 n° 13) : UN seul compte par écran, et il dit ce qu'il compte.
+  //   Pendant la Rencontre, c'est « Question 2 / 5 » : toutes les questions de la Rencontre, la dernière (« Étonnant » ou
+  //   bonus) comprise. Le panneau « Ce que vous savez » ne répète plus de chiffres, « Sa vie · vrai ou faux » non plus.
+  const bonusAVenir = session.focus && session.bonusPrevu && !session.bonusFait && !session.enBonus && !(typeof bonusSansCandidat === "function" && bonusSansCandidat()) ? 1 : 0;
+  if (session.focus && session.enBonus) return `Question ${session.normalesFaites + 1} / ${session.normalesFaites + 1} · ${session.etonnant ? "Étonnant" : "Bonus"}`;
   if (session.focus && session.enRejeu) return `À revoir · ${session.faites - session.normalesFaites + 1} / ${session.dejaRejouees.length}`;
   if (session.focus) {
     // Le total annoncé : les questions prévues, ou moins s'il ne reste plus assez de choses à demander
@@ -177,13 +250,14 @@ function texteCompteur(champ) {
     // la photo de fin (espèce présentée) est toujours la dernière question prévue
     const photoDeFin = session.presentee && champ === IDENTIFICATION;
     const annonce = photoDeFin ? session.normalesFaites + 1 : Math.max(session.normalesFaites + 1, Math.min(session.prevues, possible));
-    return `Question ${session.normalesFaites + 1} / ${annonce}`;
+    return `Question ${session.normalesFaites + 1} / ${annonce + bonusAVenir}`;
   }
   return `Question ${session.faites + 1} / ${session.total}`;
 }
 
 // Affiche la question tirée au sort (c'était la suite de nouvelleRencontre jusqu'à l'étape 50)
 function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
+  if (session && session.focus && !defi) session.tiragePose = true;   // R273 (13A) : la question est à l'écran
   if (typeof fermerTiroir === "function") fermerTiroir();  // étape R194 : la fiche en tiroir se referme à chaque question
   majBoutonPrecedente();                                   // étape 248 : visible dès qu'une question de la partie a été répondue
   document.getElementById("je-ne-sais-pas").classList.add("cache");
@@ -268,7 +342,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   if (format === "qcm")            poserQcm(espece, q, bonne);
   if (format === "vraifaux")       poserVraiFaux(espece, q, bonne);
   if (session && session.vie && session.vie.includes(champ))   // étape RF1 ; RF2 : la rafale, « 2 / 3 »
-    document.getElementById("revision").textContent = session.enRejeu ? "Sa vie · à revoir" : `Sa vie · vrai ou faux · ${session.vie.indexOf(champ) + 1} / ${session.vie.length}`;   // E2-7 : 2 questions après l'écran « Sa vie »
+    document.getElementById("revision").textContent = session.enRejeu ? "Sa vie · à revoir" : "Sa vie · vrai ou faux";   // R273 (11A) : plus de « 1 / 2 » ici, le compte est « Question n / N »   // E2-7 : 2 questions après l'écran « Sa vie »
   if (format === "photos")         poserPhotos(espece, q, bonne);
   if (format === "estimation")     poserEstimation(espece, q);
   if (format === "empreinte-nom")   poserEmpreinteNom(espece, bonne);
@@ -441,7 +515,7 @@ function ajouterBoutonPicto(colonne, valeur, estJuste) {
   const bouton = document.createElement("button");
   bouton.className = "reponse choix-photo choix-picto";
   bouton.innerHTML = `<div class="picto">${dessinReponse(colonne, valeur)}</div>
-                      <div class="legende">${majuscule(valeur)}</div>`;
+                      <div class="legende">${colonne === "regime_alimentaire_type" && regimeReponse(valeur) ? regimeReponse(valeur) : colonne === "statut_conservation" ? motStatut(valeur) : majuscule(valeur)}</div>`;   // R273 (14A) : le statut en mots simples   // R271 (n° 22) : le régime en mots simples
   if (estJuste) bouton.dataset.juste = "oui";
   bouton.onclick = () => repondre(bouton, estJuste);
   document.getElementById("reponses").appendChild(bouton);
@@ -1110,7 +1184,7 @@ function repondreSon(aLeSon, tirage) {
   if (aLeSon) {
     sauvegarder();
     afficherStats();
-    poserQuestion(tirage);           // la question de cri qui attendait
+    lancerTirage(tirage);            // la question de cri qui attendait (R272 : dans la Rencontre, après l'écran d'écoute)
     return;
   }
   // Pas de son : on retire les cris qui attendaient d'être reposés…
@@ -1273,6 +1347,13 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     retour.textContent = explication;
     if (typeof verdictHtml === "function") retour.innerHTML = verdictHtml({ juste: false, deux: nbChoixAffiches() === 2, phrase: explication,
       complement: questionDeVie(champ) ? "" : complementRencontre(espece, champ) });   // étape R265 (40.12) : « C'était l'autre » / « Pas cette fois » + complément
+    // Étape R271 (test du 19/11, n° 14 : en Découvrir, « Pas cette fois · C'est : Rougegorge familier » sans dire pourquoi, ou
+    //   une comparaison avec une autre espèce que celle choisie) : pour une espèce mal reconnue, la même explication que dans
+    //   Me tester — votre choix, la bonne réponse, et ce qui les sépare (erreurCoteACote, 27).
+    if (champ === IDENTIFICATION && !defi && session && session.focus && boutonClique && !jeNeSaisPas && typeof erreurCoteACote === "function") {
+      const choisie = ESPECES.find(e => e.nom_courant === String(boutonClique.textContent || "").replace(/\s+/g, " ").trim());
+      if (choisie && choisie !== espece) retour.innerHTML = erreurCoteACote(espece, choisie, null);
+    }
     noterEchec(espece, champ);                   // étape 106 : pour les badges
     }
     // On la programme pour plus tard (sauf si elle y est déjà)

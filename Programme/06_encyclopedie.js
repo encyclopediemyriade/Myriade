@@ -546,6 +546,11 @@ function blocAnecdotes(e) {
 // Étape 176 (13/10) : lancer une Rencontre sur UNE espèce choisie (depuis sa fiche de l'encyclopédie).
 // Une Rencontre en cours non terminée est remplacée par celle-ci.
 function lancerRencontreAvec(espece, indicesVus) {
+  // Étape R273 (13A) : la Rencontre quittée (espèce du jour, depuis une fiche) se reprend où elle en était
+  if (session && session.focus && !rencontreEnPause && typeof mettreRencontreDeCote === "function") mettreRencontreDeCote(false);
+  const pause = typeof rencontreAReprendre === "function" ? rencontreAReprendre(espece, null) : null;
+  if (pause) { const duJour = pause.duJour; reprendreRencontre(pause); if (duJour) rencontreDuJour = duJour; return; }
+  rencontreEnPause = null;
   rencontreDuJour = null;
   session = null;                      // sinon l'écran Jouer reprendrait la Rencontre en cours
   modeLibre = false; depuisArcade = false;   // étape 262 : une Rencontre ne fait pas partie de l'Arcade
