@@ -121,3 +121,65 @@ function prechaufferCalculs() {
   setTimeout(() => attendre(paquet), 600);         // juste après l'affichage de l'accueil
 }
 prechaufferCalculs();
+
+// ==================================================================
+// Étape R275 (20/11/2026, retours du 20/11, Notion 43.06, choix 6A d'Aubin) — le téléphone tourné.
+//   Critère : « Tourner le téléphone ne casse jamais l'affichage et ne fait rien perdre. »
+//   Avant : le jeu choisissait « téléphone ou ordinateur » d'après la largeur seule. Un téléphone couché (873 px de large)
+//   passait en mise en page d'ordinateur sur 393 px de haut, et l'Accueil du téléphone disparaissait (« plus rien ne s'affiche »).
+//   1. Téléphone couché = écran tactile, plus large que haut, moins de 500 px de haut (et plus de 500 px de large, pour ne pas
+//      prendre un téléphone droit dont le clavier est ouvert) : un écran « Tournez votre téléphone » passe par-dessus le jeu
+//      (style.css, #tournez). Rien n'est redessiné dessous : en redressant le téléphone, la partie est là où elle était.
+//   2. Quand l'écran change vraiment de sorte (fenêtre d'ordinateur rétrécie ou agrandie, écran pas encore à sa taille à
+//      l'ouverture — la piste de la note 1 du 20/11), le jeu refait le test et montre la page qui correspond.
+// ==================================================================
+const ECRAN_COUCHE = typeof matchMedia === "function"
+  ? matchMedia("(orientation: landscape) and (max-height: 500px) and (min-width: 500px) and (hover: none) and (pointer: coarse)") : { matches: false };
+function telephoneCouche() { return !!ECRAN_COUCHE.matches; }
+(function () {
+  const voile = document.createElement("div");
+  voile.id = "tournez";
+  voile.setAttribute("role", "status");
+  voile.innerHTML = `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="22" y="8" width="20" height="36" rx="4"/><path d="M30 39h4"/><path d="M12 30a22 22 0 0 0 22 24"/><path d="M29 49l6 5-6 5"/></svg>
+    <b>Tournez votre téléphone</b><p>Myriade se joue téléphone droit. Votre partie reprendra où elle en était.</p>`;
+  document.body.appendChild(voile);
+  if (typeof matchMedia !== "function") return;
+  // La dernière page ouverte, et la sorte d'écran à ce moment-là
+  let derniere = { vue: profil ? vueAccueil() : null, tel: vueAccueil() === "maison" };   // la page ouverte au démarrage (plus haut dans ce fichier)
+  const montrerAvant = montrer;
+  montrer = function (vue) { derniere = { vue, tel: vueAccueil() === "maison" }; return montrerAvant.apply(this, arguments); };
+  const visible = id => { const v = document.getElementById(id); return !!v && !v.classList.contains("cache"); };
+  let enAttente = false;
+  function ecranAChange() {
+    enAttente = false;
+    if (telephoneCouche()) { enAttente = true; return; }     // le message couvre l'écran : on ne touche à rien
+    const tel = vueAccueil() === "maison";
+    if (visible("vue-bienvenue")) { if (typeof afficherBienvenue === "function") afficherBienvenue(); return; }
+    if (typeof profil === "undefined" || !profil) return;
+    if (derniere.tel === tel) return;                         // la page a déjà été dessinée pour cet écran
+    const v = derniere.vue;
+    if (tel) {
+      if (v === "carte") { atlasTerritoire = null; atlasLieu = null; montrer("atlas"); }
+      else if (v === "accueil") montrer("maison");            // l'Accueil de l'ordinateur → l'Accueil du téléphone
+      else redessiner(v);
+    } else {
+      if (v === "maison") montrer("accueil");
+      else if (v === "atlas") montrer("carte");
+      else redessiner(v);
+    }
+  }
+  function redessiner(v) {
+    derniere.tel = vueAccueil() === "maison";
+    try {
+      if (v === "accueil" && visible("vue-accueil")) afficherAccueil();
+      else if (v === "encyclopedie" && visible("vue-encyclopedie")) afficherEncyclopedie();
+      else if (v === "arcade" && visible("vue-arcade")) afficherArcade();
+      else if (v === "progression" && visible("vue-progression")) afficherPageProgression();
+      else if (v === "espece" && visible("vue-espece")) afficherPageEspece();
+    } catch (err) { /* une page qui ne se redessine pas reste comme elle était */ }
+    if (typeof recalerPouce === "function") recalerPouce();
+  }
+  const ecouter = (mq, f) => { if (mq.addEventListener) mq.addEventListener("change", f); else if (mq.addListener) mq.addListener(f); };
+  ecouter(matchMedia("(max-width: 760px)"), ecranAChange);
+  ecouter(ECRAN_COUCHE, () => { if (!telephoneCouche() && enAttente) ecranAChange(); });
+})();

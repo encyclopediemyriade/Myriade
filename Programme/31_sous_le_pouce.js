@@ -18,8 +18,10 @@
 // ==================================================================
 
 const SOUS_LE_POUCE = true;          // false = les réponses restent sous la question, comme avant R265
-const RESERVE_POUCE = { rencontre: 100, jeu: 150 };   // la place du bouton fixé : en bas (Rencontre, étape 2) ; au-dessus des onglets (jeux)
-function surTelephone() { return window.innerWidth <= 760; }
+const RESERVE_POUCE = { rencontre: 100, jeu: 100 };   // R275 (43.05) : dans les jeux aussi, la barre du bas est cachée pendant qu'on joue (150 avant)
+// Étape R275 (43.07, lenteurs) : « window.innerWidth » obligeait le navigateur à recalculer toute la mise en page à chaque appel
+//   (jusqu'à 10 ms par question, bien plus sur téléphone) ; la question « écran de 760 px ou moins ? » est gardée par le navigateur.
+function surTelephone() { return ECRAN_TELEPHONE.matches; }
 
 // ---- 1. Caler les réponses en bas ----
 const calagesPouce = new Set();
@@ -46,15 +48,48 @@ function decalerPouce(premier) {   // le bloc n'est plus à caler (écran de lec
   premier.style.marginTop = "";
   if (observateurPouce) observateurPouce.unobserve(premier);
 }
+// Étape R275 (20/11, Notion 43.01, choix 1C d'Aubin ; ajuste 2A du 19/11) : avec 2 ou 3 réponses écrites, elles restent en bas
+//   mais l'une sous l'autre, en cases plus hautes : le vide entre la question et les réponses est réduit (il ne garde que
+//   la place de la ligne qui suit la réponse). Rien ne change à partir de 4 réponses, ni pour les réponses en photos.
+//   Critère : « les réponses restent faciles à toucher du pouce, et l'écran ne montre jamais un grand vide ».
+const PEU_DE_REPONSES = { min: 46, bas: 60, haut: 96, place: 64 };   // hauteur d'une case (de… à…) ; place gardée pour la ligne de retour
+function boutonsPeuDeReponses(rep) {
+  if (!rep || !rep.children) return null;
+  const visibles = [...rep.children].filter(x => x.getClientRects().length);
+  const b = visibles.filter(x => x.matches("button.reponse, button.cdo-nom"));
+  const ok = surTelephone() && (b.length === 2 || b.length === 3) && b.length === visibles.length
+    && !rep.querySelector("audio, canvas, .choix-photo:not(.choix-picto), .anneau-ecoute") && !b.some(x => x.querySelector("img, svg") && !x.classList.contains("choix-picto"))
+    && !/duo-cris|empreintes-duo|cases-a-cocher|forme-|annonce-etape|paysages|deux-photos|duo-exp/.test(rep.className)
+    && (!/grille-photos/.test(rep.className) || b.every(x => x.classList.contains("choix-picto")));   // les réponses à pictogramme (une couleur, un bec…) comptent ; pas les photos, les cris, les empreintes
+  rep.classList.toggle("peu-de-reponses", ok);
+  if (!ok) rep.style.removeProperty("--h-rep");
+  return ok ? b : null;
+}
 function recalerUn(premier) {
   const c = premier._pouce;
   if (!c || !premier.isConnected || !c.dernier.isConnected) { calagesPouce.delete(premier); return; }
-  if (!SOUS_LE_POUCE || !surTelephone() || !c.dernier.getClientRects().length) { premier.style.marginTop = ""; c.reponses.style.marginTop = ""; return; }
+  if (!SOUS_LE_POUCE || !surTelephone() || !c.dernier.getClientRects().length) { premier.style.marginTop = ""; c.reponses.style.marginTop = ""; boutonsPeuDeReponses(c.reponses); return; }
   if (c.dessous) return;                                 // la ligne est déjà sous les réponses : rien ne bouge plus
   premier.style.marginTop = "0px";
-  const bas = c.dernier.getBoundingClientRect().bottom + window.scrollY;
-  const ecart = Math.floor(window.innerHeight - c.reserve - bas);
   const vide = !premier.textContent.trim() && !premier.querySelector("img, svg");
+  const peu = boutonsPeuDeReponses(c.reponses);
+  if (peu && vide) {                                     // la hauteur des cases se règle avant la réponse, puis ne bouge plus
+    c.reponses.style.setProperty("--h-rep", PEU_DE_REPONSES.bas + "px");
+    const libre = Math.floor(window.innerHeight - c.reserve - (c.dernier.getBoundingClientRect().bottom + window.scrollY));
+    const h = Math.max(PEU_DE_REPONSES.bas, Math.min(PEU_DE_REPONSES.haut, PEU_DE_REPONSES.bas + Math.floor((libre - PEU_DE_REPONSES.place) / peu.length)));
+    c.reponses.style.setProperty("--h-rep", h + "px");
+    c.hRep = h;
+  }
+  const mesurer = () => Math.floor(window.innerHeight - c.reserve - (c.dernier.getBoundingClientRect().bottom + window.scrollY));
+  let ecart = mesurer();
+  // la ligne qui suit la réponse ne tient pas dans la place gardée : les cases hautes lui en rendent (leur bas ne bouge pas)
+  if (peu && !vide && ecart < 0 && c.hRep > PEU_DE_REPONSES.min) {
+    const avant = c.hRep, ecartAvant = ecart;
+    c.hRep = Math.max(PEU_DE_REPONSES.min, c.hRep + Math.floor(ecart / peu.length));
+    c.reponses.style.setProperty("--h-rep", c.hRep + "px");
+    ecart = mesurer();
+    if (ecart < 0) { c.hRep = avant; c.reponses.style.setProperty("--h-rep", avant + "px"); ecart = ecartAvant; }   // trop longue quand même : elle passera dessous, les cases ne bougent pas
+  }
   if (vide || c.margeVide === null) c.margeVide = Math.max(0, ecart);
   if (ecart >= 0 || vide) { premier.style.marginTop = ecart > 0 ? ecart + "px" : ""; return; }
   // Trop long pour la place libre : la ligne passe sous les réponses, qui gardent leur place
@@ -88,6 +123,10 @@ function motVerdict(juste, deux) { return juste ? "Oui" : deux ? "C'était l'aut
 function verdictHtml({ juste, deux, phrase, complement, mot }) {
   const m = mot || motVerdict(juste, deux);
   const p = phrase ? String(phrase).trim() : "";
+  // Étape R275 (42.02, choix 1A du 19/11 au soir) : après une bonne réponse, plus de pastille « Oui » — la réponse en vert
+  //   suffit ; dessous, seulement la phrase (repère ou complément). Un mot donné exprès (« Validé · 2 sur 3 »…) reste.
+  if (juste && !mot) return (p ? `<span class="verdict vd-ok vd-sans-mot"><span class="vd-phrase">${echapper(p)}</span></span>` : "")
+    + (complement ? `<span class="vd-plus${p ? "" : " vd-seul"}">${echapper(complement)}</span>` : "");
   return `<span class="verdict ${juste ? "vd-ok" : "vd-ko"}"><b class="vd-mot">${echapper(m)}</b>${p ? `<span class="vd-phrase">${echapper(p)}</span>` : ""}</span>`
     + (complement ? `<span class="vd-plus">${echapper(complement)}</span>` : "");
 }

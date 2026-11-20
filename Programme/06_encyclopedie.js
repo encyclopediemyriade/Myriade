@@ -1287,8 +1287,8 @@ function htmlPistesASuivre() {
       + `<em>encore ${f.k} <span aria-hidden="true">▶</span></em></button>`;
   }).join("");
   const lieu = p ? expeditionPourPiste(p.u) : null;
-  const ligneP = p ? `<button type="button" class="ps-ligne ps-piste" data-piste="${echapper(p.u.nom_courant)}" data-phrase="${echapper(PHRASES_PISTE[p.sorte](p))}">${caseSilhouette(p.u, "ps-sil")}`
-      + `<span><b>Une espèce à découvrir</b><small>${echapper(PHRASES_PISTE[p.sorte](p))}</small><small class="ps-lieu">${echapper(lieu.c.nom)}</small></span>`
+  const ligneP = p ? `<button type="button" class="ps-ligne ps-piste" data-piste="${echapper(p.u.nom_courant)}" data-phrase="${echapper(PHRASES_PISTE[p.sorte](p))}" style="--couleur-classe:${classeDe(p.u).couleur}">${caseSilhouette(p.u, "ps-sil")}`
+      + `<span><b>Une espèce à découvrir</b><small>${echapper(PHRASES_PISTE[p.sorte](p))}</small></span>`   // R275 (43.02) : deux lignes, comme ses voisines
       + `<em><span aria-hidden="true">▶</span></em></button>` : "";
   return `<section class="pistes-suivre"><h2>À suivre</h2>${lignesF}${ligneP}</section>`;
 }
@@ -1312,6 +1312,13 @@ function especeDeCouverture(especes) {
   const part = e => { const ch = champsDe(e).filter(x => x !== IDENTIFICATION); return ch.length ? ch.filter(x => nbBonnes(e, x) >= 1).length / ch.length : 0; };
   return vues.map(e => ({ e, p: part(e) })).sort((a, b) => b.p - a.p || a.e.nom_courant.localeCompare(b.e.nom_courant))[0].e;
 }
+// Étape R275 (42.03, choix 2A du 19/11 au soir) : une famille sans espèce rencontrée montre une grande silhouette sur la
+//   couleur de la famille (ni photo ni nom). On prend la première espèce de la famille dont le dessin existe.
+function silhouetteDeFamille(especes) {
+  if (typeof CREDITS_SILHOUETTES === "undefined") return especes[0] || null;
+  if (!silhouetteDeFamille.liste) silhouetteDeFamille.liste = new Set(CREDITS_SILHOUETTES.map(c => "Silhouettes/" + c.fichier));
+  return especes.find(e => silhouetteDeFamille.liste.has(fichierSilhouette(e))) || null;
+}
 function couverturesFamilles() {
   let html = "";
   for (const cle in CLASSES) {
@@ -1320,7 +1327,8 @@ function couverturesFamilles() {
     const vues = especes.filter(estRencontree).length, c = especeDeCouverture(especes);
     const pct = Math.round(100 * vues / especes.length);
     html += `<button type="button" class="som-famille couv-famille${c ? "" : " vide"}" data-cle="${cle}" style="--couleur-classe:${CLASSES[cle].couleur}">`
-      + (c ? `${imgMini(c.photo, "", "couv-photo")}<span class="couv-voile" aria-hidden="true"></span>` : "")
+      + (c ? `${imgMini(c.photo, "", "couv-photo")}<span class="couv-voile" aria-hidden="true"></span>`
+           : (sil => sil ? caseSilhouette(sil, "couv-sil") : "")(silhouetteDeFamille(especes)))
       + `<span class="couv-texte"><b>${CLASSES[cle].nom}</b><small>${vues ? `${vues} sur ${especes.length}` : `Aucune encore · ${especes.length} à découvrir`}</small></span>`
       + `<span class="couv-jauge"><i style="width:${pct}%"></i></span>${c ? `<span class="couv-legende">${echapper(c.nom_courant)}</span>` : ""}</button>`;
   }

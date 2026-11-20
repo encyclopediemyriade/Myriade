@@ -483,7 +483,12 @@ const memoQuota = new Map();
 function quotaApprofondir(e) {
   if (memoQuota.has(e.nom_courant)) return memoQuota.get(e.nom_courant);
   const requis = champsRequis(e, 4);
-  const n = Math.max(requis.filter(c => !CHAMPS_APPROFONDIR_PLUS.includes(c)).length, Math.min(2, requis.length));
+  let n = Math.max(requis.filter(c => !CHAMPS_APPROFONDIR_PLUS.includes(c)).length, Math.min(2, requis.length));
+  // Étape R275 (42.05) : sans la question d'altitude, le quota ne dépasse jamais ce qu'Approfondir peut demander
+  //   (ragondin : son empreinte compte dans le quota mais se trouve à l'étape 1 ; l'altitude faisait l'appoint).
+  if (typeof sujetsApprof !== "function") return n;            // 29_approfondir.js pas encore chargé : on ne garde rien en mémoire
+  const posables = sujetsApprof(e);
+  if (posables.length) n = Math.min(n, Math.max(requis.filter(c => posables.includes(c)).length, Math.min(2, requis.length)));
   memoQuota.set(e.nom_courant, n);
   return n;
 }

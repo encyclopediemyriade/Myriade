@@ -1323,7 +1323,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     xp = xp + 10;
     // Étape R265 (40.12, choix 6A) : « Oui » + la phrase de la réponse + un complément de sa fiche (remplace « Bravo ! » et « Et aussi : »)
     if (typeof verdictHtml === "function") retour.innerHTML = verdictHtml({ juste: true, deux: nbChoixAffiches() === 2, phrase: explication,
-      mot: session && session.enBonus ? "Oui, vous vous en souveniez" : "", complement: questionDeVie(champ) ? "" : complementRencontre(espece, champ) });
+      mot: session && session.enBonus ? "Vous vous en souveniez" : "", complement: questionDeVie(champ) ? "" : complementRencontre(espece, champ) });
     else retour.textContent = (session && session.enBonus ? "Bravo, vous vous en souveniez ! " : "Bravo ! ") + explication;   // étape 161
     jouerSon();
   } else {
@@ -1570,7 +1570,7 @@ function auClavier(evenement) {
   let position = boutons.findIndex(b => b.classList.contains("choisie"));      // -1 = rien de choisi
   // photos : 2 par ligne ; dans la Rencontre (étape 155), les réponses écrites aussi
   const parLigne = (document.getElementById("reponses").classList.contains("grille-photos")
-                    || (document.getElementById("carte-rencontre").classList.contains("avec-postit") && innerWidth > 760)) ? 2 : 1;
+                    || (document.getElementById("carte-rencontre").classList.contains("avec-postit") && !ECRAN_TELEPHONE.matches)) ? 2 : 1;
 
   if (touche in TOUCHES_REPONSES) {
     if (TOUCHES_REPONSES[touche] >= boutons.filter(b => b.id !== "je-ne-sais-pas").length) return;   // ex : touche 3 sur un vrai / faux

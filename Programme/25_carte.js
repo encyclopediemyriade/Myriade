@@ -121,9 +121,18 @@ function dessinerAtlasFrance(zone) {
       prochain += `<g class="at-prochain-etiq"><rect x="${x0}" y="${yy}" width="${l}" height="44" rx="22"/><text x="${x0 + l / 2}" y="${yy + 31}" font-size="27" text-anchor="middle">PROCHAIN</text></g>`;
     }
   }
-  // « vous êtes ici » : une épingle à maison
+  // Étape R275 (42.04, choix 3A du 19/11 au soir) : le territoire en cours — plus de goutte à maison contre le nom ;
+  //   une étiquette « EN COURS » sous le nom, dans le style de « PROCHAIN », et un contour clair plus épais.
+  let epingle = "", contourIci = "";
   const c0 = ici && ATLAS_NOMS[ici];
-  const epingle = c0 ? (([x, y, z]) => { const yy = y - z * 1.55 - 14; return `<g class="at-ici" transform="translate(${x} ${yy})"><path class="at-epingle" d="M0 34C-8 22-26 10-26-6a26 26 0 0 1 52 0C26 10 8 22 0 34z"/><path class="at-maison" d="M-11 -4 0-15 11-4M-7 -7v12h14v-12"/></g>`; })(c0) : "";
+  if (c0) {
+    // le contour clair déborde autour du territoire ; sa couleur est reposée par-dessus (elle cache la moitié intérieure du trait)
+    contourIci = CARTE_TERRITOIRES.filter(k => k.nom === ici).map(k => `<path d="${k.contour}" class="at-ici-contour"/>`).join("")
+      + CARTE_TERRITOIRES.filter(k => k.nom === ici).map(k => `<path d="${k.contour}" class="at-ici-fond" style="fill:${couleur(ici)};stroke:${couleur(ici)}"/>`).join("");
+    const [x, y, z, lignes, ancre] = c0, yy = y + (lignes.length - 1) * z * 1.14 + z * 0.55, l = 168;
+    const x0 = ancre === "end" ? x - l : x - l / 2;
+    epingle += `<g class="at-ici at-ici-etiq-carte"><rect x="${x0}" y="${yy}" width="${l}" height="44" rx="22"/><text x="${x0 + l / 2}" y="${yy + 31}" font-size="27" text-anchor="middle">EN COURS</text></g>`;
+  }
   // 2A : une carte postale par territoire ouvert
   const nb = (n, mot) => `${n} ${mot}${n > 1 ? (mot.endsWith("u") ? "x" : "s") : ""}`;
   const postale = t => {
@@ -150,7 +159,7 @@ function dessinerAtlasFrance(zone) {
   const phS = suivant ? photoDuTerritoire(suivant) : "";
   zone.innerHTML = `
     <header class="at-tete"><h1>Carte</h1><small>${ouverts.length} territoire${ouverts.length > 1 ? "s" : ""} ouvert${ouverts.length > 1 ? "s" : ""} sur ${tousLesTerritoires().length}</small></header>
-    <div class="at-carte-france"><svg viewBox="${CARTE_CADRE}" role="img" aria-label="Carte de France des territoires">${fond}${formes}${reliefs}${prochain}${noms}${epingle}</svg></div>
+    <div class="at-carte-france"><svg viewBox="${CARTE_CADRE}" role="img" aria-label="Carte de France des territoires">${fond}${formes}${contourIci}${reliefs}${prochain}${noms}${epingle}</svg></div>
     <h2 class="at-titre">Vos territoires</h2>
     <ul class="at-liste">${[ici].filter(t => ouverts.includes(t)).concat(ouverts.filter(t => t !== ici)).map(postale).join("")}</ul>
     ${suivant ? `<button class="at-suivant at-ligne-ferme" type="button" data-t="${echapper(suivant)}">

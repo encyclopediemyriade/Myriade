@@ -94,7 +94,12 @@ function montrerSuiteJeu(btn, r) {
   const dy = Math.min(re.bottom + 12 - limite, re.top - 12);
   if (dy > 4) window.scrollBy({ top: dy, behavior: "smooth" });
 }
+const memoTailleCoup = new WeakMap();   // R275 (43.07) : la taille d'une espèce ne change pas, on ne la recalcule plus à chaque piège
 function tailleCoup(e) {
+  if (memoTailleCoup.has(e)) return memoTailleCoup.get(e);
+  const t = tailleCoupCalculee(e); memoTailleCoup.set(e, t); return t;
+}
+function tailleCoupCalculee(e) {
   // toutes les colonnes de taille en cm (taille_min_cm, taille_max_cm_male, …) : la plus grande valeur
   const v = Object.keys(e).filter(k => /^taille_.*cm/.test(k)).map(k => parseFloat(e[k])).filter(x => isFinite(x) && x > 0);
   return v.length ? Math.max(...v) : 0;

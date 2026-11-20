@@ -143,6 +143,7 @@ function jouerRecette(nom) {
   if (!r) return;
   try {
     contexteAudio = contexteAudio || new (window.AudioContext || window.webkitAudioContext)();
+    if (contexteAudio.state === "suspended" && contexteAudio.resume) contexteAudio.resume();   // R275 : préparé d'avance, il peut attendre un premier toucher
     const ctx = contexteAudio, t0 = ctx.currentTime + 0.02;
     r.notes.forEach((f, i) => {
       const t = t0 + i * r.ecart, fin = t + r.duree;
@@ -185,6 +186,14 @@ function jouerRecette(nom) {
   } catch (e) { /* pas de son possible : tant pis */ }
 }
 
+// Étape R275 (43.07, lenteurs) : le tout premier petit son de la partie mettait en route le son du navigateur au moment même
+//   de la première réponse (40 ms sur ordinateur, jusqu'à 200 ms sur téléphone : la réponse semblait « accrocher »).
+//   Il est maintenant mis en route d'avance, à un moment calme, après le premier toucher de l'écran.
+function preparerSons() {
+  if (contexteAudio || typeof sonActif === "undefined" || !sonActif || !petitsSonsActifs()) return;
+  try { contexteAudio = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { /* pas de son possible : tant pis */ }
+}
+window.addEventListener("pointerup", () => (window.requestIdleCallback ? requestIdleCallback(preparerSons, { timeout: 1500 }) : setTimeout(preparerSons, 400)), { once: true, passive: true });
 // Étape R245 : « Petits sons : oui / non » (Réglages) ; non = aucun petit son, les cris des animaux restent
 function petitsSonsActifs() { return !(typeof suivi === "object" && suivi && suivi.petitsSons === false); }
 function jouerSon(moment = "bonne") {

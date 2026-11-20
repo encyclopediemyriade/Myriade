@@ -525,7 +525,7 @@ function placerSuiteRencontre() {
   const carte = document.getElementById("carte-rencontre"), suite = document.getElementById("postit-suite");
   const retour = document.getElementById("retour"), suivant = document.getElementById("suivant");
   if (!carte || !suite || !retour || !suivant) return;
-  const aDroite = carte.classList.contains("avec-postit") && innerWidth > 760;
+  const aDroite = carte.classList.contains("avec-postit") && !ECRAN_TELEPHONE.matches;   // R275 (43.07) : sans recalcul de la mise en page
   if (aDroite && retour.parentNode !== suite) suite.append(retour, suivant);
   else if (!aDroite && retour.parentNode === suite) {
     const bas = carte.querySelector(".contenu .bas-rencontre");
@@ -540,7 +540,7 @@ function placerQuitterTelephone() {
   const carte = document.getElementById("carte-rencontre");
   const quitter = carte && carte.querySelector("[data-quitter]");
   if (!quitter) return;
-  const enBas = carte.classList.contains("avec-postit") && innerWidth <= 760;
+  const enBas = carte.classList.contains("avec-postit") && ECRAN_TELEPHONE.matches;
   let pied = document.getElementById("pied-rencontre");
   if (enBas) {
     if (!pied) { pied = document.createElement("div"); pied.id = "pied-rencontre"; pied.className = "pied-rencontre"; carte.append(pied); }

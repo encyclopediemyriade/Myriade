@@ -553,6 +553,7 @@ const MILIEUX_VOISINS = {
   "Garrigue et maquis":             ["Landes et coteaux secs", "Falaises et rochers", "Campagne, haies et jardins", "Forêt"],
 };
 const ALTITUDE_ALPAGES = 1800;     // une espèce qui monte jusque-là peut se trouver en alpage : jamais proposé comme piège
+const ALTITUDE_REMARQUABLE = 2500;   // étape R275 (42.05) : sous cette altitude maximale, on ne pose pas la question et la fiche ne la montre pas
 // Les milieux à ne jamais proposer comme mauvaise réponse pour cette espèce :
 // les siens (principal et secondaires), leurs voisins, et les alpages si elle monte assez haut.
 function milieuxATeviter(e) {
@@ -1951,7 +1952,10 @@ const QUESTIONS = [
 
   // L'altitude : on l'arrondit à la centaine, pour que la bonne réponse ne se repère pas à ses chiffres.
   { champ: "altitude_max_m", niveau: 3, libelle: "Altitude", type: "nombre", pas: 100, plafond: 4800,
-    valeur: e => typeof e.altitude_max_m === "number" ? Math.round(e.altitude_max_m / 100) * 100 : e.altitude_max_m,
+    // Étape R275 (42.05, choix 4A du 19/11 au soir ; Aubin : « L'altitude fait partie des caractéristiques dont on se moque
+    //   sauf si c'est exceptionnel. ») : la question n'existe que pour les espèces qui montent à 2 500 m ou plus ; pour les
+    //   autres, plus de question, et la ligne « Altitude » disparaît de la fiche (une case « NA » n'est jamais montrée).
+    valeur: e => typeof e.altitude_max_m === "number" ? (e.altitude_max_m >= ALTITUDE_REMARQUABLE ? Math.round(e.altitude_max_m / 100) * 100 : "NA") : e.altitude_max_m,
     fourchette: e => fourchetteDe(e, ["altitude_min_m"], ["altitude_max_m"]),
     question: "À quelle altitude maximale peut-on l'observer ?",
     affichage: v => `${nombre(v)} m`,

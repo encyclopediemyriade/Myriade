@@ -507,7 +507,9 @@ function htmlBadgeDetail(b) {
       ${bouton}</div></div>`;
 }
 function htmlBadgesPage() {
-  const avance = b => { const s = prochainSeuil(b); return s === null ? 1 : b.mesure() / s; };
+  // R275 (43.07) : la mesure d'un badge était recalculée à chaque comparaison du tri (des dizaines de fois) : une seule fois par page
+  const memoAvance = new Map();
+  const avance = b => { if (!memoAvance.has(b.cle)) { const s = prochainSeuil(b); memoAvance.set(b.cle, s === null ? 1 : b.mesure() / s); } return memoAvance.get(b.cle); };
   const groupes = GROUPES_BADGES;   // étape PR3
   let html = "";
   for (const [cle, titre] of groupes) {
@@ -978,8 +980,10 @@ function profilVitrine(rc) {
           <span class="pgv-presque-t"><small>Presque à vous</small><b>${nomBadge(presque.b, presque.palier)}</b> · encore ${nombre(presque.reste)}</span>
           <span class="pgv-voir" aria-hidden="true">Voir</span></button>` : ""}
     </section>
-    <section class="pgv-bloc"><h2>Vos chiffres</h2><ul class="pgv-chiffres-lignes">${chiffres.map(c => `<li><span class="pgv-ch-ic">${c[3]}</span><b>${nombre(c[0])}</b><span>${c[1]}${c[2] ? ` <small>· ${c[2]}</small>` : ""}</span></li>`).join("")}
-      ${(suivi.signalements || 0) > 0 ? `<li class="pgv-contrib-ligne"><span class="pgv-ch-ic">${PICTOS_PROFIL.contrib}</span><b>${nombre(suivi.signalements)}</b><span>signalement${suivi.signalements > 1 ? "s" : ""} envoyé${suivi.signalements > 1 ? "s" : ""} <small>· merci</small></span></li>` : ""}</ul></section>${/* étape CT1 (5A) : la ligne n'apparaît qu'au premier signalement envoyé */ ""}
+    <section class="pgv-bloc"><h2>Vos chiffres</h2>${!chiffres.length && !((suivi.signalements || 0) > 0)
+      ? `<p class="pgv-chiffres-attente">Vos chiffres se rempliront dès votre première partie.</p></section>`   /* R275 (43.03, choix 3B du 20/11) : plus jamais de titre nu */
+      : `<ul class="pgv-chiffres-lignes">${chiffres.map(c => `<li><span class="pgv-ch-ic">${c[3]}</span><b>${nombre(c[0])}</b><span>${c[1]}${c[2] ? ` <small>· ${c[2]}</small>` : ""}</span></li>`).join("")}
+      ${(suivi.signalements || 0) > 0 ? `<li class="pgv-contrib-ligne"><span class="pgv-ch-ic">${PICTOS_PROFIL.contrib}</span><b>${nombre(suivi.signalements)}</b><span>signalement${suivi.signalements > 1 ? "s" : ""} envoyé${suivi.signalements > 1 ? "s" : ""} <small>· merci</small></span></li>` : ""}</ul></section>`}${/* étape CT1 (5A) : la ligne n'apparaît qu'au premier signalement envoyé */ ""}
     ${dits.length ? `<section class="pgv-bloc"><h2>Vos préférences</h2><div class="pgv-encart"><ul class="pgv-dits">${dits.join("")}</ul></div></section>` : ""}
     ${rencontres.length ? `<section class="pgv-bloc"><h2>Vos dernières rencontres</h2><div class="pgv-rencontres">${rencontres.map(e => `<button type="button" data-espece="${echapper(e.nom_courant)}" title="${echapper(e.nom_courant)}"><img src="${photoMini(e.photo)}" alt="${echapper(e.nom_courant)}"></button>`).join("")}</div></section>` : ""}
   </div>`;
