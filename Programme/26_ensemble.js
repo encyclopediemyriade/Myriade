@@ -572,6 +572,18 @@ function boutonChoixEnsemble(c, i, plusieurs) {
   return `<button type="button" class="fl-rep en-rep${e ? " en-avec-photo" : ""}" data-i="${i}" aria-pressed="${plusieurs ? "false" : ""}">
       ${image}<span class="en-texte">${echapper(c.texte)}</span></button>`;
 }
+// Étape R279 (test du 20/11, n° 2b) : sur ordinateur, les réponses (puis le bouton de la suite) restent dans l'écran ;
+//   la page descend juste assez, sans faire sortir la question par le haut. Rien ne change sur téléphone.
+function garderEnVueOrdinateur(haut, bas) {
+  if (!haut || !bas || !(window.matchMedia && window.matchMedia("(min-width: 761px)").matches)) return;
+  const placer = () => {
+    if (!bas.isConnected || !bas.getClientRects().length) return;
+    const h = haut.getBoundingClientRect(), b = bas.getBoundingClientRect();
+    const voulu = Math.min(b.bottom + 16 - window.innerHeight, h.top - 12);
+    if (voulu > 4) window.scrollTo({ top: window.scrollY + voulu, behavior: animationsReduites() ? "auto" : "smooth" });
+  };
+  requestAnimationFrame(() => setTimeout(placer, 60));
+}
 function dessinerEnsemble() {
   const z = document.getElementById("forme-ecran"), E = ensemble;
   if (!z || !E) return;
@@ -596,6 +608,7 @@ function dessinerEnsemble() {
     <div class="fp-pied">${q.plusieurs ? `<button type="button" class="bouton-accueil principal" id="en-valider" disabled>Valider</button>` : ""}
       <button type="button" class="bouton-accueil principal cache" id="en-suite">${E.i + 1 < E.file.length ? "Question suivante" : "Continuer"}</button></div></div>`;
   const boutons = [...z.querySelectorAll(".en-rep")];
+  garderEnVueOrdinateur(z.querySelector(".fl-question"), (q.plusieurs && document.getElementById("en-valider")) || z.querySelector(".en-choix"));   // R279
   const corriger = choisis => {
     const bonnes = q.choix.map((c, i) => c.bonne ? i : -1).filter(i => i >= 0);
     // Étape R236 (note 17, décision d'Aubin du 15/11) : à plusieurs réponses, la question est validée si le joueur trouve au moins
@@ -625,7 +638,8 @@ function dessinerEnsemble() {
     if (caseI && !reprise) caseI.classList.add(juste ? "ok" : "rate");
     const s = document.getElementById("en-suite");
     s.textContent = E.i + 1 < E.file.length ? "Question suivante" : "Continuer";
-    s.classList.remove("cache"); s.focus();
+    s.classList.remove("cache"); s.focus({ preventScroll: true });
+    garderEnVueOrdinateur(document.getElementById("en-retour"), s);   // R279 : le verdict et la suite à l'écran
     s.onclick = () => {
       if (E.i + 1 >= E.file.length) { finirEnsemble(); return; }
       // Étape R265 (40.05, choix 3A) : avant les questions à revoir, une page courte, avec « Non merci » pour ne pas les imposer
@@ -676,7 +690,7 @@ function finirEnsemble() {
   session = null;
   ouvrirExpedition(x);
   if (E.avant < NB_ETAPES && etapeFinie(x, 2)) {
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !",
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !",
             detail: `${E.premierCoup} question${E.premierCoup > 1 ? "s" : ""} sur ${E.total} réussie${E.premierCoup > 1 ? "s" : ""} du premier coup${gagnees ? ` · +${gagnees} empreintes` : ""}`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
     if (gagnees) verifierOuverture();

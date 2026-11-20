@@ -770,7 +770,7 @@ function finirLiensExp() {
   session = null;
   ouvrirExpedition(x);
   if (L.avant < NB_ETAPES) {
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !", detail: `${L.justes} lien${L.justes > 1 ? "s" : ""} sur ${L.items.length} trouvé${L.justes > 1 ? "s" : ""}${gagnees ? ` · +${gagnees} empreintes` : ""}`,
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !", detail: `${L.justes} lien${L.justes > 1 ? "s" : ""} sur ${L.items.length} trouvé${L.justes > 1 ? "s" : ""}${gagnees ? ` · +${gagnees} empreintes` : ""}`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
     if (gagnees) verifierOuverture();
   }
@@ -872,7 +872,7 @@ function finirRevueGroupee() {
     if (confondues.length) { session = null; lancerRevueExpedition(x, confondues); return; }   // étape R184
     if (etapeFinie(x, 1)) { session = null; ouvrirExpedition(x); } else lancerExpedition(x, 1); };
   if (etapeFinie(x, 1) && !rv.avantFinie) {
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   }
   if (gagnees) verifierOuverture();

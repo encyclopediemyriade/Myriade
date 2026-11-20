@@ -701,11 +701,20 @@ function poserCases(espece, q) {
 
 // ---- 6c. Vrai ou faux ---------------------------------------------
 let affirmationVraie = "";
+// Étape R279 (test du 20/11, N3 : « Il mange surtout des poissons. » 3 fois dans la même expédition) : les fausses valeurs
+//   déjà servies récemment passent après les autres (mémoire de la partie, les 12 dernières) ; jamais la même deux fois de suite
+const FAUX_RECENTS = [];
+function choisirFausseVF(q, bonne, espece) {
+  const l = piegesVraiFaux(q, bonne, espece), cle = v => q.champ + "|" + v;
+  const v = l.find(x => !FAUX_RECENTS.includes(cle(x))) || l[0];
+  if (v !== undefined) { FAUX_RECENTS.push(cle(v)); if (FAUX_RECENTS.length > 12) FAUX_RECENTS.shift(); }
+  return v;
+}
 function poserVraiFaux(espece, q, bonne) {
   enTete(espece, true, true);
   document.getElementById("question").textContent = "Vrai ou faux ?";
   const estVraie = Math.random() < 0.5;                  // une fois sur deux, l'affirmation est vraie
-  const valeur = estVraie ? bonne : piegesVraiFaux(q, bonne, espece)[0];   // VF1 : la fausse reste dans le « monde » de l'espèce
+  const valeur = estVraie ? bonne : choisirFausseVF(q, bonne, espece);   // VF1 : la fausse reste dans le « monde » de l'espèce ; R279 : variée
   const affirmation = document.getElementById("affirmation");
   affirmation.textContent = q.affirmation(valeur, espece);   // étape R184 : l'espèce (« s'accouple » chez les mammifères) ; E2-7 (note 11) : sans guillemets
   affirmationVraie = q.affirmation(bonne, espece);       // étape E2-4 : la phrase vraie, donnée après une erreur dans la rafale
@@ -1156,7 +1165,7 @@ function demanderSon(tirage) {
   photo.classList.add("cache");
   photo.classList.remove("cadre-empreinte", "cadre-son", "devoile");
   document.getElementById("famille").classList.add("cache");
-  document.getElementById("compteur-rencontre").textContent = texteCompteur(tirage.champ);   // étape 156
+  document.getElementById("compteur-rencontre").textContent = "";   // R279 (test du 20/11, N5) : ce n'est pas une question du jeu, pas de « Question n / N »
   document.getElementById("revision").textContent = "";
   document.getElementById("retour").textContent = "";
   document.getElementById("affirmation").classList.add("cache");
@@ -1422,6 +1431,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     const pop = { couleur, image: `<svg viewBox="0 0 48 48">${SILHOUETTES[espece.onglet] || ""}</svg>`,
       etiquette: "Nouveau rang", titre: `${classeDe(espece).nom} : ${RANGS_FAMILLE[rangApres]}`, detail: "" };
     feter({ etiquette: `Nouveau rang · ${classeDe(espece).nom}`, titre: RANGS_FAMILLE[rangApres], detail: "", son: "rang", pop,
+            taille: "petite", etiquetteCourte: "Rang de famille", titreCourt: `${classeDe(espece).nom} · ${RANGS_FAMILLE[rangApres]}`,   // R277 (37.02) : un bandeau
             visuel: `<div class="fete-visuel rang" style="color:${couleur}"><svg viewBox="0 0 48 48" style="fill:currentColor">${SILHOUETTES[espece.onglet] || ""}</svg></div>` });
   } else if (apres !== avant && apres === "maîtrisée") {
     const pop = { couleur, image: photo, etiquette: "Espèce maîtrisée", titre: nom, detail: "toute sa fiche est connue" };
@@ -1431,7 +1441,7 @@ function repondre(boutonClique, estJuste, jeNeSaisPas = false) {
     const medaille = CLASSES_PALIER[niveauApres];      // étape R144 : le palier de l'espèce (plus de médaille)
     const pop = { couleur, image: photo, medaille: dessinMedaille(medaille, niveauApres),
       etiquette: `Espèce ${nomPalier(niveauApres)}`, titre: nom, detail: "" };
-    feter({ etiquette: pop.etiquette, titre: nom, detail: sensMedaille(niveauApres, espece), son: "medaille", pop,
+    feter({ etiquette: pop.etiquette, titre: nom, detail: sensMedaille(niveauApres, espece), son: "medaille", pop, taille: "petite",   // R277 (37.02) : un bandeau
             visuel: visuelEspece(espece, medaille, dessinMedaille(medaille, niveauApres)) });
   } else if (apres !== avant && apres === "identifiée") {
     annoncerNouvelleEspece(espece, "rejoint l'encyclopédie");   // étape 206

@@ -143,6 +143,9 @@ function charger() {
     }
     // Étape 106 : les badges. Object.assign garde les valeurs de base pour ce qu'une ancienne sauvegarde ne connaît pas.
     if (donnees.suivi && typeof donnees.suivi === "object") Object.assign(suivi, renommerDansSuivi(donnees.suivi));   // R244 : anciens noms
+    // Étape R278 (37.03) : une partie d'avant la marque « Nouveau » commence à l'heure de la mise à jour — son carnet n'est pas
+    //   marqué « Nouveau » d'un coup ; seules les espèces qui y entrent ensuite le seront.
+    if (!donnees.suivi || typeof donnees.suivi !== "object" || !("encycloVue" in donnees.suivi)) suivi.encycloVue = Date.now();
     badgesObtenus = (donnees.badgesObtenus && typeof donnees.badgesObtenus === "object") ? donnees.badgesObtenus : {};
     titreChoisi = typeof donnees.titreChoisi === "string" ? donnees.titreChoisi : null;
     especeFavorite = typeof donnees.especeFavorite === "string" ? donnees.especeFavorite : null;   // étape 109

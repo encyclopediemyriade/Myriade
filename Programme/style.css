@@ -6067,7 +6067,7 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
 .at-postale-haut b { position: absolute; left: 14px; right: 14px; bottom: 10px; z-index: 1; color: #fff; font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 600; line-height: 1.15; }
 .at-ici-etiq { position: absolute; top: 10px; left: 10px; z-index: 1; display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 6px; border-radius: 99px; background: rgba(251,248,241,.94); color: #1F3A2E; font-size: 12px; font-weight: 600; }
 .at-ici-etiq svg { width: 14px; height: 14px; fill: none; stroke: #1F3A2E; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-.at-postale-bas { padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 7px; }
+.at-postale-bas { padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 6px; }
 .at-postale-bas > small { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--texte-doux); }
 .at-continuer { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 14px; border: 0; border-radius: 10px; background: var(--couleur-t, #1F3A2E); color: #fff; font: inherit; font-weight: 600; font-size: 14px; text-align: left; cursor: pointer; }
 .at-continuer span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -6528,4 +6528,157 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 @media (max-width: 760px) {
   /* 43.01 (suite) · les réponses à pictogramme (une couleur, un bec…) : le pictogramme suit la hauteur de la case */
   .carte-rencontre #reponses.peu-de-reponses > .choix-picto .picto { height: auto; align-self: stretch; display: flex; align-items: center; justify-content: center; }
+}
+
+/* ============================================================================================
+   Étape R276 (20/11/2026) · Plaisir de jouer, session A (Notion 37.06 et 37.05 ; choix 7B et 6A d'Aubin)
+   ============================================================================================ */
+/* 37.06 (7B) · quand le joueur a trouvé, la case de la bonne réponse se soulève un instant et sa coche se dessine
+   dans le coin. Réponses écrites seulement (pas les photos, ni les cases à cocher). Quand le joueur s'est trompé,
+   la bonne réponse est montrée comme avant, sans mouvement ni coche : on ne fête pas une erreur. */
+@keyframes r276-souleve {
+  0%   { transform: translateY(0);    box-shadow: 0 0 0 rgba(62, 123, 85, 0); }
+  40%  { transform: translateY(-4px); box-shadow: 0 8px 14px rgba(62, 123, 85, .30); }
+  100% { transform: translateY(0);    box-shadow: 0 0 0 rgba(62, 123, 85, 0); }
+}
+@keyframes r276-coche { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.reponse.juste:not(.choix-photo):not(.case-choix), .fl-rep.juste, .cdo-nom.bon { position: relative; animation: r276-souleve .45s ease-out; }
+.reponse.juste:not(.choix-photo):not(.case-choix)::after, .fl-rep.juste::after, .cdo-nom.bon::after {
+  content: ""; position: absolute; top: -9px; right: -7px; width: 24px; height: 24px; box-sizing: border-box; border-radius: 50%;
+  border: 2px solid var(--bon); background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233E7B55' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  animation: r276-coche .33s .1s ease-out both; pointer-events: none; }
+/* le joueur s'est trompé (une case « fausse », « presque » ou « faux » à côté) : ni mouvement ni coche */
+:has(> .reponse.fausse, > .reponse.presque, > .fl-rep.fausse, > .cdo-nom.faux) > :is(.reponse.juste, .fl-rep.juste, .cdo-nom.bon),
+#reponses:has(.fausse, .presque) .reponse.juste { animation: none; }
+:has(> .reponse.fausse, > .reponse.presque, > .fl-rep.fausse, > .cdo-nom.faux) > :is(.reponse.juste, .fl-rep.juste, .cdo-nom.bon)::after,
+#reponses:has(.fausse, .presque) .reponse.juste::after { content: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reponse.juste:not(.choix-photo):not(.case-choix), .fl-rep.juste, .cdo-nom.bon,
+  .reponse.juste:not(.choix-photo):not(.case-choix)::after, .fl-rep.juste::after, .cdo-nom.bon::after { animation: none; }
+}
+/* 37.05 (6A) · « N jours sur le terrain » à la place de « N jours d'affilée » et de la plume */
+.mai-terrain { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.mai-terrain .mai-feuille { width: 14px; height: 14px; flex: none; fill: none; stroke: #3E7B55; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ==================================================================
+   Étape R277 (20/11/2026) · Plaisir de jouer, session B (Notion 37.02, 37.03 première moitié, 37.04 ; choix 3A, 4C, 5B d'Aubin)
+   ================================================================== */
+/* 37.02 (3A) · PETITE fête : un bandeau en haut, 2 secondes, sans voile ; il ne prend pas les touchers (le jeu n'est pas coupé) */
+#bandeau-fete { position: fixed; left: 50%; top: calc(12px + env(safe-area-inset-top, 0px)); z-index: 903; width: min(420px, calc(100% - 24px)); box-sizing: border-box;
+                display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--carte); border: 1px solid var(--trait); border-radius: 14px;
+                box-shadow: 0 6px 16px rgba(31,58,46,.25); pointer-events: none; opacity: 0; transform: translate(-50%, -130%);
+                transition: transform .32s cubic-bezier(.2,.9,.3,1), opacity .25s; }
+#bandeau-fete.on { opacity: 1; transform: translate(-50%, 0); }
+#bandeau-fete .bf-rond { width: 40px; height: 40px; flex: none; border-radius: 50%; border: 2px solid var(--bf-couleur, var(--territoire)); color: var(--bf-couleur, var(--territoire));
+                         display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--carte); box-sizing: border-box; }
+#bandeau-fete .bf-rond:empty { display: none; }
+#bandeau-fete .bf-rond svg { width: 26px; height: 26px; fill: currentColor; }
+#bandeau-fete .bf-rond img { width: 100%; height: 100%; object-fit: cover; }
+#bandeau-fete .bf-rond .rond-badge, #bandeau-fete .bf-rond .rond-badge svg { width: 100%; height: 100%; }
+#bandeau-fete .bf-rond:has(.rond-badge) { border: 0; }
+#bandeau-fete .bf-texte { display: flex; flex-direction: column; min-width: 0; text-align: left; }
+#bandeau-fete small { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ocre-texte); }
+#bandeau-fete b { font-family: Literata, Georgia, serif; font-weight: 700; font-size: 17px; line-height: 1.2; color: var(--texte); }
+@media (prefers-reduced-motion: reduce) { #bandeau-fete { transition: opacity .2s; transform: translate(-50%, 0); } }
+
+/* 37.03 (4C, première moitié) · MOYENNE fête « Expédition terminée » : la planche des espèces entrées au carnet */
+.carte-fete.avec-planche { width: min(360px, calc(100% - 32px)); top: 50%; padding: 22px 18px 18px; max-height: calc(100% - 48px); overflow-y: auto; box-sizing: border-box; }
+.fete-planche { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--trait); }
+.fete-planche .fp-titre { font-size: 13px; font-weight: 600; color: var(--texte); margin-bottom: 10px; }
+.fete-planche .fp-grille { display: grid; grid-template-columns: repeat(var(--fp-n, 5), minmax(0, 72px)); justify-content: center; gap: 8px 6px; }
+.fete-planche figure { margin: 0; display: flex; flex-direction: column; gap: 4px; align-items: center; min-width: 0; }
+.fete-planche img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid var(--trait); background: var(--verrou); display: block; }
+.fete-planche figcaption { font-size: 10.5px; line-height: 1.2; color: var(--texte-doux); text-align: center; overflow-wrap: anywhere; }
+.carte-fete button.continuer { font: inherit; font-size: 16px; font-weight: 600; border: 0; cursor: pointer; min-height: 48px; width: 100%; border-radius: 12px; }
+
+/* 37.02 (3A) · GRANDE fête : plein écran sur la photo du lieu ou du territoire ; peu d'étoiles, rien ne presse */
+.voile-fete.grande.on { background: rgba(20,36,28,.72); }
+.carte-fete.grande { left: 0; top: 0; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: #1f3a2e; overflow: hidden; box-sizing: border-box;
+                     display: flex; flex-direction: column; transform: none; transition: opacity .45s; cursor: default; }
+.carte-fete.grande.on { transform: none; }
+.carte-fete.grande .fg-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.carte-fete.grande .fg-ombre { position: absolute; inset: 0; background: linear-gradient(rgba(20,36,28,.18), rgba(20,36,28,.38) 55%, rgba(20,36,28,.6)); }
+.carte-fete.grande .fg-bas { position: relative; margin-top: auto; background: #1f3a2e; color: #fbf8f1; padding: 0 22px calc(24px + env(safe-area-inset-bottom, 0px));
+                             display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.carte-fete.grande .fete-visuel { width: 104px; height: 104px; margin: -52px auto 2px; border-radius: 50%; background: #fbf8f1; border: 5px solid #fbf8f1; box-sizing: border-box;
+                                  box-shadow: 0 8px 20px rgba(0,0,0,.4); flex: none; }
+.carte-fete.grande .fete-visuel.medaille-fete .med-lieu { width: 78px; height: 78px; }
+.carte-fete.grande .fete-visuel.exp-fete { gap: 2px; } .carte-fete.grande .fete-visuel.exp-fete svg { width: 28px; height: 28px; }
+.carte-fete.grande .etiquette { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: #e7c66a; }
+.carte-fete.grande .titre { font-family: Literata, Georgia, serif; font-weight: 700; font-size: 30px; line-height: 1.15; margin: 0; color: #fbf8f1; }
+.carte-fete.grande .detail { color: #d6dfd5; font-size: 15px; margin-bottom: 8px; }
+.carte-fete.grande .detail:empty { display: none; }
+.carte-fete.grande .fete-souvenir { margin-top: 0; }
+.carte-fete.grande button.continuer { margin-top: 4px; background: #fbf8f1; color: #1f3a2e; min-height: 52px; }
+.carte-fete.grande button.continuer:focus-visible { outline: 3px solid #e7c66a; outline-offset: 2px; }
+/* Sur ordinateur : une grande carte au centre (la photo en haut, le texte en bas), pas tout l'écran */
+@media (min-width: 761px) {
+  .carte-fete.grande { left: 50%; top: 50%; width: min(620px, calc(100% - 48px)); height: min(720px, calc(100% - 48px)); border-radius: 14px; transform: translate(-50%, -50%);
+                       box-shadow: 0 24px 70px rgba(0,0,0,.45); }
+  .carte-fete.grande.on { transform: translate(-50%, -50%); }
+  .carte-fete.grande .fg-bas { padding: 0 40px 32px; }
+  .carte-fete.grande button.continuer { max-width: 320px; }
+}
+
+/* 37.04 (5B) · « Une rencontre rare », à la fin de la Rencontre (pas de gain en plus) */
+.rft-rare { position: relative; margin: 0; padding: 9px 12px; background: var(--carte); border: 2px solid var(--ocre); border-radius: 12px; text-align: left;
+            display: flex; flex-direction: column; gap: 3px; box-shadow: 0 6px 14px rgba(31,58,46,.14); animation: r277-rare .5s ease-out both; }
+.rft-rare .rr-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.rft-rare .rr-etiq { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ocre-texte); }
+.rft-rare .rr-compte { font-size: 12.5px; color: var(--texte-doux); white-space: nowrap; }
+.rft-rare .rr-compte b { font-family: Literata, Georgia, serif; font-size: 15px; color: var(--texte); }
+.rft-rare .rr-phrase { margin: 0; font-size: 13.5px; line-height: 1.35; color: var(--texte-doux); }
+@keyframes r277-rare { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .rft-rare { animation: none; } }
+
+/* ===================================================================
+   Étape R278 (20/11, « Plaisir de jouer », session C ; choix 2A et 4C d'Aubin, maquettes écrans 1 et 5)
+   =================================================================== */
+/* 37.01 (2A) · l'espèce rejoint son carnet : la phrase de fin, puis la rangée de sa famille (la place vide au bout) et le compte */
+.rft-carnet { margin: 8px 0 0; padding: 8px 12px 9px; background: var(--carte); border: 1px solid #cfc5ae; border-radius: 12px; text-align: left;
+              display: flex; flex-direction: column; gap: 7px; }
+.rft-carnet .rc-phrase { margin: 0; font-size: 14.5px; line-height: 1.35; color: var(--texte); }
+.rft-carnet .rc-bas { display: flex; align-items: center; gap: 10px; }
+/* la rangée se cale à droite, contre le compte ; s'il manque de place, ce sont les plus anciennes qui sortent à gauche */
+.rft-carnet .rc-rangee { flex: 1; min-width: 0; display: flex; gap: 6px; align-items: center; justify-content: flex-end; overflow: hidden; }
+.rft-carnet .rc-vig { flex: none; width: 40px; height: 40px; border-radius: 8px; overflow: hidden; border: 1px solid #cfc5ae; background: #e6dfd0; box-sizing: border-box; }
+.rft-carnet .rc-vig img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rft-carnet .rc-place { width: 46px; height: 46px; border: 2px dashed var(--ocre); background: transparent; }
+.rft-carnet .rc-place img { opacity: 0; }
+.rft-carnet.rc-fini .rc-place { border: 3px solid var(--ocre); box-shadow: 0 3px 8px rgba(31,58,46,.22); }
+.rft-carnet.rc-fini .rc-place img { opacity: 1; }
+.rft-carnet .rc-compte { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+.rft-carnet .rc-etiq { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ocre-texte); white-space: nowrap; }
+.rft-carnet .rc-fam { font-size: 13.5px; font-weight: 600; color: var(--texte); white-space: nowrap; }
+.rft-carnet .rc-n { font-family: Literata, Georgia, serif; font-size: 18px; font-weight: 700; }
+.rft-carnet .rc-plus { display: inline-block; font-size: 11px; font-weight: 700; color: #fbf8f1; background: var(--ocre); border-radius: 10px; padding: 1px 6px;
+                       vertical-align: 2px; opacity: 0; transform: scale(.6); transition: opacity .25s ease, transform .25s ease; }
+.rft-carnet.rc-fini .rc-plus { opacity: 1; transform: none; }
+/* la photo qui vole (une copie posée par-dessus l'écran le temps du mouvement) */
+.rc-vol { position: fixed; left: 0; top: 0; width: 1px; height: 1px; object-fit: cover; z-index: 60; pointer-events: none; box-shadow: 0 8px 20px rgba(31,58,46,.3); }
+/* quand la place manque (petit téléphone) : seulement la place de la nouvelle, contre le compte */
+.rft-carnet.rc-compact { gap: 5px; padding: 7px 10px; }
+.rft-carnet.rc-compact .rc-vig:not(.rc-place) { display: none; }
+.rft-carnet.rc-compact .rc-place { width: 38px; height: 38px; }
+/* une rencontre rare : le même encart, avec le bord ocre et l'étiquette de R277 */
+.rft-carnet.rft-rare { border: 2px solid var(--ocre); padding: 8px 12px 9px; gap: 5px; box-shadow: 0 6px 14px rgba(31,58,46,.14); }
+.rft-carnet.rft-rare .rc-phrase { font-size: 13.5px; color: var(--texte-doux); }
+/* sur ordinateur, dans la colonne de droite */
+.rft-ordi .rft-carnet { margin: 2px 0 0; }
+@media (prefers-reduced-motion: reduce) { .rft-carnet .rc-plus { transition: none; } }
+
+/* 37.03 (4C, seconde moitié) · « Nouveau » dans l'Encyclopédie, jusqu'à l'ouverture de la fiche (rien sur l'onglet du bas) */
+.tag-nouveau { position: absolute; left: 6px; top: 6px; z-index: 2; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+               background: var(--ocre); color: #fbf8f1; border-radius: 4px; padding: 2px 6px; line-height: 1.3; pointer-events: none; }
+.alb-case.alb-nouveau { position: relative; }
+.alb-case.alb-nouveau img { outline: 2px solid var(--ocre); outline-offset: -2px; }
+.fiche.fiche-nouvelle { position: relative; }
+.fiche.fiche-nouvelle .photo { position: relative; }
+.couv-famille .tag-nouveau { left: auto; right: 10px; top: 10px; }
+.fiche.fiche-nouvelle .tag-nouveau { left: auto; right: 6px; }   /* à droite : le ruban de rareté est à gauche */
+
+/* Étape R279 (test du 20/11, n° 2c) : sur ordinateur, la photo de Me tester et de Coup d'œil ne pousse plus les réponses
+   sous le bas de l'écran (la photo garde sa largeur, elle est seulement moins haute quand la fenêtre est basse) */
+@media (min-width: 761px) {
+  .cdo-photo { max-height: max(220px, calc(100vh - 420px)); }
 }

@@ -88,7 +88,7 @@ function afficherBulle(texte, duree = 2200) {   // étape R258 : durée au choix
 // Étape R245 (36.12, choix d'Aubin du 17/11) : famille « Bois doux » partout — une seule recette pour tout le jeu,
 //   plus basse et plus douce que les cris (bonne : 2 notes de bois qui montent ; mauvaise : une note grave courte ;
 //   fin : 4 notes). Le joueur peut couper ces petits sons dans Réglages (« Petits sons : oui / non ») ; les cris restent.
-const SONS_CHOISIS = { bonne: "doux_bonne", medaille: "doux_medaille", badge: "doux_badge", rang: "doux_rang",
+const SONS_CHOISIS = { carnet: "doux_carnet", bonne: "doux_bonne", medaille: "doux_medaille", badge: "doux_badge", rang: "doux_rang",
                        mauvaise: "doux_mauvaise", fin: "doux_fin", parfaite: "doux_parfaite" };
 // ---- Les sons du jeu, fabriqués par le navigateur (aucun fichier) ----
 // Chaque son est une « recette » : des notes (en hertz) jouées l'une après l'autre avec un timbre.
@@ -104,6 +104,8 @@ const RECETTES_SONS = {
   doux_medaille:  { timbre: "boisdoux", notes: [440, 554, 659], ecart: 0.1, duree: 0.45, volume: 0.07 },
   doux_badge:     { timbre: "boisdoux", notes: [523, 659, 784], ecart: 0.1, duree: 0.45, volume: 0.07 },
   doux_rang:      { timbre: "boisdoux", notes: [392, 494, 587, 784, 988], ecart: 0.1, duree: 0.6, volume: 0.07 },
+  // Étape R278 (37.01) : l'espèce se pose dans son carnet — un petit « toc » de bois, deux notes qui descendent
+  doux_carnet:    { timbre: "boisdoux", notes: [587, 440], ecart: 0.07, duree: 0.26, volume: 0.065 },
   // Anciennes recettes (gardées pour mémoire, plus utilisées depuis R245)
   // Bonne réponse
   bonne_actuel:   { timbre: "doux",   notes: [660, 880], ecart: 0.12, duree: 0.35, volume: 0.06 },
@@ -267,9 +269,103 @@ function feter(f) {
     clearTimeout(minuteurFete); minuteurFete = setTimeout(fermerFete, 3600);
     return;
   }
+  if (TROIS_TAILLES && f.taille === "petite") { feterPetite(f); return; }   // R277 : un bandeau en haut, le jeu n'est pas coupé
   fileFetes.push(f);
   if (!feteOuverte) programmerSuiteFetes(250);
 }
+
+// ==================================================================
+// Étape R277 (20/11, Notion 37.02 ; choix 3A d'Aubin) : DES FÊTES DE TROIS TAILLES
+//   « Un grand moment ne ressemble pas à un petit. »
+//   • petite (f.taille = "petite") : un bandeau en haut de l'écran, 2 secondes, sans voile : le jeu n'est pas coupé
+//       → nouveau badge, rang de famille, palier d'une espèce hors expédition ;
+//   • moyenne (rien à écrire, c'est la taille par défaut) : la carte au centre, comme avant
+//       → étape ou expédition terminée, expédition complète, médaille de bronze ou d'argent, finale du lieu, rang dans le territoire… ;
+//   • grande (f.taille = "grande" + f.photo) : plein écran sur la photo du lieu ou du territoire, peu d'étoiles, on la ferme soi-même
+//       → médaille d'or, nouveau territoire, rang du carnet, Gardien.
+//   TROIS_TAILLES = false : tout redevient la carte au centre, comme avant R277.
+// ==================================================================
+const TROIS_TAILLES = true;
+const DUREE_PETITE_FETE = 2000;                        // 2 secondes
+const filePetites = [];
+let petiteProgrammee = false, minuteurPetite = null;
+function feterPetite(f) {
+  filePetites.push(f);
+  if (!petiteProgrammee) { petiteProgrammee = true; setTimeout(suitePetites, 300); }   // (le temps qu'une fête de fin d'étape arrive : le badge s'y range)
+}
+function suitePetites() {
+  petiteProgrammee = false;
+  if (!filePetites.length) return;
+  const carteOn = document.getElementById("carte-fete").classList.contains("on");
+  // Un badge gagné en même temps qu'une fin d'étape se range dans sa fête (étape R153), au lieu d'un bandeau de plus
+  const exp = feteOuverte && feteCourante && feteCourante.fusion && carteOn ? feteCourante : fileFetes.find(g => g.fusion);
+  if (exp) for (let i = filePetites.length - 1; i >= 0; i--) {
+    const g = filePetites[i];
+    if (!g.souvenir) continue;
+    filePetites.splice(i, 1);
+    if (exp === feteCourante && carteOn) {
+      const cont = document.querySelector("#carte-fete .continuer");
+      if (cont) cont.insertAdjacentHTML("beforebegin", htmlSouvenir(g.souvenir));
+      clearTimeout(minuteurFete); minuteurFete = setTimeout(fermerFete, 3600);
+    } else exp.souvenirs = (exp.souvenirs || []).concat([g.souvenir]);
+  }
+  if (!filePetites.length) return;
+  // Une carte de fête est à l'écran (ou va venir) : le bandeau attend qu'elle soit fermée
+  if (feteOuverte || fileFetes.length || carteOn) { petiteProgrammee = true; setTimeout(suitePetites, 400); return; }
+  const f = filePetites.shift(), p = f.pop || {};
+  let b = document.getElementById("bandeau-fete");
+  if (!b) { b = document.createElement("div"); b.id = "bandeau-fete"; b.setAttribute("role", "status"); b.setAttribute("aria-live", "polite"); document.body.appendChild(b); }
+  b.style.setProperty("--bf-couleur", p.couleur || "var(--territoire)");
+  b.innerHTML = `<span class="bf-rond" aria-hidden="true">${p.image || ""}</span>`
+    + `<span class="bf-texte"><small>${f.etiquetteCourte || p.etiquette || f.etiquette || ""}</small><b>${f.titreCourt || p.titre || f.titre || ""}</b></span>`;
+  b.classList.remove("on"); void b.offsetWidth; b.classList.add("on");
+  jouerSon(f.son);
+  clearTimeout(minuteurPetite);
+  minuteurPetite = setTimeout(() => {
+    b.classList.remove("on");
+    if (filePetites.length && !petiteProgrammee) { petiteProgrammee = true; setTimeout(suitePetites, 350); }
+  }, DUREE_PETITE_FETE);
+}
+
+// ---- Étape R277 (Notion 37.03, choix 4C, première moitié) : la planche des espèces entrées au carnet pendant l'expédition ----
+//   Au premier lancement d'une expédition, le jeu note lesquelles de ses espèces sont DÉJÀ au carnet (suivi.departExp, dans la
+//   sauvegarde). À la fête « Expédition terminée », les autres espèces du carnet sont celles qui y sont entrées pendant l'expédition.
+//   Une expédition déjà commencée avant R277 est notée à sa prochaine ouverture : sa planche ne montre que ce qui entre ensuite
+//   (jamais une espèce de trop). Pas de note = pas de planche, la fête est celle d'avant.
+function noterDepartExp(x) {
+  if (!x || typeof suivi !== "object" || !suivi || !Array.isArray(x.liste)) return;
+  suivi.departExp = suivi.departExp || {};
+  if (suivi.departExp[x.id] !== undefined) return;
+  if (typeof empreintesExp === "function" && empreintesExp(x) >= NB_ETAPES) return;   // expédition déjà terminée : rien à noter
+  suivi.departExp[x.id] = x.liste.map((e, i) => estIdentifiee(e) ? i : -1).filter(i => i >= 0).join(",");
+  sauvegarder();
+}
+function especesEntreesExp(x) {
+  if (!x || typeof suivi !== "object" || !suivi || !suivi.departExp || suivi.departExp[x.id] === undefined) return [];
+  const deja = new Set(String(suivi.departExp[x.id]).split(",").filter(Boolean).map(Number));
+  return x.liste.filter((e, i) => !deja.has(i) && estIdentifiee(e));
+}
+function htmlPlancheFete(especes) {
+  const n = especes.length;
+  if (!n) return "";
+  const colonnes = n <= 5 ? n : Math.ceil(n / 2);     // 6 ou 7 espèces : deux rangées
+  return `<div class="fete-planche"><div class="fp-titre">${n} espèce${n > 1 ? "s" : ""} de plus dans votre carnet</div>`
+    + `<div class="fp-grille" style="--fp-n:${Math.max(colonnes, 3)}">${especes.map(e =>
+        `<figure><img src="${photoMini(photoEsp(e))}" alt="" onerror="this.onerror=null;this.src='${photoEsp(e)}'"><figcaption>${echapper(e.nom_courant)}</figcaption></figure>`).join("")}</div></div>`;
+}
+// La planche d'une fête : seulement pour « Expédition terminée » (f.exp = l'expédition), une seule fois
+function plancheDeLaFete(f) {
+  if (!TROIS_TAILLES || !f.exp || !/^Expédition terminée/.test(f.titre || "")) return "";
+  const especes = especesEntreesExp(f.exp);
+  if (suivi && suivi.departExp && suivi.departExp[f.exp.id] !== undefined) { delete suivi.departExp[f.exp.id]; sauvegarder(); }
+  return htmlPlancheFete(especes);
+}
+// La photo d'un territoire pour la grande fête (la photo « officielle » du territoire, celle de la carte)
+function photoFeteTerritoire(t) {
+  try { const p = typeof photoTerritoire === "function" ? photoTerritoire(t, typeof IDENTITE !== "undefined" ? IDENTITE[t] : null) : null;
+        return p && p.fichier ? p.fichier : ""; } catch (e) { return ""; }
+}
+function animationsReduites() { return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); }
 function suiteFetes() {
   if (feteOuverte && document.getElementById("carte-fete").classList.contains("on")) return;   // une fête est déjà à l'écran
   let f = fileFetes.shift();
@@ -290,21 +386,37 @@ function suiteFetes() {
   document.getElementById("carte-pop").classList.remove("visible");
   document.getElementById("bulle").classList.remove("visible");
   const carte = document.getElementById("carte-fete"), voile = document.getElementById("voile-fete");
-  carte.innerHTML = `${f.visuel}<div class="etiquette">${f.etiquette}</div><div class="titre">${f.titre}</div>`
+  // Étape R277 : la grande fête (plein écran sur une photo) et la planche des espèces entrées au carnet
+  const grande = TROIS_TAILLES && f.taille === "grande" && !!f.photo;
+  const planche = grande ? "" : plancheDeLaFete(f);
+  const corps = `<div class="etiquette">${f.etiquette}</div><div class="titre">${f.titre}</div>`
     + `<div class="detail">${f.detail || ""}</div>`
+    + planche
     + (f.souvenirs || []).map(htmlSouvenir).join("")   // R153
-    + (f.jauge ? `<div class="jauge-fete"><i style="--de:${f.jauge.de}%;--a:${f.jauge.a}%"></i></div>` : "")
-    + `<div class="continuer">Continuer</div>`;
+    + (f.jauge ? `<div class="jauge-fete"><i style="--de:${f.jauge.de}%;--a:${f.jauge.a}%"></i></div>` : "");
+  carte.classList.toggle("grande", grande); voile.classList.toggle("grande", grande);
+  carte.classList.toggle("avec-planche", !!planche);
+  carte.innerHTML = grande
+    ? `<img class="fg-photo" src="${f.photo}" alt="" onerror="this.remove()"><div class="fg-ombre" aria-hidden="true"></div>`
+      + `<div class="fg-bas">${f.visuel || ""}${corps}<button type="button" class="continuer">Continuer</button></div>`
+    : `${f.visuel || ""}${corps}` + (planche ? `<button type="button" class="continuer">Continuer</button>` : `<div class="continuer">Continuer</div>`);
   voile.classList.add("on");
   requestAnimationFrame(() => { if (feteOuverte && numero === numeroFete) carte.classList.add("on"); });
-  setTimeout(() => envolEtoiles(window.innerWidth / 2, window.innerHeight * 0.46 - 40, 22), 250);
+  // Peu d'étoiles sur la grande fête (la photo fait la fête), aucune si « réduire les animations »
+  if (grande) { if (!animationsReduites()) setTimeout(() => { const r = carte.querySelector(".fete-visuel"), c = r ? r.getBoundingClientRect() : null;
+                  if (c && feteOuverte && numero === numeroFete) envolEtoiles(c.left + c.width / 2, c.top + c.height / 2, 6); }, 500); }
+  else setTimeout(() => envolEtoiles(window.innerWidth / 2, window.innerHeight * 0.46 - 40, 22), 250);
   jouerSon(f.son);
   carte.onclick = voile.onclick = fermerFete;
   clearTimeout(minuteurFete);
-  minuteurFete = setTimeout(fermerFete, 3600);
+  // Rien ne presse : la grande fête et la fête à planche restent jusqu'à ce que le joueur les ferme (toucher, « Continuer », Échap)
+  if (grande || planche) document.addEventListener("keydown", echapFete);
+  else minuteurFete = setTimeout(fermerFete, 3600);
 }
+function echapFete(ev) { if (ev.key === "Escape" || ev.key === "Enter") { ev.preventDefault(); fermerFete(); } }
 function fermerFete() {
   clearTimeout(minuteurFete);
+  document.removeEventListener("keydown", echapFete);                // R277
   document.getElementById("carte-fete").classList.remove("on");   // étape R101 : toujours, même si le jeu croyait la fête fermée
   document.getElementById("voile-fete").classList.remove("on");
   numeroFete++;                                                    // une apparition encore en attente est annulée

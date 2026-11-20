@@ -188,7 +188,10 @@ function verifierMedaillesLieux(t) {
     if (m <= avant) continue;
     suivi.medaillesLieux[k] = m; sauvegarder();
     const s = lieuSuivant(t, c);
-    setTimeout(() => feter({ etiquette: c.nom, titre: MEDAILLES_LIEU[m].titre, son: "badge",
+    // Étape R277 (37.02) : la médaille d'or est une grande fête, plein écran sur la photo du lieu (bronze et argent : la carte au centre)
+    const enOr = m === 3 && typeof TROIS_TAILLES !== "undefined" && TROIS_TAILLES && estRenseigne(c.photo);
+    setTimeout(() => feter({ etiquette: enOr ? MEDAILLES_LIEU[m].titre : c.nom, titre: enOr ? c.nom : MEDAILLES_LIEU[m].titre, son: "badge",
+            taille: enOr ? "grande" : "", photo: enOr ? c.photo : "",
             detail: m === 2 ? (s ? `${s.nom} s'ouvre : un nouveau lieu à explorer.` : "Le lieu est à moitié exploré.") : m === 1 ? `Encore ${Math.max(0, paliersLieu(t, c)[2] - empreintesDuLieu(t, c))} empreintes pour l'argent${s ? ` : ${s.nom} s'ouvrira` : ""}.` : "Le lieu est terminé.",
             visuel: `<div class="fete-visuel medaille-fete">${medailleSvg(m)}</div>` }), 900);   // après la fête de l’étape
   }
@@ -1127,6 +1130,7 @@ function poserDuo(espece, q, bonne) {
 function lancerExpedition(x, k) {
   if (!x) return;
   if (!estOuverte(x)) { afficherBulle("Cette expédition s'ouvrira en avançant sur le chemin"); return; }
+  if (typeof noterDepartExp === "function") noterDepartExp(x);   // R277 (37.03) : ce qui est déjà au carnet avant l'expédition
   k = k || etapeEnCours(x) || 1;
   if (k > NB_ETAPES && k !== 4) k = NB_ETAPES;          // étape 298 : plus d'étape « Leurs liens »
   if (k > 1 && k !== 4 && !etapeFinie(x, k - 1) && !toutDebloque()) k = etapeEnCours(x) || 1;   // étape 332 : tout débloqué
@@ -1634,7 +1638,7 @@ function finRencontreExpedition(s) {
   document.getElementById("bouton-fin-accueil").classList.add("cache");
   if (etapeGagnee) {                                   // étape PR1 : la fête pour l'étape ; une simple bulle pour chaque espèce
     const finieAussi = etapeFinie(x, 2);   // étape E2-3 : une expédition sans question d'ensemble se termine avec les Rencontres
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Étape 1 réussie",
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Étape 1 réussie",
             detail: finieAussi ? `+${GAIN_FIN_EXPEDITION} empreintes pour l'expédition.` : `Prochaine étape : ${typeof ETAPE2_ENSEMBLE !== "undefined" && ETAPE2_ENSEMBLE ? "comment elles vivent ensemble ici" : RENCONTRE_COMPLETE ? "leurs liens" : "leur vie"} (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (gagnees) setTimeout(() => afficherBulle(`+${gagnees} empreinte${gagnees > 1 ? "s" : ""} · ${e.nom_courant}`), 600);
@@ -1648,7 +1652,7 @@ function finExpeditionParRencontre(x, s, gagnees, zone) {
   principal.textContent = "Voir l'expédition";
   principal.onclick = () => { session = null; ouvrirExpedition(x); };
   document.getElementById("bouton-fin-accueil").classList.add("cache");
-  feter({ etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !", detail: gagnees ? `+${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : "",
+  feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: "Expédition terminée !", detail: gagnees ? `+${gagnees} empreinte${gagnees > 1 ? "s" : ""}` : "",
           son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   if (gagnees) verifierOuverture();
 }
@@ -1952,7 +1956,7 @@ function finExpedition(d) {
     // Étape R153 (maquette A) : LA fête de la fin d'étape — elle dit « +N empreintes » (l'écran de fin ne le redit plus)
     //   et accueille les souvenirs (badges) gagnés au même moment (fusion: true, voir suiteFetes, 04_fetes.js)
     const plus = gagnees && apres >= NB_ETAPES ? `<b>+${gagnees} empreinte${gagnees > 1 ? "s" : ""}</b>` : "";   // (fin d'étape 1 : le gain est sur l'écran)
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: apres >= NB_ETAPES ? "Expédition terminée !" : `Étape ${k} réussie`, fusion: true,
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: apres >= NB_ETAPES ? "Expédition terminée !" : `Étape ${k} réussie`, fusion: true,
             detail: apres >= NB_ETAPES ? `${plus}${plus ? ". " : ""}La suite : la finale du lieu, quand toutes ses expéditions sont terminées.`
               : `${plus}${plus && ETAPES[k + 1] && k + 1 <= NB_ETAPES ? " · " : ""}${ETAPES[k + 1] && k + 1 <= NB_ETAPES ? `Prochaine étape : ${ETAPES[k + 1].titre.toLowerCase()}.` : ""}`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
@@ -2916,6 +2920,7 @@ function finSite(d) {
   if (fete) {
     const n = especesDuSite(t).length, premierLieu = (lieuxDe(t)[0] || {}).nom || "";
     feter({ etiquette: "Le tour du site est terminé", titre: `Gardien ${typeof deTerritoire === "function" ? deTerritoire(t) : "des " + t}`,
+            taille: "grande", photo: typeof photoFeteTerritoire === "function" ? photoFeteTerritoire(t) : "",   // R277 (37.02) : plein écran sur la photo du territoire
             detail: `${premierLieu ? `De ${premierLieu} à ${r.nom}, v` : "V"}ous avez rencontré les ${n} espèces du territoire et revu celles qui vous résistaient.`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG.repeat(3)}</div>` });
   }
@@ -3176,10 +3181,10 @@ function dessinerBilanFinale(zone) {
     <div class="planche-tete"><div><small class="finale-kicker">La finale du lieu${finale.essai ? " · essai" : ""}</small>
       <h1>${finale.reprise ? `Reprise : ${trouves} sur ${finale.file.length}` : `${trouves} lien${trouves > 1 ? "s" : ""} sur ${finale.file.length}`}</h1></div></div>
     <p>${nb > 1 ? `${nb} liens vous ont échappé` : "Un lien vous a échappé"}. Vous pouvez ${nb > 1 ? "les" : "le"} reprendre maintenant, ou passer à la planche du lieu : vous ne perdez rien.</p>
-    <ul class="bilan-liste">${manques}</ul>
     <div class="planche-boutons"><button class="couv-go" id="bilan-reprendre" type="button">Reprendre ${nb > 1 ? `les ${nb} liens` : "ce lien"} <span aria-hidden="true">▶</span></button>
       <button class="duo-autres" id="bilan-planche" type="button">Voir la planche du lieu</button></div>
-  </div></div>`;
+    <ul class="bilan-liste">${manques}</ul>
+  </div></div>`;   // étape R279 (test du 20/11, N2) : les boutons avant la liste des liens manqués, pour être vus dès l'ouverture (téléphone)
   document.getElementById("bilan-reprendre").onclick = reprendreErreurs;
   document.getElementById("bilan-planche").onclick = () => { terminerFinale(); };
 }
@@ -3347,6 +3352,9 @@ function resumeSessionTelephone(s) {
   const connu = e && (estIdentifiee(e) || !!x);   // étape R149 : dans une expédition, la Rencontre a déjà montré son nom
 
   let titre = connu ? echapper(e.nom_courant) : "Cette espèce", corps = "", retour, etat = "";
+  const rare = typeof htmlRencontreRare === "function" ? htmlRencontreRare(s) : "";   // étape R277 (37.04) : « Une rencontre rare »
+  let rarePosee = false;
+  let carnet = typeof htmlRejointCarnet === "function" ? htmlRejointCarnet(s, "") : "";   // étape R278 (37.01) : l'espèce rejoint son carnet
   if (x) {
     const faite = especeFaite(e, 1), manques = faite ? 0 : manquesEtape1(e).length, av = avanceeEtape(x, 1);
     const gagnees = Math.max(0, gainExp(x) - (s.expedition.avantGain || 0));
@@ -3384,9 +3392,13 @@ function resumeSessionTelephone(s) {
     tete = `<div class="rft-grande${bandeTel ? " rft-petite" : ""}"><img src="${srcEcran(e.photo)}" alt="${echapper(e.nom_courant)}" onerror="if (this.src.includes('/moy/')) this.src='${e.photo}';"><div class="rft-grande-bas">
         <h2 class="rft-titre">${titre}</h2>${phraseFin ? "" : etat ? `<span class="rft-acquis">${echapper(etat)}</span>` : ""}</div></div>
         ${bandeTel}
-        ${phraseFin ? `<p class="rft-phrase-fin">${phraseFin}</p>` : ""}
+        ${carnet ? (carnet = htmlRejointCarnet(s, rare ? "" : phraseFin)) : rare ? rare : phraseFin ? `<p class="rft-phrase-fin">${phraseFin}</p>` : ""}
         ${score && score.textContent.trim() ? `<div class="rft-score rft-score-ligne">${score.innerHTML}</div>` : ""}`;
+    rarePosee = !!rare;
+    var carnetPose = !!carnet;
   }
+  if (carnet && !carnetPose) corps = carnet + corps;   // R278 : hors expédition (ou sans photo), l'encart du carnet en tête du résumé
+  if (rare && !rarePosee && !carnet) corps = rare + corps;   // R277 : hors expédition (ou sans photo), l'encart vient en tête du résumé (R278 : l'encart du carnet le contient)
   construireResume({ fin: "fin-session", carnet: "carnet-fin-session",
     etiq: x ? `${x.titre} · ${RENCONTRE_COMPLETE ? "rencontre" : "faire connaissance"}` : "Rencontre terminée", tete, titre: "", corps, principal: "bouton-rejouer", retour,
     ordinateur: !!x && RENCONTRE_COMPLETE });   // étape R248h : la même fin sur ordinateur (38B)
@@ -3431,6 +3443,8 @@ function resumeSessionTelephone(s) {
     if (p) { p.textContent = "Étape 2 ▶"; p.onclick = () => { session = null; lancerExpedition(x, 2); }; }
   }
   if (x) rangerResumeOrdinateur(document.querySelector("#fin-session > .resume-fin-tel.rft-ordi"));   // étape R248h
+  if (rare && typeof feterRencontreRare === "function") feterRencontreRare(s);   // étape R277 (37.04)
+  if (carnet && typeof lancerRejointCarnet === "function") { ajusterFinRencontre(); lancerRejointCarnet(s); }   // étape R278 (37.01)
   if (x && quiEnsuiteTel) {                            // étape RF1 : « Qui rencontrer ensuite ? », sous le bouton de la suite
     const z = document.querySelector("#fin-session > .resume-fin-tel .rft-actions");
     if (z) { z.insertAdjacentHTML("afterbegin", quiEnsuiteTel); brancherQuiEnsuite(x, z);

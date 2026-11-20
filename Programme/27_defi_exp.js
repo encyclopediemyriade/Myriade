@@ -272,6 +272,7 @@ function lancerDefiExp(x) {
   if (!x) return;
   if (typeof oublierDefiExp === "function") oublierDefiExp(x);   // R241 : un nouveau défi remplace celui mis de côté
   if (typeof estOuverte === "function" && !estOuverte(x)) { afficherBulle("Cette expédition s'ouvrira en avançant sur le chemin"); return; }
+  if (typeof noterDepartExp === "function") noterDepartExp(x);   // R277 (37.03) : ce qui est déjà au carnet avant l'expédition
   suivi.derniereExpedition = suivi.derniereExpedition || {};
   suivi.derniereExpedition[x.territoire] = x.id;
   suivi.expLancees = suivi.expLancees || {};          // l'expédition compte comme commencée (ses empreintes en dépendent)
@@ -626,7 +627,7 @@ function finDefiExp() {
   window.scrollTo(0, 0);
   if (etapeGagnee) {
     const finieAussi = etapeFinie(x, 2);   // une expédition sans étape 2 se termine avec l'étape 1
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Étape 1 réussie",
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Étape 1 réussie",
             detail: empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""}` : "", son: "badge",
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (empreintes) setTimeout(() => afficherBulle(`+${empreintes} empreinte${empreintes > 1 ? "s" : ""}`), 600);
@@ -732,8 +733,8 @@ function portesEtape1(x) {
   }
   if (st && st.dernier && !st.reussi) {     // après un défi pas réussi
     return `<div class="dfx-portes"><div class="etiq-jeu">Étape 1 · Rencontres</div>
-        <p class="dfx-bandeau">Dernier défi : <b>${st.dernier.bons} sur ${st.dernier.total}</b>.${av.faites ? ` ${av.faites} espèce${av.faites > 1 ? "s sont" : " est"} déjà reconnue${av.faites > 1 ? "s" : ""} ;` : ""} il en reste ${reste}. Continuez comme vous préférez.</p>
-        <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", `Rencontrer ${reste > 1 ? `les ${reste} espèces` : "l'espèce"} à revoir.`, `${minutesRencontres(reste)} min`)}
+        <p class="dfx-bandeau">Dernier défi : <b>${st.dernier.bons} sur ${st.dernier.total}</b>.${av.faites ? ` ${av.faites} espèce${av.faites > 1 ? "s sont" : " est"} déjà reconnue${av.faites > 1 ? "s" : ""} ; il en reste ${reste}.` : ""} Continuez comme vous préférez.</p>
+        <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", `Rencontrer ${reste > 1 ? `les ${reste} espèces` : "l'espèce"} ${av.faites ? "qui reste" + (reste > 1 ? "nt" : "") : "de l'expédition"}.`, `${minutesRencontres(reste)} min`)}
           ${porteTester("Me tester", `Rejouer le défi sur les ${n} espèces.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min`)}</div>${gain}</div>`;
   }
   const commencees = av.faites > 0 || x.liste.some(e => estTentee(x, e));

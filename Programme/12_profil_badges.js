@@ -29,6 +29,8 @@ let suivi = {
   derniersBadges: [],   // étape 107 : les badges les plus récents, du plus ancien au plus récent
   parties: 0,           // étape 150 : le nombre de parties lancées (le « numéro » de la partie en cours)
   revues: {},           // étape 150 : pour chaque case trouvée, le numéro de la partie où elle l'a été la dernière fois
+  encycloVue: 0,        // étape R278 (37.03) : l'heure de la dernière visite de l'Encyclopédie (0 = jamais : une partie neuve)
+  nouveaux: [],         // étape R278 (37.03) : les espèces marquées « Nouveau » dans l'Encyclopédie, jusqu'à l'ouverture de leur fiche
 };
 let badgesObtenus = {};  // { "collectionneur": 1, "p:Alpes:pisteur": 1… } : le palier atteint
 let titreChoisi = null;  // le titre porté (ou null)
@@ -398,6 +400,7 @@ function verifierRangCarnet() {
   sauvegarder();
   const r = infoRangCarnet();
   feter({ etiquette: "Nouveau rang du carnet", titre: r.nom, son: "badge",
+          taille: "grande", photo: typeof photoFeteTerritoire === "function" ? photoFeteTerritoire(territoireActif()) : "",   // R277 (37.02) : plein écran sur la photo du territoire
           detail: `${nombre(r.n)} espèces au carnet.${r.suivant ? ` Prochain rang : ${r.suivant.nom}, à ${nombre(r.suivant.seuil)} espèces.` : " Toutes les espèces du jeu !"}`,
           visuel: `<div class="fete-visuel dessin">${dessinTampon(i)}</div>` });
 }
@@ -415,7 +418,8 @@ function suiteFileBadges() {
   // Étape 142 : la fête (la vignette du coin reste en secours pendant une partie chronométrée)
   const pop = { couleur: "#1f3a2e", image: dessinBadge(b, palier), etiquette: "Nouveau badge",
                 titre: nomBadge(b, palier), detail: b.cond };
-  feter({ etiquette: "Nouveau badge", titre: pop.titre, detail: pop.detail, son: "badge", pop, souvenir: { titre: pop.titre, image: dessinBadge(b, palier) },   // R153
+  feter({ etiquette: "Nouveau badge", titre: pop.titre, detail: pop.detail, son: "badge", pop, taille: "petite",   // R277 (37.02) : un bandeau
+          souvenir: { titre: pop.titre, image: dessinBadge(b, palier) },   // R153
           visuel: `<div class="fete-visuel badge-b1">${dessinBadge(b, palier)}</div>` });   // étape B1
   setTimeout(suiteFileBadges, 600);
 }

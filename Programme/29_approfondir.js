@@ -475,11 +475,11 @@ function feterApprof(x, empreintes, avantApprofondie) {
   // Étape R267 (40.16 « grande fête la 1re fois » + 40.17 « petite fête ») : la première fois qu'Approfondir est fini,
   //   une seule fête, qui dit que l'expédition est maintenant complète (avec sa petite étoile)
   if (!avantApprofondie && approfondie(x) && typeof expeditionComplete === "function" && expeditionComplete(x))
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Expédition complète",
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: "Expédition complète",
             detail: `Les ${x.liste.length} espèces sont connues par cœur.${empreintes ? ` +${empreintes} empreinte${empreintes > 1 ? "s" : ""}` : ""}`, son: "badge",
             visuel: `<div class="fete-visuel rang exp-fete exp-fete-complete">${PAS_SVG}<span class="exp-etoile" aria-hidden="true">★</span></div>` });
   else if (!avantApprofondie && approfondie(x))
-    feter({ etiquette: `Expédition · ${x.titre}`, titre: "Approfondir terminé", detail: empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""}` : "", son: "badge",
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: "Approfondir terminé", detail: empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""}` : "", son: "badge",
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   else if (empreintes) setTimeout(() => afficherBulle(`+${empreintes} empreinte${empreintes > 1 ? "s" : ""}`), 600);
   if (empreintes && typeof verifierOuverture === "function") verifierOuverture();

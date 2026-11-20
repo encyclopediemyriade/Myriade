@@ -37,6 +37,7 @@ function demarrerFocus(imposee, options = {}) {
   if (espece) prechargerPhotos(photosDe(espece).map(p => p.src));   // R264 (39) : ses autres photos (femelle, jeune…) à l'avance
   noterPartie();                                       // étape 106 : le jour et l'heure de jeu (badges)
   session = { focus: espece, total: QUESTIONS_FOCUS, faites: 0, bonnes: 0, numerotees: 0, bonnesNumerotees: 0, reprisesPosees: 0, reprisesJustes: 0,   // étape R101 : le score par sorte de question
+              dejaAuCarnet: !!espece && estReconnue(espece),       // étape R277 (37.04) : était-elle au carnet avant cette Rencontre ?
               revisite: !!imposee && !options.expedition,          // étape 176 : lancée depuis la fiche
               expedition: options.expedition || null,              // étape 288 : l'étape 1 d'une expédition
               physique: !!options.expedition,                      // étape 288 : seulement les caractéristiques physiques
@@ -81,7 +82,7 @@ function demarrerFocus(imposee, options = {}) {
   session.autreFormeQ = null; session.autreFormeMontree = false; session.autreFormeFaite = false;
   if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE && QUESTION_FORME_ACTIVE) {
     const f = formeAPoser(espece, expeditionParId(options.expedition.id));
-    if (f && session.vie.length >= 2) { f.remplace = session.vie[session.vie.length - 1]; session.vie = session.vie.slice(0, -1); }
+    if (f && session.vie.length >= 2) { f.remplace = session.vie[session.vie.length - 1]; f.deVie = true; session.vie = session.vie.slice(0, -1); }
     else if (f && champsEtape(espece, 1).includes("cri_son") && nbBonnes(espece, "cri_son") === 0) f.remplace = "cri_son";
     if (f && f.remplace) session.autreFormeQ = f;
   }
@@ -190,7 +191,14 @@ function choisirQuestionFocus() {
   //   montrée, elle n'est pas posée (jamais avant ; la Rencontre ne s'allonge pas)
   if (session.autreFormeQ && !session.autreFormeFaite && !session.autreFormeMontree && restants.includes(FORME_Q)) {
     restants = restants.filter(c => c !== FORME_Q);
-    if (!restants.length) { session.autreFormeQ = null; }
+    if (!restants.length) {
+      // Étape R279 (test du 20/11, n° 13 : « 2 / 4 » puis « 3 / 3 · Étonnant ») : la forme n'a pas été montrée (photo ratée),
+      //   la question qu'elle remplaçait revient à sa place : le compte annoncé ne change pas en cours de Rencontre
+      const f = session.autreFormeQ;
+      session.autreFormeQ = null;
+      if (f.deVie && f.remplace && !session.vie.includes(f.remplace)) session.vie = [...session.vie, f.remplace];
+      restants = champsFocusRestants();
+    }
   }
   // b0) Étapes 243 et 245 : l'encart « À ne pas confondre », une fois par Rencontre, juste après la photo reconnue
   if (phaseNormale && sosieAttend() && session.normalesFaites >= 1) {
@@ -617,7 +625,9 @@ function dessinerPostit() {
   const zone = document.getElementById("postit-fiche");          // étape R138 : la fiche a son propre cadre dans la colonne
   const espece = session.focus;
   // Le nom ne s'écrit en titre qu'une fois connu (sinon il soufflerait la réponse à la photo)
-  const titre = (estIdentifiee(espece) || session.presentee) ? espece.nom_courant : TITRE_CARNET_INCONNUE;
+  // Étape R279 (test du 20/11, N5) : après une erreur sur la photo, le nom a été donné : le titre le dit aussi (plus « Espèce à découvrir »)
+  const nomDonne = session.postit.some(l => l.champ === IDENTIFICATION && l.etat && l.etat !== "encours");
+  const titre = (estIdentifiee(espece) || session.presentee || nomDonne) ? espece.nom_courant : TITRE_CARNET_INCONNUE;
   // Étape 163 : pendant la question photo (« La reconnaîtriez-vous maintenant ? »), le nom déjà écrit dans le carnet
   // (titre et ligne Nom) est flouté : il soufflerait la réponse. Il redevient net après la réponse.
   // Étape R270 (test du 19/11, n° 5) : pareil pendant la question sur une autre forme (« Voici une femelle. De quelle espèce est-elle ? »)
@@ -1003,17 +1013,142 @@ function dessinRarete(espece) {
 
 function estRare(espece) { return espece.rarete_observation === "Rare"; }
 
+// ---- Étape R277 (20/11, Notion 37.04 ; choix 5B d'Aubin) : « Une rencontre rare » ----
+//   Le seuil : la colonne rarete_observation n'a que trois valeurs (Commun, Peu commun, Rare) ; « rare » = la valeur « Rare »
+//   (142 espèces sur 723). À la fin de la Rencontre où une espèce rare entre au carnet, l'écran de fin le dit dans un encart
+//   (à la place de « Vous la reconnaissez désormais. »), avec le son d'un badge et quelques étoiles. Une seule fois par espèce,
+//   sans hasard et sans gain en plus. RENCONTRE_RARE = false : la fin de Rencontre d'avant.
+const RENCONTRE_RARE = true;
+const PHRASE_RENCONTRE_RARE = "Une espèce rare à observer dans la nature. Elle est maintenant dans votre carnet.";
+function rencontreRare(s) {
+  return !!(RENCONTRE_RARE && s && s.focus && s.dejaAuCarnet === false && estRare(s.focus) && estReconnue(s.focus));
+}
+function htmlRencontreRare(s) {
+  if (!rencontreRare(s)) return "";
+  const n = ESPECES.filter(e => estRare(e) && estReconnue(e)).length;
+  return `<div class="rft-rare"><div class="rr-tete"><span class="rr-etiq">Une rencontre rare</span>`
+    + `<span class="rr-compte" title="Espèces rares dans votre carnet"><b>${nombre(n)}</b> rare${n > 1 ? "s" : ""} au carnet</span></div>`
+    + `<p class="rr-phrase">${PHRASE_RENCONTRE_RARE}</p></div>`;
+}
+// Le petit moment de fête (une fois) : le son d'un badge et quelques étoiles autour de l'encart
+function feterRencontreRare(s) {
+  if (!rencontreRare(s) || s.rareFetee) return;
+  const z = document.querySelector("#fin-session .rft-rare");
+  if (!z) return;
+  s.rareFetee = true;
+  jouerSon("badge");
+  if (typeof animationsReduites === "function" && animationsReduites()) return;
+  setTimeout(() => { const c = z.getBoundingClientRect(); if (c.width) envolEtoiles(c.left + c.width / 2, c.top + 10, 8); }, 350);
+}
+
+// ---- Étape R278 (20/11, Notion 37.01 ; choix 2A d'Aubin, maquette écran 1) : « l'espèce rejoint son carnet » ----
+//   À la fin de la Rencontre où une espèce entre au carnet (la première fois seulement), un encart montre la rangée de sa
+//   famille : ses dernières espèces rencontrées, une place vide au bout, et le compte (« Oiseaux · 12 »). Un instant après,
+//   la photo de l'espèce se réduit en vignette et va se poser dans la place vide ; le compte monte (« 13 », « +1 »),
+//   avec un petit son de bois. Un seul mouvement d'environ 1 s, pas d'étoiles. Si l'appareil demande moins d'animations,
+//   rien ne bouge : l'encart s'affiche directement rempli, sans son. CARNET_FIN_RENCONTRE = false : la fin d'avant.
+//   L'écran de fin doit tenir sans défiler : sur téléphone, si la place manque, la photo du haut raccourcit un peu,
+//   puis l'encart passe sur une seule ligne (ajusterFinRencontre).
+const CARNET_FIN_RENCONTRE = true;
+const VIGNETTES_CARNET = 4;
+const PHRASE_RARE_COURTE = "Une espèce rare à observer dans la nature.";   // la suite de la phrase (« Elle est maintenant dans votre carnet ») : la rangée la montre                 // les espèces de la famille montrées avant la nouvelle, au plus
+function entreeAuCarnet(s) {
+  return !!(CARNET_FIN_RENCONTRE && s && s.focus && s.dejaAuCarnet === false && estReconnue(s.focus));
+}
+function htmlRejointCarnet(s, phrase) {   // phrase : « Vous la reconnaissez désormais. », posée en tête de l'encart (elle n'est pas dite deux fois)
+  if (!entreeAuCarnet(s)) return "";
+  const e = s.focus, cl = classeDe(e), cle = e.onglet;
+  const fam = ESPECES.filter(x => x.onglet === cle && estReconnue(x));
+  const n = fam.length, quand = x => (progression[x.nom_courant] && progression[x.nom_courant].decouverteLe) || 0;
+  const avant = fam.filter(x => x !== e && estRenseigne(x.photo)).sort((a, b) => quand(b) - quand(a)).slice(0, VIGNETTES_CARNET).reverse();
+  const fixe = (typeof animationsReduites === "function" && animationsReduites()) || !!s.carnetAnime;   // rien ne bouge (ou déjà fait : écran refait)
+  const vig = x => `<span class="rc-vig">${imgMini(photoEsp(x), x.nom_courant)}</span>`;
+  // Une espèce rare (R277, 37.04) : l'encart « Une rencontre rare » et celui du carnet n'en font qu'un (sinon l'écran défilerait)
+  const rare = rencontreRare(s), nr = rare ? ESPECES.filter(x => estRare(x) && estReconnue(x)).length : 0;
+  if (rare) phrase = PHRASE_RARE_COURTE;
+  return `<div class="rft-carnet${rare ? " rft-rare" : ""}${fixe ? " rc-fini" : ""}" style="--couleur-classe:${cl.couleur}" data-n="${n}">`
+    + (rare ? `<div class="rr-tete"><span class="rr-etiq">Une rencontre rare</span>`
+            + `<span class="rr-compte" title="Espèces rares dans votre carnet"><b>${nombre(nr)}</b> rare${nr > 1 ? "s" : ""} au carnet</span></div>` : "")
+    + (phrase ? `<p class="rc-phrase">${phrase}</p>` : "")
+    + `<div class="rc-bas"><div class="rc-rangee">${avant.map(vig).join("")}<span class="rc-vig rc-place">${imgMini(photoEsp(e), e.nom_courant)}</span></div>`
+    + `<div class="rc-compte"><span class="rc-etiq">Dans votre carnet</span>`
+    + `<span class="rc-fam">${echapper(cl.nom)} · <b class="rc-n">${nombre(fixe ? n : n - 1)}</b> <span class="rc-plus" aria-hidden="true">+1</span></span></div></div></div>`;
+}
+// Le mouvement : une copie de la photo part de sa place et se pose dans la case vide de la rangée
+function lancerRejointCarnet(s) {
+  const fin = document.getElementById("fin-session");
+  const z = fin && [...fin.querySelectorAll(":scope > .resume-fin-tel")].find(r => r.getClientRects().length);
+  const carte = z && z.querySelector(".rft-carnet");
+  if (!carte || carte.classList.contains("rc-fini") || carte.dataset.lance) return;
+  carte.dataset.lance = "oui";
+  s.carnetAnime = true;                              // un écran refait (téléphone tourné…) ne rejoue pas le mouvement
+  const place = carte.querySelector(".rc-place"), source = z.querySelector(".rft-grande img, .rft-espece img");
+  const finir = () => {
+    carte.classList.add("rc-fini");
+    const b = carte.querySelector(".rc-n"); if (b) b.textContent = nombre(Number(carte.dataset.n));
+    try { jouerSon("carnet"); } catch (err) { /* pas de son : tant pis */ }
+  };
+  if (!place || !source || typeof Element.prototype.animate !== "function") { finir(); return; }
+  const partir = () => {
+    if (!carte.isConnected) return;
+    // une fête au centre (« Expédition terminée »…) cache l'écran : le mouvement attend qu'elle soit fermée, pour être vu
+    if (document.querySelector("#carte-fete.on") || (typeof feteOuverte !== "undefined" && feteOuverte)) { setTimeout(partir, 300); return; }
+    if (!carte.getClientRects().length) { finir(); return; }
+    const a = source.getBoundingClientRect(), b = place.getBoundingClientRect();
+    if (!a.width || !b.width) { finir(); return; }
+    const vol = document.createElement("img");
+    vol.className = "rc-vol"; vol.alt = ""; vol.src = source.currentSrc || source.src;
+    z.appendChild(vol);                              // dans le résumé : il part avec lui si l'on quitte l'écran
+    const o = vol.getBoundingClientRect();           // le point d'origine réel (au cas où un parent décale l'élément)
+    const pos = (r, rayon) => ({ left: `${r.left - o.left}px`, top: `${r.top - o.top}px`, width: `${r.width}px`, height: `${r.height}px`, borderRadius: rayon });
+    const anim = vol.animate([pos(a, "12px"), pos(b, "8px")], { duration: 950, easing: "cubic-bezier(.45,.05,.3,1)", fill: "forwards" });
+    anim.onfinish = () => { finir(); setTimeout(() => vol.remove(), 60); };
+  };
+  setTimeout(partir, rencontreRare(s) ? 1100 : 500);   // une rencontre rare : après son petit moment (son, étoiles)
+}
+// Sur téléphone, l'écran de fin doit tenir sans défiler (bouton fixé en bas) : la photo raccourcit, puis l'encart se resserre
+// Les vignettes qui ne tiennent pas en entier sont retirées (les plus anciennes, à gauche) : jamais une photo coupée
+function rangerVignettesCarnet() {
+  for (const r of document.querySelectorAll("#fin-session .rft-carnet .rc-rangee")) {
+    if (!r.getClientRects().length) continue;
+    const ecart = parseFloat(getComputedStyle(r).columnGap) || 0;
+    const large = () => [...r.children].reduce((t, c) => t + c.getBoundingClientRect().width + ecart, -ecart);
+    let v = r.querySelector(".rc-vig:not(.rc-place)");
+    while (v && large() > r.clientWidth + 0.5) { const suite = v.nextElementSibling; v.remove(); v = suite && !suite.classList.contains("rc-place") ? suite : null; }
+  }
+}
+function ajusterFinRencontre() {
+  rangerVignettesCarnet();
+  const fin = document.getElementById("fin-session");
+  const z = fin && fin.querySelector(":scope > .resume-fin-tel:not(.rft-ordi)");
+  const carte = z && z.querySelector(".rft-carnet"), bouton = z && z.querySelector(".rft-principal.rft-fixe");
+  if (!carte || !bouton || !z.getClientRects().length) return;
+  const depasse = () => document.documentElement.scrollHeight - window.innerHeight;   // > 0 : la page défilerait
+  let d = depasse();
+  if (d <= 0) return;
+  const photo = z.querySelector(".rft-grande");
+  if (photo) {
+    const h = photo.getBoundingClientRect().height, mini = 104;
+    if (h > mini) { photo.style.height = `${Math.max(mini, h - d)}px`; d = depasse(); }
+  }
+  if (d > 0) carte.classList.add("rc-compact");
+}
+
 // Étape 206 (maquette C3-C) : gagner une espèce RARE est un grand moment (carte au centre) ; sinon, la vignette du coin
 function annoncerNouvelleEspece(espece, detail) {
   const pop = { couleur: classeDe(espece).couleur, image: celluleImage(espece, true),
                 etiquette: estRare(espece) ? "★ Nouvelle espèce rare" : "Nouvelle espèce", titre: espece.nom_courant, detail, rare: estRare(espece) };
+  // Étape R277 (37.04) : dans une Rencontre, une espèce rare est marquée à la FIN de la Rencontre (plus de carte en plein milieu)
+  if (estRare(espece) && RENCONTRE_RARE && typeof session !== "undefined" && session && session.focus === espece && session.dejaAuCarnet === false) return;
+  // Étape R278 (37.01) : de même pour toute espèce, l'entrée au carnet se voit à la fin de la Rencontre (l'encart de la famille)
+  if (CARNET_FIN_RENCONTRE && typeof session !== "undefined" && session && session.focus === espece && session.dejaAuCarnet === false) return;
   if (!estRare(espece)) {                              // étape 212 (Revoir 2) : la même fenêtre au centre que les badges
     feter({ etiquette: "Nouvelle espèce", titre: espece.nom_courant, detail: majuscule(detail), son: null, pop,
             visuel: visuelEspece(espece, classeDe(espece).couleur) });
     return;
   }
-  feter({ etiquette: "★ Espèce rare !", titre: espece.nom_courant,
-          detail: "Une espèce rare à observer dans la nature. Elle rejoint votre encyclopédie.", son: "badge", pop,
+  feter({ etiquette: "Une rencontre rare", titre: espece.nom_courant,   // R277 (37.04) : les mêmes mots qu'en fin de Rencontre
+          detail: PHRASE_RENCONTRE_RARE, son: "badge", pop,
           visuel: visuelEspece(espece, "or") });
 }
 
@@ -1107,6 +1242,10 @@ function ligneRarete(espece) {
     derniere = signature;
     const y = window.scrollY, bord = el => el.getBoundingClientRect();
     let bas = bord(action || reponses).bottom;
+    // Étape R279 (test du 20/11, n° 2a) : un bouton collé en bas de l'écran (« Continuer » de l'écran « Sa vie ») est toujours
+    //   « à l'écran » : c'est le bas du contenu qu'il faut amener au-dessus de lui (sinon la page ne descendait pas)
+    if (action && /sticky|fixed/.test(getComputedStyle(action).position))
+      bas = bord(reponses).bottom + (reponses.contains(action) ? 0 : bord(action).height + 8);
     const jns = document.getElementById("je-ne-sais-pas");
     if (!action && visible(jns)) bas = Math.max(bas, bord(jns).bottom);
     // Ce qui doit rester visible en haut : après la réponse, le verdict ; avant, la question

@@ -2282,8 +2282,9 @@ const STATUTS_SIMPLES = { "Préoccupation mineure": "Pas menacée", "Quasi menac
   "En danger": "Très menacée", "En danger critique": "Au bord de la disparition" };
 function motStatut(v) { return STATUTS_SIMPLES[String(v).trim()] || majuscule(String(v)); }
 function explicationStatut(e, v) {
-  if (!statutFranceUtile(e)) return `Sur la liste rouge mondiale : ${String(v).trim()} (pas de classement sur la liste rouge de France).`;
-  let t = `Sur la liste rouge de France : ${String(v).trim()}.`;
+  // Étape R279 (test du 20/11, n° 22) : d'abord les mots de la réponse (« pas menacée »), puis le terme officiel de la liste rouge
+  if (!statutFranceUtile(e)) return `Dans le monde : ${minuscule(motStatut(v))} (liste rouge mondiale : ${String(v).trim()} ; pas de classement sur la liste rouge de France).`;
+  let t = `En France : ${minuscule(motStatut(v))} (liste rouge de France : ${String(v).trim()}).`;
   if (statutUtile(e.statut_conservation) && String(e.statut_conservation).trim() !== String(v).trim())
     t += ` Dans le monde : ${minuscule(motStatut(e.statut_conservation))} (${String(e.statut_conservation).trim()}).`;
   if (STATUTS_MENACES_FR.includes(String(v).trim()) && estRenseigne(e.cause_declin) && e.cause_declin !== "NA")

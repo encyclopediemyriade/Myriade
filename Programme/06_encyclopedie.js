@@ -143,8 +143,8 @@ function carteEncyclopedie(espece, details) {
     <p class="survol-niveaux"><span class="niv">${dessinPoints(1)} Découvert ${niveaux[0]}</span><span class="niv">${dessinPoints(2)} Connu ${niveaux[1]}</span></p>
     <p class="survol-lien">Cliquer pour ouvrir sa page</p>`;
   return `
-    <article class="fiche${estRare(espece) ? " est-rare" : ""}" ${debut} data-nom="${espece.nom_courant}" data-page="1" title="Ouvrir sa page">
-      <div class="photo">${celluleImage(espece, true)}${dessinRarete(espece)}</div>
+    <article class="fiche${estRare(espece) ? " est-rare" : ""}${estNouvelle(espece) ? " fiche-nouvelle" : ""}" ${debut} data-nom="${espece.nom_courant}" data-page="1" title="Ouvrir sa page">
+      <div class="photo">${celluleImage(espece, true)}${dessinRarete(espece)}${estNouvelle(espece) ? TAG_NOUVEAU : ""}</div>
       <div class="contenu${medaille ? " avec-medaille" : ""}">
         ${medaille}
         <h2>${espece.nom_courant}</h2>
@@ -153,6 +153,32 @@ function carteEncyclopedie(espece, details) {
         <div class="jauge"><div style="width:${pourcentage}%"></div></div>
       </div>
     </article>`;
+}
+
+// ---- Étape R278 (20/11, Notion 37.03 seconde moitié ; choix 4C d'Aubin, maquette écran 5) : « Nouveau » dans l'Encyclopédie ----
+//   Les espèces entrées au carnet depuis la dernière visite de l'Encyclopédie portent une marque « Nouveau » (sur leur photo,
+//   et sur la couverture de leur famille) jusqu'à l'ouverture de leur fiche, d'où qu'elle soit ouverte. Rien sur l'onglet du bas.
+//   suivi.encycloVue = l'heure de la dernière visite ; suivi.nouveaux = les espèces marquées (dans la sauvegarde).
+//   Une partie commencée avant R278 part de l'heure de la mise à jour (02_progression.js) : rien n'est marqué d'un coup.
+//   MARQUE_NOUVEAU = false : plus aucune marque.
+const MARQUE_NOUVEAU = true;
+const TAG_NOUVEAU = `<span class="tag-nouveau">Nouveau</span>`;
+function majNouveaux() {
+  if (!MARQUE_NOUVEAU || typeof suivi !== "object" || !suivi) return;
+  const depuis = Number(suivi.encycloVue) || 0;
+  const liste = suivi.nouveaux = Array.isArray(suivi.nouveaux) ? suivi.nouveaux : [];
+  for (const e of ESPECES) {
+    const p = progression[e.nom_courant];
+    if (p && (p.decouverteLe || 0) > depuis && estReconnue(e) && !liste.includes(e.nom_courant)) liste.push(e.nom_courant);
+  }
+  suivi.encycloVue = Date.now();
+  sauvegarder();
+}
+function estNouvelle(e) { return !!(MARQUE_NOUVEAU && e && typeof suivi === "object" && suivi && Array.isArray(suivi.nouveaux) && suivi.nouveaux.includes(e.nom_courant)); }
+function vueNouvelle(e) {
+  if (!estNouvelle(e)) return;
+  suivi.nouveaux = suivi.nouveaux.filter(n => n !== e.nom_courant);
+  sauvegarder();
 }
 
 // Étape 100 (J6) : l'encyclopédie est rangée PAR FAMILLE (Mammifères, puis Oiseaux…), chacune sous son titre.
@@ -215,6 +241,7 @@ function dessinerHautEncyclopedieMobile() {
   mise.classList.toggle("en-planches", planches);
 }
 function afficherEncyclopedie() {
+  majNouveaux();                      // étape R278 (37.03) : les espèces entrées au carnet depuis la dernière visite
   afficherFiltres();
   dessinerHautEncyclopedieMobile();   // étape M5 (téléphone)
   const grille = document.getElementById("grille");
@@ -425,6 +452,7 @@ function brancherGaleriePhotos(zone, e) {
 function ouvrirPageEspece(espece) {
   if (typeof arreterCri === "function") arreterCri();   // étape R176 : une autre fiche, un autre écran : le son s'arrête
   if (!espece) return;
+  vueNouvelle(espece);                                  // étape R278 (37.03) : la fiche ouverte, la marque « Nouveau » s'en va
   if (especeOuverte !== espece) ongletEspece = "portrait";
   if (!ficheParLien) pileFiches = [];   // étape R258 : venue d'ailleurs que d'un lien de fiche
   ficheParLien = false;
@@ -913,7 +941,7 @@ function albumFamille(cle) {
   const montrees = [...especes.filter(estRencontree), ...especes.filter(e => !estRencontree(e) && offerte(e)),
                     ...(albumMesEspeces ? [] : especes.filter(e => !estRencontree(e) && !offerte(e)))];
   const cases = montrees.map(e => estRencontree(e) || offerte(e)
-    ? `<button type="button" class="alb-case alb-vue${offerte(e) ? " alb-offerte" : ""}" data-nom="${echapper(e.nom_courant)}">${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}${offerte(e) ? "<small>À reconnaître</small>" : ""}</span></button>`
+    ? `<button type="button" class="alb-case alb-vue${offerte(e) ? " alb-offerte" : ""}${estNouvelle(e) ? " alb-nouveau" : ""}" data-nom="${echapper(e.nom_courant)}">${estNouvelle(e) ? TAG_NOUVEAU : ""}${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}${offerte(e) ? "<small>À reconnaître</small>" : ""}</span></button>`
     : `<button type="button" class="alb-case alb-vide" data-piste="${echapper(e.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(e, "alb-sil")}</button>`).join("")
     || `<p class="alb-rien">Aucune espèce découverte ici pour l'instant.</p>`;
   const nbDecouvertes = especes.filter(e => estRencontree(e) || offerte(e)).length;
@@ -1330,7 +1358,8 @@ function couverturesFamilles() {
       + (c ? `${imgMini(c.photo, "", "couv-photo")}<span class="couv-voile" aria-hidden="true"></span>`
            : (sil => sil ? caseSilhouette(sil, "couv-sil") : "")(silhouetteDeFamille(especes)))
       + `<span class="couv-texte"><b>${CLASSES[cle].nom}</b><small>${vues ? `${vues} sur ${especes.length}` : `Aucune encore · ${especes.length} à découvrir`}</small></span>`
-      + `<span class="couv-jauge"><i style="width:${pct}%"></i></span>${c ? `<span class="couv-legende">${echapper(c.nom_courant)}</span>` : ""}</button>`;
+      + `<span class="couv-jauge"><i style="width:${pct}%"></i></span>${c ? `<span class="couv-legende">${echapper(c.nom_courant)}</span>` : ""}`
+      + `${especes.some(estNouvelle) ? TAG_NOUVEAU : ""}</button>`;   // étape R278 (37.03) : une famille qui a du nouveau
   }
   return html ? `<h3 class="couv-titre">Vos familles</h3><div class="som-collection couv-collection">${html}</div>` : `<p class="grille-vide">Aucune espèce ici pour l'instant.</p>`;
 }

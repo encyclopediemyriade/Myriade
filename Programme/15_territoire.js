@@ -534,6 +534,17 @@ function noterJourDeDefi() {
   if (!s.plume && ++s.depuisPlume >= JOURS_POUR_PLUME) s.plume = true;
   s.record = Math.max(s.record || 0, s.n);
 }
+// Étape R276 (20/11, Notion 37.05, choix 6A d'Aubin) : la série « N jours d'affilée » et sa plume ne sont plus montrées.
+//   À la place : « N jours sur le terrain », le nombre de jours différents où le joueur a joué (suivi.jours, le même compte
+//   que le badge « Fidèle » et que le Profil). Ce chiffre ne redescend jamais : il n'y a plus rien à perdre.
+//   La série reste comptée en coulisses (suivi.serieDefis) pour ne rien casser dans les sauvegardes ; false = l'ancien affichage.
+const JOURS_SUR_LE_TERRAIN = true;
+const FEUILLE_TERRAIN = `<svg class="mai-feuille" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14z"/><path d="M5 19l8-8"/></svg>`;
+function joursSurLeTerrain() { return (suivi && Array.isArray(suivi.jours)) ? suivi.jours.length : 0; }
+function htmlJoursTerrain() {
+  const n = joursSurLeTerrain();
+  return n >= 2 ? `<small class="mai-serie mai-terrain" title="Le nombre de jours où vous avez joué. Il ne redescend jamais.">${FEUILLE_TERRAIN}${n} jours sur le terrain</small>` : "";
+}
 // La série telle qu'on la montre aujourd'hui (0 si elle est arrêtée) et si la plume est disponible
 function serieDefis() {
   const s = suivi && suivi.serieDefis;
@@ -983,13 +994,14 @@ function dessinerDefisMaison(t) {
   zone.classList.remove("cache");
   const serie = serieDefis();
   const plume = `<span class="mai-plume${serie.plume ? "" : " vide"}" role="img" aria-label="${serie.plume ? "Jour de grâce disponible" : "Jour de grâce déjà utilisé"}" title="${serie.plume ? "Jour de grâce disponible : un jour sans défi ne casse pas la série" : `Jour de grâce utilisé : il revient après ${JOURS_POUR_PLUME} jours`}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4c-8 0-13 5-13 12v4"/><path d="M7 16c5 0 10-3 11-9"/><path d="M4 20h6"/></svg></span>`;
-  const droite = serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée${plume}</small>`
+  const droite = JOURS_SUR_LE_TERRAIN ? (htmlJoursTerrain() || `<small>+${POINTS_DEFI} ${PAS_SVG} chacun</small>`)   // R276 (37.05)
+               : serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée${plume}</small>`
                               : `<small>+${POINTS_DEFI} ${PAS_SVG} chacun</small>`;
   const tousOk = liste.length && liste.every(d => d.reussi || avanceeDefi(t, d) >= d.but);
   const enAttente = recompensesEnAttente();
   if (tousOk && !enAttente.length && !defisDeplies) {
     zone.innerHTML = `<button type="button" class="mai-defis-plie" id="mai-defis-plie"><span class="mai-d-case" aria-hidden="true">✓</span>
-        <span class="mai-d-texte">${liste.length} défi${liste.length > 1 ? "s" : ""} réussi${liste.length > 1 ? "s" : ""} aujourd'hui</span>${serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée</small>` : ""}<span class="mai-d-fleche" aria-hidden="true">⌄</span></button>`;
+        <span class="mai-d-texte">${liste.length} défi${liste.length > 1 ? "s" : ""} réussi${liste.length > 1 ? "s" : ""} aujourd'hui</span>${JOURS_SUR_LE_TERRAIN ? htmlJoursTerrain() : serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée</small>` : ""}<span class="mai-d-fleche" aria-hidden="true">⌄</span></button>`;
     document.getElementById("mai-defis-plie").onclick = () => { defisDeplies = true; dessinerDefisMaison(t); };
     return;
   }

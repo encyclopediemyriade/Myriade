@@ -1044,6 +1044,7 @@ function verifierOuverture() {
   const visuel = forme ? `<div class="fete-visuel rang" style="color:${couleur}"><svg viewBox="${cadreTerritoire(t)}" style="width:64px;height:64px">`
     + `<path d="${forme.contour}" fill="${couleur}" stroke="${couleur}" stroke-width="6" fill-rule="evenodd"/></svg></div>` : "";
   feter({ etiquette: "Nouveau territoire", titre: t, detail: `${nb} espèces nouvelles à découvrir. Vous pouvez partir l'explorer depuis l'accueil.`,
+          taille: "grande", photo: typeof photoFeteTerritoire === "function" ? photoFeteTerritoire(t) : "",   // R277 (37.02) : plein écran sur la photo du territoire
           son: "badge", visuel, pop: { couleur, image: "", etiquette: "Nouveau territoire", titre: t, detail: `${nb} espèces nouvelles à découvrir` } });
   setTimeout(verifierOuverture, 500);                    // (au cas où un second palier serait déjà atteint)
 }
