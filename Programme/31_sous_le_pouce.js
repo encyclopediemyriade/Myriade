@@ -99,9 +99,52 @@ function recalerUn(premier) {
   const apres = c.dernier !== c.reponses && c.dernier.previousElementSibling === c.reponses ? c.reponses : c.dernier;
   apres.after(premier);
   premier.classList.add("pouce-dessous");
-  const r = premier.getBoundingClientRect(), limite = window.innerHeight - c.reserve + 8;
-  const dy = Math.min(r.bottom + 12 - limite, r.top - 12);
-  if (dy > 4) window.scrollBy({ top: dy, behavior: "smooth" });
+  descendreVersVerdict(premier, window.innerHeight - c.reserve + 8);   // R280 (44.01) : un seul mouvement, doux
+}
+// ==================================================================
+// Étape R280 (21/11/2026, 44.01, note 1 du 20/11 au soir : « ça descend vers la caractéristique… par à-coup, pas très élégant »).
+//   Critère : « Après une réponse, la page ne bouge qu'une fois, doucement, et le verdict reste sous les yeux. »
+//   Avant : deux défilements l'un derrière l'autre (ici, puis 0,35 s plus tard dans 09_rencontre.js), tous deux « jusqu'au bas de
+//   l'explication » ; or l'explication contient maintenant toute la carte d'identité (plus de 700 px) : la page descendait de
+//   680 px en un tiers de seconde et le verdict finissait caché sous la photo collée en haut.
+//   Maintenant : UN mouvement, lent (0,45 à 0,75 s), qui amène le verdict juste sous la photo ; la carte se lit ensuite en
+//   faisant défiler soi-même. Rien ne bouge si le verdict est déjà visible en entier. Un toucher arrête le mouvement.
+//   La position visée est relue à chaque image : si une photo arrive en retard et change la hauteur de la page, le mouvement
+//   suit sans à-coup.
+// ==================================================================
+let descenteVerdict = null;
+function basDeLaPhotoCollee() {
+  const ph = document.getElementById("photo-rencontre");
+  if (!ph || !ph.getClientRects().length || !/sticky|fixed/.test(getComputedStyle(ph).position)) return 0;
+  const hautColle = parseFloat(getComputedStyle(ph).top) || 0;
+  return Math.min(hautColle + ph.getBoundingClientRect().height, window.innerHeight * 0.5);
+}
+function descendreVersVerdict(zone, limiteBas) {
+  if (!zone || !zone.getClientRects().length) return;
+  if (descenteVerdict) return;                            // un mouvement est déjà en cours : il suit la page, pas besoin d'un second
+  const verdict = zone.querySelector(".verdict") || zone;
+  const libre = () => basDeLaPhotoCollee() + 10;          // le haut de la place libre, sous la photo collée
+  const r = verdict.getBoundingClientRect();
+  const bas = Math.min(r.bottom, r.top + 120);            // d'un long texte sans verdict, les premières lignes suffisent
+  if (r.top >= libre() - 6 && bas <= (limiteBas || window.innerHeight) + 0.5) return;   // déjà sous les yeux
+  const depart = window.scrollY, t0 = performance.now();
+  const voulu = () => Math.min(verdict.getBoundingClientRect().top + window.scrollY - libre(), document.documentElement.scrollHeight - window.innerHeight);
+  const dy0 = voulu() - depart;
+  if (dy0 <= 4) return;                                   // la page ne remonte jamais toute seule
+  if (typeof animationsReduites === "function" && animationsReduites()) { window.scrollTo(0, voulu()); return; }
+  const duree = Math.max(450, Math.min(750, 350 + dy0 * 0.7));
+  const arreter = () => { if (!descenteVerdict) return; cancelAnimationFrame(descenteVerdict.image); descenteVerdict = null;
+    window.removeEventListener("touchstart", arreter, true); window.removeEventListener("wheel", arreter, true); };
+  window.addEventListener("touchstart", arreter, { capture: true, passive: true });
+  window.addEventListener("wheel", arreter, { capture: true, passive: true });
+  const image = t => {
+    if (!descenteVerdict) return;
+    if (!verdict.isConnected || !verdict.getClientRects().length) { arreter(); return; }   // l'écran a changé entre-temps
+    const p = Math.min(1, (t - t0) / duree), doux = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+    window.scrollTo(0, depart + (voulu() - depart) * doux);
+    if (p < 1) descenteVerdict.image = requestAnimationFrame(image); else arreter();
+  };
+  descenteVerdict = { image: requestAnimationFrame(image) };
 }
 function recalerPouceMaintenant() { for (const p of [...calagesPouce]) recalerUn(p); }
 let recalagePrevu = false;

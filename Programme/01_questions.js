@@ -1675,7 +1675,7 @@ function avecArticleSingulier(t) {   // « brochet » → « le brochet » ; « 
   if (deElide(t) === "d'") return "l'" + t;
   return (g === "f" ? "la " : "le ") + t;
 }
-function affPredateurs(v, e) {
+function affPredateurs(v, e, maxi) {   // R280 (44.02) : maxi = pour une ligne seulement à lire, les premiers de la liste (« … , entre autres »)
   const brut = sansPoint(v), il = IlElle(e), fem = e && e.genre_nom === "féminin";
   if (/^(aucun|pas de prédateur)/i.test(brut))
     return /adulte/i.test(brut.split(";")[0]) ? `Adulte, ${ilElle(e)} n'a pas de prédateur naturel.` : `${il} n'a pas de prédateur naturel connu.`;
@@ -1717,8 +1717,10 @@ function affPredateurs(v, e) {
     }
   }
   if (!morceaux.length) return "";
+  const coupe = maxi && morceaux.length > maxi;
+  if (coupe) morceaux.length = maxi;
   const liste = morceaux.length > 1 ? morceaux.slice(0, -1).join(", ") + " et " + morceaux[morceaux.length - 1] : morceaux[0];
-  return `${il} peut être ${attaque ? "attaqué" : "chassé"}${fem ? "e" : ""} par ${liste}.`;
+  return `${il} peut être ${attaque ? "attaqué" : "chassé"}${fem ? "e" : ""} par ${liste}${coupe ? ", entre autres" : ""}.`;
 }
 function affIndice(v, e) {
   // VF2 : un mammifère n'a pas de pelotes ; on le repère dans celles des chouettes (pachyure étrusque)
@@ -2104,6 +2106,7 @@ const QUESTIONS = [
   { champ: "plantes_liees", niveau: 3, libelle: "Plantes", formats: ["qcm"],
     valeur: e => e.onglet === "Insectes" && estRenseigne(e.plante_hote) ? deuxPremieres(e.plante_hote) : "NA",
     question: "De quelles plantes dépend-il ?",
+    piegesDistincts: true,   // R280 (44.05) : jamais deux réponses qui se ressemblent
     pieges: e => [...new Set(ESPECES.filter(a => a !== e && a.onglet === "Insectes" && estRenseigne(a.plante_hote)).map(a => deuxPremieres(a.plante_hote)))],
     explication: (e, v) => `Il dépend de ces plantes : ${minuscule(v)}.` },
 

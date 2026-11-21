@@ -6682,3 +6682,15 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 @media (min-width: 761px) {
   .cdo-photo { max-height: max(220px, calc(100vh - 420px)); }
 }
+
+/* ===================================================================
+   Étape R280 (21/11, retours du 20/11 au soir et du 21/11 ; Notion 44.04, choix 3B d'Aubin)
+   =================================================================== */
+/* 44.04 (3B) · la rangée du carnet en fin de Rencontre : plus de mode « compact » (les espèces d'avant restent visibles).
+   Sur un téléphone étroit (360 px), des vignettes à peine plus petites pour que deux espèces d'avant tiennent à côté de la nouvelle. */
+@media (max-width: 380px) {
+  .rft-carnet .rc-bas { gap: 8px; }
+  .rft-carnet .rc-rangee { gap: 5px; }
+  .rft-carnet .rc-vig { width: 36px; height: 36px; }
+  .rft-carnet .rc-place { width: 42px; height: 42px; }
+}

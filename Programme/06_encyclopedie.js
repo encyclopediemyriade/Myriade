@@ -944,7 +944,9 @@ function albumFamille(cle) {
     ? `<button type="button" class="alb-case alb-vue${offerte(e) ? " alb-offerte" : ""}${estNouvelle(e) ? " alb-nouveau" : ""}" data-nom="${echapper(e.nom_courant)}">${estNouvelle(e) ? TAG_NOUVEAU : ""}${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}${offerte(e) ? "<small>À reconnaître</small>" : ""}</span></button>`
     : `<button type="button" class="alb-case alb-vide" data-piste="${echapper(e.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(e, "alb-sil")}</button>`).join("")
     || `<p class="alb-rien">Aucune espèce découverte ici pour l'instant.</p>`;
-  const nbDecouvertes = especes.filter(e => estRencontree(e) || offerte(e)).length;
+  // Étape R280 (44.04, choix 4A du 21/11) : les espèces offertes, « à reconnaître », ne comptent nulle part : l'onglet dit le même chiffre
+  //   que le titre de l'album et que la fin de Rencontre (avant : l'onglet « Découvertes » les comptait).
+  const nbDecouvertes = vues;
   const bouton = ongletsDecouvertes(especes.length, nbDecouvertes, albumMesEspeces, "alb-onglets");   // étape R245 (36.26)
   return `<section class="groupe-famille album-famille" style="--couleur-classe:${CLASSES[cle].couleur}">
       <button type="button" class="alb-retour">← Toutes les familles</button>

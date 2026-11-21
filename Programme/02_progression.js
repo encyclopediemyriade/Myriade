@@ -255,6 +255,43 @@ function prechargerPhotos(srcs, petite) {
 function prechargerEspeces(especes, petite) {
   prechargerPhotos((especes || []).filter(Boolean).map(e => e.photo), petite);
 }
+// Étape R280 (21/11/2026, 44.07, note 7 du 20/11 au soir : « que ce soit picto ou image, chaque fois ça prend un petit temps à
+//   apparaître ») : seules les photos étaient chargées d'avance. Maintenant aussi, pour une espèce : sa silhouette, son
+//   empreinte, et les pictogrammes de ses questions de Rencontre (ceux des réponses proposées et ceux de l'écran « Sa vie »).
+//   Ce sont de petits dessins (1 à 3 Ko) ; chacun n'est demandé qu'une fois par partie (dejaPrecharges).
+function prechargerFichiers(srcs) {
+  for (const src of srcs || []) {
+    if (!src || dejaPrecharges.has(src)) continue;
+    dejaPrecharges.add(src);
+    const im = new Image(); im.decoding = "async"; im.src = src;
+  }
+}
+function mediasRencontre(e) {
+  const l = [];
+  if (!e) return l;
+  try {
+    if (typeof fichierSilhouette === "function") l.push(fichierSilhouette(e));
+    const emp = typeof cleEmpreinte === "function" ? cleEmpreinte(e) : null;
+    if (emp && typeof EMPREINTES !== "undefined" && EMPREINTES[emp]) l.push(`Empreintes/${emp}.svg`);
+    const champs = typeof champsEtape === "function" ? [...champsEtape(e, 1), ...champsEtape(e, 2)] : [];
+    for (const c of new Set(champs)) {
+      const q = QUESTIONS.find(x => x.champ === c);
+      if (!q) continue;
+      const v = valeurDe(e, q);
+      const avecDessin = q.pictos || c === "regime_alimentaire_type" || c === "chasse_principale";
+      if (!avecDessin || !estRenseigne(v) || v === "NA") continue;
+      // sa réponse, et les autres réponses possibles de la question (les mauvaises réponses en sont tirées), 12 au plus
+      for (const val of [v, ...valeursQuestion(q).slice(0, 12)])
+        if (typeof val === "string" && !PASTILLES[val]) l.push(`Pictos/${c}__${nomDeFichier(val)}.svg`);
+    }
+  } catch (err) { /* un chargement d'avance ne doit jamais gêner le jeu */ }
+  return l;
+}
+function prechargerRencontre(especes) {
+  const liste = (Array.isArray(especes) ? especes : [especes]).filter(Boolean);
+  const plusTard = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 1500 }) : f => setTimeout(f, 200);
+  liste.forEach((e, i) => setTimeout(() => plusTard(() => prechargerFichiers(mediasRencontre(e))), i * 250));
+}
 function celluleImage(espece, petite) {
   // Étape 293 : sans photo libre, la silhouette s'affiche à la place, avec la mention « photo à venir »
   if (!estRenseigne(espece.photo)) {
@@ -1252,7 +1289,18 @@ function autresValeursBrutes(q, bonne, espece) {
   if ((q.champ === "proies" || q.champ === "predateurs") && espece && estItem(espece, q, bonne))
     return q.champ === "proies" ? piegesAliment(espece) : piegesPredateur(espece);
   // Certaines questions fournissent elles-mêmes leurs pièges (voir "pieges", partie 1)
-  if (q.pieges) return melanger(q.pieges(espece).filter(v => !piegeInterdit(q, bonne, v, espece) && !aussiVraiPour(q, espece, v)));   // (étapes 135 et 137 ; R185 : l'espèce)
+  if (q.pieges) {
+    let propres = melanger(q.pieges(espece).filter(v => !piegeInterdit(q, bonne, v, espece) && !aussiVraiPour(q, espece, v)));   // (étapes 135 et 137 ; R185 : l'espèce)
+    // Étape R280 (44.05, note 5 du 20/11 au soir : « Oseilles » proposé contre « Oseilles sauvages ») : pour les questions à
+    //   réponses libres (piegesDistincts : les plantes d'un insecte), aucun piège ne ressemble à la bonne
+    //   réponse, ni à un piège déjà gardé (« Graminées » et « Graminées, carex » ne sont jamais proposées ensemble).
+    if (q.piegesDistincts) {
+      const gardes = [];
+      for (const v of propres) if (!seRessemblent(v, bonne) && !gardes.some(g => seRessemblent(g, v))) gardes.push(v);
+      propres = gardes;
+    }
+    return propres;
+  }
   const valeurs = valeursQuestion(q)                     // étape R239b (lenteurs) : les valeurs distinctes, calculées une fois par question
     .filter(v => !seRessemblent(v, bonne))
     .filter(v => !piegeInterdit(q, bonne, v, espece))   // étape 135 : rien d'à moitié vrai (R185 : ni voisin)

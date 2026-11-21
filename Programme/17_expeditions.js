@@ -1286,6 +1286,14 @@ const VIE_TROP_EVIDENT = {
   milieu_principal: e => ["Mammiferes", "Reptiles", "Mollusques", "Crustaces"].includes(e.onglet) ? ["Mer et océan"] : [],
   emplacement_nid: e => /clochers|fenêtre|domestique|maisons/.test(e.nom_courant) ? ["Bâtiment"] : [],   // l'effraie des clochers, l'hirondelle de fenêtre
   indice_presence: e => /^Taupe/.test(e.nom_courant) ? [e.indice_presence] : [],   // « La taupe… ses taupinières »
+  // Étape R280 (44.02) : les sujets qui n'ont qu'une phrase à lire (A_LIRE, plus bas) suivent la même règle « pas trop évident »
+  activite: e => [...(["Oiseaux", "Reptiles", "Insectes"].includes(e.onglet) ? ["Surtout le jour"] : []),          // la plupart des oiseaux, des lézards, des papillons
+                  ...(["Chiroptères", "Strigiformes"].includes(e.ordre) ? ["Surtout la nuit"] : [])],               // chauves-souris, chouettes et hiboux
+  deplacement_saisonnier: e => e.onglet === "Oiseaux" ? [] : ["Reste sur place toute l'année"],                     // dit seulement pour un oiseau (qui pourrait migrer)
+  naissance: e => ["Pond des œufs", ...(e.onglet === "Mammiferes" ? ["Donne naissance à des petits déjà formés"] : [])],
+  hibernation: () => ["n'hiberne pas"],
+  pelage_hiver: () => ["Garde la même couleur"],
+  metamorphose: e => e.ordre === "Lépidoptères" ? [METAMORPHOSES[0]] : [],                                          // la chenille et sa chrysalide
 };
 // VF3 : un mot de la phrase est déjà dans le nom de l'espèce (même début de 5 lettres, ou mot du nom qui le contient)
 const MOTS_SANS_SENS = /^(surtout|souvent|presence|danger|reproduit|croiser|peut|niche|dans|sur|avec|pour|chasser|repere)$/;
@@ -1301,7 +1309,7 @@ function vieTropEvidente(e, c, v) {
   const f = VIE_TROP_EVIDENT[c];
   if (f && f(e).includes(v)) return true;
   const q = QUESTIONS.find(x => x.champ === c);
-  let phrase = ""; try { phrase = q && q.affirmation ? q.affirmation(v, e) : ""; } catch (err) { phrase = ""; }
+  let phrase = ""; try { phrase = q && q.affirmation ? q.affirmation(v, e) : (A_LIRE[c] ? A_LIRE[c](v, e, q) : ""); } catch (err) { phrase = ""; }
   return nomDonneLaPhrase(e, phrase.replace(/^(Il|Elle)\s/, "").replace(/\([^)]*\)/g, ""));   // sans les précisions entre parenthèses
 }
 function vieEnVraiFaux(e, c) {
@@ -1339,11 +1347,52 @@ function vieRencontre(x, e) {
 //   marqué « déjà noté ») ; s'il en manque encore, d'autres faits nouveaux, seulement à lire. Avant : 3 faits au plus, moins
 //   ceux déjà connus (une espèce qui en avait 2 de connus n'en montrait qu'un).
 // Un fait seulement à lire : une phrase vraie, pas trop évidente (même règle que R243 / VF3), sans besoin d'une fausse valeur
+// ---- Étape R280 (21/11/2026, 44.02, note 2 du 20/11 au soir : « Je croyais qu'on s'était fixé au moins 3 faits sur sa vie ») ----
+//   Critère : « L'écran "Sa vie" montre toujours 3 faits, dont aucun ne se devine. »
+//   Cause : un fait n'était montré que si son sujet avait une phrase de vrai ou faux (affirmation). L'activité, les déplacements,
+//   le nombre de petits ou d'œufs, la couvaison, la gestation, la naissance, la métamorphose, l'hibernation… n'en avaient pas :
+//   160 espèces tombaient à 2 faits ou moins dans une expédition de leur milieu. Ces sujets ont maintenant une PHRASE À LIRE
+//   (A_LIRE). Elle ne sert qu'à la lecture : aucun vrai ou faux de plus (vieEnVraiFaux ne les prend pas).
+//   Les phrases reprennent celles que le jeu dit déjà après la question du même sujet (explication), accordées (il / elle).
+const explALire = (v, e, q) => q && q.explication ? q.explication(e, v) : "";
+const A_LIRE = {
+  activite: v => `Il est actif ${minuscule(sansPoint(v))}.`,
+  deplacement_saisonnier: explALire,          // « Il migre selon la saison. »
+  nb_petits_max: (v, e, q) => Number(v) === 1 ? (e.onglet === "Oiseaux" ? "Une couvée ne compte qu'un seul œuf." : "Une portée ne compte qu'un seul petit.")
+                                              : explALire(v, e, q),   // « Une couvée compte jusqu'à 7 œufs. » / « Une portée compte jusqu'à 5 petits. »
+  incubation_jours: v => `Ses œufs éclosent au bout d'environ ${nombre(Math.round(v))} jours.`,       // arrondi : « environ 14 jours », pas « 13,5 »
+  gestation_jours: v => `La gestation dure environ ${nombre(Math.round(v))} jours.`,
+  naissance: explALire,                       // « La femelle donne naissance à des petits déjà formés. »
+  nb_oeufs_ordre: (v, e) => typeof e.nb_petits_max !== "number" ? "" : metAuMonde(e)
+    ? `La femelle peut mettre au monde jusqu'à ${nombre(e.nb_petits_max)} petits à la fois.`
+    : `La femelle peut pondre jusqu'à ${nombre(e.nb_petits_max)} œufs à chaque ponte.`,
+  metamorphose: explALire,                    // « Il devient adulte sans chrysalide : la larve grandit peu à peu. »
+  hibernation: explALire,                     // « En hiver, il hiberne. »
+  pelage_hiver: explALire,                    // « En hiver, son pelage change de couleur. »
+  vie_larve: explALire,                       // « Sa vie de têtard peut durer jusqu'à 3 mois. »
+  toile: explALire, soin_des_petits: explALire, niveau_estran: explALire,
+  // … et deux sujets de sa fiche pris plus loin (Approfondir), en dernier recours seulement (faitsSaVie)
+  longevite_max_annees: (v, e, q) => {        // « Il peut vivre jusqu'à 12 ans. » ; moins d'un an : en mois
+    if (typeof v !== "number") return "";
+    if (v >= 1) return explALire(v, e, q);
+    const mois = Math.round(v * 12);
+    return mois >= 1 ? `Il peut vivre jusqu'à ${mois} mois.` : ""; },
+  plantes_liees: explALire                    // « Il dépend de ces plantes : orpins, joubarbes. »
+};
+function phraseALire(e, c, v) {
+  const q = QUESTIONS.find(x => x.champ === c);
+  if (!q || !A_LIRE[c]) return "";
+  let p = ""; try { p = A_LIRE[c](v, e, q) || ""; } catch (err) { return ""; }
+  if (!p || /undefined|null|NaN/.test(p) || /^(Pour chasser|Ses œufs|Sa coquille) : /.test(p)) return "";   // une valeur que la phrase ne sait pas dire proprement
+  return typeof accordGenre === "function" ? accordGenre(p, e) : p;
+}
 function vieALire(e, c) {
   const q = QUESTIONS.find(x => x.champ === c);
-  if (!q || !q.affirmation || q.type === "nombre" || q.format) return false;
+  if (!q) return false;
   let v; try { v = valeurDe(e, q); } catch (err) { return false; }
   if (!estRenseigne(v) || v === "NA" || String(v).startsWith("NA") || vieTropEvidente(e, c, v)) return false;
+  if (!q.affirmation && A_LIRE[c]) return !!phraseALire(e, c, v);   // R280 : un sujet qui n'a qu'une phrase à lire
+  if (!q.affirmation || q.type === "nombre" || q.format) return false;
   let p = ""; try { p = q.affirmation(v, e); } catch (err) { return false; }
   return !!p && !/undefined|null/.test(p);
 }
@@ -1375,9 +1424,13 @@ const PICTOS_VIE = {
   milieu: '<path d="M12 21V10M12 10c-4 0-6-3-6-6 4 0 6 2 6 6zM12 13c4 0 6-3 6-6-4 0-6 2-6 6z"/>',
   trace: '<ellipse cx="12" cy="15" rx="4" ry="5"/><circle cx="6.5" cy="8" r="1.6"/><circle cx="10" cy="5.5" r="1.6"/><circle cx="14" cy="5.5" r="1.6"/><circle cx="17.5" cy="8" r="1.6"/>',
   groupe: '<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 19c1-3 3-4.5 5-4.5s4 1.5 5 4.5M11 19c1-3 3-4.5 5-4.5s4 1.5 5 4.5"/>',
+  jour: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/>',   // R280 : actif le jour
+  oeuf: '<path d="M12 3.5c-3.3 0-6 5-6 9.2a6 6 0 0 0 12 0c0-4.2-2.7-9.2-6-9.2z"/>',                                                                    // R280 : œufs, petits, naissance
   autre: '<circle cx="12" cy="12" r="7"/><path d="M12 8v5M12 16v.5"/>'
 };
 function sortePictoVie(champ) {
+  if (/petits|oeufs|incubation|gestation|naissance|larve|metamorphose/.test(champ)) return "oeuf";   // R280 (44.02)
+  if (/estran/.test(champ)) return "milieu";
   if (/regime|proies|chasse|alimen/.test(champ)) return "mange";
   if (/nid|logis|abri|terrier/.test(champ)) return "nid";
   if (/hiver|hiberna/.test(champ)) return "hiver";
@@ -1394,7 +1447,8 @@ function pictoVie(champ, valeur) {
   // VF4 : la façon de chasser aussi (avant : le dessin « mange », un insecte, pour « il guette ses proies à l'affût »)
   if (["regime_alimentaire_type", "chasse_principale"].includes(champ) && estRenseigne(valeur) && valeur !== "NA")
     return `<span class="sv-picto sv-img" aria-hidden="true"><img src="Pictos/${champ}__${nomDeFichier(valeur)}.svg" alt="" onerror="this.remove()"></span>`;
-  return `<span class="sv-picto" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${PICTOS_VIE[sortePictoVie(champ)]}</svg></span>`;
+  const sorte = champ === "activite" && /jour/i.test(String(valeur)) && !/nuit/i.test(String(valeur)) ? "jour" : sortePictoVie(champ);   // R280 : un soleil pour « surtout le jour »
+  return `<span class="sv-picto" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${PICTOS_VIE[sorte]}</svg></span>`;
 }
 function valeurFaitVie(espece, champ) {
   const q = QUESTIONS.find(x => x.champ === champ);
@@ -1403,7 +1457,11 @@ function valeurFaitVie(espece, champ) {
 }
 function phraseFaitVie(espece, champ) {
   const q = QUESTIONS.find(x => x.champ === champ);
-  if (!q || !q.affirmation) return "";
+  if (!q) return "";
+  if (!q.affirmation) return phraseALire(espece, champ, valeurFaitVie(espece, champ));   // R280 (44.02) : un fait seulement à lire
+  // R280 : la ligne des prédateurs, quand elle est seulement à lire, cite 3 animaux au plus (le rougegorge en avait 7)
+  if (champ === "predateurs" && typeof affPredateurs === "function" && session && !(session.vieNouveaux || []).includes(champ))
+    return affPredateurs(valeurFaitVie(espece, champ), espece, 3);
   return q.affirmation(valeurFaitVie(espece, champ), espece);
 }
 function ligneSaVie(champ, phrase, valeur, connu) {
@@ -2188,6 +2246,8 @@ function ouvrirExpedition(x) { expeditionAffichee = x; montrer("expedition"); de
   // R264 (Notion 39) : pendant qu'on lit la page, les photos des espèces de l'expédition se chargent (grandes et petites) :
   //   la Rencontre ou le défi les montre ensuite tout de suite. Un peu plus tard, pour ne pas ralentir la page elle-même.
   if (x && x.liste) setTimeout(() => { prechargerEspeces(x.liste, true); prechargerEspeces(x.liste, false); }, 400);
+  // R280 (44.07) : puis, un peu après, les silhouettes, empreintes et pictos de leurs Rencontres (une espèce tous les quarts de seconde)
+  if (x && x.liste && typeof prechargerRencontre === "function") setTimeout(() => prechargerRencontre(x.liste), 1200);
 }
 function dessinerEcranExpedition() {
   const zone = document.getElementById("vue-expedition"), x = expeditionAffichee;

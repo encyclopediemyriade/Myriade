@@ -35,6 +35,7 @@ function demarrerFocus(imposee, options = {}) {
   const espece = imposee || choisirEspeceFocus(enJeu);
   dernierFocus = espece;
   if (espece) prechargerPhotos(photosDe(espece).map(p => p.src));   // R264 (39) : ses autres photos (femelle, jeune…) à l'avance
+  if (espece && typeof prechargerRencontre === "function") prechargerRencontre(espece);   // R280 (44.07) : sa silhouette, son empreinte, ses pictos
   noterPartie();                                       // étape 106 : le jour et l'heure de jeu (badges)
   session = { focus: espece, total: QUESTIONS_FOCUS, faites: 0, bonnes: 0, numerotees: 0, bonnesNumerotees: 0, reprisesPosees: 0, reprisesJustes: 0,   // étape R101 : le score par sorte de question
               dejaAuCarnet: !!espece && estReconnue(espece),       // étape R277 (37.04) : était-elle au carnet avant cette Rencontre ?
@@ -1055,6 +1056,12 @@ const PHRASE_RARE_COURTE = "Une espèce rare à observer dans la nature.";   // 
 function entreeAuCarnet(s) {
   return !!(CARNET_FIN_RENCONTRE && s && s.focus && s.dejaAuCarnet === false && estReconnue(s.focus));
 }
+// Étape R280 (44.04, choix 4A du 21/11) : la toute première espèce reconnue d'une famille est annoncée (« Votre premier oiseau ») :
+//   les espèces offertes au départ ne comptent pas, la rangée est donc vide ce jour-là, et le « 1 » se comprend sans explication.
+const PREMIER_DE_FAMILLE = { Mammiferes: "Votre premier mammifère", Oiseaux: "Votre premier oiseau", Amphibiens: "Votre premier amphibien",
+  Reptiles: "Votre premier reptile", Poissons: "Votre premier poisson", Insectes: "Votre premier insecte", Crustaces: "Votre premier crustacé",
+  Mollusques: "Votre premier mollusque" };
+function premierDeFamille(cle) { return PREMIER_DE_FAMILLE[cle] || "La première de sa famille"; }
 function htmlRejointCarnet(s, phrase) {   // phrase : « Vous la reconnaissez désormais. », posée en tête de l'encart (elle n'est pas dite deux fois)
   if (!entreeAuCarnet(s)) return "";
   const e = s.focus, cl = classeDe(e), cle = e.onglet;
@@ -1071,7 +1078,7 @@ function htmlRejointCarnet(s, phrase) {   // phrase : « Vous la reconnaissez d�
             + `<span class="rr-compte" title="Espèces rares dans votre carnet"><b>${nombre(nr)}</b> rare${nr > 1 ? "s" : ""} au carnet</span></div>` : "")
     + (phrase ? `<p class="rc-phrase">${phrase}</p>` : "")
     + `<div class="rc-bas"><div class="rc-rangee">${avant.map(vig).join("")}<span class="rc-vig rc-place">${imgMini(photoEsp(e), e.nom_courant)}</span></div>`
-    + `<div class="rc-compte"><span class="rc-etiq">Dans votre carnet</span>`
+    + `<div class="rc-compte"><span class="rc-etiq">${n === 1 ? premierDeFamille(cle) : "Dans votre carnet"}</span>`   // R280 (44.04, 4A)
     + `<span class="rc-fam">${echapper(cl.nom)} · <b class="rc-n">${nombre(fixe ? n : n - 1)}</b> <span class="rc-plus" aria-hidden="true">+1</span></span></div></div></div>`;
 }
 // Le mouvement : une copie de la photo part de sa place et se pose dans la case vide de la rangée
@@ -1106,7 +1113,7 @@ function lancerRejointCarnet(s) {
   };
   setTimeout(partir, rencontreRare(s) ? 1100 : 500);   // une rencontre rare : après son petit moment (son, étoiles)
 }
-// Sur téléphone, l'écran de fin doit tenir sans défiler (bouton fixé en bas) : la photo raccourcit, puis l'encart se resserre
+// Sur téléphone, la photo raccourcit pour que l'écran de fin tienne si possible sans défiler (R280 : l'encart ne se resserre plus)
 // Les vignettes qui ne tiennent pas en entier sont retirées (les plus anciennes, à gauche) : jamais une photo coupée
 function rangerVignettesCarnet() {
   for (const r of document.querySelectorAll("#fin-session .rft-carnet .rc-rangee")) {
@@ -1131,7 +1138,8 @@ function ajusterFinRencontre() {
     const h = photo.getBoundingClientRect().height, mini = 104;
     if (h > mini) { photo.style.height = `${Math.max(mini, h - d)}px`; d = depasse(); }
   }
-  if (d > 0) carte.classList.add("rc-compact");
+  // Étape R280 (44.04, choix 3B du 21/11) : plus de mode « compact » qui cachait les espèces d'avant (sur un téléphone de 360 px,
+  //   il ne restait qu'une image). Les vignettes gardent leur taille ; s'il manque encore un peu de place, la page défile.
 }
 
 // Étape 206 (maquette C3-C) : gagner une espèce RARE est un grand moment (carte au centre) ; sinon, la vignette du coin
@@ -1176,6 +1184,8 @@ function ligneRarete(espece) {
     const aLire = retour && retour.offsetParent && retour.textContent.trim();
     const cible = fixe ? (aLire ? retour : null) : suivant;
     if (!cible) return;
+    // Étape R280 (44.01) : bouton fixé en bas → un seul mouvement doux, qui amène le verdict sous la photo (31_sous_le_pouce.js)
+    if (fixe && typeof descendreVersVerdict === "function") { descendreVersVerdict(retour, suivant.getBoundingClientRect().top - 12); return; }
     const limite = fixe ? suivant.getBoundingClientRect().top - 12 : window.innerHeight;
     const r = cible.getBoundingClientRect();
     const dy = Math.min(r.bottom + 12 - limite, r.top - 12);          // jusqu'au bas de l'explication, son haut reste visible

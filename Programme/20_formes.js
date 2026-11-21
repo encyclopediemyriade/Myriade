@@ -343,16 +343,38 @@ function entreesPossibles(e, x) {
   if (aDesIndices(e) && !indicesAmbigus(e, x) && piegesIndices(e, x).length >= 3) p.push("indices");
   return p;
 }
+// Étape R280 (44.03, note 3 du 20/11 au soir, choix 1A d'Aubin du 21/11 ; remplace « la forme de l'expédition reste la préférée ») :
+//   l'entrée TOURNE entre toutes les entrées possibles de l'espèce : la moins jouée de l'expédition d'abord.
+//   • « classique » et « aux jumelles » sont toutes deux « une photo, quatre noms » : elles comptent ensemble, et ne se suivent jamais ;
+//   • à égalité, une entrée sans photo passe d'abord (dans une expédition de 7 espèces, au plus 3 Rencontres s'ouvrent sur photo) ;
+//   • la toute première Rencontre du jeu (carnet encore vide) reste classique.
+//   Avant : la forme de l'expédition (« classique » pour 359 expéditions sur 764) revenait une espèce sur deux, soit 4 ou 5
+//   Rencontres sur 7 ouvertes sur photo.
+const ENTREES_TOURNANTES = true;
+const sorteEntree = f => (f === "classique" || f === "jumelles") ? "photo" : f;
 function entreeEspece(x, e) {
   const vues = entreesVues[x.id] = entreesVues[x.id] || [];
   const possibles = entreesPossibles(e, x), derniere = vues[vues.length - 1];
-  const ok = possibles.filter(f => f !== derniere);
   let f;
-  if (!ok.length) f = possibles[0];
-  else if (ok.includes(formeEtape1(x))) f = formeEtape1(x);
-  else {
-    const compte = k => vues.filter(v => v === k).length, min = Math.min(...ok.map(compte));
-    f = auHasard(ok.filter(k => compte(k) === min));
+  if (ENTREES_TOURNANTES) {
+    const premiere = !vues.length && typeof estReconnue === "function" && !ESPECES.some(estReconnue);
+    const ok = possibles.filter(k => sorteEntree(k) !== sorteEntree(derniere));
+    if (premiere) f = "classique";
+    else if (!ok.length) f = possibles.find(k => k !== derniere) || possibles[0];   // rien d'autre à offrir : au moins pas la même
+    else {
+      const compte = k => vues.filter(v => sorteEntree(v) === sorteEntree(k)).length, min = Math.min(...ok.map(compte));
+      let choix = ok.filter(k => compte(k) === min);
+      if (choix.some(k => sorteEntree(k) !== "photo")) choix = choix.filter(k => sorteEntree(k) !== "photo");
+      f = auHasard(choix);
+    }
+  } else {
+    const ok = possibles.filter(k => k !== derniere);
+    if (!ok.length) f = possibles[0];
+    else if (ok.includes(formeEtape1(x))) f = formeEtape1(x);
+    else {
+      const compte = k => vues.filter(v => v === k).length, min = Math.min(...ok.map(compte));
+      f = auHasard(ok.filter(k => compte(k) === min));
+    }
   }
   vues.push(f);
   return f;

@@ -173,8 +173,20 @@ function quitterJeu() {
   if (fe) { ouvrirPageEspece(fe); window.scrollTo(0, 0); return; }   // étape R258
   // R241 : là d'où la partie a été lancée — la page des jeux, sinon l'accueil
   if (depuisArcade) { montrer("arcade"); return; }
-  if (typeof rencontreDuJour !== "undefined" && rencontreDuJour) { rencontreDuJour = null; montrer(typeof vueAccueil === "function" ? vueAccueil() : "accueil"); window.scrollTo(0, 0); return; }
-  montrer("accueil");
+  // Étape R280 (44.06, note 6 du 20/11 au soir) : la touche retour et le « ← » ramènent à la page d'où la Rencontre a été lancée
+  //   (la fiche, l'Accueil, l'Encyclopédie, la page du territoire…), pendant la Rencontre comme sur son écran de fin.
+  //   Avant : sans origine connue (fin de la Rencontre du jour, Rencontre lancée d'une fiche), on arrivait sur la page du territoire.
+  if (typeof rencontreDuJour !== "undefined") rencontreDuJour = null;
+  if (typeof revenirPagePrecedente === "function" && revenirPagePrecedente()) return;
+  montrer(typeof vueAccueil === "function" ? vueAccueil() : "accueil"); window.scrollTo(0, 0);
+}
+// R280 : le nom de la page où le « ← » ramène (la dernière page vue avant le jeu)
+function nomPageOrigine() {
+  const p = typeof pileRetour !== "undefined" && pileRetour.length ? pileRetour[pileRetour.length - 1] : null;
+  if (!p) return "Accueil";
+  const tel = typeof vueAccueil === "function" && vueAccueil() === "maison";
+  return ({ espece: "Fiche", maison: "Accueil", accueil: tel ? "Territoire" : "Accueil", encyclopedie: "Encyclopédie", atlas: "Carte", carte: "Territoires",
+            arcade: "Jeux", lieu: "Lieu", expedition: "Expédition", progression: "Profil" })[p.vue] || "Retour";
 }
 
 // Entrer dans la Rencontre : reprendre la session en cours, ou
@@ -183,7 +195,7 @@ function quitterJeu() {
 function majHautJeu() {
   const b = document.querySelector("#haut-jeu .haut-jeu-retour");
   if (!b) return;
-  const vers = defi && defi.ficheEspece ? "Fiche" : depuisArcade ? "Jeux" : (typeof rencontreDuJour !== "undefined" && rencontreDuJour) ? "Accueil" : "Retour";
+  const vers = defi && defi.ficheEspece ? "Fiche" : depuisArcade ? "Jeux" : nomPageOrigine();
   b.textContent = "← " + vers;
 }
 function entrerRencontre() {
