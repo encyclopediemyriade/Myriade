@@ -444,7 +444,7 @@ function recompenseExpedition(t) {
   const enCours = expeditionsDe(t).filter(x => ouvertes.has(x.id) && empreintesExp(x) === 0 && expeditionCommencee(x));
   const meilleure = enCours.map(x => avanceeEtape(x, 1)).sort((a, b) => b.faites / b.total - a.faites / a.total)[0];
   return { cle: "expedition", titre: `Expédition « ${fermee.titre} »`,
-           reste: nouvelles ? "commencez une expédition" : "finissez une étape 1",
+           reste: nouvelles ? "commencez une expédition" : "finissez les Rencontres d'une expédition",
            part: meilleure ? meilleure.faites / meilleure.total : 0 };
 }
 function recompensePrincipale(t) { return recompenseRang(t) || recompenseTerritoire(); }
@@ -453,7 +453,7 @@ function recompensePrincipale(t) { return recompenseRang(t) || recompenseTerrito
 const POINTS_DEFI = 2;   // étape PR1 : 2 empreintes par défi réussi (1 avant)
 function expAuHasard(t, filtre) { const l = expeditionsDe(t).filter(filtre); return l.length ? l[Math.floor(Math.random() * l.length)] : null; }
 const SORTES_DEFI = {
-  etape:     { texte: d => `Finir l'étape ${d.etape} de « ${(expeditionParId(d.exp) || {}).titre || "?"} »`,
+  etape:     { texte: d => `Finir ${d.etape === 1 ? "les Rencontres" : typeof titreEtape === "function" ? titreEtape(d.etape) : "l'étape " + d.etape} de « ${(expeditionParId(d.exp) || {}).titre || "?"} »`,   // R284 (45.06) : sans numéro
                creer: t => { const ouv = expeditionsOuvertes(t); const x = expAuHasard(t, y => ouv.has(y.id) && expeditionCommencee(y) && etapeEnCours(y));
                              return x ? { exp: x.id, etape: etapeEnCours(x), but: 1, depart: 0 } : null; },
                mesure: (t, d) => { const x = expeditionParId(d.exp); return x && etapeFinie(x, d.etape) ? 1 : 0; } },

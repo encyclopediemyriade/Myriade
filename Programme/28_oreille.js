@@ -24,7 +24,7 @@ REGLES_COURTES.oreille = "Un cri, quatre photos : à qui est-il ?";
 
 function especesOreille(especes) {
   const caddie = typeof coupToutes === "function" && coupToutes();
-  return especes.filter(e => typeof aUnCri === "function" && aUnCri(e) && (caddie || estReconnue(e) || (typeof estOfferte === "function" && estOfferte(e))));
+  return especes.filter(e => typeof aUnCri === "function" && aUnCri(e) && estRenseigne(e.photo) && (caddie || estReconnue(e) || (typeof estOfferte === "function" && estOfferte(e))));
 }
 function possibiliteOreille(especes) {
   const n = especesOreille(especes).length;
@@ -39,7 +39,7 @@ function metaOreille() {
 }
 // Les pièges : des espèces qui ont un cri, du même milieu et de la même famille d'abord, puis de la même famille, puis le reste
 function piegesOreille(e, pool) {
-  const autres = pool.filter(x => x !== e && x.nom_courant !== e.nom_courant && aUnCri(x));
+  const autres = pool.filter(x => x !== e && x.nom_courant !== e.nom_courant && aUnCri(x) && estRenseigne(x.photo));   // R284 (45.04) : jamais une espèce sans photo
   const listes = [
     autres.filter(x => x.onglet === e.onglet && estRenseigne(e.milieu_principal) && x.milieu_principal === e.milieu_principal),
     autres.filter(x => x.onglet === e.onglet),
@@ -78,7 +78,7 @@ function lancerOreille(seules) {
       if (j > 0) [tirage[k], tirage[j]] = [tirage[j], tirage[k]];
     }
   }
-  const pool = d.especes.filter(x => typeof aUnCri === "function" && aUnCri(x));
+  const pool = d.especes.filter(x => typeof aUnCri === "function" && aUnCri(x) && estRenseigne(x.photo));
   const tours = tirage.map(e => ({ espece: e, noms: melanger([e, ...piegesOreille(e, pool)]), choix: null }));
   oreille = { tours, i: 0, bons: 0, revoir: !!seules };
   depuisArcade = true;

@@ -6762,3 +6762,35 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
   .dfx-qq-grille { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .dfx-sp { display: grid; grid-template-columns: 1fr 1fr; }
 }
+
+/* ==================================================================
+   Étape R284 (21/11 au soir, Notion 45.02, choix 3A) : « Qui est qui ? » — les noms gardent leur place, grisés une fois posés
+   (les photos ne bougent plus sous le doigt) ; la photo choisie se voit nettement (cadre épais foncé, légère ombre).
+   ================================================================== */
+.dfx-qq-nom.place { opacity: .38; border-style: dashed; background: transparent; cursor: default; text-decoration: line-through; text-decoration-thickness: 1px; }
+.dfx-qq-case.choisie .dfx-qq-ph { border-color: var(--texte); box-shadow: 0 0 0 3px var(--texte), 0 6px 14px rgba(31, 58, 46, .28); transform: translateY(-2px); }
+.dfx-qq-case.choisie .dfx-qq-place { border-style: solid; border-color: var(--texte); }
+.dfx-qq-ph { transition: transform .15s ease, box-shadow .15s ease; }
+@media (prefers-reduced-motion: reduce) { .dfx-qq-ph { transition: none; } .dfx-qq-case.choisie .dfx-qq-ph { transform: none; } }
+/* ==================================================================
+   Étape R284 (Notion 45.06, choix 4A) : plus de numéro d'étape. Chaque partie a toujours le même picto et la même couleur :
+   Rencontres (œil, vert), Leurs liens (points reliés, bleu), Approfondir · facultatif (loupe, ocre).
+   ================================================================== */
+:root { --etape-1: #2F6B4A; --etape-1-fond: #E1EDE4; --etape-2: #2E5E78; --etape-2-fond: #DEE9EF; --etape-4: #8A5A22; --etape-4-fond: #F2E6D3; }
+.etape-nom { display: inline-flex; align-items: center; gap: 6px; vertical-align: middle; }
+.etape-nom .etape-picto { width: 1.25em; height: 1.25em; flex: none; }
+.etape-nom.etape-1 { color: var(--etape-1); } .etape-nom.etape-2 { color: var(--etape-2); } .etape-nom.etape-4 { color: var(--etape-4); }
+.etape-nom .exp-facultatif { color: #6E6656; }
+.exp-etape-texte b .etape-nom { font-size: inherit; }
+.etiq-jeu .etape-nom .etape-picto { width: 15px; height: 15px; }
+.exp-num.etape-1, .exp-num.etape-2, .exp-num.etape-4 { position: relative; }
+.exp-num.etape-1 { background: var(--etape-1-fond); color: var(--etape-1); }
+.exp-num.etape-2 { background: var(--etape-2-fond); color: var(--etape-2); }
+.exp-num.etape-4 { background: var(--etape-4-fond); color: var(--etape-4); }
+.exp-num .etape-picto { width: 22px; height: 22px; }
+.exp-etape.active .exp-num.etape-1, .exp-etape.active .exp-num.etape-2, .exp-etape.active .exp-num.etape-4 { box-shadow: 0 0 0 2px currentColor; }
+.exp-etape.finie .exp-num.etape-1 { background: var(--etape-1); color: #fff; }
+.exp-etape.finie .exp-num.etape-2 { background: var(--etape-2); color: #fff; }
+.exp-etape.finie .exp-num.etape-4, .exp-num.etape-4.fait { background: var(--etape-4); color: #fff; }
+.exp-num.fait::after { content: "✓"; position: absolute; right: -3px; bottom: -3px; width: 17px; height: 17px; border-radius: 50%; background: #fff; color: #3E7B55;
+  font: 700 11px/17px "Work Sans", system-ui, sans-serif; text-align: center; box-shadow: 0 0 0 1.5px #3E7B55; }

@@ -795,8 +795,10 @@ function tailleRencontre(e) {
   const v = q.valeur(e);
   if (typeof v !== "number") return null;
   const f = q.fourchette ? q.fourchette(e) : null, mesure = mesureTaille(e).fiche;
-  if (f && f[0] < f[1]) return { chiffres: `${nombre(f[0])}–${nombre(f[1])}`, texte: `${nombre(f[0])} à ${nombre(f[1])} cm ${mesure}`, mesure };
-  return { chiffres: nombre(v), texte: `jusqu'à ${nombre(v)} cm ${mesure}`, mesure: `au plus, ${mesure}` };
+  // Étape R284 (45.01, note 6 du 21/11 au soir : « 11,4 à 26 cm ») : à partir de 10 cm, la taille est dite au centimètre près
+  const r = n => n >= 10 ? Math.round(n) : n;
+  if (f && f[0] < f[1] && r(f[0]) < r(f[1])) return { chiffres: `${nombre(r(f[0]))}–${nombre(r(f[1]))}`, texte: `${nombre(r(f[0]))} à ${nombre(r(f[1]))} cm ${mesure}`, mesure };
+  return { chiffres: nombre(r(v)), texte: `jusqu'à ${nombre(r(v))} cm ${mesure}`, mesure: `au plus, ${mesure}` };
 }
 // Le picto chiffré : les chiffres au-dessus d'une toise (flèche double avec ses deux butées)
 function pictoTaille(t) {

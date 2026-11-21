@@ -192,8 +192,8 @@ function portesApprofondir(x, num) {
   if (toutes && EXPEDITION_COMPLETE) {
     const pause = testApprofEnPause(x);
     return `<div class="exp-etape approfondir finie apf-finie">
-        <span class="exp-num">✓</span>
-        <span class="exp-etape-texte"><b>Étape ${num} · Approfondir</b><small>Les ${n} espèces sont connues par cœur${expeditionComplete(x) ? ` : l'expédition est <b class="apf-complete">complète ${ETOILE_COMPLETE}</b>` : ""}.</small></span>
+        <span class="exp-num etape-4 fait">${pictoEtape(4)}</span>
+        <span class="exp-etape-texte"><b>${nomEtape(4)}</b><small>Les ${n} espèces sont connues par cœur${expeditionComplete(x) ? ` : l'expédition est <b class="apf-complete">complète ${ETOILE_COMPLETE}</b>` : ""}.</small></span>
         <span class="exp-etape-gain pris" title="Empreintes de cette étape facultative">+${gainEtape(x, 4)}<small>(1 par espèce)</small><span>${PAS_SVG}</span></span>
         <span class="apf-finie-liens"><button class="duo-autres" data-apf="decouvrir">Revoir de plus près</button>
         <button class="duo-autres" data-apf="${pause ? "reprendre" : "tester"}">${pause ? "Reprendre le test" : "Me tester"}</button></span>
@@ -205,7 +205,7 @@ function portesApprofondir(x, num) {
     : st && st.dernier && !st.reussi ? `<p class="dfx-bandeau">Dernier test : <b>${st.dernier.bons} sur ${st.dernier.total}</b>.${faites ? ` ${faites} espèce${faites > 1 ? "s" : ""} déjà connue${faites > 1 ? "s" : ""} par cœur.` : ""} Continuez comme vous préférez.</p>`
     : faites ? `<p class="dfx-bandeau">${faites} espèce${faites > 1 ? "s" : ""} sur ${n} connue${faites > 1 ? "s" : ""} par cœur. Continuez comme vous préférez.</p>`
     : `<p class="dfx-phrase">Ce qui ne se voit pas : leurs mesures, ce qu'elles mangent, qui les mange, leurs noms, leur statut. Deux façons d'y aller ; vous pourrez changer en route.</p>`;
-  return `<div class="dfx-portes apf-portes${toutes ? " finie" : ""}"><div class="etiq-jeu">Étape ${num} · Approfondir <em class="exp-facultatif">Facultatif</em></div>
+  return `<div class="dfx-portes apf-portes${toutes ? " finie" : ""}"><div class="etiq-jeu">${nomEtape(4)}</div>
       ${bandeau}
       <div class="dfx-deux-portes">${decouvrir}${tester}</div>
       <small class="dfx-gain">+${gainEtape(x, 4)} ${PAS_SVG} · 1 par espèce connue par cœur, quelle que soit la façon</small></div>`;

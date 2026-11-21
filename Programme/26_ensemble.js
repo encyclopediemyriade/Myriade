@@ -494,7 +494,7 @@ function aUneEtapeEnsemble(x) { return ETAPE2_ENSEMBLE && questionsEnsembleExp(x
 //   - Les questions d'une expédition restent les mêmes pendant toute la session (pas de nouveau tirage à chaque visite).
 // ==================================================================
 if (ETAPE2_ENSEMBLE && typeof ETAPES !== "undefined")
-  ETAPES[2] = { titre: "Ensemble", texte: "Comment ces espèces vivent ensemble ici : qui chasse qui, le jour et la nuit, l'hiver, ce qui les aide" };
+  ETAPES[2] = { titre: "Leurs liens", texte: "Comment ces espèces vivent ensemble ici : qui chasse qui, le jour et la nuit, l'hiver, ce qui les aide" };
 const memoEnsemble = new Map();
 // Étape R245 (point 1 du 17/11) : tirage FIXE par expédition. Le choix des questions se fait avec un hasard « à graine »
 //   tiré du numéro de l'expédition : la même expédition donne toujours les mêmes questions (elle a toujours, ou jamais,

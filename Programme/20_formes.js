@@ -574,7 +574,7 @@ function dessinerPlanche() {
         <img src="${photoMini(e.photo)}" alt=""><span class="fp-nom">${echapper(e.nom_courant)}</span>${f ? `<span class="fp-phrase-posee">${echapper(f.texte)}</span>` : ""}</button>`; }).join("")}</div>
     <div class="fp-phrases">${p.phrases.map((f, i) => p.places[i] ? "" : `<button type="button" class="fp-phrase${p.choisie === i ? " choisie" : ""}" data-i="${i}">${echapper(f.texte)}</button>`).join("")}</div>
     <p class="fp-retour" id="fp-retour">${p.retour || ""}</p>
-    <div class="fp-pied">${fini ? `<button type="button" class="bouton-accueil principal" id="fp-suite">Continuer l'étape 2 ▶</button>`
+    <div class="fp-pied">${fini ? `<button type="button" class="bouton-accueil principal" id="fp-suite">${typeof continuerEtape === "function" ? continuerEtape(2) : "Continuer"} ▶</button>`
       : `<span class="fp-aide">Une phrase mal placée est expliquée ; elle reviendra plus tard dans l'étape.</span>`}</div></div>`;
   z.querySelectorAll(".fp-phrase").forEach(b => b.onclick = () => { p.choisie = Number(b.dataset.i); p.retour = ""; dessinerPlanche(); });
   z.querySelectorAll(".fp-espece").forEach(b => b.onclick = () => placerPhrase(b.dataset.nom));
@@ -907,7 +907,7 @@ function finirRevueGroupee() {
     if (confondues.length) { session = null; lancerRevueExpedition(x, confondues); return; }   // étape R184
     if (etapeFinie(x, 1)) { session = null; ouvrirExpedition(x); } else lancerExpedition(x, 1); };
   if (etapeFinie(x, 1) && !rv.avantFinie) {
-    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: "Étape 1 réussie", detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: etapeReussie(1), detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   }
   if (gagnees) verifierOuverture();

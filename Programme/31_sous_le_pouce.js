@@ -281,6 +281,20 @@ function complementFiche(e, champ, exclus = []) {
   return "";
 }
 
+// ==================================================================
+// Étape R284 (21/11 au soir, Notion 45.03, choix 1A d'Aubin ; ajuste 2A du 19/11 / 40.03 ; notes 1 et 5 : « Gros trou ça fait
+//   étrange ») : les réponses EN PHOTOS suivent la question (plus de grand vide entre la question et les photos) ;
+//   « Tout sous le pouce » reste pour les réponses EN NOMS. Critère : « Sur votre téléphone, la question et ses photos se
+//   lisent d'un seul regard, sans trou, et le pouce atteint les réponses sans remonter. »
+//   Concerne : Me tester (« Laquelle est… ? », cri, indices), À l'oreille, et dans la Rencontre « Elle ou son sosie » et
+//   « Par les indices ». La ligne qui suit la réponse s'écrit sous les photos, comme avant R265.
+// ==================================================================
+function reponsesEnPhotos(bloc) {
+  if (!bloc) return false;
+  if (bloc.matches(".dfx-photos, .ore-photos, .fe-photos") || bloc.querySelector(".fe-photos")) return true;
+  const b = [...bloc.querySelectorAll("button")];
+  return b.length > 0 && b.every(x => x.querySelector("img:not(.dfx-silh), .a-venir") && !x.classList.contains("choix-picto"));
+}
 // ---- Les écrans des jeux (Me tester, Approfondir, Coup d'œil, À l'oreille) : même structure « cdo » ----
 //   La ligne de retour (.cdo-retour, avec le bouton fixé) passe juste au-dessus des réponses ; les aides restent dessous.
 function calerJeuSousPouce(zone, selecteur) {
@@ -288,6 +302,7 @@ function calerJeuSousPouce(zone, selecteur) {
   const choix = zone.querySelector(selecteur || ".cdo-noms, .dfx-photos, .ore-photos"), retour = zone.querySelector(".cdo-retour");
   if (!choix || !retour) return;
   if (!SOUS_LE_POUCE || !surTelephone()) return;
+  if (reponsesEnPhotos(choix)) return;   // R284 (45.03) : les photos suivent la question, la ligne de retour reste dessous
   choix.before(retour);
   retour.classList.add("pouce-retour");
   const aides = choix.nextElementSibling && choix.nextElementSibling.matches(".dfx-aides, .ore-aide") ? choix.nextElementSibling : null;
@@ -317,11 +332,13 @@ function complementReconnaissance(e, sujet) {
   const caler = () => {
     prevu = false;
     if (!SOUS_LE_POUCE) return;
-    const tel = surTelephone();
-    // sur téléphone, la ligne de retour juste au-dessus des réponses ; sur ordinateur, elle reprend sa place (dessous)
+    const photos = reponsesEnPhotos(rep);   // R284 (45.03) : « Elle ou son sosie », « Par les indices » : pas calées en bas
+    const tel = surTelephone() && !photos;
+    // sur téléphone, la ligne de retour juste au-dessus des réponses ; sur ordinateur (et pour des photos), elle reprend sa place (dessous)
     const nouvelle = !rep.querySelector(".juste, .fausse, .presque") && !rep.dataset.repondu;   // une question pas encore répondue
     if (tel && nouvelle && retour.parentNode === rep.parentNode && retour.nextElementSibling !== rep) { rep.before(retour); retour.classList.remove("pouce-dessous"); if (retour._pouce) retour._pouce.dessous = false; rep.style.marginTop = ""; }
     if (!tel && retour.parentNode === rep.parentNode && retour.nextElementSibling === rep) {
+      if (retour._pouce) decalerPouce(retour);
       const jns = document.getElementById("je-ne-sais-pas"); (jns && jns.parentNode === rep.parentNode ? jns : rep).after(retour);
     }
     if (tel && aDesReponses()) { if (nouvelle || !retour._pouce) calerSousPouce(retour, rep, RESERVE_POUCE.rencontre); else recalerPouce(); }

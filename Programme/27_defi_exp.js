@@ -106,10 +106,22 @@ function enteteRepechage(titre, rq, i) {
 // R242 (13A) : combien de questions pour chaque espèce — 3, ou 2 pour une espèce déjà reconnue ailleurs (sa courte révision),
 //   puis on retire une question aux espèces qui en ont 3 jusqu'à tenir dans les 20 (jamais moins de 2)
 function questionsParEspece(x, deja) {
-  const nb = new Map(x.liste.map(e => [e, deja && deja.has(e.nom_courant) ? 2 : DEFI_PAR_ESPECE]));
+  const nb = new Map(x.liste.map(e => [e, !jouableEnJeu(e) ? 0 : deja && deja.has(e.nom_courant) ? 2 : DEFI_PAR_ESPECE]));   // R284 (45.04) : sans photo, aucune question
   let total = [...nb.values()].reduce((a, b) => a + b, 0);
   for (const e of melanger(x.liste.slice())) { if (total <= DEFI_MAX_QUESTIONS) break; if (nb.get(e) > 2) { nb.set(e, nb.get(e) - 1); total--; } }
+  if (typeof DEFI_VARIE !== "undefined" && DEFI_VARIE) ajusterPassagesVarie(x, nb);
   return nb;
+}
+// Étape R284 (45.01) : depuis que repères et indices doivent vraiment départager, certaines expéditions n'ont plus assez de
+//   façons différentes pour tenir 5A (aucune façon plus de 5 fois). Plutôt que de répéter une façon, on retire un passage aux
+//   espèces qui en ont 3 (jamais moins de 2) jusqu'à ce que les façons possibles suffisent.
+function ajusterPassagesVarie(x, nb) {
+  const pool = poolDefi(x), f = new Map(x.liste.filter(jouableEnJeu).map(e => [e, faconsEspece(e, x, pool)]));
+  const sep = paireSepareDefi(x) ? 2 : 0, qq = x.liste.filter(e => jouableEnJeu(e) && nb.get(e) > 0).length >= 4 ? 4 : 0;
+  const capacite = FACONS_SIMPLES.reduce((s, fa) => s + Math.min(FACON_MAX, [...f.values()].reduce((a, o) => a + (o[fa] || 0), 0)), 0) + sep + qq;
+  let total = [...nb.values()].reduce((a, b) => a + b, 0);
+  const ordre = x.liste.filter(e => nb.get(e) > 2).sort((a, b) => a.nom_courant.localeCompare(b.nom_courant));   // toujours les mêmes (le compte de la porte reste juste)
+  for (const e of ordre) { if (total <= capacite) break; nb.set(e, nb.get(e) - 1); total--; }
 }
 function nbQuestionsDefi(x) {
   const deja = new Set(x.liste.filter(e => typeof estReconnue === "function" && estReconnue(e)).map(e => e.nom_courant));
@@ -155,7 +167,7 @@ function poolDefi(x) { return ESPECES.filter(e => territoiresJeu(e).includes(x.t
 function piegesDefi(e, x, pool) {
   const t = tailleCoup(e), proche = o => { const u = tailleCoup(o); return !t || !u || Math.max(t, u) / Math.min(t, u) <= 3; };
   const sosies = typeof sosiesDe === "function" ? sosiesDe(e) : [];
-  const ici = melanger(x.liste.filter(o => o !== e && estRenseigne(o.photo)
+  const ici = melanger(x.liste.filter(o => o !== e && jouableEnJeu(o)
     && (sosies.includes(o) || (o.nom_affichage_groupe && o.nom_affichage_groupe === e.nom_affichage_groupe) || (o.onglet === e.onglet && proche(o)))));
   const choisis = ici.slice(0, 3);
   for (const o of piegesCoupDoeil(e, pool.filter(p => !choisis.includes(p)))) if (choisis.length < 3 && !choisis.some(c => c.nom_courant === o.nom_courant)) choisis.push(o);
@@ -166,7 +178,7 @@ function coriaceExp(x) {
   const parEspece = {};
   for (const [cle, n] of Object.entries((suivi && suivi.echecs) || {})) { const nom = cle.split("|")[0]; parEspece[nom] = (parEspece[nom] || 0) + n; }
   let meilleure = null, max = 1;
-  for (const e of x.liste) if ((parEspece[e.nom_courant] || 0) > max) { max = parEspece[e.nom_courant]; meilleure = e; }
+  for (const e of x.liste) if (jouableEnJeu(e) && (parEspece[e.nom_courant] || 0) > max) { max = parEspece[e.nom_courant]; meilleure = e; }
   return meilleure;
 }
 // L'ordre des questions : un premier tour (chaque espèce une fois), puis un second ; jamais deux fois de suite la même ;
@@ -392,10 +404,110 @@ function repereCommun(x, o) {
     if (x.couleur && x.couleur !== "NA" && y.couleur === x.couleur) return true;
     if (couleursDe(y.texte).some(c => cx.includes(c))) return true;
     return [...motsRepere(y.texte)].filter(w => mx.has(w)).length >= 2;
-  });
+  }) || ficheCommune(x, o);
 }
 // Sa carte dit autre chose sur la même partie (« Calotte noire » face à « Calotte bleu vif ») : la fausse réponse est sûre
 function repereContraste(x, o) { return cartesReperes(o).some(y => y.partie === x.partie && reperesDifferent(x.texte, y.texte)); }
+
+// ==================================================================
+// Étape R284 (21/11 au soir, Notion 45.01, choix d'Aubin 5A ; notes 2b, 3, 6, 7 du 21/11 au soir) : dans Me tester, un repère
+//   ou un indice n'est montré que s'il départage VRAIMENT. « Dos brun » posé face au campagnol agreste (« Pelage long et
+//   ébouriffé », mais dos brun dans sa fiche), « Museau court et arrondi » face à la taupe, au renard et à la crossope (hors de
+//   l'expédition, alors que les deux campagnols ont eux aussi le museau arrondi) : on gagnait sans lire le repère.
+//   • Une fausse réponse doit CONTREDIRE le repère (pas seulement « dire autre chose ») : sur la même partie, une autre couleur
+//     sans couleur commune, ou le contraire (court / long, pointu / arrondi, nu / poilu…) ; la fiche compte aussi (couleur,
+//     couleur dominante, formes du museau, de la queue, des oreilles) : si elle porte le repère, la fausse réponse est écartée.
+//   • Les fausses réponses ne viennent que de l'expédition ; s'il n'y en a pas 3 sûres, un autre repère, sinon une autre façon.
+//   • Par les indices : plus d'indice ajouté « pour faire nombre » ; la taille ne sépare que si les fourchettes (mâles et
+//     femelles comprises) ne se touchent pas ; fausses photos de l'expédition seulement.
+// ==================================================================
+const SENS_CONTRAIRES = [
+  [/^court/, /^long/],
+  [/^pointu/, /^(arrondi|rond)/],
+  [/^nue?s?$/, /^(poilu|velu|touffu|fourni)/],
+  [/^grand/, /^petit/],
+  [/^clair/, /^(fonce|sombre)/],
+  [/^large/, /^etroit/],
+  [/^droit/, /^(courbe|recourbe|arque)/],
+];
+function motsSimples(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").split(/[^a-z]+/).filter(Boolean); }
+// Les « sens » d'un texte : "g:m" = le membre m du couple de contraires g (« Museau court et arrondi » → court, arrondi)
+function sensDe(t) {
+  const s = new Set(), mots = motsSimples(t);
+  SENS_CONTRAIRES.forEach((g, gi) => g.forEach((re, mi) => { if (mots.some(w => re.test(w))) s.add(gi + ":" + mi); }));
+  return s;
+}
+function sensContraires(a, b) {   // a et b disent le contraire l'un de l'autre sur au moins un couple, sans rien partager de ce couple
+  for (const k of a) { const g = k.split(":")[0]; const autres = [...b].filter(z => z.split(":")[0] === g); if (autres.length && !autres.includes(k) && ![...a].some(z => z.split(":")[0] === g && autres.includes(z))) return true; }
+  return false;
+}
+function sensCommun(a, b) { return [...a].some(k => b.has(k)); }
+function couleursRepere(r) { return [...new Set([...couleursDe(r.texte), ...(r.couleur && r.couleur !== "NA" ? couleursDe(r.couleur) : [])])]; }
+// Ce que la fiche dit de cette partie : couleurs (colonne « couleur », découpée par parties, et couleur dominante pour le dos,
+//   le corps ou le pelage) et formes (museau, queue, oreilles)
+const PARTIES_FICHE = { dos: /^(dos|dessus)/, corps: /^(corps|dessus)/, pelage: /^(pelage|dessus)/, ventre: /^(ventre|dessous)/, queue: /^queue/, tete: /^tete/,
+  gorge: /^gorge/, poitrine: /^poitrine/, ailes: /^aile/, pattes: /^patte/, bec: /^bec/, museau: /^museau/, oreilles: /^oreille/, calotte: /^calotte/, cou: /^cou$/ };
+const FORMES_FICHE = { museau: ["museau_forme"], queue: ["queue_forme"], oreilles: ["oreilles_forme", "oreilles_taille"] };
+function ficheDe(o, partie) {
+  const re = PARTIES_FICHE[partie];
+  const morceaux = String(estRenseigne(o.couleur) ? o.couleur : "").split(/[,;]/).map(s => s.trim()).filter(Boolean);
+  const general = ["dos", "corps", "pelage"].includes(partie);
+  const couleurs = re ? morceaux.filter((m, k) => { const mots = motsSimples(m); return mots.some(w => re.test(w)) || (general && k === 0 && !Object.values(PARTIES_FICHE).some(r => mots.some(w => r.test(w)))); }) : [];
+  if (general && estRenseigne(o.couleur_dominante)) couleurs.push(o.couleur_dominante);
+  const formes = (FORMES_FICHE[partie] || []).map(c => lireCase(o, c)).filter(v => estRenseigne(v) && v !== "NA");
+  return { couleurs: [...new Set(couleurs.flatMap(couleursDe))], sens: sensDe(formes.join(" ")) };
+}
+function ficheCommune(x, o) {
+  if (!x.partie || x.partie === "NA") return false;
+  const f = ficheDe(o, x.partie), cx = couleursRepere(x);
+  return cx.some(c => f.couleurs.includes(c)) || sensCommun(sensDe(x.texte), f.sens);
+}
+// La fausse réponse contredit le repère : sur la même partie, sa carte (ou sa fiche) dit une autre couleur, ou le contraire
+function contreditPar(x, couleurs, sens) {
+  const cx = couleursRepere(x);
+  return (cx.length && couleurs.length && !couleurs.some(c => cx.includes(c))) || sensContraires(sensDe(x.texte), sens);
+}
+function ligneContredit(x, y) { return y.partie === x.partie && contreditPar(x, couleursRepere(y), sensDe(y.texte)); }
+function repereContredit(x, o) {
+  if (!x.partie || x.partie === "NA") return false;
+  if (cartesReperes(o).some(y => ligneContredit(x, y))) return true;
+  const f = ficheDe(o, x.partie);
+  return contreditPar(x, f.couleurs, f.sens);
+}
+// Ce que la fiche dit de contraire, en quelques mots (« Queue courte », « Museau pointu », « Dos gris »), pour l'explication
+const NOMS_PARTIES = { dos: "Dos", corps: "Corps", pelage: "Pelage", ventre: "Ventre", queue: "Queue", tete: "Tête", gorge: "Gorge", poitrine: "Poitrine",
+  ailes: "Ailes", pattes: "Pattes", bec: "Bec", museau: "Museau", oreilles: "Oreilles", calotte: "Calotte", cou: "Cou" };
+function ligneFicheContraire(x, o) {
+  const nom = NOMS_PARTIES[x.partie];
+  if (!nom) return "";
+  for (const c of FORMES_FICHE[x.partie] || []) {
+    const v = lireCase(o, c);
+    if (estRenseigne(v) && v !== "NA" && sensContraires(sensDe(x.texte), sensDe(v))) return `${nom} ${String(v).toLowerCase()}`;
+  }
+  const f = ficheDe(o, x.partie), cx = couleursRepere(x);
+  if (cx.length && f.couleurs.length && !f.couleurs.some(c => cx.includes(c))) {
+    const v = ["dos", "corps", "pelage"].includes(x.partie) && estRenseigne(o.couleur_dominante) ? o.couleur_dominante : "";
+    return v ? `${nom} ${String(v).toLowerCase()}` : "";
+  }
+  return "";
+}
+// R284 (45.04, choix 2A) : une espèce sans photo libre reste rencontrée (sa silhouette), mais n'est jamais posée dans les jeux,
+//   ni comme bonne réponse ni comme fausse réponse (une silhouette « photo à venir » à côté de vraies photos n'aide pas)
+function jouableEnJeu(e) { return !!e && estRenseigne(e.photo); }
+// Les fourchettes de taille (mâles et femelles comprises) ; sans minimum connu : « jusqu'à » pour la bonne réponse (tout ce qui
+//   est plus petit colle), les 6/10 du maximum pour une fausse réponse
+function fourchetteTailleDefi(e, bonne) {
+  const q = QUESTIONS.find(z => z.champ === "taille_max_cm"), v = q ? q.valeur(e) : null;
+  if (typeof v !== "number") return null;
+  const f = q.fourchette ? q.fourchette(e) : null;
+  return f && f[0] < f[1] ? [Math.min(f[0], v), Math.max(f[1], v)] : [bonne ? 0 : v * 0.6, v];
+}
+function taillesDisjointes(e, o) {
+  const a = fourchetteTailleDefi(e, true), b = fourchetteTailleDefi(o, false);
+  if (!a || !b) return false;
+  const [p, g] = a[1] < b[0] ? [a, b] : b[1] < a[0] ? [b, a] : [null, null];
+  return !!p && g[0] / Math.max(p[1], 0.01) >= 1.2;   // un écart net entre les deux fourchettes
+}
 // Les repères qu'on peut donner seuls : ceux de la photo principale, sur une partie dite, sans le nom dedans (parties visibles d'abord)
 function reperesInterrogeables(e) {
   const r = reperesDe(e);
@@ -403,34 +515,62 @@ function reperesInterrogeables(e) {
   return reperesPourForme(r, formePourPhoto(r, "")).filter(x => x.partie && x.partie !== "NA" && x.texte && !texteDitNom(x.texte, e))
     .map((x, i) => ({ x, i })).sort((a, b) => rangPartie(a.x.partie) - rangPartie(b.x.partie) || a.i - b.i).map(o => o.x);
 }
-// 1A : 3 fausses réponses dont la carte dit autre chose sur la même partie, jamais le même repère (l'expédition d'abord)
+// 1A (R284 : 45.01) : 3 fausses réponses de l'expédition, dont la carte ou la fiche CONTREDIT le repère, jamais ne le porte
 function piegesRepere(e, x, rp, pool) {
-  const ok = o => o !== e && estRenseigne(o.photo) && reperesDe(o) && repereContraste(rp, o) && !repereCommun(rp, o) && !texteDitNom(rp.texte, o);
-  const tri = l => melanger(l).sort((a, b) => (a.onglet === e.onglet ? 0 : 1) - (b.onglet === e.onglet ? 0 : 1));
-  const l = [...tri(x.liste.filter(ok)), ...tri(pool.filter(o => !x.liste.includes(o) && ok(o)))];
+  const ok = o => o !== e && jouableEnJeu(o) && reperesDe(o) && repereContredit(rp, o) && !repereCommun(rp, o) && !texteDitNom(rp.texte, o);
+  const l = melanger(x.liste.filter(ok)).sort((a, b) => (a.onglet === e.onglet ? 0 : 1) - (b.onglet === e.onglet ? 0 : 1));
   return l.filter((o, k) => l.findIndex(z => z.nom_courant === o.nom_courant) === k).slice(0, 3);
 }
-// 3A : un indice sépare-t-il la bonne espèce de cette fausse photo ?
+// 3A : un indice sépare-t-il la bonne espèce de cette fausse photo ? (R284 : la taille, par fourchettes disjointes)
 function separeParIndice(e, i, o) {
-  if (i.taille) { const a = tailleNombre(e), b = tailleNombre(o); return !!(a && b && Math.max(a, b) / Math.min(a, b) >= 1.6); }
+  if (i.taille) return taillesDisjointes(e, o);
+  if (i.etiq === "Indice de présence") {   // « Empreintes, crottes » colle aussi au lièvre (« Empreintes, crottes, gîte ») : il faut un indice qu'elle n'a pas
+    //   (et des empreintes, des crottes : presque tous en laissent ; seul un indice propre — terrier, gîte, nid… — départage)
+    const a = elementsTrace(traceDe(e)), b = elementsTrace(traceDe(o));
+    return a.length > 0 && b.length > 0 && a.some(z => !b.includes(z) && !TRACES_COMMUNES.test(z));
+  }
+  if (i.etiq === "Activité") {             // « À l'aube et au crépuscule » colle aussi à « De jour comme de nuit » : il faut des moments sans rien en commun
+    const a = momentsActivite(lireCase(e, "activite")), b = momentsActivite(lireCase(o, "activite"));
+    return a.length > 0 && b.length > 0 && !a.some(z => b.includes(z));
+  }
   const v = i.cle(e), w = i.cle(o);
   return !!(v && w && w !== v);
 }
+const TRACES_COMMUNES = /^(des |les )?(empreintes?|crottes?|traces?|laissees?|fientes?|excrements?|poils?|plumes?)$/;
+function elementsTrace(t) { return String(t || "").split(/,|;| et /).map(s => simplifier(s.trim())).filter(Boolean); }
+// Les moments d'activité : jour, nuit, aube et crépuscule (« de jour comme de nuit » = tous)
+function momentsActivite(t) {
+  const s = motsSimples(t).join(" ");
+  if (!s) return [];
+  if (/jour comme de nuit|nuit comme de jour|toute la journee|a toute heure|jour et nuit/.test(s)) return ["jour", "nuit", "crepuscule"];
+  const m = [];
+  if (/\bjour\b|diurne|journee/.test(s)) m.push("jour");
+  if (/\bnuit\b|nocturne/.test(s)) m.push("nuit");
+  if (/aube|crepuscul|soir|matin/.test(s)) m.push("crepuscule");
+  return m;
+}
+// R284 (45.01) : les fausses photos viennent de l'expédition seulement (jamais un sosie), et chacune est écartée par un indice
+//   montré ; on essaie plusieurs trios avant de renoncer
 function questionIndicesDefi(e, x) {
-  if (!estRenseigne(e.photo) || indicesAmbigus(e, x)) return null;
+  if (!jouableEnJeu(e) || indicesAmbigus(e, x)) return null;
   const cands = candidatsIndices(e).filter(i => INDICES_DEFI.includes(i.etiq) && !texteDitNom(i.texte, e));
-  const pieges = piegesIndices(e, x);
-  if (!cands.length || pieges.length < 3) return null;
-  const choisis = [];
-  let reste = pieges.slice();
-  while (reste.length && choisis.length < 3) {   // l'indice qui écarte le plus de fausses photos qui restent
-    const m = cands.filter(i => !choisis.includes(i)).map(i => ({ i, n: reste.filter(o => separeParIndice(e, i, o)).length })).sort((a, b) => b.n - a.n)[0];
-    if (!m || !m.n) break;
-    choisis.push(m.i); reste = reste.filter(o => !separeParIndice(e, m.i, o));
+  if (!cands.length) return null;
+  const sosies = sosiesDe(e);
+  const possibles = x.liste.filter(o => o !== e && jouableEnJeu(o) && !sosies.includes(o) && cands.some(i => separeParIndice(e, i, o)));
+  if (possibles.length < 3) return null;
+  for (let essai = 0; essai < 12; essai++) {
+    const pieges = melanger(possibles.slice()).sort((a, b) => (a.onglet === e.onglet ? 0 : 1) - (b.onglet === e.onglet ? 0 : 1)).slice(0, 3);
+    const choisis = [];
+    let reste = pieges.slice();
+    while (reste.length && choisis.length < 3) {   // l'indice qui écarte le plus de fausses photos qui restent
+      const m = cands.filter(i => !choisis.includes(i)).map(i => ({ i, n: reste.filter(o => separeParIndice(e, i, o)).length })).sort((a, b) => b.n - a.n)[0];
+      if (!m || !m.n) break;
+      choisis.push(m.i); reste = reste.filter(o => !separeParIndice(e, m.i, o));
+    }
+    if (reste.length) continue;   // réunis, les indices ne désigneraient pas une seule des 4
+    return { indices: cands.filter(i => choisis.includes(i)).map(i => ({ etiq: i.etiq, texte: i.texte, taille: !!i.taille })), pieges };
   }
-  if (reste.length) return null;   // réunis, les indices ne désigneraient pas une seule des 4
-  for (const i of cands) if (choisis.length < 2 && !choisis.includes(i)) choisis.push(i);
-  return { indices: cands.filter(i => choisis.includes(i)).map(i => ({ etiq: i.etiq, texte: i.texte, taille: !!i.taille })), pieges };
+  return null;
 }
 // 2A : les repères d'une espèce qui la séparent de son sosie (jamais un repère partagé ; ceux qui parlent de la même partie d'abord)
 function reperesSeparables(a, b) {
@@ -440,7 +580,7 @@ function reperesSeparables(a, b) {
 function paireSepareDefi(x) {
   const paires = [];
   for (const a of x.liste) for (const b of sosiesDe(a)) {
-    if (!x.liste.includes(b) || a.nom_courant >= b.nom_courant) continue;
+    if (!x.liste.includes(b) || a.nom_courant >= b.nom_courant || !jouableEnJeu(a) || !jouableEnJeu(b)) continue;
     const ra = reperesSeparables(a, b), rb = reperesSeparables(b, a);
     if (ra.length >= 2 && rb.length >= 2) paires.push({ a, b, ra: ra.slice(0, 2), rb: rb.slice(0, 2) });
   }
@@ -517,13 +657,30 @@ function planDefiVarie(x, nb, pool) {
     if (s < scoreMin) { scoreMin = s; meilleure = { suite, fin: !!fin }; }
   }
   // Retouche : des échanges de deux places, gardés quand ils améliorent (la coriace reste la dernière)
-  const l = meilleure ? meilleure.suite : [], bout = l.length - (meilleure && meilleure.fin ? 1 : 0);
-  for (let k = 0; k < 400 && scoreMin > 0 && bout > 2; k++) {
-    const i = Math.floor(Math.random() * bout), j = Math.floor(Math.random() * bout);
-    if (i === j) continue;
-    [l[i], l[j]] = [l[j], l[i]];
-    const s = noteSuite(l);
-    if (s < scoreMin) scoreMin = s; else [l[i], l[j]] = [l[j], l[i]];
+  const l = meilleure ? meilleure.suite : [];
+  const retoucher = () => {
+    const bout = l.length - (meilleure && meilleure.fin ? 1 : 0);
+    for (let k = 0; k < 400 && scoreMin > 0 && bout > 2; k++) {
+      const i = Math.floor(Math.random() * bout), j = Math.floor(Math.random() * bout);
+      if (i === j) continue;
+      [l[i], l[j]] = [l[j], l[i]];
+      const s = noteSuite(l);
+      if (s < scoreMin) scoreMin = s; else [l[i], l[j]] = [l[j], l[i]];
+    }
+  };
+  retoucher();
+  // R284 (45.01) : dernier filet — une façon encore au-delà de 5 : on retire une de ses questions à une espèce qui en a 3
+  //   (jamais la coriace en dernier, jamais une manche), puis on retouche
+  const passages = e => l.filter(o => o.especes.includes(e)).length;
+  for (let k = 0; k < 6; k++) {
+    const compte = {};
+    l.forEach(o => { compte[o.facon] = (compte[o.facon] || 0) + o.taille; });
+    const trop = Object.keys(compte).find(fa => compte[fa] > FACON_MAX && !["quiestqui", "separe"].includes(fa));
+    if (!trop) break;
+    const i = l.findIndex((o, j) => !o.bloc && o.facon === trop && passages(o.especes[0]) > 2 && !(meilleure.fin && j === l.length - 1));
+    if (i < 0) break;
+    l.splice(i, 1);
+    scoreMin = noteSuite(l); retoucher();
   }
   return { suite: l, f };
 }
@@ -584,7 +741,9 @@ function photoRepereDefi(q) {
 // Après une erreur sur le repère : ce que dit chacune des deux cartes sur cette partie
 function blocRepereErreur(q, choisie) {
   const rc = reperesDe(choisie), principale = rc ? reperesPourForme(rc, formePourPhoto(rc, "")) : [];
-  const y = [...principale, ...cartesReperes(choisie)].find(z => z.partie === q.rp.partie && reperesDifferent(z.texte, q.rp.texte));
+  const meme = [...principale, ...cartesReperes(choisie)].filter(z => z.partie === q.rp.partie && reperesDifferent(z.texte, q.rp.texte));
+  // R284 : la ligne qui dit le contraire d'abord ; sinon ce que dit sa fiche (« Queue courte »), sinon la ligne de la même partie
+  const y = meme.find(z => ligneContredit(q.rp, z)) || (ligneFicheContraire(q.rp, choisie) ? { texte: ligneFicheContraire(q.rp, choisie) } : null) || meme[0];
   const ligne = (e, t, cls) => `<li><i class="${cls}"></i><span><b>${echapper(majuscule(nomCourt(e)))} :</b> ${echapper(minusculeTexte(t))}</span></li>`;
   return `<div class="dfx-separe"><small>Ce qui les sépare</small><ul>${ligne(q.espece, q.rp.texte, "ok")}${y ? ligne(choisie, y.texte, "ko") : ""}</ul></div>`;
 }
@@ -649,10 +808,15 @@ function verifierSepareDefi(q) {
 function deNomAvecArticle(e) { const t = nomAvecArticle(e); return /^le /.test(t) ? "du " + t.slice(3) : /^les /.test(t) ? "des " + t.slice(4) : "de " + t; }
 function groupeQq(d, q) { return d.questions.filter(z => z.type === "quiestqui" && z.g === q.g); }
 function corpsQuiEstQui(d, q) {
-  const gr = groupeQq(d, q), restants = q.noms.filter(e => { const z = gr.find(y => y.espece === e); return z && !z.pose; });
+  // R284 (45.02, choix 3A ; notes 4a et 4b du 21/11 au soir) : les noms restent en haut et gardent leur place une fois posés
+  //   (grisés), pour que les photos ne bougent jamais sous le doigt ; la consigne dit les deux sens
+  const gr = groupeQq(d, q), pose = e => { const z = gr.find(y => y.espece === e); return !z || z.pose; };
+  const restants = q.noms.filter(e => !pose(e));
   return `<div class="dfx-facon">Qui est qui ?</div>
-    <p class="cdo-q">${restants.length ? "Touchez un nom, puis sa photo." : "Les 4 sont à leur place."}</p>
-    <div class="dfx-qq-noms${restants.length ? "" : " vide"}">${restants.map(e => `<button type="button" class="dfx-qq-nom${d.qqNom === e ? " choisi" : ""}" data-nom="${echapper(e.nom_courant)}" aria-pressed="${d.qqNom === e}">${echapper(e.nom_courant)}</button>`).join("")}</div>
+    <p class="cdo-q">${restants.length ? "Touchez une photo et son nom, dans l'ordre que vous voulez." : "Les 4 sont à leur place."}</p>
+    <div class="dfx-qq-noms">${q.noms.map(e => pose(e)
+      ? `<button type="button" class="dfx-qq-nom place" disabled aria-label="${echapper(e.nom_courant)} : placé">${echapper(e.nom_courant)}</button>`
+      : `<button type="button" class="dfx-qq-nom${d.qqNom === e ? " choisi" : ""}" data-nom="${echapper(e.nom_courant)}" aria-pressed="${d.qqNom === e}">${echapper(e.nom_courant)}</button>`).join("")}</div>
     <div class="dfx-qq-grille">${gr.map((z, k) => `<div class="dfx-qq-case${z.pose ? " pose" : ""}${d.qqPhoto === k ? " choisie" : ""}" data-k="${k}">
         <button type="button" class="dfx-qq-ph" data-k="${k}" aria-label="Photo ${k + 1}${z.photo && formeCourte(z.photo.sujet) ? ` · ${formeCourte(z.photo.sujet)}` : ""}"${z.pose ? " disabled" : ""}>${z.photo ? imagePhoto(z.photo.src, `Photo ${k + 1}`, true) : celluleImage(z.espece, true)}${z.photo && formeCourte(z.photo.sujet) ? `<small>${echapper(formeCourte(z.photo.sujet))}</small>` : ""}</button>
         <div class="dfx-qq-place">${z.pose ? `✓ ${echapper(z.espece.nom_courant)}` : ""}</div></div>`).join("")}</div>`;
@@ -661,7 +825,7 @@ function brancherQuiEstQui(d, q) {
   const bloc = document.getElementById("dfx-qq");
   if (!bloc) return;
   const gr = groupeQq(d, q);
-  bloc.querySelectorAll(".dfx-qq-nom").forEach(b => b.onclick = () => {
+  bloc.querySelectorAll(".dfx-qq-nom:not(.place)").forEach(b => b.onclick = () => {
     const e = especeParNom(b.dataset.nom);
     if (d.qqPhoto != null) { placerQuiEstQui(d, q, e, gr[d.qqPhoto]); return; }
     d.qqNom = d.qqNom === e ? null : e; redessinerQuiEstQui(d, q);
@@ -979,13 +1143,14 @@ function finDefiExp() {
   const zone = document.getElementById("vue-defiexp");
   const c = comptesDefiExp(d);
   const aRevoir = x.liste.filter(e => !faiteDans(x, e, 1));
-  const vignette = e => `<img src="${photoMini(photoEsp(e))}" alt="${echapper(e.nom_courant)}">`;
+  // R284 (45.04) : jamais une silhouette « photo à venir » à côté des vraies photos du bilan (l'espèce sans photo : son nom seul)
+  const vignette = e => jouableEnJeu(e) ? `<img src="${photoMini(photoEsp(e))}" alt="${echapper(e.nom_courant)}">` : "";
   if (reussi && FIN_TEST_VIVANTE) {                   // étape R267 (40.16) : la fin « comme les autres »
     const ensuite = typeof aUneEtape2 === "function" && aUneEtape2(x) && !etapeFinie(x, 2);
     zone.innerHTML = `<div class="cdo dfx dfx-fin dft">${ecranFinTest({ x, etiq: `${x.titre} · Me tester`, titre: "Défi réussi",
         bons, total, sous: `bonnes réponses${repechage ? " · repêché" : ""}`, empreintes,
-        ronds: x.liste.map(e => ({ e, ok: faiteDans(x, e, 1) })), motOk: "reconnues", ratees: rateesDefi(d),
-        pied: `${ensuite ? `<p class="dft-suite">Prochaine étape : <b>Ensemble</b>, comment elles vivent ici.</p>` : ""}
+        ronds: x.liste.filter(jouableEnJeu).map(e => ({ e, ok: faiteDans(x, e, 1) })), tous: x.liste.map(e => ({ e, ok: faiteDans(x, e, 1) })), motOk: "reconnues", ratees: rateesDefi(d),
+        pied: `${ensuite ? `<p class="dft-suite">Ensuite : <b>${titreEtape(2)}</b>, comment elles vivent ici.</p>` : ""}
           <button class="cdo-suivant dft-principal" id="dfx-voir">Revenir à l'expédition</button>` })}</div>`;
     animerGainFinTest(empreintes);
   } else if (reussi) {
@@ -997,8 +1162,8 @@ function finDefiExp() {
         <div class="dfx-ronds">${x.liste.map(vignette).join("")}</div>
         <ul class="dfx-lignes">
           <li>Les ${x.liste.length} espèces sont <b>reconnues</b>.</li>
-          <li>${empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""} : celles de l'étape 1.` : "Vos empreintes de l'étape 1 étaient déjà gagnées."}</li>
-          ${ensuite ? `<li>Pour les <b>comprendre</b> : l'étape Ensemble, comment elles vivent ici.</li>` : ""}
+          <li>${empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""} : celles des Rencontres.` : "Vos empreintes des Rencontres étaient déjà gagnées."}</li>
+          ${ensuite ? `<li>Pour les <b>comprendre</b> : ${titreEtape(2)}, comment elles vivent ici.</li>` : ""}
         </ul>
         <button class="cdo-suivant" id="dfx-voir">Revenir à l'expédition</button>
       </div>`;
@@ -1028,7 +1193,7 @@ function finDefiExp() {
   window.scrollTo(0, 0);
   if (etapeGagnee) {
     const finieAussi = etapeFinie(x, 2);   // une expédition sans étape 2 se termine avec l'étape 1
-    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Étape 1 réussie",
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : etapeReussie(1),
             detail: empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""}` : "", son: "badge",
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (empreintes) setTimeout(() => afficherBulle(`+${empreintes} empreinte${empreintes > 1 ? "s" : ""}`), 600);
@@ -1051,7 +1216,7 @@ function jaugeLieuFinTest(x, gain) {
   return `<div class="dft-lieu"><div class="dft-lieu-texte"><span>${echapper(c.nom)}</span><b>${apres} sur ${max}</b></div>${dessinJaugeGain(avant, apres - avant, max)}</div>`;
 }
 function ecranFinTest(o) {
-  const n = o.ronds.filter(r => r.ok).length;
+  const tous = o.tous || o.ronds, n = tous.filter(r => r.ok).length;   // R284 : o.tous = toutes les espèces, quand les ronds n'en montrent qu'une partie
   const ronds = o.ronds.map(r => `<span class="dft-rond${r.ok ? " ok" : ""}"><img src="${photoMini(photoEsp(r.e))}" alt="${echapper(r.e.nom_courant)}" onerror="this.onerror=null;this.src='${photoEsp(r.e)}'">${r.ok ? `<i aria-hidden="true">✓</i>` : ""}</span>`).join("");
   const ratees = (o.ratees || []).length ? `<details class="dft-ratees"><summary>${o.ratees.length > 1 ? `Les ${o.ratees.length} questions ratées` : "La question ratée"}</summary>
       <ul>${o.ratees.map(r => `<li><b>${echapper(r.nom)}</b>${r.detail ? `<small>${echapper(r.detail)}</small>` : ""}</li>`).join("")}</ul></details>` : "";
@@ -1062,7 +1227,7 @@ function ecranFinTest(o) {
       <p class="dft-sous">${o.sous}</p>
       ${o.empreintes ? `<div class="dft-gain" id="dft-gain">+${o.empreintes} ${PAS_SVG}</div>` : ""}
       <div class="dft-ronds">${ronds}</div>
-      ${n ? `<p class="dft-mot">${n === o.ronds.length ? `Les ${n} espèces sont <b>${o.motOk}</b>.` : `${n} espèce${n > 1 ? "s" : ""} sur ${o.ronds.length} ${n > 1 ? "sont" : "est"} <b>${o.motOk}</b>.`}</p>` : ""}
+      ${n ? `<p class="dft-mot">${n === tous.length ? `Les ${n} espèces sont <b>${o.motOk}</b>.` : `${n} espèce${n > 1 ? "s" : ""} sur ${tous.length} ${n > 1 ? "sont" : "est"} <b>${o.motOk}</b>.`}</p>` : ""}
       ${jaugeLieuFinTest(o.x, o.empreintes)}
       ${ratees}
     </div>${o.pied || ""}`;
@@ -1126,7 +1291,7 @@ function portesEtape1(x) {
   if (defiEnPause(x)) {                     // R241 (36.17) : un défi mis de côté — « Reprendre le défi » d'abord (comme « Continuer les Rencontres », 2B)
     const s = suivi.defisEnCours[x.id], total = s.questions.length, faites = s.questions.filter(q => q.c).length;
     const erreurs = s.questions.filter(q => q.c && q.c !== q.e).length;
-    return `<div class="dfx-portes encours"><div class="etiq-jeu">Étape 1 · Rencontres</div>
+    return `<div class="dfx-portes encours"><div class="etiq-jeu">${nomEtape(1)}</div>
         <div class="dfx-encours"><div class="dfx-encours-haut"><b>Me tester · en cours</b><small>${faites} sur ${total}</small></div>
           <i class="jauge-jeu"><b style="width:${Math.round(100 * faites / Math.max(1, total))}%"></b></i>
           <div class="dfx-prochaine"><span>${erreurs ? `${erreurs} erreur${erreurs > 1 ? "s" : ""} jusqu'ici` : "Aucune erreur jusqu'ici"} · ${erreursPermisesDefi(total)} permise${erreursPermisesDefi(total) > 1 ? "s" : ""}</span></div>
@@ -1135,7 +1300,7 @@ function portesEtape1(x) {
         <small class="dfx-note">Le défi reste de côté : vous pourrez le reprendre plus tard.</small>${gain}</div>`;
   }
   if (st && st.dernier && !st.reussi) {     // après un défi pas réussi
-    return `<div class="dfx-portes"><div class="etiq-jeu">Étape 1 · Rencontres</div>
+    return `<div class="dfx-portes"><div class="etiq-jeu">${nomEtape(1)}</div>
         <p class="dfx-bandeau">Dernier défi : <b>${st.dernier.bons} sur ${st.dernier.total}</b>.${av.faites ? ` ${av.faites} espèce${av.faites > 1 ? "s sont" : " est"} déjà reconnue${av.faites > 1 ? "s" : ""} ; il en reste ${reste}.` : ""} Continuez comme vous préférez.</p>
         <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", `Rencontrer ${reste > 1 ? `les ${reste} espèces` : "l'espèce"} ${av.faites ? "qui reste" + (reste > 1 ? "nt" : "") : "de l'expédition"}.`, `${minutesRencontres(reste)} min`)}
           ${porteTester("Me tester", `Rejouer le défi sur les ${n} espèces.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min`)}</div>${gain}</div>`;
@@ -1147,7 +1312,7 @@ function portesEtape1(x) {
       : especeFaite(p, 1) ? `À revoir ici : ${especesARevoirIci(x).length} espèce${especesARevoirIci(x).length > 1 ? "s" : ""} déjà rencontrée${especesARevoirIci(x).length > 1 ? "s" : ""} ailleurs (une photo chacune)`
       : `Prochaine rencontre : ${estIdentifiee(p) ? echapper(p.nom_courant) : "une espèce inconnue"}`;
     const vign = p && !especeFaite(p, 1) ? `<span class="dfx-vign${estIdentifiee(p) ? "" : " inconnue"}"><img src="${photoMini(photoEsp(p))}" alt=""></span>` : "";
-    return `<div class="dfx-portes encours"><div class="etiq-jeu">Étape 1 · Rencontres</div>
+    return `<div class="dfx-portes encours"><div class="etiq-jeu">${nomEtape(1)}</div>
         <div class="dfx-encours"><div class="dfx-encours-haut"><b>Découvrir · en cours</b><small>${av.faites} sur ${n}</small></div>
           <i class="jauge-jeu"><b style="width:${Math.round(100 * av.faites / n)}%"></b></i>
           ${prochaine ? `<div class="dfx-prochaine">${vign}<span>${prochaine}</span></div>` : ""}
@@ -1155,7 +1320,7 @@ function portesEtape1(x) {
         <button class="dfx-plutot" data-porte="tester">${PICTO_TESTER}Me tester plutôt</button>
         <small class="dfx-note">Le défi porte sur les ${n} espèces.${av.faites ? ` ${av.faites > 1 ? `Les ${av.faites} déjà reconnues le restent` : "Celle déjà reconnue le reste"}, quoi qu'il arrive.` : ""}</small>${gain}</div>`;
   }
-  return `<div class="dfx-portes"><div class="etiq-jeu">Étape 1 · Rencontres</div>
+  return `<div class="dfx-portes"><div class="etiq-jeu">${nomEtape(1)}</div>
       <p class="dfx-phrase">Deux façons de reconnaître ces ${n} espèces : les découvrir une à une, ou vous tester tout de suite. Vous pourrez changer en route.</p>
       <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues))}
         ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${erreursPermisesDefi(nbQuestionsDefi(x))} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 2 aides`)}</div>${gain}</div>`;
