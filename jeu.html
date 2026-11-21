@@ -33,10 +33,22 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <!-- L'apparence du jeu -->
+  <!-- Étape R285c (41.12, 21/11) : l'écran d'attente du premier chargement (sur une 4G lente, environ 10 s la première fois ;
+       ensuite le jeu est gardé sur le téléphone et s'ouvre aussitôt). Son style est ici, pour s'afficher avant le reste. -->
+  <style>
+    #ecran-chargement { position: fixed; inset: 0; z-index: 9999; background: #f3eee2; color: #1f3a2e; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px; font-family: Georgia, "Times New Roman", serif; text-align: center; padding: 24px; }
+    #ecran-chargement img { width: 76px; height: 76px; animation: chargement-tourne 2.4s linear infinite; }
+    #ecran-chargement b { font-size: 1.7rem; font-weight: 600; }
+    #ecran-chargement small { font: 0.95rem/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; color: #5a6a60; }
+    @keyframes chargement-tourne { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { #ecran-chargement img { animation: none; } }
+  </style>
   <link rel="stylesheet" href="Programme/style.css?v=1.29.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
 </head>
 
 <body>
+  <div id="ecran-chargement" role="status" aria-live="polite"><img src="Images/myriade_logo.svg" alt=""><b>Myriade</b><small>Le carnet se prépare…<br>La première fois, cela peut prendre quelques secondes.</small></div>
   <!-- ===================== HTML ===================== -->
 
   <!-- Barre du haut -->
@@ -464,7 +476,7 @@
 
       <section class="ap-rubrique" id="ap-reglages">
       <h2 class="ap-titre">Réglages</h2>
-      <p>Les petits sons, votre prénom, la sauvegarde de votre partie, l'installation du jeu et, en bas, « Tout débloquer » ou « Recommencer ».</p>
+      <p>Les petits sons, votre prénom, la sauvegarde de votre partie, l'installation du jeu et, en bas, « Recommencer ».</p>
       <div id="ap-reglages-corps"></div>
       </section>
 
@@ -677,5 +689,6 @@
   <script src="Programme/30_signaler.js?v=1.29.0"></script>   <!-- étape CT1 : « Signaler une erreur » (formulaire Tally, panneau, merci) -->
   <script src="Programme/31_sous_le_pouce.js?v=1.29.0"></script>   <!-- étape R265 : réponses sous le pouce, ligne « Oui » + complément après la réponse -->
   <script src="Programme/22_typographie.js?v=1.29.0"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
+  <script>(function () { var e = document.getElementById("ecran-chargement"); if (e) e.remove(); })();   // R285c : tout est chargé, l'écran d'attente s'efface</script>
 </body>
 </html>

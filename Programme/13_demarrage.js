@@ -42,11 +42,8 @@ document.getElementById("onglet-apropos").onclick = () => montrer("apropos");   
 document.getElementById("onglet-progression").onclick = () => montrer("progression");   // étape 106
 document.getElementById("suite-bienvenue").onclick = suiteBienvenue;
 document.getElementById("retour-bienvenue").onclick = () => { etapeBienvenue = ECRANS_BIENVENUE[Math.max(0, ECRANS_BIENVENUE.indexOf(etapeBienvenue) - 1)]; afficherBienvenue(); window.scrollTo(0, 0); };   // étape PR4
-// Un rappel affiché dans la console (F12) à chaque ouverture de la page :
-// s'il apparaît, c'est que cette version du jeu connaît bien les commandes de test.
-console.log("Commandes de test :  toutDebloquer()   toutDebloquer(0.5)   restaurerPartie()   changerProfil()\n"
-          + "                     decouvrirEspeces()   decouvrirEspeces(10)   decouvrirEspece(\"Chamois\")\n"
-          + "                     trouverCaracteristiques()   trouverCaracteristiques(0.5)");
+// Étape R285c (41.12, demande d'Aubin du 21/11, 22 h 09) : les commandes de test restent utilisables dans la console (F12),
+//   mais ne sont plus annoncées aux joueurs. Leur liste est dans Code\commandes_console.txt.
 // Étape R192 (n° 11.7, note d'Aubin du 13/11 : « la page d'accueil ne se met pas à jour ») : sur téléphone, l'application
 //   reste ouverte en arrière-plan ; en y revenant (le lendemain, après une autre appli…), l'accueil montrait encore la date,
 //   l'espèce du jour, les défis et le lieu d'avant. On le redessine dès que le jeu revient à l'écran.

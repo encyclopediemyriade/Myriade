@@ -632,11 +632,12 @@ function dessinerActionsAPropos(attente) {
       question: oui ? "Revenir au jeu pas à pas ? Les territoires déjà ouverts le restent ; les espèces débloquées d'office quittent le carnet (sauf celles que vous avez reconnues vous-même)."
                     : "Tout débloquer ? Territoires, lieux, expéditions, étapes, finales et toutes les espèces seront ouverts.",
       faire: () => { reglerToutDebloque(!oui); dessinerActionsAPropos(); } },
+  ].filter(() => oui).concat([   // R285c (41.12) : « Tout débloquer » n'est plus proposé dans les réglages ; une partie déjà toute débloquée garde « Revenir au jeu pas à pas »
     { cle: "recommencer", titre: "Recommencer",
       texte: "Effacer toute la progression et repartir de zéro.",
       question: "Effacer toute la progression ? Cela ne peut pas être annulé.",
       faire: effacerPartie },
-  ];
+  ]);
   // Étape M11 (07/11, idée de l'utilisateur) : le prénom ou pseudo se règle ici (il n'est plus modifiable dans le Profil)
   const prenom = typeof prenomJoueur === "function" ? prenomJoueur() : "";
   const blocPrenomReglage = `<div class="apropos-action apropos-prenom" data-cle="prenom">${attente === "prenom"

@@ -1247,7 +1247,7 @@ function dessinerCarteChoix() {
     // Étape 209 : jamais bloquant — on peut tout ouvrir d'un clic
     const manque = avantProchainTerritoire();
     if (manque !== null) {
-      resume.insertAdjacentHTML("beforeend", `<br><small class="ouverture">${PHRASE_OUVERTURE}<br>Prochain territoire : encore ${texteManque(manque)} · tout débloquer : page À propos</small>`);   // étape PR4
+      resume.insertAdjacentHTML("beforeend", `<br><small class="ouverture">${PHRASE_OUVERTURE}<br>Prochain territoire : encore ${texteManque(manque)}</small>`);   // étape PR4 ; R285c (41.12) : plus de « tout débloquer »
     }
   }
   // Un clic sur un territoire jouable : on l'ajoute ou on le retire du choix, puis on redessine l'écran

@@ -193,7 +193,7 @@ function repondreInsolite(boutonClique, estJuste) {
 //   Rien n'est enregistré (ni fiche, ni questions trouvées, ni empreintes) : la partie du joueur ne change pas.
 //   Bouton visible tant que le chantier est en test (ESSAI_INSOLITES_VISIBLE) ; à retirer à la fin du chantier.
 // ==================================================================
-const ESSAI_INSOLITES_VISIBLE = true;
+const ESSAI_INSOLITES_VISIBLE = false;   // R285c (41.12) : retiré des réglages avant la mise en ligne ; reste lançable : lancerEssaiInsolites() dans la console
 const ESSAI_INSOLITES_QUESTIONS = 10;
 let essaiInsolitesVus = new Set();         // pour faire défiler toutes les questions d'un essai à l'autre (le temps de la visite)
 
