@@ -113,7 +113,8 @@ function questionsParEspece(x, deja) {
 }
 function nbQuestionsDefi(x) {
   const deja = new Set(x.liste.filter(e => typeof estReconnue === "function" && estReconnue(e)).map(e => e.nom_courant));
-  return [...questionsParEspece(x, deja).values()].reduce((a, b) => a + b, 0);
+  const sepa = typeof DEFI_VARIE !== "undefined" && DEFI_VARIE && paireSepareDefi(x) ? 1 : 0;   // R283 : « Ce qui les sépare » = une question pour deux espèces
+  return [...questionsParEspece(x, deja).values()].reduce((a, b) => a + b, 0) - sepa;
 }
 let defiExp = null;                 // le défi en cours
 // R249 : la question à l'écran — celle du défi, ou celle du repêchage (d.rep = { questions, i, lance })
@@ -193,7 +194,12 @@ function sauverDefiExp() {
   if (!d || !suivi) return;
   suivi.defisEnCours = suivi.defisEnCours || {};
   const plat = q => ({ e: q.espece.nom_courant, t: q.type || "photo", p: q.photo ? q.photo.src : null, s: q.photo ? q.photo.sujet || "" : "",
-      n: q.noms.map(o => o.nom_courant), c: q.choix ? q.choix.nom_courant : null, r: q.retires.map(o => o.nom_courant) });
+      n: q.noms.map(o => o.nom_courant), c: q.choix ? q.choix.nom_courant : null, r: q.retires.map(o => o.nom_courant),
+      // R283 : ce qu'il faut pour reposer les nouvelles façons à l'identique
+      ...(q.rp ? { rp: { partie: q.rp.partie, texte: q.rp.texte, couleur: q.rp.couleur || "NA", pour: q.rp.pour || "" } } : {}),
+      ...(q.indices ? { ix: q.indices.map(i => [i.etiq, i.texte]) } : {}),
+      ...(q.autre ? { a: q.autre.nom_courant, it: q.items.map(z => [z.e.nom_courant, z.rp.texte, z.rp.partie, z.place ? z.place.nom_courant : null]) } : {}),
+      ...(q.type === "quiestqui" ? { g: q.g, po: !!q.pose } : {}) });
   suivi.defisEnCours[d.x.id] = { i: d.i, aides: { ...d.aides }, pv: !!d.perduVu, questions: d.questions.map(plat),
     rep: d.rep ? { i: d.rep.i, lance: !!d.rep.lance, questions: d.rep.questions.map(plat) } : null };   // R249 : le repêchage aussi
   sauvegarder();
@@ -202,7 +208,7 @@ function oublierDefiExp(x) { if (suivi && suivi.defisEnCours && suivi.defisEnCou
 function defiEnPause(x) {
   const s = suivi && suivi.defisEnCours && suivi.defisEnCours[x.id];
   const repEnCours = s && s.rep && s.rep.questions && s.rep.questions.some(q => !q.c);   // R249 : un repêchage pas fini
-  return !!(s && s.questions && (s.questions.some(q => !q.c) || repEnCours) && !etapeFinie(x, 1));
+  return !!(s && s.questions && (s.questions.some(q => !q.c || (q.t === "quiestqui" && !q.po)) || repEnCours) && !etapeFinie(x, 1));   // R283 : une manche pas finie
 }
 function reprendreDefiExp(x) {
   const s = suivi && suivi.defisEnCours && suivi.defisEnCours[x.id];
@@ -211,12 +217,22 @@ function reprendreDefiExp(x) {
   const relire = q => {
     const e = E(q.e); if (!e) return null;
     const photo = q.p ? (photosDe(e).find(p => p.src === q.p) || { src: q.p, sujet: q.s }) : null;
-    return { espece: e, type: q.t || "photo", photo, noms: q.n.map(E).filter(Boolean), choix: q.c ? E(q.c) : null, retires: (q.r || []).map(E).filter(Boolean) };
+    const base = { espece: e, type: q.t || "photo", photo, noms: q.n.map(E).filter(Boolean), choix: q.c ? E(q.c) : null, retires: (q.r || []).map(E).filter(Boolean) };
+    // R283 : les nouvelles façons ; une donnée qui manque (ou une façon inconnue) → la question d'avant, sur sa photo
+    const enPhoto = () => ({ ...base, type: "photo", photo: photo || photosDefi(e)[0] || null });
+    if (base.type === "repere") return q.rp && q.rp.texte ? { ...base, rp: q.rp } : enPhoto();
+    if (base.type === "indices") return q.ix && q.ix.length ? { ...base, indices: q.ix.map(([etiq, texte]) => ({ etiq, texte })) } : enPhoto();
+    if (base.type === "separe") {
+      const b = q.a && E(q.a), items = (q.it || []).map(([n, texte, partie, pl]) => ({ e: E(n), rp: { texte, partie }, place: pl ? E(pl) : null }));
+      return b && items.length === 4 && items.every(z => z.e) ? { ...base, autre: b, items } : enPhoto();
+    }
+    if (base.type === "quiestqui") return photo && q.g ? { ...base, g: q.g, pose: !!q.po } : enPhoto();
+    return ["photo", "laquelle", "cri"].includes(base.type) ? base : enPhoto();
   };
   const questions = s.questions.map(relire);
   const repQ = s.rep && s.rep.questions ? s.rep.questions.map(relire) : null;   // R249
   if (questions.some(q => !q || q.noms.length < 2) || (repQ && repQ.some(q => !q || q.noms.length < 2))) { oublierDefiExp(x); lancerDefiExp(x); return; }   // données changées : on repart
-  const i = questions.findIndex(q => !q.choix);
+  const i = questions.findIndex(q => !faiteDefi(q));   // R283
   defiExp = { x, questions, i: i < 0 ? questions.length - 1 : i, aides: { retirer: true, silhouettes: true, ...(s.aides || {}) }, silhouettesVisibles: false,
               avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: new Set(x.liste.filter(estReconnue).map(e => e.nom_courant)), perduVu: !!s.pv };
   if (repQ) { repQ.forEach(q => q.rep = true); const j = repQ.findIndex(q => !q.choix); defiExp.rep = { questions: repQ, i: j < 0 ? repQ.length - 1 : j, lance: !!s.rep.lance }; }
@@ -283,6 +299,13 @@ function lancerDefiExp(x) {
   const vues = {}, rang = {};
   const dejaReconnues = new Set(x.liste.filter(estReconnue).map(e => e.nom_courant));
   const nb = questionsParEspece(x, dejaReconnues);
+  if (DEFI_VARIE) {   // R283 : reconnaître autrement (repère, indices, Qui est qui ?, Ce qui les sépare)
+    defiExp = { x, questions: questionsDefiVarie(x, nb, pool), i: 0, aides: { retirer: true, silhouettes: true }, silhouettesVisibles: false, prevues: nb,
+                avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues };
+    montrer("defiexp");
+    afficherQuestionDefiExp();
+    return;
+  }
   // R242 (choix 10A) : chaque espèce par plusieurs chemins — 1re : sa photo, « Quelle est cette espèce ? » ;
   //   2e : « Laquelle est … ? » (le nom est donné, 4 photos) ; 3e : son cri (4 photos), sinon une autre forme (femelle, jeune…),
   //   sinon de nouveau « Laquelle est … ? ». Jamais larve ni chenille (photosJeu).
@@ -325,13 +348,374 @@ function lancerDefiExp(x) {
   afficherQuestionDefiExp();
 }
 
+// ==================================================================
+// Étape R283 (21/11, chantier « Me tester, reconnaître autrement », choix d'Aubin « 1A · 2A · 3A · 4A · 5A » du 21/11, 13 h 34 ;
+//   fiche reprise_me_tester_varie.md ; maquettes https://claude.ai/artifact/HkrDM44xTU1xmLaM3RJqbc).
+//   Constat d'Aubin : photo, « Laquelle est… ? », cri, « c'est un peu toujours la même chose ». Le défi reconnaît désormais
+//   de sept façons, et la RÈGLE DU TEST tient partout : la question ne montre jamais sa réponse (on montre l'animal et on
+//   demande qui c'est, ou on donne un nom, un repère, des indices SANS photo de la réponse ; la photo vient après).
+//   • 1A « Le repère » : un repère de la carte (forme de la photo principale), 4 noms sans photo ; les fausses réponses ont une
+//     carte qui dit autre chose sur la même partie du corps, jamais le même repère ; après la réponse, la photo.
+//   • 2A « Ce qui les sépare » : une vraie paire de sosies de l'expédition, 4 repères (2 + 2) à placer sous les deux noms,
+//     jamais un repère que les deux partagent ; juste si les 4 sont à leur place ; une fois par défi ; compte pour les deux.
+//   • 3A « Par les indices » : 3 indices au plus (où, indice de présence, taille, activité ; jamais ce qui se lit sur la photo),
+//     4 photos ; réunis, ils ne désignent qu'une des 4.
+//   • 4A « Qui est qui ? » : une manche de 4 espèces (4 photos sans nom, 4 noms à placer), compte pour 4 questions ;
+//     un nom mal placé revient à sa liste et compte une erreur pour cette espèce (une seule par espèce).
+//   • 5A : en 20 questions, jamais deux fois de suite la même façon, aucune plus de 5 fois (la manche compte pour 4).
+//   Chaque espèce garde ses 3 passages (2 si déjà reconnue) ; la coriace reste la dernière question ; une espèce sans carte ni
+//   indices sûrs garde les façons d'avant (photo, « Laquelle est… ? », cri).
+// ==================================================================
+const DEFI_VARIE = true;          // false = le défi d'avant (R242-R264 : photo, « Laquelle est… ? », cri)
+const FACON_MAX = 5;              // 5A : aucune façon plus de 5 fois
+const FACONS_SIMPLES = ["photo", "silhouette", "laquelle", "cri", "repere", "indices"];   // « silhouette » : la question photo d'une espèce sans photo libre
+const INDICES_DEFI = ["Où", "Indice de présence", "Taille", "Activité"];   // 3A : ni bec ni museau (ils se voient sur la photo)
+function faiteDefi(q) { return q.type === "quiestqui" ? !!q.pose : !!q.choix; }
+function especesDeQ(q) { return q.autre ? [q.espece, q.autre] : [q.espece]; }
+function formeCourte(sujet) { const t = etiquetteForme(sujet); return t ? t.replace(/^(La|Le|L')\s?/, "").replace(/^./, c => c.toUpperCase()) : ""; }
+// Un mot du nom dans un texte donnerait la réponse (« Calotte bleu vif » → la mésange bleue ; « Gorge » → le rougegorge)
+function racinesNom(e) { return [...motsRepere(e.nom_courant)].filter(w => w.length >= 4); }
+function texteDitNom(texte, e) {
+  const r = racinesNom(e);
+  return [...motsRepere(texte)].some(w => w.length >= 4 && r.some(n => n.slice(0, 4) === w.slice(0, 4) || n.includes(w)));
+}
+function cartesReperes(o) { const r = reperesDe(o); return r ? r.reperes : []; }
+// Le même repère sur la carte d'une autre espèce : presque les mêmes mots ; ou, sur la même partie, la même couleur franche,
+//   un même mot de couleur, ou deux mots en commun (« Tête noire, grandes joues blanches » et « Joues blanches… » : à moitié vrai)
+const MOTS_COULEUR = ["noir", "blan", "jaun", "roug", "roux", "rous", "bleu", "vert", "gris", "brun", "oran", "rose", "viol", "dore", "beig", "fauv", "crem", "ocre", "somb", "argen", "pour"];
+function couleursDe(t) { return [...motsRepere(t)].map(w => MOTS_COULEUR.find(c => w.startsWith(c))).filter(Boolean); }
+function repereCommun(x, o) {
+  const mx = motsRepere(x.texte), cx = couleursDe(x.texte);
+  return cartesReperes(o).some(y => {
+    if (!reperesDifferent(x.texte, y.texte)) return true;
+    if (!x.partie || x.partie === "NA" || y.partie !== x.partie) return false;
+    if (x.couleur && x.couleur !== "NA" && y.couleur === x.couleur) return true;
+    if (couleursDe(y.texte).some(c => cx.includes(c))) return true;
+    return [...motsRepere(y.texte)].filter(w => mx.has(w)).length >= 2;
+  });
+}
+// Sa carte dit autre chose sur la même partie (« Calotte noire » face à « Calotte bleu vif ») : la fausse réponse est sûre
+function repereContraste(x, o) { return cartesReperes(o).some(y => y.partie === x.partie && reperesDifferent(x.texte, y.texte)); }
+// Les repères qu'on peut donner seuls : ceux de la photo principale, sur une partie dite, sans le nom dedans (parties visibles d'abord)
+function reperesInterrogeables(e) {
+  const r = reperesDe(e);
+  if (!r) return [];
+  return reperesPourForme(r, formePourPhoto(r, "")).filter(x => x.partie && x.partie !== "NA" && x.texte && !texteDitNom(x.texte, e))
+    .map((x, i) => ({ x, i })).sort((a, b) => rangPartie(a.x.partie) - rangPartie(b.x.partie) || a.i - b.i).map(o => o.x);
+}
+// 1A : 3 fausses réponses dont la carte dit autre chose sur la même partie, jamais le même repère (l'expédition d'abord)
+function piegesRepere(e, x, rp, pool) {
+  const ok = o => o !== e && estRenseigne(o.photo) && reperesDe(o) && repereContraste(rp, o) && !repereCommun(rp, o) && !texteDitNom(rp.texte, o);
+  const tri = l => melanger(l).sort((a, b) => (a.onglet === e.onglet ? 0 : 1) - (b.onglet === e.onglet ? 0 : 1));
+  const l = [...tri(x.liste.filter(ok)), ...tri(pool.filter(o => !x.liste.includes(o) && ok(o)))];
+  return l.filter((o, k) => l.findIndex(z => z.nom_courant === o.nom_courant) === k).slice(0, 3);
+}
+// 3A : un indice sépare-t-il la bonne espèce de cette fausse photo ?
+function separeParIndice(e, i, o) {
+  if (i.taille) { const a = tailleNombre(e), b = tailleNombre(o); return !!(a && b && Math.max(a, b) / Math.min(a, b) >= 1.6); }
+  const v = i.cle(e), w = i.cle(o);
+  return !!(v && w && w !== v);
+}
+function questionIndicesDefi(e, x) {
+  if (!estRenseigne(e.photo) || indicesAmbigus(e, x)) return null;
+  const cands = candidatsIndices(e).filter(i => INDICES_DEFI.includes(i.etiq) && !texteDitNom(i.texte, e));
+  const pieges = piegesIndices(e, x);
+  if (!cands.length || pieges.length < 3) return null;
+  const choisis = [];
+  let reste = pieges.slice();
+  while (reste.length && choisis.length < 3) {   // l'indice qui écarte le plus de fausses photos qui restent
+    const m = cands.filter(i => !choisis.includes(i)).map(i => ({ i, n: reste.filter(o => separeParIndice(e, i, o)).length })).sort((a, b) => b.n - a.n)[0];
+    if (!m || !m.n) break;
+    choisis.push(m.i); reste = reste.filter(o => !separeParIndice(e, m.i, o));
+  }
+  if (reste.length) return null;   // réunis, les indices ne désigneraient pas une seule des 4
+  for (const i of cands) if (choisis.length < 2 && !choisis.includes(i)) choisis.push(i);
+  return { indices: cands.filter(i => choisis.includes(i)).map(i => ({ etiq: i.etiq, texte: i.texte, taille: !!i.taille })), pieges };
+}
+// 2A : les repères d'une espèce qui la séparent de son sosie (jamais un repère partagé ; ceux qui parlent de la même partie d'abord)
+function reperesSeparables(a, b) {
+  return reperesInterrogeables(a).filter(x => !repereCommun(x, b) && !texteDitNom(x.texte, b))
+    .map((x, i) => ({ x, i, c: repereContraste(x, b) ? 0 : 1 })).sort((p, q) => p.c - q.c || p.i - q.i).map(o => o.x);
+}
+function paireSepareDefi(x) {
+  const paires = [];
+  for (const a of x.liste) for (const b of sosiesDe(a)) {
+    if (!x.liste.includes(b) || a.nom_courant >= b.nom_courant) continue;
+    const ra = reperesSeparables(a, b), rb = reperesSeparables(b, a);
+    if (ra.length >= 2 && rb.length >= 2) paires.push({ a, b, ra: ra.slice(0, 2), rb: rb.slice(0, 2) });
+  }
+  return paires.length ? melanger(paires)[0] : null;
+}
+// Ce que chaque espèce peut recevoir : combien de fois chaque façon (le repère : 2 repères différents au plus ; indices et cri : 1)
+function faconsEspece(e, x, pool) {
+  const pieges = piegesDefi(e, x, pool);
+  const avecPhotos = [e, ...pieges].every(o => estRenseigne(o.photo)) && pieges.length >= 3;
+  const cri = typeof aUnCri === "function" && aUnCri(e) && typeof sonActif !== "undefined" && sonActif && avecPhotos;
+  const reps = reperesInterrogeables(e).map(rp => ({ rp, pieges: piegesRepere(e, x, rp, pool) })).filter(o => o.pieges.length >= 3).slice(0, 2);
+  const ind = questionIndicesDefi(e, x);
+  const sansPhoto = !estRenseigne(e.photo);
+  return { photo: sansPhoto ? 0 : 9, silhouette: sansPhoto ? 9 : 0, laquelle: avecPhotos ? 2 : 0, cri: cri ? 1 : 0, repere: reps.length, indices: ind ? 1 : 0, reps, ind };
+}
+// 5A : le déroulé. Les deux manches (Ce qui les sépare, Qui est qui ?) d'abord réservées, puis un tirage glouton refait 60 fois,
+//   gardé quand il ne met jamais deux fois de suite la même façon ni la même espèce, et aucune façon plus de 5 fois.
+function planDefiVarie(x, nb, pool) {
+  const f = new Map(x.liste.map(e => [e, faconsEspece(e, x, pool)]));
+  const reste = new Map(x.liste.map(e => [e, nb.get(e) || 0]));
+  const cor = coriaceExp(x), blocs = [];
+  const sep = paireSepareDefi(x);
+  if (sep && reste.get(sep.a) > (sep.a === cor ? 1 : 0) && reste.get(sep.b) > (sep.b === cor ? 1 : 0)) {
+    blocs.push({ bloc: true, facon: "separe", especes: [sep.a, sep.b], sep, taille: 1 });
+    reste.set(sep.a, reste.get(sep.a) - 1); reste.set(sep.b, reste.get(sep.b) - 1);
+  }
+  const libres = e => reste.get(e) - (e === cor ? 1 : 0);
+  const pourQq = melanger(x.liste.filter(e => estRenseigne(e.photo) && libres(e) > 0)).sort((a, b) => libres(b) - libres(a));
+  if (pourQq.length >= 4) {
+    const qq = pourQq.slice(0, 4);
+    blocs.push({ bloc: true, facon: "quiestqui", especes: qq, taille: 4 });
+    qq.forEach(e => reste.set(e, reste.get(e) - 1));
+  }
+  const noteSuite = suite => {   // la vraie mesure : mêmes espèces ou même façon à la suite, façons au-delà de 5 ; une manche pas en tête
+    const compte = {};
+    let n = suite.length && suite[0].bloc ? 5 : 0;
+    suite.forEach((o, k) => { compte[o.facon] = (compte[o.facon] || 0) + o.taille; if (k) n += penalite(suite[k - 1], o, {}); });
+    for (const c of Object.values(compte)) n += Math.max(0, c - FACON_MAX) * 50;
+    return n;
+  };
+  const penalite = (prec, o, compte) => (prec && o.especes.some(e => prec.especes.includes(e)) ? 1000 : 0) + (prec && prec.facon === o.facon ? 100 : 0)
+    + Math.max(0, (compte[o.facon] || 0) + o.taille - FACON_MAX) * 50;
+  let meilleure = null, scoreMin = Infinity;
+  for (let essai = 0; essai < 60 && scoreMin > 0; essai++) {
+    const r = new Map(reste), vus = new Map(x.liste.map(e => [e, []])), compte = {}, suite = [], aPlacer = blocs.slice();
+    const usage = (e, fa) => vus.get(e).filter(z => z === fa).length;
+    const options = e => FACONS_SIMPLES.filter(fa => usage(e, fa) < f.get(e)[fa]);
+    let fin = null;
+    if (cor && r.get(cor) > 0) { r.set(cor, r.get(cor) - 1); fin = cor; }
+    const total = [...r.values()].reduce((a, b) => a + b, 0) + aPlacer.length;
+    for (let n = 0; n < total; n++) {
+      const prec = suite[suite.length - 1], possibles = [...aPlacer];
+      for (const e of x.liste) if (r.get(e) > 0) for (const fa of options(e)) possibles.push({ especes: [e], facon: fa, taille: 1 });
+      let choix = null, pMin = Infinity;
+      for (const o of melanger(possibles)) {
+        let p = penalite(prec, o, compte) + (compte[o.facon] || 0) * 0.8 + Math.random() * 0.5;
+        if (o.bloc) p += n < 2 ? 6 : -0.5;                 // pas de manche tout au début
+        else { const e = o.especes[0]; p += usage(e, o.facon) * 3 - r.get(e) * (0.5 + 3 / options(e).length); }   // peu de façons possibles = à placer tôt, entre les autres
+        if (n === 0 && o.facon !== "photo") p += 2;        // on commence doucement, par une photo
+        if (p < pMin) { pMin = p; choix = o; }
+      }
+      if (!choix) break;
+      suite.push(choix); compte[choix.facon] = (compte[choix.facon] || 0) + choix.taille;
+      if (choix.bloc) aPlacer.splice(aPlacer.indexOf(choix), 1); else r.set(choix.especes[0], r.get(choix.especes[0]) - 1);
+      choix.especes.forEach(e => vus.get(e).push(choix.facon));
+    }
+    if (fin) {   // la coriace, en dernier, avec la façon qui va le mieux après la précédente
+      const prec = suite[suite.length - 1];
+      const fa = options(fin).map(z => ({ z, p: penalite(prec, { especes: [fin], facon: z, taille: 1 }, compte) + usage(fin, z) * 3 + Math.random() })).sort((a, b) => a.p - b.p)[0];
+      const o = { especes: [fin], facon: fa ? fa.z : estRenseigne(fin.photo) ? "photo" : "silhouette", taille: 1 };
+      suite.push(o); compte[o.facon] = (compte[o.facon] || 0) + 1;
+    }
+    const s = noteSuite(suite);
+    if (s < scoreMin) { scoreMin = s; meilleure = { suite, fin: !!fin }; }
+  }
+  // Retouche : des échanges de deux places, gardés quand ils améliorent (la coriace reste la dernière)
+  const l = meilleure ? meilleure.suite : [], bout = l.length - (meilleure && meilleure.fin ? 1 : 0);
+  for (let k = 0; k < 400 && scoreMin > 0 && bout > 2; k++) {
+    const i = Math.floor(Math.random() * bout), j = Math.floor(Math.random() * bout);
+    if (i === j) continue;
+    [l[i], l[j]] = [l[j], l[i]];
+    const s = noteSuite(l);
+    if (s < scoreMin) scoreMin = s; else [l[i], l[j]] = [l[j], l[i]];
+  }
+  return { suite: l, f };
+}
+// Les questions, dans l'ordre du déroulé
+function questionsDefiVarie(x, nb, pool) {
+  const { suite, f } = planDefiVarie(x, nb, pool);
+  const vues = {}, usage = new Map(), questions = [];
+  const prendrePhoto = (e, auHasard) => {
+    const ph = photosDefi(e), deja = vues[e.nom_courant] || [];
+    const neuves = ph.filter(p => !deja.includes(p.src));
+    const photo = auHasard ? (melanger(neuves)[0] || ph[0]) : deja.length ? (neuves.find(p => etiquetteForme(p.sujet)) || neuves[0] || ph[0]) : ph[0];
+    if (photo) vues[e.nom_courant] = [...deja, photo.src];
+    return photo || null;
+  };
+  let g = 0;
+  for (const u of suite) {
+    if (u.facon === "quiestqui") {
+      g++;
+      const noms = melanger(u.especes.slice());
+      for (const e of melanger(u.especes.slice())) questions.push({ espece: e, type: "quiestqui", g, photo: prendrePhoto(e, true), noms, choix: null, retires: [], pose: false });
+      continue;
+    }
+    if (u.facon === "separe") {
+      const { a, b, ra, rb } = u.sep;
+      const items = melanger([...ra.map(rp => ({ e: a, rp })), ...rb.map(rp => ({ e: b, rp }))]).map(o => ({ ...o, place: null }));
+      questions.push({ espece: a, autre: b, type: "separe", photo: null, noms: [a, b], items, choix: null, retires: [] });
+      continue;
+    }
+    const e = u.especes[0], fe = f.get(e), n = usage.get(e) || {}, rang = n[u.facon] || 0;
+    n[u.facon] = rang + 1; usage.set(e, n);
+    const base = { espece: e, type: u.facon, photo: null, choix: null, retires: [] };
+    if (u.facon === "repere") questions.push({ ...base, rp: fe.reps[rang].rp, noms: melanger([e, ...fe.reps[rang].pieges]) });
+    else if (u.facon === "indices") questions.push({ ...base, indices: fe.ind.indices, noms: melanger([e, ...fe.ind.pieges]) });
+    else if (u.facon === "photo" || u.facon === "silhouette") questions.push({ ...base, type: "photo", facon: u.facon, photo: prendrePhoto(e, false), noms: melanger([e, ...piegesDefi(e, x, pool)]) });
+    else questions.push({ ...base, noms: melanger([e, ...piegesDefi(e, x, pool)]) });
+  }
+  return questions;
+}
+// 1A : la question du repère (sans photo). Le dessin de la partie n'est montré que si les 4 réponses ont la même silhouette de famille.
+function corpsRepereDefi(q) {
+  const rp = q.rp, r = reperesDe(q.espece);
+  const contours = q.noms.map(o => contourDe(o, reperesDe(o)));
+  const dessin = r && contours[0] && contours.every(c => c === contours[0]) ? dessinPartie(contours[0], rp.partie) : "";
+  const forme = rp.pour && !["tous", "adulte"].includes(rp.pour) && r && formesReperes(r).length > 1 ? (NOMS_FORME[rp.pour] || majuscule(rp.pour)) : "";
+  return `<div class="dfx-facon">Le repère</div>
+    <p class="cdo-q">À qui est ce repère ?</p>
+    <div class="dfx-repere">${dessin ? `<span class="rp-image">${dessin}</span>` : ""}<span>${forme ? `<small>${echapper(forme)}</small>` : ""}<b>${echapper(majuscule(rp.texte))}</b></span></div>
+    <p class="dfx-consigne">Sans photo : retrouvez l'espèce à qui il appartient.</p>
+    <div class="cdo-noms dfx-noms-col">${q.noms.map((e, k) => boutonNomDefi(e, k, q)).join("")}</div>`;
+}
+// Après la réponse juste : la photo, avec le repère
+function photoRepereDefi(q) {
+  const ph = q.rp.pour ? photosDe(q.espece).find(p => p.sujet && FORME_DE_SUJET[p.sujet] === q.rp.pour) : null;
+  const img = ph ? imagePhoto(ph.src, q.espece.nom_courant, true) : celluleImage(q.espece, true);
+  return `<div class="dfx-rp-photo agrandir-groupe"><figure class="agr" data-legende="${echapper(q.espece.nom_courant)}"><span class="agr-cadre">${img}${LOUPE_SVG}</span>
+      <figcaption><b>${echapper(q.espece.nom_courant)}</b><span>${echapper(majuscule(q.rp.texte))}</span></figcaption></figure></div>`;
+}
+// Après une erreur sur le repère : ce que dit chacune des deux cartes sur cette partie
+function blocRepereErreur(q, choisie) {
+  const rc = reperesDe(choisie), principale = rc ? reperesPourForme(rc, formePourPhoto(rc, "")) : [];
+  const y = [...principale, ...cartesReperes(choisie)].find(z => z.partie === q.rp.partie && reperesDifferent(z.texte, q.rp.texte));
+  const ligne = (e, t, cls) => `<li><i class="${cls}"></i><span><b>${echapper(majuscule(nomCourt(e)))} :</b> ${echapper(minusculeTexte(t))}</span></li>`;
+  return `<div class="dfx-separe"><small>Ce qui les sépare</small><ul>${ligne(q.espece, q.rp.texte, "ok")}${y ? ligne(choisie, y.texte, "ko") : ""}</ul></div>`;
+}
+// 3A : la question des indices (4 photos, aucun nom)
+function corpsIndicesDefi(q) {
+  return `<div class="dfx-facon">Par les indices</div>
+    <p class="cdo-q">Qui a laissé ces indices ?</p>
+    <ul class="fe-indices dfx-indices">${q.indices.map(i => `<li class="fe-indice"><span class="fe-etiq">${echapper(i.etiq)}</span><span class="fe-texte">${echapper(i.texte)}</span></li>`).join("")}</ul>
+    <div class="ore-photos dfx-photos">${q.noms.map((e, k) => boutonPhotoDefi(e, k, q)).join("")}</div>`;
+}
+function texteIndicePour(o, etiq) {
+  if (etiq === "Taille") { const t = tailleRencontre(o); return t ? majuscule(t.texte) : ""; }
+  const c = candidatsIndices(o).find(z => z.etiq === etiq);
+  return c ? c.texte : "";
+}
+// Après une erreur sur les indices : le premier indice qui les sépare, pour les deux espèces
+function blocIndicesErreur(q, choisie) {
+  const l = q.indices.map(i => ({ i, autre: texteIndicePour(choisie, i.etiq) })).find(z => z.autre && simplifier(z.autre) !== simplifier(z.i.texte));
+  if (!l) return null;
+  const ligne = (e, t, cls) => `<li><i class="${cls}"></i><span><b>${echapper(majuscule(nomCourt(e)))} :</b> ${echapper(minusculeTexte(t))}</span></li>`;
+  return `<div class="dfx-separe"><small>Ce qui les sépare · ${echapper(minusculeTexte(l.i.etiq))}</small><ul>${ligne(q.espece, l.i.texte, "ok")}${ligne(choisie, l.autre, "ko")}</ul></div>`;
+}
+// 2A : placer 4 repères sous les deux noms (sans photo), puis « Vérifier »
+function corpsSepareDefi(q) {
+  return `<div class="dfx-facon">Ce qui les sépare</div>
+    <p class="cdo-q">À qui est chaque repère ?</p>
+    <p class="dfx-consigne">Sans photo : touchez le nom de l'espèce sous chaque repère.</p>
+    <ul class="dfx-sp">${q.items.map((it, k) => `<li class="dfx-sp-item" data-k="${k}"><span class="dfx-sp-txt">${echapper(majuscule(it.rp.texte))}</span>
+      <span class="dfx-sp-choix">${q.noms.map((e, n) => `<button type="button" class="dfx-sp-nom${it.place === e ? " choisi" : ""}" data-k="${k}" data-n="${n}" aria-pressed="${it.place === e}">${echapper(e.nom_courant)}</button>`).join("")}</span></li>`).join("")}</ul>
+    <button class="cdo-suivant" id="dfx-sp-ok"${q.items.every(it => it.place) ? "" : " disabled"}>Vérifier</button>`;
+}
+function brancherSepareDefi(q) {
+  const zone = document.getElementById("vue-defiexp");
+  zone.querySelectorAll(".dfx-sp-nom").forEach(b => b.onclick = () => {
+    if (q.choix) return;
+    q.items[+b.dataset.k].place = q.noms[+b.dataset.n];
+    b.parentNode.querySelectorAll("button").forEach(o => { const on = o === b; o.classList.toggle("choisi", on); o.setAttribute("aria-pressed", on); });
+    document.getElementById("dfx-sp-ok").disabled = !q.items.every(z => z.place);
+  });
+  document.getElementById("dfx-sp-ok").onclick = () => verifierSepareDefi(q);
+}
+function verifierSepareDefi(q) {
+  if (!defiExp || q.choix || !q.items.every(z => z.place)) return;
+  const juste = q.items.every(z => z.place === z.e), faux = q.items.filter(z => z.place !== z.e).length;
+  q.choix = juste ? q.espece : q.autre;
+  const zone = document.getElementById("vue-defiexp");
+  zone.querySelectorAll(".dfx-sp-item").forEach((li, k) => {
+    const it = q.items[k];
+    li.classList.add(it.place === it.e ? "ok" : "ko");
+    li.querySelectorAll("button").forEach((b, n) => { b.disabled = true; if (q.noms[n] === it.e) b.classList.add("bon"); else if (q.noms[n] === it.place) b.classList.add("faux"); });
+  });
+  const ok = document.getElementById("dfx-sp-ok"); if (ok) ok.remove();
+  const fig = e => `<figure class="ok agr" data-legende="${echapper(e.nom_courant)}"><span class="agr-cadre">${celluleImage(e, true)}${LOUPE_SVG}</span><span>${echapper(e.nom_courant)}</span>
+      <ul class="dfx-sp-rp">${q.items.filter(z => z.e === e).map(z => `<li class="${z.place === z.e ? "ok" : "ko"}">${echapper(majuscule(z.rp.texte))}</li>`).join("")}</ul></figure>`;
+  const html = `<div class="dfx-erreur dfx-sp-fin">${juste ? `<small class="dfx-oui">Les 4 repères sont à leur place</small>`
+      : `<small class="dfx-pas">Pas cette fois</small><b class="dfx-cetait">${faux > 1 ? `${faux} repères mal placés` : "Un repère mal placé"}</b>`}
+    <div class="dfx-duo agrandir-groupe">${fig(q.espece)}${fig(q.autre)}</div></div>`;
+  conclureReponseDefi(q, juste, html);
+}
+// 4A : la manche « Qui est qui ? » (les questions d'un même groupe g, à la suite)
+// « du merle noir », « de la mésange bleue », « de l'hermine », « des… »
+function deNomAvecArticle(e) { const t = nomAvecArticle(e); return /^le /.test(t) ? "du " + t.slice(3) : /^les /.test(t) ? "des " + t.slice(4) : "de " + t; }
+function groupeQq(d, q) { return d.questions.filter(z => z.type === "quiestqui" && z.g === q.g); }
+function corpsQuiEstQui(d, q) {
+  const gr = groupeQq(d, q), restants = q.noms.filter(e => { const z = gr.find(y => y.espece === e); return z && !z.pose; });
+  return `<div class="dfx-facon">Qui est qui ?</div>
+    <p class="cdo-q">${restants.length ? "Touchez un nom, puis sa photo." : "Les 4 sont à leur place."}</p>
+    <div class="dfx-qq-noms${restants.length ? "" : " vide"}">${restants.map(e => `<button type="button" class="dfx-qq-nom${d.qqNom === e ? " choisi" : ""}" data-nom="${echapper(e.nom_courant)}" aria-pressed="${d.qqNom === e}">${echapper(e.nom_courant)}</button>`).join("")}</div>
+    <div class="dfx-qq-grille">${gr.map((z, k) => `<div class="dfx-qq-case${z.pose ? " pose" : ""}${d.qqPhoto === k ? " choisie" : ""}" data-k="${k}">
+        <button type="button" class="dfx-qq-ph" data-k="${k}" aria-label="Photo ${k + 1}${z.photo && formeCourte(z.photo.sujet) ? ` · ${formeCourte(z.photo.sujet)}` : ""}"${z.pose ? " disabled" : ""}>${z.photo ? imagePhoto(z.photo.src, `Photo ${k + 1}`, true) : celluleImage(z.espece, true)}${z.photo && formeCourte(z.photo.sujet) ? `<small>${echapper(formeCourte(z.photo.sujet))}</small>` : ""}</button>
+        <div class="dfx-qq-place">${z.pose ? `✓ ${echapper(z.espece.nom_courant)}` : ""}</div></div>`).join("")}</div>`;
+}
+function brancherQuiEstQui(d, q) {
+  const bloc = document.getElementById("dfx-qq");
+  if (!bloc) return;
+  const gr = groupeQq(d, q);
+  bloc.querySelectorAll(".dfx-qq-nom").forEach(b => b.onclick = () => {
+    const e = especeParNom(b.dataset.nom);
+    if (d.qqPhoto != null) { placerQuiEstQui(d, q, e, gr[d.qqPhoto]); return; }
+    d.qqNom = d.qqNom === e ? null : e; redessinerQuiEstQui(d, q);
+  });
+  bloc.querySelectorAll(".dfx-qq-ph").forEach(b => b.onclick = () => {
+    const k = +b.dataset.k;
+    if (d.qqNom) { placerQuiEstQui(d, q, d.qqNom, gr[k]); return; }
+    d.qqPhoto = d.qqPhoto === k ? null : k; redessinerQuiEstQui(d, q);
+  });
+}
+function redessinerQuiEstQui(d, q, faute) {
+  const bloc = document.getElementById("dfx-qq");
+  if (!bloc) return;
+  bloc.innerHTML = corpsQuiEstQui(d, q);
+  if (faute != null) { const c = bloc.querySelector(`.dfx-qq-case[data-k="${faute}"]`); if (c) { c.classList.add("faute"); setTimeout(() => c.classList.remove("faute"), 900); } }
+  brancherQuiEstQui(d, q);
+}
+// Un nom posé sur une photo : juste, il reste ; faux, il revient à sa liste et compte une erreur pour cette espèce (la première seulement)
+function placerQuiEstQui(d, q, e, z) {
+  const gr = groupeQq(d, q), es = gr.find(y => y.espece === e);
+  d.qqNom = null; d.qqPhoto = null;
+  if (!es || !z || z.pose) { redessinerQuiEstQui(d, q); return; }
+  const bon = z.espece === e;
+  if (!es.choix) {
+    es.choix = bon ? e : z.espece;
+    if (d.dejaReconnues.has(e.nom_courant)) { if (bon) acquerir(e, IDENTIFICATION); else noterEchec(e, IDENTIFICATION); }
+    else if (!bon && typeof noterEchec === "function") noterEchec(e, IDENTIFICATION);
+  }
+  if (bon) es.pose = true;
+  try { jouerSon(bon ? "bonne" : "mauvaise"); } catch (err) {}
+  sauverDefiExp();
+  majCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length));
+  const barre = document.querySelector("#vue-defiexp .dfx-barre"); if (barre) barre.outerHTML = enteteDefiExp().match(/<div class="dfx-barre[^"]*"[^>]*>.*<\/div>$/s)[0];
+  redessinerQuiEstQui(d, q, bon ? null : gr.indexOf(z));
+  if (gr.every(y => y.pose)) finirQuiEstQui(d, q);
+}
+function finirQuiEstQui(d, q) {
+  const gr = groupeQq(d, q), fautes = gr.filter(y => y.choix !== y.espece);
+  const html = fautes.length ? `<div class="dfx-erreur dfx-qq-fin"><small class="dfx-pas">Pas du premier coup</small>
+      ${fautes.map(y => `<p class="dfx-qq-faute"><b>${echapper(y.espece.nom_courant)}</b> · votre premier choix : la photo ${echapper(deNomAvecArticle(y.choix))}.</p>${blocSepare(y.espece, y.choix, y.photo && y.photo.sujet)}`).join("")}</div>`
+    : `<p class="dfx-qq-bravo">Les 4 du premier coup.</p>`;
+  conclureReponseDefi(q, !fautes.length, html, { son: false, noter: false });
+}
+
 // Le haut de l'écran : « Quitter », l'expédition, « 5 / 14 », puis la barre (une case par question)
 function enteteDefiExp() {
   const d = defiExp;
   if (d.rep && d.rep.lance) return enteteRepechage(d.x.titre, d.rep.questions.map(q => ({ repondu: !!q.choix, juste: q.choix === q.espece })), d.rep.i);   // R249
-  const cases = d.questions.map((q, k) => `<i class="${q.choix ? (q.choix === q.espece ? "ok" : "ko") : k === d.i ? "cur" : ""}"></i>`).join("");
+  // R283 : la manche « Qui est qui ? » occupe 4 cases (« 9 à 12 / 20 »)
+  const qc = d.questions[d.i], gr = qc && qc.type === "quiestqui" ? d.questions.map((z, k) => k).filter(k => d.questions[k].type === "quiestqui" && d.questions[k].g === qc.g) : [d.i];
+  const cases = d.questions.map((q, k) => `<i class="${q.choix ? (q.choix === q.espece ? "ok" : "ko") : gr.includes(k) ? "cur" : ""}"></i>`).join("");
+  const n = d.questions.length, compte = gr.length > 1 ? `${gr[0] + 1} à ${gr[gr.length - 1] + 1} / ${n}` : `${Math.min(d.i + 1, n)} / ${n}`;
   return `<div class="dfx-haut"><button class="cdo-quitter dfx-sortir" id="dfx-quitter" aria-label="Revenir à l'expédition (le défi est gardé)">←</button>
-      <span class="cdo-titre">Me tester · ${echapper(d.x.titre)}</span><span class="dfx-compte">${Math.min(d.i + 1, d.questions.length)} / ${d.questions.length}</span></div>
+      <span class="cdo-titre">Me tester · ${echapper(d.x.titre)}</span><span class="dfx-compte">${compte}</span></div>
     <div class="dfx-barre" style="grid-template-columns:repeat(${d.questions.length},1fr)">${cases}</div>`;
 }
 function imageQuestionDefi(q) {
@@ -353,10 +737,14 @@ function afficherQuestionDefiExp() {
     if (s.photo) prechargerPhotos([s.photo.src]);
     if (s.type !== "photo") prechargerEspeces(s.noms, true);
   }
+  if (q.type === "quiestqui") { d.qqNom = null; d.qqPhoto = null; }
   const zone = document.getElementById("vue-defiexp");
   const etiquette = q.photo ? etiquetteForme(q.photo.sujet) : "";
-  const enPhotos = q.type === "laquelle" || q.type === "cri";
-  const corps = q.type === "cri"
+  const enPhotos = q.type === "laquelle" || q.type === "cri" || q.type === "indices";
+  const sansAides = q.type === "separe" || q.type === "quiestqui";   // R283 : rien à retirer dans une manche
+  const corps = q.type === "repere" ? corpsRepereDefi(q) : q.type === "indices" ? corpsIndicesDefi(q) : q.type === "separe" ? corpsSepareDefi(q)
+    : q.type === "quiestqui" ? `<div id="dfx-qq">${corpsQuiEstQui(d, q)}</div>`
+    : q.type === "cri"
     ? `<div class="ore-ecoute dfx-ecoute"><button class="ore-play" id="dfx-play" aria-label="Écouter le cri">${PLAY_SVG}</button><p class="cdo-q">À qui est ce cri ?</p></div>
        <div class="ore-photos dfx-photos">${q.noms.map((e, k) => boutonPhotoDefi(e, k, q)).join("")}</div>`
     : q.type === "laquelle"
@@ -368,11 +756,13 @@ function afficherQuestionDefiExp() {
   zone.innerHTML = `<div class="cdo dfx">${enteteDefiExp()}${enRep ? "" : ligneCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length))}
       ${corps}
       <div class="cdo-retour" id="dfx-retour"></div>
-      ${enRep ? "" : `<div class="dfx-aides" id="dfx-aides"><small>Vos aides</small>
+      ${enRep || sansAides ? "" : `<div class="dfx-aides" id="dfx-aides"><small>Vos aides</small>
         <button class="cdo-second" id="dfx-retirer"${d.aides.retirer ? "" : " disabled"}>Retirer deux réponses</button>
         ${enPhotos ? "" : `<button class="cdo-second" id="dfx-silh"${d.aides.silhouettes ? "" : " disabled"}>Voir les silhouettes</button>`}</div>`}
     </div>`;   // R249 : pas d'aide pendant le repêchage (une erreur n'y coûte rien)
   zone.querySelectorAll(".cdo-nom, .dfx-ph").forEach(b => b.onclick = () => repondreDefiExp(q.noms[+b.dataset.k], b));
+  if (q.type === "separe") brancherSepareDefi(q);
+  if (q.type === "quiestqui") brancherQuiEstQui(d, q);
   const play = document.getElementById("dfx-play");
   if (play) { play.onclick = () => ecouter(q.espece); setTimeout(() => { if (defiExp && qCouranteDefi(defiExp) === q && !q.choix) ecouter(q.espece); }, 250); }
   document.getElementById("dfx-quitter").onclick = mettreDefiDeCote;   // R241 (36.33) : plus de feuille « Quitter le défi ? »
@@ -404,11 +794,9 @@ function aideSilhouettes() {
 
 function repondreDefiExp(choisie, bouton) {
   const d = defiExp, q = d ? qCouranteDefi(d) : null;
-  if (!d || q.choix) return;
-  const enRep = !!(d.rep && d.rep.lance);   // R249
+  if (!d || q.choix || q.type === "separe" || q.type === "quiestqui") return;   // R283 : les deux manches ont leur propre fin
   q.choix = choisie;
   const juste = choisie === q.espece;
-  try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}   // R239 (36.04) : les mêmes petits sons que le reste du jeu
   const zone = document.getElementById("vue-defiexp");
   zone.querySelectorAll(".cdo-nom").forEach((b, k) => {
     b.disabled = true;
@@ -425,30 +813,43 @@ function repondreDefiExp(choisie, bouton) {
       if (q.noms[k] === q.espece) b.classList.add("bon"); else if (b === bouton) b.classList.add("faux"); else b.classList.add("autre");
     });
   }
+  // R265 (40.12, 6A) : une bonne réponse a sa ligne « Oui » et un repère de terrain (le nom n'est pas redit, R239)
+  //   R283 : après le repère (posé sans photo), la photo arrive avec le repère, pour expliquer
+  const oui = typeof verdictHtml === "function" ? `<p class="apf-verdict">${verdictHtml({ juste: true, complement: q.type === "repere" ? "" : complementReconnaissance(q.espece, q.photo && q.photo.sujet) })}</p>` : "";
+  const bloc = q.type === "repere" ? blocRepereErreur(q, choisie) : q.type === "indices" ? blocIndicesErreur(q, choisie) : null;
+  const html = juste ? `${oui}${q.type === "repere" ? photoRepereDefi(q) : ""}`
+    : `${erreurCoteACote(q.espece, choisie, q.photo && q.photo.sujet, bloc)}${q.type === "cri" && typeof aUnCri === "function" && aUnCri(choisie)
+      ? `<div class="dfx-ecouter"><small>Écoutez les deux :</small><button class="cdo-second" data-ecoute="${echapper(q.espece.nom_courant)}">${PLAY_SVG}${echapper(q.espece.nom_courant)}</button><button class="cdo-second" data-ecoute="${echapper(choisie.nom_courant)}">${PLAY_SVG}${echapper(choisie.nom_courant)}</button></div>` : ""}`;
+  conclureReponseDefi(q, juste, html);
+}
+// R283 : la suite d'une réponse, commune à toutes les façons (son, compte, sauvegarde, explication, « Question suivante »)
+//   opts.son = false : déjà joué (Qui est qui ?, à chaque nom posé) ; opts.noter = false : déjà noté espèce par espèce
+function conclureReponseDefi(q, juste, explication, opts = {}) {
+  const d = defiExp, enRep = !!(d.rep && d.rep.lance);   // R249
+  if (opts.son !== false) try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}   // R239 (36.04) : les mêmes petits sons que le reste du jeu
+  const zone = document.getElementById("vue-defiexp");
   // Une espèce déjà reconnue avant le défi : la réponse compte pour elle, comme dans Coup d'œil (les autres attendent la fin)
-  if (d.dejaReconnues.has(q.espece.nom_courant)) { if (juste) acquerir(q.espece, IDENTIFICATION); else if (!enRep) noterEchec(q.espece, IDENTIFICATION); }
-  else if (!juste && !enRep && typeof noterEchec === "function") noterEchec(q.espece, IDENTIFICATION);   // pour la coriace des prochains défis (R249 : une erreur au repêchage ne compte pas)
+  if (opts.noter !== false) for (const e of especesDeQ(q)) {
+    if (d.dejaReconnues.has(e.nom_courant)) { if (juste) acquerir(e, IDENTIFICATION); else if (!enRep) noterEchec(e, IDENTIFICATION); }
+    else if (!juste && !enRep && typeof noterEchec === "function") noterEchec(e, IDENTIFICATION);   // pour la coriace des prochains défis (R249 : une erreur au repêchage ne compte pas)
+  }
   sauverDefiExp();   // R241 : le défi en cours est gardé à chaque réponse
   d.silhouettesVisibles = false;
   const aides = document.getElementById("dfx-aides");
   if (aides) aides.style.visibility = "hidden";   // R265 : la place reste, les réponses ne bougent pas
   // R249 : au repêchage, c'est fini à la dernière question, ou dès que les erreurs effacées suffisent
-  const fin = enRep ? (d.rep.i >= d.rep.questions.length - 1 || erreursDefi(d) <= erreursPermisesDefi(d.questions.length)) : d.i >= d.questions.length - 1;
+  const fin = enRep ? (d.rep.i >= d.rep.questions.length - 1 || erreursDefi(d) <= erreursPermisesDefi(d.questions.length)) : d.questions.every(faiteDefi);
   // R274 (5A) : le compte des erreurs suit ; avec l'erreur qui rend le défi impossible à réussir (même repêché), le choix
   //   « Continuer quand même » / « Arrêter et découvrir ces espèces » remplace « Question suivante », une seule fois.
   if (!enRep) majCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length));
   const perdu = !enRep && !fin && !juste && !d.perduVu && defiPerdu(erreursDefi(d), erreursPermisesDefi(d.questions.length));
   const suivant = perdu ? blocDefiPerdu("défi", "Arrêter et découvrir ces espèces") : `<button class="cdo-suivant" id="dfx-suivant">${fin ? "Voir le résultat" : "Question suivante"}</button>`;
   const retour = document.getElementById("dfx-retour");
-  // R265 (40.12, 6A) : une bonne réponse a sa ligne « Oui » et un repère de terrain (le nom n'est pas redit, R239)
-  const oui = typeof verdictHtml === "function" ? `<p class="apf-verdict">${verdictHtml({ juste: true, complement: complementReconnaissance(q.espece, q.photo && q.photo.sujet) })}</p>` : "";
-  if (juste && enRep) retour.innerHTML = `<p class="dfx-efface">Une erreur effacée.</p>${oui}${suivant}`;   // R249
-  else if (juste) retour.innerHTML = `${oui}${suivant}`;
-  else retour.innerHTML = `${erreurCoteACote(q.espece, choisie, q.photo && q.photo.sujet)}${q.type === "cri" && typeof aUnCri === "function" && aUnCri(choisie)
-      ? `<div class="dfx-ecouter"><small>Écoutez les deux :</small><button class="cdo-second" data-ecoute="${echapper(q.espece.nom_courant)}">${PLAY_SVG}${echapper(q.espece.nom_courant)}</button><button class="cdo-second" data-ecoute="${echapper(choisie.nom_courant)}">${PLAY_SVG}${echapper(choisie.nom_courant)}</button></div>` : ""}${suivant}`;
+  retour.innerHTML = `${juste && enRep ? `<p class="dfx-efface">Une erreur effacée.</p>` : ""}${explication}${suivant}`;   // R249
   retour.querySelectorAll("[data-ecoute]").forEach(b => b.onclick = () => ecouter(especeParNom(b.dataset.ecoute)));
   zone.querySelector(".dfx-barre").outerHTML = enteteDefiExp().match(/<div class="dfx-barre[^"]*"[^>]*>.*<\/div>$/s)[0];
-  const avancer = () => { if (fin) finDefiExp(); else { if (enRep) d.rep.i++; else d.i++; sauverDefiExp(); afficherQuestionDefiExp(); } };
+  // R283 : la question suivante est la première pas encore faite (la manche « Qui est qui ? » en occupe 4)
+  const avancer = () => { if (fin) finDefiExp(); else { if (enRep) d.rep.i++; else d.i = d.questions.findIndex(z => !faiteDefi(z)); sauverDefiExp(); afficherQuestionDefiExp(); } };
   if (perdu) {   // R274 : pas de bouton fixé ici, les deux choix sont dans la page, sous l'explication
     brancherChoixDefiPerdu(avancer);
     const bloc = document.getElementById("dfx-perdu");
@@ -469,8 +870,8 @@ function blocSepare(bonne, choisie, sujet) {
   return s ? `<div class="dfx-separe"><small>${s.titre}</small>${s.critere ? `<p>${echapper(majuscule(s.critere))}</p>`
       : `<ul>${ligne(bonne, s.bonne, "ok")}${s.choisie ? ligne(choisie, s.choisie, "ko") : ""}</ul>`}</div>` : "";
 }
-function erreurCoteACote(bonne, choisie, sujet) {
-  const bloc = blocSepare(bonne, choisie, sujet);
+function erreurCoteACote(bonne, choisie, sujet, autreBloc) {   // R283 : autreBloc = l'explication propre à la façon (repère, indices)
+  const bloc = autreBloc || blocSepare(bonne, choisie, sujet);
   return `<div class="dfx-erreur"><small class="dfx-pas">Pas cette fois</small><b class="dfx-cetait">C'était ${echapper(nomAvecArticle(bonne))}</b>
       <div class="dfx-duo agrandir-groupe"><figure class="ko agr" data-legende="Votre choix · ${echapper(choisie.nom_courant)}"><figcaption>Votre choix</figcaption><span class="agr-cadre">${celluleImage(choisie, true)}${LOUPE_SVG}</span><span>${echapper(choisie.nom_courant)}</span></figure>`
     + `<figure class="ok agr" data-legende="La bonne réponse · ${echapper(bonne.nom_courant)}"><figcaption>La bonne réponse</figcaption><span class="agr-cadre">${q2Image(bonne, sujet)}${LOUPE_SVG}</span><span>${echapper(bonne.nom_courant)}</span></figure></div>${bloc}</div>`;   // R239 (16b) : toucher pour agrandir
@@ -521,7 +922,7 @@ function comptesDefiExp(d, jusqua) {
   const c = new Map(d.x.liste.map(e => [e, { bons: 0, poses: 0 }]));
   d.questions.slice(0, jusqua === undefined ? d.questions.length : jusqua).forEach(q => {
     if (!q.choix) return;
-    const k = c.get(q.espece); k.poses++; if (q.choix === q.espece) k.bons++;
+    for (const e of especesDeQ(q)) { const k = c.get(e); if (!k) continue; k.poses++; if (q.choix === q.espece) k.bons++; }   // R283 : « Ce qui les sépare » compte pour les deux
   });
   // R249 : chaque bonne réponse au repêchage efface une erreur de son espèce (jamais plus de bonnes que de questions)
   if (jusqua === undefined && d.rep) d.rep.questions.forEach(q => { if (q.choix && q.choix === q.espece) { const k = c.get(q.espece); if (k) k.bons = Math.min(k.poses, k.bons + 1); } });
@@ -539,7 +940,7 @@ function reconnaitreParDefi(x, especes) {
 }
 function especesGagneesDefi(d, reussi, jusqua) {
   const c = comptesDefiExp(d, jusqua);
-  const prevues = e => d.questions.filter(q => q.espece === e).length;   // R242 : 2 ou 3 selon l'espèce
+  const prevues = e => d.questions.filter(q => especesDeQ(q).includes(e)).length;   // R242 : 2 ou 3 selon l'espèce (R283 : la paire compte pour les deux)
   return d.x.liste.filter(e => reussi || (c.get(e).poses >= prevues(e) && c.get(e).poses > 0 && c.get(e).bons === c.get(e).poses));
 }
 
@@ -680,9 +1081,11 @@ function animerGainFinTest(n) {
 }
 function rateesDefi(d) {
   const nom = e => e ? e.nom_courant : "";
-  const forme = { photo: "sa photo", laquelle: "« Laquelle est… ? »", cri: "son cri" };
-  return d.questions.filter(q => q.choix && q.choix !== q.espece).map(q => ({ nom: nom(q.espece),
-    detail: `${q.photo && etiquetteForme(q.photo.sujet) ? etiquetteForme(q.photo.sujet) : forme[q.type] || "sa photo"} · votre choix : ${nom(q.choix)}` }));
+  const forme = { photo: "sa photo", laquelle: "« Laquelle est… ? »", cri: "son cri", repere: "son repère", indices: "ses indices", quiestqui: "« Qui est qui ? »" };
+  return d.questions.filter(q => q.choix && q.choix !== q.espece).map(q => q.type === "separe"   // R283
+    ? { nom: `${nom(q.espece)} et ${nom(q.autre)}`, detail: "« Ce qui les sépare » · des repères mal placés" }
+    : { nom: nom(q.espece),
+    detail: `${q.type !== "quiestqui" && q.photo && etiquetteForme(q.photo.sujet) ? etiquetteForme(q.photo.sujet) : forme[q.type] || "sa photo"} · votre choix : ${nom(q.choix)}` });
 }
 
 // (R241, note 33 : la feuille « Quitter le défi ? » est retirée ; sortir met le défi de côté, voir mettreDefiDeCote.

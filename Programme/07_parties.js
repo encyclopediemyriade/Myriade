@@ -589,6 +589,14 @@ function terminerSession() {
   if (s && s.focus && typeof mettreAReconnaitre === "function") mettreAReconnaitre(s.focus);
   // Étape R263 (Notion 40.17, 19c) : une Rencontre d'expédition faite est notée (une question ratée ne la rend pas « à faire »)
   if (s && s.focus && s.expedition && s.expedition.etape === 1 && suivi) { suivi.rencontresFaites = suivi.rencontresFaites || {}; suivi.rencontresFaites[s.focus.nom_courant] = 1; }
+  // Étape R282 : le temps de cette Rencontre est noté (le champ demandé, ou "" pour « Sa vie » et l'autre forme) : l'étape 1 de
+  //   l'espèce ne demande plus que la photo et ce champ (champsRequis, 17). Une Rencontre refaite garde le premier temps noté
+  //   s'il demandait moins (rien ne recule).
+  if (s && s.focus && s.expedition && s.expedition.etape === 1 && suivi && s.temps !== undefined && s.champs1) {
+    suivi.tempsRencontre = suivi.tempsRencontre || {};
+    const nom = s.focus.nom_courant, c = s.champs1[1] || "";
+    if (!(nom in suivi.tempsRencontre) || (suivi.tempsRencontre[nom] && !c)) suivi.tempsRencontre[nom] = c;
+  }
   if (rencontreDuJour) {
     validerEspeceDuJour(rencontreDuJour);
     rencontreDuJour = null;

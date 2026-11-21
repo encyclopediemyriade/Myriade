@@ -475,7 +475,9 @@ function poserIdentification(espece) {
   const pieges = [...sosies, ...autres].slice(0, 3);
   for (const e of melanger([espece, ...pieges])) ajouterBouton(e.nom_courant, e === espece);
   // Après la réponse : le nom, puis comment ne pas la confondre (pas en défi de rapidité, où tout va vite)
-  enCours.explication = `C'est : ${espece.nom_courant} (${espece.nom_affichage_groupe.toLowerCase()}).` + (defi ? "" : phraseConfusion(espece));
+  // R282 : dans la Rencontre en trois temps, « À ne pas confondre » est sur la carte qui suit (et sur la carte de fin) : pas redit ici
+  const confusionSurCarte = !!(session && session.physique && typeof RENCONTRE_TROIS_TEMPS !== "undefined" && RENCONTRE_TROIS_TEMPS);
+  enCours.explication = `C'est : ${espece.nom_courant} (${espece.nom_affichage_groupe.toLowerCase()}).` + (defi || confusionSurCarte ? "" : phraseConfusion(espece));
 }
 
 // ---- 6b. QCM : 4 réponses écrites --------------------------------
@@ -1203,6 +1205,8 @@ function repondreSon(aLeSon, tirage) {
   // Étape 140 : dans le Carnet, plus aucun cri dans cette partie, et une autre question est tirée à la place
   if (defi) { defi.cris = false; poserQuestion(choisirQuestionDefi()); return; }
   // La question de cri est remplacée par une autre, sur la même espèce
+  // Étape R282 : dans la Rencontre en trois temps, c'est le temps qui change (sa vie, son empreinte, son autre forme, son détail)
+  if (typeof tempsSansSon === "function" && tempsSansSon()) return;
   // Étape RF1 : dans la Rencontre d'une expédition, la remplaçante est une question prévue (pas une question déjà posée)
   if (session && session.physique && champsFocusRestants().length) { const t = choisirQuestionFocus(); if (t && t.champ) { poserQuestion(t); return; } }
   poserQuestion({ espece: tirage.espece, champ: choisirChamp(tirage.espece), estRevision: false });

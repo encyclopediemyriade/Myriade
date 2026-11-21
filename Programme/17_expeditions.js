@@ -53,7 +53,19 @@ const ETAPES_JOUEES = [1, 2];
 //   espèce à l'autre), puis un fait ÉTONNANT (deux affirmations, une vraie). L'étape 2 ne garde que ce qui reste
 //   (une chose de vie manquée) ; elle deviendra « Leurs liens » (étape RF3).
 //   false = le jeu d'avant (étape 1 = l'allure, étape 2 = la vie). Copie complète du jeu d'avant : jeu_1.6.5.html.
-const VIE_QUESTIONS = 2;               // étape E2-7 (note 12) : des 3 faits montrés sur l'écran « Sa vie », 2 sont ensuite demandés en vrai ou faux
+// ---- Étape R282 (21/11/2026, Notion 44.08, note 3 du 20/11 au soir, choix d'Aubin « C✓ · 1B · 2B · 3A » du 21/11, 13 h 20) ----
+//   Critère : « Une expédition de 7 espèces se fait en une quinzaine de minutes, sans lassitude. Chaque Rencontre garde un moment
+//   où l'on apprend quelque chose de neuf, mais aucune ne repasse par les mêmes temps que la précédente. Rien de ce qui sort de la
+//   Rencontre n'est perdu : on le retrouve dans la fiche et dans Approfondir. »
+//   1B : une Rencontre = l'entrée, la carte, UN SEUL TEMPS À ELLE, puis « Étonnant ». Le temps tourne d'une espèce à l'autre
+//        (« Sa vie », son cri, son empreinte, son autre forme, son détail) : jamais celui de l'espèce d'avant, le moins vu de
+//        l'expédition d'abord (comme les entrées, R280). Avant : toutes ces questions dans chaque Rencontre (4 à 7 réponses,
+//        10 à 15 écrans ; 3 réponses et 5 à 7 écrans maintenant).
+//   2B : « Sa vie » montre toujours 3 faits, puis UN seul vrai ou faux (2 avant).
+//   3A : « Étonnant » reste à chaque Rencontre.
+//   false = la Rencontre complète d'avant (R281).
+const RENCONTRE_TROIS_TEMPS = true;
+const VIE_QUESTIONS = RENCONTRE_TROIS_TEMPS ? 1 : 2;   // étape E2-7 (note 12) : des 3 faits montrés sur l'écran « Sa vie », 2 étaient demandés en vrai ou faux ; R282 (2B) : 1
 const VIE_PAR_RENCONTRE = 3;           // étape RF1 : les choses de sa vie posées dans la Rencontre (RF2 : 3 cartes « vrai ou faux » ; 2 restent exigées)
 const NB_TRAITS_ALLURE = RENCONTRE_COMPLETE ? 1 : 2;   // étape 1 : les traits d'allure les plus parlants (ET1 : 2 au lieu de 4 ; RF1 : 1)
 const NB_TRAITS_ALLURE_AVANT = 4;      // étape ET1 : les traits 3 et 4 passent dans Approfondir, posés mais pas exigés (rien ne recule)
@@ -471,6 +483,14 @@ function calculerChampsEtape(e, k) {
 // Étape 288 : ce qui compte pour finir l'étape 1 — la photo et les traits physiques, SANS le cri
 // (le cri est posé quand le son est là, mais il ne bloque jamais : on peut jouer sans le son).
 function champsRequis(e, k) {
+  if (k === 1 && RENCONTRE_TROIS_TEMPS && suivi && suivi.tempsRencontre && e.nom_courant in suivi.tempsRencontre) {
+    // Étape R282 : une fois sa Rencontre faite, l'étape 1 demande la photo et la question de SON temps (le détail ou
+    //   l'empreinte ; le cri n'a jamais été exigé). Ce que la Rencontre n'a pas montré (cri, empreinte, détail d'une autre
+    //   espèce) n'est pas exigé : il reste dans la fiche, À l'oreille et « Me tester ». Avant la Rencontre : la règle d'avant.
+    //   Rien ne recule : la liste ne peut que raccourcir.
+    const t = suivi.tempsRencontre[e.nom_courant];
+    return [IDENTIFICATION, ...(t && t !== "cri_son" && champsEtape(e, 1).includes(t) ? [t] : [])];
+  }
   if (k === 1) return champsEtape(e, 1).filter(c => c !== "cri_son");
   if (k === 4) {                                    // étape R167 : les traits manqués à l'étape 1 sont posés, pas exigés
     const traits = traitsAllure(e);
@@ -1467,6 +1487,44 @@ function phraseFaitVie(espece, champ) {
 function ligneSaVie(champ, phrase, valeur, connu) {
   if (valeur === undefined && session && session.focus) { try { valeur = valeurFaitVie(session.focus, champ); } catch (e) { valeur = null; } }
   return `<div class="sv-ligne${connu ? " sv-connu" : ""}">${pictoVie(champ, valeur)}<span class="sv-texte">${echapper(phrase)}${connu ? ` <small class="sv-deja">déjà noté</small>` : ""}</span></div>`;
+}
+// ---- Étape R282 (1B) : le temps qui tourne ----
+//   Les temps possibles d'une espèce, dans l'ordre de préférence à égalité : sa vie, son cri, son empreinte, son autre forme,
+//   son détail (le moins parlant : « le bec est évident et n'apporte rien », 11/11, en dernier).
+//   • « Sa vie » : s'il reste un fait de sa vie à demander ;
+//   • son cri : s'il a un cri pas encore reconnu, que le son n'est pas coupé et que la Rencontre ne s'ouvre pas déjà « par le cri » ;
+//   • son empreinte, son détail : pas encore trouvés ;
+//   • son autre forme : une forme nettement différente (R254).
+//   Mémoire de la partie (comme les entrées) : tempsVus[expédition] = les temps des Rencontres déjà commencées.
+const tempsVus = {};
+const ORDRE_TEMPS = ["vie", "cri", "empreinte", "forme", "detail"];
+const NOMS_TEMPS = { vie: "Sa vie", cri: "Son cri", empreinte: "Son empreinte", forme: "Son autre forme", detail: "Son détail" };
+function tempsPossibles(x, e, nouveauxVie, entree) {
+  const p = [], c1 = champsEtape(e, 1), manque = c => c1.includes(c) && nbBonnes(e, c) === 0;
+  if (nouveauxVie.length) p.push("vie");
+  if (manque("cri_son") && entree !== "cri" && !(sonDemande && !sonActif)) p.push("cri");
+  if (manque("empreinte_nom")) p.push("empreinte");
+  if (typeof QUESTION_FORME_ACTIVE !== "undefined" && QUESTION_FORME_ACTIVE && typeof formeAPoser === "function" && formeAPoser(e, x)) p.push("forme");
+  const d = traitsEtape1(e)[0];
+  if (d && manque(d)) p.push("detail");
+  return p;
+}
+function choisirTemps(x, possibles) {
+  const vus = tempsVus[x.id] = tempsVus[x.id] || [];
+  if (!possibles.length) { vus.push(""); return ""; }
+  const derniere = vus[vus.length - 1];
+  let ok = possibles.filter(t => t !== derniere);
+  if (!ok.length) ok = possibles;                      // rien d'autre à offrir : le même temps plutôt qu'aucun
+  const compte = t => vus.filter(v => v === t).length, min = Math.min(...ok.map(compte));
+  let choix = ok.filter(t => compte(t) === min);
+  if (choix.length > 1) choix = choix.filter(t => t !== "detail");   // le détail seulement s'il n'y a rien d'autre à égalité
+  const t = auHasard(choix);
+  vus.push(t);
+  return t;
+}
+// Le champ demandé à l'étape 1 pour un temps (rien pour « Sa vie » et l'autre forme, qui ne sont pas des questions d'étape 1)
+function champTemps(e, t) {
+  return t === "cri" ? "cri_son" : t === "empreinte" ? "empreinte_nom" : t === "detail" ? (traitsEtape1(e)[0] || "") : "";
 }
 function montrerSaVie(tirage) {
   const espece = session.focus;

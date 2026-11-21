@@ -109,7 +109,7 @@ function blocReperes(espece, opts = {}) {
     : "";
   if (onglets) brancherOngletsReperes();
   let confusion = "";
-  if (opts.fin && typeof confusionDe === "function") {
+  if ((opts.fin || opts.confusion) && typeof confusionDe === "function") {   // R282 : opts.confusion = la carte de la Rencontre en trois temps
     const g = confusionDe(espece);
     if (g) {
       const autres = g.especes.filter(n => n !== espece.nom_courant);

@@ -71,7 +71,9 @@ function formeAvantOuverture(espece) {
   const x = expeditionParId(session.expedition.id);
   if (!x) return false;
   // Étape RF4 : avec la Rencontre complète, la façon d'entrer se choisit espèce par espèce (jamais deux fois de suite la même)
-  const f = typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE ? entreeEspece(x, espece) : formeEtape1(x);
+  // R282 : l'entrée est déjà choisie au lancement de la Rencontre (preparerTroisTemps, 09), avant son temps
+  const f = session.entree ? session.entree
+    : typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE ? entreeEspece(x, espece) : formeEtape1(x);
   if (f === "jumelles") { poserJumelles(espece); return true; }
   if (f === "sosie") { const autre = sosiePourEntree(espece); if (autre) { poserSosieEntree(espece, autre); return true; } }
   if (f === "cri" && aUnCri(espece) && !(sonDemande && !sonActif)) { poserEcoute(espece); return true; }

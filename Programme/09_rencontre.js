@@ -28,6 +28,55 @@ function choisirEspeceFocus(enJeu) {
 
 // Étape 176 : "imposee" = une espèce choisie depuis sa fiche de l'encyclopédie (bouton « Refaire une Rencontre »).
 // Le périmètre de la Rencontre est alors son territoire et sa famille (les choix de l'écran Jouer ne changent pas).
+// ---- Étape R282 (Notion 44.08, choix « 1B · 2B · 3A ») : la Rencontre en trois temps ----
+//   L'entrée, la carte, un seul temps à elle (sa vie, son cri, son empreinte, son autre forme ou son détail, qui tourne d'une
+//   espèce à l'autre : tempsPossibles, choisirTemps dans 17), puis « Étonnant ». « À ne pas confondre » n'est plus un écran à
+//   part : il est dans la carte (blocReperes, option confusion). L'entrée est choisie ici, avant le temps (une Rencontre
+//   qui s'ouvre par le cri ne le redemande pas) ; formeAvantOuverture (20) la reprend.
+function preparerTroisTemps(espece, options) {
+  const x = expeditionParId(options.expedition.id);
+  session.entree = !estIdentifiee(espece) && !options.expedition.revue && !options.expedition.rattrapage
+    && typeof FORMES_EXPEDITION !== "undefined" && FORMES_EXPEDITION && x ? entreeEspece(x, espece) : null;
+  const { c } = choisirEtAppliquerTemps(espece, x);
+  session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;   // 3A : à chaque Rencontre
+  session.sosieFait = true;                                // « À ne pas confondre » : dans la carte, plus un écran à part
+  const aDemander = 1 + (c && nbBonnes(espece, c) === 0 ? 1 : 0) + session.vie.length + (session.autreFormeQ ? 1 : 0);
+  session.total = Math.max(1, Math.min(QUESTIONS_FOCUS, aDemander));
+  session.prevues = session.total;
+  if (session.etonnant) { session.bonusPrevu = true; session.total = session.total + 1; }
+}
+// Choisit le temps de la Rencontre (17 : tempsPossibles, choisirTemps) et prépare ce qu'il montre et demande.
+//   sansCri : le joueur vient de dire qu'il n'a pas le son ; le temps « cri » déjà noté est retiré de la mémoire et un autre
+//   le remplace (comme l'annonce l'écran « Le son est-il disponible ? »).
+function choisirEtAppliquerTemps(espece, x, sansCri) {
+  if (sansCri) { const vus = tempsVus[x.id] || []; if (vus[vus.length - 1] === "cri") vus.pop(); }
+  // les faits de sa vie, sans toucher à la mémoire des sujets si ce n'est pas son temps
+  const memoireAvant = sujetsVusExp[x.id];
+  const nouveauxVie = vieRencontre(x, espece);
+  const t = choisirTemps(x, tempsPossibles(x, espece, nouveauxVie, session.entree).filter(k => !(sansCri && k === "cri")));
+  session.temps = t;
+  session.vie = []; session.vieFaits = []; session.vieConnus = []; session.vieNouveaux = []; session.vieBonnes = {}; session.vieMontree = false;
+  if (t === "vie") {
+    const sv = faitsSaVie(x, espece, nouveauxVie);
+    session.vieFaits = sv.faits; session.vieConnus = sv.connus; session.vieNouveaux = nouveauxVie;
+    session.vie = nouveauxVie.slice(0, VIE_QUESTIONS);
+    for (const c of session.vieFaits) { const q = QUESTIONS.find(y => y.champ === c); session.vieBonnes[c] = q.tirer && nouveauxVie.includes(c) ? q.tirer(espece) : valeurDe(espece, q); }
+  } else if (memoireAvant === undefined) delete sujetsVusExp[x.id]; else sujetsVusExp[x.id] = memoireAvant;
+  session.autreFormeQ = null; session.autreFormeMontree = !!session.autreFormeMontree; session.autreFormeFaite = false;
+  if (t === "forme") { const f = formeAPoser(espece, x); if (f) { f.remplace = null; session.autreFormeQ = f; } }
+  const c = champTemps(espece, t);
+  session.champs1 = [IDENTIFICATION, ...(c ? [c] : [])];   // ce que l'étape 1 demande dans cette Rencontre
+  return { t, c };
+}
+// Étape R282 : « Pas de son » pendant une Rencontre dont le temps est son cri → un autre temps, puis la suite de la Rencontre
+function tempsSansSon() {
+  if (!session || !session.physique || session.temps !== "cri" || !session.expedition) return false;
+  const x = expeditionParId(session.expedition.id);
+  if (!x) return false;
+  choisirEtAppliquerTemps(session.focus, x, true);
+  nouvelleRencontre();
+  return true;
+}
 function demarrerFocus(imposee, options = {}) {
   const territoires = imposee ? territoiresJeu(imposee) : territoiresChoisis;
   const classes = imposee ? [imposee.onglet] : classesChoisies;
@@ -64,39 +113,42 @@ function demarrerFocus(imposee, options = {}) {
   // Étape R150 (07/11, retour en jouant : la question revenait à chaque oiseau) : « Le son est-il disponible ? »
   // n'est plus posée qu'une fois par jour ; la réponse du jour vaut pour toutes les Rencontres.
   sonDemande = !!(suivi && suivi.sonDemandeLe === aujourdhui());
-  // Étape RF1 : la Rencontre complète d'une expédition — sa vie (vrai ou faux) et un fait étonnant
-  session.vie = [];
-  session.etonnant = null;
-  if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE) {
-    // Étape E2-7 (note 12, choix d'Aubin « 1A · 2B · 3A · 4A · 5A ») : sa vie se DÉCOUVRE d'abord (l'écran « Sa vie », 3 faits),
-    //   puis 2 vrai ou faux sur ces faits (VIE_QUESTIONS). La valeur de chaque fait est tirée une fois et resservie à la question.
-    const xVie = expeditionParId(options.expedition.id), nouveauxVie = vieRencontre(xVie, espece);
-    // Étape R263 (Notion 40.09) : toujours 3 faits à l'écran ; seuls les nouveaux sont ensuite demandés
-    const sv = typeof faitsSaVie === "function" ? faitsSaVie(xVie, espece, nouveauxVie) : { faits: nouveauxVie, connus: [] };
-    session.vieFaits = sv.faits; session.vieConnus = sv.connus; session.vieNouveaux = nouveauxVie;
-    session.vie = nouveauxVie.slice(0, VIE_QUESTIONS);
-    session.vieBonnes = {};
-    // R263 : les faits seulement à lire (déjà connus, ou en plus) sont dits en entier, sans tirage
-    for (const c of session.vieFaits) { const q = QUESTIONS.find(x => x.champ === c); session.vieBonnes[c] = q.tirer && nouveauxVie.includes(c) ? q.tirer(espece) : valeurDe(espece, q); }
-    session.vieMontree = false;
-    session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;
+  if (session.physique && typeof RENCONTRE_TROIS_TEMPS !== "undefined" && RENCONTRE_TROIS_TEMPS && RENCONTRE_COMPLETE) { preparerTroisTemps(espece, options); }
+  else {
+    // Étape RF1 : la Rencontre complète d'une expédition — sa vie (vrai ou faux) et un fait étonnant
+    session.vie = [];
+    session.etonnant = null;
+    if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE) {
+      // Étape E2-7 (note 12, choix d'Aubin « 1A · 2B · 3A · 4A · 5A ») : sa vie se DÉCOUVRE d'abord (l'écran « Sa vie », 3 faits),
+      //   puis 2 vrai ou faux sur ces faits (VIE_QUESTIONS). La valeur de chaque fait est tirée une fois et resservie à la question.
+      const xVie = expeditionParId(options.expedition.id), nouveauxVie = vieRencontre(xVie, espece);
+      // Étape R263 (Notion 40.09) : toujours 3 faits à l'écran ; seuls les nouveaux sont ensuite demandés
+      const sv = typeof faitsSaVie === "function" ? faitsSaVie(xVie, espece, nouveauxVie) : { faits: nouveauxVie, connus: [] };
+      session.vieFaits = sv.faits; session.vieConnus = sv.connus; session.vieNouveaux = nouveauxVie;
+      session.vie = nouveauxVie.slice(0, VIE_QUESTIONS);
+      session.vieBonnes = {};
+      // R263 : les faits seulement à lire (déjà connus, ou en plus) sont dits en entier, sans tirage
+      for (const c of session.vieFaits) { const q = QUESTIONS.find(x => x.champ === c); session.vieBonnes[c] = q.tirer && nouveauxVie.includes(c) ? q.tirer(espece) : valeurDe(espece, q); }
+      session.vieMontree = false;
+      session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;
+    }
+    // Étape R254 (36.34) : la question sur une autre forme, qui prend la place de la 2e question de « Sa vie » (sinon du cri)
+    session.autreFormeQ = null; session.autreFormeMontree = false; session.autreFormeFaite = false;
+    if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE && QUESTION_FORME_ACTIVE) {
+      const f = formeAPoser(espece, expeditionParId(options.expedition.id));
+      if (f && session.vie.length >= 2) { f.remplace = session.vie[session.vie.length - 1]; f.deVie = true; session.vie = session.vie.slice(0, -1); }
+      else if (f && champsEtape(espece, 1).includes("cri_son") && nbBonnes(espece, "cri_son") === 0) f.remplace = "cri_son";
+      if (f && f.remplace) session.autreFormeQ = f;
+    }
+    // Le nombre de questions : 8 au plus, moins s'il y a peu de choses à demander sur cette espèce
+    const aDemander = session.physique ? champsEtape(espece, 1).filter(c => c !== IDENTIFICATION && nbBonnes(espece, c) === 0).length + 1 + session.vie.length   // étape 288 ; R132 : seulement ce qui manque, + la photo ; RF1 : + sa vie
+        + (session.autreFormeQ && session.autreFormeQ.remplace !== "cri_son" ? 1 : 0)   // R254 : la question de forme remplace une question de « Sa vie » (déjà retirée)
+      : (session.revisite ? [...new Set([...champsAInterroger(espece), ...champsReste(espece)])] : champsAInterroger(espece))   // étape R129
+          .filter(c => !estApparence(c)).length + (estIdentifiee(espece) ? 0 : 1);   // (étape 138 : sans l'apparence)
+    session.total = Math.max(1, Math.min(QUESTIONS_FOCUS, aDemander));
+    session.prevues = session.total;                     // étape 156 : les questions prévues (sans les reprises de la fin)
+    if (session.etonnant) { session.bonusPrevu = true; session.total = session.total + 1; }   // étape RF1 : le fait étonnant, à la fin
   }
-  // Étape R254 (36.34) : la question sur une autre forme, qui prend la place de la 2e question de « Sa vie » (sinon du cri)
-  session.autreFormeQ = null; session.autreFormeMontree = false; session.autreFormeFaite = false;
-  if (session.physique && typeof RENCONTRE_COMPLETE !== "undefined" && RENCONTRE_COMPLETE && QUESTION_FORME_ACTIVE) {
-    const f = formeAPoser(espece, expeditionParId(options.expedition.id));
-    if (f && session.vie.length >= 2) { f.remplace = session.vie[session.vie.length - 1]; f.deVie = true; session.vie = session.vie.slice(0, -1); }
-    else if (f && champsEtape(espece, 1).includes("cri_son") && nbBonnes(espece, "cri_son") === 0) f.remplace = "cri_son";
-    if (f && f.remplace) session.autreFormeQ = f;
-  }
-  // Le nombre de questions : 8 au plus, moins s'il y a peu de choses à demander sur cette espèce
-  const aDemander = session.physique ? champsEtape(espece, 1).filter(c => c !== IDENTIFICATION && nbBonnes(espece, c) === 0).length + 1 + session.vie.length   // étape 288 ; R132 : seulement ce qui manque, + la photo ; RF1 : + sa vie
-      + (session.autreFormeQ && session.autreFormeQ.remplace !== "cri_son" ? 1 : 0)   // R254 : la question de forme remplace une question de « Sa vie » (déjà retirée)
-    : (session.revisite ? [...new Set([...champsAInterroger(espece), ...champsReste(espece)])] : champsAInterroger(espece))   // étape R129
-        .filter(c => !estApparence(c)).length + (estIdentifiee(espece) ? 0 : 1);   // (étape 138 : sans l'apparence)
-  session.total = Math.max(1, Math.min(QUESTIONS_FOCUS, aDemander));
-  session.prevues = session.total;                     // étape 156 : les questions prévues (sans les reprises de la fin)
-  if (session.etonnant) { session.bonusPrevu = true; session.total = session.total + 1; }   // étape RF1 : le fait étonnant, à la fin
   session.normalesFaites = 0;                          // et combien ont déjà été posées
   preparerPostit();                                    // étape 151 : la fiche post-it, vide
   document.getElementById("fin-session").classList.add("cache");
@@ -139,7 +191,7 @@ function champsFocusRestants() {
   const espece = session.focus;
   if (session.physique) {                                // étape 288 : la Rencontre physique de l'étape 1 d'une expédition
     // étape R132 : une espèce déjà en partie connue (ailleurs) ne repasse que ce qui lui manque
-    return [...champsEtape(espece, 1), ...(session.vie || []), ...(session.autreFormeQ ? [FORME_Q] : [])]   // R254 : + la question de forme
+    return [...(session.champs1 || champsEtape(espece, 1)), ...(session.vie || []), ...(session.autreFormeQ ? [FORME_Q] : [])]   // R254 : + la question de forme ; R282 : seulement le champ de son temps
       .filter(c => !(session.autreFormeQ && c === session.autreFormeQ.remplace))                                   // (à la place du cri, s'il le faut)
       .filter(c => c !== IDENTIFICATION && !session.posees.includes(c) && nbBonnes(espece, c) === 0);   // RF1 : + sa vie
   }
@@ -855,7 +907,9 @@ function carteBravo(e) {
     p ? tuile(pictoPoids(p), "", "poids") : "",
     ...(typeof elementsEnsemble === "function" ? elementsEnsemble(e) : []).map(x => tuile(x.dessin, x.texte, echapper(minuscule(x.libelle))))
   ].filter(Boolean);
-  const rp = typeof blocReperes === "function" ? blocReperes(e, { sansOnglets: true, sansTitre: true }) : "";
+  // R282 : dans la Rencontre en trois temps, « À ne pas confondre » est sur la carte (plus un écran à part)
+  const avecConfusion = !!(session && session.physique && session.focus === e && typeof RENCONTRE_TROIS_TEMPS !== "undefined" && RENCONTRE_TROIS_TEMPS);
+  const rp = typeof blocReperes === "function" ? blocReperes(e, { sansOnglets: true, sansTitre: true, confusion: avecConfusion }) : "";
   const formes = typeof blocFormesNettes === "function" ? blocFormesNettes(e) : "";   // étape R253 (36.34) : « Ses autres formes »
   return `<div class="carte-bravo${formes ? " avec-formes" : ""}"><p class="cb-titre">Pour ${pe(e).la} reconnaître</p>`
     + (tuiles.length ? `<p class="cb-sous">Sa silhouette</p><div class="cb-tuiles">${tuiles.join("")}</div>` : "")
