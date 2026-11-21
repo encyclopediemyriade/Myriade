@@ -37,6 +37,16 @@ function erreursPermisesDefi(total) { return Math.max(2, Math.round(total * 3 / 
 const REPECHAGE_MAX = 2;   // questions de repêchage au plus (et erreurs de trop au plus)
 // Combien d'erreurs il faut effacer pour réussir : 1 ou 2 ; 0 = pas de repêchage (défi réussi, ou trop d'erreurs)
 function repechageNecessaire(erreurs, permises) { const n = erreurs - permises; return n >= 1 && n <= REPECHAGE_MAX ? n : 0; }
+// Étape R285b (note 6 du 21/11, choix 6B d'Aubin, 21 h 51) : toutes les questions annoncées sont posées. Dès que les bonnes
+//   réponses suffisent, le jeu le dit (« le défi est réussi ») ; la question qui reste sert à revoir l'espèce et ne compte plus.
+//   La ligne au-dessus de l'explication, commune aux deux défis : erreurs = après cette réponse ; i = rang de la question.
+function ligneRepechage(juste, erreurs, permises, i, n) {
+  const avant = juste ? erreurs + 1 : erreurs, reste = n - 1 - i;
+  if (!juste || avant <= permises) return "";   // une erreur ici ne coûte rien ; après la réussite, rien à redire
+  if (erreurs > permises) return `<p class="dfx-efface">Une erreur effacée.</p>`;
+  const suite = reste > 1 ? ` Encore ${reste} questions, pour revoir ces espèces : elles ne comptent plus.` : reste === 1 ? " Dernière question, pour revoir l'espèce : elle ne compte plus." : "";
+  return `<p class="dfx-efface">Erreur effacée · le défi est réussi.${suite}</p>`;
+}
 // ==================================================================
 // Étape R274 (19/11, session T5 du test du 19/11, n° 8 ; choix 5A d'Aubin, qui complète « la partie va au bout » du 17/11) :
 //   critère « le joueur sait où il en est, et n'est jamais retenu dans un défi qu'il ne peut plus réussir ».
@@ -90,6 +100,7 @@ function ecranRepechage(titre, erreurs, permises, n) {
       <ul class="dfx-lignes">
         <li>${n > 1 ? `${n} questions de plus, une par espèce manquée` : "Une question de plus, sur l'espèce manquée"}, posée${n > 1 ? "s" : ""} autrement.</li>
         <li>Chaque bonne réponse efface une erreur : il en faut ${besoin > 1 ? `${besoin}` : "une"}.</li>
+        ${n > besoin ? `<li>Toutes les questions sont posées : une fois le défi réussi, la dernière sert à revoir l'espèce.</li>` : ""}
         <li>Une erreur ici ne coûte rien.</li>
       </ul>
       <button class="cdo-suivant" id="dfx-rep-go">Commencer le repêchage</button>
@@ -1134,14 +1145,14 @@ function conclureReponseDefi(q, juste, explication, opts = {}) {
   const aides = document.getElementById("dfx-aides");
   if (aides) aides.style.visibility = "hidden";   // R265 : la place reste, les réponses ne bougent pas
   // R249 : au repêchage, c'est fini à la dernière question, ou dès que les erreurs effacées suffisent
-  const fin = enRep ? (d.rep.i >= d.rep.questions.length - 1 || erreursDefi(d) <= erreursPermisesDefi(d.questions.length)) : d.questions.every(faiteDefi);
+  const fin = enRep ? d.rep.i >= d.rep.questions.length - 1 : d.questions.every(faiteDefi);   // R285b (6B) : toutes les questions du repêchage sont posées
   // R274 (5A) : le compte des erreurs suit ; avec l'erreur qui rend le défi impossible à réussir (même repêché), le choix
   //   « Continuer quand même » / « Arrêter et découvrir ces espèces » remplace « Question suivante », une seule fois.
   if (!enRep) majCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length));
   const perdu = !enRep && !fin && !juste && !d.perduVu && defiPerdu(erreursDefi(d), erreursPermisesDefi(d.questions.length));
   const suivant = perdu ? blocDefiPerdu("défi", "Arrêter et découvrir ces espèces") : `<button class="cdo-suivant" id="dfx-suivant">${fin ? "Voir le résultat" : "Question suivante"}</button>`;
   const retour = document.getElementById("dfx-retour");
-  retour.innerHTML = `${juste && enRep ? `<p class="dfx-efface">Une erreur effacée.</p>` : ""}${explication}${suivant}`;   // R249
+  retour.innerHTML = `${enRep ? ligneRepechage(juste, erreursDefi(d), erreursPermisesDefi(d.questions.length), d.rep.i, d.rep.questions.length) : ""}${explication}${suivant}`;   // R249, R285b
   retour.querySelectorAll("[data-ecoute]").forEach(b => b.onclick = () => ecouter(especeParNom(b.dataset.ecoute)));
   zone.querySelector(".dfx-barre").outerHTML = enteteDefiExp().match(/<div class="dfx-barre[^"]*"[^>]*>.*<\/div>$/s)[0];
   // R283 : la question suivante est la première pas encore faite (la manche « Qui est qui ? » en occupe 4)

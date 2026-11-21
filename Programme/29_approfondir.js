@@ -321,7 +321,7 @@ function repondreApprof(choisie, bouton) {
   if (test) sauverTestApprof();
   let fin, texteSuite;
   if (test) {
-    fin = enRep ? (a.rep.i >= a.rep.questions.length - 1 || erreursTestApprof(a) <= erreursPermisesDefi(a.questions.length)) : a.i >= a.questions.length - 1;
+    fin = enRep ? a.rep.i >= a.rep.questions.length - 1 : a.i >= a.questions.length - 1;   // R285b (6B) : toutes les questions du repêchage sont posées
     texteSuite = fin ? "Voir le résultat" : "Question suivante";
   } else {
     fin = a.j >= a.aPoser.length - 1;
@@ -337,7 +337,7 @@ function repondreApprof(choisie, bouton) {
   const plus = complementApprof(a, q, test);
   const dejaEcrite = juste && q.affirmation && q.bonne === "Vrai";   // l'affirmation vraie est déjà à l'écran : pas redite
   const ligneOui = `<p class="apf-verdict">${verdictHtml({ juste, deux: q.choix.length === 2, phrase: dejaEcrite ? "" : q.ligne || "", complement: plus })}</p>`;
-  if (juste) retour.innerHTML = `${enRep ? `<p class="dfx-efface">Une erreur effacée.</p>` : ""}${ligneOui}${!test && trouvesEspece(e, 4) > (a.avantTrouves[e.nom_courant] || 0) && nbBonnes(e, q.champ) === 1 ? `<p class="apf-plus">+1 pour ${echapper(nomAvecArticle(e))}</p>` : ""}${suivant}`;
+  if (juste) retour.innerHTML = `${enRep ? ligneRepechage(true, erreursTestApprof(a), erreursPermisesDefi(a.questions.length), a.rep.i, a.rep.questions.length) : ""}${ligneOui}${!test && trouvesEspece(e, 4) > (a.avantTrouves[e.nom_courant] || 0) && nbBonnes(e, q.champ) === 1 ? `<p class="apf-plus">+1 pour ${echapper(nomAvecArticle(e))}</p>` : ""}${suivant}`;
   else if (test && q.affirmation) retour.innerHTML = `${ligneOui}${suivant}`;   // R265 : « vrai ou faux » raté → « C'était l'autre » + la phrase vraie
   else if (test) retour.innerHTML = `<div class="dfx-erreur apf-erreur"><small class="dfx-pas">Pas cette fois</small>
       <div class="apf-duo"><div class="ko"><small>Votre réponse</small><b>${echapper(choisie)}</b></div><div class="ok"><small>La bonne réponse</small><b>${echapper(q.bonne)}</b></div></div>
