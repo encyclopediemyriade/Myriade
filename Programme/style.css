@@ -6794,3 +6794,5 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 .exp-etape.finie .exp-num.etape-4, .exp-num.etape-4.fait { background: var(--etape-4); color: #fff; }
 .exp-num.fait::after { content: "✓"; position: absolute; right: -3px; bottom: -3px; width: 17px; height: 17px; border-radius: 50%; background: #fff; color: #3E7B55;
   font: 700 11px/17px "Work Sans", system-ui, sans-serif; text-align: center; box-shadow: 0 0 0 1.5px #3E7B55; }
+/* Étape R285 (47.03) · Me tester : chaque aide dit ce qui reste, sur une petite ligne sous son nom */
+.dfx-aides .dfx-aide-reste { display: block; font-size: .8em; font-weight: 500; opacity: .8; margin-top: 2px; }

@@ -129,9 +129,7 @@ function dessinerAtlasFrance(zone) {
     // le contour clair déborde autour du territoire ; sa couleur est reposée par-dessus (elle cache la moitié intérieure du trait)
     contourIci = CARTE_TERRITOIRES.filter(k => k.nom === ici).map(k => `<path d="${k.contour}" class="at-ici-contour"/>`).join("")
       + CARTE_TERRITOIRES.filter(k => k.nom === ici).map(k => `<path d="${k.contour}" class="at-ici-fond" style="fill:${couleur(ici)};stroke:${couleur(ici)}"/>`).join("");
-    const [x, y, z, lignes, ancre] = c0, yy = y + (lignes.length - 1) * z * 1.14 + z * 0.55, l = 168;
-    const x0 = ancre === "end" ? x - l : x - l / 2;
-    epingle += `<g class="at-ici at-ici-etiq-carte"><rect x="${x0}" y="${yy}" width="${l}" height="44" rx="22"/><text x="${x0 + l / 2}" y="${yy + 31}" font-size="27" text-anchor="middle">EN COURS</text></g>`;
+    // Étape R285 (47.01, retours du 21/11 au soir) : plus d'étiquette « EN COURS » ; le territoire ressort par sa couleur et son contour blanc
   }
   // 2A : une carte postale par territoire ouvert
   const nb = (n, mot) => `${n} ${mot}${n > 1 ? (mot.endsWith("u") ? "x" : "s") : ""}`;

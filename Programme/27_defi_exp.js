@@ -5,7 +5,7 @@
 //   • deux façons de valider l'étape 1 d'une expédition : les Rencontres (Découvrir) OU un défi réussi (Me tester) ;
 //   • le défi : 2 questions par espèce (10 à 14), réussi avec 2 erreurs au plus ; la partie va toujours au bout ;
 //     pièges proches (sosies, même groupe…), autres formes (femelle, jeune, hiver ; jamais larve ni chenille) ;
-//     2 aides (retirer deux réponses, voir les silhouettes) ; pas de chronomètre ;
+//     aides : retirer deux réponses (2 fois), voir les silhouettes (1 fois) — R285 ; pas de chronomètre ;
 //   • chaque erreur est expliquée, côte à côte : votre choix et la bonne réponse, puis « Ce qui les sépare »
 //     (un repère de chaque carte, sur la même partie du corps quand c'est possible) ;
 //   • la coriace (l'espèce de l'expédition la plus ratée jusqu'ici) revient en dernière question ;
@@ -201,6 +201,17 @@ function ordreDefi(x, nb) {
 // Étape R241 (17/11, notes 17 et 33 du 16/11, tâches 36.17 et 36.33) : le défi en cours est SAUVEGARDÉ à chaque réponse
 //   (suivi.defisEnCours[id] : questions posées, réponses, aides). Sortir (« ← » en haut, touche retour) le met de côté,
 //   sans feuille ni question ; « Reprendre le défi » repart de la question où l'on s'était arrêté. Rien n'est perdu.
+// Étape R285 (47.03, choix « Une de plus » du 21/11, 20 h 40) : « Retirer deux réponses » 2 fois par partie,
+//   « Voir les silhouettes » 1 fois ; le bouton dit ce qui reste. Une ancienne partie (aides en oui / non) est reprise sans rien perdre :
+//   aide encore là = le nouveau nombre ; « Retirer » déjà utilisé = 1 restante ; silhouettes déjà vues = 0.
+const AIDES_DEFI = { retirer: 2, silhouettes: 1 };
+function aidesDefi(a) {
+  const n = (v, max) => v === true || v === undefined || v === null ? max : v === false ? max - 1 : Number.isFinite(+v) ? Math.max(0, Math.min(max, +v)) : max;
+  return { retirer: n(a && a.retirer, AIDES_DEFI.retirer), silhouettes: n(a && a.silhouettes, AIDES_DEFI.silhouettes) };
+}
+function texteAideDefi(nom, reste, max) {
+  return `${nom}<span class="dfx-aide-reste">${reste > 0 ? `${reste} restante${reste > 1 ? "s" : ""}` : `déjà utilisée${max > 1 ? "s" : ""}`}</span>`;
+}
 function sauverDefiExp() {
   const d = defiExp;
   if (!d || !suivi) return;
@@ -245,7 +256,7 @@ function reprendreDefiExp(x) {
   const repQ = s.rep && s.rep.questions ? s.rep.questions.map(relire) : null;   // R249
   if (questions.some(q => !q || q.noms.length < 2) || (repQ && repQ.some(q => !q || q.noms.length < 2))) { oublierDefiExp(x); lancerDefiExp(x); return; }   // données changées : on repart
   const i = questions.findIndex(q => !faiteDefi(q));   // R283
-  defiExp = { x, questions, i: i < 0 ? questions.length - 1 : i, aides: { retirer: true, silhouettes: true, ...(s.aides || {}) }, silhouettesVisibles: false,
+  defiExp = { x, questions, i: i < 0 ? questions.length - 1 : i, aides: aidesDefi(s.aides), silhouettesVisibles: false,
               avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: new Set(x.liste.filter(estReconnue).map(e => e.nom_courant)), perduVu: !!s.pv };
   if (repQ) { repQ.forEach(q => q.rep = true); const j = repQ.findIndex(q => !q.choix); defiExp.rep = { questions: repQ, i: j < 0 ? repQ.length - 1 : j, lance: !!s.rep.lance }; }
   montrer("defiexp");
@@ -312,7 +323,7 @@ function lancerDefiExp(x) {
   const dejaReconnues = new Set(x.liste.filter(estReconnue).map(e => e.nom_courant));
   const nb = questionsParEspece(x, dejaReconnues);
   if (DEFI_VARIE) {   // R283 : reconnaître autrement (repère, indices, Qui est qui ?, Ce qui les sépare)
-    defiExp = { x, questions: questionsDefiVarie(x, nb, pool), i: 0, aides: { retirer: true, silhouettes: true }, silhouettesVisibles: false, prevues: nb,
+    defiExp = { x, questions: questionsDefiVarie(x, nb, pool), i: 0, aides: aidesDefi(), silhouettesVisibles: false, prevues: nb,
                 avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues };
     montrer("defiexp");
     afficherQuestionDefiExp();
@@ -354,7 +365,7 @@ function lancerDefiExp(x) {
   const suite = enchainerVarie(prevues, (e, r) => [genreQ(parEspece.get(e)[r - 1])], { derniere: coriaceExp(x), max: 99 });
   const vuesRang = new Map();
   const questions = suite.map(z => { const r = vuesRang.get(z.e) || 0; vuesRang.set(z.e, r + 1); return parEspece.get(z.e)[r]; });
-  defiExp = { x, questions, i: 0, aides: { retirer: true, silhouettes: true }, silhouettesVisibles: false, prevues: nb,
+  defiExp = { x, questions, i: 0, aides: aidesDefi(), silhouettesVisibles: false, prevues: nb,
               avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues };
   montrer("defiexp");
   afficherQuestionDefiExp();
@@ -508,11 +519,18 @@ function taillesDisjointes(e, o) {
   const [p, g] = a[1] < b[0] ? [a, b] : b[1] < a[0] ? [b, a] : [null, null];
   return !!p && g[0] / Math.max(p[1], 0.01) >= 1.2;   // un écart net entre les deux fourchettes
 }
+// R285 (47.02, note 4) : un repère de silhouette ne se comprend pas seul (« Petite, ronde, queue courte », « Trapu, pattes
+//   courtes », « Papillon de taille moyenne ») : il n'est jamais donné sans photo
+const MOTS_SILHOUETTE = /^(et|tres|petit|petite|petits|petites|grand|grande|gros|grosse|rond|ronde|trapu|trapue|massif|massive|elance|elancee|svelte|mince|fin|fine|dodu|dodue|robuste|allonge|allongee|compact|compacte|minuscule|enorme|fluet|fluette)$/;
+function repereDeSilhouette(t) {
+  const debut = motsSimples(String(t).split(",")[0]);
+  return (debut.length > 0 && debut.every(w => MOTS_SILHOUETTE.test(w))) || /silhouette|allure|taille moyenne/.test(motsSimples(t).join(" "));
+}
 // Les repères qu'on peut donner seuls : ceux de la photo principale, sur une partie dite, sans le nom dedans (parties visibles d'abord)
 function reperesInterrogeables(e) {
   const r = reperesDe(e);
   if (!r) return [];
-  return reperesPourForme(r, formePourPhoto(r, "")).filter(x => x.partie && x.partie !== "NA" && x.texte && !texteDitNom(x.texte, e))
+  return reperesPourForme(r, formePourPhoto(r, "")).filter(x => x.partie && x.partie !== "NA" && x.texte && !texteDitNom(x.texte, e) && !repereDeSilhouette(x.texte))
     .map((x, i) => ({ x, i })).sort((a, b) => rangPartie(a.x.partie) - rangPartie(b.x.partie) || a.i - b.i).map(o => o.x);
 }
 // 1A (R284 : 45.01) : 3 fausses réponses de l'expédition, dont la carte ou la fiche CONTREDIT le repère, jamais ne le porte
@@ -521,23 +539,49 @@ function piegesRepere(e, x, rp, pool) {
   const l = melanger(x.liste.filter(ok)).sort((a, b) => (a.onglet === e.onglet ? 0 : 1) - (b.onglet === e.onglet ? 0 : 1));
   return l.filter((o, k) => l.findIndex(z => z.nom_courant === o.nom_courant) === k).slice(0, 3);
 }
-// 3A : un indice sépare-t-il la bonne espèce de cette fausse photo ? (R284 : la taille, par fourchettes disjointes)
-function separeParIndice(e, i, o) {
-  if (i.taille) return taillesDisjointes(e, o);
-  if (i.etiq === "Indice de présence") {   // « Empreintes, crottes » colle aussi au lièvre (« Empreintes, crottes, gîte ») : il faut un indice qu'elle n'a pas
-    //   (et des empreintes, des crottes : presque tous en laissent ; seul un indice propre — terrier, gîte, nid… — départage)
-    const a = elementsTrace(traceDe(e)), b = elementsTrace(traceDe(o));
-    return a.length > 0 && b.length > 0 && a.some(z => !b.includes(z) && !TRACES_COMMUNES.test(z));
-  }
-  if (i.etiq === "Activité") {             // « À l'aube et au crépuscule » colle aussi à « De jour comme de nuit » : il faut des moments sans rien en commun
-    const a = momentsActivite(lireCase(e, "activite")), b = momentsActivite(lireCase(o, "activite"));
-    return a.length > 0 && b.length > 0 && !a.some(z => b.includes(z));
-  }
-  const v = i.cle(e), w = i.cle(o);
-  return !!(v && w && w !== v);
+// ==================================================================
+// Étape R285 (47.02, choix « B » d'Aubin du 21/11, 20 h 25 ; notes 2, 4 et 5 du 21/11 au soir sur la 1.28.0) : « Par les
+//   indices » et « Le repère » restent, à la même fréquence, mais justes et qui orientent. Aubin : « L'indice ne doit pas
+//   forcément être unique à une espèce mais la combinaison d'indices doit l'être » ; un joueur qui connaît les animaux trouve
+//   à coup sûr. Le défaut de R284 : une simple différence de fiche passait pour une exclusion (la chevêche « écartée » parce
+//   que sa fiche dit « Pelotes de réjection » et non « Cris nocturnes », ou « À l'aube et au crépuscule » et non « la nuit »).
+//   • Activité : l'aube et le crépuscule recoupent le jour ET la nuit ; seuls « le jour » et « la nuit » s'excluent.
+//   • Indice de présence : chaque fiche n'en a qu'un, son absence ne prouve rien. N'écartent que les indices propres à un
+//     groupe (pelotes et fientes : oiseaux ; guano : chauves-souris ; mue : reptiles, insectes, araignées, crustacés…).
+//     Les cris et les chants ne sont pas un indice de présence ici (ils sont retirés du texte).
+//   • Où : le milieu principal n'est qu'un milieu parmi d'autres ; il n'écarte que ce qui vit dans l'eau face à ce qui vit
+//     sur la terre ferme (un poisson face à un renard), jamais deux milieux de terre ou deux milieux d'eau.
+//   • Taille : dite en comparaison avec un animal connu (« De la taille d'un merle »), seulement si les 4 réponses ont la même
+//     mesure (du bec à la queue, sans la queue…), avec des fourchettes nettement séparées.
+// ==================================================================
+const CRIS_INDICE = /^(des |les )?(cris?|chants?|choeurs?|roucoulements?|hurlements?|claquements?|stridulations?|sifflements?)\b/;
+// Les indices propres à un groupe : qui peut les laisser (familles du jeu, ou ordre pour les chauves-souris)
+const INDICES_DE_GROUPE = [
+  { re: /pelote/, peut: o => o.onglet === "Oiseaux" },
+  { re: /fiente|rochers blanchis/, peut: o => o.onglet === "Oiseaux" },
+  { re: /^plumes?\b/, peut: o => o.onglet === "Oiseaux" },
+  { re: /proies? (parfois )?empalee|empales/, peut: o => o.onglet === "Oiseaux" },
+  { re: /guano/, peut: o => o.ordre === "Chiroptères" },
+  { re: /^poils?$/, peut: o => o.onglet === "Mammiferes" },
+  { re: /taupiniere|tumuli|souille|griffade|griffure|troncs? griffe|hutte|barrage/, peut: o => o.onglet === "Mammiferes" },
+  { re: /\bmue\b|exuvie/, peut: o => ["Reptiles", "Insectes", "Araignees_mille_pattes", "Crustaces"].includes(o.onglet) },
+  { re: /trace de reptation/, peut: o => o.onglet === "Reptiles" },
+  { re: /^toiles? (ronde|en nappe|pouponniere)|^toile$/, peut: o => o.onglet === "Araignees_mille_pattes" },
+  { re: /chenille|toiles? de chenilles|oothequ/, peut: o => o.onglet === "Insectes" },
+  { re: /tetard/, peut: o => o.onglet === "Amphibiens" },
+  { re: /frayere/, peut: o => o.onglet === "Poissons" },
+  { re: /turricule|tortillons de sable/, peut: o => o.onglet === "Vers_meduses_compagnie" },
+];
+function elementsTrace(t) { return String(t || "").split(/,|;| et /).map(z => z.trim()).filter(Boolean); }
+// Le texte de l'indice de présence pour Me tester : sans les cris ; vide s'il ne reste rien
+function traceDefi(e) {
+  const l = elementsTrace(traceDe(e)).filter(z => !CRIS_INDICE.test(simplifier(z)));
+  return l.length ? majuscule(l.join(", ")) : "";
 }
-const TRACES_COMMUNES = /^(des |les )?(empreintes?|crottes?|traces?|laissees?|fientes?|excrements?|poils?|plumes?)$/;
-function elementsTrace(t) { return String(t || "").split(/,|;| et /).map(s => simplifier(s.trim())).filter(Boolean); }
+function groupesTrace(e) {
+  const l = elementsTrace(traceDefi(e)).map(simplifier);
+  return INDICES_DE_GROUPE.filter(g => l.some(z => g.re.test(z)));
+}
 // Les moments d'activité : jour, nuit, aube et crépuscule (« de jour comme de nuit » = tous)
 function momentsActivite(t) {
   const s = motsSimples(t).join(" ");
@@ -549,17 +593,89 @@ function momentsActivite(t) {
   if (/aube|crepuscul|soir|matin/.test(s)) m.push("crepuscule");
   return m;
 }
+// R285 : deux activités ne s'excluent que si l'une est « le jour » seul et l'autre « la nuit » seule
+function activitesExclues(a, b) {
+  const x = momentsActivite(a), y = momentsActivite(b);
+  const pur = m => m.length === 1 && m[0] !== "crepuscule";
+  return pur(x) && pur(y) && x[0] !== y[0];
+}
+// R285 : vivre dans l'eau (poissons ; mollusques, crustacés, vers des eaux) ou sur la terre ferme
+const MILIEUX_DE_BORD = ["Marais", "Dunes et plages", "Estuaires et lagunes"];
+function especeDansLEauDefi(o) {
+  const m = lireCase(o, "milieu_principal");
+  return o.onglet === "Poissons" || (["Mollusques", "Crustaces", "Vers_meduses_compagnie"].includes(o.onglet) && MILIEUX_AQUATIQUES.includes(m) && !MILIEUX_DE_BORD.includes(m));
+}
+function especeSurTerreDefi(o) {
+  const m = lireCase(o, "milieu_principal");
+  return !!m && o.onglet !== "Poissons" && !MILIEUX_AQUATIQUES.includes(m) && !MILIEUX_DE_BORD.includes(m) && !["Mares et étangs", "Marais"].includes(m)
+    && ["Mammiferes", "Oiseaux", "Reptiles", "Insectes", "Araignees_mille_pattes", "Mollusques"].includes(o.onglet);
+}
+// R285 : la taille dite en comparaison, avec des animaux connus mesurés de la même façon
+const TAILLES_CONNUES = {
+  "du bec à la queue": [["un roitelet", 9], ["une mésange", 12], ["un moineau", 15], ["un merle", 25], ["un pigeon", 32], ["une corneille", 47], ["une buse", 53], ["un héron cendré", 95], ["un cygne", 150]],
+  "de long, sans la queue": [["une souris", 8], ["un rat", 20], ["un écureuil", 22], ["un hérisson", 25], ["un lapin", 40], ["un chat", 50], ["un renard", 70], ["un chevreuil", 120], ["un sanglier", 150], ["un cerf", 210]],
+  "au garrot": [["un chat", 30], ["un renard", 40], ["un chevreuil", 70], ["un cerf", 120]],
+  "de long|Poissons": [["un vairon", 8], ["une sardine", 20], ["une truite", 40], ["un brochet", 90], ["un thon", 200]],
+  "de long|Reptiles": [["un lézard des murailles", 20], ["un lézard vert", 35], ["une vipère", 65], ["une couleuvre", 130]],
+  "de long|Amphibiens": [["une rainette", 4.5], ["une grenouille", 9], ["une salamandre", 18]],
+  "de long|Crustaces": [["une crevette", 5], ["une écrevisse", 11], ["un homard", 45]],
+  "de long": [["une fourmi", 0.6], ["une coccinelle", 0.7], ["une abeille", 1.3], ["un hanneton", 2.7], ["une sauterelle verte", 5], ["un ver de terre", 12]],
+  "(coquille)": [["un petit-gris (escargot)", 3.5], ["une moule", 6], ["une huître", 10]],
+};
+function mesureDefi(o) { return mesureTaille(o).fiche; }
+function tailleMilieu(o) { const f = fourchetteTailleDefi(o, false); return f ? Math.sqrt(Math.max(f[0], 0.01) * f[1]) : null; }
+function tailleComparee(o) {
+  const m = tailleMilieu(o), mes = mesureDefi(o);
+  const refs = TAILLES_CONNUES[mes + "|" + o.onglet] || TAILLES_CONNUES[mes];
+  if (!m || !refs) return "";
+  const nomSimple = simplifier(o.nom_courant);   // jamais « un peu plus petit qu'un rat » pour le rat noir
+  const [nom, v] = refs.filter(r => !nomSimple.includes(simplifier(r[0].replace(/^(un|une) /, "").split(/[ (]/)[0]))).sort((a, b) => Math.abs(Math.log(m / a[1])) - Math.abs(Math.log(m / b[1])))[0];
+  const k = m / v, de = nom.replace(/^(un|une) /, "$1 ");
+  if (k > 1.6) return `Plus grand que ${de}`.replace("que un", "qu'un").replace("que une", "qu'une");
+  if (k < 0.62) return `Plus petit que ${de}`.replace("que un", "qu'un").replace("que une", "qu'une");
+  if (k > 1.18) return `Un peu plus grand qu'${de}`;
+  if (k < 0.85) return `Un peu plus petit qu'${de}`;
+  return `De la taille d'${de}`;
+}
+// Les indices de Me tester (Où, indice de présence sans les cris, taille comparée, activité)
+function candidatsIndicesDefi(e) {
+  const l = [], milieu = lireCase(e, "milieu_principal"), trace = traceDefi(e), t = tailleComparee(e), act = lireCase(e, "activite");
+  if (milieu) l.push({ etiq: "Où", texte: majuscule(milieu) });
+  if (trace) l.push({ etiq: "Indice de présence", texte: trace });
+  if (t) l.push({ etiq: "Taille", texte: t, taille: true });
+  if (act && momentsActivite(act).length) l.push({ etiq: "Activité", texte: majuscule(act) });
+  return l.filter(i => INDICES_DEFI.includes(i.etiq) && !texteDitNom(i.texte, e));
+}
+// 3A : un indice sépare-t-il la bonne espèce de cette fausse photo ? (R285 : seulement si l'indice la contredit vraiment)
+function separeParIndice(e, i, o) {
+  if (i.taille || i.etiq === "Taille") return mesureDefi(e) === mesureDefi(o) && taillesDisjointes(e, o) && !!tailleComparee(e)
+    && Math.abs(Math.log(tailleMilieu(e) / tailleMilieu(o))) >= Math.log(1.5) && tailleComparee(o) !== tailleComparee(e);
+  if (i.etiq === "Indice de présence") {
+    if (!traceDefi(e)) return false;
+    const mien = simplifier(traceDefi(o));
+    return groupesTrace(e).some(g => !g.peut(o) && !elementsTrace(mien).some(z => g.re.test(z)));
+  }
+  if (i.etiq === "Activité") return activitesExclues(lireCase(e, "activite"), lireCase(o, "activite"));
+  if (i.etiq === "Où") return (especeDansLEauDefi(e) && especeSurTerreDefi(o)) || (especeSurTerreDefi(e) && especeDansLEauDefi(o));
+  return false;
+}
 // R284 (45.01) : les fausses photos viennent de l'expédition seulement (jamais un sosie), et chacune est écartée par un indice
-//   montré ; on essaie plusieurs trios avant de renoncer
+//   montré ; on essaie plusieurs trios avant de renoncer. R285 : la taille n'est montrée que si les 4 ont la même mesure.
 function questionIndicesDefi(e, x) {
   if (!jouableEnJeu(e) || indicesAmbigus(e, x)) return null;
-  const cands = candidatsIndices(e).filter(i => INDICES_DEFI.includes(i.etiq) && !texteDitNom(i.texte, e));
-  if (!cands.length) return null;
+  const tous = candidatsIndicesDefi(e);
+  if (!tous.length) return null;
   const sosies = sosiesDe(e);
-  const possibles = x.liste.filter(o => o !== e && jouableEnJeu(o) && !sosies.includes(o) && cands.some(i => separeParIndice(e, i, o)));
+  const possibles = x.liste.filter((o, k, l) => o !== e && l.indexOf(o) === k && jouableEnJeu(o) && !sosies.includes(o) && tous.some(i => separeParIndice(e, i, o)));
   if (possibles.length < 3) return null;
-  for (let essai = 0; essai < 12; essai++) {
-    const pieges = melanger(possibles.slice()).sort((a, b) => (a.onglet === e.onglet ? 0 : 1) - (b.onglet === e.onglet ? 0 : 1)).slice(0, 3);
+  // tous les trios possibles, dans un ordre tiré au hasard, ceux de la même famille d'abord (R285 : un trio mêlé empêche la taille)
+  const l = melanger(possibles.slice()).slice(0, 12), trios = [];
+  for (let i = 0; i < l.length; i++) for (let j = i + 1; j < l.length; j++) for (let k = j + 1; k < l.length; k++) trios.push([l[i], l[j], l[k]]);
+  const meme = t => t.filter(o => o.onglet === e.onglet).length;
+  trios.sort((a, b) => meme(b) - meme(a));
+  for (const pieges of trios) {
+    const memeMesure = pieges.every(o => mesureDefi(o) === mesureDefi(e));
+    const cands = tous.filter(i => !i.taille || memeMesure);
     const choisis = [];
     let reste = pieges.slice();
     while (reste.length && choisis.length < 3) {   // l'indice qui écarte le plus de fausses photos qui restent
@@ -727,9 +843,22 @@ function corpsRepereDefi(q) {
   const forme = rp.pour && !["tous", "adulte"].includes(rp.pour) && r && formesReperes(r).length > 1 ? (NOMS_FORME[rp.pour] || majuscule(rp.pour)) : "";
   return `<div class="dfx-facon">Le repère</div>
     <p class="cdo-q">À qui est ce repère ?</p>
-    <div class="dfx-repere">${dessin ? `<span class="rp-image">${dessin}</span>` : ""}<span>${forme ? `<small>${echapper(forme)}</small>` : ""}<b>${echapper(majuscule(rp.texte))}</b></span></div>
+    <div class="dfx-repere">${dessin ? `<span class="rp-image">${dessin}</span>` : ""}<span>${forme ? `<small>${echapper(forme)}</small>` : ""}<b>${echapper(texteRepereDefi(q))}</b></span></div>
     <p class="dfx-consigne">Sans photo : retrouvez l'espèce à qui il appartient.</p>
     <div class="cdo-noms dfx-noms-col">${q.noms.map((e, k) => boutonNomDefi(e, k, q)).join("")}</div>`;
+}
+// R285 (47.02, note 4) : quand les 4 réponses ne sont pas du même groupe, le repère dit de qui il parle
+//   (« Cet oiseau : queue courte, tête aplatie… »)
+function groupeDitDefi(e) {
+  const g = { Oiseaux: "Cet oiseau", Mammiferes: e.ordre === "Chiroptères" ? "Cette chauve-souris" : "Ce mammifère", Insectes: "Cet insecte",
+    Poissons: "Ce poisson", Reptiles: "Ce reptile", Amphibiens: "Cet amphibien", Mollusques: "Ce mollusque", Crustaces: "Ce crustacé",
+    Araignees_mille_pattes: e.ordre === "Aranéides" ? "Cette araignée" : "" }[e.onglet];
+  return g || "";
+}
+function groupeDefi(e) { return e.onglet === "Mammiferes" && e.ordre === "Chiroptères" ? "chauve-souris" : e.onglet === "Araignees_mille_pattes" ? e.ordre : e.onglet; }
+function texteRepereDefi(q) {
+  const memes = q.noms.every(o => groupeDefi(o) === groupeDefi(q.espece)), g = groupeDitDefi(q.espece);
+  return memes || !g ? majuscule(q.rp.texte) : `${g} : ${minusculeTexte(q.rp.texte)}`;
 }
 // Après la réponse juste : la photo, avec le repère
 function photoRepereDefi(q) {
@@ -750,19 +879,22 @@ function blocRepereErreur(q, choisie) {
 // 3A : la question des indices (4 photos, aucun nom)
 function corpsIndicesDefi(q) {
   return `<div class="dfx-facon">Par les indices</div>
-    <p class="cdo-q">Qui a laissé ces indices ?</p>
+    <p class="cdo-q">${q.indices.every(i => i.etiq === "Indice de présence") ? "Qui a laissé ces indices ?" : "Qui suis-je ?"}</p>
     <ul class="fe-indices dfx-indices">${q.indices.map(i => `<li class="fe-indice"><span class="fe-etiq">${echapper(i.etiq)}</span><span class="fe-texte">${echapper(i.texte)}</span></li>`).join("")}</ul>
     <div class="ore-photos dfx-photos">${q.noms.map((e, k) => boutonPhotoDefi(e, k, q)).join("")}</div>`;
 }
+// R285 : après une erreur, la taille est dite en comparaison ET en centimètres (pour apprendre)
 function texteIndicePour(o, etiq) {
-  if (etiq === "Taille") { const t = tailleRencontre(o); return t ? majuscule(t.texte) : ""; }
-  const c = candidatsIndices(o).find(z => z.etiq === etiq);
-  return c ? c.texte : "";
+  if (etiq === "Taille") { const c = tailleComparee(o), t = tailleRencontre(o); return c ? `${c}${t ? ` (${t.texte})` : ""}` : (t ? majuscule(t.texte) : ""); }
+  if (etiq === "Où" && especeDansLEauDefi(o)) { const m = lireCase(o, "milieu_principal"); return m ? `Dans l'eau : ${minusculeTexte(m)}` : ""; }
+  const c = candidatsIndicesDefi(o).find(z => z.etiq === etiq);
+  return c ? c.texte : etiq === "Indice de présence" ? "Ne laisse pas cet indice" : "";
 }
-// Après une erreur sur les indices : le premier indice qui les sépare, pour les deux espèces
+// Après une erreur sur les indices : le premier indice qui les sépare VRAIMENT (R285), pour les deux espèces
 function blocIndicesErreur(q, choisie) {
-  const l = q.indices.map(i => ({ i, autre: texteIndicePour(choisie, i.etiq) })).find(z => z.autre && simplifier(z.autre) !== simplifier(z.i.texte));
-  if (!l) return null;
+  const sep = q.indices.find(i => separeParIndice(q.espece, i, choisie)) || q.indices.find(i => simplifier(texteIndicePour(choisie, i.etiq)) !== simplifier(i.texte));
+  const l = sep ? { i: sep.etiq === "Taille" ? { ...sep, texte: texteIndicePour(q.espece, "Taille") } : sep, autre: texteIndicePour(choisie, sep.etiq) } : null;
+  if (!l || !l.autre) return null;
   const ligne = (e, t, cls) => `<li><i class="${cls}"></i><span><b>${echapper(majuscule(nomCourt(e)))} :</b> ${echapper(minusculeTexte(t))}</span></li>`;
   return `<div class="dfx-separe"><small>Ce qui les sépare · ${echapper(minusculeTexte(l.i.etiq))}</small><ul>${ligne(q.espece, l.i.texte, "ok")}${ligne(choisie, l.autre, "ko")}</ul></div>`;
 }
@@ -921,8 +1053,8 @@ function afficherQuestionDefiExp() {
       ${corps}
       <div class="cdo-retour" id="dfx-retour"></div>
       ${enRep || sansAides ? "" : `<div class="dfx-aides" id="dfx-aides"><small>Vos aides</small>
-        <button class="cdo-second" id="dfx-retirer"${d.aides.retirer ? "" : " disabled"}>Retirer deux réponses</button>
-        ${enPhotos ? "" : `<button class="cdo-second" id="dfx-silh"${d.aides.silhouettes ? "" : " disabled"}>Voir les silhouettes</button>`}</div>`}
+        <button class="cdo-second" id="dfx-retirer"${d.aides.retirer > 0 && !q.retires.length ? "" : " disabled"}>${texteAideDefi("Retirer deux réponses", d.aides.retirer, AIDES_DEFI.retirer)}</button>
+        ${enPhotos ? "" : `<button class="cdo-second" id="dfx-silh"${d.aides.silhouettes > 0 && !d.silhouettesVisibles ? "" : " disabled"}>${texteAideDefi("Voir les silhouettes", d.aides.silhouettes, AIDES_DEFI.silhouettes)}</button>`}</div>`}
     </div>`;   // R249 : pas d'aide pendant le repêchage (une erreur n'y coûte rien)
   zone.querySelectorAll(".cdo-nom, .dfx-ph").forEach(b => b.onclick = () => repondreDefiExp(q.noms[+b.dataset.k], b));
   if (q.type === "separe") brancherSepareDefi(q);
@@ -940,19 +1072,19 @@ function boutonNomDefi(e, k, q) {
   const retire = q.retires.includes(e);
   return `<button class="cdo-nom${silh ? " avec-silh" : ""}${retire ? " retire" : ""}" data-k="${k}"${retire ? " disabled" : ""}>${silh ? `<img class="dfx-silh" src="${silh}" alt="" onerror="this.remove()">` : ""}<span>${echapper(e.nom_courant)}</span></button>`;
 }
-// Aide 1 : deux mauvaises réponses disparaissent (une fois par défi)
+// Aide 1 : deux mauvaises réponses disparaissent (2 fois par défi, R285 ; une seule fois par question)
 function aideRetirer(q) {
   const d = defiExp;
-  if (!d.aides.retirer || q.choix) return;
-  d.aides.retirer = false;
+  if (!(d.aides.retirer > 0) || q.choix || q.retires.length) return;
+  d.aides.retirer--;
   q.retires = melanger(q.noms.filter(e => e !== q.espece)).slice(0, 2);
   afficherQuestionDefiExp();
 }
 // Aide 2 : la silhouette de chaque réponse, jusqu'à la fin de la question (une fois par défi)
 function aideSilhouettes() {
   const d = defiExp;
-  if (!d.aides.silhouettes || qCouranteDefi(d).choix) return;
-  d.aides.silhouettes = false; d.silhouettesVisibles = true;
+  if (!(d.aides.silhouettes > 0) || qCouranteDefi(d).choix || d.silhouettesVisibles) return;
+  d.aides.silhouettes--; d.silhouettesVisibles = true;
   afficherQuestionDefiExp();
 }
 
@@ -1323,7 +1455,7 @@ function portesEtape1(x) {
   return `<div class="dfx-portes"><div class="etiq-jeu">${nomEtape(1)}</div>
       <p class="dfx-phrase">Deux façons de reconnaître ces ${n} espèces : les découvrir une à une, ou vous tester tout de suite. Vous pourrez changer en route.</p>
       <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues))}
-        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${erreursPermisesDefi(nbQuestionsDefi(x))} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 2 aides`)}</div>${gain}</div>`;
+        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${erreursPermisesDefi(nbQuestionsDefi(x))} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`)}</div>${gain}</div>`;
 }
 function brancherPortes(zone, x) {
   zone.querySelectorAll("[data-porte]").forEach(b => b.onclick = () => b.dataset.porte === "tester" ? lancerDefiExp(x) : b.dataset.porte === "reprendre" ? reprendreDefiExp(x) : lancerExpedition(x, 1));

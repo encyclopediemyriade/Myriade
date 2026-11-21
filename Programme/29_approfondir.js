@@ -9,7 +9,7 @@
 //   • ME TESTER = 3 questions par espèce, 20 au plus, 3 erreurs permises pour 20 (erreursPermisesDefi, 27) ; mêmes sujets
 //     qu'Approfondir (mesures, nourriture, prédateurs, noms, statut…) mais plus difficile : pièges plus proches, espèces
 //     mêlées, pas de lecture avant ; une erreur montre côte à côte votre réponse, la bonne, et la ligne de la fiche ;
-//     la partie va au bout ; repêchage commun avec le défi de l'étape 1 (R249) ; une seule aide (« Retirer deux réponses ») ;
+//     la partie va au bout ; repêchage commun avec le défi de l'étape 1 (R249) ; une aide (« Retirer deux réponses », 2 fois par partie depuis R285) ;
 //     mis de côté et repris comme le défi de l'étape 1.
 //   • Même récompense pour les deux portes : réussi = toutes « connues par cœur » (1 empreinte par espèce) ;
 //     pas réussi = celles dont toutes les questions sont justes.
@@ -186,7 +186,7 @@ function portesApprofondir(x, num) {
   if (testApprofEnPause(x)) {
     const s = suivi.approfTestsEnCours[x.id], total = s.questions.length, rep = s.questions.filter(q => q.c !== null).length;
     tester = porteTester("Me tester · en cours", `Reprendre où vous en étiez : ${rep} sur ${total}.`, "Reprendre le test").replace('data-porte="tester"', 'data-apf="reprendre"');
-  } else tester = porteTester("Me tester", `${nq} questions, ${perm} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nq)} min · 1 aide`).replace('data-porte="tester"', 'data-apf="tester"');
+  } else tester = porteTester("Me tester", `${nq} questions, ${perm} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nq)} min · 2 aides`).replace('data-porte="tester"', 'data-apf="tester"');
   // Étape R267 (Notion 40.17, choix 10A) : toutes connues par cœur → l'étape est cochée comme les autres (✓, empreintes prises),
   //   en une ligne ; on peut toujours revoir ou se tester, sans empreintes en double. L'expédition est alors « complète ».
   if (toutes && EXPEDITION_COMPLETE) {
@@ -291,16 +291,19 @@ function afficherQuestionApprof() {
       <p class="cdo-q apf-q">${echapper(q.texte)}</p>${q.affirmation ? `<p class="apf-affirmation">${echapper(q.affirmation)}</p>` : ""}
       <div class="cdo-noms apf-choix${classeNombreChoix(q.choix.length)}">${q.choix.map((t, k) => `<button class="cdo-nom${(q.retires || []).includes(t) ? " retire" : ""}" data-k="${k}"${(q.retires || []).includes(t) ? " disabled" : ""}><span>${echapper(t)}</span></button>`).join("")}</div>
       <div class="cdo-retour" id="dfx-retour"></div>
-      ${test && !enRep ? `<div class="dfx-aides" id="dfx-aides"><small>Votre aide</small><button class="cdo-second" id="dfx-retirer"${a.aide && q.choix.length > 2 ? "" : " disabled"}>Retirer deux réponses</button></div>` : ""}
+      ${test && !enRep ? `<div class="dfx-aides" id="dfx-aides"><small>Votre aide</small><button class="cdo-second" id="dfx-retirer"${aideApprof(a) > 0 && q.choix.length > 2 && !(q.retires || []).length ? "" : " disabled"}>${texteAideDefi("Retirer deux réponses", aideApprof(a), AIDES_DEFI.retirer)}</button></div>` : ""}
     </div>`;
   zone.querySelectorAll(".apf-choix .cdo-nom").forEach(b => b.onclick = () => repondreApprof(q.choix[+b.dataset.k], b));
   document.getElementById("dfx-quitter").onclick = () => test ? mettreTestApprofDeCote() : retourExpApprof(a.x);
   calerJeuSousPouce(zone, ".apf-choix");   // étape R265 (40.03)
   const ret = document.getElementById("dfx-retirer");
-  if (ret) ret.onclick = () => { if (!a.aide || q.choisi !== null || q.choix.length <= 2) return; a.aide = false;
+  if (ret) ret.onclick = () => { if (!(aideApprof(a) > 0) || q.choisi !== null || q.choix.length <= 2 || (q.retires || []).length) return; a.aide = aideApprof(a) - 1;
     q.retires = melanger(q.choix.filter(t => t !== q.bonne)).slice(0, Math.max(1, Math.min(2, q.choix.length - 2))); sauverTestApprof(); afficherQuestionApprof(); };
   window.scrollTo(0, 0);
 }
+// Étape R285 (47.03) : « Retirer deux réponses » 2 fois par partie aussi dans le Me tester d'Approfondir ; l'aide est un nombre
+//   (un ancien test mis de côté, oui / non, est repris par aidesDefi : non utilisée = 2, utilisée = 1)
+function aideApprof(a) { return typeof a.aide === "number" ? a.aide : aidesDefi({ retirer: a.aide }).retirer; }
 function repondreApprof(choisie, bouton) {
   const a = apf, test = a.mode === "tester", q = test ? qCouranteApprof(a) : a.aPoser[a.j];
   if (!a || (test && q.choisi !== null) || (!test && q.repondu)) return;
@@ -512,7 +515,7 @@ function lancerTestApprof(x) {
   questions.forEach(q => { q.choisi = null; q.retires = []; });
   varierFormesApprof(questions, 2);   // R265 (40.15, 8B) : quelques questions en « vrai ou faux »
   if (!questions.length) { afficherBulle("Rien à tester ici pour l'instant"); return; }
-  apf = { mode: "tester", x, questions, i: 0, aide: true, rep: null, avantGain: gainExp(x), avantApprofondie: approfondie(x),
+  apf = { mode: "tester", x, questions, i: 0, aide: AIDES_DEFI.retirer, rep: null, avantGain: gainExp(x), avantApprofondie: approfondie(x),
           bonusApres: APPROF_BONUS_PHOTO && questions.length >= 6 ? Math.round(questions.length * 0.6) : -1, bonusFait: false };   // R266
   sauverTestApprof();
   montrer("defiexp");
@@ -555,7 +558,7 @@ function reprendreTestApprof(x) {
   const questions = s.questions.map(relireQ), repQ = s.rep ? s.rep.questions.map(relireQ) : null;
   if (questions.some(q => !q) || (repQ && repQ.some(q => !q))) { delete suivi.approfTestsEnCours[x.id]; lancerTestApprof(x); return; }   // données changées
   const i = questions.findIndex(q => q.choisi === null);
-  apf = { mode: "tester", x, questions, i: i < 0 ? questions.length - 1 : i, aide: s.aide !== false, rep: null, avantGain: gainExp(x), avantApprofondie: approfondie(x),
+  apf = { mode: "tester", x, questions, i: i < 0 ? questions.length - 1 : i, aide: aidesDefi({ retirer: s.aide }).retirer, rep: null, avantGain: gainExp(x), avantApprofondie: approfondie(x),
           bonusApres: s.bA === undefined ? -1 : s.bA, bonusFait: !!s.bF, perduVu: !!s.pv };
   if (repQ) { const j = repQ.findIndex(q => q.choisi === null); apf.rep = { questions: repQ, i: j < 0 ? repQ.length - 1 : j, lance: !!s.rep.lance }; }
   montrer("defiexp");
