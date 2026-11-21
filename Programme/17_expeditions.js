@@ -989,7 +989,7 @@ function majFilExpedition(x, k) {
   const etape = k === 4 ? `Étape ${typeof aUneEtape2 === "function" && !aUneEtape2(x) ? 2 : 3} · Approfondir` : `Étape ${k} · ${ETAPES[k].titre}`;   // R241 (18a) : même numéro que la page
   fil.style.setProperty("--couleur-territoire", couleur);
   // Étape R91 (Revoir 9) : pendant le jeu, la bannière de l'expédition reste en haut, en réduit (même photo, même mise en page)
-  const ph = photoExp(x);
+  const ph = typeof srcEcran === "function" ? srcEcran(photoExp(x)) : photoExp(x);   // R281 : sur téléphone, la version téléphone (déjà chargée), pas la grande photo d'origine
   fil.className = "fil-banniere";
   fil.dataset.exp = x.id;   // étape R188 : « Quitter » et le retour du téléphone savent à quel lieu revenir
   fil.innerHTML = `<img class="fil-fond" src="${ph}" alt=""><img class="fil-photo" src="${ph}" alt="">
@@ -1023,7 +1023,7 @@ function majBandeExpedition(x, fil, k) {
         const but = butEspece(e, k), part = but ? Math.min(100, Math.round(100 * trouvesEspece(e, k) / but)) : 100;
         const st = especeFaite(e, k) ? "trouve" : `prog${e === ici ? " ici" : ""}`;
         const titre = `${e.nom_courant}${st === "trouve" ? " : fait" : ` : ${Math.min(trouvesEspece(e, k), but)} sur ${but}`}`;
-        return `<span class="be-rond ${st}${estRenseigne(e.photo) ? "" : " silh"}" style="--p:${part}" title="${echapper(titre)}"><img src="${photoEsp(e)}" alt=""></span>`; }).join("")}</span>
+        return `<span class="be-rond ${st}${estRenseigne(e.photo) ? "" : " silh"}" style="--p:${part}" title="${echapper(titre)}"><img ${srcRond(e)} alt=""></span>`; }).join("")}</span>
       <span class="be-texte">${faites < x.liste.length ? `${faites} espèce${faites > 1 ? "s" : ""} sur ${x.liste.length} : c'est fait` : "Toutes les espèces : c'est fait"}</span><span class="be-partie"></span>`;   // étape M19 : sur téléphone, « 4 / 11 » au bout de la ligne
     // Étape R125 (choix B) : à l'étape 3, la fiche de l'espèce de la question en cours, qui se remplit (ocre = gagné dans cette partie)
     majPartieBande();
@@ -1042,7 +1042,7 @@ function majBandeExpedition(x, fil, k) {
       //   aux jumelles, au sosie et aux indices)
       // Étape R272 (choix 1A) : comme dans la bande de fin, une espèce pas encore rencontrée reste en silhouette
       const cachee = RENCONTRE_COMPLETE && ((st === "ici" && !estIdentifiee(e) && !(session && session.presentee)) || (st === "reste" && pasEncoreRencontree(x, e)));
-      return `<span class="be-rond ${st}${estRenseigne(e.photo) && !cachee ? "" : " silh"}" title="${echapper(titre)}"><img src="${cachee ? fichierSilhouette(e) : photoEsp(e)}" alt=""></span>`; }).join("")}</span>
+      return `<span class="be-rond ${st}${estRenseigne(e.photo) && !cachee ? "" : " silh"}" title="${echapper(titre)}"><img ${cachee ? `src="${fichierSilhouette(e)}"` : srcRond(e)} alt=""></span>`; }).join("")}</span>
     <span class="be-texte"></span>`;   // R273 (11A) : plus de « 1 trouvée · encore 6 à découvrir » au-dessus de la question (les ronds le montrent)
 }
 // Étape M19 (07/11, choix B « Une seule ligne ») : sur téléphone, aux étapes 2 et 3, un seul repère au-dessus de la question :
@@ -1207,7 +1207,7 @@ function ligneFiche(e, avant, k = 4, x = null) {
   const c = casesFiche(e, avant, k), finie = x ? faiteDans(x, e, k) : c.trouves >= c.but;
   const nom = k === 1 && !estIdentifiee(e) ? "À découvrir" : e.nom_courant;   // étape 1 : jamais le nom d'une espèce pas encore trouvée
   return `<div class="fiche-ligne${finie ? " finie" : ""}" title="${echapper(nom)}">
-      <span class="be-rond${finie ? " trouve" : ""}${estRenseigne(e.photo) ? "" : " silh"}"><img src="${photoEsp(e)}" alt=""></span>
+      <span class="be-rond${finie ? " trouve" : ""}${estRenseigne(e.photo) ? "" : " silh"}"><img ${srcRond(e)} alt=""></span>
       <span class="fiche-nom${nom === e.nom_courant ? "" : " inconnue"}">${echapper(nom)}</span><span class="fiche-cases">${c.html}</span>
       <span class="fiche-compte">${k === 1 && x && !finie && c.but && c.trouves >= c.but ? "à revoir ici" : k === 1 && x && !finie && estTentee(x, e) ? `${c.trouves}/${c.but} · à revoir` : `${c.trouves}/${c.but}`}</span></div>`;   // R126 : connue ailleurs, à revoir dans l'expédition
 }
@@ -2096,6 +2096,13 @@ function imgMini(src, alt, classe) {
 function vedetteDe(x) { return (x.vedette && x.liste.find(e => e.nom_courant === x.vedette)) || x.liste.find(e => estRenseigne(e.photo)) || x.liste[0]; }
 // Étape 293 : la photo d'une espèce, ou sa silhouette quand la photo est « à venir » ; la photo d'une expédition
 function photoEsp(e) { return estRenseigne(e.photo) ? e.photo : fichierSilhouette(e); }
+// Étape R281 (44.07 suite) : les petits ronds (bande des espèces d'une expédition, d'une Rencontre, d'Approfondir) chargeaient
+//   la GRANDE photo d'origine (960 px) pour un rond de 40 px : sur téléphone, un second gros fichier par espèce, en plus de la
+//   photo de l'écran. Ils prennent maintenant la miniature (360 px), déjà chargée d'avance ; la grande photo reste en secours.
+function srcRond(e) {
+  if (!estRenseigne(e.photo)) return `src="${fichierSilhouette(e)}"`;
+  return `src="${photoMini(e.photo)}" onerror="if (this.src.includes('/mini/')) this.src='${e.photo}';"`;
+}
 function photoExp(x) { return x.photo || photoEsp(vedetteDe(x)); }
 function carteChapitre(x, etat) {
   const etiquettes = { finie: [libelleTerminee(x), expeditionComplete(x) ? "fin complete" : "fin"], encours: [`En cours · étape ${etapeEnCours(x) || 1}`, "cours"], nouvelle: ["Nouvelle", "nouv"], fermee: ["Bientôt", "ferm"] };   // R131
@@ -2245,9 +2252,14 @@ let expeditionAffichee = null;
 function ouvrirExpedition(x) { expeditionAffichee = x; montrer("expedition"); dessinerEcranExpedition(); window.scrollTo(0, 0);
   // R264 (Notion 39) : pendant qu'on lit la page, les photos des espèces de l'expédition se chargent (grandes et petites) :
   //   la Rencontre ou le défi les montre ensuite tout de suite. Un peu plus tard, pour ne pas ralentir la page elle-même.
-  if (x && x.liste) setTimeout(() => { prechargerEspeces(x.liste, true); prechargerEspeces(x.liste, false); }, 400);
-  // R280 (44.07) : puis, un peu après, les silhouettes, empreintes et pictos de leurs Rencontres (une espèce tous les quarts de seconde)
-  if (x && x.liste && typeof prechargerRencontre === "function") setTimeout(() => prechargerRencontre(x.liste), 1200);
+  // R281 (44.07 suite) : dans l'ordre où le jeu en aura besoin — les silhouettes (la bande de la première Rencontre), les
+  //   grandes photos, les petites, puis le reste de chaque Rencontre (pictos, empreintes, autres photos, sosies, fausses photos).
+  //   Tout passe par une file (3 à la fois, priorité basse) : rien ne passe devant ce que l'écran demande.
+  if (x && x.liste) setTimeout(() => {
+    if (typeof fichierSilhouette === "function") prechargerFichiers(x.liste.map(e => fichierSilhouette(e)));
+    prechargerEspeces(x.liste, false); prechargerEspeces(x.liste, true);
+    if (typeof prechargerRencontre === "function") prechargerRencontre(x.liste, x);
+  }, 300);
 }
 function dessinerEcranExpedition() {
   const zone = document.getElementById("vue-expedition"), x = expeditionAffichee;
@@ -2309,7 +2321,7 @@ function dessinerEcranExpedition() {
       marque = `<em class="exp-compte fait">✓ connue</em>`;   // étape R130 : plus de médailles dans l'expédition (pour l'instant)
     }
     return `<button class="exp-esp${id ? "" : " inconnue"}${fait ? " bien" : ""}${deja && kCadre === 1 ? " deja" : ""}${e === cible ? " piste-cible" : ""}" data-nom="${echapper(e.nom_courant)}" ${id ? "" : "disabled"}>
-        <span class="exp-rond${estRenseigne(e.photo) ? "" : " silh"}"><img src="${photoEsp(e)}" alt="" loading="lazy"></span><small>${id ? e.nom_courant : e === cible ? "Votre piste" : "À découvrir"}</small>${marque}</button>`;
+        <span class="exp-rond${estRenseigne(e.photo) ? "" : " silh"}"><img ${srcRond(e)} alt="" loading="lazy"></span><small>${id ? e.nom_courant : e === cible ? "Votre piste" : "À découvrir"}</small>${marque}</button>`;
   }).join("");
   const titreCadre = kCadre ? `Étape ${kCadre === 4 ? numApprof : kCadre} · ${ETAPES[kCadre].titre}` : expeditionComplete(x) ? `Expédition complète ${ETOILE_COMPLETE}` : "Expédition terminée";   // R267 (40.17)   // R239 (36.18a) : même numéro que la carte   // R131 : sans « Les espèces · » (demande de l'utilisateur)
   const aideCadre = kCadre === 1 ? `Leur nom se découvre à cette étape. Sélectionnez une espèce découverte pour ouvrir sa fiche.${especesARevoirIci(x).length ? " « À revoir ici » : vous la connaissez déjà d'ailleurs, une photo suffit." : ""}`

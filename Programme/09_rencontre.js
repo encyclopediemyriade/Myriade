@@ -34,8 +34,10 @@ function demarrerFocus(imposee, options = {}) {
   const enJeu = ESPECES.filter(e => estDans(e, territoires) && classes.includes(e.onglet));
   const espece = imposee || choisirEspeceFocus(enJeu);
   dernierFocus = espece;
-  if (espece) prechargerPhotos(photosDe(espece).map(p => p.src));   // R264 (39) : ses autres photos (femelle, jeune…) à l'avance
-  if (espece && typeof prechargerRencontre === "function") prechargerRencontre(espece);   // R280 (44.07) : sa silhouette, son empreinte, ses pictos
+  // R264 (39), R280 (44.07), R281 : tout ce que sa Rencontre va montrer (photos, silhouette, empreinte, pictos) passe en tête
+  //   de la file des chargements d'avance
+  if (espece && typeof prechargerRencontre === "function") prechargerRencontre(espece, options.expedition ? expeditionParId(options.expedition.id) : null, true);
+  else if (espece) prechargerPhotos(photosDe(espece).map(p => p.src));
   noterPartie();                                       // étape 106 : le jour et l'heure de jeu (badges)
   session = { focus: espece, total: QUESTIONS_FOCUS, faites: 0, bonnes: 0, numerotees: 0, bonnesNumerotees: 0, reprisesPosees: 0, reprisesJustes: 0,   // étape R101 : le score par sorte de question
               dejaAuCarnet: !!espece && estReconnue(espece),       // étape R277 (37.04) : était-elle au carnet avant cette Rencontre ?

@@ -36,6 +36,9 @@ function montrer(vue) {
   if (vueMaison) vueMaison.classList.toggle("cache", vue !== "maison");
   if (vue === "maison" && typeof dessinerMaison === "function") dessinerMaison();
   if (vue === "maison") window.scrollTo(0, 0);              // étape M14 : l'accueil s'ouvre toujours en haut (après « Comment jouer », il s'ouvrait au milieu)
+  // R281 (44.07 suite) : pendant qu'on regarde l'Accueil, ce que la Rencontre de l'espèce du jour montrera se charge d'avance
+  if ((vue === "maison" || vue === "accueil") && typeof prechargerRencontre === "function" && typeof especeDuJour === "function")
+    setTimeout(() => { try { const j = especeDuJour(); if (j) prechargerRencontre(j); } catch (err) { /* rien */ } }, 900);
   document.getElementById("vue-arcade").classList.toggle("cache", vue !== "arcade");   // étape 262 : l'Arcade
   const vueCoup = document.getElementById("vue-coupdoeil");                            // étape R191 : Coup d'œil
   if (vueCoup) vueCoup.classList.toggle("cache", vue !== "coupdoeil");

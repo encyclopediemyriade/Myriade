@@ -242,55 +242,108 @@ function srcEcran(src) {
   return m && ECRAN_TELEPHONE.matches && PHOTOS_MOY.has(m[1]) ? "Images/moy/" + m[1] : s;
 }
 // Charger à l'avance (pendant qu'on lit ou qu'on répond) les photos qui vont venir : elles s'affichent alors tout de suite.
+// ==================================================================
+// Étape R281 (21/11/2026, 44.07 suite : « le ralentissement touche toutes les premières apparitions d'image », Aubin, sur la 1.26.0).
+//   Mesuré sur une copie (réseau et processeur ralentis) : les chargements d'avance de R280 partaient tous en même temps et
+//   passaient DEVANT les images à afficher tout de suite (la photo de la première Rencontre attendait jusqu'à 1,6 s, les
+//   silhouettes de la bande plus d'une seconde). Maintenant :
+//   • UNE FILE D'ATTENTE : 3 chargements d'avance à la fois, en priorité basse ; ce que l'écran demande passe devant ;
+//   • ce qui sert à la Rencontre qui commence passe EN TÊTE de la file (« urgent ») ;
+//   • les images chargées d'avance sont GARDÉES en mémoire, déjà décodées : elles s'affichent sans le petit temps de décodage ;
+//   • l'ordre à l'ouverture d'une expédition : les silhouettes (toutes petites, montrées dès la première Rencontre), les photos,
+//     les petites photos, puis pour chaque espèce ses pictos, son empreinte, ses autres photos, son sosie et ses fausses photos.
+// ==================================================================
 const dejaPrecharges = new Set();
-function prechargerPhotos(srcs, petite) {
-  for (const brut of srcs || []) {
-    if (!brut || !estRenseigne(brut)) continue;
-    const src = petite ? String(brut).replace("Images/", "Images/mini/") : srcEcran(brut);
-    if (dejaPrecharges.has(src)) continue;
-    dejaPrecharges.add(src);
-    const im = new Image(); im.decoding = "async"; im.src = src;
+const filePrecharge = [], imagesGardees = new Map();
+let prechargesEnCours = 0;
+const PRECHARGES_ENSEMBLE = 3, IMAGES_GARDEES_MAX = 500;
+function avancerPrecharges() {
+  while (prechargesEnCours < PRECHARGES_ENSEMBLE && filePrecharge.length) {
+    const src = filePrecharge.shift();
+    prechargesEnCours++;
+    const im = new Image();
+    im.decoding = "async";
+    try { im.fetchPriority = "low"; } catch (err) { /* navigateur ancien */ }
+    let fini = false;
+    const fin = ok => {
+      if (fini) return; fini = true;
+      prechargesEnCours--;
+      if (ok) {
+        imagesGardees.set(src, im);                       // gardée : le navigateur la ressert sans la relire ni la redécoder
+        if (imagesGardees.size > IMAGES_GARDEES_MAX) imagesGardees.delete(imagesGardees.keys().next().value);
+        if (typeof im.decode === "function" && /\.jpe?g$/i.test(src)) im.decode().catch(() => {});
+      }
+      avancerPrecharges();
+    };
+    im.onload = () => fin(true); im.onerror = () => fin(false);
+    setTimeout(() => fin(false), 8000);                    // un fichier qui ne répond pas ne bloque pas la file
+    im.src = src;
   }
 }
-function prechargerEspeces(especes, petite) {
-  prechargerPhotos((especes || []).filter(Boolean).map(e => e.photo), petite);
+// urgent = pour l'écran qui arrive : en tête de la file, dans l'ordre donné
+function prechargerFichiers(srcs, urgent) {
+  const liste = [...new Set((srcs || []).filter(s => s && typeof s === "string"))];
+  if (urgent) {
+    const neufs = [];
+    for (const src of liste) {
+      const i = filePrecharge.indexOf(src);
+      if (i >= 0) { filePrecharge.splice(i, 1); neufs.push(src); }          // déjà en attente : il passe devant
+      else if (!dejaPrecharges.has(src)) { dejaPrecharges.add(src); neufs.push(src); }
+    }
+    filePrecharge.unshift(...neufs);
+  } else for (const src of liste) { if (dejaPrecharges.has(src)) continue; dejaPrecharges.add(src); filePrecharge.push(src); }
+  avancerPrecharges();
 }
-// Étape R280 (21/11/2026, 44.07, note 7 du 20/11 au soir : « que ce soit picto ou image, chaque fois ça prend un petit temps à
-//   apparaître ») : seules les photos étaient chargées d'avance. Maintenant aussi, pour une espèce : sa silhouette, son
-//   empreinte, et les pictogrammes de ses questions de Rencontre (ceux des réponses proposées et ceux de l'écran « Sa vie »).
-//   Ce sont de petits dessins (1 à 3 Ko) ; chacun n'est demandé qu'une fois par partie (dejaPrecharges).
-function prechargerFichiers(srcs) {
-  for (const src of srcs || []) {
-    if (!src || dejaPrecharges.has(src)) continue;
-    dejaPrecharges.add(src);
-    const im = new Image(); im.decoding = "async"; im.src = src;
-  }
+function prechargerPhotos(srcs, petite, urgent) {
+  prechargerFichiers((srcs || []).filter(b => b && estRenseigne(b)).map(brut => petite ? String(brut).replace("Images/", "Images/mini/") : srcEcran(brut)), urgent);
 }
-function mediasRencontre(e) {
+function prechargerEspeces(especes, petite, urgent) {
+  prechargerPhotos((especes || []).filter(Boolean).map(e => e.photo), petite, urgent);
+}
+// Étape R280 (44.07) : pour une espèce, sa silhouette, son empreinte et les pictogrammes de ses questions de Rencontre
+//   (ceux des réponses proposées et ceux de l'écran « Sa vie »). R281 : + ses autres photos (grandes et petites) et, dans une
+//   expédition (x), la petite photo de son sosie et celles des fausses photos de l'entrée « par les indices ».
+function mediasRencontre(e, x) {
   const l = [];
   if (!e) return l;
+  const mini = src => String(src).replace("Images/", "Images/mini/");
   try {
     if (typeof fichierSilhouette === "function") l.push(fichierSilhouette(e));
+    if (estRenseigne(e.photo)) { l.push(srcEcran(e.photo), mini(e.photo)); for (const ph of photosDe(e).slice(1)) l.push(srcEcran(ph.src), mini(ph.src)); }
     const emp = typeof cleEmpreinte === "function" ? cleEmpreinte(e) : null;
     if (emp && typeof EMPREINTES !== "undefined" && EMPREINTES[emp]) l.push(`Empreintes/${emp}.svg`);
     const champs = typeof champsEtape === "function" ? [...champsEtape(e, 1), ...champsEtape(e, 2)] : [];
     for (const c of new Set(champs)) {
-      const q = QUESTIONS.find(x => x.champ === c);
+      const q = QUESTIONS.find(y => y.champ === c);
       if (!q) continue;
       const v = valeurDe(e, q);
-      const avecDessin = q.pictos || c === "regime_alimentaire_type" || c === "chasse_principale";
+      const avecDessin = q.pictos || q.colonnePicto || q.format === "picto" || c === "regime_alimentaire_type" || c === "chasse_principale";
+      const col = q.colonnePicto || c;
       if (!avecDessin || !estRenseigne(v) || v === "NA") continue;
       // sa réponse, et les autres réponses possibles de la question (les mauvaises réponses en sont tirées), 12 au plus
       for (const val of [v, ...valeursQuestion(q).slice(0, 12)])
-        if (typeof val === "string" && !PASTILLES[val]) l.push(`Pictos/${c}__${nomDeFichier(val)}.svg`);
+        if (typeof val === "string" && !PASTILLES[val]) l.push(`Pictos/${col}__${nomDeFichier(val)}.svg`);
+    }
+    // les pictos de sa carte « Pour le reconnaître » (sa propre valeur pour chaque trait dessiné)
+    for (const q of QUESTIONS) {
+      if (!q.pictos && !q.colonnePicto && q.format !== "picto") continue;
+      let v; try { v = valeurDe(e, q); } catch (err) { continue; }
+      if (typeof v === "string" && estRenseigne(v) && v !== "NA" && !PASTILLES[v]) l.push(`Pictos/${q.colonnePicto || q.champ}__${nomDeFichier(v)}.svg`);
+    }
+    if (x) {
+      const sosie = typeof sosiePourEntree === "function" ? sosiePourEntree(e) : null;
+      if (sosie && estRenseigne(sosie.photo)) l.push(mini(sosie.photo));
+      if (typeof piegesIndicesPrevus === "function" && typeof aDesIndices === "function" && aDesIndices(e))
+        for (const o of piegesIndicesPrevus(e, x)) if (o && estRenseigne(o.photo)) l.push(mini(o.photo));
     }
   } catch (err) { /* un chargement d'avance ne doit jamais gêner le jeu */ }
   return l;
 }
-function prechargerRencontre(especes) {
+function prechargerRencontre(especes, x, urgent) {
   const liste = (Array.isArray(especes) ? especes : [especes]).filter(Boolean);
+  if (urgent) { prechargerFichiers(liste.flatMap(e => mediasRencontre(e, x)), true); return; }
   const plusTard = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 1500 }) : f => setTimeout(f, 200);
-  liste.forEach((e, i) => setTimeout(() => plusTard(() => prechargerFichiers(mediasRencontre(e))), i * 250));
+  liste.forEach((e, i) => setTimeout(() => plusTard(() => prechargerFichiers(mediasRencontre(e, x))), i * 120));
 }
 function celluleImage(espece, petite) {
   // Étape 293 : sans photo libre, la silhouette s'affiche à la place, avec la mention « photo à venir »
@@ -305,7 +358,7 @@ function celluleImage(espece, petite) {
   // bonne taille, donc nette. Si elle manque, on retombe sur la grande photo.
   const grande = espece.photo;
   const src = petite ? grande.replace("Images/", "Images/mini/") : srcEcran(grande);   // R264 : version téléphone
-  return `<img src="${src}" alt="${espece.nom_courant}"${petite ? ' loading="lazy" decoding="async"' : ""}
+  return `<img src="${src}" alt="${espece.nom_courant}"${petite ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"'}
                onerror="if (this.src.includes('/mini/') || this.src.includes('/moy/')) this.src='${grande}'; else if (this.parentNode) this.outerHTML='photo à venir';">`;
 }
 

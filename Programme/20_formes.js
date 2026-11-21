@@ -76,7 +76,7 @@ function formeAvantOuverture(espece) {
   if (f === "sosie") { const autre = sosiePourEntree(espece); if (autre) { poserSosieEntree(espece, autre); return true; } }
   if (f === "cri" && aUnCri(espece) && !(sonDemande && !sonActif)) { poserEcoute(espece); return true; }
   if (f === "indices" && aDesIndices(espece) && !indicesAmbigus(espece, x)) {   // R179 : jamais deux espèces de l'expédition pour les mêmes indices
-    const pieges = piegesIndices(espece, x);
+    const pieges = piegesIndicesPrevus(espece, x, true);   // R281 : les fausses photos déjà chargées d'avance, si elles sont prêtes
     if (pieges.length >= 3) { poserIndices(espece, x, pieges); return true; }
   }
   return false;
@@ -266,6 +266,17 @@ function piegesIndices(e, x) {
     if (!choix.includes(o)) choix.push(o);
   }
   return choix;
+}
+// Étape R281 (44.07 suite) : les trois fausses photos de l'entrée « par les indices » sont tirées au hasard. Pour pouvoir les
+//   charger d'avance, le tirage est fait une fois à l'ouverture de l'expédition et gardé jusqu'à la Rencontre (consommer = il
+//   sert, puis il est oublié : une Rencontre refaite tire d'autres fausses photos).
+const tiragesIndices = new Map();
+function piegesIndicesPrevus(e, x, consommer) {
+  const cle = x.id + "|" + e.nom_courant;
+  let p = tiragesIndices.get(cle);
+  if (!p || p.length < 3) { p = piegesIndices(e, x); if (!consommer) tiragesIndices.set(cle, p); }
+  if (consommer) tiragesIndices.delete(cle);
+  return p;
 }
 function htmlIndice(i) {
   return `<li class="fe-indice"><span class="fe-etiq">${echapper(i.etiq)}</span>${i.image

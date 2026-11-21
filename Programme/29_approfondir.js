@@ -231,7 +231,7 @@ function lancementApprof(x) {
 function retourExpApprof(x) { apf = null; arreterSonDefi(); ouvrirExpedition(x); }
 function ronds(x, ici) {   // la bande des espèces : l'anneau se remplit (cases trouvées), ✓ quand elle est connue par cœur
   return `<div class="apf-ronds">${x.liste.map(e => { const but = butEspece(e, 4), part = but ? Math.min(100, Math.round(100 * trouvesEspece(e, 4) / but)) : 100;
-    return `<span class="be-rond ${especeFaite(e, 4) ? "trouve" : "prog"}${e === ici ? " ici" : ""}${estRenseigne(e.photo) ? "" : " silh"}" style="--p:${part}" title="${echapper(e.nom_courant)}"><img src="${photoEsp(e)}" alt=""></span>`; }).join("")}</div>`;
+    return `<span class="be-rond ${especeFaite(e, 4) ? "trouve" : "prog"}${e === ici ? " ici" : ""}${estRenseigne(e.photo) ? "" : " silh"}" style="--p:${part}" title="${echapper(e.nom_courant)}"><img ${srcRond(e)} alt=""></span>`; }).join("")}</div>`;
 }
 
 // ==================================================================
