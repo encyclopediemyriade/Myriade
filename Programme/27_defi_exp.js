@@ -116,11 +116,11 @@ function enteteRepechage(titre, rq, i) {
 }
 // R242 (13A) : combien de questions pour chaque espèce — 3, ou 2 pour une espèce déjà reconnue ailleurs (sa courte révision),
 //   puis on retire une question aux espèces qui en ont 3 jusqu'à tenir dans les 20 (jamais moins de 2)
-function questionsParEspece(x, deja) {
+function questionsParEspece(x, deja, brut) {   // R291 : brut = sans l'ajustement R284 (les passages avant de manquer de façons)
   const nb = new Map(x.liste.map(e => [e, !jouableEnJeu(e) ? 0 : deja && deja.has(e.nom_courant) ? 2 : DEFI_PAR_ESPECE]));   // R284 (45.04) : sans photo, aucune question
   let total = [...nb.values()].reduce((a, b) => a + b, 0);
   for (const e of melanger(x.liste.slice())) { if (total <= DEFI_MAX_QUESTIONS) break; if (nb.get(e) > 2) { nb.set(e, nb.get(e) - 1); total--; } }
-  if (typeof DEFI_VARIE !== "undefined" && DEFI_VARIE) ajusterPassagesVarie(x, nb);
+  if (typeof DEFI_VARIE !== "undefined" && DEFI_VARIE && !brut) ajusterPassagesVarie(x, nb);
   return nb;
 }
 // Étape R284 (45.01) : depuis que repères et indices doivent vraiment départager, certaines expéditions n'ont plus assez de
@@ -137,20 +137,22 @@ function ajusterPassagesVarie(x, nb) {
 function nbQuestionsDefi(x) {
   const deja = new Set(x.liste.filter(e => typeof estPhotoReconnue === "function" && estPhotoReconnue(e)).map(e => e.nom_courant));   // R287 : la photo, pas le carnet
   const sepa = typeof DEFI_VARIE !== "undefined" && DEFI_VARIE && paireSepareDefi(x) ? 1 : 0;   // R283 : « Ce qui les sépare » = une question pour deux espèces
-  return [...questionsParEspece(x, deja).values()].reduce((a, b) => a + b, 0) - sepa;
+  const nb = questionsParEspece(x, deja);
+  const rendues = typeof DEFI_VIE !== "undefined" && DEFI_VIE ? combienVieDefi(x, nb, deja).rendues : 0;   // R291 : les places rendues aux questions sur la vie
+  return [...nb.values()].reduce((a, b) => a + b, 0) - sepa + rendues;
 }
 let defiExp = null;                 // le défi en cours
 // R249 : la question à l'écran — celle du défi, ou celle du repêchage (d.rep = { questions, i, lance })
 function qCouranteDefi(d) { return d.rep && d.rep.lance ? d.rep.questions[d.rep.i] : d.questions[d.i]; }
 function erreursDefi(d) {
-  const brutes = d.questions.filter(q => q.choix && q.choix !== q.espece).length;
+  const brutes = questionsReco(d).filter(q => q.choix && q.choix !== q.espece).length;   // R291 : les questions sur la vie ne comptent pas
   const effacees = d.rep ? d.rep.questions.filter(q => q.choix && q.choix === q.espece).length : 0;
   return brutes - effacees;
 }
 // R249 : une question de repêchage pour une espèce manquée, « par un autre chemin » : d'abord une façon pas encore posée
 //   dans ce défi (son cri, puis « Laquelle est … ? »), sinon une photo pas encore vue (autre forme), sinon « Laquelle est … ? »
 function questionAutreCheminDefi(e, d) {
-  const x = d.x, posees = d.questions.filter(q => q.espece === e);
+  const x = d.x, posees = questionsReco(d).filter(q => q.espece === e);
   const types = new Set(posees.map(q => q.type || "photo")), vues = posees.filter(q => q.photo).map(q => q.photo.src);
   const ph = photosDefi(e), pieges = piegesDefi(e, x, poolDefi(x));
   const avecPhotos = [e, ...pieges].every(o => estRenseigne(o.photo)) && pieges.length >= 3;
@@ -233,7 +235,8 @@ function sauverDefiExp() {
       ...(q.rp ? { rp: { partie: q.rp.partie, texte: q.rp.texte, couleur: q.rp.couleur || "NA", pour: q.rp.pour || "" } } : {}),
       ...(q.indices ? { ix: q.indices.map(i => [i.etiq, i.texte]) } : {}),
       ...(q.autre ? { a: q.autre.nom_courant, it: q.items.map(z => [z.e.nom_courant, z.rp.texte, z.rp.partie, z.place ? z.place.nom_courant : null]) } : {}),
-      ...(q.type === "quiestqui" ? { g: q.g, po: !!q.pose } : {}) });
+      ...(q.type === "quiestqui" ? { g: q.g, po: !!q.pose } : {}),
+      ...(q.type === "vie" ? { v: platVieDefi(q.vie), j: q.vieJuste === undefined ? null : q.vieJuste } : {}) });   // R291
   suivi.defisEnCours[d.x.id] = { i: d.i, aides: { ...d.aides }, pv: !!d.perduVu, questions: d.questions.map(plat),
     rep: d.rep ? { i: d.rep.i, lance: !!d.rep.lance, questions: d.rep.questions.map(plat) } : null };   // R249 : le repêchage aussi
   sauvegarder();
@@ -261,18 +264,19 @@ function reprendreDefiExp(x) {
       return b && items.length === 4 && items.every(z => z.e) ? { ...base, autre: b, items } : enPhoto();
     }
     if (base.type === "quiestqui") return photo && q.g ? { ...base, g: q.g, pose: !!q.po } : enPhoto();
+    if (base.type === "vie") { const v = relireVieDefi(e, q.v); return v ? { ...base, noms: [], vie: v, ...(q.c && q.j !== null && q.j !== undefined ? { vieJuste: !!q.j } : {}) } : enPhoto(); }   // R291
     return ["photo", "laquelle", "cri"].includes(base.type) ? base : enPhoto();
   };
   const questions = s.questions.map(relire);
   const repQ = s.rep && s.rep.questions ? s.rep.questions.map(relire) : null;   // R249
-  if (questions.some(q => !q || q.noms.length < 2) || (repQ && repQ.some(q => !q || q.noms.length < 2))) { oublierDefiExp(x); lancerDefiExp(x); return; }   // données changées : on repart
+  if (questions.some(q => !q || (q.type !== "vie" && q.noms.length < 2)) || (repQ && repQ.some(q => !q || q.noms.length < 2))) { oublierDefiExp(x); lancerDefiExp(x); return; }   // données changées : on repart
   const i = questions.findIndex(q => !faiteDefi(q));   // R283
   defiExp = { x, questions, i: i < 0 ? questions.length - 1 : i, aides: aidesDefi(s.aides), silhouettesVisibles: false,
               avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: new Set(x.liste.filter(estPhotoReconnue).map(e => e.nom_courant)), perduVu: !!s.pv };
   if (repQ) { repQ.forEach(q => q.rep = true); const j = repQ.findIndex(q => !q.choix); defiExp.rep = { questions: repQ, i: j < 0 ? repQ.length - 1 : j, lance: !!s.rep.lance }; }
   montrer("defiexp");
   if (defiExp.rep && !defiExp.rep.lance) { afficherAnnonceRepechage(); return; }   // R249 : repris sur l'écran « Vous y êtes presque »
-  if (!defiExp.rep && !defiExp.perduVu && i > 0 && defiPerdu(erreursDefi(defiExp), erreursPermisesDefi(questions.length))) { afficherChoixDefiPerdu(); return; }   // R274 (5A)
+  if (!defiExp.rep && !defiExp.perduVu && i > 0 && defiPerdu(erreursDefi(defiExp), erreursPermisesDefi(nbRecoDefi(defiExp)))) { afficherChoixDefiPerdu(); return; }   // R274 (5A)
   afficherQuestionDefiExp();
 }
 // Sortir du défi : il est mis de côté (ce qui est réussi 2 fois sur 2 est gardé tout de suite, comme avant), retour à l'expédition
@@ -292,11 +296,11 @@ function mettreDefiDeCote() {
 function arreterDefiExp() {
   const d = defiExp;
   if (!d) return;
-  const x = d.x, k = d.questions.findIndex(q => !q.choix), poses = k < 0 ? d.questions.length : k;
+  const x = d.x, k = d.questions.findIndex(q => !q.choix), poses = d.questions.slice(0, k < 0 ? d.questions.length : k).filter(q => !estVieQ(q)).length;   // R291
   arreterSonDefi(); oublierDefiExp(x);
   const gardees = especesGagneesDefi(d, false, poses);
   if (gardees.length) reconnaitreParDefi(x, gardees);
-  const bons = d.questions.filter(q => q.choix && q.choix === q.espece).length;
+  const bons = questionsReco(d).filter(q => q.choix && q.choix === q.espece).length;
   suivi.defisExp = suivi.defisExp || {};
   const st = suivi.defisExp[x.id] = suivi.defisExp[x.id] || { joues: 0, reussi: false, meilleur: 0 };
   st.joues++; st.meilleur = Math.max(st.meilleur || 0, bons); st.dernier = { bons, total: poses };
@@ -313,7 +317,7 @@ function brancherChoixDefiPerdu(continuer) {
 function afficherChoixDefiPerdu() {
   const d = defiExp, zone = document.getElementById("vue-defiexp");
   arreterSonDefi();
-  zone.innerHTML = ecranDefiPerdu(`Me tester · ${d.x.titre}`, "défi", "Arrêter et découvrir ces espèces", erreursDefi(d), erreursPermisesDefi(d.questions.length));
+  zone.innerHTML = ecranDefiPerdu(`Me tester · ${d.x.titre}`, "défi", "Arrêter et découvrir ces espèces", erreursDefi(d), erreursPermisesDefi(nbRecoDefi(d)));
   document.getElementById("dfx-quitter").onclick = mettreDefiDeCote;
   brancherChoixDefiPerdu(afficherQuestionDefiExp);
   window.scrollTo(0, 0);
@@ -334,7 +338,8 @@ function lancerDefiExp(x) {
   const dejaReconnues = new Set(x.liste.filter(estPhotoReconnue).map(e => e.nom_courant));   // R287 : la photo déjà reconnue (pas seulement au carnet)
   const nb = questionsParEspece(x, dejaReconnues);
   if (DEFI_VARIE) {   // R283 : reconnaître autrement (repère, indices, Qui est qui ?, Ce qui les sépare)
-    defiExp = { x, questions: questionsDefiVarie(x, nb, pool), i: 0, aides: aidesDefi(), silhouettesVisibles: false, prevues: nb,
+    const vie = DEFI_VIE ? choisirVieDefi(x, nb, dejaReconnues) : [];   // R291 : 2 à 4 questions sur la vie, à la place de questions pour reconnaître (nb est ajusté)
+    defiExp = { x, questions: questionsDefiVarie(x, nb, pool, vie), i: 0, aides: aidesDefi(), silhouettesVisibles: false, prevues: nb,
                 avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues };
     montrer("defiexp");
     afficherQuestionDefiExp();
@@ -725,7 +730,7 @@ function faconsEspece(e, x, pool) {
 }
 // 5A : le déroulé. Les deux manches (Ce qui les sépare, Qui est qui ?) d'abord réservées, puis un tirage glouton refait 60 fois,
 //   gardé quand il ne met jamais deux fois de suite la même façon ni la même espèce, et aucune façon plus de 5 fois.
-function planDefiVarie(x, nb, pool) {
+function planDefiVarie(x, nb, pool, vie) {
   const f = new Map(x.liste.map(e => [e, faconsEspece(e, x, pool)]));
   const reste = new Map(x.liste.map(e => [e, nb.get(e) || 0]));
   const cor = coriaceExp(x), blocs = [];
@@ -734,8 +739,11 @@ function planDefiVarie(x, nb, pool) {
     blocs.push({ bloc: true, facon: "separe", especes: [sep.a, sep.b], sep, taille: 1 });
     reste.set(sep.a, reste.get(sep.a) - 1); reste.set(sep.b, reste.get(sep.b) - 1);
   }
+  // R291 : les questions sur la vie, placées comme des manches d'une question (« vie », une façon de plus)
+  for (const v of vie || []) blocs.push({ bloc: true, vie: true, facon: "vie", especes: [v.e], data: v, taille: 1 });
   const libres = e => reste.get(e) - (e === cor ? 1 : 0);
-  const pourQq = melanger(x.liste.filter(e => estRenseigne(e.photo) && libres(e) > 0)).sort((a, b) => libres(b) - libres(a));
+  const aVie = new Set((vie || []).map(v => v.e));   // R291 : la manche prend d'abord les espèces sans question sur la vie (elles finissent plus tôt)
+  const pourQq = melanger(x.liste.filter(e => estRenseigne(e.photo) && libres(e) > 0)).sort((a, b) => (aVie.has(a) ? 1 : 0) - (aVie.has(b) ? 1 : 0) || libres(b) - libres(a));
   if (pourQq.length >= 4) {
     const qq = pourQq.slice(0, 4);
     blocs.push({ bloc: true, facon: "quiestqui", especes: qq, taille: 4 });
@@ -746,6 +754,8 @@ function planDefiVarie(x, nb, pool) {
     let n = suite.length && suite[0].bloc ? 5 : 0;
     suite.forEach((o, k) => { compte[o.facon] = (compte[o.facon] || 0) + o.taille; if (k) n += penalite(suite[k - 1], o, {}); });
     for (const c of Object.values(compte)) n += Math.max(0, c - FACON_MAX) * 50;
+    // R291 : une question sur la vie montre l'animal et son nom : jamais avant une question qui le fait reconnaître
+    suite.forEach((o, k) => { if (o.vie && suite.slice(k + 1).some(z => z.especes.includes(o.especes[0]))) n += 100000; });   // (jamais échangé contre autre chose)
     return n;
   };
   const penalite = (prec, o, compte) => (prec && o.especes.some(e => prec.especes.includes(e)) ? 1000 : 0) + (prec && prec.facon === o.facon ? 100 : 0)
@@ -759,13 +769,15 @@ function planDefiVarie(x, nb, pool) {
     if (cor && r.get(cor) > 0) { r.set(cor, r.get(cor) - 1); fin = cor; }
     const total = [...r.values()].reduce((a, b) => a + b, 0) + aPlacer.length;
     for (let n = 0; n < total; n++) {
-      const prec = suite[suite.length - 1], possibles = [...aPlacer];
+      const prec = suite[suite.length - 1], possibles = aPlacer.filter(b => !b.vie || (r.get(b.especes[0]) <= 0 && b.especes[0] !== fin
+        && !aPlacer.some(z => !z.vie && z.especes.includes(b.especes[0]))));   // R291 : la vie, une fois l'espèce reconnue
       for (const e of x.liste) if (r.get(e) > 0) for (const fa of options(e)) possibles.push({ especes: [e], facon: fa, taille: 1 });
       let choix = null, pMin = Infinity;
       for (const o of melanger(possibles)) {
         let p = penalite(prec, o, compte) + (compte[o.facon] || 0) * 0.8 + Math.random() * 0.5;
-        if (o.bloc) p += n < 2 ? 6 : -0.5;                 // pas de manche tout au début
-        else { const e = o.especes[0]; p += usage(e, o.facon) * 3 - r.get(e) * (0.5 + 3 / options(e).length); }   // peu de façons possibles = à placer tôt, entre les autres
+        if (o.vie) p -= 1;                                 // R291 : dès que possible (sinon elles s'entassent à la fin)
+        else if (o.bloc) p += n < 2 ? 6 : -0.5;            // pas de manche tout au début
+        else { const e = o.especes[0]; p += usage(e, o.facon) * 3 - r.get(e) * (0.5 + 3 / options(e).length) - (aVie.has(e) ? 1.2 : 0); }   // R291 : reconnue tôt, sa question sur la vie peut venir tôt   // peu de façons possibles = à placer tôt, entre les autres
         if (n === 0 && o.facon !== "photo") p += 2;        // on commence doucement, par une photo
         if (p < pMin) { pMin = p; choix = o; }
       }
@@ -798,7 +810,7 @@ function planDefiVarie(x, nb, pool) {
   retoucher();
   // R284 (45.01) : dernier filet — une façon encore au-delà de 5 : on retire une de ses questions à une espèce qui en a 3
   //   (jamais la coriace en dernier, jamais une manche), puis on retouche
-  const passages = e => l.filter(o => o.especes.includes(e)).length;
+  const passages = e => l.filter(o => !o.vie && o.especes.includes(e)).length;   // R291 : sans la question sur la vie
   for (let k = 0; k < 6; k++) {
     const compte = {};
     l.forEach(o => { compte[o.facon] = (compte[o.facon] || 0) + o.taille; });
@@ -809,11 +821,31 @@ function planDefiVarie(x, nb, pool) {
     l.splice(i, 1);
     scoreMin = noteSuite(l); retoucher();
   }
+  // R291 : deux questions sur la vie encore de suite (souvent après une manche « Qui est qui ? » tardive) : on glisse entre
+  //   elles une question d'une autre espèce prise plus tôt, quand le déroulé y gagne (la règle « vie après la reconnaissance » tient)
+  //   Elle sert aussi à tout déroulé encore imparfait (deux fois la même façon de suite, rare : 1 défi sur 2 000 environ avant R291).
+  for (let tour = 0; tour < 8; tour++) {
+    if (noteSuite(l) <= 0) break;
+    let mieux = null, sMin = noteSuite(l);
+    const bout = l.length - (meilleure && meilleure.fin ? 1 : 0);   // la coriace reste la dernière
+    for (let i = 0; i < bout; i++) for (let j = 0; j < bout; j++) {   // chaque question déplacée à chaque place
+      if (i === j) continue;
+      const c = l.slice(), [u] = c.splice(i, 1);
+      c.splice(j, 0, u);
+      const sc = noteSuite(c);
+      if (sc < sMin) { sMin = sc; mieux = c; }
+    }
+    if (!mieux) break;
+    l.splice(0, l.length, ...mieux);
+  }
   return { suite: l, f };
 }
+function vieDeSuite(suite) { return suite.some((o, i) => i > 0 && o.vie && suite[i - 1].vie); }
 // Les questions, dans l'ordre du déroulé
-function questionsDefiVarie(x, nb, pool) {
-  const { suite, f } = planDefiVarie(x, nb, pool);
+function questionsDefiVarie(x, nb, pool, vie) {
+  let plan = planDefiVarie(x, nb, pool, vie);
+  for (let essai = 0; essai < 4 && vie && vie.length && vieDeSuite(plan.suite); essai++) plan = planDefiVarie(x, nb, pool, vie);   // R291 : dernier recours, un autre tirage
+  const { suite, f } = plan;
   const vues = {}, usage = new Map(), questions = [];
   const prendrePhoto = (e, auHasard) => {
     const ph = photosDefi(e), deja = vues[e.nom_courant] || [];
@@ -824,6 +856,7 @@ function questionsDefiVarie(x, nb, pool) {
   };
   let g = 0;
   for (const u of suite) {
+    if (u.facon === "vie") { questions.push(questionVieDefi(u.data)); continue; }   // R291
     if (u.facon === "quiestqui") {
       g++;
       const noms = melanger(u.especes.slice());
@@ -1000,7 +1033,7 @@ function placerQuiEstQui(d, q, e, z) {
   if (bon) es.pose = true;
   try { jouerSon(bon ? "bonne" : "mauvaise"); } catch (err) {}
   sauverDefiExp();
-  majCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length));
+  majCompteErreurs(erreursDefi(d), erreursPermisesDefi(nbRecoDefi(d)));
   const barre = document.querySelector("#vue-defiexp .dfx-barre"); if (barre) barre.outerHTML = enteteDefiExp().match(/<div class="dfx-barre[^"]*"[^>]*>.*<\/div>$/s)[0];
   redessinerQuiEstQui(d, q, bon ? null : gr.indexOf(z));
   if (gr.every(y => y.pose)) finirQuiEstQui(d, q);
@@ -1019,7 +1052,7 @@ function enteteDefiExp() {
   if (d.rep && d.rep.lance) return enteteRepechage(d.x.titre, d.rep.questions.map(q => ({ repondu: !!q.choix, juste: q.choix === q.espece })), d.rep.i);   // R249
   // R283 : la manche « Qui est qui ? » occupe 4 cases (« 9 à 12 / 20 »)
   const qc = d.questions[d.i], gr = qc && qc.type === "quiestqui" ? d.questions.map((z, k) => k).filter(k => d.questions[k].type === "quiestqui" && d.questions[k].g === qc.g) : [d.i];
-  const cases = d.questions.map((q, k) => `<i class="${q.choix ? (q.choix === q.espece ? "ok" : "ko") : gr.includes(k) ? "cur" : ""}"></i>`).join("");
+  const cases = d.questions.map((q, k) => `<i class="${estVieQ(q) ? `vie${q.choix ? " fait" : k === d.i ? " cur" : ""}` : q.choix ? (q.choix === q.espece ? "ok" : "ko") : gr.includes(k) ? "cur" : ""}"></i>`).join("");   // R291 : la vie, à part
   const n = d.questions.length, compte = gr.length > 1 ? `${gr[0] + 1} à ${gr[gr.length - 1] + 1} / ${n}` : `${Math.min(d.i + 1, n)} / ${n}`;
   return `<div class="dfx-haut"><button class="cdo-quitter dfx-sortir" id="dfx-quitter" aria-label="Revenir à l'expédition (le défi est gardé)">←</button>
       <span class="cdo-titre">Me tester · ${echapper(d.x.titre)}</span><span class="dfx-compte">${compte}</span></div>
@@ -1048,8 +1081,8 @@ function afficherQuestionDefiExp() {
   const zone = document.getElementById("vue-defiexp");
   const etiquette = q.photo ? etiquetteForme(q.photo.sujet) : "";
   const enPhotos = q.type === "laquelle" || q.type === "cri" || q.type === "indices";
-  const sansAides = q.type === "separe" || q.type === "quiestqui";   // R283 : rien à retirer dans une manche
-  const corps = q.type === "repere" ? corpsRepereDefi(q) : q.type === "indices" ? corpsIndicesDefi(q) : q.type === "separe" ? corpsSepareDefi(q)
+  const sansAides = q.type === "separe" || q.type === "quiestqui" || q.type === "vie";   // R283 : rien à retirer dans une manche ; R291 : ni sur la vie
+  const corps = q.type === "vie" ? corpsVieDefi(q) : q.type === "repere" ? corpsRepereDefi(q) : q.type === "indices" ? corpsIndicesDefi(q) : q.type === "separe" ? corpsSepareDefi(q)
     : q.type === "quiestqui" ? `<div id="dfx-qq">${corpsQuiEstQui(d, q)}</div>`
     : q.type === "cri"
     ? `<div class="ore-ecoute dfx-ecoute"><button class="ore-play" id="dfx-play" aria-label="Écouter le cri">${PLAY_SVG}</button><p class="cdo-q">À qui est ce cri ?</p></div>
@@ -1060,7 +1093,7 @@ function afficherQuestionDefiExp() {
     : `<div class="cdo-photo">${imageQuestionDefi(q)}${etiquette ? `<small class="cdo-forme">${echapper(etiquette.replace(/^(La|Le|L')\s?/, "").replace(/^./, c => c.toUpperCase()))}</small>` : ""}</div>
        <p class="cdo-q">Quelle est cette espèce ?</p>
        <div class="cdo-noms">${q.noms.map((e, k) => boutonNomDefi(e, k, q)).join("")}</div>`;
-  zone.innerHTML = `<div class="cdo dfx">${enteteDefiExp()}${enRep ? "" : ligneCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length))}
+  zone.innerHTML = `<div class="cdo dfx">${enteteDefiExp()}${enRep ? "" : ligneCompteErreurs(erreursDefi(d), erreursPermisesDefi(nbRecoDefi(d)))}
       ${corps}
       <div class="cdo-retour" id="dfx-retour"></div>
       ${enRep || sansAides ? "" : `<div class="dfx-aides" id="dfx-aides"><small>Vos aides</small>
@@ -1070,6 +1103,7 @@ function afficherQuestionDefiExp() {
   zone.querySelectorAll(".cdo-nom, .dfx-ph").forEach(b => b.onclick = () => repondreDefiExp(q.noms[+b.dataset.k], b));
   if (q.type === "separe") brancherSepareDefi(q);
   if (q.type === "quiestqui") brancherQuiEstQui(d, q);
+  if (q.type === "vie") zone.querySelectorAll(".dfx-vie-rep").forEach(b => b.onclick = () => repondreVieDefi(q, +b.dataset.k, b));   // R291
   const play = document.getElementById("dfx-play");
   if (play) { play.onclick = () => ecouter(q.espece); setTimeout(() => { if (defiExp && qCouranteDefi(defiExp) === q && !q.choix) ecouter(q.espece); }, 250); }
   document.getElementById("dfx-quitter").onclick = mettreDefiDeCote;   // R241 (36.33) : plus de feuille « Quitter le défi ? »
@@ -1101,7 +1135,7 @@ function aideSilhouettes() {
 
 function repondreDefiExp(choisie, bouton) {
   const d = defiExp, q = d ? qCouranteDefi(d) : null;
-  if (!d || q.choix || q.type === "separe" || q.type === "quiestqui") return;   // R283 : les deux manches ont leur propre fin
+  if (!d || q.choix || q.type === "separe" || q.type === "quiestqui" || q.type === "vie") return;   // R291 : la vie aussi   // R283 : les deux manches ont leur propre fin
   q.choix = choisie;
   const juste = choisie === q.espece;
   const zone = document.getElementById("vue-defiexp");
@@ -1148,11 +1182,11 @@ function conclureReponseDefi(q, juste, explication, opts = {}) {
   const fin = enRep ? d.rep.i >= d.rep.questions.length - 1 : d.questions.every(faiteDefi);   // R285b (6B) : toutes les questions du repêchage sont posées
   // R274 (5A) : le compte des erreurs suit ; avec l'erreur qui rend le défi impossible à réussir (même repêché), le choix
   //   « Continuer quand même » / « Arrêter et découvrir ces espèces » remplace « Question suivante », une seule fois.
-  if (!enRep) majCompteErreurs(erreursDefi(d), erreursPermisesDefi(d.questions.length));
-  const perdu = !enRep && !fin && !juste && !d.perduVu && defiPerdu(erreursDefi(d), erreursPermisesDefi(d.questions.length));
+  if (!enRep) majCompteErreurs(erreursDefi(d), erreursPermisesDefi(nbRecoDefi(d)));
+  const perdu = !enRep && !fin && !juste && !opts.vie && !d.perduVu && defiPerdu(erreursDefi(d), erreursPermisesDefi(nbRecoDefi(d)));
   const suivant = perdu ? blocDefiPerdu("défi", "Arrêter et découvrir ces espèces") : `<button class="cdo-suivant" id="dfx-suivant">${fin ? "Voir le résultat" : "Question suivante"}</button>`;
   const retour = document.getElementById("dfx-retour");
-  retour.innerHTML = `${enRep ? ligneRepechage(juste, erreursDefi(d), erreursPermisesDefi(d.questions.length), d.rep.i, d.rep.questions.length) : ""}${explication}${suivant}`;   // R249, R285b
+  retour.innerHTML = `${enRep ? ligneRepechage(juste, erreursDefi(d), erreursPermisesDefi(nbRecoDefi(d)), d.rep.i, d.rep.questions.length) : ""}${explication}${suivant}`;   // R249, R285b
   retour.querySelectorAll("[data-ecoute]").forEach(b => b.onclick = () => ecouter(especeParNom(b.dataset.ecoute)));
   zone.querySelector(".dfx-barre").outerHTML = enteteDefiExp().match(/<div class="dfx-barre[^"]*"[^>]*>.*<\/div>$/s)[0];
   // R283 : la question suivante est la première pas encore faite (la manche « Qui est qui ? » en occupe 4)
@@ -1228,7 +1262,7 @@ function separeEntre(bonne, choisie, sujet) {
 function comptesDefiExp(d, jusqua) {
   const c = new Map(d.x.liste.map(e => [e, { bons: 0, poses: 0 }]));
   d.questions.slice(0, jusqua === undefined ? d.questions.length : jusqua).forEach(q => {
-    if (!q.choix) return;
+    if (!q.choix || estVieQ(q)) return;   // R291
     for (const e of especesDeQ(q)) { const k = c.get(e); if (!k) continue; k.poses++; if (q.choix === q.espece) k.bons++; }   // R283 : « Ce qui les sépare » compte pour les deux
   });
   // R249 : chaque bonne réponse au repêchage efface une erreur de son espèce (jamais plus de bonnes que de questions)
@@ -1247,13 +1281,13 @@ function reconnaitreParDefi(x, especes) {
 }
 function especesGagneesDefi(d, reussi, jusqua) {
   const c = comptesDefiExp(d, jusqua);
-  const prevues = e => d.questions.filter(q => especesDeQ(q).includes(e)).length;   // R242 : 2 ou 3 selon l'espèce (R283 : la paire compte pour les deux)
+  const prevues = e => questionsReco(d).filter(q => especesDeQ(q).includes(e)).length;   // R291 : sans les questions sur la vie   // R242 : 2 ou 3 selon l'espèce (R283 : la paire compte pour les deux)
   return d.x.liste.filter(e => reussi || (c.get(e).poses >= prevues(e) && c.get(e).poses > 0 && c.get(e).bons === c.get(e).poses));
 }
 
 // R249 : l'écran « Repêchage · Vous y êtes presque »
 function lancerRepechageDefi(d) {
-  const especes = especesRepechage(d.questions.map(q => ({ espece: q.espece, juste: q.choix === q.espece })));
+  const especes = especesRepechage(questionsReco(d).map(q => ({ espece: q.espece, juste: q.choix === q.espece })));
   d.rep = { questions: especes.map(e => questionAutreCheminDefi(e, d)), i: 0, lance: false };
   sauverDefiExp();
   afficherAnnonceRepechage();
@@ -1261,7 +1295,7 @@ function lancerRepechageDefi(d) {
 function afficherAnnonceRepechage() {
   const d = defiExp, zone = document.getElementById("vue-defiexp");
   arreterSonDefi();
-  zone.innerHTML = ecranRepechage(`Me tester · ${d.x.titre}`, erreursDefi(d), erreursPermisesDefi(d.questions.length), d.rep.questions.length);
+  zone.innerHTML = ecranRepechage(`Me tester · ${d.x.titre}`, erreursDefi(d), erreursPermisesDefi(nbRecoDefi(d)), d.rep.questions.length);
   document.getElementById("dfx-quitter").onclick = mettreDefiDeCote;
   document.getElementById("dfx-rep-go").onclick = () => { d.rep.lance = true; sauverDefiExp(); afficherQuestionDefiExp(); };
   document.getElementById("dfx-rep-passer").onclick = () => { d.rep.questions.forEach(q => { if (!q.choix) q.passee = true; }); d.rep.passe = true; finDefiExp(); };
@@ -1269,7 +1303,7 @@ function afficherAnnonceRepechage() {
 }
 function finDefiExp() {
   const d = defiExp, x = d.x;
-  const total = d.questions.length, bons = d.questions.filter(q => q.choix === q.espece).length;
+  const total = nbRecoDefi(d), bons = questionsReco(d).filter(q => q.choix === q.espece).length;   // R291 : le score ne compte que les questions pour reconnaître
   // R249 : 4 ou 5 erreurs (pour 3 permises) → le repêchage, une seule fois par défi
   if (!d.rep && repechageNecessaire(total - bons, erreursPermisesDefi(total))) { lancerRepechageDefi(d); return; }
   const reussi = erreursDefi(d) <= erreursPermisesDefi(total);   // R249 : les erreurs effacées au repêchage ne comptent plus
@@ -1288,13 +1322,18 @@ function finDefiExp() {
   const aRevoir = x.liste.filter(e => !faiteDans(x, e, 1));
   // R284 (45.04) : jamais une silhouette « photo à venir » à côté des vraies photos du bilan (l'espèce sans photo : son nom seul)
   const vignette = e => jouableEnJeu(e) ? `<img src="${photoMini(photoEsp(e))}" alt="${echapper(e.nom_courant)}">` : "";
+  // Étape R291 (choix 3A du 22/11) : après un défi réussi, la suite est proposée franchement — « Leurs liens · N questions ▶ »
+  //   (ou « Une dernière question ▶ » pour une expédition à une seule question) ; « Revenir à l'expédition » devient un lien discret.
+  const suite = reussi ? suiteApresDefi(x) : null;
+  const boutonsSuite = suite ? `<button class="cdo-suivant dft-principal" id="dfx-suite">${echapper(suite.texte)}</button>
+          <button class="dfx-lien" id="dfx-voir">Revenir à l'expédition</button>` : `<button class="cdo-suivant dft-principal" id="dfx-voir">Revenir à l'expédition</button>`;
   if (reussi && FIN_TEST_VIVANTE) {                   // étape R267 (40.16) : la fin « comme les autres »
     const ensuite = typeof aUneEtape2 === "function" && aUneEtape2(x) && !etapeFinie(x, 2);
     zone.innerHTML = `<div class="cdo dfx dfx-fin dft">${ecranFinTest({ x, etiq: `${x.titre} · Me tester`, titre: "Défi réussi",
         bons, total, sous: `bonnes réponses${repechage ? " · repêché" : ""}`, empreintes,
-        ronds: x.liste.filter(jouableEnJeu).map(e => ({ e, ok: faiteDans(x, e, 1) })), tous: x.liste.map(e => ({ e, ok: faiteDans(x, e, 1) })), motOk: "reconnues", ratees: rateesDefi(d),
+        ronds: x.liste.filter(jouableEnJeu).map(e => ({ e, ok: faiteDans(x, e, 1) })), tous: x.liste.map(e => ({ e, ok: faiteDans(x, e, 1) })), motOk: "reconnues", ratees: rateesDefi(d), aRetenir: aRetenirDefi(d),
         pied: `${ensuite ? `<p class="dft-suite">Ensuite : <b>${titreEtape(2)}</b>, comment elles vivent ici.</p>` : ""}
-          <button class="cdo-suivant dft-principal" id="dfx-voir">Revenir à l'expédition</button>` })}</div>`;
+          ${boutonsSuite}` })}</div>`;
     animerGainFinTest(empreintes);
   } else if (reussi) {
     const ensuite = typeof aUneEtape2 === "function" && aUneEtape2(x) && !etapeFinie(x, 2);
@@ -1308,11 +1347,11 @@ function finDefiExp() {
           <li>${empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""} : celles des Rencontres.` : "Vos empreintes des Rencontres étaient déjà gagnées."}</li>
           ${ensuite ? `<li>Pour les <b>comprendre</b> : ${titreEtape(2)}, comment elles vivent ici.</li>` : ""}
         </ul>
-        <button class="cdo-suivant" id="dfx-voir">Revenir à l'expédition</button>
+        ${boutonsSuite}
       </div>`;
   } else {
     const gardees = x.liste.filter(e => faiteDans(x, e, 1));
-    const repere = e => { const r = typeof reperesDe === "function" ? reperesDe(e) : null; const q = d.questions.find(z => z.espece === e && z.choix !== e);
+    const repere = e => { const r = typeof reperesDe === "function" ? reperesDe(e) : null; const q = questionsReco(d).find(z => z.espece === e && z.choix !== e);
       const l = r ? reperesPourForme(r, formePourPhoto(r, (q && q.photo && q.photo.sujet) || "")) : [];
       const forme = q && q.photo && etiquetteForme(q.photo.sujet);
       return l.length ? `${forme ? `${forme} : ` : ""}${forme ? minusculeTexte(l[0].texte) : l[0].texte}` : ""; };
@@ -1325,6 +1364,7 @@ function finDefiExp() {
         <p class="cdo-sous">${bons} bonnes réponses sur ${total} · il en faut ${total - erreursPermisesDefi(total)}</p>`}
         ${gardees.length ? `<div class="dfx-groupe ok"><small>Reconnues · gardées</small><div class="dfx-pastilles">${gardees.map(e => `<span>${vignette(e)}${echapper(e.nom_courant)}</span>`).join("")}</div></div>` : ""}
         ${n ? `<div class="dfx-groupe"><small>À revoir</small><ul class="dfx-revoir">${aRevoir.map(e => `<li>${vignette(e)}<span><b>${echapper(e.nom_courant)}</b>${repere(e) ? `<small>${echapper(repere(e))}</small>` : ""}</span></li>`).join("")}</ul></div>` : ""}
+        ${blocARetenir(aRetenirDefi(d))}
         <p class="dfx-deux">Deux façons de finir l'expédition :</p>
         <div class="dfx-boutons"><button class="cdo-second" id="dfx-decouvrir">Découvrir ${n > 1 ? `les ${n}` : "la dernière"}</button><button class="cdo-suivant" id="dfx-rejouer">Rejouer le défi</button></div>
         <button class="dfx-lien" id="dfx-voir">Plus tard · revenir à l'expédition</button>
@@ -1333,6 +1373,8 @@ function finDefiExp() {
     document.getElementById("dfx-rejouer").onclick = () => lancerDefiExp(x);
   }
   document.getElementById("dfx-voir").onclick = () => { defiExp = null; ouvrirExpedition(x); };
+  const btnSuite = document.getElementById("dfx-suite");
+  if (btnSuite && suite) btnSuite.onclick = () => { defiExp = null; suite.lancer(); };
   window.scrollTo(0, 0);
   if (etapeGagnee) {
     const finieAussi = etapeFinie(x, 2);   // une expédition sans étape 2 se termine avec l'étape 1
@@ -1341,6 +1383,17 @@ function finDefiExp() {
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (empreintes) setTimeout(() => afficherBulle(`+${empreintes} empreinte${empreintes > 1 ? "s" : ""}`), 600);
   if (empreintes) verifierOuverture();
+}
+
+// R291 (3A) : ce qui suit un défi réussi — Leurs liens (obligatoire pour la finale du lieu), ou la question unique ; sinon rien
+function suiteApresDefi(x) {
+  if (!etapeFinie(x, 1)) return null;
+  if (typeof aUneEtape2 === "function" && aUneEtape2(x) && !etapeFinie(x, 2)) {
+    const n = typeof questionsEnsembleExp === "function" ? questionsEnsembleExp(x).length : 0;
+    return { texte: `${titreEtape(2)}${n >= 2 ? ` · ${n} questions` : ""} ▶`, lancer: () => lancerExpedition(x, 2) };
+  }
+  if (typeof questionFinaleExp === "function" && questionFinaleExp(x)) return { texte: "Une dernière question ▶", lancer: () => ouvrirEnsembleExp(x) };
+  return null;
 }
 
 // ==================================================================
@@ -1372,7 +1425,7 @@ function ecranFinTest(o) {
       <div class="dft-ronds">${ronds}</div>
       ${n ? `<p class="dft-mot">${n === tous.length ? `Les ${n} espèces sont <b>${o.motOk}</b>.` : `${n} espèce${n > 1 ? "s" : ""} sur ${tous.length} ${n > 1 ? "sont" : "est"} <b>${o.motOk}</b>.`}</p>` : ""}
       ${jaugeLieuFinTest(o.x, o.empreintes)}
-      ${ratees}
+      ${ratees}${blocARetenir(o.aRetenir)}
     </div>${o.pied || ""}`;
 }
 // « +N » : il apparaît, puis s'envole vers le compteur d'empreintes du haut (comme « Tout récupérer » sur l'accueil)
@@ -1390,7 +1443,7 @@ function animerGainFinTest(n) {
 function rateesDefi(d) {
   const nom = e => e ? e.nom_courant : "";
   const forme = { photo: "sa photo", laquelle: "« Laquelle est… ? »", cri: "son cri", repere: "son repère", indices: "ses indices", quiestqui: "« Qui est qui ? »" };
-  return d.questions.filter(q => q.choix && q.choix !== q.espece).map(q => q.type === "separe"   // R283
+  return questionsReco(d).filter(q => q.choix && q.choix !== q.espece).map(q => q.type === "separe"   // R283
     ? { nom: `${nom(q.espece)} et ${nom(q.autre)}`, detail: "« Ce qui les sépare » · des repères mal placés" }
     : { nom: nom(q.espece),
     detail: `${q.type !== "quiestqui" && q.photo && etiquetteForme(q.photo.sujet) ? etiquetteForme(q.photo.sujet) : forme[q.type] || "sa photo"} · votre choix : ${nom(q.choix)}` });
@@ -1433,11 +1486,12 @@ function portesEtape1(x) {
   const reste = n - av.faites;
   if (defiEnPause(x)) {                     // R241 (36.17) : un défi mis de côté — « Reprendre le défi » d'abord (comme « Continuer les Rencontres », 2B)
     const s = suivi.defisEnCours[x.id], total = s.questions.length, faites = s.questions.filter(q => q.c).length;
-    const erreurs = s.questions.filter(q => q.c && q.c !== q.e).length;
+    const erreurs = s.questions.filter(q => q.c && q.c !== q.e && q.t !== "vie").length;
+    const permises = erreursPermisesDefi(s.questions.filter(q => q.t !== "vie").length);   // R291 : la vie ne compte pas
     return `<div class="dfx-portes encours"><div class="etiq-jeu">${nomEtape(1)}</div>
         <div class="dfx-encours"><div class="dfx-encours-haut"><b>Me tester · en cours</b><small>${faites} sur ${total}</small></div>
           <i class="jauge-jeu"><b style="width:${Math.round(100 * faites / Math.max(1, total))}%"></b></i>
-          <div class="dfx-prochaine"><span>${erreurs ? `${erreurs} erreur${erreurs > 1 ? "s" : ""} jusqu'ici` : "Aucune erreur jusqu'ici"} · ${erreursPermisesDefi(total)} permise${erreursPermisesDefi(total) > 1 ? "s" : ""}</span></div>
+          <div class="dfx-prochaine"><span>${erreurs ? `${erreurs} erreur${erreurs > 1 ? "s" : ""} jusqu'ici` : "Aucune erreur jusqu'ici"} · ${permises} permise${permises > 1 ? "s" : ""}</span></div>
           <button class="cdo-suivant" data-porte="reprendre">Reprendre le défi</button></div>
         <button class="dfx-plutot" data-porte="decouvrir">${PICTO_DECOUVRIR}Découvrir plutôt</button>
         <small class="dfx-note">Le défi reste de côté : vous pourrez le reprendre plus tard.</small>${gain}</div>`;
@@ -1466,7 +1520,7 @@ function portesEtape1(x) {
   return `<div class="dfx-portes"><div class="etiq-jeu">${nomEtape(1)}</div>
       <p class="dfx-phrase">Deux façons de reconnaître ces ${n} espèces : les découvrir une à une, ou vous tester tout de suite. Vous pourrez changer en route.</p>
       <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues))}
-        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${erreursPermisesDefi(nbQuestionsDefi(x))} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`)}</div>${gain}</div>`;
+        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${erreursPermisesDefi(nbQuestionsDefi(x) - nbVieDefi(x))} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`)}</div>${gain}</div>`;
 }
 function brancherPortes(zone, x) {
   zone.querySelectorAll("[data-porte]").forEach(b => b.onclick = () => b.dataset.porte === "tester" ? lancerDefiExp(x) : b.dataset.porte === "reprendre" ? reprendreDefiExp(x) : lancerExpedition(x, 1));
@@ -1478,7 +1532,8 @@ function brancherPortes(zone, x) {
 //   (suivi.rencontresFaites, depuis R263) ou, pour les parties d'avant, une chose de sa vie déjà trouvée (le défi n'en demande pas).
 function rencontreDejaFaite(e) {
   if (suivi && suivi.rencontresFaites && suivi.rencontresFaites[e.nom_courant]) return true;
-  return typeof champsEtape === "function" && champsEtape(e, 2).some(c => nbBonnes(e, c) >= 1);
+  const parDefi = c => suivi && suivi.vieDefi && suivi.vieDefi[e.nom_courant + "|" + c] ? 1 : 0;   // R291 : trouvée dans Me tester, pas dans une Rencontre
+  return typeof champsEtape === "function" && champsEtape(e, 2).some(c => nbBonnes(e, c) - parDefi(c) >= 1);
 }
 function especesSansRencontre(x) {
   return x.liste.filter(e => reconnueParDefi(e) && estRenseigne(e.photo) && trouvesEspece(e, 1) < butEspece(e, 1) && !rencontreDejaFaite(e));
@@ -1492,4 +1547,172 @@ function rencontrerEspeceExp(x, e) {
                                     faitesAvant: avanceeEtape(x, 1).faites } });
   majFilExpedition(x, 1);
   window.scrollTo(0, 0);
+}
+
+// ==================================================================
+// Étape R291 (22/11, chantier « Leurs liens et Me tester », choix d'Aubin « 2aB · 2bB · 2cB » du 22/11, 16 h 40 ;
+//   fiche reprise_liens_me_tester.md ; précision d'Aubin : « les questions sur la vie doivent être pertinentes, pas de hauteurs,
+//   nombre d'œufs… ») : DES QUESTIONS SUR LA VIE DANS « ME TESTER ».
+//   • 2aB : 3 ou 4 par défi de 20 (2 ou 3 pour un défi de 10 à 15 questions), À LA PLACE de questions pour reconnaître (le défi
+//     garde son nombre de questions) ; jamais deux pour la même espèce, une espèce sur deux au plus ; elles forment une façon de
+//     plus (« vie ») : jamais deux de suite, 5 au plus ; jamais avant une question qui fait reconnaître la même espèce (l'animal
+//     y est montré avec son nom) ; jamais sur la coriace.
+//   • 2bB : l'animal est montré (photo et nom) : « Étonnant » (deux affirmations, une vraie) ou « Sa vie » (vrai ou faux, comme
+//     dans la Rencontre). Sujets gardés : comment l'animal vit — jamais un chiffre, une durée, un mois, une hauteur. Dans le
+//     jeu d'aujourd'hui, 4 de ces sujets ont une phrase de vrai ou faux : régime, nid (sans hauteur), chasse, défense.
+//     « Étonnant » : jamais un fait dont la vraie ou la fausse phrase repose sur un nombre (en chiffres ou en lettres) ou une mesure.
+//   • 2cB : une erreur est expliquée côte à côte (votre choix / la bonne réponse / la ligne de la fiche ou le fait), mais ne
+//     compte pas (ni dans les erreurs, ni au repêchage, ni dans le score) ; elle va dans « À retenir », à part, en fin de défi.
+//     Une bonne réponse note le fait « trouvé » (Étonnant : suivi.insolites ; Sa vie : la case de la fiche, comme la Rencontre) :
+//     il ne revient pas dans la Rencontre. Le défi valide toujours « reconnues », rien d'autre.
+//   Un défi mis de côté avant cette étape se reprend tel quel (sans question sur la vie). DEFI_VIE = false : le défi d'avant.
+// ==================================================================
+const DEFI_VIE = true;
+const CHAMPS_VIE_DEFI = ["regime_alimentaire_type", "activite", "hibernation", "deplacement_saisonnier", "emplacement_nid", "chasse_principale",
+  "defense_principale", "metamorphose", "naissance", "soin_des_petits", "vie_larve", "pelage_hiver", "toile"];   // § 2 de la fiche (les autres : écartés)
+function estVieQ(q) { return !!q && q.type === "vie"; }
+function questionsReco(d) { return d.questions.filter(q => !estVieQ(q)); }   // les questions pour reconnaître (elles seules comptent)
+function nbRecoDefi(d) { return questionsReco(d).length; }
+// Un nombre (en chiffres ou en lettres) ou une mesure dans une phrase
+const NOMBRES_ECRITS_DEFI = /\b(deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingts?|trente|quarante|cinquante|soixante|cents?|mille|milliers?|millions?|milliards?|dizaines?|douzaines?|vingtaines?|trentaines?|centaines?|quinzaines?)\b/;
+const MESURES_EN_LETTRES = /\b(km|cm|mm|kg|metres?|centimetres?|millimetres?|kilometres?|grammes?|kilos?|kilogrammes?|tonnes?|litres?|degres?|pour ?cent)\b|%/;
+function texteAChiffre(t) {
+  const s = String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/mille[- ]pattes/g, "");
+  return /\d/.test(s) || NOMBRES_ECRITS_DEFI.test(s) || MESURES_EN_LETTRES.test(s);
+}
+// « Sa vie » : les sujets qui se posent en vrai ou faux pour cette espèce, sans aucun chiffre (ni dans la vraie, ni dans les fausses)
+function sujetsVieDefi(e) {
+  const l = [];
+  for (const c of CHAMPS_VIE_DEFI) {
+    if (!vieEnVraiFaux(e, c)) continue;
+    const q = QUESTIONS.find(z => z.champ === c), bonne = q.tirer ? q.tirer(e) : valeurDe(e, q);
+    const vraie = affirmationVraieDe(q, bonne, e);
+    if (!vraie || texteAChiffre(bonne) || texteAChiffre(vraie)) continue;
+    const fausses = piegesVraiFaux(q, bonne, e).filter(v => !texteAChiffre(v) && affirmationVraieDe(q, v, e) && !texteAChiffre(affirmationVraieDe(q, v, e)));
+    if (fausses.length) l.push({ c, q, bonne, vraie, fausses });
+  }
+  return l;
+}
+// « Étonnant » : les faits de l'espèce à deux phrases, sans nombre ni mesure, dont le nom ne désigne pas la vraie
+const memoEtonnantsDefi = new Map();
+function etonnantsDefi(e) {
+  if (!memoEtonnantsDefi.has(e.nom_courant)) {
+    const d = typeof donneesInsolites === "function" ? donneesInsolites() : null;
+    memoEtonnantsDefi.set(e.nom_courant, !d || typeof INSOLITES_ACTIFS === "undefined" || !INSOLITES_ACTIFS ? [] : d.faits.filter(f => f.espece === e.nom_courant && f.fait && f.faux
+      && !texteAChiffre(f.fait) && !texteAChiffre(f.faux) && !(nomDonneLaPhrase(e, f.fait) && !nomDonneLaPhrase(e, f.faux))));
+  }
+  return memoEtonnantsDefi.get(e.nom_courant).filter(faitDisponible);
+}
+function aUneQuestionVie(e) { return sujetsVieDefi(e).length > 0 || etonnantsDefi(e).length > 0; }
+function hashTexte(t) { let h = 0; for (const c of String(t)) h = (h * 31 + c.charCodeAt(0)) | 0; return Math.abs(h); }
+// Combien : 3 ou 4 pour un défi de 16 questions ou plus, 2 ou 3 de 10 à 15, 2 en dessous (le même nombre pour une même expédition) ;
+//   une espèce sur deux au plus ; chacune prend la place d'une question pour reconnaître d'une espèce qui en a 3 (jamais moins de 2)
+//   Un défi que R284 a raccourci faute de façons assez variées : les questions sur la vie reprennent d'abord ces places-là
+//   (« rendues » : le défi retrouve le nombre de questions prévu, 20 au plus), puis celles des espèces qui ont 3 questions.
+function combienVieDefi(x, nb, deja) {
+  const jou = x.liste.filter(e => jouableEnJeu(e) && (nb.get(e) || 0) > 0), cor = coriaceExp(x);
+  const brut = questionsParEspece(x, deja || new Set(), true);
+  const total = jou.reduce((s, e) => s + nb.get(e), 0), avant = jou.reduce((s, e) => s + (brut.get(e) || 0), 0), plus = hashTexte("vie|" + x.id) % 2;
+  const libresRendues = Math.max(0, avant - total);
+  const cible = avant >= 16 ? 3 + plus : avant >= 10 ? 2 + plus : 2;
+  const elig = jou.filter(e => e !== cor && aUneQuestionVie(e));
+  const surplus = jou.reduce((s, e) => s + Math.max(0, nb.get(e) - 2), 0);
+  const n = Math.max(0, Math.min(cible, Math.ceil(jou.length / 2), elig.length, surplus + libresRendues));
+  return { n, elig, rendues: Math.min(n, libresRendues) };
+}
+function nbVieDefi(x) {
+  if (!DEFI_VIE || !DEFI_VARIE) return 0;
+  const deja = new Set(x.liste.filter(e => typeof estPhotoReconnue === "function" && estPhotoReconnue(e)).map(e => e.nom_courant));
+  return combienVieDefi(x, questionsParEspece(x, deja), deja).n;
+}
+// Le choix des espèces et des questions (nb est ajusté : une question pour reconnaître en moins par question sur la vie)
+function choisirVieDefi(x, nb, deja) {
+  const { n, elig, rendues } = combienVieDefi(x, nb, deja);
+  let aRendre = rendues;
+  if (!n) return [];
+  const choisies = melanger(elig.slice()).slice(0, n), l = [];
+  let sorte = Math.random() < 0.5 ? "etonnant" : "savie";
+  for (const e of choisies) {
+    const sv = sujetsVieDefi(e), et = etonnantsDefi(e);
+    const s = sorte === "etonnant" ? (et.length ? "etonnant" : "savie") : (sv.length ? "savie" : "etonnant");
+    if (s === "etonnant") {   // un fait pas encore trouvé d'abord
+      const neufs = et.filter(f => !insoliteTrouve(f.id)), f = auHasard(neufs.length ? neufs : et);
+      l.push({ e, sorte: s, id: f.id, fait: f.fait, faux: f.faux, explication: f.explication || "", pv: Math.random() < 0.5 });
+    } else {                  // un sujet pas encore trouvé d'abord ; une fois sur deux, la phrase est vraie
+      const neufs = sv.filter(o => nbBonnes(e, o.c) === 0), o = auHasard(neufs.length ? neufs : sv);
+      const vrai = Math.random() < 0.5, valeur = vrai ? o.bonne : o.fausses[0];
+      l.push({ e, sorte: s, champ: o.c, valeur, vrai, texte: affirmationVraieDe(o.q, valeur, e), vraie: o.vraie });
+    }
+    sorte = s === "etonnant" ? "savie" : "etonnant";   // l'une puis l'autre, quand c'est possible
+    // la question pour reconnaître qu'elle remplace : la sienne si elle en a 3, sinon celle d'une espèce qui en a 3
+    if (aRendre > 0) { aRendre--; continue; }   // une place rendue : aucune question pour reconnaître en moins
+    const prise = nb.get(e) > 2 ? e : x.liste.filter(o => (nb.get(o) || 0) > 2).sort((a, b) => nb.get(b) - nb.get(a) || a.nom_courant.localeCompare(b.nom_courant))[0];
+    if (prise) nb.set(prise, nb.get(prise) - 1);
+  }
+  return l;
+}
+function questionVieDefi(v) { return { espece: v.e, type: "vie", vie: v, photo: null, noms: [], choix: null, retires: [] }; }
+// La sauvegarde (suivi.defisEnCours) et sa relecture
+function platVieDefi(v) { return v.sorte === "etonnant" ? { s: "etonnant", id: v.id, pv: !!v.pv } : { s: "savie", c: v.champ, val: v.valeur }; }
+function relireVieDefi(e, p) {
+  if (!p) return null;
+  if (p.s === "etonnant") {
+    const d = typeof donneesInsolites === "function" ? donneesInsolites() : null, f = d && d.faits.find(z => z.id === p.id && z.espece === e.nom_courant);
+    return f && f.fait && f.faux ? { e, sorte: "etonnant", id: f.id, fait: f.fait, faux: f.faux, explication: f.explication || "", pv: !!p.pv } : null;
+  }
+  const q = QUESTIONS.find(z => z.champ === p.c);
+  if (!q || !q.affirmation || p.val === undefined || p.val === null) return null;
+  const bonne = q.tirer ? q.tirer(e) : valeurDe(e, q), texte = affirmationVraieDe(q, p.val, e), vraie = affirmationVraieDe(q, bonne, e);
+  return texte && vraie ? { e, sorte: "savie", champ: p.c, valeur: p.val, vrai: String(p.val) === String(bonne), texte, vraie } : null;
+}
+// L'écran : l'animal (photo et nom), puis la question ; deux réponses
+function phrasesEtonnantDefi(v) { return v.pv ? [v.fait, v.faux] : [v.faux, v.fait]; }
+function corpsVieDefi(q) {
+  const v = q.vie, e = q.espece, et = v.sorte === "etonnant";
+  const reponses = et ? phrasesEtonnantDefi(v) : ["Vrai", "Faux"];
+  return `<div class="dfx-facon">${et ? "Étonnant" : "Sa vie"}</div>
+    <div class="cdo-photo dfx-vie-photo">${celluleImage(e, false)}</div>
+    <p class="dfx-vie-nom"><b>${echapper(e.nom_courant)}</b></p>
+    <p class="cdo-q">${et ? "À votre avis, lequel est vrai ?" : "Vrai ou faux ?"}</p>
+    ${et ? "" : `<div class="dfx-vie-affirmation">${echapper(v.texte)}</div>`}
+    <div class="cdo-noms dfx-noms-col dfx-vie-reponses${et ? " phrases" : " vf"}">${reponses.map((t, k) => `<button type="button" class="cdo-nom dfx-vie-rep" data-k="${k}"><span>${echapper(t)}</span></button>`).join("")}</div>
+    <p class="dfx-consigne dfx-vie-consigne">Sur sa vie : cette question ne compte pas dans les erreurs.</p>`;
+}
+function repondreVieDefi(q, k, bouton) {
+  const d = defiExp;
+  if (!d || q.choix || !estVieQ(q)) return;
+  const v = q.vie, e = q.espece, et = v.sorte === "etonnant";
+  const reponses = et ? phrasesEtonnantDefi(v) : ["Vrai", "Faux"];
+  const bonneK = et ? reponses.indexOf(v.fait) : v.vrai ? 0 : 1, juste = k === bonneK;
+  q.choix = e; q.vieJuste = juste;   // (choix = l'espèce : la question est faite ; juste ou non, elle ne compte pas)
+  document.querySelectorAll("#vue-defiexp .dfx-vie-rep").forEach((b, i) => { b.disabled = true; if (i === bonneK) b.classList.add("bon"); else if (b === bouton) b.classList.add("faux"); });
+  if (juste) {   // le fait est noté « trouvé » : il ne revient pas dans la Rencontre
+    if (et) { suivi.insolites = suivi.insolites || {}; suivi.insolites[v.id] = (suivi.insolites[v.id] || 0) + 1; }
+    else {
+      if (nbBonnes(e, v.champ) === 0) { suivi.vieDefi = suivi.vieDefi || {}; suivi.vieDefi[e.nom_courant + "|" + v.champ] = 1; }   // (voir rencontreDejaFaite)
+      acquerir(e, v.champ);
+    }
+  }
+  if (et && typeof noterEtonnantVu === "function") noterEtonnantVu(v.id);   // CQ7 : un « Étonnant » lu peut revenir dans « Reliez »
+  const consigne = document.querySelector("#vue-defiexp .dfx-vie-consigne"); if (consigne) consigne.remove();   // redit dessous, après la réponse
+  const ligne = et ? v.explication : (v.vrai ? "" : v.vraie);
+  // Étonnant : les deux phrases sont déjà à l'écran, votre choix en orange, la bonne en vert (le côte à côte est là) ;
+  //   Sa vie : « Vrai » / « Faux » côte à côte, puis la ligne de la fiche
+  const html = juste
+    ? `<p class="apf-verdict">${verdictHtml({ juste: true, phrase: et ? "" : ligne, complement: et ? ligne : "" })}</p><p class="dfx-vie-note">Noté sur sa fiche.</p>`
+    : `<div class="dfx-erreur dfx-vie-erreur"><small class="dfx-pas">${et ? "Pas cette fois · c'était l'autre" : "Pas cette fois"}</small>
+        ${et ? "" : `<div class="dfx-vie-duo"><div class="ko"><small>Votre choix</small><span>${echapper(reponses[k])}</span></div><div class="ok"><small>La bonne réponse</small><span>${echapper(reponses[bonneK])}</span></div></div>`}
+        ${(et ? v.explication : v.vraie) ? `<div class="dfx-separe"><small>${et ? "Le fait" : "Sur sa fiche"}</small><p>${echapper(et ? v.explication : v.vraie)}</p></div>` : ""}
+        <p class="dfx-vie-note">Cette question ne compte pas dans les erreurs : elle vous attend dans « À retenir ».</p></div>`;
+  conclureReponseDefi(q, juste, html, { noter: false, vie: true });
+}
+// « À retenir » : les questions sur la vie manquées, à part des questions ratées (décision à relire)
+function aRetenirDefi(d) {
+  return d.questions.filter(q => estVieQ(q) && q.choix && q.vieJuste === false)
+    .map(q => ({ nom: q.espece.nom_courant, detail: q.vie.sorte === "etonnant" ? q.vie.fait : q.vie.vraie }));
+}
+function blocARetenir(l) {
+  if (!l || !l.length) return "";
+  return `<details class="dft-ratees dft-retenir"><summary>À retenir${l.length > 1 ? ` · ${l.length}` : ""}</summary>
+      <ul>${l.map(r => `<li><b>${echapper(r.nom)}</b><small>${echapper(r.detail)}</small></li>`).join("")}</ul></details>`;
 }

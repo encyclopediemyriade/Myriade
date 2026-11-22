@@ -50,13 +50,13 @@ const ETAPES_JOUEES = [1, 2];
 // ==================================================================
 // Étape R284 (21/11 au soir, Notion 45.06, choix 4A ; note 8a d'Aubin : « parfois l'étape 2, c'est sa vie et parfois ça va
 //   approfondir ») : plus de « Étape 1 / Étape 2 » à l'écran. Chaque partie a son nom, toujours le même picto et la même
-//   couleur : « Rencontres » (un œil, vert), « Leurs liens » (trois points reliés, bleu), « Approfondir · facultatif » (une
+//   couleur : « Rencontres » (un œil, vert), « Leurs liens » (deux cercles qui se chevauchent depuis R291, bleu), « Approfondir · facultatif » (une
 //   loupe, ocre). Critère : « On comprend, sans numéro, ce qui est obligatoire et ce qui est facultatif. »
 //   (Le numéro reste dans le programme : k = 1, 2, 4.)
 // ==================================================================
 const PICTOS_ETAPE = {
   1: '<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.8"/>',
-  2: '<circle cx="5.5" cy="17" r="2.3"/><circle cx="18.5" cy="17" r="2.3"/><circle cx="12" cy="6" r="2.3"/><path d="M7 15l3.8-7M17 15l-3.8-7M7.8 17h8.4"/>',
+  2: '<circle cx="9" cy="12" r="5.6"/><circle cx="15" cy="12" r="5.6"/>',   // étape R291 (choix 1B du 22/11) : deux cercles qui se chevauchent
   4: '<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5"/>',
 };
 function titreEtape(k) { return k === 4 ? "Approfondir" : ETAPES[k] ? ETAPES[k].titre : ""; }
@@ -2219,7 +2219,8 @@ function deLieu(nom) {
 // Étape 333 (30/10) : la carte de la finale a un vrai visuel — une mosaïque des photos des espèces reliées dans le lieu
 //   (4 photos au plus, les espèces des liens, dans l'ordre des liens). Sans lien : l'ancien picto reste.
 // Étape R92 (Revoir 9, choix A2) : « la toile » — un rond au centre relié à cinq autres (un lieu et ses espèces)
-const PICTO_LIENS = `<svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="24" r="4.5"/><circle cx="24" cy="7" r="3.2"/><circle cx="40" cy="19" r="3.2"/><circle cx="34" cy="39" r="3.2"/><circle cx="14" cy="39" r="3.2"/><circle cx="8" cy="19" r="3.2"/><path d="M24 19.5V10.2 M28.3 22.7 37 20 M26.7 27.6 32.2 36.4 M21.3 27.6 15.8 36.4 M19.7 22.7 11 20"/></svg>`;
+// Étape R291 (choix 1B du 22/11) : le même dessin que « Leurs liens » (deux cercles qui se chevauchent), à la place de l'étoile
+const PICTO_LIENS = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="12" r="5.6"/><circle cx="15" cy="12" r="5.6"/></svg>`;
 function especesDesLiens(t, nom, n = 4) {
   const vues = [], liste = [];
   for (const k of liensDuLieu(t, nom)) for (const x of [k.a, k.nature_b === "element" ? null : k.b]) {
