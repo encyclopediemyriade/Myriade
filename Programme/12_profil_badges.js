@@ -569,7 +569,7 @@ function afficherPageProgression() {
         <p class="pg-petit-titre">Espèce favorite</p>
         ${favorite()
           ? `<button class="pg-favori-carte" id="pg-favori" title="Ouvrir sa page" style="--couleur-classe:${classeDe(favorite()).couleur}"><span class="ph">${celluleImage(favorite(), true)}</span><span>${favorite().nom_courant}<small>${classeDe(favorite()).nom}</small></span></button>`
-          : `<small>À choisir depuis la page d'une espèce déjà identifiée.</small><br><button class="porter" id="pg-favori-choisir">Ouvrir l'encyclopédie</button>`}
+          : `<small>À choisir depuis la page d'une espèce de votre carnet.</small><br><button class="porter" id="pg-favori-choisir">Ouvrir l'encyclopédie</button>`}
       </div>
     </div>`;
 
@@ -590,7 +590,7 @@ function afficherPageProgression() {
       </div>
       <div>
         <div class="pg-chiffres">
-          <div class="pg-encart"><b>${especesT.filter(estReconnue).length}</b><span>espèces identifiées sur ${especesT.length}</span></div>
+          <div class="pg-encart"><b>${especesT.filter(estReconnue).length}</b><span>espèces dans votre carnet, sur ${especesT.length}</span></div>
           <div class="pg-encart"><b>${especesT.filter(e => statut(e) === "maîtrisée").length}</b><span>espèces maîtrisées</span></div>
           <div class="pg-encart"><b>${obtenus}</b><span>badges sur ${badges.length}</span></div>
         </div>
@@ -684,7 +684,7 @@ function afficherPageProgression() {
     const tuile = document.createElement("button");
     tuile.className = "pg-encart pg-tuile " + MEDAILLES[f.palier];
     tuile.style.setProperty("--couleur-classe", CLASSES[cle].couleur);
-    tuile.title = `${CLASSES[cle].nom} : ${f.especesId} / ${f.nb} espèces identifiées, ${f.medailles} palier${f.medailles > 1 ? "s" : ""} d'espèce (${Math.round(f.part * 100)} %)`
+    tuile.title = `${CLASSES[cle].nom} : ${f.especesId} / ${f.nb} espèces dans votre carnet, ${f.medailles} palier${f.medailles > 1 ? "s" : ""} d'espèce (${Math.round(f.part * 100)} %)`
       + (f.palier < PALIERS_FAMILLE.length ? ` · prochain rang : ${RANGS_FAMILLE[f.palier + 1]} à ${Math.round(PALIERS_FAMILLE[f.palier] * 100)} %` : "");
     tuile.innerHTML = `<svg class="anneau" viewBox="0 0 52 52" aria-hidden="true"><circle class="fond" cx="26" cy="26" r="20"/>
         ${f.trouvees ? `<circle class="arc" cx="26" cy="26" r="20" stroke-dasharray="${tour * f.part} ${tour}" transform="rotate(-90 26 26)"/>` : ""}

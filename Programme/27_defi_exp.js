@@ -135,7 +135,7 @@ function ajusterPassagesVarie(x, nb) {
   for (const e of ordre) { if (total <= capacite) break; nb.set(e, nb.get(e) - 1); total--; }
 }
 function nbQuestionsDefi(x) {
-  const deja = new Set(x.liste.filter(e => typeof estReconnue === "function" && estReconnue(e)).map(e => e.nom_courant));
+  const deja = new Set(x.liste.filter(e => typeof estPhotoReconnue === "function" && estPhotoReconnue(e)).map(e => e.nom_courant));   // R287 : la photo, pas le carnet
   const sepa = typeof DEFI_VARIE !== "undefined" && DEFI_VARIE && paireSepareDefi(x) ? 1 : 0;   // R283 : « Ce qui les sépare » = une question pour deux espèces
   return [...questionsParEspece(x, deja).values()].reduce((a, b) => a + b, 0) - sepa;
 }
@@ -268,7 +268,7 @@ function reprendreDefiExp(x) {
   if (questions.some(q => !q || q.noms.length < 2) || (repQ && repQ.some(q => !q || q.noms.length < 2))) { oublierDefiExp(x); lancerDefiExp(x); return; }   // données changées : on repart
   const i = questions.findIndex(q => !faiteDefi(q));   // R283
   defiExp = { x, questions, i: i < 0 ? questions.length - 1 : i, aides: aidesDefi(s.aides), silhouettesVisibles: false,
-              avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: new Set(x.liste.filter(estReconnue).map(e => e.nom_courant)), perduVu: !!s.pv };
+              avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: new Set(x.liste.filter(estPhotoReconnue).map(e => e.nom_courant)), perduVu: !!s.pv };
   if (repQ) { repQ.forEach(q => q.rep = true); const j = repQ.findIndex(q => !q.choix); defiExp.rep = { questions: repQ, i: j < 0 ? repQ.length - 1 : j, lance: !!s.rep.lance }; }
   montrer("defiexp");
   if (defiExp.rep && !defiExp.rep.lance) { afficherAnnonceRepechage(); return; }   // R249 : repris sur l'écran « Vous y êtes presque »
@@ -331,7 +331,7 @@ function lancerDefiExp(x) {
   sauvegarder();
   const pool = poolDefi(x);
   const vues = {}, rang = {};
-  const dejaReconnues = new Set(x.liste.filter(estReconnue).map(e => e.nom_courant));
+  const dejaReconnues = new Set(x.liste.filter(estPhotoReconnue).map(e => e.nom_courant));   // R287 : la photo déjà reconnue (pas seulement au carnet)
   const nb = questionsParEspece(x, dejaReconnues);
   if (DEFI_VARIE) {   // R283 : reconnaître autrement (repère, indices, Qui est qui ?, Ce qui les sépare)
     defiExp = { x, questions: questionsDefiVarie(x, nb, pool), i: 0, aides: aidesDefi(), silhouettesVisibles: false, prevues: nb,
@@ -1336,7 +1336,7 @@ function finDefiExp() {
   window.scrollTo(0, 0);
   if (etapeGagnee) {
     const finieAussi = etapeFinie(x, 2);   // une expédition sans étape 2 se termine avec l'étape 1
-    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : etapeReussie(1),
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Rencontres validées par le test",   // R287 (3A) : pas « Rencontres terminées » sans Rencontre
             detail: empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""}` : "", son: "badge",
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (empreintes) setTimeout(() => afficherBulle(`+${empreintes} empreinte${empreintes > 1 ? "s" : ""}`), 600);

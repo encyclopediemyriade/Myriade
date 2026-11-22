@@ -126,7 +126,9 @@ function paliersLieu(t, c) { const m = empreintesMaxLieu(t, c); return [0, Math.
 function medailleLieu(t, c) {   // 0 = aucune, 1 = bronze, 2 = argent, 3 = or
   if (lieuTermine(t, c)) return 3;
   const n = empreintesDuLieu(t, c), p = paliersLieu(t, c);
-  return n >= p[2] ? 2 : n >= p[1] ? 1 : 0;
+  // Étape R288 : une médaille déjà gagnée ne se perd pas quand le nombre d'espèces d'une expédition change (le trésor l'a quittée)
+  const garde = !toutDebloque() && typeof suivi === "object" && suivi && suivi.medaillesLieux ? Math.min(2, suivi.medaillesLieux[t + "|" + c.nom] || 0) : 0;
+  return Math.max(garde, n >= p[2] ? 2 : n >= p[1] ? 1 : 0);
 }
 function lieuPrecedent(t, c) { const l = lieuxDe(t), i = l.indexOf(c); return i > 0 ? l[i - 1] : null; }
 function lieuSuivant(t, c) { const l = lieuxDe(t), i = l.indexOf(c); return i >= 0 && i < l.length - 1 ? l[i + 1] : null; }
@@ -684,7 +686,7 @@ function marquerRevue(id, e) {
   const l = suivi.expRevues[id] = suivi.expRevues[id] || [];
   if (!l.includes(e.nom_courant)) { l.push(e.nom_courant); sauvegarder(); }
 }
-function faiteDans(x, e, k) { return especeFaite(e, k) && (k !== 1 || estRevue(x, e)); }
+function faiteDans(x, e, k) { return (especeFaite(e, k) && (k !== 1 || estRevue(x, e))) || (typeof gardeR288 === "function" && gardeR288(x, e, k)); }   // R288 : une espèce arrivée dans une expédition déjà faite y compte comme faite
 function especesARevoirIci(x) { return x.liste.filter(e => especeFaite(e, 1) && !estRevue(x, e)); }
 function avanceeEtape(x, k) { const faites = x.liste.filter(e => faiteDans(x, e, k)).length; return { faites, total: x.liste.length }; }
 function etapeFinieSansLiens(x, k) { return k >= 1 && k <= NB_ETAPES && (k === 1 || etapeFinieSansLiens(x, k - 1)) && x.liste.every(e => faiteDans(x, e, k)); }
@@ -699,7 +701,7 @@ function etapeFinieAncienne(x, k) {
   if (k === 2 && RENCONTRE_COMPLETE && typeof migrerLiensRF3 === "function") migrerLiensRF3();   // avant tout calcul (sinon une expédition finie ensuite serait prise pour ancienne)
   return etapeFinieSansLiens(x, k) && (k !== 2 || !RENCONTRE_COMPLETE || typeof liensOk !== "function" || liensOk(x));
 }
-function approfondie(x) { return x.liste.every(e => especeFaite(e, 4)); }   // étape 288
+function approfondie(x) { return x.liste.every(e => especeFaite(e, 4) || (typeof gardeR288 === "function" && gardeR288(x, e, 4))); }   // étape 288 ; R288 : rien ne recule
 // Étape R131 (05/11, choix de l'utilisateur, option 1) : « Terminée » dit aussi ce qu'il reste dans Approfondir (facultatif),
 // « Terminée · Approfondir 2/7 », puis « Terminée » tout court quand Approfondir est fini.
 // Étape R267 (Notion 40.17, choix 10A du 19/11) : quand Approfondir est fini aussi, l'expédition est « complète »
@@ -2883,7 +2885,7 @@ function dessinerPageLieu() {
         ${x0 ? `${!suiteX0 || suiteX0.choisir ? `<small class="lieu-go-titre">${echapper(x0.titre)}</small>` : ""}<button class="couv-go" id="lieu-go" type="button">${texteGo}${suiteX0 && !suiteX0.choisir ? ` · ${echapper(x0.titre)}` : ""} <span aria-hidden="true">▶</span></button>`
           : finaleIci ? `<button class="couv-go" id="lieu-go" type="button">Jouer la finale <span aria-hidden="true">▶</span></button>` : ""}</div>
     </div>
-    <div class="lieu-sombre">${blocMedailleLieu(t, c)}${groupes}</div></div>`;   // étape R153 (avant : la carte d'identité en tête)   // étape R133 : la médaille du lieu   // étape R104 : la carte d'identité du lieu en tête
+    <div class="lieu-sombre">${typeof blocRareteLieu === "function" ? blocRareteLieu(t, c) : ""}${blocMedailleLieu(t, c)}${groupes}</div></div>`;   // R288 : « Des espèces rares vivent ici. », puis le trésor à la fin du lieu   // étape R153 (avant : la carte d'identité en tête)   // étape R133 : la médaille du lieu   // étape R104 : la carte d'identité du lieu en tête
   document.getElementById("lieu-sortir").onclick = () => montrer("accueil");
   const sortirM = document.getElementById("lieu-sortir-m"); if (sortirM) sortirM.onclick = () => { montrer("accueil"); window.scrollTo(0, 0); };   // étape M8
   const go = document.getElementById("lieu-go"); if (go) go.onclick = () => { if (x0) allerX0(); else lancerFinale(t, c.nom); };
@@ -2900,6 +2902,7 @@ function dessinerPageLieu() {
     if (e && estReconnue(e)) ouvrirPageEspece(e);
     else afficherBulle("Vous la découvrirez dans une des expéditions de ce lieu");
   });
+  if (typeof brancherRareteLieu === "function") brancherRareteLieu(zone, t, c);   // R288 : « Suivre la piste », le trésor trouvé
   const fin = document.getElementById("exp-finale");
   if (fin) fin.onclick = () => {                           // étape 301
     if (finaleFaite(t, c.nom)) { ouvrirPlanche(t, c.nom); return; }
@@ -3498,7 +3501,7 @@ function resumeSessionTelephone(s) {
   dernierResumeSession = s;
   if (!s) { retirerResumeFin("fin-session"); return; }
   const e = s.focus, x = s.expedition && expeditionParId(s.expedition.id);
-  const connu = e && (estIdentifiee(e) || !!x);   // étape R149 : dans une expédition, la Rencontre a déjà montré son nom
+  const connu = e && (estIdentifiee(e) || !!x || estReconnue(e));   // étape R149 : dans une expédition, la Rencontre a déjà montré son nom ; R287 (1B) : au carnet, son nom est dit
 
   let titre = connu ? echapper(e.nom_courant) : "Cette espèce", corps = "", retour, etat = "";
   const rare = typeof htmlRencontreRare === "function" ? htmlRencontreRare(s) : "";   // étape R277 (37.04) : « Une rencontre rare »
@@ -3520,6 +3523,8 @@ function resumeSessionTelephone(s) {
     var quiEnsuiteTel = "";   // étape R246 : la liste « Qui rencontrer ensuite ? » sous le bouton est remplacée par la bande
   } else if (s.duJour) {
     corps = `<div class="rft-phrase">${PHRASE_FIN_DU_JOUR}</div>`;   // étape R187 : le bouton principal ramène déjà à l'accueil
+  } else if (s.tresor && typeof retourTresor === "function") {
+    retour = retourTresor(s);                          // étape R288 : la Rencontre d'un trésor ramène à son lieu
   } else {
     retour = { texte: "← Accueil", action: () => document.getElementById("bouton-fin-accueil").click() };
   }
@@ -3592,7 +3597,9 @@ function resumeSessionTelephone(s) {
     if (p) { p.textContent = `${titreEtape(2)} ▶`; p.onclick = () => { session = null; lancerExpedition(x, 2); }; }
   }
   if (x) rangerResumeOrdinateur(document.querySelector("#fin-session > .resume-fin-tel.rft-ordi"));   // étape R248h
-  if (rare && typeof feterRencontreRare === "function") feterRencontreRare(s);   // étape R277 (37.04)
+  if (typeof poserEncadrePourquoi === "function") poserEncadrePourquoi(s);   // étape R288 (6D) : « Pourquoi il est rare », sous le titre
+  if (typeof finRencontreTresor === "function") finRencontreTresor(s);       // étape R288 : le trésor du lieu est trouvé (grande fête)
+  if ((rare || (typeof RARETE_R288 !== "undefined" && RARETE_R288)) && typeof feterRencontreRare === "function") feterRencontreRare(s);   // étape R277 (37.04) ; R288 (5D)
   if (carnet && typeof lancerRejointCarnet === "function") { ajusterFinRencontre(); lancerRejointCarnet(s); }   // étape R278 (37.01)
   if (x && quiEnsuiteTel) {                            // étape RF1 : « Qui rencontrer ensuite ? », sous le bouton de la suite
     const z = document.querySelector("#fin-session > .resume-fin-tel .rft-actions");

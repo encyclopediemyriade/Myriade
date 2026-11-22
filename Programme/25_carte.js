@@ -205,7 +205,7 @@ function portraitTerritoire(t) {
   const ph = photoTerritoire(t, id), chiffres = chiffresTerritoire(t, id).slice(0, 3);
   const emb = emblemesTerritoire(t), autres = especesDe(t).length - emb.length;
   const vignette = e => `<button class="at-emb" type="button" data-nom="${echapper(e.nom_courant)}">
-      <span class="at-emb-ph">${imgMini(photoEsp(e), e.nom_courant)}${estReconnue(e) ? `<i class="at-emb-ok" aria-label="Reconnue">✓</i>` : ""}</span>
+      <span class="at-emb-ph">${imgMini(photoEsp(e), e.nom_courant)}${estReconnue(e) ? `<i class="at-emb-ok" aria-label="Dans votre carnet">✓</i>` : ""}</span>
       <span>${echapper(e.nom_courant)}</span></button>`;
   return `<section class="at-portrait">
       <img src="${ph.fichier}" alt="${echapper(ph.legende || t)}" loading="lazy">
@@ -233,7 +233,7 @@ function emblemesApercu(t) {
   if (!emb.length) return "";
   return `<h2 class="at-titre">Ceux qui vous y attendent</h2>
     <div class="at-emblemes">${emb.map(e => `<button class="at-emb" type="button" data-nom="${echapper(e.nom_courant)}">
-      <span class="at-emb-ph">${imgMini(photoEsp(e), e.nom_courant)}${estReconnue(e) ? `<i class="at-emb-ok" aria-label="Reconnue">✓</i>` : ""}</span>
+      <span class="at-emb-ph">${imgMini(photoEsp(e), e.nom_courant)}${estReconnue(e) ? `<i class="at-emb-ok" aria-label="Dans votre carnet">✓</i>` : ""}</span>
       <span>${echapper(e.nom_courant)}</span></button>`).join("")}</div>
     ${autres > 0 ? `<p class="at-note">et ${nombre(autres)} autres espèces, à découvrir sur place.</p>` : ""}`;
 }

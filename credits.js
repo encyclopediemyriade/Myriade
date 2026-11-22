@@ -1530,6 +1530,16 @@ const CREDITS_PHOTOS = {
   "licence": "CC BY-SA 2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Western_Three-toed_Skink_(Chalcides_striatus)_found_under_a_stone_by_Jean_NICOLAS_(14167709840).jpg"
  },
+ "globicephale_noir": {
+  "auteur": "Elizabeth Zwamborn",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Whale-Watching_Cape_Breton_(cropped).JPG"
+ },
+ "pipistrelle_de_kuhl": {
+  "auteur": "Ömer Selim Kaya",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/345511713"
+ },
  "flamant_rose": {
   "auteur": "Diego Delso",
   "licence": "CC BY-SA 4.0",
@@ -8789,6 +8799,16 @@ const CREDITS_PHOTOS = {
   "auteur": "Bastien Le Mort",
   "licence": "CC BY 4.0",
   "source": "https://www.inaturalist.org/observations/369735431"
+ },
+ "maquereau_commun": {
+  "auteur": "Crystal Butler",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://www.inaturalist.org/observations/221341182"
+ },
+ "raie_bouclee": {
+  "auteur": "Bj.schoenmakers",
+  "licence": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Raja_clavata_(Thornback_ray_or_thornback_skate),_Ecomare,_Texel,_the_Netherlands.JPG"
  }
 };
 

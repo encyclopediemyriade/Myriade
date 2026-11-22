@@ -60,7 +60,7 @@ function carteEncyclopedie(espece, details) {
   // le cadre, le nom ludique et la jauge. tabindex="0" permet d'ouvrir la fiche au clic.
   const debut = `style="--couleur-classe:${couleur}" tabindex="0"`;
 
-  // Les caractéristiques déjà trouvées d'une espèce pas encore identifiée (étape 57) :
+  // Les caractéristiques déjà trouvées d'une espèce pas encore au carnet (étape 57) :
   // elles viennent des défis, et se lisent sur sa carte même si l'espèce n'est pas découverte.
   const trouvees = questionsPossibles(espece).filter(q => nbBonnes(espece, q.champ) >= 1);
   const lignesTrouvees = trouvees.map(q => {
@@ -69,27 +69,31 @@ function carteEncyclopedie(espece, details) {
   }).join("");
   const texteTrouvees = `${trouvees.length} caractéristique${trouvees.length > 1 ? "s" : ""} trouvée${trouvees.length > 1 ? "s" : ""}`;
 
-  // Pas encore identifiée : carte verrouillée. Sans rien de trouvé, pas de fiche détaillée ;
+  // Pas encore au carnet : carte verrouillée. Sans rien de trouvé, pas de fiche détaillée ;
   // sinon, la carte dit combien de caractéristiques sont trouvées, et le survol les liste.
-  if (s === "inconnue" && typeof estOfferte === "function" && estOfferte(espece)) {   // étape E2-12 : offerte, « à reconnaître »
+  // Étape R287 (1B) : la carte suit le carnet (estReconnue), plus le seul statut « photo reconnue »
+  const auCarnet = estReconnue(espece);
+  // Étape R288 (R1 + I2) : une espèce rare ressort dans l'album (liseré et fond ocre doux) ; pas encore trouvée, un toucher ouvre son volet
+  const rareR288 = typeof marqueRarete === "function" && estRare(espece);
+  if (!auCarnet && typeof estOfferte === "function" && estOfferte(espece)) {   // étape E2-12 ; R287 (2B) : « Pour bien démarrer »
     return `
       <article class="fiche offerte" ${debut} data-nom="${espece.nom_courant}" data-page="1" title="Ouvrir sa page">
         <div class="photo">${celluleImage(espece, true)}</div>
-        <div class="contenu"><h2>${espece.nom_courant}</h2><div class="ludique">À reconnaître</div><div class="scientifique">${estOfferteDepart(espece) ? "Offerte au départ" : "Déjà rencontrée"}</div></div>
+        <div class="contenu"><h2>${espece.nom_courant}</h2><div class="ludique">Pour bien démarrer</div><div class="scientifique">Pas encore dans votre carnet</div></div>
       </article>`;
   }
-  if (s === "inconnue") {
+  if (!auCarnet) {
     if (trouvees.length) details[espece.nom_courant] = `
-      <p class="statut">Pas encore identifiée · ${texteTrouvees}</p>
+      <p class="statut">Pas encore dans votre carnet · ${texteTrouvees}</p>
       ${ligneRarete(espece)}
       ${lignesTrouvees}
-      <p class="carac inconnu">À identifier pour ouvrir sa fiche.</p>`;
+      <p class="carac inconnu">À rencontrer pour ouvrir sa fiche.</p>`;
     return `
-      <article class="fiche verrouillee" ${debut}${trouvees.length ? ` data-nom="${espece.nom_courant}"` : ""}>
+      <article class="fiche verrouillee${rareR288 ? " est-rare" : ""}" ${debut}${trouvees.length ? ` data-nom="${espece.nom_courant}"` : ""}${rareR288 ? ` data-rare-volet="${espece.nom_courant}" title="Une espèce rare"` : ""}>
         <div class="photo photo-silhouette"><img src="${fichierSilhouette(espece)}" alt="" loading="lazy" onerror="this.remove()">${dessinRarete(espece)}</div>
         <div class="contenu">
           <div class="ludique">${espece.nom_affichage_groupe}</div>
-          <div class="scientifique">${trouvees.length ? texteTrouvees : "Pas encore rencontrée"}</div>
+          ${rareR288 ? marqueRarete(espece) : `<div class="scientifique">${trouvees.length ? texteTrouvees : "Pas encore rencontrée"}</div>`}
         </div>
       </article>`;
   }
@@ -137,7 +141,7 @@ function carteEncyclopedie(espece, details) {
   const niveaux = [1, 2].map(n => champs.filter(c => niveauDonnee(espece, c) === n).length);
   details[espece.nom_courant] = `
     <h3>${espece.nom_courant}</h3>
-    <p class="statut">${termine >= 1 ? NOMS_MEDAILLE[termine] : "Pas encore rencontrée"}${estRenseigne(espece.rarete_observation) ? ` · ${espece.rarete_observation}` : ""}</p>
+    <p class="statut">${motCarnet(espece, termine)}${estRenseigne(espece.rarete_observation) ? ` · ${espece.rarete_observation}` : ""}</p>
     <div class="survol-global"><span class="survol-jauge"><i style="width:${pourcentage}%"></i></span><small>${trouvesFiche} sur ${champsFiche.length} trouvées</small></div>
     <div class="survol-rubriques">${rubriques}</div>
     <p class="survol-niveaux"><span class="niv">${dessinPoints(1)} Découvert ${niveaux[0]}</span><span class="niv">${dessinPoints(2)} Connu ${niveaux[1]}</span></p>
@@ -147,7 +151,7 @@ function carteEncyclopedie(espece, details) {
       <div class="photo">${celluleImage(espece, true)}${dessinRarete(espece)}${estNouvelle(espece) ? TAG_NOUVEAU : ""}</div>
       <div class="contenu${medaille ? " avec-medaille" : ""}">
         ${medaille}
-        <h2>${espece.nom_courant}</h2>
+        <h2>${espece.nom_courant}</h2>${rareR288 ? marqueRarete(espece) : ""}
         <div class="ludique">${espece.nom_affichage_groupe}</div>
         <div class="scientifique">${espece.nom_scientifique}</div>
         <div class="jauge"><div style="width:${pourcentage}%"></div></div>
@@ -290,6 +294,11 @@ function afficherEncyclopedie() {
     carte.onclick = () => ouvrirPageEspece(ESPECES.find(e => e.nom_courant === carte.dataset.nom));
     carte.onkeydown = ev => { if (ev.key === "Enter") carte.onclick(); };
   }
+  // Étape R288 (I2) : une rare pas encore trouvée ouvre son volet (groupe, territoires ; jamais son nom ni son lieu)
+  if (typeof ouvrirVoletRare === "function") for (const carte of grille.querySelectorAll(".fiche[data-rare-volet]")) {
+    carte.onclick = () => ouvrirVoletRare(ESPECES.find(e => e.nom_courant === carte.dataset.rareVolet));
+    carte.onkeydown = ev => { if (ev.key === "Enter") carte.onclick(); };
+  }
 }
 
 // ==================================================================
@@ -341,7 +350,10 @@ const RUBRIQUES_ESPECE = [
   { cle: "liens", nom: "Liens et protection", champs: ["plantes_liees","predateurs","defense_principale","danger_homme","statut_conservation"] },
   { cle: "traces", nom: "Traces et sons", champs: ["verbe_cri","cri_son","empreinte_nom","empreinte_choix","indice_presence"] },
 ];
-const NOMS_MEDAILLE = ["", "Espèce reconnue", "Espèce comprise", "Espèce familière"];   // étape E2-3 (n° 13.1) : « croisée » → « reconnue »   // étape R144
+const NOMS_MEDAILLE = ["", "Espèce reconnue", "Espèce comprise", "Espèce familière"];
+// Étape R287 (choix « 3A ») : UN mot par état, le même partout — le palier s'il y en a un, sinon « Dans votre carnet »
+//   ou « Pas encore dans votre carnet » (avant : « Pas encore rencontrée » ou « Identifiée » pour une espèce au carnet).
+function motCarnet(e, termine) { return termine >= 1 ? NOMS_MEDAILLE[termine] : estReconnue(e) ? "Dans votre carnet" : "Pas encore dans votre carnet"; }   // étape E2-3 (n° 13.1) : « croisée » → « reconnue »   // étape R144
 let especeOuverte = null, ongletEspece = "portrait", positionEncyclopedie = 0;
 
 function rubriqueDe(q) {
@@ -361,7 +373,8 @@ function rubriquesDe(espece) {
 function valeurPage(espece, q) {
   const cle = cleEmpreinte(espece);
   if (q.champ === "empreinte_nom") return `<img class="pe-empreinte" src="Empreintes/${cle}.svg" alt="son empreinte">`;
-  if (q.champ === "cri_son") return `<audio controls preload="none"><source src="Sons/${cle}.mp3"><source src="Sons/${cle}.ogg"></audio>`;
+  if (q.champ === "cri_son") { const f = typeof SONS !== "undefined" && SONS[cle] && SONS[cle].fichier || cle;   // R290 : le son peut porter un autre nom que la photo
+    return `<audio controls preload="none"><source src="Sons/${f}.mp3"><source src="Sons/${f}.ogg"></audio>`; }
   const v = valeurDe(espece, q);
   return q.affichageFiche ? q.affichageFiche(espece, v) : afficherValeur(q, v);
 }
@@ -477,7 +490,8 @@ function afficherPageEspece() {
   const champs = champsDe(e).filter(x => x !== IDENTIFICATION), trouves = champs.filter(x => nbBonnes(e, x) >= 1).length;
   const termine = niveauTermine(e);
   const medaille = termine >= 1 ? dessinMedaille(MEDAILLES[termine], termine) : `<span class="pe-sans"></span>`;
-  const detail = termine >= 1 ? sensMedaille(termine, e) : `Faites connaissance ${pe(e).avecElle} en expédition`;   // R236 : accordé au nom   // étape R144
+  // Étape R287 (choix « 3A ») : une espèce au carnet sans palier ne dit plus « Pas encore rencontrée » : ce qui reste à faire
+  const detail = termine >= 1 ? sensMedaille(termine, e) : estReconnue(e) ? `Rencontres à faire en expédition pour ${pe(e).la} reconnaître` : `Faites connaissance ${pe(e).avecElle} en expédition`;   // R236 : accordé au nom   // étape R144
   const jauges = presentes.map(r => {
     const qs = par[r.cle], t = qs.filter(q => nbBonnes(e, q.champ) >= 1).length;
     return `<button class="pe-rub${r.cle === ongletEspece ? " actif" : ""}" data-onglet="${r.cle}"><span>${r.nom}</span><small>${t} / ${qs.length}</small>`
@@ -489,12 +503,12 @@ function afficherPageEspece() {
       <aside class="pe-cote">
         <div class="pe-photo">${celluleImage(e)}${dessinRarete(e)}<span class="pe-forme cache"></span>${couvertureFiche(e, c)}</div>${galeriePhotos(e)}
         ${etiquettesFiche(e, termine, trouves, champs.length)}${/* étape R260b (2A) : téléphone — le statut en petites étiquettes */ ""}
-        <div class="pe-medaille${termine ? "" : " vide"}">${medaille}<span><b>${termine ? NOMS_MEDAILLE[termine] : "Pas encore rencontrée"}</b><small>${detail}</small></span></div>
+        <div class="pe-medaille${termine ? "" : " vide"}">${medaille}<span><b>${motCarnet(e, termine)}</b><small>${detail}</small></span></div>
         <h1>${e.nom_courant}</h1>
-        <div class="pe-sci">${e.nom_scientifique}</div>
+        <div class="pe-sci">${e.nom_scientifique}</div>${typeof ficheRarete === "function" ? ficheRarete(e) : ""}${/* étape R288 (1A, 6D) : « Rare · lieu », puis « Pourquoi il est rare » */ ""}
         ${estReconnue(e) ? `<button class="pe-favori${especeFavorite === e.nom_courant ? " choisie" : ""}" id="pe-favori">${ETOILE}${especeFavorite === e.nom_courant ? "Mon espèce favorite" : "En faire mon espèce favorite"}</button>` : ""}
         <div class="pe-groupe"><span style="color:${c.couleur}">${c.nom}</span> · ${e.nom_affichage_groupe}</div>
-        <div class="pe-statut">${majuscule(statut(e))} · ${trouves} sur ${champs.length} trouvées</div>
+        <div class="pe-statut">${motCarnet(e, termine)} · ${trouves} sur ${champs.length} trouvées</div>
         ${estReconnue(e) ? boutonFiche(e, champs.length - trouves) : ""}${/* étape R258 (4A) : « Faire une Rencontre » ou « Compléter sa fiche » */ ""}
         <nav>${jauges}</nav>
       </aside>
@@ -571,6 +585,18 @@ function blocAnecdotes(e) {
   return `<section class="pe-anecdotes"><h3>Le saviez-vous ?</h3><ul>${lignes}</ul></section>`;
 }
 
+// Étape R287 (4B) : l'expédition qui sert de cadre à une Rencontre lancée hors expédition : d'abord une expédition ouverte du
+//   territoire où l'on joue, puis une expédition ouverte ailleurs, puis n'importe laquelle qui la contient.
+const RENCONTRE_PARTOUT = true;   // false = la Rencontre d'avant hors expédition (jusqu'à 8 questions)
+function expeditionCadre(e) {
+  if (typeof toutesExpeditions !== "function" || !e) return null;
+  if (typeof cadreTresor === "function") { const xt = cadreTresor(e); if (xt) return xt; }   // étape R288 : la Rencontre du trésor, au bout de sa piste
+  const avec = toutesExpeditions().filter(x => x.liste.includes(e));
+  if (!avec.length) return null;
+  const ta = typeof territoireActif === "function" ? territoireActif() : null, ouvertes = {};
+  const ouverte = x => { try { if (!(x.territoire in ouvertes)) ouvertes[x.territoire] = expeditionsOuvertes(x.territoire); return ouvertes[x.territoire].has(x.id); } catch (err) { return false; } };
+  return avec.find(x => x.territoire === ta && ouverte(x)) || avec.find(ouverte) || avec.find(x => x.territoire === ta) || avec[0];
+}
 // Étape 176 (13/10) : lancer une Rencontre sur UNE espèce choisie (depuis sa fiche de l'encyclopédie).
 // Une Rencontre en cours non terminée est remplacée par celle-ci.
 function lancerRencontreAvec(espece, indicesVus) {
@@ -584,7 +610,11 @@ function lancerRencontreAvec(espece, indicesVus) {
   modeLibre = false; depuisArcade = false;   // étape 262 : une Rencontre ne fait pas partie de l'Arcade
   jeuChoisi = "rencontre";
   montrer("jouer");                    // l'onglet Jouer (arrête aussi un défi en cours)
-  demarrerFocus(espece);
+  // Étape R287 (choix « 4B ») : la même Rencontre partout — les trois temps de l'expédition (l'entrée, « Pour le reconnaître »,
+  //   un temps, « Étonnant »), avec une expédition qui contient l'espèce comme cadre (sa vie, son temps) ; elle ne compte pas
+  //   pour cette expédition (pas d'empreintes en plus : les gains ne changent pas). Sans expédition : la Rencontre d'avant.
+  const cadre = RENCONTRE_PARTOUT && typeof expeditionCadre === "function" ? expeditionCadre(espece) : null;
+  demarrerFocus(espece, cadre ? { cadre: cadre.id } : {});
   // Étape 263 : les traits déjà donnés en indice (carte « Rencontre » de la page du territoire) ne sont pas redemandés ici
   if (indicesVus && indicesVus.length && session) session.posees.push(...indicesVus.filter(c => !session.posees.includes(c)));
   window.scrollTo(0, 0);
@@ -762,10 +792,11 @@ function afficherAPropos() {
   }).join("")}</table></details>`;
   document.getElementById("credits-photos").innerHTML = html;
   // Les sons : seulement les espèces qui ont un cri dans le jeu
-  const avecSon = ESPECES.filter(e => sons[cleEmpreinte(e)]);
+  const cleSon = e => { const c = cleEmpreinte(e); return typeof SONS !== "undefined" && SONS[c] && SONS[c].fichier || c; };   // R290
+  const avecSon = ESPECES.filter(e => sons[cleSon(e)]);
   document.getElementById("credits-sons").innerHTML = `<details class="credits-famille">
       <summary>Tous les cris<small>${avecSon.length} sons</small></summary>
-      <table class="table-credits">${avecSon.map(e => ligneCredit(e, sons[cleEmpreinte(e)], false)).join("")}</table>
+      <table class="table-credits">${avecSon.map(e => ligneCredit(e, sons[cleSon(e)], false)).join("")}</table>
     </details>`;
   // Étape ML6 : les crédits des silhouettes (PhyloPic), repliés comme ceux des photos
   const blocSilh = document.getElementById("credits-silhouettes");
@@ -941,8 +972,11 @@ function albumFamille(cle) {
   // Étape R260 (3A) : vos espèces d'abord, puis les « à reconnaître », puis les cases vides
   const montrees = [...especes.filter(estRencontree), ...especes.filter(e => !estRencontree(e) && offerte(e)),
                     ...(albumMesEspeces ? [] : especes.filter(e => !estRencontree(e) && !offerte(e)))];
+  // Étape R288 (R1 + I2) : une rare ressort (liseré et fond ocre doux, « Rare » sous le nom) ; pas encore trouvée, un toucher ouvre son volet
+  const rareR = e => typeof marqueRarete === "function" && estRare(e);
   const cases = montrees.map(e => estRencontree(e) || offerte(e)
-    ? `<button type="button" class="alb-case alb-vue${offerte(e) ? " alb-offerte" : ""}${estNouvelle(e) ? " alb-nouveau" : ""}" data-nom="${echapper(e.nom_courant)}">${estNouvelle(e) ? TAG_NOUVEAU : ""}${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}${offerte(e) ? "<small>À reconnaître</small>" : ""}</span></button>`
+    ? `<button type="button" class="alb-case alb-vue${offerte(e) ? " alb-offerte" : ""}${estNouvelle(e) ? " alb-nouveau" : ""}${rareR(e) ? " alb-rare" : ""}" data-nom="${echapper(e.nom_courant)}">${estNouvelle(e) ? TAG_NOUVEAU : ""}${imgMini(e.photo || fichierSilhouette(e), e.nom_courant)}<span>${e.nom_courant}${offerte(e) ? "<small>Pour bien démarrer</small>" : ""}${rareR(e) ? marqueRarete(e) : ""}</span></button>`
+    : rareR(e) ? `<button type="button" class="alb-case alb-vide alb-rare" data-rare-volet="${echapper(e.nom_courant)}" aria-label="Une espèce rare à découvrir">${caseSilhouette(e, "alb-sil")}<span class="alb-mq">${marqueRarete(e)}</span></button>`
     : `<button type="button" class="alb-case alb-vide" data-piste="${echapper(e.nom_courant)}" aria-label="Espèce à découvrir">${caseSilhouette(e, "alb-sil")}</button>`).join("")
     || `<p class="alb-rien">Aucune espèce découverte ici pour l'instant.</p>`;
   // Étape R280 (44.04, choix 4A du 21/11) : les espèces offertes, « à reconnaître », ne comptent nulle part : l'onglet dit le même chiffre
@@ -1015,7 +1049,8 @@ function afficherCollectionTelephone(grille) {
   const retour = grille.querySelector(".alb-retour");
   if (retour) retour.onclick = () => { filtreClasse = "Toutes"; afficherEncyclopedie(); window.scrollTo(0, 0); };
   for (const b of grille.querySelectorAll(".alb-vue")) b.onclick = () => ouvrirPageEspece(ESPECES.find(e => e.nom_courant === b.dataset.nom));
-  for (const b of grille.querySelectorAll(".alb-vide")) b.onclick = () => ouvrirPiste(ESPECES.find(e => e.nom_courant === b.dataset.piste));
+  for (const b of grille.querySelectorAll(".alb-vide")) b.onclick = () => b.dataset.rareVolet && typeof ouvrirVoletRare === "function"   // R288 (I2)
+    ? ouvrirVoletRare(ESPECES.find(e => e.nom_courant === b.dataset.rareVolet)) : ouvrirPiste(ESPECES.find(e => e.nom_courant === b.dataset.piste));
   grille.querySelectorAll(".alb-onglets [data-vue]").forEach(b => b.onclick = () => {   // étape R245 (36.26) : les deux onglets
     albumMesEspeces = b.dataset.vue === "decouvertes";
     try { localStorage.setItem("myriade-album-mes-especes", albumMesEspeces ? "oui" : "non"); } catch (e) { /* rien */ }
@@ -1384,8 +1419,8 @@ function couvertureFiche(e, c) {
 }
 function etiquettesFiche(e, termine, trouves, total) {
   const complete = total > 0 && trouves >= total;
-  const palier = termine >= 1 ? NOMS_MEDAILLE[termine].replace(/^Espèce /, "") : majuscule(statut(e));
-  return `<div class="pe-etiquettes"><span class="pe-et-statut">✓ ${echapper(majuscule(palier))}</span>`
+  const palier = motCarnet(e, termine).replace(/^Espèce /, "");   // R287 (3A) : le même mot que la fiche sur ordinateur
+  return `<div class="pe-etiquettes"><span class="pe-et-statut">${estReconnue(e) ? "✓ " : ""}${echapper(majuscule(palier))}</span>`
     + `<span>${complete ? "Fiche complète ✓" : `${trouves} / ${total} sur sa fiche`}</span>`
     + (especeFavorite === e.nom_courant ? `<span class="pe-et-fav">★ Votre favorite</span>` : "") + `</div>`;
 }

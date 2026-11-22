@@ -188,6 +188,9 @@ const EMPREINTES = {
   campagnol_terrestre:  { groupe: "5 doigts", texte: "quatre doigts en étoile à l'avant, cinq à l'arrière, comme celle du campagnol amphibie", sosies: "rongeurs" },
   campagnol_agreste:    { groupe: "5 doigts", texte: "minuscule : quatre doigts en étoile à l'avant, cinq à l'arrière, comme celle du campagnol des champs", sosies: "rongeurs" },
   campagnol_souterrain: { groupe: "5 doigts", texte: "minuscule : quatre doigts en étoile à l'avant, cinq à l'arrière ; on la voit rarement, il vit sous terre", sosies: "rongeurs" },
+  // Étape R290 (22/11) : deux dessins repris d'une espèce très proche (même genre), pour les pistes des trésors
+  campagnol_des_pyrenees: { groupe: "5 doigts", texte: "minuscule : quatre doigts en étoile à l'avant, cinq à l'arrière, comme celle du campagnol agreste", sosies: "rongeurs" },
+  goeland_d_audouin:    { groupe: "oiseaux", texte: "trois doigts reliés par une palmure aux bords droits, comme celle du goéland leucophée", sosies: "palmipedes" },
   souris_grise:         { groupe: "5 doigts", texte: "minuscule : quatre doigts à l'avant, cinq à l'arrière, comme celle du mulot en plus petit", sosies: "rongeurs" },
   rat_noir:             { groupe: "5 doigts", texte: "quatre doigts à l'avant, cinq longs doigts à l'arrière, comme celle du surmulot en un peu plus petit", sosies: "rongeurs" },
   surmulot:             { groupe: "5 doigts", texte: "quatre doigts à l'avant, cinq longs doigts à l'arrière, la plus grande des empreintes de rats et souris", sosies: "rongeurs" },
@@ -373,7 +376,7 @@ const SONS = {
   petit_duc_scops:        { ext: "mp3", texte: "son chant « tiou » flûté, répété la nuit" },
   rollier_d_europe:       { ext: "mp3", texte: "ses cris rauques « rak-rak »" },
   coucou_geai:            { ext: "mp3", texte: "ses cris crépitants" },
-  pie_grieche_meridionale:{ ext: "mp3", texte: "son chant grinçant" },
+  pie_grieche_meridionale_3: { ext: "mp3", texte: "son chant grinçant", fichier: "pie_grieche_meridionale" },   // R290 : la photo a changé de nom, le son non
   fauvette_melanocephale: { ext: "mp3", texte: "son chant crépitant et pressé" },
   traquet_oreillard:      { ext: "mp3", texte: "son chant grinçant" },   // étape 195 : nouvel enregistrement (Fitou, Aude), moins bruité
   remiz_penduline:        { ext: "mp3", texte: "son cri fin et étiré « tsiiou »" },
@@ -469,7 +472,7 @@ const SONS = {
   fauvette_sarde:         { ext: "mp3", texte: "son chant crépitant" },
   gallinule_poule_d_eau:  { ext: "mp3", texte: "ses cris brefs" },
   grebe_castagneux:       { ext: "mp3", texte: "son trille hennissant" },
-  fauvette_de_moltoni:    { ext: "mp3", texte: "son chant et ses cris « trrr »" },
+  fauvette_de_moltoni_2: { ext: "mp3", texte: "son chant et ses cris « trrr »", fichier: "fauvette_de_moltoni" },   // R290 : la photo a changé de nom, le son non
   bruant_proyer:          { ext: "mp3", texte: "son chant, comme un trousseau de clés" },
   troglodyte_mignon:      { ext: "mp3", texte: "son chant puissant en trilles" },
   goeland_d_audouin:      { ext: "mp3", texte: "ses cris" },
@@ -478,12 +481,42 @@ const SONS = {
   martinet_pale:          { ext: "mp3", texte: "ses cris en vol" },
   puffin_yelkouan:        { ext: "mp3", texte: "ses caquètements rauques, la nuit" },
   faucon_d_eleonore:      { ext: "mp3", texte: "ses cris « kek-kek »" },
-  pipit_rousseline:       { ext: "mp3", texte: "son chant « zirluih »" },
+  pipit_rousseline:       { ext: "mp3", texte: "son chant « zirluih »" },  // Étape R290 (22/11/2026) : 29 cris préparés et crédités fin octobre (Jura, étape 302 ; Vosges, étape VG1 ; Plaines de l'Est)
+  //   mais jamais inscrits ici : le jeu ne les faisait pas entendre. « fichier » : nom du son quand il diffère de la photo.
+  bruant_des_roseaux:     { ext: "mp3", texte: "son chant bref « tii tiou tiik »" },
+  corbeau_freux_3:        { ext: "mp3", texte: "ses croassements rauques", fichier: "corbeau_freux" },
+  courtiliere:            { ext: "mp3", texte: "sa stridulation" },
+  crapaud_vert:           { ext: "mp3", texte: "son chant" },
+  criquet_des_patures:    { ext: "mp3", texte: "sa stridulation" },
+  decticelle_cendree:     { ext: "mp3", texte: "sa stridulation" },
+  fauvette_babillarde:    { ext: "mp3", texte: "son chant en crécelle" },
+  fauvette_des_jardins:   { ext: "mp3", texte: "son chant gazouillé" },
+  fauvette_grisette:      { ext: "mp3", texte: "son chant" },
+  fuligule_milouin:       { ext: "mp3", texte: "ses cris" },
+  gobemouche_a_collier:   { ext: "mp3", texte: "son chant" },
+  gobemouche_noir:        { ext: "mp3", texte: "son chant" },
+  grebe_a_cou_noir:       { ext: "mp3", texte: "ses cris" },
+  grenouille_rieuse:      { ext: "mp3", texte: "son coassement" },
+  grillon_des_bois:       { ext: "mp3", texte: "sa stridulation" },
+  grimpereau_des_jardins: { ext: "mp3", texte: "son chant aigu" },
+  grive_litorne:          { ext: "mp3", texte: "ses cris" },
+  grosbec_casse_noyaux:   { ext: "mp3", texte: "ses cris" },
+  nette_rousse:           { ext: "mp3", texte: "ses cris" },
+  pic_cendre:             { ext: "mp3", texte: "sa série de notes qui descendent" },
+  pic_tridactyle:         { ext: "mp3", texte: "son cri" },
+  pigeon_colombin:        { ext: "mp3", texte: "son roucoulement" },
+  pouillot_fitis:         { ext: "mp3", texte: "son chant en cascade" },
+  pouillot_siffleur:      { ext: "mp3", texte: "son trille" },
+  rale_des_genets:        { ext: "mp3", texte: "son « crèx crèx » râpeux" },
+  rousserolle_turdoide:   { ext: "mp3", texte: "son chant rauque" },
+  sauterelle_cymbaliere:  { ext: "mp3", texte: "sa stridulation" },
+  sizerin_cabaret:        { ext: "mp3", texte: "ses pépiements et ses trilles" },
+  tarin_des_aulnes:       { ext: "mp3", texte: "son gazouillis" },
 };
 // L'enregistrement de son cri, ou "NA" si l'on n'en a pas (la question n'est alors pas posée)
 function fichierSon(espece) {
   const cle = cleEmpreinte(espece);          // même outil que pour les empreintes : le nom de la photo
-  return SONS[cle] ? `Sons/${cle}.${SONS[cle].ext}` : "NA";
+  return SONS[cle] ? `Sons/${SONS[cle].fichier || cle}.${SONS[cle].ext}` : "NA";   // R290 : « fichier » si le son ne porte pas le nom de la photo
 }
 
 // ---- Ce que mesure la "taille" (étape 30) ----------------------------------

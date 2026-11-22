@@ -389,17 +389,24 @@ function suiteFetes() {
   // Étape R277 : la grande fête (plein écran sur une photo) et la planche des espèces entrées au carnet
   const grande = TROIS_TAILLES && f.taille === "grande" && !!f.photo;
   const planche = grande ? "" : plancheDeLaFete(f);
+  // Étape R288 (rareté, 2C) : la fin d'un lieu complète la fête « Expédition terminée » de sa dernière expédition (pas de fête en plus)
+  const finLieu = !grande && typeof blocFeteFinLieu === "function" ? blocFeteFinLieu(f) : "";
   const corps = `<div class="etiquette">${f.etiquette}</div><div class="titre">${f.titre}</div>`
     + `<div class="detail">${f.detail || ""}</div>`
-    + planche
+    + planche + finLieu
     + (f.souvenirs || []).map(htmlSouvenir).join("")   // R153
     + (f.jauge ? `<div class="jauge-fete"><i style="--de:${f.jauge.de}%;--a:${f.jauge.a}%"></i></div>` : "");
   carte.classList.toggle("grande", grande); voile.classList.toggle("grande", grande);
-  carte.classList.toggle("avec-planche", !!planche);
+  carte.classList.toggle("avec-planche", !!planche || !!finLieu);
+  // R288 : une classe en plus (f.classe : la carte « article » d'une rare, la « couverture » du trésor) ; f.garder : on la ferme soi-même
+  for (const k of [...carte.classList]) if (k.startsWith("fete-r288")) carte.classList.remove(k);
+  if (f.classe) carte.classList.add(...String(f.classe).split(" "));
+  const garder = !!(planche || finLieu || f.garder);
   carte.innerHTML = grande
     ? `<img class="fg-photo" src="${f.photo}" alt="" onerror="this.remove()"><div class="fg-ombre" aria-hidden="true"></div>`
       + `<div class="fg-bas">${f.visuel || ""}${corps}<button type="button" class="continuer">Continuer</button></div>`
-    : `${f.visuel || ""}${corps}` + (planche ? `<button type="button" class="continuer">Continuer</button>` : `<div class="continuer">Continuer</div>`);
+    : `${f.visuel || ""}${corps}` + (garder ? `<button type="button" class="continuer">Continuer</button>` : `<div class="continuer">Continuer</div>`);
+  if (finLieu && typeof brancherFeteFinLieu === "function") brancherFeteFinLieu(carte);   // R288 : « Suivre la piste du trésor »
   voile.classList.add("on");
   requestAnimationFrame(() => { if (feteOuverte && numero === numeroFete) carte.classList.add("on"); });
   // Peu d'étoiles sur la grande fête (la photo fait la fête), aucune si « réduire les animations »
@@ -410,7 +417,7 @@ function suiteFetes() {
   carte.onclick = voile.onclick = fermerFete;
   clearTimeout(minuteurFete);
   // Rien ne presse : la grande fête et la fête à planche restent jusqu'à ce que le joueur les ferme (toucher, « Continuer », Échap)
-  if (grande || planche) document.addEventListener("keydown", echapFete);
+  if (grande || garder) document.addEventListener("keydown", echapFete);
   else minuteurFete = setTimeout(fermerFete, 3600);
 }
 function echapFete(ev) { if (ev.key === "Escape" || ev.key === "Enter") { ev.preventDefault(); fermerFete(); } }

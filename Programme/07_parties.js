@@ -588,11 +588,13 @@ function terminerSession() {
   // Étape R236 (note 9) : la photo n'a pas été reconnue à la fin de la Rencontre → l'espèce entre au carnet « à reconnaître »
   if (s && s.focus && typeof mettreAReconnaitre === "function") mettreAReconnaitre(s.focus);
   // Étape R263 (Notion 40.17, 19c) : une Rencontre d'expédition faite est notée (une question ratée ne la rend pas « à faire »)
-  if (s && s.focus && s.expedition && s.expedition.etape === 1 && suivi) { suivi.rencontresFaites = suivi.rencontresFaites || {}; suivi.rencontresFaites[s.focus.nom_courant] = 1; }
+  // Étape R287 (4B) : une Rencontre en trois temps hors expédition est notée de la même façon (elle a montré la même chose)
+  const troisTempsFinie = !!(s && s.focus && ((s.expedition && s.expedition.etape === 1) || s.cadre));
+  if (troisTempsFinie && suivi) { suivi.rencontresFaites = suivi.rencontresFaites || {}; suivi.rencontresFaites[s.focus.nom_courant] = 1; }
   // Étape R282 : le temps de cette Rencontre est noté (le champ demandé, ou "" pour « Sa vie » et l'autre forme) : l'étape 1 de
   //   l'espèce ne demande plus que la photo et ce champ (champsRequis, 17). Une Rencontre refaite garde le premier temps noté
   //   s'il demandait moins (rien ne recule).
-  if (s && s.focus && s.expedition && s.expedition.etape === 1 && suivi && s.temps !== undefined && s.champs1) {
+  if (troisTempsFinie && suivi && s.temps !== undefined && s.champs1) {
     suivi.tempsRencontre = suivi.tempsRencontre || {};
     const nom = s.focus.nom_courant, c = s.champs1[1] || "";
     if (!(nom in suivi.tempsRencontre) || (suivi.tempsRencontre[nom] && !c)) suivi.tempsRencontre[nom] = c;

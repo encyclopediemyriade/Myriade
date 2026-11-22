@@ -6796,3 +6796,140 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
   font: 700 11px/17px "Work Sans", system-ui, sans-serif; text-align: center; box-shadow: 0 0 0 1.5px #3E7B55; }
 /* Étape R285 (47.03) · Me tester : chaque aide dit ce qui reste, sur une petite ligne sous son nom */
 .dfx-aides .dfx-aide-reste { display: block; font-size: .8em; font-weight: 500; opacity: .8; margin-top: 2px; }
+
+/* ==================================================================
+   Étape R288 (22/11/2026) · Jouer avec la rareté (32_rarete.js ; choix d'Aubin « 1A · 2C · T2 · R1 · I2 · 4C + P1 · 5D · 6D »)
+   ================================================================== */
+/* 1A · la marque : un petit mot sous le nom, un point ocre (« Rare ») ou la spirale du logo (« Trésor du lieu ») ; ni ruban ni métal */
+.mq-rare { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; line-height: 1.3; color: var(--ocre-texte); font-weight: 600; letter-spacing: .01em; }
+.mq-point { display: inline-block; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ocre); }
+.mq-spirale { flex: none; width: 12px; height: 12px; color: var(--ocre); }
+.fiche .contenu .mq-rare { margin: 1px 0 2px; }
+.mq-rare-fiche { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--ocre-texte); }
+.mq-rare-fiche .mq-spirale { width: 14px; height: 14px; }
+/* R1 · dans l'album, les rares ressortent (trouvées ou non) : liseré ocre et fond ocre doux (remplace le cadre doré de l'étape 206) */
+.fiche.est-rare { border-color: rgba(168,101,42,.55); box-shadow: 0 0 0 1.5px rgba(168,101,42,.45); background: #f6ead9; }
+.fiche.est-rare:hover, .fiche.est-rare:focus { box-shadow: 0 0 0 2px rgba(168,101,42,.6), 0 4px 12px rgba(138,79,28,.14); }
+.fiche.verrouillee.est-rare { background: #eadcc6; cursor: pointer; }
+.fiche.verrouillee.est-rare .photo { background: #ddcbb0; }
+/* 6D · l'encadré « Pourquoi il / elle est rare » : un filet foncé en haut, une phrase en Literata */
+.rr-pourquoi { border-top: 2px solid var(--texte); border-bottom: 1px solid var(--trait); padding: 9px 0 10px; margin: 10px 0; text-align: left; }
+.rr-pourquoi .rrp-titre { font-size: 12px; font-weight: 700; color: var(--ocre-texte); margin-bottom: 3px; letter-spacing: .01em; }
+.rr-pourquoi p { margin: 0; font-family: "Literata", Georgia, serif; font-size: 15px; line-height: 1.45; color: var(--texte); }
+#fin-session .rr-pourquoi { margin: 10px 16px 6px; }
+#fin-session .rft-ordi .rr-pourquoi { margin: 10px 0 6px; }
+.pe-cote .rr-pourquoi.rrp-fiche { margin: 10px 0 4px; }
+/* 2C · le compte du territoire (une petite ligne sous le rang) */
+.raretes-terr { display: flex; flex-wrap: wrap; gap: 2px 14px; margin-top: 5px; font-size: 12px; color: var(--texte-doux); }
+.raretes-terr span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.raretes-terr b { color: var(--texte); font-weight: 700; font-family: inherit; font-size: inherit; }
+.raretes-terr.tm-raretes { margin-top: 6px; color: #DCD5C4; }
+.raretes-terr.tm-raretes b { color: #FBF8F1; }
+.raretes-terr.tm-raretes .mq-point { background: #E9C9A0; } .raretes-terr.tm-raretes .mq-spirale { color: #E9C9A0; }
+/* 2C + T2 · la page du lieu (fond sombre) : la promesse, puis le trésor à la fin du lieu */
+.rarete-bloc { display: flex; flex-direction: column; gap: 12px; }
+.rarete-lieu { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 14.5px; color: #E9DFCB; }
+.rarete-lieu .mq-point { background: #E9C9A0; width: 7px; height: 7px; }
+.tresor-lieu { background: #2A4A3B; border: 1px solid #4F6B5D; border-radius: 10px; padding: 14px 16px 16px; color: #FBF8F1; max-width: 560px; }
+.tresor-lieu .tl-kick { display: block; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #E9C9A0; }
+.tresor-lieu .tl-titre { display: block; font-family: "Literata", Georgia, serif; font-size: 19px; font-weight: 600; margin: 3px 0 4px; }
+.tresor-lieu p { margin: 0 0 12px; font-size: 14px; color: #DCD5C4; }
+.tresor-lieu .tl-go { font: inherit; font-size: 15px; font-weight: 600; border: 0; border-radius: 8px; padding: 11px 18px; background: #FBF8F1; color: var(--texte); cursor: pointer; min-height: 44px; }
+.tresor-trouve { font: inherit; display: flex; align-items: center; gap: 10px; text-align: left; background: transparent; border: 1px solid #4F6B5D; border-radius: 10px; padding: 10px 14px; color: #FBF8F1; cursor: pointer; max-width: 560px; }
+.tresor-trouve .mq-spirale { width: 22px; height: 22px; color: #E9C9A0; }
+.tresor-trouve small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #E9C9A0; }
+.tresor-trouve b { font-family: "Literata", Georgia, serif; font-size: 16px; font-weight: 600; }
+.tresor-trouve .tt-fl { margin-left: auto; font-size: 20px; color: #C9D3CB; }
+/* 2C · la fin du lieu, dans la fête « Expédition terminée » */
+.fete-fin-lieu { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--trait); text-align: left; }
+.fete-fin-lieu .ffl-kick { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ocre-texte); }
+.fete-fin-lieu .ffl-titre { font-family: "Literata", Georgia, serif; font-size: 18px; font-weight: 600; line-height: 1.25; margin: 4px 0 8px; color: var(--texte); }
+.fete-fin-lieu .ffl-grille { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.fete-fin-lieu .ffl-vig { aspect-ratio: 1; border-radius: 4px; overflow: hidden; background: #d9cfbd; display: block; }
+.fete-fin-lieu .ffl-vig img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fete-fin-lieu .ffl-plus { aspect-ratio: 1; border-radius: 4px; background: var(--papier); display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--texte-doux); }
+.fete-fin-lieu .ffl-tresor { margin: 10px 0 8px; font-family: "Literata", Georgia, serif; font-size: 15px; line-height: 1.4; color: var(--texte); }
+.fete-fin-lieu .ffl-piste { font: inherit; font-size: 15px; font-weight: 600; width: 100%; min-height: 44px; border: 0; border-radius: 8px; background: var(--texte); color: #FBF8F1; cursor: pointer; }
+/* 5D · la carte « article » d'une rare (fête moyenne) */
+.carte-fete.fete-r288-article { padding: 0; overflow: hidden; text-align: left; border: 1px solid var(--trait); width: min(340px, calc(100% - 40px)); }
+.carte-fete.fete-r288-article .art-photo { height: 170px; background: #cfc6b6; }
+.carte-fete.fete-r288-article .art-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.carte-fete.fete-r288-article .art-photo img.art-sil { object-fit: contain; padding: 20px; box-sizing: border-box; opacity: .6; }
+.carte-fete.fete-r288-article .etiquette { margin: 16px 18px 0; display: inline-block; font-size: 10.5px; letter-spacing: .14em; font-weight: 700; color: var(--ocre-texte); border-top: 1.5px solid var(--ocre); padding-top: 3px; }
+.carte-fete.fete-r288-article .titre { margin: 4px 18px 2px; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 23px; }
+.carte-fete.fete-r288-article .detail { margin: 0 18px; color: var(--texte); }
+.carte-fete.fete-r288-article .art-chapo { margin: 4px 0 8px; font-family: "Literata", Georgia, serif; font-size: 15px; line-height: 1.45; }
+.carte-fete.fete-r288-article .art-compte { display: block; font-size: 12px; color: var(--texte-doux); }
+.carte-fete.fete-r288-article .continuer { display: block; box-sizing: border-box; width: calc(100% - 36px); margin: 14px 18px 18px; }
+/* 5D · la « couverture » du trésor (grande fête, plein écran sur la photo du lieu) */
+.carte-fete.grande.fete-r288-revue .fg-bas { text-align: left; }
+.carte-fete.grande.fete-r288-revue .etiquette { display: inline-block; color: #E9C9A0; border-top: 1.5px solid #E9C9A0; padding-top: 3px; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
+.carte-fete.grande.fete-r288-revue .titre { font-size: 32px; margin: 4px 0 2px; }
+.carte-fete.grande.fete-r288-revue .fete-visuel { margin: -52px 0 6px; }
+.carte-fete.grande.fete-r288-revue .detail { color: #FBF8F1; }
+.carte-fete.grande.fete-r288-revue .rv-statut { font-size: 13px; color: #C9D3CB; margin-bottom: 8px; }
+.carte-fete.grande.fete-r288-revue .rv-lignes p { margin: 0 0 6px; font-size: 14px; line-height: 1.45; color: #EDE6D6; }
+.carte-fete.grande.fete-r288-revue .rv-lignes b { color: #FBF8F1; }
+.carte-fete.grande.fete-r288-revue .fete-visuel .photo-fete { border-color: #E9C9A0; }
+/* 4C + P1 · la piste du trésor, plein écran sur la photo du lieu */
+#piste-tresor { display: none; position: fixed; inset: 0; z-index: 850; background: #14241c; color: #FBF8F1; flex-direction: column; }
+#piste-tresor.on { display: flex; }
+html.piste-ouverte, html.piste-ouverte body { overflow: hidden; }
+#piste-tresor .pt-haut { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+#piste-tresor .pt-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#piste-tresor .pt-voile { position: absolute; inset: 0; background: linear-gradient(rgba(10,25,18,.55), rgba(10,25,18,.35) 40%, rgba(10,25,18,.55)); transition: background .6s; }
+#piste-tresor.au-coin .pt-voile { background: radial-gradient(circle at var(--cx, 70%) var(--cy, 40%), rgba(10,25,18,0) 70px, rgba(10,25,18,.78) 150px); }
+#piste-tresor .pt-chemin { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); width: min(100%, 520px); height: min(84%, 560px); overflow: visible; }
+#piste-tresor .pt-trace-tout { fill: none; stroke: rgba(233,201,160,.55); stroke-width: 3; stroke-dasharray: 2 9; stroke-linecap: round; }
+#piste-tresor .pt-trace-fait { fill: none; stroke: #E9C9A0; stroke-width: 3.5; stroke-dasharray: 2 9; stroke-linecap: round; }
+#piste-tresor .pt-arret { fill: rgba(20,36,28,.7); stroke: #E9C9A0; stroke-width: 2.5; }
+#piste-tresor .pt-arret.fait { fill: #E9C9A0; }
+#piste-tresor .pt-arret.ici { fill: #FBF8F1; stroke: #E9C9A0; stroke-width: 4; }
+#piste-tresor .pt-coin { fill: rgba(20,36,28,.35); stroke: #E9C9A0; stroke-width: 2.5; stroke-dasharray: 5 6; }
+#piste-tresor .pt-coin.ouvert { fill: rgba(251,248,241,.08); animation: pt-ouvre .9s cubic-bezier(.2,1.2,.4,1) both; transform-box: fill-box; transform-origin: center; }
+#piste-tresor .pt-sil { filter: brightness(0) invert(.96); animation: pt-apparait 1s .35s both; }
+@keyframes pt-ouvre { from { transform: scale(.35); opacity: .2; } to { transform: scale(1); opacity: 1; } }
+@keyframes pt-apparait { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { #piste-tresor .pt-coin.ouvert, #piste-tresor .pt-sil { animation: none; } #piste-tresor .pt-voile { transition: none; } }
+#piste-tresor .pt-retour { position: absolute; left: 12px; top: calc(10px + env(safe-area-inset-top, 0px)); font: inherit; font-size: 14px; color: #FBF8F1; background: rgba(20,36,28,.55); border: 1px solid rgba(251,248,241,.3); border-radius: 18px; padding: 8px 14px; cursor: pointer; min-height: 40px; }
+#piste-tresor .pt-titre { position: absolute; right: 14px; top: calc(12px + env(safe-area-inset-top, 0px)); text-align: right; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+#piste-tresor .pt-titre small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #E9C9A0; }
+#piste-tresor .pt-titre b { font-size: 15px; }
+#piste-tresor .pt-bas { flex: none; background: #1f3a2e; padding: 16px 18px calc(18px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid #3D5E4E; }
+#piste-tresor .pt-rep { min-height: 92px; margin-bottom: 14px; }
+#piste-tresor .pt-rep small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #E9C9A0; margin-bottom: 4px; }
+#piste-tresor .pt-rep p { margin: 0; font-family: "Literata", Georgia, serif; font-size: 16px; line-height: 1.45; }
+#piste-tresor .pt-avec-dessin { display: flex; gap: 14px; align-items: center; }
+#piste-tresor .pt-dessin { flex: none; width: 92px; height: 92px; border-radius: 8px; background: #FBF8F1; display: flex; align-items: center; justify-content: center; }
+#piste-tresor .pt-dessin img, #piste-tresor .pt-dessin svg { max-width: 86px; max-height: 86px; }
+#piste-tresor .pt-ecouter { font: inherit; font-size: 15px; margin-top: 10px; border: 1px solid #E9C9A0; color: #FBF8F1; background: transparent; border-radius: 22px; padding: 9px 18px; cursor: pointer; min-height: 44px; }
+#piste-tresor .pt-ecouter.joue { background: rgba(233,201,160,.15); }
+#piste-tresor .pt-entendu { margin-top: 8px !important; font-size: 14px !important; color: #DCD5C4; }
+#piste-tresor .pt-entendu.cache { display: none; }
+#piste-tresor .pt-indices { margin: 0; display: grid; gap: 6px; }
+#piste-tresor .pt-indices div { display: flex; gap: 10px; font-size: 15px; }
+#piste-tresor .pt-indices dt { flex: none; width: 92px; color: #C9D3CB; font-size: 13px; padding-top: 1px; }
+#piste-tresor .pt-indices dd { margin: 0; font-family: "Literata", Georgia, serif; }
+#piste-tresor .pt-coin-lieu { font-size: 20px !important; font-weight: 600; margin-bottom: 4px !important; }
+#piste-tresor .pt-suite { font: inherit; width: 100%; min-height: 48px; font-size: 16px; font-weight: 600; border: 0; border-radius: 10px; background: #FBF8F1; color: var(--texte); cursor: pointer; }
+@media (min-width: 761px) {
+  #piste-tresor .pt-bas { width: min(560px, 100%); margin: 0 auto; box-sizing: border-box; border: 1px solid #3D5E4E; border-bottom: 0; border-radius: 14px 14px 0 0; }
+}
+/* I2 · le volet d'une rare pas encore trouvée (jamais son nom ni son lieu) */
+#volet-rare { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(31,58,46,.45); align-items: flex-end; justify-content: center; }
+#volet-rare.on { display: flex; }
+#volet-rare .vr-carte { width: min(480px, 100%); box-sizing: border-box; background: var(--carte); color: var(--texte); border-radius: 14px 14px 0 0; padding: 18px 18px calc(22px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -8px 24px rgba(0,0,0,.18); }
+#volet-rare .vr-tete { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+#volet-rare .vr-sil { flex: none; width: 80px; height: 60px; border-radius: 6px; background: #efe0c8; display: flex; align-items: center; justify-content: center; }
+#volet-rare .vr-sil img { max-width: 85%; max-height: 85%; opacity: .55; }
+#volet-rare .vr-tete small { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--ocre-texte); }
+#volet-rare .vr-tete b { display: block; font-family: "Literata", Georgia, serif; font-size: 18px; font-weight: 600; }
+#volet-rare p { margin: 0 0 6px; font-size: 15px; line-height: 1.45; }
+#volet-rare .vr-doux { color: var(--texte-doux); font-size: 14px; }
+#volet-rare .vr-fermer { font: inherit; margin-top: 12px; width: 100%; min-height: 46px; border: 1px solid var(--trait); border-radius: 8px; background: var(--papier); color: var(--texte); font-size: 15px; cursor: pointer; }
+/* R288 (R1 + I2) : l'album du téléphone */
+.alb-case.alb-rare { box-shadow: 0 0 0 1.5px rgba(168,101,42,.55); background: #f6ead9; border-color: rgba(168,101,42,.55); }
+.alb-case.alb-vide.alb-rare { background: #eadcc6; border-style: solid; }
+.alb-case .mq-rare { display: flex; justify-content: center; margin-top: 2px; font-size: 10.5px; }
+.alb-case .alb-mq { display: block; padding: 3px 2px 5px; }
+.alb-case.alb-vue .mq-rare { color: #F3D9B1; text-shadow: 0 1px 3px rgba(0,0,0,.6); } .alb-case.alb-vue .mq-point { background: #E9C9A0; }

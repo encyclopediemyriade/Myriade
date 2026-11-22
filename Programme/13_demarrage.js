@@ -70,6 +70,7 @@ for (const nom of ["afficherAccueil", "afficherStats", "afficherPageCarte", "aff
 charger();                                         // ← on ressort la partie sauvegardée
 if (typeof migrerToutDebloque === "function") migrerToutDebloque();   // étape PR6 : Tout débloquer, espèces comprises
 if (typeof migrerLieuxR133 === "function") migrerLieuxR133();         // étape R133 : les lieux déjà ouverts le restent
+if (typeof migrerR288 === "function") migrerR288();                   // étape R288 : le trésor a quitté son expédition, des rares sont arrivées : rien ne recule
 // Étape 106 : les badges déjà mérités, sans vignette — étape R262 : fait après l'ouverture (fin de prechaufferCalculs)
 afficherStats();
 // Première visite (pas encore de profil) : ses trois écrans ; sinon, l'Accueil (étape 52)

@@ -321,7 +321,7 @@ function poserExplication() {
     note.id = "note-depart";
     // "des Alpes" se dit naturellement ; pour un autre territoire, on garde une tournure qui marche avec tous les noms
     const ou = deTerritoire(lieu);   // étape 190 : « des Alpes », « du Massif armoricain », « du Bassin parisien et Val de Loire »
-    note.innerHTML = `Pour bien démarrer, <strong>${brouillon.depart.length} espèces communes</strong> ${ou} vous sont déjà présentées : leur photo et leur carte sont là, et vous pouvez jouer avec tout de suite. Elles compteront dans votre carnet une fois reconnues.`;   // R270 (n° 32) : avant « sont dans votre carnet », alors que le compteur disait « Carnet : 0 espèce »   // étape E2-12
+    note.innerHTML = `Pour bien démarrer, <strong>${brouillon.depart.length} espèces communes</strong> ${ou} vous sont déjà présentées : leur photo et leur carte sont là, et vous pouvez jouer avec tout de suite. Elles entreront dans votre carnet dès votre première rencontre avec elles.`;   // R270 (n° 32) : avant « sont dans votre carnet », alors que le compteur disait « Carnet : 0 espèce »   // étape E2-12
     corps.appendChild(note);
     // Une vignette par espèce : sa miniature dans un cadre à la couleur de sa famille, puis son nom
     const grille = document.createElement("div");
@@ -391,15 +391,23 @@ function offrirEspece(espece) {
 // Étape R236 (note 9 du 15/11, choix d'Aubin « BA ») : une espèce rencontrée dont la photo n'a pas été reconnue à la fin de sa
 //   Rencontre n'est plus perdue : elle devient « à reconnaître », comme les espèces offertes (carnet, Coup d'œil, À l'oreille).
 //   Elle devient Reconnue quand on la réussit (Rencontre, défi, ou Coup d'œil). Sauvegarde : suivi.aReconnaitre (noms).
+// Étape R287 (choix « 1B ») : cette liste dit maintenant « Rencontre faite, photo pas encore reconnue » : l'espèce est AU CARNET
+//   (estReconnue, 05) et sa photo reviendra. Elle reçoit sa date d'entrée (marque « Nouveau », tri du carnet) et, si c'est la
+//   première de sa famille, la présentation de la famille, comme une espèce reconnue sur sa photo.
 function mettreAReconnaitre(espece) {
   if (!espece || estReconnue(espece) || !estRenseigne(espece.photo)) return;
+  if (typeof noterNouvelleFamille === "function") noterNouvelleFamille(espece);   // avant d'entrer au carnet (elle compte les autres)
   suivi.aReconnaitre = suivi.aReconnaitre || [];
   if (!suivi.aReconnaitre.includes(espece.nom_courant)) suivi.aReconnaitre.push(espece.nom_courant);
+  const p = progression[espece.nom_courant];
+  if (p && !p.decouverteLe) p.decouverteLe = Date.now();
 }
 function estOfferteDepart(espece) { return !!(suivi && suivi.offertes && suivi.offertes.includes(espece.nom_courant)) && !estReconnue(espece); }
-function estARevoirRencontre(espece) { return !!(suivi && suivi.aReconnaitre && suivi.aReconnaitre.includes(espece.nom_courant)) && !estReconnue(espece); }
-// « À reconnaître » : offerte au départ, ou rencontrée sans avoir été reconnue (R236)
-function estOfferte(espece) { return estOfferteDepart(espece) || estARevoirRencontre(espece); }
+// Rencontre faite, photo pas encore reconnue (l'espèce est au carnet depuis R287 ; la photo reste à revoir)
+function estARevoirRencontre(espece) { return !!(suivi && suivi.aReconnaitre && suivi.aReconnaitre.includes(espece.nom_courant)) && !estIdentifiee(espece); }
+// Étape R287 (choix « 2B ») : « Pour bien démarrer » = seulement les espèces offertes au départ, pas encore au carnet.
+//   (Avant : « À reconnaître » réunissait les offertes et les espèces rencontrées sans la photo, qui sont au carnet depuis R287.)
+function estOfferte(espece) { return estOfferteDepart(espece); }
 function offrirEspeceAncien(espece) {   // l'ancien don (espèce identifiée d'office, étape 60), gardé pour mémoire
   marquerVue(espece);
   progression[espece.nom_courant].acquis[IDENTIFICATION] = 1;

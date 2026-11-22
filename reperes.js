@@ -25122,5 +25122,221 @@ const REPERES = {
     "pour": "tous"
    }
   ]
+ },
+ "Porte-queue de Corse": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [
+   "adulte",
+   "chenille"
+  ],
+  "forme_photo": "adulte",
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "Jaune",
+    "texte": "Ailes jaunes à épaisses bandes noires",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "Bleu",
+    "texte": "Taches bleues sur l'aile arrière",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "Rouge",
+    "texte": "Petite tache rouge sur l'aile arrière",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Queues très courtes",
+    "pour": "adulte"
+   },
+   {
+    "partie": "corps",
+    "couleur": "Noir",
+    "texte": "Dos noir, taches blanches et jaunes",
+    "pour": "chenille"
+   },
+   {
+    "partie": "corps",
+    "couleur": "Vert",
+    "texte": "Flancs vert clair",
+    "pour": "chenille"
+   },
+   {
+    "partie": "corps",
+    "couleur": "Orange",
+    "texte": "Taches jaune orangé sur les flancs",
+    "pour": "chenille"
+   }
+  ]
+ },
+ "Pacha à deux queues": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [
+   "adulte",
+   "larve"
+  ],
+  "forme_photo": "adulte",
+  "reperes": [
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Deux queues à l'aile arrière",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_avant",
+    "couleur": "Brun",
+    "texte": "Dessus brun foncé bordé d'orange",
+    "pour": "adulte"
+   },
+   {
+    "partie": "NA",
+    "couleur": "NA",
+    "texte": "Dessous brun-roux rayé de blanc",
+    "pour": "adulte"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "Bleu",
+    "texte": "Points bleus près des queues",
+    "pour": "adulte"
+   },
+   {
+    "partie": "corps",
+    "couleur": "Vert",
+    "texte": "Corps vert ponctué de blanc",
+    "pour": "larve"
+   },
+   {
+    "partie": "corps",
+    "couleur": "NA",
+    "texte": "Tête à quatre cornes",
+    "pour": "larve"
+   },
+   {
+    "partie": "corps",
+    "couleur": "NA",
+    "texte": "Arrière du corps fourchu",
+    "pour": "larve"
+   }
+  ]
+ },
+ "Fadet tyrrhénien": {
+  "contour": "papillon",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "ailes_avant",
+    "couleur": "Orange",
+    "texte": "Ailes orange vif",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_avant",
+    "couleur": "Noir",
+    "texte": "Ocelle noir au coin de l'aile",
+    "pour": "tous"
+   },
+   {
+    "partie": "ailes_arriere",
+    "couleur": "NA",
+    "texte": "Petits ocelles sous l'aile arrière",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Lézard de Bonnal": {
+  "contour": "lezard",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "Gris",
+    "texte": "Dos gris ou gris-brun",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Flancs sombres, presque noirs",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos sans ligne sombre centrale",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Psammodrome d'Edwards": {
+  "contour": "lezard",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos gris à brun",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Fines lignes claires sur le dos",
+    "pour": "tous"
+   },
+   {
+    "partie": "dos",
+    "couleur": "NA",
+    "texte": "Dos en damier noir et blanc",
+    "pour": "tous"
+   }
+  ]
+ },
+ "Lycose de Narbonne": {
+  "contour": "araignee",
+  "etat": "verifie",
+  "formes": [],
+  "forme_photo": null,
+  "reperes": [
+   {
+    "partie": "cephalothorax",
+    "couleur": "NA",
+    "texte": "Bande claire au milieu",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "NA",
+    "texte": "Chevrons sombres sur l'abdomen",
+    "pour": "tous"
+   },
+   {
+    "partie": "pattes",
+    "couleur": "NA",
+    "texte": "Pattes rayées noir et blanc dessous",
+    "pour": "tous"
+   },
+   {
+    "partie": "abdomen",
+    "couleur": "Noir",
+    "texte": "Ventre noir bordé d'orange",
+    "pour": "tous"
+   }
+  ]
  }
 };

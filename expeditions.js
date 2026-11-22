@@ -220,16 +220,16 @@ const EXPEDITIONS = [
   "milieu": "Forêt",
   "photo": "Images/lynx_boreal.jpg",
   "especes": [
-   "Lynx boréal",
    "Martre des pins",
    "Chevêchette d'Europe",
    "Autour des palombes",
-   "Épervier d'Europe"
+   "Épervier d'Europe",
+   "Musaraigne carrelet"
   ],
   "rang": 11,
   "chapitre": "Massif de la Chartreuse",
   "carrefour": 1,
-  "vedette": "Lynx boréal"
+  "vedette": ""
  },
  {
   "id": "Alpes|11",
@@ -324,7 +324,6 @@ const EXPEDITIONS = [
    "Lapin de garenne",
    "Hermine",
    "Belette",
-   "Chat forestier",
    "Campagnol des champs",
    "Campagnol terrestre"
   ],
@@ -572,15 +571,15 @@ const EXPEDITIONS = [
   "id": "Alpes|28",
   "territoire": "Alpes",
   "ordre": 28,
-  "titre": "Grenouilles et crapauds",
+  "titre": "Grenouilles, crapauds et leur chasseur",
   "milieu": "Mares et étangs",
   "photo": "Images/grenouille_rousse.jpg",
   "especes": [
    "Grenouille rousse",
    "Grenouille verte",
-   "Sonneur à ventre jaune",
    "Alyte accoucheur",
-   "Crapaud calamite"
+   "Crapaud calamite",
+   "Cigogne noire"
   ],
   "rang": 29,
   "chapitre": "Lac de Serre-Ponçon",
@@ -691,15 +690,15 @@ const EXPEDITIONS = [
   "milieu": "Campagne, haies et jardins",
   "photo": "Images/pie_grieche_a_tete_rousse.jpg",
   "especes": [
-   "Pie-grièche à tête rousse",
    "Loriot d'Europe",
    "Torcol fourmilier",
    "Rougequeue à front blanc",
-   "Grive draine"
+   "Grive draine",
+   "Huppe fasciée"
   ],
   "chapitre": "Mont Ventoux",
   "carrefour": 5,
-  "vedette": "Pie-grièche à tête rousse"
+  "vedette": ""
  },
  {
   "id": "Alpes|36",
@@ -768,8 +767,8 @@ const EXPEDITIONS = [
    "Gypaète barbu",
    "Aigle royal",
    "Vautour fauve",
-   "Vautour moine",
-   "Vautour percnoptère"
+   "Vautour percnoptère",
+   "Petit-duc scops"
   ],
   "chapitre": "Gorges du Verdon",
   "carrefour": 6,
@@ -867,7 +866,6 @@ const EXPEDITIONS = [
    "Molosse de Cestoni",
    "Vespère de Savi",
    "Petit rhinolophe",
-   "Oreillard montagnard",
    "Sérotine de Nilsson",
    "Murin de Natterer",
    "Murin à moustaches"
@@ -1468,8 +1466,7 @@ const EXPEDITIONS = [
    "Belette",
    "Campagnol des champs",
    "Rat des moissons",
-   "Campagnol agreste",
-   "Campagnol des Pyrénées"
+   "Campagnol agreste"
   ],
   "rang": 2,
   "chapitre": "Moissac, entre Tarn et Garonne",
@@ -1608,7 +1605,6 @@ const EXPEDITIONS = [
    "Cigale plébéienne",
    "Cigale grise",
    "Criquet égyptien",
-   "Pachyure étrusque",
    "Mangore petite-bouteille"
   ],
   "rang": 9,
@@ -1731,8 +1727,7 @@ const EXPEDITIONS = [
    "Vanneau huppé",
    "Perdrix grise",
    "Caille des blés",
-   "Œdicnème criard",
-   "Outarde canepetière"
+   "Œdicnème criard"
   ],
   "chapitre": "Marais poitevin",
   "carrefour": 2,
@@ -1930,7 +1925,6 @@ const EXPEDITIONS = [
    "Guêpier d'Europe",
    "Hirondelle de rivage",
    "Petit gravelot",
-   "Cigogne noire",
    "Bergeronnette des ruisseaux"
   ],
   "rang": 25,
@@ -1966,10 +1960,10 @@ const EXPEDITIONS = [
   "photo": "Images/loutre_d_europe.jpg",
   "especes": [
    "Loutre d'Europe",
-   "Vison d'Europe",
    "Murin de Daubenton",
    "Putois d'Europe",
-   "Campagnol amphibie"
+   "Campagnol amphibie",
+   "Noctule commune"
   ],
   "chapitre": "Estuaire de la Charente",
   "carrefour": 4,
@@ -2079,15 +2073,15 @@ const EXPEDITIONS = [
   "milieu": "Lacs",
   "photo": "Images/balbuzard_pecheur.jpg",
   "especes": [
-   "Balbuzard pêcheur",
    "Grand cormoran",
    "Martin-pêcheur d'Europe",
    "Sterne pierregarin",
-   "Héron cendré"
+   "Héron cendré",
+   "Héron pourpré"
   ],
   "chapitre": "Lac de Cazaux-Sanguinet",
   "carrefour": 5,
-  "vedette": "Balbuzard pêcheur"
+  "vedette": ""
  },
  {
   "id": "Bassin aquitain|34",
@@ -2276,9 +2270,9 @@ const EXPEDITIONS = [
   "especes": [
    "Écrevisse à pattes blanches",
    "Patelline des fleuves",
-   "Grande mulette",
    "Lamproie de Planer",
-   "Crossope aquatique"
+   "Crossope aquatique",
+   "Anguille européenne"
   ],
   "chapitre": "Barthes de l'Adour",
   "carrefour": 6,
@@ -2429,7 +2423,6 @@ const EXPEDITIONS = [
   "milieu": "Campagne, haies et jardins",
   "photo": "Images/pie_grieche_a_tete_rousse.jpg",
   "especes": [
-   "Pie-grièche à tête rousse",
    "Loriot d'Europe",
    "Huppe fasciée",
    "Torcol fourmilier",
@@ -2439,7 +2432,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Île d'Oléron",
   "carrefour": 7,
-  "vedette": "Pie-grièche à tête rousse"
+  "vedette": ""
  },
  {
   "id": "Bassin aquitain|52",
@@ -2488,15 +2481,15 @@ const EXPEDITIONS = [
   "milieu": "Forêt",
   "photo": "Images/martre_des_pins.jpg",
   "especes": [
-   "Martre des pins",
    "Genette commune",
    "Autour des palombes",
    "Épervier d'Europe",
-   "Aigle botté"
+   "Aigle botté",
+   "Renard roux"
   ],
   "chapitre": "Rocamadour et le causse",
   "carrefour": 8,
-  "vedette": "Martre des pins"
+  "vedette": ""
  },
  {
   "id": "Bassin aquitain|55",
@@ -2583,7 +2576,6 @@ const EXPEDITIONS = [
   "milieu": "Dunes et plages",
   "photo": "Images/gravelot_a_collier_interrompu.jpg",
   "especes": [
-   "Gravelot à collier interrompu",
    "Grand gravelot",
    "Bécasseau sanderling",
    "Talitre sauteur",
@@ -2593,7 +2585,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Dune du Pilat",
   "carrefour": 9,
-  "vedette": "Gravelot à collier interrompu"
+  "vedette": ""
  },
  {
   "id": "Bassin aquitain|60",
@@ -3012,7 +3004,6 @@ const EXPEDITIONS = [
   "milieu": "Rivières et torrents",
   "photo": "Images/ecrevisse_a_pattes_blanches.jpg",
   "especes": [
-   "Écrevisse à pattes blanches",
    "Écrevisse signal",
    "Gammare",
    "Patelline des fleuves",
@@ -3022,7 +3013,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Paris, ses bois et ses parcs",
   "carrefour": 0,
-  "vedette": "Écrevisse à pattes blanches"
+  "vedette": ""
  },
  {
   "id": "Bassin parisien et Val de Loire|7",
@@ -3112,7 +3103,6 @@ const EXPEDITIONS = [
   "milieu": "Campagne, haies et jardins",
   "photo": "Images/pie_grieche_a_tete_rousse.jpg",
   "especes": [
-   "Pie-grièche à tête rousse",
    "Loriot d'Europe",
    "Huppe fasciée",
    "Torcol fourmilier",
@@ -3122,7 +3112,7 @@ const EXPEDITIONS = [
   "rang": 11,
   "chapitre": "Chinon et la Vienne",
   "carrefour": 1,
-  "vedette": "Pie-grièche à tête rousse"
+  "vedette": ""
  },
  {
   "id": "Bassin parisien et Val de Loire|12",
@@ -3232,8 +3222,8 @@ const EXPEDITIONS = [
    "Saumon atlantique",
    "Anguille européenne",
    "Lamproie marine",
-   "Grande alose",
-   "Milan noir"
+   "Milan noir",
+   "Sterne naine"
   ],
   "rang": 17,
   "chapitre": "Chambord et la Loire",
@@ -3390,8 +3380,7 @@ const EXPEDITIONS = [
    "Pic mar",
    "Sittelle torchepot",
    "Pic vert",
-   "Pic épeichette",
-   "Pic cendré"
+   "Pic épeichette"
   ],
   "chapitre": "Sologne",
   "carrefour": 3,
@@ -3503,7 +3492,6 @@ const EXPEDITIONS = [
   "milieu": "Landes et coteaux secs",
   "photo": "Images/lezard_des_souches.jpg",
   "especes": [
-   "Lézard des souches",
    "Œdipode turquoise",
    "Ascalaphe soufré",
    "Punaise arlequin",
@@ -3513,7 +3501,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Forêt de Fontainebleau",
   "carrefour": 4,
-  "vedette": "Lézard des souches"
+  "vedette": ""
  },
  {
   "id": "Bassin parisien et Val de Loire|32",
@@ -3666,7 +3654,6 @@ const EXPEDITIONS = [
    "Balbuzard pêcheur",
    "Grand cormoran",
    "Héron cendré",
-   "Cigogne noire",
    "Nette rousse",
    "Fuligule milouin"
   ],
@@ -3816,19 +3803,19 @@ const EXPEDITIONS = [
   "id": "Bassin parisien et Val de Loire|47",
   "territoire": "Bassin parisien et Val de Loire",
   "ordre": 47,
-  "titre": "Les tritons et leur chasseur",
+  "titre": "Les tritons et leurs chasseurs",
   "milieu": "Mares et étangs",
   "photo": "Images/triton_crete.jpg",
   "especes": [
-   "Triton crêté",
    "Triton palmé",
    "Triton marbré",
    "Triton ponctué",
-   "Couleuvre helvétique"
+   "Couleuvre helvétique",
+   "Couleuvre vipérine"
   ],
   "chapitre": "La Brenne",
   "carrefour": 7,
-  "vedette": "Triton crêté"
+  "vedette": ""
  },
  {
   "id": "Bassin parisien et Val de Loire|48",
@@ -3877,7 +3864,6 @@ const EXPEDITIONS = [
   "photo": "Images/courlis_cendre.jpg",
   "especes": [
    "Courlis cendré",
-   "Pie-grièche grise",
    "Tarier des prés",
    "Pipit farlouse",
    "Corneille noire",
@@ -3975,7 +3961,7 @@ const EXPEDITIONS = [
    "Raie bouclée",
    "Baudroie commune",
    "Lançon",
-   "Saint-Pierre"
+   "Congre"
   ],
   "chapitre": "Falaises d'Étretat",
   "carrefour": 9,
@@ -4092,8 +4078,7 @@ const EXPEDITIONS = [
    "Mésange à longue queue",
    "Roitelet à triple bandeau",
    "Gobemouche noir",
-   "Pigeon colombin",
-   "Sizerin cabaret"
+   "Pigeon colombin"
   ],
   "chapitre": "Forêt de Compiègne",
   "carrefour": 5,
@@ -4302,7 +4287,8 @@ const EXPEDITIONS = [
    "Étourneau sansonnet",
    "Tourterelle des bois",
    "Moineau friquet",
-   "Corneille mantelée"
+   "Corneille mantelée",
+   "Pie-grièche à tête rousse"
   ],
   "chapitre": "Ajaccio et les îles Sanguinaires",
   "carrefour": 0,
@@ -4635,7 +4621,8 @@ const EXPEDITIONS = [
    "Grive draine",
    "Pigeon ramier",
    "Rougegorge familier",
-   "Grosbec casse-noyaux"
+   "Grosbec casse-noyaux",
+   "Pie-grièche à tête rousse"
   ],
   "chapitre": "Corte et la vallée de la Restonica",
   "carrefour": 2,
@@ -4783,7 +4770,6 @@ const EXPEDITIONS = [
   "milieu": "Landes et coteaux secs",
   "photo": "Images/pie_grieche_a_tete_rousse.jpg",
   "especes": [
-   "Pie-grièche à tête rousse",
    "Huppe fasciée",
    "Alouette lulu",
    "Pipit rousseline",
@@ -4793,7 +4779,7 @@ const EXPEDITIONS = [
   "rang": 26,
   "chapitre": "Désert des Agriates",
   "carrefour": 3,
-  "vedette": "Pie-grièche à tête rousse"
+  "vedette": ""
  },
  {
   "id": "Corse|27",
@@ -4941,7 +4927,8 @@ const EXPEDITIONS = [
    "Hirondelle de fenêtre",
    "Martinet noir",
    "Choucas des tours",
-   "Bergeronnette grise"
+   "Bergeronnette grise",
+   "Pie-grièche à tête rousse"
   ],
   "chapitre": "Cap Corse",
   "carrefour": 5,
@@ -5018,7 +5005,6 @@ const EXPEDITIONS = [
   "especes": [
    "Tarier des prés",
    "Pipit des arbres",
-   "Bruant ortolan",
    "Torcol fourmilier",
    "Rougequeue à front blanc",
    "Pouillot de Bonelli",
@@ -5188,10 +5174,10 @@ const EXPEDITIONS = [
   "photo": "Images/puffin_de_scopoli.jpg",
   "especes": [
    "Puffin de Scopoli",
-   "Puffin yelkouan",
    "Fou de Bassan",
    "Goéland brun",
-   "Sterne caugek"
+   "Sterne caugek",
+   "Cormoran huppé"
   ],
   "rang": 47,
   "chapitre": "Bouches de Bonifacio",
@@ -5225,15 +5211,15 @@ const EXPEDITIONS = [
   "milieu": "Falaises et rochers",
   "photo": "Images/gypaete_barbu.jpg",
   "especes": [
-   "Gypaète barbu",
    "Aigle royal",
    "Faucon pèlerin",
    "Grand corbeau",
-   "Chocard à bec jaune"
+   "Chocard à bec jaune",
+   "Crave à bec rouge"
   ],
   "chapitre": "Monte Cinto et le Niolo",
   "carrefour": 8,
-  "vedette": "Gypaète barbu"
+  "vedette": ""
  },
  {
   "id": "Corse|52",
@@ -5374,15 +5360,15 @@ const EXPEDITIONS = [
   "milieu": "Estuaires et lagunes",
   "photo": "Images/balbuzard_pecheur.jpg",
   "especes": [
-   "Balbuzard pêcheur",
    "Goéland d'Audouin",
    "Martin-pêcheur d'Europe",
    "Cistude d'Europe",
-   "Écrevisse de Louisiane"
+   "Écrevisse de Louisiane",
+   "Daurade royale"
   ],
   "chapitre": "Réserve naturelle de Scandola",
   "carrefour": 9,
-  "vedette": "Balbuzard pêcheur"
+  "vedette": ""
  },
  {
   "id": "Corse|13",
@@ -5393,7 +5379,6 @@ const EXPEDITIONS = [
   "photo": "Images/petit_gravelot.jpg",
   "especes": [
    "Petit gravelot",
-   "Gravelot à collier interrompu",
    "Bécasseau sanderling",
    "Mouette rieuse",
    "Sterne pierregarin",
@@ -5711,7 +5696,6 @@ const EXPEDITIONS = [
   "photo": "Images/cigogne_blanche.jpg",
   "especes": [
    "Cigogne blanche",
-   "Cigogne noire",
    "Grue cendrée",
    "Héron garde-bœufs",
    "Busard cendré",
@@ -6024,16 +6008,16 @@ const EXPEDITIONS = [
   "milieu": "Lacs",
   "photo": "Images/balbuzard_pecheur.jpg",
   "especes": [
-   "Balbuzard pêcheur",
    "Grande aigrette",
    "Bihoreau gris",
    "Aigrette garzette",
-   "Martin-pêcheur d'Europe"
+   "Martin-pêcheur d'Europe",
+   "Harle bièvre"
   ],
   "rang": 30,
   "chapitre": "Lacs de Remoray et de Saint-Point",
   "carrefour": 4,
-  "vedette": "Balbuzard pêcheur"
+  "vedette": ""
  },
  {
   "id": "Jura|29",
@@ -6467,7 +6451,6 @@ const EXPEDITIONS = [
   "especes": [
    "Milan royal",
    "Busard Saint-Martin",
-   "Pie-grièche grise",
    "Alouette des champs",
    "Bruant jaune",
    "Élanion blanc",
@@ -6486,7 +6469,6 @@ const EXPEDITIONS = [
   "milieu": "Forêt",
   "photo": "Images/grand_tetras.jpg",
   "especes": [
-   "Grand tétras",
    "Gélinotte des bois",
    "Pic tridactyle",
    "Cassenoix moucheté",
@@ -6495,7 +6477,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Forêt du Risoux et Les Rousses",
   "carrefour": 8,
-  "vedette": "Grand tétras"
+  "vedette": ""
  },
  {
   "id": "Jura|54",
@@ -7158,7 +7140,6 @@ const EXPEDITIONS = [
   "milieu": "Rivières et torrents",
   "photo": "Images/ecrevisse_a_pattes_blanches.jpg",
   "especes": [
-   "Écrevisse à pattes blanches",
    "Gammare",
    "Patelline des fleuves",
    "Lamproie de Planer",
@@ -7168,7 +7149,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Suisse normande",
   "carrefour": 2,
-  "vedette": "Écrevisse à pattes blanches"
+  "vedette": ""
  },
  {
   "id": "Massif armoricain|20",
@@ -7200,7 +7181,6 @@ const EXPEDITIONS = [
    "Héron pourpré",
    "Cigogne blanche",
    "Aigrette garzette",
-   "Ibis falcinelle",
    "Spatule blanche"
   ],
   "chapitre": "Lac de Grand-Lieu",
@@ -7356,8 +7336,7 @@ const EXPEDITIONS = [
    "Cincle plongeur",
    "Bergeronnette des ruisseaux",
    "Hirondelle de rivage",
-   "Petit gravelot",
-   "Cigogne noire"
+   "Petit gravelot"
   ],
   "chapitre": "Bocage vendéen",
   "carrefour": 4,
@@ -7475,8 +7454,7 @@ const EXPEDITIONS = [
    "Cicindèle champêtre",
    "Punaise arlequin",
    "Zygène de la filipendule",
-   "Micrommate émeraude",
-   "Vipère péliade"
+   "Micrommate émeraude"
   ],
   "chapitre": "Forêt de Brocéliande",
   "carrefour": 5,
@@ -7799,15 +7777,15 @@ const EXPEDITIONS = [
   "milieu": "Dunes et plages",
   "photo": "Images/gravelot_a_collier_interrompu.jpg",
   "especes": [
-   "Gravelot à collier interrompu",
    "Bécasseau sanderling",
    "Talitre sauteur",
    "Vélelle",
-   "Sterne caugek"
+   "Sterne caugek",
+   "Coque commune"
   ],
   "chapitre": "Presqu'île de Crozon",
   "carrefour": 8,
-  "vedette": "Gravelot à collier interrompu"
+  "vedette": ""
  },
  {
   "id": "Massif armoricain|53",
@@ -7817,7 +7795,6 @@ const EXPEDITIONS = [
   "milieu": "Falaises et rochers",
   "photo": "Images/macareux_moine.jpg",
   "especes": [
-   "Macareux moine",
    "Fou de Bassan",
    "Pingouin torda",
    "Guillemot de Troïl",
@@ -7827,7 +7804,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Les Sept-Îles",
   "carrefour": 9,
-  "vedette": "Macareux moine"
+  "vedette": ""
  },
  {
   "id": "Massif armoricain|54",
@@ -8212,7 +8189,8 @@ const EXPEDITIONS = [
    "Faucon crécerelle",
    "Milan noir",
    "Faucon hobereau",
-   "Bondrée apivore"
+   "Bondrée apivore",
+   "Circaète Jean-le-Blanc"
   ],
   "rang": 4,
   "chapitre": "Salers",
@@ -8372,7 +8350,6 @@ const EXPEDITIONS = [
    "Crapaud calamite",
    "Triton crêté",
    "Triton alpestre",
-   "Sonneur à ventre jaune",
    "Pélodyte ponctué"
   ],
   "chapitre": "Brioude et le val d'Allier",
@@ -8830,7 +8807,6 @@ const EXPEDITIONS = [
   "photo": "Images/goeland_leucophee.jpg",
   "especes": [
    "Goéland leucophée",
-   "Balbuzard pêcheur",
    "Cigogne noire",
    "Anax empereur",
    "Libellule déprimée",
@@ -9026,7 +9002,6 @@ const EXPEDITIONS = [
    "Vautour fauve",
    "Vautour moine",
    "Vautour percnoptère",
-   "Gypaète barbu",
    "Aigle royal",
    "Grand corbeau"
   ],
@@ -9202,7 +9177,6 @@ const EXPEDITIONS = [
   "especes": [
    "Fauvette pitchou",
    "Bruant fou",
-   "Pie-grièche à tête rousse",
    "Huppe fasciée",
    "Rollier d'Europe",
    "Torcol fourmilier",
@@ -9223,7 +9197,6 @@ const EXPEDITIONS = [
    "Chamois",
    "Marmotte des Alpes",
    "Mouflon méditerranéen",
-   "Loup gris",
    "Campagnol terrestre",
    "Campagnol souterrain",
    "Sérotine de Nilsson"
@@ -9693,15 +9666,15 @@ const EXPEDITIONS = [
   "milieu": "Dunes et plages",
   "photo": "Images/gravelot_a_collier_interrompu.jpg",
   "especes": [
-   "Gravelot à collier interrompu",
    "Bécasseau sanderling",
    "Tournepierre à collier",
    "Vélelle",
-   "Pélagie"
+   "Pélagie",
+   "Mouette rieuse"
   ],
   "chapitre": "Étang de Thau",
   "carrefour": 1,
-  "vedette": "Gravelot à collier interrompu"
+  "vedette": ""
  },
  {
   "id": "Méditerranée|10",
@@ -9852,8 +9825,7 @@ const EXPEDITIONS = [
    "Guêpier d'Europe",
    "Hirondelle de rivage",
    "Petit gravelot",
-   "Cigogne noire",
-   "Balbuzard pêcheur"
+   "Cigogne noire"
   ],
   "chapitre": "Gorges du Gardon",
   "carrefour": 2,
@@ -9970,7 +9942,6 @@ const EXPEDITIONS = [
    "Aigle de Bonelli",
    "Aigle royal",
    "Vautour fauve",
-   "Vautour moine",
    "Vautour percnoptère",
    "Grand corbeau"
   ],
@@ -10026,7 +9997,6 @@ const EXPEDITIONS = [
   "milieu": "Campagne, haies et jardins",
   "photo": "Images/outarde_canepetiere.jpg",
   "especes": [
-   "Outarde canepetière",
    "Œdicnème criard",
    "Busard cendré",
    "Caille des blés",
@@ -10036,7 +10006,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "La Crau",
   "carrefour": 4,
-  "vedette": "Outarde canepetière"
+  "vedette": ""
  },
  {
   "id": "Méditerranée|27",
@@ -10473,7 +10443,6 @@ const EXPEDITIONS = [
   "especes": [
    "Rainette méridionale",
    "Discoglosse peint",
-   "Pélobate cultripède",
    "Pélodyte ponctué",
    "Alyte accoucheur",
    "Crapaud calamite",
@@ -10628,15 +10597,15 @@ const EXPEDITIONS = [
   "milieu": "Campagne, haies et jardins",
   "photo": "Images/pie_grieche_a_tete_rousse.jpg",
   "especes": [
-   "Pie-grièche à tête rousse",
    "Loriot d'Europe",
    "Huppe fasciée",
    "Rougequeue à front blanc",
-   "Grive draine"
+   "Grive draine",
+   "Torcol fourmilier"
   ],
   "chapitre": "Massif des Maures",
   "carrefour": 8,
-  "vedette": "Pie-grièche à tête rousse"
+  "vedette": ""
  },
  {
   "id": "Méditerranée|58",
@@ -10751,7 +10720,6 @@ const EXPEDITIONS = [
    "Cormoran huppé",
    "Goéland brun",
    "Goéland leucophée",
-   "Puffin yelkouan",
    "Océanite tempête"
   ],
   "chapitre": "Les Calanques",
@@ -11314,15 +11282,15 @@ const EXPEDITIONS = [
   "milieu": "Forêt",
   "photo": "Images/pic_cendre.jpg",
   "especes": [
-   "Pic cendré",
    "Pouillot de Bonelli",
    "Gobemouche noir",
    "Mésange huppée",
-   "Grand Sylvain"
+   "Grand Sylvain",
+   "Circaète Jean-le-Blanc"
   ],
   "chapitre": "Dijon et la Côte de Nuits",
   "carrefour": 1,
-  "vedette": "Pic cendré"
+  "vedette": ""
  },
  {
   "id": "Plaines de l'Est et val de Saône|17",
@@ -11637,7 +11605,6 @@ const EXPEDITIONS = [
   "photo": "Images/pie_grieche_ecorcheur.jpg",
   "especes": [
    "Pie-grièche écorcheur",
-   "Pie-grièche grise",
    "Bruant jaune",
    "Bruant proyer",
    "Tarier pâtre",
@@ -11864,15 +11831,15 @@ const EXPEDITIONS = [
   "id": "Plaines de l'Est et val de Saône|45",
   "territoire": "Plaines de l'Est et val de Saône",
   "ordre": 45,
-  "titre": "Grenouilles et tritons",
+  "titre": "Grenouilles, tritons et leur chasseur",
   "milieu": "Mares et étangs",
   "photo": "Images/grenouille_rousse.jpg",
   "especes": [
    "Grenouille rousse",
-   "Sonneur à ventre jaune",
    "Grenouille verte",
    "Triton ponctué",
-   "Triton alpestre"
+   "Triton alpestre",
+   "Héron cendré"
   ],
   "chapitre": "L'étang de Lindre",
   "carrefour": 5,
@@ -12039,16 +12006,16 @@ const EXPEDITIONS = [
   "milieu": "Forêt",
   "photo": "Images/cigogne_noire.jpg",
   "especes": [
-   "Cigogne noire",
    "Pic noir",
    "Martre des pins",
    "Écureuil roux",
-   "Mésange à longue queue"
+   "Mésange à longue queue",
+   "Pouillot siffleur"
   ],
   "rang": 54,
   "chapitre": "Monthermé et la vallée de la Meuse",
   "carrefour": 7,
-  "vedette": "Cigogne noire"
+  "vedette": ""
  },
  {
   "id": "Plaines de l'Est et val de Saône|54",
@@ -12192,7 +12159,6 @@ const EXPEDITIONS = [
    "Grenouille agile",
    "Grenouille rieuse",
    "Crapaud calamite",
-   "Triton crêté",
    "Triton palmé",
    "Pélodyte ponctué"
   ],
@@ -12285,9 +12251,9 @@ const EXPEDITIONS = [
   "especes": [
    "Cerf élaphe",
    "Chevreuil",
-   "Chat forestier",
    "Blaireau européen",
-   "Bécasse des bois"
+   "Bécasse des bois",
+   "Chouette hulotte"
   ],
   "chapitre": "Langres et son plateau",
   "carrefour": 9,
@@ -12740,7 +12706,6 @@ const EXPEDITIONS = [
    "Orvet fragile",
    "Seps strié",
    "Crapaud épineux",
-   "Vipère de Seoane",
    "Épeire diadème",
    "Musaraigne couronnée"
   ],
@@ -12842,8 +12807,7 @@ const EXPEDITIONS = [
    "Chevreuil",
    "Sanglier",
    "Renard roux",
-   "Blaireau européen",
-   "Ours brun"
+   "Blaireau européen"
   ],
   "chapitre": "Vallée d'Aspe",
   "carrefour": 6,
@@ -12861,7 +12825,6 @@ const EXPEDITIONS = [
    "Pic épeichette",
    "Pic mar",
    "Pic noir",
-   "Pic à dos blanc",
    "Sittelle torchepot",
    "Grimpereau des bois"
   ],
@@ -12941,8 +12904,7 @@ const EXPEDITIONS = [
    "Bec-croisé des sapins",
    "Venturon montagnard",
    "Geai des chênes",
-   "Pipit des arbres",
-   "Grand tétras"
+   "Pipit des arbres"
   ],
   "chapitre": "Tourbière de Bernadouze",
   "carrefour": 7,
@@ -13436,7 +13398,6 @@ const EXPEDITIONS = [
   "especes": [
    "Gypaète barbu",
    "Vautour fauve",
-   "Vautour moine",
    "Vautour percnoptère",
    "Aigle royal",
    "Faucon pèlerin"
@@ -13457,8 +13418,7 @@ const EXPEDITIONS = [
    "Moiré de Lefèbvre",
    "Bourdon des Pyrénées",
    "Miramelle pyrénéenne",
-   "Lézard vivipare",
-   "Lézard de Bonnal"
+   "Lézard vivipare"
   ],
   "rang": 53,
   "chapitre": "Cirque de Gavarnie",
@@ -13905,7 +13865,6 @@ const EXPEDITIONS = [
   "especes": [
    "Cordulie arctique",
    "Aeschne subarctique",
-   "Agrion hasté",
    "Sympétrum noir",
    "Nacré de la canneberge",
    "Cuivré de la bistorte"
@@ -14105,7 +14064,7 @@ const EXPEDITIONS = [
    "Vandoise",
    "Hotu",
    "Ablette",
-   "Lote"
+   "Vairon"
   ],
   "rang": 18,
   "chapitre": "Remiremont et la vallée de la Moselle",
@@ -14277,7 +14236,6 @@ const EXPEDITIONS = [
   "milieu": "Mares et étangs",
   "photo": "Images/sonneur_a_ventre_jaune.jpg",
   "especes": [
-   "Sonneur à ventre jaune",
    "Triton ponctué",
    "Triton crêté",
    "Grenouille rieuse",
@@ -14287,7 +14245,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Mont Sainte-Odile",
   "carrefour": 3,
-  "vedette": "Sonneur à ventre jaune"
+  "vedette": ""
  },
  {
   "id": "Vosges|28",
@@ -14302,7 +14260,8 @@ const EXPEDITIONS = [
    "Effraie des clochers",
    "Taupe d'Europe",
    "Belette",
-   "Surmulot"
+   "Surmulot",
+   "Pic cendré"
   ],
   "chapitre": "Vallée de Munster",
   "carrefour": 4,
@@ -14379,8 +14338,7 @@ const EXPEDITIONS = [
    "Coucou gris",
    "Grive draine",
    "Mésange à longue queue",
-   "Bruant proyer",
-   "Pie-grièche grise"
+   "Bruant proyer"
   ],
   "chapitre": "Vallée de Munster",
   "carrefour": 4,
@@ -14436,7 +14394,6 @@ const EXPEDITIONS = [
    "Anax empereur",
    "Aeschne bleue",
    "Crocothémis écarlate",
-   "Leucorrhine douteuse",
    "Agrion élégant"
   ],
   "chapitre": "Plateau des Mille Étangs",
@@ -14551,10 +14508,10 @@ const EXPEDITIONS = [
   "photo": "Images/ecureuil_roux.jpg",
   "especes": [
    "Écureuil roux",
-   "Martre des pins",
    "Campagnol roussâtre",
    "Mulot à collier",
-   "Hermine"
+   "Hermine",
+   "Grand murin"
   ],
   "rang": 41,
   "chapitre": "Le Donon et la vallée de la Bruche",
@@ -14689,7 +14646,8 @@ const EXPEDITIONS = [
    "Gobemouche noir",
    "Rougequeue à front blanc",
    "Autour des palombes",
-   "Bondrée apivore"
+   "Bondrée apivore",
+   "Pic cendré"
   ],
   "chapitre": "Château du Falkenstein et étang de Hanau",
   "carrefour": 7,
@@ -14746,7 +14704,6 @@ const EXPEDITIONS = [
    "Bouvreuil pivoine",
    "Mésange boréale",
    "Tarin des aulnes",
-   "Sizerin cabaret",
    "Venturon montagnard"
   ],
   "chapitre": "Ballon d'Alsace",
@@ -14844,7 +14801,7 @@ const EXPEDITIONS = [
    "Campagnol terrestre",
    "Bruant fou",
    "Guêpier d'Europe",
-   "Cigogne noire"
+   "Merle à plastron"
   ],
   "chapitre": "Le Grand Ballon",
   "carrefour": 9,
@@ -14979,7 +14936,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Pays basque",
   "phrase": "Vallée des Pyrénées basques parcourue par la Nive des Aldudes, autour de Saint-Étienne-de-Baïgorry, réputée pour les vignes de l'Irouléguy.",
-  "vedette": "Vipère de Seoane",
+  "vedette": "Pie-grièche à tête rousse",
   "credit": "Jojo V, CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:Les_Aldudes.jpg",
   "seuil": 0,
@@ -15079,7 +15036,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Pays basque",
   "phrase": "Immense forêt de hêtres et de sapins du Pays basque, parmi les plus vastes d'Europe, étendue entre le plateau d'Occabé et le pic d'Orhy.",
-  "vedette": "Pic à dos blanc",
+  "vedette": "Rosalie des Alpes",
   "credit": "Daniel Villafruela, CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:For%C3%AAt_d%27Iraty-Col_d%27Orgambidesca-1964.jpg",
   "seuil": 7,
@@ -15103,7 +15060,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Béarn",
   "phrase": "Grande vallée pyrénéenne du Béarn qui suit le gave d'Aspe jusqu'à la frontière espagnole, au col du Somport.",
-  "vedette": "Ours brun",
+  "vedette": "Desman des Pyrénées",
   "credit": "Frank Markesteijn, CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:Vall%C3%A9e_d%27Aspe_Cette-Eygun.jpg",
   "seuil": 9,
@@ -16488,7 +16445,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Bouches-du-Rhône",
   "phrase": "Vaste plaine de galets déposés par l'ancienne Durance, dont la steppe, appelée coussoul, pâturée par les moutons, abrite le ganga cata et l'outarde canepetière.",
-  "vedette": "Outarde canepetière",
+  "vedette": "Faucon crécerellette",
   "credit": "Mikani, CC BY-SA 2.0 fr",
   "photo_source": "https://commons.wikimedia.org/wiki/File:Crau_-_May_2007_-_by_Mikani.jpg",
   "seuil": 4,
@@ -16901,7 +16858,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Gironde",
   "phrase": "Plus haute dune d'Europe, longue de 2,9 kilomètres et haute de plus de 100 mètres, qui avance de 1 à 5 mètres par an dans la forêt, face au banc d'Arguin.",
-  "vedette": "Gravelot à collier interrompu",
+  "vedette": "Lézard ocellé",
   "credit": "Jörg Braukmann, CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:Sommet_de_la_Dune_du_Pilat.jpg",
   "seuil": 19,
@@ -17162,7 +17119,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Haute-Corse",
   "phrase": "Massif dominé par le Monte Cinto, plus haut sommet de Corse avec 2 706 mètres, dont la première ascension connue date de 1882 et dont un contrefort borde la région du Niolo.",
-  "vedette": "Gypaète barbu",
+  "vedette": "Aigle royal",
   "credit": "Rémih, CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:Monte_Cinto_Punta_Minuta.jpg",
   "seuil": 15,
@@ -17188,7 +17145,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Corse-du-Sud",
   "phrase": "Réserve naturelle créée en 1975 sur la côte ouest, à la fois terrestre et marine, classée à l'Unesco depuis 1983, avec une presqu'île de 919 hectares de falaises rouges et de maquis.",
-  "vedette": "Balbuzard pêcheur",
+  "vedette": "Mérou brun",
   "credit": "LySioS-wkp, CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:R%C3%A9serve_naturelle_scandola_(31474).jpg",
   "seuil": 19,
@@ -17450,7 +17407,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Jura",
   "phrase": "La forêt du Risoux, peuplée d'épicéas plusieurs fois centenaires, se prolonge en Suisse, côté Vallée de Joux. On y accède depuis Les Rousses, station de montagne proche de la frontière et du lac des Rousses.",
-  "vedette": "Grand tétras",
+  "vedette": "Gélinotte des bois",
   "credit": "Alexey M., CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:Lac-des-Rousses-4.JPG",
   "seuil": 15,
@@ -17990,7 +17947,7 @@ const CHAPITRES = [
   "type": "lieu",
   "pays": "Ardennes",
   "phrase": "À Monthermé, la Meuse serpente en méandres au fond d'une vallée couverte de forêts. Depuis la Roche aux Sept Villages, on aperçoit les villages de la vallée et les rochers des Quatre Fils Aymon, dont la forme rappelle quatre cavaliers sur un cheval.",
-  "vedette": "Cigogne noire",
+  "vedette": "Grand-duc d'Europe",
   "credit": "Jpcuvelier, CC BY-SA 4.0",
   "photo_source": "https://commons.wikimedia.org/wiki/File:Joigny-sur-Meuse._Vue_du_village_et_d%27une_partie_de_la_vall%C3%A9e_de_la_Meuse.jpg",
   "seuil": 12,
@@ -18484,20 +18441,6 @@ const LIENS = [
  },
  {
   "territoire": "Pyrénées",
-  "lieu": "Forêt d'Iraty",
-  "a": "Pic à dos blanc",
-  "b": "Les arbres morts",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le pic à dos blanc trouve-t-il ses larves préférées ?",
-  "phrase": "Le pic à dos blanc fouille les arbres morts.",
-  "pieges": [
-   "Les haies d'épineux",
-   "Les prairies humides"
-  ]
- },
- {
-  "territoire": "Pyrénées",
   "lieu": "Saint-Jean-Pied-de-Port",
   "a": "Taupe d'Europe",
   "b": "Lombric commun",
@@ -18694,20 +18637,6 @@ const LIENS = [
  },
  {
   "territoire": "Pyrénées",
-  "lieu": "Tourbière de Bernadouze",
-  "a": "Grand tétras",
-  "b": "Les pins",
-  "nature_b": "element",
-  "role": "Garde-manger",
-  "question": "Où le grand tétras trouve-t-il sa nourriture en hiver ?",
-  "phrase": "L'hiver, le grand tétras mange les aiguilles des pins.",
-  "pieges": [
-   "Les prairies humides",
-   "Les haies d'épineux"
-  ]
- },
- {
-  "territoire": "Pyrénées",
   "lieu": "Vallée d'Aspe",
   "a": "Blaireau européen",
   "b": "Renard roux",
@@ -18844,20 +18773,6 @@ const LIENS = [
   "pieges": [
    "Le gypaète couve les œufs abandonnés par les vautours fauves.",
    "Le gypaète montre les carcasses aux jeunes vautours fauves."
-  ]
- },
- {
-  "territoire": "Pyrénées",
-  "lieu": "Vallée d'Ossau",
-  "a": "Vautour moine",
-  "b": "Vautour fauve",
-  "nature_b": "espece",
-  "role": "Compagnons",
-  "question": "Quel est leur lien ?",
-  "phrase": "Ils se partagent les carcasses, chacun ses morceaux préférés.",
-  "pieges": [
-   "Ils partent ensemble chaque hiver vers l'Afrique.",
-   "Le vautour moine élève les petits du vautour fauve."
   ]
  },
  {
@@ -19311,20 +19226,6 @@ const LIENS = [
  {
   "territoire": "Bassin parisien et Val de Loire",
   "lieu": "La Brenne",
-  "a": "Triton crêté",
-  "b": "Triton marbré",
-  "nature_b": "espece",
-  "role": "Cousins",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le triton crêté et le marbré donnent parfois des hybrides",
-  "pieges": [
-   "Le triton crêté couve les œufs du triton marbré",
-   "Le triton marbré nettoie la peau du triton crêté"
-  ]
- },
- {
-  "territoire": "Bassin parisien et Val de Loire",
-  "lieu": "La Brenne",
   "a": "Loir gris",
   "b": "Chouette hulotte",
   "nature_b": "espece",
@@ -19362,20 +19263,6 @@ const LIENS = [
   "pieges": [
    "La couleuvre helvétique fuit le crapaud, trop toxique pour elle",
    "Le crapaud épineux imite la couleuvre pour se protéger"
-  ]
- },
- {
-  "territoire": "Bassin parisien et Val de Loire",
-  "lieu": "La Brenne",
-  "a": "Triton crêté",
-  "b": "Couleuvre helvétique",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le triton crêté nourrit parfois la couleuvre helvétique",
-  "pieges": [
-   "La couleuvre helvétique protège le triton crêté des hérons",
-   "Le triton crêté mange les œufs de la couleuvre helvétique"
   ]
  },
  {
@@ -19843,20 +19730,6 @@ const LIENS = [
  {
   "territoire": "Bassin parisien et Val de Loire",
   "lieu": "Lac du Der",
-  "a": "Cigogne noire",
-  "b": "Les gros arbres",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où la cigogne noire construit-elle son nid ?",
-  "phrase": "La cigogne noire niche haut dans un grand arbre forestier",
-  "pieges": [
-   "Les toits des maisons",
-   "La roselière"
-  ]
- },
- {
-  "territoire": "Bassin parisien et Val de Loire",
-  "lieu": "Lac du Der",
   "a": "Grue cendrée",
   "b": "Les champs cultivés",
   "nature_b": "element",
@@ -20053,20 +19926,6 @@ const LIENS = [
  {
   "territoire": "Bassin parisien et Val de Loire",
   "lieu": "Forêt de Fontainebleau",
-  "a": "Tique du mouton",
-  "b": "Lézard des souches",
-  "nature_b": "espece",
-  "role": "Passager",
-  "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes tiques se nourrissent sur le lézard des souches",
-  "pieges": [
-   "La tique du mouton protège le lézard de ses prédateurs",
-   "Le lézard des souches se nourrit surtout de tiques"
-  ]
- },
- {
-  "territoire": "Bassin parisien et Val de Loire",
-  "lieu": "Forêt de Fontainebleau",
   "a": "Œdipode turquoise",
   "b": "Argiope frelon",
   "nature_b": "espece",
@@ -20076,20 +19935,6 @@ const LIENS = [
   "pieges": [
    "L'œdipode turquoise se cache dans la toile de l'argiope",
    "L'argiope frelon pond ses œufs sur l'œdipode turquoise"
-  ]
- },
- {
-  "territoire": "Bassin parisien et Val de Loire",
-  "lieu": "Forêt de Fontainebleau",
-  "a": "Œdipode turquoise",
-  "b": "Lézard des souches",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Les criquets comme l'œdipode nourrissent le lézard des souches",
-  "pieges": [
-   "Le lézard des souches imite les couleurs de l'œdipode",
-   "Les deux se disputent les mêmes graines sur le sable"
   ]
  },
  {
@@ -20146,20 +19991,6 @@ const LIENS = [
   "pieges": [
    "Les berges de l'étang",
    "Les gros arbres"
-  ]
- },
- {
-  "territoire": "Bassin parisien et Val de Loire",
-  "lieu": "Paris, ses bois et ses parcs",
-  "a": "Écrevisse signal",
-  "b": "Écrevisse à pattes blanches",
-  "nature_b": "espece",
-  "role": "Nouveau venu",
-  "question": "Quel est leur lien ?",
-  "phrase": "L'écrevisse signal transmet une maladie mortelle à l'autre",
-  "pieges": [
-   "Elles partagent le même terrier creusé dans la berge",
-   "L'écrevisse signal porte les œufs de l'autre"
   ]
  },
  {
@@ -20515,20 +20346,6 @@ const LIENS = [
  {
   "territoire": "Massif armoricain",
   "lieu": "Suisse normande",
-  "a": "Écrevisse américaine",
-  "b": "Écrevisse à pattes blanches",
-  "nature_b": "espece",
-  "role": "Nouveau venu",
-  "question": "Quel est leur lien ?",
-  "phrase": "L'américaine transmet une maladie mortelle à l'autre écrevisse.",
-  "pieges": [
-   "L'américaine creuse les terriers où l'autre écrevisse s'abrite.",
-   "L'autre écrevisse garde les œufs de l'américaine au printemps."
-  ]
- },
- {
-  "territoire": "Massif armoricain",
-  "lieu": "Suisse normande",
   "a": "Triton crêté",
   "b": "Triton marbré",
   "nature_b": "espece",
@@ -20832,20 +20649,6 @@ const LIENS = [
   "pieges": [
    "Les vasières",
    "Les berges de l'étang"
-  ]
- },
- {
-  "territoire": "Massif armoricain",
-  "lieu": "Bocage vendéen",
-  "a": "Cigogne noire",
-  "b": "Les gros arbres",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où la cigogne noire construit-elle son nid ?",
-  "phrase": "La cigogne noire bâtit son nid dans un gros arbre.",
-  "pieges": [
-   "Les toits des maisons",
-   "Les prairies humides"
   ]
  },
  {
@@ -21257,20 +21060,6 @@ const LIENS = [
  {
   "territoire": "Massif armoricain",
   "lieu": "Presqu'île de Crozon",
-  "a": "Gravelot à collier interrompu",
-  "b": "Les grèves de sable",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le gravelot à collier interrompu pond-il ses œufs ?",
-  "phrase": "Il pond ses œufs à même le sable des plages.",
-  "pieges": [
-   "La falaise",
-   "Les vasières"
-  ]
- },
- {
-  "territoire": "Massif armoricain",
-  "lieu": "Presqu'île de Crozon",
   "a": "Seiche commune",
   "b": "Les herbiers marins",
   "nature_b": "element",
@@ -21294,20 +21083,6 @@ const LIENS = [
   "pieges": [
    "Ils construisent ensemble de grands nids d'algues.",
    "Ils passent l'hiver ensemble sur les étangs."
-  ]
- },
- {
-  "territoire": "Massif armoricain",
-  "lieu": "Les Sept-Îles",
-  "a": "Puffin des Anglais",
-  "b": "Macareux moine",
-  "nature_b": "espece",
-  "role": "Locataire",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le puffin s'installe parfois dans un terrier de macareux.",
-  "pieges": [
-   "Le puffin couve parfois les œufs du macareux.",
-   "Le puffin apporte du poisson aux petits macareux."
   ]
  },
  {
@@ -22111,20 +21886,6 @@ const LIENS = [
  {
   "territoire": "Alpes",
   "lieu": "Gorges du Verdon",
-  "a": "Vautour moine",
-  "b": "Vautour fauve",
-  "nature_b": "espece",
-  "role": "Compagnons",
-  "question": "Quel est leur lien ?",
-  "phrase": "Ils partagent les carcasses, sans manger les mêmes morceaux.",
-  "pieges": [
-   "Ils construisent ensemble un grand nid dans la falaise.",
-   "Ils migrent ensemble chaque automne jusqu'en Afrique du Nord."
-  ]
- },
- {
-  "territoire": "Alpes",
-  "lieu": "Gorges du Verdon",
   "a": "Petite tortue",
   "b": "Paon-du-jour",
   "nature_b": "espece",
@@ -22162,20 +21923,6 @@ const LIENS = [
   "pieges": [
    "La pie élève parfois les petits du petit-duc abandonnés.",
    "Le petit-duc protège le nid de la pie des chats."
-  ]
- },
- {
-  "territoire": "Alpes",
-  "lieu": "Gorges du Verdon",
-  "a": "Vautour moine",
-  "b": "Les pins",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le vautour moine installe-t-il son nid ?",
-  "phrase": "Le vautour moine niche au sommet des grands pins.",
-  "pieges": [
-   "Les vieux ponts",
-   "Les vieux murs"
   ]
  },
  {
@@ -23399,20 +23146,6 @@ const LIENS = [
  {
   "territoire": "Massif central",
   "lieu": "Gorges du Tarn et de la Jonte",
-  "a": "Gypaète barbu",
-  "b": "Vautour fauve",
-  "nature_b": "espece",
-  "role": "Nettoyeur",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le gypaète mange les os laissés par les fauves.",
-  "pieges": [
-   "Le gypaète dort dans les nids des fauves.",
-   "Le gypaète guide les fauves vers l'eau."
-  ]
- },
- {
-  "territoire": "Massif central",
-  "lieu": "Gorges du Tarn et de la Jonte",
   "a": "Faucon pèlerin",
   "b": "Grand-duc d'Europe",
   "nature_b": "espece",
@@ -23618,20 +23351,6 @@ const LIENS = [
   "pieges": [
    "Le campagnol terrestre creuse le terrier du renard.",
    "Le renard protège le campagnol terrestre des rapaces."
-  ]
- },
- {
-  "territoire": "Massif central",
-  "lieu": "Puy Mary",
-  "a": "Cerf élaphe",
-  "b": "Loup gris",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le cerf est le principal repas du loup.",
-  "pieges": [
-   "Le cerf suit le loup pour trouver de l'eau.",
-   "Le loup protège les faons du cerf en hiver."
   ]
  },
  {
@@ -23870,20 +23589,6 @@ const LIENS = [
   "pieges": [
    "Les grèves de sable",
    "Les berges abruptes"
-  ]
- },
- {
-  "territoire": "Méditerranée",
-  "lieu": "Étang de Thau",
-  "a": "Gravelot à collier interrompu",
-  "b": "Les grèves de sable",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le Gravelot à collier interrompu pond-il ses œufs ?",
-  "phrase": "Il pond ses œufs directement sur le sable des plages.",
-  "pieges": [
-   "La roselière",
-   "Les vieux murs"
   ]
  },
  {
@@ -24710,20 +24415,6 @@ const LIENS = [
   "pieges": [
    "Les fonds de sable",
    "Les grottes sous-marines"
-  ]
- },
- {
-  "territoire": "Méditerranée",
-  "lieu": "Les Calanques",
-  "a": "Puffin yelkouan",
-  "b": "La falaise",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le puffin yelkouan installe-t-il son nid ?",
-  "phrase": "Il pond son œuf dans une fissure des falaises côtières.",
-  "pieges": [
-   "Les herbiers marins",
-   "Les grèves de sable"
   ]
  },
  {
@@ -25933,20 +25624,6 @@ const LIENS = [
  {
   "territoire": "Bassin aquitain",
   "lieu": "Coteaux du Gers",
-  "a": "Pachyure étrusque",
-  "b": "Les vieux murs",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où la pachyure étrusque trouve-t-elle refuge ?",
-  "phrase": "Elle niche entre les pierres des murs en ruine.",
-  "pieges": [
-   "Les prairies humides",
-   "Les berges de l'étang"
-  ]
- },
- {
-  "territoire": "Bassin aquitain",
-  "lieu": "Coteaux du Gers",
   "a": "Rougequeue noir",
   "b": "Les toits des maisons",
   "nature_b": "element",
@@ -26254,20 +25931,6 @@ const LIENS = [
  },
  {
   "territoire": "Bassin aquitain",
-  "lieu": "Estuaire de la Charente",
-  "a": "Vison d'Europe",
-  "b": "Campagnol amphibie",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Les campagnols amphibies nourrissent le vison d'Europe.",
-  "pieges": [
-   "Le campagnol se nourrit des restes de repas du vison.",
-   "Le vison et le campagnol broutent les mêmes herbes."
-  ]
- },
- {
-  "territoire": "Bassin aquitain",
   "lieu": "Lac de Cazaux-Sanguinet",
   "a": "Coucou gris",
   "b": "Accenteur mouchet",
@@ -26418,20 +26081,6 @@ const LIENS = [
   "pieges": [
    "En mer, la grande alose se nourrit des jeunes lamproies.",
    "En rivière, l'alose pond ses œufs dans le nid de la lamproie."
-  ]
- },
- {
-  "territoire": "Bassin aquitain",
-  "lieu": "Barthes de l'Adour",
-  "a": "Grande mulette",
-  "b": "Esturgeon européen",
-  "nature_b": "espece",
-  "role": "Passager",
-  "question": "Quel est leur lien ?",
-  "phrase": "Les larves de la mulette s'accrochent aux branchies de l'esturgeon.",
-  "pieges": [
-   "Les larves de la mulette nourrissent les jeunes esturgeons.",
-   "L'esturgeon abrite ses œufs dans les coquilles de la mulette."
   ]
  },
  {
@@ -26600,20 +26249,6 @@ const LIENS = [
   "pieges": [
    "La tique pond ses œufs dans le pelage du chevreuil.",
    "Le chevreuil se nourrit des tiques du sous-bois."
-  ]
- },
- {
-  "territoire": "Bassin aquitain",
-  "lieu": "Rocamadour et le causse",
-  "a": "Écureuil roux",
-  "b": "Martre des pins",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "L'écureuil roux nourrit parfois la martre.",
-  "pieges": [
-   "L'écureuil roux cache des noisettes pour la martre.",
-   "La martre et l'écureuil élèvent leurs petits ensemble."
   ]
  },
  {
@@ -26795,20 +26430,6 @@ const LIENS = [
   "phrase": "Il niche aussi sur les toits des villes.",
   "pieges": [
    "Les gros arbres",
-   "La roselière"
-  ]
- },
- {
-  "territoire": "Bassin aquitain",
-  "lieu": "Dune du Pilat",
-  "a": "Gravelot à collier interrompu",
-  "b": "Les laisses de mer",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le gravelot à collier interrompu trouve-t-il sa nourriture ?",
-  "phrase": "Il picore les petites bêtes cachées dans les algues échouées.",
-  "pieges": [
-   "Les pins",
    "La roselière"
   ]
  },
@@ -27132,20 +26753,6 @@ const LIENS = [
   "pieges": [
    "Les sables nus",
    "Les berges abruptes"
-  ]
- },
- {
-  "territoire": "Corse",
-  "lieu": "Désert des Agriates",
-  "a": "Pie-grièche à tête rousse",
-  "b": "Les haies d'épineux",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où la pie-grièche à tête rousse range-t-elle ses proies ?",
-  "phrase": "Elle range ses proies sur les épines des buissons.",
-  "pieges": [
-   "Les vasières",
-   "Les fonds de sable"
   ]
  },
  {
@@ -27487,20 +27094,6 @@ const LIENS = [
  {
   "territoire": "Corse",
   "lieu": "Monte Cinto et le Niolo",
-  "a": "Mouflon méditerranéen",
-  "b": "Gypaète barbu",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Les carcasses de mouflon nourrissent le gypaète.",
-  "pieges": [
-   "Le gypaète débarrasse le mouflon de ses tiques.",
-   "Le mouflon prévient le gypaète des dangers."
-  ]
- },
- {
-  "territoire": "Corse",
-  "lieu": "Monte Cinto et le Niolo",
   "a": "Faucon pèlerin",
   "b": "Grand corbeau",
   "nature_b": "espece",
@@ -27594,20 +27187,6 @@ const LIENS = [
   "pieges": [
    "Le poulpe nettoie la peau du mérou.",
    "Le mérou protège les œufs du poulpe."
-  ]
- },
- {
-  "territoire": "Corse",
-  "lieu": "Réserve naturelle de Scandola",
-  "a": "Balbuzard pêcheur",
-  "b": "La falaise",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le balbuzard installe-t-il son nid à Scandola ?",
-  "phrase": "Son nid de branches coiffe les pitons de la falaise.",
-  "pieges": [
-   "La roselière",
-   "Les grèves de sable"
   ]
  },
  {
@@ -28018,20 +27597,6 @@ const LIENS = [
  },
  {
   "territoire": "Vosges",
-  "lieu": "Mont Sainte-Odile",
-  "a": "Sonneur à ventre jaune",
-  "b": "Les ornières",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le sonneur à ventre jaune pond-il ses œufs ?",
-  "phrase": "Le sonneur pond dans les ornières des chemins forestiers.",
-  "pieges": [
-   "La roselière",
-   "Les vieilles souches"
-  ]
- },
- {
-  "territoire": "Vosges",
   "lieu": "Vallée de Munster",
   "a": "Coucou gris",
   "b": "Bergeronnette grise",
@@ -28215,20 +27780,6 @@ const LIENS = [
  {
   "territoire": "Vosges",
   "lieu": "Le Donon et la vallée de la Bruche",
-  "a": "Campagnol roussâtre",
-  "b": "Martre des pins",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol roussâtre est une proie préférée de la martre.",
-  "pieges": [
-   "Le campagnol roussâtre creuse le terrier où dort la martre.",
-   "Le campagnol roussâtre profite des restes de repas de la martre."
-  ]
- },
- {
-  "territoire": "Vosges",
-  "lieu": "Le Donon et la vallée de la Bruche",
   "a": "Murin à oreilles échancrées",
   "b": "Grand rhinolophe",
   "nature_b": "espece",
@@ -28392,20 +27943,6 @@ const LIENS = [
   "pieges": [
    "Le mulot dort dans le nid de la chouette.",
    "La chouette nettoie le terrier du mulot."
-  ]
- },
- {
-  "territoire": "Vosges",
-  "lieu": "Ballon d'Alsace",
-  "a": "Tarin des aulnes",
-  "b": "Sizerin cabaret",
-  "nature_b": "espece",
-  "role": "Compagnons",
-  "question": "Quel est leur lien ?",
-  "phrase": "En hiver, ils se déplacent ensemble en bandes.",
-  "pieges": [
-   "Au printemps, ils partagent le même nid.",
-   "Le tarin nourrit les petits du sizerin."
   ]
  },
  {
@@ -29111,20 +28648,6 @@ const LIENS = [
  {
   "territoire": "Plaines de l'Est et val de Saône",
   "lieu": "L'étang de Lindre",
-  "a": "Sonneur à ventre jaune",
-  "b": "Les ornières",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le sonneur à ventre jaune pond-il ses œufs ?",
-  "phrase": "Le sonneur pond dans les ornières pleines d'eau des chemins.",
-  "pieges": [
-   "Les sables nus",
-   "Les gros arbres"
-  ]
- },
- {
-  "territoire": "Plaines de l'Est et val de Saône",
-  "lieu": "L'étang de Lindre",
   "a": "Gobemouche à collier",
   "b": "Les gros arbres",
   "nature_b": "element",
@@ -29260,20 +28783,6 @@ const LIENS = [
   "pieges": [
    "La roselière",
    "Les prairies humides"
-  ]
- },
- {
-  "territoire": "Plaines de l'Est et val de Saône",
-  "lieu": "Monthermé et la vallée de la Meuse",
-  "a": "Cigogne noire",
-  "b": "Les gros arbres",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où la cigogne noire construit-elle son nid ?",
-  "phrase": "La cigogne noire bâtit son nid sur un gros arbre.",
-  "pieges": [
-   "La roselière",
-   "Les éboulis"
   ]
  },
  {
@@ -29769,20 +29278,6 @@ const LIENS = [
  {
   "territoire": "Vosges",
   "lieu": "Plateau des Mille Étangs",
-  "a": "Leucorrhine douteuse",
-  "b": "Les sphaignes",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où la larve de la leucorrhine douteuse grandit-elle ?",
-  "phrase": "La leucorrhine douteuse se reproduit dans les mares à sphaignes.",
-  "pieges": [
-   "Les petits ruisseaux",
-   "Les champs cultivés"
-  ]
- },
- {
-  "territoire": "Vosges",
-  "lieu": "Plateau des Mille Étangs",
   "a": "Damier de la succise",
   "b": "Les prairies humides",
   "nature_b": "element",
@@ -30187,20 +29682,6 @@ const LIENS = [
   ]
  },
  {
-  "territoire": "Plaines de l'Est et val de Saône",
-  "lieu": "Langres et son plateau",
-  "a": "Chat forestier",
-  "b": "Blaireau européen",
-  "nature_b": "espece",
-  "role": "Locataire",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le chat forestier s'abrite parfois dans le terrier du blaireau.",
-  "pieges": [
-   "Le chat forestier et le blaireau partagent leurs repas d'hiver.",
-   "Le blaireau dort dans le nid perché du chat forestier."
-  ]
- },
- {
   "territoire": "Jura",
   "lieu": "Pontarlier et le château de Joux",
   "a": "Hirondelle de fenêtre",
@@ -30399,20 +29880,6 @@ const LIENS = [
  {
   "territoire": "Jura",
   "lieu": "Tourbières de Frasne",
-  "a": "Pie-grièche grise",
-  "b": "Campagnol des champs",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol des champs nourrit surtout la pie-grièche grise.",
-  "pieges": [
-   "La pie-grièche grise niche dans le terrier du campagnol.",
-   "Le campagnol des champs prévient la pie-grièche du danger."
-  ]
- },
- {
-  "territoire": "Jura",
-  "lieu": "Tourbières de Frasne",
   "a": "Sonneur à ventre jaune",
   "b": "Les ornières",
   "nature_b": "element",
@@ -30548,20 +30015,6 @@ const LIENS = [
   "pieges": [
    "Les champs cultivés",
    "Les prairies humides"
-  ]
- },
- {
-  "territoire": "Bassin aquitain",
-  "lieu": "Estuaire de la Charente",
-  "a": "Vison d'Europe",
-  "b": "Putois d'Europe",
-  "nature_b": "espece",
-  "role": "Cousins",
-  "question": "Quel est leur lien ?",
-  "phrase": "Il arrive qu'ils se croisent et aient des petits ensemble.",
-  "pieges": [
-   "Le putois suit le vison pour finir ses proies.",
-   "Le vison creuse le terrier où naît le putois."
   ]
  },
  {
@@ -30958,20 +30411,6 @@ const LIENS = [
  },
  {
   "territoire": "Massif central",
-  "lieu": "Brioude et le val d'Allier",
-  "a": "Sonneur à ventre jaune",
-  "b": "Les ornières",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le sonneur à ventre jaune pond-il ses œufs ?",
-  "phrase": "Le sonneur pond ses œufs dans l'eau des ornières.",
-  "pieges": [
-   "Les vieux murs",
-   "La lande"
-  ]
- },
- {
-  "territoire": "Massif central",
   "lieu": "Étangs du Forez",
   "a": "Grèbe à cou noir",
   "b": "Mouette rieuse",
@@ -31223,20 +30662,6 @@ const LIENS = [
   ]
  },
  {
-  "territoire": "Massif armoricain",
-  "lieu": "Les Sept-Îles",
-  "a": "Goéland marin",
-  "b": "Macareux moine",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Les macareux nourrissent le goéland marin.",
-  "pieges": [
-   "Le goéland niche dans un terrier de macareux.",
-   "Le macareux couve dans un vieux nid de goéland."
-  ]
- },
- {
   "territoire": "Alpes",
   "lieu": "Lac d'Annecy",
   "a": "Couleuvre helvétique",
@@ -31262,20 +30687,6 @@ const LIENS = [
   "pieges": [
    "Les orties",
    "Les arbres morts"
-  ]
- },
- {
-  "territoire": "Alpes",
-  "lieu": "Lac de Serre-Ponçon",
-  "a": "Sonneur à ventre jaune",
-  "b": "Les ornières",
-  "nature_b": "element",
-  "role": "Sa maison",
-  "question": "Où le sonneur à ventre jaune pond-il souvent ses œufs ?",
-  "phrase": "Il pond dans l'eau des ornières des chemins.",
-  "pieges": [
-   "Les vieilles granges",
-   "Les sables nus"
   ]
  },
  {

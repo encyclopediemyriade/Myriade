@@ -189,7 +189,8 @@ function repondreCoupDoeil(choisie, bouton) {
   suivi.coupDoeil.vues[t.espece.nom_courant] = (suivi.coupDoeil.vues[t.espece.nom_courant] || 0) + 1;
   if (juste) {
     coup.bons++; coup.serie++; coup.serieMax = Math.max(coup.serieMax, coup.serie);
-    if (estReconnue(t.espece) || (typeof estARevoirRencontre === "function" && estARevoirRencontre(t.espece))) acquerir(t.espece, IDENTIFICATION);   // choix d'Aubin : une photo bien reconnue compte pour l'espèce (R191b : seulement si déjà rencontrée ; R236 : une espèce rencontrée « à reconnaître » devient Reconnue)
+    // R287 (2B) : une espèce offerte au départ (« Pour bien démarrer ») entre aussi au carnet par une photo bien reconnue
+    if (estReconnue(t.espece) || (typeof estOfferte === "function" && estOfferte(t.espece))) acquerir(t.espece, IDENTIFICATION);   // choix d'Aubin : une photo bien reconnue compte pour l'espèce (R191b : seulement si déjà rencontrée ; R236 : une espèce rencontrée « à reconnaître » devient Reconnue)
   } else {
     coup.serie = 0;
     if (estReconnue(t.espece)) noterEchec(t.espece, IDENTIFICATION);

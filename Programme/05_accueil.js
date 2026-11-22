@@ -77,21 +77,40 @@ function afficherStats() {
     + `<div class="detail-carnet" id="detail-carnet" hidden></div>`;
   stats.onclick = ev => { if (!ev.target.closest(".detail-carnet")) basculerDetailCarnet(); };
   const sousEncyclo = document.getElementById("sous-encyclopedie");
-  if (sousEncyclo) sousEncyclo.textContent = `${nombre(p.identifiees)} / ${nombre(p.total)} espèces identifiées`;
+  if (sousEncyclo) sousEncyclo.textContent = `${nombre(p.identifiees)} / ${nombre(p.total)} espèces dans votre carnet`;
   const pj = document.getElementById("picto-jouer-accueil"), pe = document.getElementById("picto-encyclopedie-accueil");
   if (pj && !pj.innerHTML) pj.innerHTML = picto("rencontre");
   if (pe && !pe.innerHTML) pe.innerHTML = picto("revision");
   // Le total d'espèces du jeu, en haut à droite de la photo du bandeau
   const legende = document.getElementById("legende-bandeau");
-  if (legende) legende.textContent = `${nombre(p.total)} espèces à identifier`;
+  if (legende) legende.textContent = `${nombre(p.total)} espèces à découvrir`;
 }
 
 // Une espèce compte comme "reconnue" à partir du statut "identifiée"
 // (c'est-à-dire : au moins reconnue sur sa photo).
 // Étape R262 (lenteurs) : même réponse que « statut ≠ inconnue », sans calculer les médailles et les étapes (c'était,
 //   au lancement, le calcul de toutes les questions de toutes les espèces avant d'afficher l'accueil).
-function estReconnue(espece) {
+// Étape R287 (22/11, choix d'Aubin « 1B » : « Quand une espèce compte-t-elle ? ») : une espèce entre au carnet dès que sa
+//   Rencontre est faite jusqu'au bout, photo trouvée ou non (ou par un défi « Me tester » réussi, ou une photo reconnue ailleurs).
+//   Une Rencontre finie sans la photo est notée dans suivi.aReconnaitre (R236) : ces espèces sont donc au carnet, et leur photo
+//   reviendra (l'étape Rencontres de l'expédition la demande toujours, comme Coup d'œil). Rien ne recule : les parties
+//   d'avant qui avaient des espèces « à reconnaître » après une Rencontre les voient entrer au carnet.
+//   estPhotoReconnue = la règle d'avant (photo reconnue une fois), gardée là où la photo compte vraiment (Me tester).
+const memoRencontreesR287 = { src: null, n: -1, set: null };
+function rencontreesSansPhoto() {
+  const l = typeof suivi !== "undefined" && suivi && Array.isArray(suivi.aReconnaitre) ? suivi.aReconnaitre : null;
+  if (!l) return null;
+  if (memoRencontreesR287.src !== l || memoRencontreesR287.n !== l.length) { memoRencontreesR287.src = l; memoRencontreesR287.n = l.length; memoRencontreesR287.set = new Set(l); }
+  return memoRencontreesR287.set;
+}
+function estPhotoReconnue(espece) {
   return !!progression[espece.nom_courant] && estIdentifiee(espece);
+}
+function estReconnue(espece) {
+  if (!progression[espece.nom_courant]) return false;
+  if (estIdentifiee(espece)) return true;
+  const r = rencontreesSansPhoto();
+  return !!r && r.has(espece.nom_courant);
 }
 
 // Le territoire dont l'accueil montre la progression (texte + barres par famille).
@@ -317,7 +336,7 @@ function afficherProgression() {
     const prochain = f.palier < PALIERS_FAMILLE.length
       ? ` · prochain rang : ${RANGS_FAMILLE[f.palier + 1]} à ${Math.round(PALIERS_FAMILLE[f.palier] * 100)} %`
       : "";
-    bouton.title = `${CLASSES[cle].nom} : ${f.especesId} / ${f.nb} espèces identifiées, ${f.medailles} palier${f.medailles > 1 ? "s" : ""} d'espèce (${Math.round(f.part * 100)} %)`
+    bouton.title = `${CLASSES[cle].nom} : ${f.especesId} / ${f.nb} espèces dans votre carnet, ${f.medailles} palier${f.medailles > 1 ? "s" : ""} d'espèce (${Math.round(f.part * 100)} %)`
                  + (metal ? ` · ${RANGS_FAMILLE[f.palier]}` : "") + prochain;
     bouton.innerHTML = `
       <svg viewBox="0 0 52 52" aria-hidden="true">
@@ -477,7 +496,8 @@ function especesJouables() { return ESPECES.filter(e => estRenseigne(e.photo)); 
 function especeDuJour() {
   // Étape 265 : l'espèce du jour n'est plus que sur la page d'accueil générale (la carte) : elle vient des territoires ouverts
   //   (étape 252 : elle venait du territoire où l'on est, quand elle était sur sa page)
-  const ouverts = territoiresOuverts(), toutes = especesJouables(), ici = toutes.filter(e => territoiresJeu(e).some(x => ouverts.includes(x)));
+  // Étape R288 : un trésor qu'on ne trouve qu'au bout de sa piste n'est jamais l'espèce du jour (la surprise de fin de lieu reste entière)
+  const ouverts = territoiresOuverts(), toutes = especesJouables().filter(e => typeof especeReserveeTresor !== "function" || !especeReserveeTresor(e)), ici = toutes.filter(e => territoiresJeu(e).some(x => ouverts.includes(x)));
   const liste = ici.length ? ici : toutes;
   if (!liste.length) return null;
   // Étape R183c (10/11, choix d'Aubin) : UNE seule espèce du jour, qui reste toute la journée ; une fois rencontrée, elle est

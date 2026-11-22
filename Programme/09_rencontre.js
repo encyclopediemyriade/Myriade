@@ -34,8 +34,8 @@ function choisirEspeceFocus(enJeu) {
 //   part : il est dans la carte (blocReperes, option confusion). L'entrée est choisie ici, avant le temps (une Rencontre
 //   qui s'ouvre par le cri ne le redemande pas) ; formeAvantOuverture (20) la reprend.
 function preparerTroisTemps(espece, options) {
-  const x = expeditionParId(options.expedition.id);
-  session.entree = !estIdentifiee(espece) && !options.expedition.revue && !options.expedition.rattrapage
+  const x = expeditionParId(options.expedition ? options.expedition.id : options.cadre);   // R287 (4B) : hors expédition, son cadre
+  session.entree = !!options.expedition && !estIdentifiee(espece) && !options.expedition.revue && !options.expedition.rattrapage
     && typeof FORMES_EXPEDITION !== "undefined" && FORMES_EXPEDITION && x ? entreeEspece(x, espece) : null;
   const { c } = choisirEtAppliquerTemps(espece, x);
   session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;   // 3A : à chaque Rencontre
@@ -70,8 +70,8 @@ function choisirEtAppliquerTemps(espece, x, sansCri) {
 }
 // Étape R282 : « Pas de son » pendant une Rencontre dont le temps est son cri → un autre temps, puis la suite de la Rencontre
 function tempsSansSon() {
-  if (!session || !session.physique || session.temps !== "cri" || !session.expedition) return false;
-  const x = expeditionParId(session.expedition.id);
+  if (!session || !session.physique || session.temps !== "cri" || !(session.expedition || session.cadre)) return false;
+  const x = expeditionParId(session.expedition ? session.expedition.id : session.cadre);   // R287 (4B)
   if (!x) return false;
   choisirEtAppliquerTemps(session.focus, x, true);
   nouvelleRencontre();
@@ -85,14 +85,15 @@ function demarrerFocus(imposee, options = {}) {
   dernierFocus = espece;
   // R264 (39), R280 (44.07), R281 : tout ce que sa Rencontre va montrer (photos, silhouette, empreinte, pictos) passe en tête
   //   de la file des chargements d'avance
-  if (espece && typeof prechargerRencontre === "function") prechargerRencontre(espece, options.expedition ? expeditionParId(options.expedition.id) : null, true);
+  if (espece && typeof prechargerRencontre === "function") prechargerRencontre(espece, options.expedition ? expeditionParId(options.expedition.id) : options.cadre ? expeditionParId(options.cadre) : null, true);
   else if (espece) prechargerPhotos(photosDe(espece).map(p => p.src));
   noterPartie();                                       // étape 106 : le jour et l'heure de jeu (badges)
   session = { focus: espece, total: QUESTIONS_FOCUS, faites: 0, bonnes: 0, numerotees: 0, bonnesNumerotees: 0, reprisesPosees: 0, reprisesJustes: 0,   // étape R101 : le score par sorte de question
               dejaAuCarnet: !!espece && estReconnue(espece),       // étape R277 (37.04) : était-elle au carnet avant cette Rencontre ?
               revisite: !!imposee && !options.expedition,          // étape 176 : lancée depuis la fiche
               expedition: options.expedition || null,              // étape 288 : l'étape 1 d'une expédition
-              physique: !!options.expedition,                      // étape 288 : seulement les caractéristiques physiques
+              physique: !!options.expedition || !!options.cadre,   // étape 288 : seulement les caractéristiques physiques ; R287 (4B) : aussi hors expédition
+              cadre: options.cadre || null,                         // étape R287 (4B) : l'expédition qui sert de cadre (elle ne compte pas)
               photoAvant: photoFin(territoires, territoireDeLaPartie(options)),   // étape M20 : familles du territoire où l'on joue                   // étape 97 : pour l'écran de fin
               bilan: [],
               avant: photoProgression(territoires, classes),
@@ -980,7 +981,9 @@ function afficherFicheSession(s) {
   const gain = trouvees - s.ficheAvant;
   const niveau = niveauTermine(espece);
   const medaille = niveau && !s.expedition ? dessinMedaille(MEDAILLES[niveau], niveau) : "";   // étape R130 : pas de médaille dans une expédition
-  const etat = estIdentifiee(espece) ? majuscule(statut(espece)) : `Pas encore reconnu${pe(espece).e} : ${pe(espece).elle} reviendra`;
+  // Étape R287 (1B, 3A) : le même mot que la fiche ; une photo pas encore reconnue est dite à part
+  const etat = estReconnue(espece) ? `${typeof motCarnet === "function" ? motCarnet(espece, niveau) : "Dans votre carnet"}${estIdentifiee(espece) ? "" : " · sa photo reviendra"}`
+             : `Pas encore dans votre carnet : ${pe(espece).elle} reviendra`;
   zone.style.setProperty("--couleur-classe", classeDe(espece).couleur);
   zone.innerHTML = `
     <div class="fiche-session-haut">
@@ -1065,6 +1068,7 @@ function tirerSelonRarete(liste, combien) {
 // Étape 206 (maquette C3-A, 18/10) : un ruban en haut à gauche de la photo — doré « ★ Rare », gris « Peu commun » ;
 //   rien pour une espèce commune (moins de bruit).
 function dessinRarete(espece) {
+  if (typeof RARETE_R288 !== "undefined" && RARETE_R288) return "";   // étape R288 (1A) : plus de ruban sur la photo, un petit mot sous le nom (32_rarete.js)
   const r = RARETES[espece.rarete_observation];
   if (!r || r.points === 1) return "";
   return `<span class="rarete ruban${r.points === 3 ? " rare" : ""}">${r.points === 3 ? "★ Rare" : "Peu commun"}</span>`;
@@ -1083,7 +1087,7 @@ function rencontreRare(s) {
   return !!(RENCONTRE_RARE && s && s.focus && s.dejaAuCarnet === false && estRare(s.focus) && estReconnue(s.focus));
 }
 function htmlRencontreRare(s) {
-  if (!rencontreRare(s)) return "";
+  if (!rencontreRare(s) || (typeof RARETE_R288 !== "undefined" && RARETE_R288)) return "";   // R288 (5D, 6D) : la carte « article » et l'encadré « Pourquoi » le remplacent
   const n = ESPECES.filter(e => estRare(e) && estReconnue(e)).length;
   return `<div class="rft-rare"><div class="rr-tete"><span class="rr-etiq">Une rencontre rare</span>`
     + `<span class="rr-compte" title="Espèces rares dans votre carnet"><b>${nombre(n)}</b> rare${n > 1 ? "s" : ""} au carnet</span></div>`
@@ -1091,6 +1095,10 @@ function htmlRencontreRare(s) {
 }
 // Le petit moment de fête (une fois) : le son d'un badge et quelques étoiles autour de l'encart
 function feterRencontreRare(s) {
+  if (typeof RARETE_R288 !== "undefined" && RARETE_R288) {   // étape R288 (5D) : une carte « article » au centre, une fois par espèce
+    if (rencontreRare(s) && !s.rareFetee && !s.tresor && typeof feterArticleRare === "function") { s.rareFetee = true; feterArticleRare(s.focus); }
+    return;
+  }
   if (!rencontreRare(s) || s.rareFetee) return;
   const z = document.querySelector("#fin-session .rft-rare");
   if (!z) return;
@@ -1123,13 +1131,15 @@ function premierDeFamille(cle) { return PREMIER_DE_FAMILLE[cle] || "La première
 function htmlRejointCarnet(s, phrase) {   // phrase : « Vous la reconnaissez désormais. », posée en tête de l'encart (elle n'est pas dite deux fois)
   if (!entreeAuCarnet(s)) return "";
   const e = s.focus, cl = classeDe(e), cle = e.onglet;
+  // Étape R287 (1B) : la Rencontre est faite, la photo pas encore reconnue : elle entre quand même au carnet, et on dit pourquoi
+  if (!estIdentifiee(e)) phrase = `${pe(e).Elle} entre dans votre carnet. Sa photo reviendra : vous ${pe(e).la} reconnaîtrez une prochaine fois.`;
   const fam = ESPECES.filter(x => x.onglet === cle && estReconnue(x));
   const n = fam.length, quand = x => (progression[x.nom_courant] && progression[x.nom_courant].decouverteLe) || 0;
   const avant = fam.filter(x => x !== e && estRenseigne(x.photo)).sort((a, b) => quand(b) - quand(a)).slice(0, VIGNETTES_CARNET).reverse();
   const fixe = (typeof animationsReduites === "function" && animationsReduites()) || !!s.carnetAnime;   // rien ne bouge (ou déjà fait : écran refait)
   const vig = x => `<span class="rc-vig">${imgMini(photoEsp(x), x.nom_courant)}</span>`;
   // Une espèce rare (R277, 37.04) : l'encart « Une rencontre rare » et celui du carnet n'en font qu'un (sinon l'écran défilerait)
-  const rare = rencontreRare(s), nr = rare ? ESPECES.filter(x => estRare(x) && estReconnue(x)).length : 0;
+  const rare = rencontreRare(s) && !(typeof RARETE_R288 !== "undefined" && RARETE_R288), nr = rare ? ESPECES.filter(x => estRare(x) && estReconnue(x)).length : 0;   // R288 : plus d'étiquette « Une rencontre rare » ici
   if (rare) phrase = PHRASE_RARE_COURTE;
   return `<div class="rft-carnet${rare ? " rft-rare" : ""}${fixe ? " rc-fini" : ""}" style="--couleur-classe:${cl.couleur}" data-n="${n}">`
     + (rare ? `<div class="rr-tete"><span class="rr-etiq">Une rencontre rare</span>`
@@ -1213,6 +1223,7 @@ function annoncerNouvelleEspece(espece, detail) {
             visuel: visuelEspece(espece, classeDe(espece).couleur) });
     return;
   }
+  if (typeof RARETE_R288 !== "undefined" && RARETE_R288 && typeof feterArticleRare === "function") { feterArticleRare(espece); return; }   // R288 (5D)
   feter({ etiquette: "Une rencontre rare", titre: espece.nom_courant,   // R277 (37.04) : les mêmes mots qu'en fin de Rencontre
           detail: PHRASE_RENCONTRE_RARE, son: "badge", pop,
           visuel: visuelEspece(espece, "or") });

@@ -176,7 +176,7 @@ function dessinerProgressionTerritoire(t, couleur) {
   zone.style.setProperty("--couleur-territoire", couleur);
   zone.innerHTML = `
     <div class="rang-empreintes">${PAS_SVG}<b>${r.empreintes}</b><small>empreinte${r.empreintes > 1 ? "s" : ""}</small></div>
-    <div class="rang-nom"><div class="etiq-jeu">Rang dans ce territoire</div><b>${r.nom}</b></div>
+    <div class="rang-nom"><div class="etiq-jeu">Rang dans ce territoire</div><b>${r.nom}</b>${typeof ligneRaretesTerritoire === "function" ? ligneRaretesTerritoire(t) : ""}</div>
     <div class="rang-recompense">${rec ? `<div class="rang-ligne"><span>${rec.cle === "rang" ? "Prochain rang" : "Prochaine récompense"} : <b>${rec.cle === "rang" ? rec.titre.replace(/^Rang /, "") : rec.titre}</b></span><small>${rec.reste}</small></div>
       <i class="jauge-jeu"><b style="width:${Math.round(100 * rec.part)}%"></b></i>${rec.cle === "rang" ? ligneProchainTerritoire() : ""}` : `<span>Toutes les récompenses de ce territoire sont gagnées. Bravo !</span>`}</div>`;
 }
@@ -400,7 +400,7 @@ function verifierMonteeRang(t, r) {
   if (!suivi) return;
   suivi.rangsTerritoire = suivi.rangsTerritoire || {};
   const avant = suivi.rangsTerritoire[t];
-  suivi.rangsTerritoire[t] = r.i;
+  suivi.rangsTerritoire[t] = avant === undefined ? r.i : Math.max(avant, r.i);   // R288 : jamais plus bas (pas de fausse fête si le compte baisse un instant)
   if (avant === undefined || r.i <= avant) { if (avant === undefined) sauvegarder(); return; }
   sauvegarder();
   if (r.i >= RANGS_EMPREINTES.length) return;          // étape PR1 : Gardien = la fête du site remarquable, déjà faite
@@ -713,7 +713,7 @@ function dessinerTerrMobile(t) {
         <div class="tm-plein"><div class="tm-etiq">${typeof miniFrance === "function" ? miniFrance(t) : ""}<span>Territoire</span></div>
           <h2>${echapper(t)}</h2><small>${lieux.length} lieux · ${nombre(especesDe(t).length)} espèces</small>
           <div class="tm-rang"><span class="tm-rang-etiq">Rang dans ce territoire : </span><b>${echapper(r.nom)}</b>${r.suivant ? ` · ${echapper(r.suivant.nom)} à ${nombre(r.suivant.seuil)}` : ""}</div>
-          <i class="tm-jauge"><b style="width:${Math.round(100 * (r.suivant ? r.suivant.part : 1))}%"></b></i></div>
+          <i class="tm-jauge"><b style="width:${Math.round(100 * (r.suivant ? r.suivant.part : 1))}%"></b></i>${typeof ligneRaretesTerritoire === "function" ? ligneRaretesTerritoire(t, "tm-raretes") : ""}</div>
         <div class="tm-reduit"><div class="tm-etiq"><span>Sur la carte</span></div><h2 class="tm-sel-nom"></h2><small>${echapper(t)}</small></div>
       </div>
       <div class="tm-carte">${carte}</div></div>
