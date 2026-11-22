@@ -1516,12 +1516,6 @@ function complementRencontre(espece, champ) {
   } catch (err) { exclus = []; }
   return complementFiche(espece, champ, exclus);
 }
-// Étape RF2 : le bilan de la rafale — chaque affirmation, juste ou non, et la phrase à retenir
-function bilanRafale(cartes) {
-  const n = cartes.filter(c => c.juste).length;
-  return `<div class="rafale-bilan"><div class="rafale-titre">Sa vie · ${n} sur ${cartes.length}</div><ul>${cartes.map(c =>
-    `<li class="${c.juste ? "ok" : "ko"}"><span class="rafale-marque" aria-hidden="true">${c.juste ? "✓" : "✗"}</span><span><span class="rafale-affirm">${c.verite ? `<b>${echapper(c.verite)}</b> · ` : ""}${echapper(c.texte)}</span>${echapper(c.expl || "")}</span></li>`).join("")}</ul></div>`;
-}
 // Étape RF2 (choix d'Aubin : « avancer d'un toucher ») : dans une Rencontre, après une bonne réponse (ou une carte de la rafale),
 //   toucher la photo ou la question passe à la suite, sans viser le bouton.
 document.addEventListener("click", ev => {

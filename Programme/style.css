@@ -235,20 +235,13 @@ body {
 .table-credits .vignette span.silh { background: transparent; }
 .table-credits .vignette span.silh img { object-fit: contain; }
 /* Étape ML3 : « Participer à Myriade » (trois cartes, un message préparé chacune, la liste des espèces sans photo) */
-.participer-cartes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0 0; }
-.participer-carte { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; background: var(--carte);
-                    border: 1px solid var(--trait); border-radius: 6px; }
-.participer-carte h3 { margin: 0; font-size: 17px; font-weight: 600; color: var(--territoire); }
-.participer-carte p { margin: 0 0 6px !important; font-size: 14.5px !important; color: var(--texte-doux); line-height: 1.5; flex: 1; }
-.participer-carte .bouton-apropos { align-self: flex-start; text-decoration: none; background: var(--papier); }
 .participer-attente { margin-top: 14px !important; }
 .participer-liste { list-style: none; margin: 0; padding: 4px 16px 10px; columns: 2; column-gap: 28px; font-size: 14px; }
 .participer-liste li { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 5px 0;
                        border-bottom: 1px solid #efe9de; break-inside: avoid; }
 .participer-liste li span small { display: block; color: var(--texte-doux); font-size: 12px; line-height: 1.3; }
 .participer-liste a { flex: none; font-size: 13px; color: var(--ocre-texte); }
-.participer-adresse { font-size: 14px !important; color: var(--texte-doux); margin-top: 12px !important; }
-@media (max-width: 760px) { .participer-cartes { grid-template-columns: 1fr; } .participer-liste { columns: 1; } }
+@media (max-width: 760px) {  .participer-liste { columns: 1; } }
 .pied-apropos { margin-top: 40px !important; font-size: 13px !important; color: var(--texte-doux); text-align: center; }
 @media (max-width: 640px) { .table-credits .licence { white-space: normal; } .table-credits .espece { width: auto; } }
 
@@ -2413,7 +2406,6 @@ h1, h2, h3, .gros-bouton b, .apropos h1, .pe-cote h1, .carte-rencontre h1 {
 .defi-texte small { display: block; font-size: 12px; color: var(--texte-doux); }
 .defi-gain { flex: none; font-size: 12px; font-weight: 700; color: var(--ocre-texte); }
 .defi.ok .defi-gain { color: #3E7B55; }
-.recompenses { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
 .recompense.cliquable { cursor: pointer; }
 .recompense.cliquable:hover .rang-ligne > span { text-decoration: underline; }
 .rec-pastille { display: inline-block; width: 11px; height: 11px; margin-right: 8px; border-radius: 50%; vertical-align: 0; background: var(--couleur-territoire, var(--territoire)); }
@@ -2830,18 +2822,6 @@ h1, h2, h3, .gros-bouton b, .apropos h1, .pe-cote h1, .carte-rencontre h1 {
    Étape 331 (28/10/2026) : les planches « Tout est lié » dans l'encyclopédie
    ================================================================== */
 .filtre-planches { margin-top: 10px; }
-.planches-intro { margin: 0 0 22px; color: var(--texte-doux); font-size: 15px; }
-.grille-planches { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
-.planche-ency { display: flex; flex-direction: column; padding: 0; text-align: left; border: 1px solid var(--trait); border-radius: 6px; overflow: hidden;
-  background: var(--carte); font: inherit; color: inherit; cursor: pointer; transition: transform .15s, box-shadow .15s; }
-.planche-ency:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(31,58,46,.12); }
-.planche-ency .pl-ph { display: block; height: 120px; overflow: hidden; background: var(--verrou, #E6DFCF); border-bottom: 3px solid var(--couleur-classe); }
-.planche-ency .pl-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.planche-ency .pl-corps { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px 12px; }
-.planche-ency .pl-corps b { font-family: Literata, Georgia, serif; font-weight: 600; font-size: 16px; color: var(--encre, #1F3A2E); }
-.planche-ency .pl-corps small { color: var(--texte-doux); font-size: 13px; }
-.planche-ency.a-jouer { cursor: default; opacity: .6; filter: grayscale(.7); }
-.planche-ency.a-jouer:hover { transform: none; box-shadow: none; }
 
 /* ==================================================================
    Étape 332 (28/10/2026) : Revoir 7
@@ -3616,15 +3596,7 @@ button.pastille-carnet:hover { background: #fff; }
   .acm-corps { padding: 6px 16px 16px; display: flex; flex-direction: column; gap: 12px; }
   .acm-corps p { margin: 0; font-size: 13.5px; color: #DCD5C4; }
   .acm-corps p b { color: #fff; }
-  .acm-ronds { display: flex; flex-wrap: wrap; gap: 6px; }
-  .acm-rond { position: relative; width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); background: #2A4A3B; box-sizing: border-box; overflow: hidden; }
-  .acm-rond img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .acm-rond.silh img { object-fit: contain; padding: 4px; box-sizing: border-box; filter: invert(1); opacity: .8; }
-  .acm-rond.fait { border-color: #6FB38A; }
   .acm-corps .couv-go { width: 100%; justify-content: center; }
-  .acm-territoire { margin: 20px 0 4px; }
-  .acm-territoire .couv-vous { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ocre-texte, #8A4F1C); font-weight: 600; }
-  .acm-territoire h2 { margin: 2px 0 0; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 22px; line-height: 1.2; color: #1F3A2E; }
   .acm-lien-carte { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 16px; border: 1px solid var(--trait);
     border-radius: 6px; background: var(--carte); font: inherit; font-size: 15px; font-weight: 600; color: #1F3A2E; cursor: pointer; text-align: left; }
   #ac-jour-mobile { margin: 0; }
@@ -3646,14 +3618,9 @@ button.pastille-carnet:hover { background: #fff; }
   .ency-loupe { width: 18px; height: 18px; flex: none; background: var(--texte-doux);
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='m16 16 4.5 4.5'/%3E%3C/svg%3E") center / contain no-repeat;
             mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='m16 16 4.5 4.5'/%3E%3C/svg%3E") center / contain no-repeat; }
-  .ency-segments { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; padding: 3px; border-radius: 8px; background: #E4DCC9; }
-  .ency-segments button { min-height: 40px; border: 0; border-radius: 6px; background: none; font: inherit; font-size: 14px; color: var(--texte-doux); cursor: pointer; padding: 0 6px; line-height: 1.2; }
-  .ency-segments button small { font-size: 12px; opacity: .85; }
-  .ency-segments button.actif { background: var(--carte); color: #1F3A2E; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
   .ency-mise .filtres { gap: 10px; }
   .ency-mise .filtres .titre-filtre { display: none; }
   .ency-mise .bloc-planches { display: none; }
-  .ency-mise.en-planches .liste-familles, .ency-mise.en-planches .option-decouvertes { display: none; }
   .ency-mise .option-decouvertes { justify-content: space-between; }
 }
 
@@ -3669,15 +3636,12 @@ button.pastille-carnet:hover { background: #fff; }
 /* Profil (ordinateur) : le prénom au-dessus du rang */
 .pg-prenom { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
 .pg-prenom-nom { font-family: "Literata", Georgia, serif; font-size: 24px; font-weight: 600; color: #1F3A2E; }
-.pg-prenom-modifier, .pg-cn-modifier { font: inherit; font-size: 13px; padding: 0; border: 0; background: none; color: var(--texte-doux); text-decoration: underline; cursor: pointer; }
 .pg-prenom-form { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
 .pg-prenom-form input { font: inherit; font-size: 16px; padding: 7px 10px; border: 1px solid var(--trait); border-radius: 6px; min-width: 0; flex: 1; max-width: 260px; }
 .pg-prenom-form button { font: inherit; font-size: 14px; font-weight: 600; padding: 7px 14px; border: 0; border-radius: 6px; background: #1F3A2E; color: #FBF8F1; cursor: pointer; }
 /* la carte de naturaliste et « Réglages et à propos » : seulement sur téléphone */
-.pg-apropos-mobile { display: none; }   /* R154 : la carte de naturaliste vaut aussi sur ordinateur (bloc « Étape R154 » en fin de fichier) */
+   /* R154 : la carte de naturaliste vaut aussi sur ordinateur (bloc « Étape R154 » en fin de fichier) */
 @media (max-width: 760px) {
-  .pg-apropos-mobile { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 50px; margin: 18px 0 0; padding: 0 16px;
-    border: 1px solid var(--trait); border-radius: 6px; background: var(--carte); font: inherit; font-size: 15px; color: var(--texte); cursor: pointer; }
   /* « Jeux » aligné comme les autres onglets */
   #onglet-jouer::after { display: block; line-height: 1.1; margin-top: -4px; }
   .prenom-bienvenue input { font-size: 16px; }
@@ -3713,7 +3677,6 @@ button.pastille-carnet:hover { background: #fff; }
   .acm-bande h2 { margin: 0; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 23px; line-height: 1.15; color: #fff; }
   .acm-bande small { font-size: 12.5px; color: #F3E2C6; }
   .acm-minicarte { width: 96px; height: 96px; flex: none; }
-  .acm-territoire { display: none; }
   .acm-titre small { display: flex; align-items: center; gap: 5px; }
   /* Lieu : la pastille du territoire remplace « Sortir vers… », l'épingle et « Lieu réel » au-dessus du nom */
   .lieu-hero:has(.rep-pastille) .lieu-sortir { display: none; }
@@ -3746,31 +3709,10 @@ button.pastille-carnet:hover { background: #fff; }
   .mai-bonjour h1 { margin: 0; font-family: "Literata", Georgia, serif; font-weight: 600; font-size: 28px; line-height: 1.15; color: #1F3A2E; }
   .mai-bonjour p { margin: 2px 0 0; font-size: 14px; color: #5E584B; }
   /* Le carnet */
-  .mai-carnet { background: #1F3A2E; color: #FBF8F1; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-  .mai-c-haut { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-  .mai-c-haut span { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #E9C9A0; }
-  .mai-c-haut small { font-size: 12px; color: #DCD5C4; }
-  .mai-c-nombre { display: flex; align-items: flex-end; gap: 10px; }
-  .mai-c-nombre > b { font-family: "Literata", Georgia, serif; font-size: 46px; font-weight: 600; line-height: 1; }
-  .mai-c-nombre > span { display: flex; flex-direction: column; font-size: 15px; padding-bottom: 4px; }
-  .mai-c-nombre small { font-size: 12.5px; color: #DCD5C4; }
-  .mai-jauge { display: block; height: 6px; border-radius: 3px; background: rgba(255,255,255,.18); overflow: hidden; }
-  .mai-jauge b { display: block; height: 100%; background: #E9C9A0; border-radius: 3px; }
-  .mai-c-recentes > small { display: block; font-size: 12px; color: #DCD5C4; margin-bottom: 6px; }
-  .mai-c-recentes > div { display: flex; gap: 6px; }
-  .mai-rond { flex: 0 1 46px; min-width: 0; aspect-ratio: 1; padding: 0; border: 2px solid #FBF8F1; border-radius: 50%; overflow: hidden; background: #2A4A3B; cursor: pointer; }
-  .mai-rond img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .mai-c-vide { margin: 0; font-size: 13px; color: #DCD5C4; }
   /* Reprendre le lieu */
   .mai-reprendre { display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px; border: 1px solid var(--trait, #CFC5AE); border-radius: 6px;
     background: #FBF8F1; font: inherit; color: inherit; text-align: left; cursor: pointer; }
   .mai-reprendre > img { width: 76px; height: 58px; object-fit: cover; border-radius: 4px; flex: none; }
-  .mai-r-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-  .mai-r-texte small { display: flex; align-items: center; gap: 4px; font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; font-weight: 700; color: #8A4F1C; }
-  .mai-r-texte small .rep-ic { width: 13px; height: 13px; }
-  .mai-r-texte b { font-size: 15px; font-weight: 600; color: #1F3A2E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .mai-r-texte em { font-style: normal; font-size: 12.5px; color: #5E584B; }
-  .mai-r-go { width: 40px; height: 40px; border-radius: 50%; background: #E9C9A0; color: #1F3A2E; display: grid; place-items: center; flex: none; }
   /* Défis du jour */
   .mai-defis { background: #FBF8F1; border: 1px solid var(--trait, #CFC5AE); border-radius: 6px; padding: 10px 12px 4px; }
   .mai-d-haut { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 2px; }
@@ -3785,18 +3727,9 @@ button.pastille-carnet:hover { background: #fff; }
   .mai-defi.ok .mai-d-texte { color: #5E584B; }   /* étape R218 : un défi réussi est coché, pas barré */
   .mai-defi > small { font-size: 12px; color: #5E584B; }
   /* Étape R218 (n° 17, choix E) : tuile compacte de l'espèce du jour, série des défis et plume */
-  .mai-tuile-jour { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 1px solid var(--trait, #CFC5AE);
-    border-radius: 6px; background: #FBF8F1; font: inherit; color: #1F3A2E; text-align: left; cursor: pointer; }
-  .mai-tj-photo { width: 56px; height: 56px; flex: none; border-radius: 6px; overflow: hidden; background: #E4DCC9; }
-  .mai-tj-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .mai-tj-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-  .mai-tj-texte small { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #8A4F1C; }
-  .mai-tj-texte b { font-size: 16px; font-weight: 600; line-height: 1.25; }
   .mai-tj-coche { color: #3E7B55; font-size: 14px; }
   .mai-tj-gain { font-size: 12.5px; color: #5E584B; }
   .mai-tj-gain svg, .mai-tj-gain .pas { width: 13px; height: 13px; vertical-align: -2px; }
-  .mai-tuile-jour .mai-r-go { width: 32px; height: 32px; font-size: 12px; }
-  .mai-tuile-jour.faite .mai-r-go { background: #EFE7D6; }
   .mai-serie { display: inline-flex; align-items: center; gap: 5px; }
   .mai-plume { display: inline-flex; color: #3E7B55; }
   .mai-plume.vide { color: #B9AF99; }
@@ -3808,13 +3741,6 @@ button.pastille-carnet:hover { background: #fff; }
   #mai-jour h2 { font-size: 22px; }
   #mai-jour p { font-size: 14.5px; }
   /* Liens vers le territoire et la carte */
-  .mai-liens { display: flex; flex-direction: column; gap: 8px; }
-  .mai-lien { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 14px; border: 1px solid var(--trait, #CFC5AE); border-radius: 6px;
-    background: #FBF8F1; font: inherit; color: #1F3A2E; text-align: left; cursor: pointer; }
-  .mai-lien > span:nth-of-type(1) { flex: 1; display: flex; flex-direction: column; font-size: 12px; color: #5E584B; }
-  .mai-lien b { font-size: 14.5px; color: #1F3A2E; font-weight: 600; }
-  .mai-lien .rep-ic { width: 20px; height: 20px; }
-  #mai-territoire .rep-ic { color: var(--couleur-territoire); }
 }
 
 /* Étape M11 (07/11) : le prénom ou pseudo se règle dans « Réglages de la partie » (À propos) */
@@ -3890,7 +3816,6 @@ button.pastille-carnet:hover { background: #fff; }
   .resume-fin-tel .rft-emp { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; color: var(--ocre-texte, #8A4F1C);
     background: var(--papier, #F3EEE2); border-radius: 6px; padding: 8px 10px; }
   .resume-fin-tel .rft-emp svg { width: 16px; height: 16px; flex: none; color: var(--ocre, #A8652A); }
-  .resume-fin-tel .rft-insec { white-space: nowrap; }
   .resume-fin-tel .rft-actions { padding-top: 16px; display: flex; flex-direction: column; gap: 10px; }
   .resume-fin-tel .rft-principal { font: inherit; font-weight: 600; font-size: 16px; min-height: 52px; border: 0; border-radius: 8px;
     background: var(--texte, #1F3A2E); color: #FBF8F1; width: 100%; cursor: pointer; }
@@ -3945,17 +3870,6 @@ button.pastille-carnet:hover { background: #fff; }
   .som-collection { display: flex; flex-direction: column; gap: 10px; width: 100%; }
   .som-famille { display: flex; flex-direction: column; gap: 8px; width: 100%; padding: 11px 12px 12px; text-align: left; font: inherit; color: var(--texte);
     background: var(--carte); border: 1px solid var(--trait); border-left: 4px solid var(--couleur-classe); border-radius: 8px; cursor: pointer; }
-  .som-haut { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-  .som-haut > b { font-family: "Literata", Georgia, serif; font-size: 16.5px; font-weight: 600; color: #1F3A2E; }
-  .som-haut > span { font-size: 13.5px; color: var(--texte-doux); white-space: nowrap; }
-  .som-haut > span b { color: #1F3A2E; }
-  .som-ronds { display: flex; align-items: center; gap: 4px; overflow: hidden; }
-  .som-ronds small { font-size: 12px; color: var(--texte-doux); margin-left: 2px; }
-  .som-rond { flex: none; width: 34px; height: 34px; border-radius: 50%; overflow: hidden; box-sizing: border-box; display: grid; place-items: center; }
-  .som-photo { border: 2px solid var(--carte); box-shadow: 0 0 0 1px var(--trait); }
-  .som-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .som-vide { background: #EDE6D6; border: 1px dashed #C9BFA8; }
-  .som-vide img { width: 24px; height: 24px; max-width: 24px; max-height: 24px; object-fit: contain; opacity: .33; }
   .som-jauge, .alb-jauge { display: block; height: 6px; border-radius: 3px; background: #E3DBC9; overflow: hidden; }
   .som-jauge i, .alb-jauge i { display: block; height: 100%; border-radius: 3px; background: #3E7B55; }
   .album-famille .alb-retour { align-self: flex-start; font: inherit; font-size: 14px; color: #1F3A2E; background: none; border: 0; padding: 0; min-height: 40px; text-decoration: underline; cursor: pointer; }
@@ -4013,11 +3927,6 @@ button.pastille-carnet:hover { background: #fff; }
   #vue-accueil #ac-progression.ac-progression { border-top: 1px solid var(--trait); border-radius: 6px; margin-top: 12px; }   /* le rang n'est plus collé à l'encart retiré */
 }
 /* Étape M23 (07/11) : sur l'Accueil du téléphone, « Reprendre le territoire » (mène à la page du territoire) */
-@media (max-width: 760px) {
-  .mai-rep-terr .mai-r-carte { width: 76px; height: 58px; flex: none; border-radius: 4px; background: var(--couleur-territoire); display: grid; place-items: center; overflow: hidden; }
-  .mai-rep-terr .mai-r-carte svg { width: 52px; height: 52px; }
-  .mai-rep-terr .mai-r-texte em { line-height: 1.3; }
-}
 
 /* ==================================================================
    Étape M25 (07/11/2026, choix d'Aubin : maquette A5) — téléphone : la page du territoire.
@@ -4208,7 +4117,6 @@ button.pastille-carnet:hover { background: #fff; }
 .pg-avatar-vide { display: grid; place-items: center; width: 100%; height: 100%; font-family: "Literata", Georgia, serif; font-size: 30px; color: #E9C9A0; }
 .pg-cn-qui { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .pg-cn-nom { font-family: "Literata", Georgia, serif; font-size: 26px; font-weight: 600; line-height: 1.1; overflow-wrap: anywhere; }
-.pg-cn-modifier { color: #C9D3CB; align-self: flex-start; font-size: 12.5px; }
 .pg-cn-rang { font-size: 13px; color: #DCD5C4; }
 .pg-cn-debut { font-size: 12px; color: #C9D3CB; }
 .pg-cn-prenom { display: flex; gap: 6px; }
@@ -4290,13 +4198,9 @@ button.pastille-carnet:hover { background: #fff; }
    ================================================================== */
 .prochain-terr { display: flex; align-items: center; gap: 0; margin-top: 10px; font-size: 13.5px; color: var(--texte); }
 .prochain-terr .rec-pastille { flex: none; }
-.ac-defis .regles-empreintes { align-self: start; padding: 14px 22px; }
-.regles-empreintes summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--ocre-texte); min-height: 28px; display: flex; align-items: center; }
-.regles-empreintes .jeu-sous.petit { margin: 8px 0 2px; line-height: 1.5; }
 .lieu-pied small.lieu-ouvre { color: var(--ocre-texte, #8A4F1C); font-size: 12.5px; }
 @media (max-width: 760px) {
   .tm-prochain-terr { margin: 4px 0 0; padding: 10px 14px; border: 1px solid var(--trait); border-radius: 6px; background: var(--carte); }
-  .ac-defis .regles-empreintes { padding: 4px 16px; }
   .tm-lieu.prochain .tm-txt small { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.3; }   /* la ligne « S'ouvre à l'argent… » tient en entier */
 }
 
@@ -4434,8 +4338,6 @@ button.pastille-carnet:hover { background: #fff; }
 .forme-chip svg { width: 12px; height: 12px; flex: none; }
 /* R169 · Par le cri */
 #reponses.forme-ecoute { display: flex; flex-direction: column; gap: 10px; }
-.fe-scene { position: relative; height: 210px; background: var(--territoire); border-radius: 6px; }
-.fe-scene .anneau-ecoute { width: 110px; height: 110px; margin: -55px 0 0 -55px; }
 .fe-aide { margin: 4px 0 0; font-size: 14px; color: var(--texte-doux); }
 .fe-petit { margin: 0; font-size: 12.5px; color: var(--texte-doux); text-align: center; }
 .fe-go { width: 100%; min-height: 48px; }
@@ -4503,7 +4405,6 @@ button.pastille-carnet:hover { background: #fff; }
   .fp-especes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
   .fp-espece img { height: 72px; }
   .fp-nom { font-size: 11.5px; padding: 4px 5px; }
-  .fe-scene { height: 170px; }
 }
 @media (max-width: 760px) {
   /* R171-R172 : comme pendant les autres questions (M3), les onglets du bas se retirent pendant la planche et le lien du lieu */
@@ -4536,11 +4437,7 @@ button.pastille-carnet:hover { background: #fff; }
    ================================================================== */
 .trait-taille .seul small, .retour-taille .seul small { font-size: inherit; color: var(--texte); letter-spacing: 0; text-transform: none; }
 /* Étape R180 : encyclopédie — plus de « ? ? ? » ; bouton « Seulement mes espèces découvertes » (album du téléphone) */
-.alb-mes-especes { display: none; }
 @media (max-width: 760px) {
-  .alb-mes-especes { display: inline-flex; align-items: center; min-height: 34px; margin: 8px 0 6px; padding: 0 12px; border: 1px solid var(--trait);
-    border-radius: 17px; background: var(--carte); font: inherit; font-size: 13px; color: var(--texte); cursor: pointer; }
-  .alb-mes-especes[aria-pressed="true"] { background: #1F3A2E; border-color: #1F3A2E; color: #FBF8F1; }
   .alb-vide > .alb-sil { padding: 0; }
   .alb-rien { grid-column: 1 / -1; color: var(--texte-doux); font-size: 14px; margin: 8px 0; }
 }
@@ -4574,8 +4471,6 @@ button.pastille-carnet:hover { background: #fff; }
 .pgv-med.argent { background: conic-gradient(#b9c0c4, #eef1f2, #8f989d, #eef1f2, #b9c0c4); }
 .pgv-med.bronze { background: conic-gradient(#b07a4a, #e9c3a0, #8a5a32, #e9c3a0, #b07a4a); }
 .pgv-med img, .pgv-med .pgv-ico { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--territoire); box-sizing: border-box; object-fit: cover; display: block; }
-.pgv-med .pgv-ico { background: var(--carte); display: flex; align-items: center; justify-content: center; padding: 12px; }
-.pgv-med .pgv-ico svg { width: 100%; height: 100%; }
 .pgv-med.petit { width: 48px; height: 48px; padding: 0; background: none; }
 .pgv-med.petit img { filter: grayscale(1); opacity: .55; }
 .pgv-vide { margin: 0; font-size: 14px; color: #d9e2da; }
@@ -4586,13 +4481,7 @@ button.pastille-carnet:hover { background: #fff; }
 .pgv-presque-t small { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #e8c9a0; }
 .pgv-voir { color: #e8c9a0; font-size: 13px; font-weight: 600; }
 .pgv-bloc { display: flex; flex-direction: column; gap: 10px; }
-.pgv-chiffres { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .pgv-chiffre, .pgv-encart, .pgv-contrib { background: var(--carte); border: 1px solid var(--trait); border-radius: 12px; padding: 12px; }
-.pgv-chiffre { display: flex; flex-direction: column; gap: 4px; }
-.pgv-chiffre b { font-family: Literata, Georgia, serif; font-size: 30px; line-height: 1; }
-.pgv-chiffre span { font-size: 13px; line-height: 1.35; }
-.pgv-chiffre small { display: block; color: var(--texte-doux); font-size: 13px; }
-.pgv-etiq { margin: 0 0 10px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ocre-texte); }
 .pgv-dits { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .pgv-dits li { display: flex; gap: 12px; align-items: center; font-size: 14px; line-height: 1.35; }
 .pgv-dits li[data-espece] { cursor: pointer; }
@@ -4601,11 +4490,6 @@ button.pastille-carnet:hover { background: #fff; }
 .pgv-heure { background: var(--territoire) center / 26px no-repeat; }
 .pgv-heure.matin, .pgv-heure.apresmidi { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cg fill='none' stroke='%23e8c9a0' stroke-width='1.7' stroke-linecap='round'%3E%3Ccircle cx='13' cy='13' r='5'/%3E%3Cpath d='M13 2v3M13 21v3M2 13h3M21 13h3M5 5l2 2M19 19l2 2M5 21l2-2M19 7l2-2'/%3E%3C/g%3E%3C/svg%3E"); }
 .pgv-heure.soir, .pgv-heure.nuit { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath d='M19 4a9 9 0 1 0 4 15 7 7 0 0 1-4-15Z' fill='none' stroke='%23e8c9a0' stroke-width='1.7'/%3E%3C/svg%3E"); }
-.pgv-contrib { display: flex; gap: 14px; align-items: center; border-style: dashed; border-color: #b9ad92; }
-.pgv-contrib b { font-family: Literata, Georgia, serif; font-size: 30px; line-height: 1; color: var(--ocre-texte); flex: none; }
-.pgv-contrib span { font-size: 14px; line-height: 1.35; }
-.pgv-contrib strong { display: block; }
-.pgv-contrib small { display: block; color: var(--texte-doux); font-size: 13px; }
 .pgv-rencontres { display: flex; gap: 8px; }
 .pgv-rencontres button { width: 66px; height: 66px; padding: 0; border: 0; border-radius: 10px; overflow: hidden; cursor: pointer; flex: none; background: var(--verrou); }
 .pgv-rencontres img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -4615,22 +4499,7 @@ button.pastille-carnet:hover { background: #fff; }
 .pgv-logo .o { fill: var(--ocre); }
 
 /* ---------- Étape R183b (10/11) : accueil du téléphone — la carte « Reprendre » (maquette E sur fond vert), sans carnet ---------- */
-.mai-reprendre.mai-rep-e { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; overflow: hidden; border: 0; border-radius: 14px;
-  background: var(--territoire, #1F3A2E); color: #FBF8F1; text-align: left; cursor: pointer; font: inherit; width: 100%; }
-.mai-e-haut { display: flex; height: 150px; }
-.mai-e-carte { width: 44%; flex: none; padding: 12px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; }
-.mai-e-carte svg { width: 100%; height: 100%; display: block; }
-.mai-e-photo { flex: 1; min-width: 0; background: #2a4a3b; }
-.mai-e-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.mai-e-bas { display: flex; align-items: center; gap: 12px; padding: 12px 14px 14px; border-top: 4px solid var(--couleur-territoire, #8b3a4a); }
-.mai-e-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-.mai-e-texte small { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #E9C9A0; }
-.mai-e-texte b { font-family: "Literata", Georgia, serif; font-size: 18px; font-weight: 600; line-height: 1.2; color: #FBF8F1; }
-.mai-e-texte em { font-style: normal; font-size: 13px; color: #DCD5C4; }
-.mai-e-jauge { display: block; height: 5px; border-radius: 3px; background: rgba(251,248,241,.22); overflow: hidden; margin-top: 4px; }
-.mai-e-jauge b { display: block; height: 100%; background: #E9C9A0; }
 /* Étape R183c : l'espèce du jour, une seule par jour, « Rencontrée » une fois faite (+2 empreintes) */
-.ac-rencontree { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 10px; background: var(--bon); color: #fff; letter-spacing: .04em; text-transform: none; font-weight: 600; }
 .ac-gain-jour { display: inline-flex; align-items: center; gap: 3px; margin-left: 6px; color: var(--ocre-texte); letter-spacing: 0; text-transform: none; font-weight: 600; }
 .ac-gain-jour svg { width: 13px; height: 13px; fill: currentColor; }
 .ac-jour-fait { margin: 4px 0 8px; font-size: 14px; color: var(--texte-doux); }
@@ -4683,17 +4552,6 @@ button.pastille-carnet:hover { background: #fff; }
 .qui-ensuite-texte small { color: var(--texte-doux, #5a6a60); font-size: .85rem; }
 
 /* ===== Étape RF2 : la rafale « Sa vie · vrai ou faux », « Et aussi », la fin de Rencontre (maquette 7B) ===== */
-.rafale-bilan { display: block; margin-top: 4px; }
-.rafale-bilan .rafale-titre { display: block; font-weight: 600; color: var(--texte, #1f3a2e); margin-bottom: 6px; }
-.rafale-bilan ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.rafale-bilan li { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 10px; background: var(--carte, #fbf8f1); border: 1px solid var(--trait, #cfc5ae); }
-.rafale-bilan li.ok { border-color: #8fbf9c; background: #eef5ef; }
-.rafale-bilan li.ko { border-color: #d9b48f; background: #fbf1e6; }
-.rafale-bilan .rafale-marque { flex: none; width: 20px; font-weight: 700; color: var(--bon, #3e7b55); }
-.rafale-bilan li.ko .rafale-marque { color: var(--ocre, #a8652a); }
-.rafale-bilan .rafale-affirm { display: block; font-style: italic; color: var(--texte-doux, #5a6a60); font-size: .92em; margin-bottom: 2px; }
-.retour .et-aussi { display: block; margin-top: 6px; }
-.retour .et-aussi b { color: var(--ocre-texte, #8a4f1c); font-weight: 600; }
 .resume-fin-tel .rft-grande { position: relative; border-radius: 12px; overflow: hidden; height: 210px; margin: 2px 0 2px; }
 .resume-fin-tel .rft-grande img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .resume-fin-tel .rft-grande-bas { position: absolute; left: 0; right: 0; bottom: 0; padding: 34px 14px 12px; display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;
@@ -4875,33 +4733,27 @@ button.pastille-carnet:hover { background: #fff; }
 .at-carte-france svg { display: block; width: 100%; height: auto; }
 .at-terr { stroke-width: 2.5; stroke-linejoin: round; cursor: pointer; }
 .at-terr.ferme { cursor: default; }
-.at-prochain-trait { fill: none; stroke: #A8652A; stroke-width: 6; stroke-dasharray: 14 10; stroke-linejoin: round; pointer-events: none; }
 .at-nom { font-family: "Work Sans", system-ui, sans-serif; font-weight: 600; fill: #fff; text-anchor: middle; pointer-events: none; stroke-width: 7px; stroke-linejoin: round; paint-order: stroke; }
 .at-nom.ferme { fill: #3F453C; font-weight: 500; }
-.at-ici circle { fill: #FBF8F1; stroke: #1F3A2E; stroke-width: 2; } .at-ici path { fill: none; stroke: #1F3A2E; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.at-ici { pointer-events: none; }
+ 
 .at-titre { margin: 6px 0 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--texte-doux); font-family: "Work Sans", system-ui, sans-serif; }
 .at-liste, .at-lieux, .at-plus-tard ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .at-ligne { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--trait); border-radius: 10px; background: var(--carte); font: inherit; color: var(--texte); text-align: left; cursor: pointer; }
 .at-pastille { width: 16px; height: 16px; flex: none; border-radius: 50%; border: 2px solid transparent; box-sizing: border-box; display: inline-block; }
-.at-ligne-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.at-ligne-corps b { font-size: 15px; } .at-ligne-corps b small { font-weight: 400; color: var(--texte-doux); font-size: 13px; }
-.at-ligne-corps > small { font-size: 12.5px; color: var(--texte-doux); }
+ 
 .at-jauge { display: block; height: 5px; border-radius: 99px; background: #E6E0D2; overflow: hidden; }
 .at-jauge em { display: block; height: 100%; border-radius: 99px; }
 .at-fleche { font-size: 22px; color: var(--texte-doux); }
 .at-suivant { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px dashed #C9B48F; border-radius: 10px; }
 .at-suivant > span:last-child { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
 .at-suivant small { color: var(--texte-doux); font-size: 12.5px; }
-.at-plus-tard summary { min-height: 44px; display: flex; align-items: center; padding: 0 14px; border: 1px solid var(--trait); border-radius: 10px; cursor: pointer; color: var(--texte-doux); font-size: 14px; }
-.at-plus-tard ul { padding: 10px 14px 0; gap: 6px; } .at-plus-tard li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--texte-doux); }
+ 
 /* la carte du territoire : plus grande, le relief sous les points */
 .at-carte-terr .carte-lieux { margin: 0; }
 .at-carte-terr .carte-lieux svg { max-height: 360px; }
 .at-carte-terr .cl-voisin { stroke: #ECE5D6; stroke-width: 2; }
 .at-carte-terr .cl-terr { stroke: color-mix(in srgb, var(--couleur-t) 14%, #FBF8F1); stroke-width: 3; stroke-linejoin: round; }   /* bouche les jours entre les morceaux du contour */
 .at-carte-terr .cl-terr-trait { stroke-width: 7; }
-.at-choix .sentier-lieu.court { flex: none; margin: 4px 10px 0; }
 .at-relief { opacity: .9; pointer-events: none; }
 .at-carte-terr .cl-lieu { cursor: pointer; }
 .at-carte-terr .cl-lieu.choisi .cl-pt, .at-carte-terr .cl-lieu.choisi .cl-site { stroke: #1F3A2E; stroke-width: 4; }
@@ -4909,16 +4761,6 @@ button.pastille-carnet:hover { background: #fff; }
 .at-carte-terr .cl-lieu:not(.choisi) .cl-nom:not(.survol) { opacity: 0; }
 .at-carte-terr .cl-lieu.choisi .cl-nom { opacity: 1; }
 /* le lieu choisi */
-.at-choix { background: var(--carte); border: 1px solid var(--trait); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
-.at-choix:empty { display: none; }
-.at-choix-haut { display: flex; gap: 12px; align-items: center; }
-.at-choix-ph { width: 64px; height: 64px; flex: none; border-radius: 8px; overflow: hidden; background: #E4E0D3; }
-.at-choix-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.at-etiq { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; color: var(--texte-doux); }
-.at-choix h2 { margin: 2px 0 0; font-family: Literata, Georgia, serif; font-size: 19px; line-height: 1.2; }
-.at-pays { color: var(--texte-doux); font-size: 12.5px; }
-.at-choix p { margin: 0; font-size: 14px; }
-.at-aller { min-height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; border: 0; border-radius: 10px; background: var(--couleur-t, #1F3A2E); color: #fff; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; }
 .at-lieu-ligne { width: 100%; display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 12px; border: 1px solid transparent; border-radius: 10px; background: none; font: inherit; color: var(--texte); text-align: left; cursor: pointer; }
 .at-lieu-ligne.choisi { background: var(--carte); border-color: var(--trait); }
 .at-lieu-ligne > span:last-child { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
@@ -4985,12 +4827,7 @@ button.pastille-carnet:hover { background: #fff; }
 .en-rep { display: flex; align-items: center; gap: 12px; font: inherit; color: inherit; cursor: pointer; }
 .en-rep img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex: none; }
 .en-texte { flex: 1; font-size: 15px; }
-.en-case { width: 20px; height: 20px; flex: none; border: 2px solid var(--trait); border-radius: 4px; box-sizing: border-box; display: grid; place-items: center; font-size: 12px; }
 .en-rep.coche { border: 2px solid var(--ocre); background: #fbf3e6; }
-.en-rep.coche .en-case { background: var(--ocre); border-color: var(--ocre); color: #fff; }
-.en-rep.coche .en-case::after { content: "✓"; }
-.en-rep.juste .en-case { background: var(--bon); border-color: var(--bon); color: #fff; }
-.en-rep.juste .en-case::after { content: "✓"; }
 .en-rep.oubliee { border-style: dashed; }
 .en-rep:disabled { cursor: default; color: inherit; }
 .en-carte .fp-pied { gap: 10px; }
@@ -5090,7 +4927,6 @@ button.pastille-carnet:hover { background: #fff; }
 .dfx-feuille h2 { font-family: var(--titre, Georgia, serif); margin: 0; font-size: 1.35rem; }
 .dfx-feuille p { margin: 0; }
 .dfx-feuille > small { color: var(--texte-doux); }
-.dfx-porte { border-color: var(--territoire, #1f3a2e); font-weight: 600; }
 
 /* ---------- Étape E2-9 : l'expédition à deux portes ---------- */
 .dfx-portes { background: var(--carte); border: 1px solid var(--trait); border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
@@ -5188,24 +5024,11 @@ button.pastille-carnet:hover { background: #fff; }
 .at-ligne-ferme { width: 100%; display: flex; align-items: center; gap: 12px; min-height: 44px; font: inherit; color: inherit; text-align: left; cursor: pointer; }
 button.at-suivant { background: none; }
 button.at-suivant > span:nth-child(2) { flex: 1; }
-.at-plus-tard li { display: block; }
-.at-plus-tard .at-ligne-ferme { padding: 4px 0; border: 0; background: none; color: var(--texte-doux); font-size: 14px; }
-.at-plus-tard .at-ligne-ferme > span:nth-child(2) { flex: 1; }
 .at-terr.ferme { cursor: pointer; }
 .at-badge-apercu { display: inline-flex; align-items: center; gap: 5px; flex: none; padding: 5px 10px; border: 1.5px solid var(--couleur-t); border-radius: 99px; color: var(--couleur-t); font-size: 12.5px; font-weight: 600; }
 .at-badge-apercu svg, .at-etiq svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
-.at-etiq svg { vertical-align: -2px; margin-right: 4px; }
 .at-bandeau-apercu { margin: 0; padding: 10px 14px; border-radius: 10px; background: color-mix(in srgb, var(--couleur-t) 12%, #fff); font-size: 13.5px; line-height: 1.45; }
 /* le portrait du territoire */
-.at-portrait { background: var(--carte); border: 1px solid var(--trait); border-radius: 12px; overflow: hidden; }
-.at-portrait > img { display: block; width: 100%; height: 180px; object-fit: cover; }
-.at-portrait-corps { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; }
-.at-portrait-leg { font-size: 11.5px; color: var(--texte-doux); }
-.at-phrase { margin: 0; font-family: Literata, Georgia, serif; font-size: 18px; line-height: 1.3; font-weight: 500; }
-.at-chiffres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.at-chiffres div { display: flex; flex-direction: column; gap: 2px; }
-.at-chiffres b { font-family: Literata, Georgia, serif; font-size: 18px; line-height: 1.15; }
-.at-chiffres small { font-size: 11.5px; line-height: 1.3; color: var(--texte-doux); }
 /* les espèces emblématiques : photo et nom */
 .at-emblemes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 8px; }
 .at-emb { display: flex; flex-direction: column; gap: 5px; padding: 0; border: 0; background: none; font: inherit; color: var(--texte); text-align: left; font-size: 12px; line-height: 1.25; cursor: pointer; }
@@ -5214,8 +5037,6 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
 .at-emb-ok { position: absolute; right: 4px; bottom: 4px; width: 20px; height: 20px; border-radius: 50%; background: #3E7B55; color: #fff; font-style: normal; font-size: 12px; display: grid; place-items: center; }
 .at-note { margin: -4px 0 0; font-size: 12.5px; color: var(--texte-doux); }
 /* les lieux : photo en aperçu, l'espèce du lieu */
-.at-lp-ph { width: 44px; height: 44px; flex: none; border-radius: 8px; overflow: hidden; background: #E4E0D3; }
-.at-lp-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .at-lieu-ligne .at-lieu-ici { color: var(--texte); }
 /* la fiche d'un lieu à venir */
 .at-lieu-phrase { margin: 0; font-size: 14px; line-height: 1.45; }
@@ -5653,7 +5474,6 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
   .rft-ordi .rft-emp { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; color: var(--ocre-texte, #8A4F1C);
     background: var(--papier, #F3EEE2); border-radius: 6px; padding: 9px 12px; }
   .rft-ordi .rft-emp svg { width: 16px; height: 16px; flex: none; color: var(--ocre, #A8652A); }
-  .rft-ordi .rft-insec { white-space: nowrap; }
   .rft-ordi .rft-actions { padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
   .rft-ordi .rft-principal { font: inherit; font-weight: 600; font-size: 16px; min-height: 50px; border: 0; border-radius: 8px;
     background: var(--texte, #1F3A2E); color: #FBF8F1; width: 100%; cursor: pointer; }
@@ -5910,7 +5730,6 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
 .pistes-suivre .ps-ligne b { display: block; font-weight: 600; font-size: 14px; color: #1F3A2E; }
 .pistes-suivre .ps-piste b { color: var(--ocre-texte); }
 .pistes-suivre .ps-ligne small { display: block; margin: 0; font-size: 13px; line-height: 1.3; color: var(--texte); }
-.pistes-suivre .ps-ligne small.ps-lieu { font-size: 12.5px; color: var(--texte-doux); }
 .pistes-suivre .ps-ligne em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--ocre-texte); white-space: nowrap; }
 .pistes-suivre .ps-photo { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 2px solid var(--carte); box-shadow: 0 0 0 1px var(--trait); box-sizing: border-box; }
 .pistes-suivre .ps-jauge { display: block; height: 5px; margin-top: 5px; border-radius: 3px; background: #E3DBC9; overflow: hidden; }
@@ -6057,8 +5876,6 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
 .at-prochain-etiq { pointer-events: none; }
 .at-prochain-etiq rect { fill: #A8652A; }
 .at-prochain-etiq text { fill: #fff; font-family: "Work Sans", system-ui, sans-serif; font-weight: 600; letter-spacing: 1px; }
-.at-ici .at-epingle { fill: #1F3A2E; stroke: #FBF8F1; stroke-width: 4; }
-.at-ici .at-maison { fill: none; stroke: #FBF8F1; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 /* 2A · les cartes postales */
 .at-postale { border: 1px solid var(--trait); border-radius: 14px; overflow: hidden; background: var(--carte); }
 .at-ligne.at-postale-haut { position: relative; display: block; height: 118px; padding: 0; border: 0; border-radius: 0; background: #C9C2B0; overflow: hidden; }
@@ -6124,7 +5941,6 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 .fl-choix.deux-par-ligne .en-rep { flex-direction: column; justify-content: center; gap: 6px; padding: 8px 6px; text-align: center; min-height: 0; }
 .fl-choix.deux-par-ligne .en-rep img { width: 52px; height: 52px; }
 .fl-choix.deux-par-ligne .en-texte { font-size: 14px; line-height: 1.25; overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
-.fl-choix.deux-par-ligne .en-case { position: absolute; top: 6px; right: 6px; }
 .fl-choix.deux-par-ligne .en-rep { position: relative; }
 .apf-choix.deux-par-ligne { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
@@ -6177,8 +5993,6 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
    fixé en bas sur téléphone (juste au-dessus des onglets), avec la vignette de l'espèce. Les espèces grisées sans ✓
    portent le mot « à la fin ». Toucher une espèce entourée la choisit : elle est cerclée de vert et le bouton change. */
 .resume-fin-tel .rft-principal.rft-avec-vignette { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 14px; }
-.resume-fin-tel .rft-principal .rft-vignette { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none;
-  border: 2px solid #FBF8F1; }
 .resume-fin-tel .rft-principal.rft-avec-vignette span { text-align: left; line-height: 1.25; }
 .resume-fin-tel .qui-ensuite-bande .rft-rond.qe-plus-tard { margin-bottom: 15px; }
 .resume-fin-tel .qe-mot { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 2px; white-space: nowrap;
@@ -6470,8 +6284,6 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 /* 42.04 (3A) · la carte de France : le territoire en cours a un contour clair plus épais et l'étiquette « EN COURS » sous son nom */
 .at-ici-contour { fill: none; stroke: #FBF8F1; stroke-width: 20; stroke-linejoin: round; pointer-events: none; }
 .at-ici-fond { stroke-width: 2.5; stroke-linejoin: round; pointer-events: none; }
-.at-ici-etiq-carte rect { fill: #1F3A2E; stroke: #FBF8F1; stroke-width: 3; }
-.at-ici-etiq-carte text { fill: #fff; stroke: none; font-family: "Work Sans", system-ui, sans-serif; font-weight: 600; letter-spacing: 1px; }
 /* 43.02 (2A) · « À suivre » : la piste a le style des deux lignes du dessus ; une grande silhouette foncée sur la couleur de sa famille */
 .pistes-suivre .ps-ligne.ps-piste { border-color: var(--trait); background: var(--carte); }
 .pistes-suivre .ps-piste b { color: #1F3A2E; }
@@ -6657,9 +6469,6 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 /* la photo qui vole (une copie posée par-dessus l'écran le temps du mouvement) */
 .rc-vol { position: fixed; left: 0; top: 0; width: 1px; height: 1px; object-fit: cover; z-index: 60; pointer-events: none; box-shadow: 0 8px 20px rgba(31,58,46,.3); }
 /* quand la place manque (petit téléphone) : seulement la place de la nouvelle, contre le compte */
-.rft-carnet.rc-compact { gap: 5px; padding: 7px 10px; }
-.rft-carnet.rc-compact .rc-vig:not(.rc-place) { display: none; }
-.rft-carnet.rc-compact .rc-place { width: 38px; height: 38px; }
 /* une rencontre rare : le même encart, avec le bord ocre et l'étiquette de R277 */
 .rft-carnet.rft-rare { border: 2px solid var(--ocre); padding: 8px 12px 9px; gap: 5px; box-shadow: 0 6px 14px rgba(31,58,46,.14); }
 .rft-carnet.rft-rare .rc-phrase { font-size: 13.5px; color: var(--texte-doux); }

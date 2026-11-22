@@ -365,8 +365,6 @@ function formeAPoser(e, x) {
 }
 // Appelé quand la rangée « Ses autres formes » est affichée pour l'espèce de la Rencontre
 function noterFormeMontree(espece) { if (session && session.focus === espece) session.autreFormeMontree = true; }
-// La question peut-elle être posée maintenant ?
-function formePosable() { return !!(session && session.autreFormeQ && session.autreFormeMontree && !session.autreFormeFaite); }
 function poserQuestionForme(espece) {
   const f = session && session.autreFormeQ;
   enTete(espece, true, false, f ? QUESTION_FORME[f.sujet][0] : "");

@@ -42,44 +42,6 @@ function favorite() {
 }
 const ETOILE = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></svg>`;
 
-// ---- Les petits dessins des badges : traits fins, dans un carré de 24 ----
-// (Les badges d'une famille reprennent la silhouette des anneaux, voir SILHOUETTES.)
-const ICONES_BADGES = {
-  cadres:   `<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/>`,
-  fiche:    `<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/>`,
-  son:      `<path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/>`,
-  traces:   `<ellipse cx="8" cy="15" rx="3" ry="4"/><circle cx="5" cy="9" r="1.2"/><circle cx="8" cy="7.5" r="1.2"/><circle cx="11" cy="9" r="1.2"/><ellipse cx="17" cy="11" rx="2.6" ry="3.4"/><circle cx="15" cy="5.5" r="1"/><circle cx="17.5" cy="4.5" r="1"/><circle cx="20" cy="5.5" r="1"/>`,
-  portrait: `<rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M7 18c1.5-3 8.5-3 10 0"/>`,
-  boussole: `<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>`,
-  rose:     `<circle cx="12" cy="12" r="2"/><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/>`,
-  cible:    `<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>`,
-  oeil:     `<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="3"/>`,
-  bouclier: `<path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/>`,
-  soleil:   `<path d="M4 17h16"/><path d="M7 17a5 5 0 0 1 10 0"/><path d="M12 7v2M5.5 10.5l1.4 1.4M18.5 10.5l-1.4 1.4"/>`,
-  lune:     `<path d="M19 14.5A7.5 7.5 0 1 1 9.5 5a6 6 0 0 0 9.5 9.5z"/>`,
-  calendrier:`<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>`,
-  saisons:  `<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>`,
-  pas:      `<ellipse cx="9" cy="8" rx="3" ry="4.5"/><ellipse cx="15" cy="16" rx="3" ry="4.5"/>`,
-  carte:    `<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>`,
-  montagne: `<path d="M2 20l7-12 4 6 3-4 6 10z"/><path d="M7.5 10.5l1.5 1 1.5-1"/>`,
-  flocon:   `<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 6.5l2.5-2M9.5 19.5L12 17.5l2.5 2"/>`,
-  herbe:    `<path d="M5 21c0-6 2-10 5-13M12 21c0-7 0-11 0-16M19 21c0-6-2-10-5-13"/>`,
-  insecte:  `<ellipse cx="12" cy="14" rx="3.5" ry="5.5"/><circle cx="12" cy="6.5" r="2"/><path d="M8.5 11L4 9M8.5 15H4M9 18l-4 2M15.5 11L20 9M15.5 15H20M15 18l4 2"/>`,
-  dormeur:  `<path d="M17 14.5A6.5 6.5 0 1 1 8.5 6a5 5 0 0 0 8.5 8.5z"/><path d="M15 4h4l-4 4h4"/>`,
-  venin:    `<path d="M12 3c3 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-6.5 6-11z"/>`,
-  feuillage:`<path d="M12 21V11"/><path d="M12 11C7 11 4 8 4 3c5 0 8 3 8 8zM12 13c5 0 8-3 8-8-5 0-8 3-8 8z"/>`,
-  sommet:   `<path d="M2 20l10-16 10 16z"/><path d="M8.5 10l3.5 2 3.5-2"/>`,
-  main:     `<path d="M5 20c2-4 4-5 7-5h4"/><path d="M12 15c0-5 3-8 8-9 0 5-3 8-8 9z"/>`,
-  ensemble: `<circle cx="7" cy="9" r="2.5"/><circle cx="17" cy="9" r="2.5"/><circle cx="12" cy="7" r="2.8"/><path d="M2.5 19c.5-3 2.5-5 4.5-5M21.5 19c-.5-3-2.5-5-4.5-5M7 20c.5-4 2.5-6 5-6s4.5 2 5 6"/>`,
-  vague:    `<path d="M2 10c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0M2 15c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0"/>`,
-  sapin:    `<path d="M12 2l5 7h-3l4 6h-4l3 4H7l3-4H6l4-6H7z"/><path d="M12 19v3"/>`,
-  rocher:   `<path d="M3 20l3-8 4-3 4 2 3-2 4 11z"/>`,
-  riviere:  `<path d="M7 2c4 4-4 8 0 12s-4 6 0 8M15 2c4 4-4 8 0 12s-4 6 0 8"/>`,
-  haie:     `<path d="M2 20h20"/><circle cx="6.5" cy="14" r="4.5"/><circle cx="13" cy="12.5" r="5"/><circle cx="19" cy="15" r="3.5"/>`,
-  loupe:    `<circle cx="10" cy="10" r="6.5"/><path d="M15 15l6 6"/>`,
-  medaille: `<circle cx="12" cy="12" r="9"/><path d="M12 5.5c4.5 2.5 4.5 8.5 0 12-4.5-3.5-4.5-9.5 0-12z"/>`,
-  chemin:   `<path d="M8 21c0-4 8-5 8-9s-6-4-6-7"/><circle cx="10" cy="4" r="1"/>`,
-};
 // ---- Étape B1 (13/11/2026, choix d'Aubin : style A4 « couleur du groupe ») ----
 // Un seul dessin par badge, partout (page des badges, fête, vitrine du Profil, fin de partie) : un rond à la couleur
 // du groupe, un disque papier, le dessin à l'encre ; les paliers en 1 à 3 points en bas (plein = gagné).
@@ -347,7 +309,6 @@ function prochainSeuil(b) {
   if (b.paliers) return palier < b.paliers.length ? b.paliers[palier] : null;
   return palier ? null : b.but;
 }
-const ROMAINS = ["", "I", "II", "III"];
 // Étape R238 (note 3 du 15/11, choix 8A) : le palier d'un badge en points (« Étonnant ! ●○○ ») au lieu d'un chiffre romain
 //   (« Étonnant ! I » se lisait mal) ; les paliers des badges sont déjà en points (B1).
 function pointsPalier(b, palier) { const n = (b.paliers || []).length || 3; return "●".repeat(palier) + "○".repeat(Math.max(0, n - palier)); }
@@ -889,27 +850,6 @@ function votreHeure() {
   const [cle, texte] = MOMENTS.reduce((a, m) => (c[m[0]] || 0) > (c[a[0]] || 0) ? m : a);
   return { cle, texte };
 }
-// La photo d'un badge : une espèce de VOTRE carnet (ou un lieu joué) liée à ce qu'il récompense ; sinon son dessin
-function photoBadge(b) {
-  const l = especesRencontrees(), par = f => l.find(f) || null;
-  const nommee = nom => par(e => e.nom_courant === nom);
-  const derniere = derniereRencontree();
-  const lieu = () => { const t = territoireActif(), c = t && lieuDernierJoue(t); return c && estRenseigne(c.photo) ? c.photo : null; };
-  const esp = {
-    "carnet": () => favorite() || derniere, "toutes-familles": () => derniere, "specialiste": () => familleDeCoeur() && par(e => e.onglet === familleDeCoeur().cle),
-    "or": () => par(e => niveauTermine(e) === NB_NIVEAUX), "raretes": () => par(e => e.rarete_observation === "Rare"),
-    "proteger": () => par(e => ["Vulnérable", "En danger", "En danger critique"].includes(e.statut_conservation_france)),
-    "oreille-fine": () => par(e => nbBonnes(e, "cri_son") >= 1), "lecteur-traces": () => par(e => nbBonnes(e, "empreinte_nom") >= 1 || nbBonnes(e, "empreinte_choix") >= 1),
-    "oeil-lynx": () => derniere, "tenacite": () => (especeCoriace() || {}).e,
-    "fidele": () => nommee("Merle noir") || derniere, "quatre-saisons": () => nommee("Hérisson d'Europe") || derniere,
-    "leve-tot": () => nommee("Rougegorge familier") || par(e => /jour/i.test(e.activite || "")) || derniere,
-    "oiseau-de-nuit": () => nommee("Effraie des clochers") || par(e => /nuit/i.test(e.activite || "")) || derniere,
-    "duel": () => derniere,
-  }[b.cle];
-  if (esp) { const e = esp(); return e ? photoMini(e.photo) : null; }
-  const p = lieu(); return p ? photoMini(p) : (derniere ? photoMini(derniere.photo) : null);   // badges des expéditions et des lieux
-}
-const COULEURS_PALIER = ["", "bronze", "argent", "or"];
 function medaillonBadge(b, petit) {           // étape B1 : le dessin du badge, toujours le même (plus de photo du carnet)
   return `<span class="pgv-med mb-vitrine${petit ? " petit" : ""}">${dessinBadge(b)}</span>`;
 }

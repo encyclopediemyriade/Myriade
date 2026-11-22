@@ -200,24 +200,6 @@ function emblemesTerritoire(t) {
   const ici = new Set(especesDe(t).map(e => e.nom_courant));
   return ((id && id.emblemes) || []).map(n => especeParNom(n)).filter(e => e && ici.has(e.nom_courant)).slice(0, 8);
 }
-function portraitTerritoire(t) {
-  const id = typeof IDENTITE !== "undefined" ? IDENTITE[t] : null;
-  const ph = photoTerritoire(t, id), chiffres = chiffresTerritoire(t, id).slice(0, 3);
-  const emb = emblemesTerritoire(t), autres = especesDe(t).length - emb.length;
-  const vignette = e => `<button class="at-emb" type="button" data-nom="${echapper(e.nom_courant)}">
-      <span class="at-emb-ph">${imgMini(photoEsp(e), e.nom_courant)}${estReconnue(e) ? `<i class="at-emb-ok" aria-label="Dans votre carnet">✓</i>` : ""}</span>
-      <span>${echapper(e.nom_courant)}</span></button>`;
-  return `<section class="at-portrait">
-      <img src="${ph.fichier}" alt="${echapper(ph.legende || t)}" loading="lazy">
-      <div class="at-portrait-corps">
-        ${ph.legende ? `<small class="at-portrait-leg">${legendeCouv(ph, true)}</small>` : ""}
-        ${id && id.phrase ? `<p class="at-phrase">${echapper(id.phrase)}</p>` : ""}
-        ${chiffres.length ? `<div class="at-chiffres">${chiffres.map(c => `<div><b>${echapper(c.valeur)}</b><small>${echapper(c.texte)}</small></div>`).join("")}</div>` : ""}
-      </div></section>
-    ${emb.length ? `<h2 class="at-titre">Ceux qui vous y attendent</h2>
-    <div class="at-emblemes">${emb.map(vignette).join("")}</div>
-    ${autres > 0 ? `<p class="at-note">et ${nombre(autres)} autres espèces, à découvrir sur place.</p>` : ""}` : ""}`;
-}
 // Étape R247 (17/11, 36.25, choix 25B ; cas non prévus 8A, 9A) : la page d'un territoire, dans l'ordre :
 //   le titre, le territoire en 2 lignes (sa phrase), la carte (petite France), puis les lieux numérotés comme les pastilles
 //   (1 à N dans l'ordre d'ouverture ; le site remarquable = étoile sans numéro, en dernier). Une pastille touchée fait défiler
@@ -331,41 +313,4 @@ function avantGoutLieu(t, c) {
     ${exps.length ? `<div class="at-exps"><b>${exps.length} expédition${exps.length > 1 ? "s" : ""} vous y attend${exps.length > 1 ? "ent" : ""}</b>
       <ul>${exps.map(x => `<li>${echapper(x.titre)}</li>`).join("")}</ul></div>` : ""}
     ${v ? `<div class="at-vedette">${imgMini(photoEsp(v), v.nom_courant)}<span>L'espèce du lieu<b>${echapper(v.nom_courant)}</b></span></div>` : ""}`;
-}
-function dessinerChoixLieu(t, c) {
-  const zone = document.getElementById("at-choix");
-  if (!zone || !c) return;
-  const couleur = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
-  const apercu = territoireEnApercu(t);
-  const site = c.type === "remarquable", ouvert = chapitreOuvert(t, c) && !apercu;
-  let etat, texte = "", bouton = "", gout = "";
-  if (apercu) {
-    etat = site ? "Le site remarquable · à venir" : "Lieu à venir";
-    gout = site ? `<p class="at-lieu-phrase">${echapper(c.phrase || "Le site remarquable du territoire.")}</p>` : avantGoutLieu(t, c);
-  } else if (site) {
-    etat = "Le site remarquable";
-    texte = ouvert ? "Révision de tout le territoire." : "Il s'ouvre quand tous les lieux du territoire sont terminés.";
-    if (ouvert) bouton = "Y aller";
-  } else if (!ouvert) {
-    etat = prochainLieu(t) === c ? "Le prochain lieu" : "Plus tard";
-    texte = lieuPrecedent(t, c) && chapitreOuvert(t, lieuPrecedent(t, c))
-      ? `S'ouvre à l'argent ${echapper(deLieu(lieuPrecedent(t, c).nom))} : ${texteManqueLieu(t, c, true).toLowerCase()}.`
-      : "S'ouvrira plus tard.";
-    gout = avantGoutLieu(t, c);
-  } else {
-    const e = etatLieu(t, c);
-    etat = e === "fini" ? "Lieu terminé" : e === "cours" ? (lieuDernierJoue(t) === c ? "Lieu en cours" : "Lieu commencé") : "Lieu ouvert";
-    texte = phraseMedaille(t, c);
-    bouton = finaleAJouer(t, c) ? "Jouer la finale" : e === "cours" ? "Reprendre ici" : e === "fini" ? "Revoir ce lieu" : "Partir ici";
-  }
-  zone.style.setProperty("--couleur-t", couleur);
-  zone.innerHTML = `<div class="at-choix-haut">
-      <span class="at-choix-ph">${imgMini(c.photo, "")}</span>
-      <div><small class="at-etiq">${apercu ? LOCK_SVG : ""}${etat}</small><h2>${echapper(c.nom)}</h2>${c.pays ? `<small class="at-pays">${echapper(c.pays)}</small>` : ""}</div></div>
-    ${!site && ouvert ? sentierLieu(t, c, { court: true }) : ""}
-    ${texte ? `<p>${texte}</p>` : ""}
-    ${gout}
-    ${bouton ? `<button class="at-aller" type="button">${bouton} <span aria-hidden="true">→</span></button>` : ""}`;
-  const b = zone.querySelector(".at-aller");
-  if (b) b.onclick = () => { changerTerritoire(t); if (site) ouvrirSite(t); else ouvrirLieu(t, c.nom); window.scrollTo(0, 0); };
 }

@@ -424,29 +424,6 @@ function recompenseRang(t) {
   if (r.suivant.gardien) return { cle: "rang", titre: `Rang ${r.suivant.nom}`, reste: r.suivant.texte, part: Math.max(0, Math.min(1, r.suivant.part)) };   // étape PR1
   return { cle: "rang", titre: `Rang ${r.suivant.nom}`, reste: `${r.empreintes} / ${r.suivant.seuil} empreintes`, part: Math.max(0, Math.min(1, r.suivant.part)) };
 }
-function recompenseExpedition(t) {
-  if (typeof aDesLieux === "function" && aDesLieux(t)) {   // étape 290 : la prochaine récompense = le prochain lieu
-    const c = prochainLieu(t);
-    if (!c) return null;
-    const p = lieuPrecedent(t, c), s = p ? paliersLieu(t, p)[2] : 0, n = p ? empreintesDuLieu(t, p) : 0;   // étape R133 : l'argent du lieu d'avant
-    return { cle: "expedition", titre: `${c.nom} s'ouvre`, reste: texteManqueLieu(t, c), part: s ? Math.min(1, n / s) : 1 };
-  }
-  if (aDesChapitres(t)) {                         // étape 287 : la prochaine récompense du chemin = le carrefour suivant
-    const c = chapitreCourant(t), suivants = c ? chapitresDe(t).filter(p => p.carrefour === c.carrefour + 1) : [];
-    if (!suivants.length || carrefourOuvert(t, c.carrefour + 1)) return null;
-    const f = finiesChapitre(t, c.nom), m = FINIES_POUR_CARREFOUR - f;
-    return { cle: "expedition", titre: `Carrefour : ${suivants.map(p => p.nom.toLowerCase()).join(" ou ")}`,
-             reste: `encore ${m} expédition${m > 1 ? "s" : ""} à terminer`, part: f / FINIES_POUR_CARREFOUR };
-  }
-  const ouvertes = expeditionsOuvertes(t), fermee = expeditionsDe(t).find(x => !ouvertes.has(x.id));
-  if (!fermee) return null;
-  const nouvelles = expeditionsDe(t).filter(x => etatExpedition(x, ouvertes) === "nouvelle").length;
-  const enCours = expeditionsDe(t).filter(x => ouvertes.has(x.id) && empreintesExp(x) === 0 && expeditionCommencee(x));
-  const meilleure = enCours.map(x => avanceeEtape(x, 1)).sort((a, b) => b.faites / b.total - a.faites / a.total)[0];
-  return { cle: "expedition", titre: `Expédition « ${fermee.titre} »`,
-           reste: nouvelles ? "commencez une expédition" : "finissez les Rencontres d'une expédition",
-           part: meilleure ? meilleure.faites / meilleure.total : 0 };
-}
 function recompensePrincipale(t) { return recompenseRang(t) || recompenseTerritoire(); }
 
 // ---- Les défis du jour (par territoire) ----
@@ -491,13 +468,6 @@ SORTES_DEFI.fiche = {
 function lancerDefiFiche(d) { const e = especeParNom(d.espece); if (e) lancerFicheEspece(e); }
 function casesTrouveesTerritoire(t) {   // étape R129 : les cases trouvées sur les espèces du territoire
   return especesDe(t).filter(estIdentifiee).reduce((s, e) => s + questionsPossibles(e).filter(q => nbBonnes(e, q.champ) >= 1).length, 0);
-}
-// Étape R129 : l'espèce du territoire, déjà dans le carnet, qui a le plus de choses à découvrir (pour le défi « inédites »)
-function especeAvecReste(t) {
-  const l = especesDe(t).filter(e => estIdentifiee(e) && estRenseigne(e.photo)).map(e => ({ e, n: champsReste(e).length })).filter(x => x.n);
-  if (!l.length) return null;
-  const max = Math.max(...l.map(x => x.n));
-  return auHasard(l.filter(x => x.n >= max - 2)).e;
 }
 function nouveauxDefis(t) {
   const liste = [];
@@ -813,17 +783,6 @@ function miniCarteTerritoire(t) {
   if (typeof CARTE_TERRITOIRES === "undefined" || typeof CARTE_CADRE === "undefined") return "";
   return `<svg class="acm-minicarte" viewBox="${CARTE_CADRE}" aria-hidden="true">` + CARTE_TERRITOIRES.map(c =>
     `<path d="${c.contour}" fill="${c.nom === t ? "#FBF8F1" : "rgba(255,255,255,.22)"}" stroke="rgba(0,0,0,.12)" stroke-width="3"/>`).join("") + `</svg>`;
-}
-// Étape R183b (R183d : plus claire, demande d'Aubin) : la France claire pour la carte « Reprendre » sur fond vert : les autres territoires en crème transparent,
-// le territoire à sa couleur avec un contour clair, et un point doré à la vraie place du lieu en cours (LIEUX_CARTE)
-function miniCarteLieu(t, lieu) {
-  if (typeof CARTE_TERRITOIRES === "undefined" || typeof CARTE_CADRE === "undefined") return "";
-  const couleur = (TERRITOIRES[t] || {}).couleur || "#8b3a4a";
-  const pt = lieu && typeof LIEUX_CARTE !== "undefined" && LIEUX_CARTE.points ? LIEUX_CARTE.points[`${t}|${lieu.nom}`] : null;
-  return `<svg viewBox="${CARTE_CADRE}" role="img" aria-label="${echapper(t)} en France">`
-    + CARTE_TERRITOIRES.filter(c => c.nom !== t).map(c => `<path d="${c.contour}" fill="rgba(251,248,241,.74)" stroke="rgba(31,58,46,.28)" stroke-width="4"/>`).join("")
-    + CARTE_TERRITOIRES.filter(c => c.nom === t).map(c => `<path d="${c.contour}" fill="${couleur}" stroke="#FBF8F1" stroke-width="9"/>`).join("")
-    + (pt ? `<circle cx="${pt[0]}" cy="${pt[1]}" r="38" fill="#E9C9A0" stroke="#1F3A2E" stroke-width="10"/>` : "") + `</svg>`;
 }
 // La pastille « remonter d'un niveau » (vers le territoire ou vers le lieu)
 function pastilleNiveau(k, texte, id, couleur) {

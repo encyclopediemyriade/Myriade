@@ -22,8 +22,6 @@
 //              suivi.defisExp[id] = { joues, reussi, meilleur, dernier: { bons, total } }.
 const DEFI_PAR_ESPECE = 3;          // questions par espèce (R242, choix d'Aubin 13A du 16/11 au soir ; avant : 2)
 const DEFI_MAX_QUESTIONS = 20;      // R242 (13A) : 20 questions au plus (avec 8 ou 9 espèces, certaines n'en ont que 2)
-const DEFI_ERREURS_PERMISES = 2;    // (repère ancien : 2 erreurs sur 14) — voir erreursPermisesDefi
-const SUJETS_SANS_DEFI = ["larve", "chenille"];   // stades trop difficiles à reconnaître (note 6)
 // R242 (13A) : environ 3 erreurs permises sur 20, proportionnel au nombre de questions (2 au moins)
 function erreursPermisesDefi(total) { return Math.max(2, Math.round(total * 3 / 20)); }
 // ==================================================================
@@ -193,22 +191,6 @@ function coriaceExp(x) {
   let meilleure = null, max = 1;
   for (const e of x.liste) if (jouableEnJeu(e) && (parEspece[e.nom_courant] || 0) > max) { max = parEspece[e.nom_courant]; meilleure = e; }
   return meilleure;
-}
-// L'ordre des questions : un premier tour (chaque espèce une fois), puis un second ; jamais deux fois de suite la même ;
-// la coriace en dernière question
-function ordreDefi(x, nb) {
-  const tours = [];
-  for (let k = 0; k < DEFI_PAR_ESPECE; k++) tours.push(...melanger(x.liste.filter(e => (nb ? nb.get(e) : 2) > k)));
-  const cor = coriaceExp(x);
-  if (cor) {
-    const i = tours.lastIndexOf(cor);
-    tours.splice(i, 1); tours.push(cor);
-  }
-  for (let k = 1; k < tours.length; k++) if (tours[k] === tours[k - 1]) {
-    const j = tours.findIndex((e, m) => m !== k && m !== tours.length - 1 && e !== tours[k - 1] && (m === 0 || tours[m - 1] !== tours[k]) && (m + 1 >= tours.length || tours[m + 1] !== tours[k]));
-    if (j >= 0) [tours[k], tours[j]] = [tours[j], tours[k]];
-  }
-  return tours;
 }
 
 // Étape R241 (17/11, notes 17 et 33 du 16/11, tâches 36.17 et 36.33) : le défi en cours est SAUVEGARDÉ à chaque réponse

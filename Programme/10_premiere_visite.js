@@ -15,7 +15,6 @@ const NIVEAUX_PROFIL = [
   { valeur: 3, nom: "Expert de Terrain",   texte: "Une bonne connaissance du terrain : toutes les questions, dès le départ." },
 ];
 const NB_TERRITOIRES_PROFIL = 1;        // combien de territoires le joueur débloque au départ
-const NB_DEPART_PAR_FAMILLE = 2;
 const ESPECES_OFFERTES = true;           // étape E2-12 (seconde partie, 16/11) : 8 espèces offertes au départ, « à reconnaître » (avant : false depuis R92)
 const NB_OFFERTES = 8;                  // étape E2-12 : combien d'espèces offertes
 const RARETE_DEPART = "Commun";         // leur rareté (colonne rarete_observation du tableur)
@@ -367,17 +366,6 @@ function tirerEspecesDeDepart(lieu) {
   for (const e of triees) if (tirees.length < NB_OFFERTES && !tirees.includes(e)) tirees.push(e);
   return tirees;
 }
-function tirerEspecesDeDepartAncien(lieu) {   // l'ancien tirage (2 par famille, étape 60), gardé pour mémoire
-  const tirees = [];
-  for (const cle of Object.keys(CLASSES)) {
-    const famille = especesDe(lieu).filter(e => e.onglet === cle && estRenseigne(e.photo));
-    const communes = melanger(famille.filter(e => rareteDe(e) === RARETE_DEPART));
-    const peuCommunes = melanger(famille.filter(e => rareteDe(e) === "Peu commun" && !communes.includes(e)));
-    const autres = melanger(famille.filter(e => !communes.includes(e) && !peuCommunes.includes(e)));
-    tirees.push(...[...communes, ...peuCommunes, ...autres].slice(0, NB_DEPART_PAR_FAMILLE));
-  }
-  return tirees;
-}
 
 // Place une espèce dans l'encyclopédie sans question : elle est "identifiée" (photo et nom
 // visibles), mais aucune caractéristique n'est trouvée. Même geste qu'à la fin d'un défi.
@@ -408,12 +396,6 @@ function estARevoirRencontre(espece) { return !!(suivi && suivi.aReconnaitre && 
 // Étape R287 (choix « 2B ») : « Pour bien démarrer » = seulement les espèces offertes au départ, pas encore au carnet.
 //   (Avant : « À reconnaître » réunissait les offertes et les espèces rencontrées sans la photo, qui sont au carnet depuis R287.)
 function estOfferte(espece) { return estOfferteDepart(espece); }
-function offrirEspeceAncien(espece) {   // l'ancien don (espèce identifiée d'office, étape 60), gardé pour mémoire
-  marquerVue(espece);
-  progression[espece.nom_courant].acquis[IDENTIFICATION] = 1;
-  progression[espece.nom_courant].decouverteLe = Date.now();   // étape 107 : les espèces offertes ont aussi une date
-  progression[espece.nom_courant].offerte = true;              // étape 209 : ne compte pas pour ouvrir un territoire
-}
 
 // "Continuer" : écran suivant ; au dernier, les réponses deviennent le profil et le jeu s'ouvre
 function suiteBienvenue() {

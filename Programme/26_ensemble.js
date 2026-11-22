@@ -477,8 +477,6 @@ function varierEnsemble(q) {
   }
   return [...suite, ...fin];
 }
-// Une expédition qui n'offre qu'une question, ou aucune : pas d'étape 2 (la question unique se pose à la fin des Rencontres).
-function aUneEtapeEnsemble(x) { return ETAPE2_ENSEMBLE && questionsEnsembleExp(x).length >= 2; }   // R245 : tirage fixe
 
 
 // ==================================================================

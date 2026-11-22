@@ -1481,7 +1481,6 @@ function piegesVraiFaux(q, bonne, espece) {
 //      fiche complète   = niveau 3 terminé (médaille d'or) = toutes les cases trouvées
 //      maîtrisée        = toutes les cases confirmées (trouvées 3 fois, étape 101 ; avant : 2 fois)
 // ==================================================================
-const STATUTS = ["inconnue", "identifiée", "fiche partielle", "fiche complète", "maîtrisée"];
 
 // Étape R262 (lenteurs) : une mémoire valable le temps de dessiner une page (Profil, Carte, Encyclopédie, accueil…).
 //   Une page demandait des centaines de fois le statut des mêmes espèces (jusqu'à 1,6 s sur un téléphone lent).

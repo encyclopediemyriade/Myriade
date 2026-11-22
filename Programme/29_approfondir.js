@@ -18,7 +18,7 @@
 // Sauvegarde : suivi.approfondiesDefi (espèces connues par cœur par un test : especeFaite(e, 4), 17),
 //              suivi.approfTests[id] = { joues, reussi, meilleur, dernier: { bons, total } },
 //              suivi.approfTestsEnCours[id] = le test mis de côté (questions, réponses, aide, repêchage).
-const APPROF_DEUX_PORTES = true;     // false = l'ancien Approfondir (parties de 10 questions)
+// (R292 : le réglage APPROF_DEUX_PORTES est retiré avec l'ancien Approfondir en parties de 10 questions.)
 const APPROF_LIGNES = 3;             // lignes de « De plus près »
 const APPROF_TEST_PAR_ESPECE = 3, APPROF_TEST_MAX = 20;
 let apf = null;                      // la partie en cours (Découvrir ou Me tester)
@@ -492,15 +492,6 @@ function feterApprof(x, empreintes, avantApprofondie) {
 // ==================================================================
 // ME TESTER : 3 questions par espèce, 20 au plus, 3 erreurs permises pour 20, repêchage, une aide
 // ==================================================================
-function ordreTestApprof(nb) {
-  const tours = [];
-  for (let k = 0; k < APPROF_TEST_PAR_ESPECE; k++) tours.push(...melanger([...nb.keys()].filter(e => nb.get(e) > k)));
-  for (let k = 1; k < tours.length; k++) if (tours[k] === tours[k - 1]) {
-    const j = tours.findIndex((e, m) => m !== k && e !== tours[k - 1] && (m === 0 || tours[m - 1] !== tours[k]) && (m + 1 >= tours.length || tours[m + 1] !== tours[k]));
-    if (j >= 0) [tours[k], tours[j]] = [tours[j], tours[k]];
-  }
-  return tours;
-}
 function lancerTestApprof(x) {
   if (!x) return;
   if (suivi.approfTestsEnCours) delete suivi.approfTestsEnCours[x.id];   // un nouveau test remplace celui mis de côté

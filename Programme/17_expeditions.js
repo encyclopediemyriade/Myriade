@@ -193,14 +193,6 @@ function phraseMedaille(t, c) {
   if (pm.niveau === 2) return `${enc(pm.manque)} : médaille d'argent${s ? ` et <b>${echapper(s.nom)}</b> s'ouvre` : ""}.`;
   return `${pm.manque ? `${enc(pm.manque)}, puis ` : ""}${chapitreFini(t, c) ? "la finale du lieu" : "toutes ses expéditions et la finale"} : médaille d'or.`;
 }
-function phraseMedailleAvant(t, c) {   // (l'ancienne phrase, gardée pour mémoire, plus appelée depuis R153)
-  const n = empreintesDuLieu(t, c), max = empreintesMaxLieu(t, c), m = medailleLieu(t, c), pm = prochaineMedailleLieu(t, c), s = lieuSuivant(t, c);
-  const tete = `<b>${Math.min(n, max)} empreinte${n > 1 ? "s" : ""}</b> sur ${max}`;
-  if (!pm) return `${tete} · <b>médaille d'or</b> : le lieu est terminé.`;
-  const quoi = pm.niveau === 2 ? (s ? `${s.nom} s'ouvre` : "le lieu est à moitié exploré") : pm.niveau === 1 ? "première médaille du lieu" : "le lieu est terminé";
-  if (pm.niveau === 3) return `${tete} · encore ${pm.manque ? `<b>${pm.manque}</b> empreinte${pm.manque > 1 ? "s" : ""} et ` : ""}${chapitreFini(t, c) ? "la finale du lieu" : "toutes ses expéditions et la finale"} pour l'or.`;
-  return `${tete} · encore <b>${pm.manque}</b> pour ${pm.niveau === 1 ? "le bronze" : "l'argent"} : ${quoi}.`;
-}
 function blocMedailleLieu(t, c) {   // étape R153 : « Votre avancée ici · 23 / 74 », la jauge, une phrase
   const n = Math.min(empreintesDuLieu(t, c), empreintesMaxLieu(t, c));
   return `<div class="medaille-lieu"><div class="etiq-jeu ml-tete"><span>Votre avancée ici</span><b>${n} / ${empreintesMaxLieu(t, c)}</b></div>${sentierLieu(t, c)}<p>${phraseMedaille(t, c)}</p></div>`;
@@ -1183,7 +1175,7 @@ function lancerExpedition(x, k) {
   sauvegarder();
   depuisArcade = false; modeLibre = false;
   if (k === 1) { lancerRencontreExpedition(x); return; }   // étape 288 : une Rencontre physique, une espèce
-  if (k === 4 && typeof APPROF_DEUX_PORTES !== "undefined" && APPROF_DEUX_PORTES) { ouvrirCarteApprofondir(x); return; }   // étape R250 : les deux portes d'Approfondir
+  if (k === 4) { ouvrirCarteApprofondir(x); return; }   // étape R250 : les deux portes d'Approfondir (R292 : l'ancien Approfondir en parties de 10 questions est retiré)
   if (k === 2 && typeof ETAPE2_ENSEMBLE !== "undefined" && ETAPE2_ENSEMBLE) {   // étape E2-3 : l'étape 2 « Ensemble, dans ce lieu »
     if (questionsEnsembleExp(x).length) ouvrirEnsembleExp(x); else ouvrirExpedition(x);   // « Rejouer » marche aussi ; une seule question : « Une dernière question »
     return;
@@ -1195,8 +1187,6 @@ function lancerExpedition(x, k) {
   territoiresDefi = [x.territoire];
   territoiresChoisis = [x.territoire];
   jeuChoisi = "revision"; revisionsSeules = false; photosSeules = (k === 1); questionsClassique = QUESTIONS_REVISION;
-  // Étape R101 : Approfondir pose seulement ce qui reste à découvrir (plus de questions déjà vues à l'étape 2)
-  if (k === 4) { const n = nouveautesApprofondir(x); if (n > 0) questionsClassique = Math.min(QUESTIONS_REVISION, n); }
   // Étape R102 (choix A4) : l'étape 2 pose jusqu'à 3 choses nouvelles par espèce (2 restent exigées : rien ne recule)
   if (k === 2) questionsClassique = Math.max(QUESTIONS_REVISION, Math.min(TRAITS_VIE_POSES * x.liste.length, nouveautesEtape2(x)));
   // Étape M17 (07/11/2026, choix d'Aubin : « 2 parties d'environ 10 ») : sur téléphone, l'étape 2 se joue en parties
@@ -1219,11 +1209,6 @@ const PARTIE_ETAPE2 = 11, PARTIE_ETAPE2_MAX = 14;   // étape M17 : l'étape 2 e
 function nouveautesEtape2(x) {
   return x.liste.filter(estIdentifiee).reduce((n, e) => n + Math.min(TRAITS_VIE_POSES, champsEtape(e, 2)
     .filter(c => QUESTIONS.some(q => q.champ === c) && nbBonnes(e, c) === 0).length), 0);
-}
-// Étape R101 : combien de questions encore jamais trouvées Approfondir peut poser dans cette expédition
-function nouveautesApprofondir(x) {
-  return x.liste.filter(estIdentifiee).reduce((n, e) => n + champsEtape(e, 4)
-    .filter(c => QUESTIONS.some(q => q.champ === c) && nbBonnes(e, c) === 0).length, 0);
 }
 // Étape R124 (Revoir 11, choix de l'utilisateur « garder, mais mieux l'expliquer ») : l'avancée d'Approfondir en choses
 // découvertes (pas seulement en espèces finies), et le nombre de parties qui restent, à 10 questions par partie.
@@ -1256,8 +1241,7 @@ function texteResteApprofondir(x) {   // étape R125 : sous les fiches, ce qui r
   const a = avanceeApprofondir(x);
   // Étape R149 : le nombre de choses à découvrir, qui baisse à chaque partie (le nombre de parties, arrondi, bougeait peu)
   if (a.reste <= 0 || a.especes >= a.nbEspeces) return `Les ${a.nbEspeces} espèces connues par cœur`;
-  if (typeof APPROF_DEUX_PORTES !== "undefined" && APPROF_DEUX_PORTES) return `Encore ${a.reste} chose${a.reste > 1 ? "s" : ""} à découvrir`;   // R250 : plus de parties de 10 questions
-  return `Encore ${a.reste} chose${a.reste > 1 ? "s" : ""} à découvrir, environ ${a.parties} partie${a.parties > 1 ? "s" : ""} de 10 questions`;
+  return `Encore ${a.reste} chose${a.reste > 1 ? "s" : ""} à découvrir`;   // R250 : plus de parties de 10 questions
 }
 // Étape R149 : à l'étape 2, ce qui reste se compte sur les espèces pas encore faites (avant : toutes, d'où « 21 » au lieu de 11)
 function texteResteEtape2(x) {
@@ -1518,8 +1502,6 @@ function ligneSaVie(champ, phrase, valeur, connu) {
 //   • son autre forme : une forme nettement différente (R254).
 //   Mémoire de la partie (comme les entrées) : tempsVus[expédition] = les temps des Rencontres déjà commencées.
 const tempsVus = {};
-const ORDRE_TEMPS = ["vie", "cri", "empreinte", "forme", "detail"];
-const NOMS_TEMPS = { vie: "Sa vie", cri: "Son cri", empreinte: "Son empreinte", forme: "Son autre forme", detail: "Son détail" };
 function tempsPossibles(x, e, nouveauxVie, entree) {
   const p = [], c1 = champsEtape(e, 1), manque = c => c1.includes(c) && nbBonnes(e, c) === 0;
   if (nouveauxVie.length) p.push("vie");
@@ -1582,17 +1564,6 @@ const PARTIES_ADAPTATIONS = { bec_forme: /bec/, bec_couleur: /bec/, ornement_tet
   nageoires_dos: /nageoire|épine|epine/, barbillons: /barbillon/, antennes_forme: /antenne/, ailes_repos: /aile/, ailes_visibles: /aile/,
   couleur_dominante: /plumage|pelage|robe|couleur|tache|bande|miroir|rayure/, robe: /plumage|pelage|robe|tache|bande|rayure|point/,
   coquille: /coquille/, peau_texture: /peau|pustule|glande/, pupille_forme: /pupille|œil|oeil|yeux/, yeux_couleur: /œil|oeil|yeux/ };
-function detailPhysique(e, champ) {
-  if (!estRenseigne(e.adaptations_physiques) || String(e.adaptations_physiques).startsWith("NA")) return "";
-  const clauses = String(e.adaptations_physiques).split(";").map(t => t.trim()).filter(Boolean);
-  const vus = (session && session.detailsVus) || [];
-  const libres = clauses.filter(c => !vus.includes(c));
-  if (!libres.length) return "";
-  const motif = PARTIES_ADAPTATIONS[champ];
-  const c = (motif && libres.find(t => motif.test(t.toLowerCase()))) || libres[0];
-  if (session) session.detailsVus = [...vus, c];
-  return c.charAt(0).toUpperCase() + c.slice(1);
-}
 // Étape RF1 : « Qui rencontrer ensuite ? » — le joueur choisit ; chaque silhouette a un mot de terrain (jamais le nom)
 const MOTS_TERRAIN = {
   "Falaises et rochers": "Sur les rochers", "Alpages et pelouses d'altitude": "Dans l'alpage", "Forêt": "Sous les arbres",
@@ -2366,13 +2337,13 @@ function dessinerEcranExpedition() {
   const fini3 = n >= NB_ETAPES || toutDebloque();   // étape 332 ; R125 : les fiches viennent de ligneFiche
   const numApprof = ens && !aUneEtape2(x) ? 2 : 3;   // étape E2-3 : sans étape 2, Approfondir est la 2e
   // Étape R250 (36.07) : une fois ouverte, la carte d'Approfondir a ses deux portes égales, « Découvrir » / « Me tester » (29_approfondir.js)
-  const approf = fini3 && typeof APPROF_DEUX_PORTES !== "undefined" && APPROF_DEUX_PORTES ? portesApprofondir(x, numApprof)
-    : `<div class="exp-etape approfondir${fini3 ? "" : " fermee"}${approfondie(x) ? " finie" : ""}">
+  // R292 : la carte fermée (avant la fin des Rencontres) ; une fois ouverte, les deux portes (l'ancien Approfondir en parties de 10 questions est retiré)
+  const approf = fini3 ? portesApprofondir(x, numApprof)
+    : `<div class="exp-etape approfondir fermee${approfondie(x) ? " finie" : ""}">
       <span class="exp-num etape-4${approfondie(x) ? " fait" : ""}">${pictoEtape(4)}</span>
-      <span class="exp-etape-texte"><b>${nomEtape(4)}</b><small>${ETAPES[4].texte}</small>
-        ${fini3 && !approfondie(x) ? `<i class="jauge-jeu"><b style="width:${Math.round(100 * avanceeApprofondir(x).faites / Math.max(1, avanceeApprofondir(x).total))}%"></b></i><small>${avanceeApprofondir(x).especes} espèce${avanceeApprofondir(x).especes > 1 ? "s" : ""} sur ${x.liste.length} connue${avanceeApprofondir(x).especes > 1 ? "s" : ""} par cœur · ${texteResteApprofondir(x).charAt(0).toLowerCase()}${texteResteApprofondir(x).slice(1)}</small>` : ""}</span>
+      <span class="exp-etape-texte"><b>${nomEtape(4)}</b><small>${ETAPES[4].texte}</small></span>
       <span class="exp-etape-gain ${approfondie(x) ? "pris" : ""}" title="Empreintes de cette étape facultative">+${gainEtape(x, 4)}<small>(1 par espèce)</small><span>${PAS_SVG}</span></span>
-      ${fini3 ? `<button class="duo-autres" data-k="4">${approfondie(x) ? "Rejouer" : "Jouer"}</button>` : `<small class="exp-verrou">🔒 ${apresEtape(numApprof - 1)}</small>`}
+      <small class="exp-verrou">🔒 ${apresEtape(numApprof - 1)}</small>
     </div>`;   // étape R127 : l'avancée par espèce est dans le cadre « Les espèces » (à droite)
   const prochaine = cours === 1 ? especeAConnaitre(x) : null;
   // Étape R127 (05/11, choix de l'utilisateur, artefact « Myriade · Cadre de l'étape en cours ») : le cadre « Les espèces »
@@ -2407,8 +2378,7 @@ function dessinerEcranExpedition() {
   const aideCadre = kCadre === 1 ? `Leur nom se découvre à cette étape. Sélectionnez une espèce découverte pour ouvrir sa fiche.${especesARevoirIci(x).length ? " « À revoir ici » : vous la connaissez déjà d'ailleurs, une photo suffit." : ""}`
     : kCadre === 2 && ens ? "Comment ces espèces vivent ensemble ici : quelques questions qui en réunissent plusieurs. Sélectionnez une espèce pour ouvrir sa fiche."
     : kCadre === 2 ? "Deux choses à découvrir par espèce : où elle vit, ce qu'elle mange, quand la voir… Sélectionnez une espèce pour ouvrir sa fiche."
-    : kCadre === 4 ? (typeof APPROF_DEUX_PORTES !== "undefined" && APPROF_DEUX_PORTES ? "Ce qui ne se voit pas : à découvrir de plus près, ou à tester. Sélectionnez une espèce pour ouvrir sa fiche."   // R250
-                     : "Tout savoir de chaque espèce, en plusieurs parties de 10 questions. Sélectionnez une espèce pour ouvrir sa fiche.")
+    : kCadre === 4 ? "Ce qui ne se voit pas : à découvrir de plus près, ou à tester. Sélectionnez une espèce pour ouvrir sa fiche."   // R250
     : "Les trois étapes sont faites. Touchez une espèce pour ouvrir sa fiche : il reste peut-être des choses à y découvrir.";   // étape R130
   const lieuDeX = x.chapitre ? chapitreParNom(x.territoire, x.chapitre) : null;   // étape 290
   zone.innerHTML = `<div class="exp-ecran" style="--couleur-territoire:${couleur}">

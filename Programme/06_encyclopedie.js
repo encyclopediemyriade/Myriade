@@ -190,12 +190,10 @@ function vueNouvelle(e) {
 // en haut de la page (remplace le tri « découvertes d'abord » de l'étape 60).
 // Avec l'option « Découvertes uniquement », on ne garde que les espèces identifiées.
 // Étape M5 (06/11/2026, choix de l'utilisateur : maquette « Deux onglets ») — sur téléphone, en haut de l'encyclopédie :
-// une recherche (parmi les espèces déjà découvertes seulement, pour ne jamais nommer une espèce inconnue) et deux onglets
-// « Les espèces » / « Les planches des lieux » (on revient aux espèces d'un geste). Caché sur ordinateur (style.css, étape M5).
-let rechercheEncyclo = "", familleAvantPlanches = "Toutes";
-// Étape K3 (16/11/2026, choix d'Aubin « 7B ») : les planches « Tout est lié » ne sont plus dans l'Encyclopédie (téléphone et
-//   ordinateur) ; les lieux vivent dans la Carte. Une planche se revoit toujours depuis la page de son lieu (bouton de la finale).
-const PLANCHES_DANS_ENCYCLO = false;
+// une recherche (parmi les espèces déjà découvertes seulement, pour ne jamais nommer une espèce inconnue). Caché sur ordinateur (style.css, étape M5).
+// Étape K3 (16/11, choix « 7B ») : les planches « Tout est lié » ne sont plus dans l'Encyclopédie ; une planche se revoit
+//   depuis la page de son lieu (R292 : l'ancien onglet et l'ancien filtre « Planches des lieux » sont retirés du code).
+let rechercheEncyclo = "";
 function dessinerHautEncyclopedieMobile() {
   const mise = document.querySelector("#vue-encyclopedie .ency-mise");
   if (!mise) return;
@@ -207,10 +205,7 @@ function dessinerHautEncyclopedieMobile() {
     haut.innerHTML = `<div class="ency-ligne"><h2 class="ency-titre-m">Encyclopédie</h2><span class="ency-terr-place"></span>
         <button type="button" class="ency-loupe-bouton" id="ency-loupe-bouton" aria-label="Chercher une espèce découverte" aria-expanded="false"><span class="ency-loupe" aria-hidden="true"></span></button></div>
       <label class="ency-recherche"><span class="ency-loupe" aria-hidden="true"></span>
-        <input type="search" id="ency-recherche" placeholder="Chercher une espèce découverte" autocomplete="off" aria-label="Chercher une espèce découverte"></label>
-      <div class="ency-segments" role="tablist">
-        <button type="button" role="tab" id="ency-seg-especes">Les espèces</button>
-        <button type="button" role="tab" id="ency-seg-planches">Les planches des lieux</button></div>`;
+        <input type="search" id="ency-recherche" placeholder="Chercher une espèce découverte" autocomplete="off" aria-label="Chercher une espèce découverte"></label>`;
     mise.insertBefore(haut, mise.firstChild);
     haut.querySelector("#ency-loupe-bouton").onclick = () => {   // R260 : la loupe ouvre (ou referme) le champ
       const ouvert = !haut.classList.contains("recherche-ouverte");
@@ -222,27 +217,13 @@ function dessinerHautEncyclopedieMobile() {
     let attente = null;
     haut.querySelector("#ency-recherche").oninput = ev => {
       clearTimeout(attente);
-      attente = setTimeout(() => { rechercheEncyclo = ev.target.value.trim(); if (filtreClasse === "planches") filtreClasse = familleAvantPlanches; afficherEncyclopedie(); }, 180);
+      attente = setTimeout(() => { rechercheEncyclo = ev.target.value.trim(); afficherEncyclopedie(); }, 180);
     };
-    haut.querySelector("#ency-seg-especes").onclick = () => { if (filtreClasse === "planches") { filtreClasse = familleAvantPlanches; afficherEncyclopedie(); } };
-    haut.querySelector("#ency-seg-planches").onclick = () => {
-      if (filtreClasse !== "planches") { familleAvantPlanches = filtreClasse; filtreClasse = "planches"; afficherEncyclopedie(); }
-    };
-    if (!PLANCHES_DANS_ENCYCLO) haut.querySelector(".ency-segments").remove();   // étape K3 : plus d'onglet « Les planches des lieux »
   }
   // R260 : le menu des territoires (refait par afficherFiltres) passe dans la ligne du haut, en puce (téléphone)
   const place = haut.querySelector(".ency-terr-place"), bt = document.querySelector("#filtres .filtres-territoire");
   if (place && bt && collectionSurTelephone()) { place.innerHTML = ""; place.appendChild(bt); }
   if (rechercheEncyclo) haut.classList.add("recherche-ouverte");
-  if (!PLANCHES_DANS_ENCYCLO && filtreClasse === "planches") filtreClasse = familleAvantPlanches || "Toutes";   // étape K3
-  const planches = filtreClasse === "planches", pl = planchesDuFiltre();
-  if (!haut.querySelector("#ency-seg-especes")) { haut.querySelector(".ency-recherche").classList.remove("cache"); mise.classList.remove("en-planches"); return; }   // étape K3
-  const segE = haut.querySelector("#ency-seg-especes"), segP = haut.querySelector("#ency-seg-planches");
-  segE.classList.toggle("actif", !planches); segE.setAttribute("aria-selected", String(!planches));
-  segP.classList.toggle("actif", planches); segP.setAttribute("aria-selected", String(planches));
-  segP.innerHTML = `Les planches des lieux${pl.total ? ` <small>${pl.faites}/${pl.total}</small>` : ""}`;
-  haut.querySelector(".ency-recherche").classList.toggle("cache", planches);
-  mise.classList.toggle("en-planches", planches);
 }
 function afficherEncyclopedie() {
   majNouveaux();                      // étape R278 (37.03) : les espèces entrées au carnet depuis la dernière visite
@@ -250,8 +231,7 @@ function afficherEncyclopedie() {
   dessinerHautEncyclopedieMobile();   // étape M5 (téléphone)
   const grille = document.getElementById("grille");
   fermerFenetre();
-  if (filtreClasse === "planches" && !PLANCHES_DANS_ENCYCLO) filtreClasse = "Toutes";   // étape K3
-  if (filtreClasse === "planches") { afficherPlanches(grille); return; }   // étape 331
+  if (filtreClasse === "planches") filtreClasse = "Toutes";   // étape K3 : plus de planches dans l'Encyclopédie (R292 : sécurité gardée)
   const cherche = rechercheEncyclo && window.matchMedia && window.matchMedia("(max-width: 760px)").matches ? simplifier(rechercheEncyclo) : "";   // étape M5
   fermerPiste();
   const miseR161 = document.querySelector(".ency-mise");   // étape R161 : la bande des familles cachée sur le sommaire du téléphone
@@ -299,39 +279,6 @@ function afficherEncyclopedie() {
     carte.onclick = () => ouvrirVoletRare(ESPECES.find(e => e.nom_courant === carte.dataset.rareVolet));
     carte.onkeydown = ev => { if (ev.key === "Enter") carte.onclick(); };
   }
-}
-
-// ==================================================================
-// Étape 331 (28/10/2026) : les planches « Tout est lié » dans l'encyclopédie.
-//   Un filtre « Planches des lieux » dans la colonne de gauche (selon le territoire choisi) ;
-//   une carte par lieu qui a sa finale : la planche s'ouvre si la finale a été jouée, sinon « finale à jouer ».
-function planchesDuFiltre() {
-  const terrs = filtreTerritoire === "Tous" ? tousLesTerritoires() : [filtreTerritoire];
-  const parT = terrs.map(t => ({ t, lieux: (typeof lieuxDe === "function" ? lieuxDe(t) : []).filter(c => finaleDisponible(t, c)) }))
-                    .filter(x => x.lieux.length);
-  const total = parT.reduce((n, x) => n + x.lieux.length, 0);
-  const faites = parT.reduce((n, x) => n + x.lieux.filter(c => finaleFaite(x.t, c.nom)).length, 0);
-  return { parT, total, faites };
-}
-function afficherPlanches(grille) {
-  const pl = planchesDuFiltre();
-  let html = `<p class="planches-intro">Chaque lieu terminé garde ici la planche des liens de sa finale.</p>`;
-  for (const { t, lieux } of pl.parT) {
-    const faites = lieux.filter(c => finaleFaite(t, c.nom)).length;
-    const coul = TERRITOIRES[t] ? TERRITOIRES[t].couleur : "var(--territoire)";
-    const cartes = lieux.map(c => {
-      const fait = finaleFaite(t, c.nom), n = liensDuLieu(t, c.nom).length;
-      return `<button class="planche-ency${fait ? "" : " a-jouer"}" type="button" data-t="${echapper(t)}" data-nom="${echapper(c.nom)}"${fait ? "" : " disabled"}>
-          <span class="pl-ph">${imgMini(c.photo, c.nom)}</span>
-          <span class="pl-corps"><b>${echapper(c.nom)}</b><small>${fait ? `${n} liens · revoir la planche` : "Finale à jouer pour l'ouvrir"}</small></span></button>`;
-    }).join("");
-    html += `<section class="groupe-famille" style="--couleur-classe:${coul}">
-        <h2 class="titre-famille">${echapper(t)}<small>${faites} / ${lieux.length}</small></h2>
-        <div class="grille-planches">${cartes}</div></section>`;
-  }
-  if (!pl.total) html = `<p class="grille-vide">Aucune planche pour ce territoire pour l'instant.</p>`;
-  grille.innerHTML = html;
-  grille.querySelectorAll(".planche-ency:not(.a-jouer)").forEach(b => b.onclick = () => ouvrirPlanche(b.dataset.t, b.dataset.nom, "encyclopedie"));
 }
 
 // ==================================================================
@@ -903,25 +850,11 @@ function afficherFiltres() {
   zone.appendChild(liste);
   // Étape R245 (36.26, choix 26C du 17/11) : deux onglets « Toutes · N | Découvertes · N » sous les familles
   //   (remplacent l'interrupteur « Découvertes uniquement ») ; le choix est gardé, sans rien afficher à ce sujet.
-  const dansFiltre = especesDuFiltre().filter(e => filtreClasse === "Toutes" || filtreClasse === "planches" || e.onglet === filtreClasse);
+  const dansFiltre = especesDuFiltre().filter(e => filtreClasse === "Toutes" || e.onglet === filtreClasse);
   zone.insertAdjacentHTML("beforeend", ongletsDecouvertes(dansFiltre.length, dansFiltre.filter(e => estReconnue(e)).length, decouvertesSeules, "ency-onglets-filtres"));
   zone.querySelectorAll(".ency-onglets-filtres [data-vue]").forEach(b => b.onclick = () => {
     decouvertesSeules = b.dataset.vue === "decouvertes"; sauvegarder(); afficherEncyclopedie();
   });
-  // Étape 331 : les planches « Tout est lié » des lieux terminés, gardées dans l'encyclopédie.
-  // Étape 334 (Revoir 8) : dans un bloc à part, sous les familles, pour ne plus les confondre avec un filtre.
-  const pl = planchesDuFiltre();
-  if (PLANCHES_DANS_ENCYCLO && pl.total) {   // étape K3 : retiré (choix « 7B »)
-    const bloc = document.createElement("div");
-    bloc.className = "bloc-planches";
-    bloc.innerHTML = `<span class="titre-filtre">Les finales des lieux</span>`;
-    const b = document.createElement("button");
-    b.className = "filtre filtre-planches" + (filtreClasse === "planches" ? " actif" : "");
-    b.innerHTML = `${typeof PICTO_LIENS !== "undefined" ? PICTO_LIENS : ""}<span class="nom-filtre">Planches des lieux</span><small>${pl.faites} / ${pl.total}</small>`;
-    b.onclick = () => { filtreClasse = "planches"; afficherEncyclopedie(); };
-    bloc.appendChild(b);
-    zone.appendChild(bloc);
-  }
 }
 
 // ==================================================================
@@ -941,25 +874,6 @@ function collectionSurTelephone() { return typeof surTelephone === "function" &&
 const estRencontree = e => estReconnue(e);
 function caseSilhouette(e, classe) {
   return `<span class="${classe}"><img src="${fichierSilhouette(e)}" alt="" loading="lazy" onerror="this.remove()"></span>`;
-}
-function sommaireCollection() {
-  let html = "";
-  for (const cle in CLASSES) {
-    const especes = especesDuFiltre().filter(e => e.onglet === cle);
-    if (!especes.length) continue;
-    const off = e => typeof estOfferte === "function" && estOfferte(e);   // étape E2-12 : les offertes juste après les rencontrées
-    const vues = especes.filter(estRencontree), autres = [...especes.filter(e => !estRencontree(e) && off(e)), ...especes.filter(e => !estRencontree(e) && !off(e))];
-    const montrees = [...vues, ...autres].slice(0, 8);
-    const ronds = montrees.map(e => estRencontree(e) || (typeof estOfferte === "function" && estOfferte(e))   // étape E2-12 : les offertes en photo
-      ? `<span class="som-rond som-photo">${imgMini(e.photo, e.nom_courant)}</span>`
-      : caseSilhouette(e, "som-rond som-vide")).join("");
-    const reste = especes.length - montrees.length;
-    html += `<button type="button" class="som-famille" data-cle="${cle}" style="--couleur-classe:${CLASSES[cle].couleur}">
-        <span class="som-haut"><b>${CLASSES[cle].nom}</b><span><b>${vues.length}</b> sur ${especes.length} ›</span></span>
-        <span class="som-ronds">${ronds}${reste > 0 ? `<small>+${reste}</small>` : ""}</span>
-        <span class="som-jauge"><i style="width:${Math.round(100 * vues.length / especes.length)}%"></i></span></button>`;
-  }
-  return html ? `<div class="som-collection">${html}</div>` : `<p class="grille-vide">Aucune espèce ici pour l'instant.</p>`;
 }
 // Étape R180 (retour d'Aubin du 09/11) : plus de « ? ? ? » sous les silhouettes (la silhouette seule suffit) ;
 // un petit bouton « Seulement mes espèces découvertes » cache les cases vides (réglage gardé dans le navigateur).
