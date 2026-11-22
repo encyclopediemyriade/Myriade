@@ -493,11 +493,11 @@ function phraseDuJour(e) {
   return [chiffres.length ? majuscule(chiffres.join(", ")) + "." : "", atout ? `Son atout : ${atout}.` : ""].filter(Boolean).join(" ");
 }
 function especesJouables() { return ESPECES.filter(e => estRenseigne(e.photo)); }
-function especeDuJour() {
+function especeDuJour(ouvertsDonnes) {   // R297 : ouvertsDonnes = les territoires à prendre (première visite, avant leur ouverture)
   // Étape 265 : l'espèce du jour n'est plus que sur la page d'accueil générale (la carte) : elle vient des territoires ouverts
   //   (étape 252 : elle venait du territoire où l'on est, quand elle était sur sa page)
   // Étape R288 : un trésor qu'on ne trouve qu'au bout de sa piste n'est jamais l'espèce du jour (la surprise de fin de lieu reste entière)
-  const ouverts = territoiresOuverts(), toutes = especesJouables().filter(e => typeof especeReserveeTresor !== "function" || !especeReserveeTresor(e)), ici = toutes.filter(e => territoiresJeu(e).some(x => ouverts.includes(x)));
+  const ouverts = ouvertsDonnes || territoiresOuverts(), toutes = especesJouables().filter(e => typeof especeReserveeTresor !== "function" || !especeReserveeTresor(e)), ici = toutes.filter(e => territoiresJeu(e).some(x => ouverts.includes(x)));
   const liste = ici.length ? ici : toutes;
   if (!liste.length) return null;
   // Étape R183c (10/11, choix d'Aubin) : UNE seule espèce du jour, qui reste toute la journée ; une fois rencontrée, elle est

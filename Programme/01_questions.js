@@ -1641,7 +1641,7 @@ const AFF_CHASSE = { "Poursuite": "poursuit ses proies", "Bond sur la proie": "b
   "Capture en vol": "attrape ses proies en vol", "Poursuite à la course": "poursuit ses proies à la course" };
 const AFF_NID = { "Falaise ou paroi rocheuse": "sur une falaise ou une paroi rocheuse", "Au sol": "au sol", "Cavité d'arbre": "dans un arbre creux",
   "Arbre ou buisson": "dans un arbre ou un buisson", "Roselière ou végétation dense": "dans une roselière ou une végétation dense", "Terrier": "dans un terrier",
-  "Sur l'eau (nid flottant)": "sur l'eau, dans un nid flottant", "Bâtiment": "dans un bâtiment" };
+  "Sur l'eau (nid flottant)": "sur l'eau, dans un nid flottant", "Bâtiment": "le plus souvent dans ou sur un bâtiment" };   // R297 (notes 4-5) : plus « dans un bâtiment », trop absolu
 // Étape R237 : les mêmes endroits, en plus court, pour « Il peut aussi nicher … » (plusieurs à la suite)
 const NID_AUSSI = { "Falaise ou paroi rocheuse": "sur une falaise", "Au sol": "au sol", "Cavité d'arbre": "dans un arbre creux",
   "Arbre ou buisson": "dans un arbre ou un buisson", "Roselière ou végétation dense": "dans les roseaux", "Terrier": "dans un terrier",
@@ -2140,7 +2140,10 @@ const QUESTIONS = [
     valeur: e => e.onglet === "Insectes" && estRenseigne(e.plante_hote) ? deuxPremieres(e.plante_hote) : "NA",
     question: "De quelles plantes dépend-il ?",
     piegesDistincts: true,   // R280 (44.05) : jamais deux réponses qui se ressemblent
-    pieges: e => [...new Set(ESPECES.filter(a => a !== e && a.onglet === "Insectes" && estRenseigne(a.plante_hote)).map(a => deuxPremieres(a.plante_hote)))],
+    // R297 (note 7) : les plantes d'autres insectes du même groupe d'abord (d'autres papillons pour un papillon), s'il y en a assez
+    pieges: e => { const de = l => [...new Set(l.filter(a => a !== e && a.onglet === "Insectes" && estRenseigne(a.plante_hote) && !(a.a_confirmer || []).includes("plante_hote")).map(a => deuxPremieres(a.plante_hote)))];
+      const memeOrdre = de(ESPECES.filter(a => a.ordre === e.ordre));
+      return memeOrdre.length >= 6 ? memeOrdre : de(ESPECES); },
     explication: (e, v) => `Il dépend de ces plantes : ${minuscule(v)}.` },
 
   // La durée de la vie de têtard (grenouilles, crapauds) ou de larve (tritons, salamandres), d'après

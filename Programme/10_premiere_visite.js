@@ -333,7 +333,27 @@ function poserExplication() {
         </figure>`;
     }
     corps.appendChild(grille);
+    prechargerAccueilDepart(lieu);
   }
+}
+// Étape R297 (note 1b du 22/11 au soir : sur l'Accueil d'une partie neuve, la photo de « Votre première expédition » et celle
+//   de l'espèce du jour arrivaient avec un temps de retard). Elles n'étaient demandées qu'à l'ouverture de l'Accueil. Elles le
+//   sont maintenant dès cet écran (« Comment jouer », le territoire est connu), en tête de la file, et gardées prêtes à
+//   s'afficher : l'Accueil les montre tout de suite. Mêmes fichiers que ceux que l'Accueil affichera.
+function prechargerAccueilDepart(lieu) {
+  try {
+    if (typeof prechargerFichiers !== "function") return;
+    const l = [];
+    const x = typeof expeditionAReprendre === "function" ? expeditionAReprendre(lieu) : null;
+    const c = x && x.chapitre && typeof chapitreParNom === "function" ? chapitreParNom(lieu, x.chapitre) : null;
+    if (c && estRenseigne(c.photo) && typeof photoMini === "function") l.push(photoMini(c.photo));
+    // les territoires qui seront ouverts (même règle que suiteBienvenue) ; l'Accueil montre la photo principale telle quelle
+    const tout = brouillon && (brouillon.decouverte === "tout" || brouillon.decouverte === "toutjeu");
+    const ouverts = tout ? tousLesTerritoires() : (brouillon ? brouillon.territoires : []).filter(t => especesDe(t).length).slice(0, 1);
+    const j = typeof especeDuJour === "function" ? especeDuJour(ouverts.length ? ouverts : tousLesTerritoires()) : null;
+    if (j && estRenseigne(j.photo)) l.push(j.photo);
+    prechargerFichiers(l, true);
+  } catch (err) { /* un chargement d'avance ne doit jamais gêner le jeu */ }
 }
 
 // ---- Les espèces de départ (étape 60) ----------------------------------

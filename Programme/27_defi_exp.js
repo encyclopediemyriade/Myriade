@@ -1420,7 +1420,7 @@ function suiteApresDefi(x) {
     const n = typeof questionsEnsembleExp === "function" ? questionsEnsembleExp(x).length : 0;
     return { texte: `${titreEtape(2)}${n >= 2 ? ` · ${n} questions` : ""} ▶`, lancer: () => lancerExpedition(x, 2) };
   }
-  if (typeof questionFinaleExp === "function" && questionFinaleExp(x)) return { texte: "Une dernière question ▶", lancer: () => ouvrirEnsembleExp(x) };
+  if (typeof questionFinaleExp === "function" && questionFinaleExp(x)) return { texte: texteQuestionFinale(x), lancer: () => ouvrirEnsembleExp(x) };
   return null;
 }
 

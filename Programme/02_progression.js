@@ -625,6 +625,7 @@ function calculerQuestionsPossibles(espece) {
     //   espèces (« Qui sont ses prédateurs ? ») donnaient des pièges faciles (« Guêpes parasites » pour un moineau) ou à
     //   moitié vrais (« Loutre » pour l'ablette) : sans pièges sûrs, la question n'est pas posée.
     if (q.champ === "predateurs" && !modeItems(espece, "predateurs")) return false;
+    if (questionDuGroupeTropFacile(q, espece)) return false;   // étape R297 (note 7) : insectes, régime et aliment
     if (q.pieges && !q.format && q.type !== "nombre" && autresValeurs(q, v, espece).length === 0
         && !(q.piegesQcm && piegesDuQcm(q, espece, v).length)) return false;   // étape R187 : sans les pièges interdits
     // Étape R184 (10/11, retour d'Aubin : « Comment sont ses oreilles ? » de la fouine, une seule réponse, « Moyennes ») :
@@ -1352,7 +1353,43 @@ function valeursQuestion(q) {
   }
   return v;
 }
-function autresValeurs(q, bonne, espece) { return sansDoublonsDeTexte(autresValeursBrutes(q, bonne, espece), bonne); }   // étape R187
+function autresValeurs(q, bonne, espece) { return mondeDuGroupe(q, espece, sansDoublonsDeTexte(autresValeursBrutes(q, bonne, espece), bonne)); }   // étape R187
+// ---- Étape R297 (note 7 du 22/11 au soir : « Que mange-t-il ? » se devinait sans rien savoir chez les papillons) ----
+// Pour un insecte, le régime (« herbivore » contre « piscivore », « suceur de sang »…) et l'aliment (« Nectar » contre
+//   « Crustacés », « Araignées ») avaient des fausses réponses impossibles pour son groupe. Règle : pour un insecte, une
+//   mauvaise réponse est une valeur qu'a au moins une AUTRE espèce du même ordre (papillons, libellules, criquets…) ;
+//   s'il en reste moins de 2, la question n'est pas posée (questionDuGroupeTropFacile). Chez les papillons, il n'en reste
+//   pas : la question qui apprend quelque chose est celle des plantes de la chenille (« De quelles plantes dépend-il ? »).
+const CHAMPS_MONDE_DU_GROUPE = ["regime_alimentaire_type", "proies"];
+const ORDRES_ALIMENT_SUR = ["Orthoptères", "Hémiptères", "Mantoptères"];   // le jeune (larve) mange comme l'adulte
+const memoValeursOrdre = new Map();
+function valeursDeLOrdre(champ, espece) {
+  const cle = champ + "|" + espece.ordre;
+  if (!memoValeursOrdre.has(cle)) {
+    const s = new Set();
+    for (const a of ESPECES) if (a.onglet === "Insectes" && a.ordre === espece.ordre) {
+      if (champ === "proies") listeItems(a, "proies").forEach(i => s.add(i));
+      else if (estRenseigne(a[champ])) s.add(String(a[champ]));
+    }
+    memoValeursOrdre.set(cle, s);
+  }
+  return memoValeursOrdre.get(cle);
+}
+function mondeDuGroupe(q, espece, pieges) {
+  if (!espece || espece.onglet !== "Insectes" || !estRenseigne(espece.ordre) || !CHAMPS_MONDE_DU_GROUPE.includes(q.champ)) return pieges;
+  const siens = valeursDeLOrdre(q.champ, espece);
+  return pieges.filter(v => siens.has(String(v)));
+}
+function questionDuGroupeTropFacile(q, espece) {
+  if (!espece || espece.onglet !== "Insectes" || !CHAMPS_MONDE_DU_GROUPE.includes(q.champ)) return false;
+  // l'aliment : 3 au moins (avec 2, il restait « Bouses et crottins, Fourmis » contre « Nectar » pour l'apollon,
+  //   ou « Plancton, Crustacés », vrais pour la larve, contre « Insectes » pour une libellule)
+  //   Et seulement pour les groupes où le jeune mange comme l'adulte : chez les papillons, coléoptères, abeilles, guêpes,
+  //   fourmis, libellules…, la larve et l'adulte ne mangent pas la même chose, et des pièges du groupe étaient à moitié vrais
+  //   (« Pollen » pour la coccinelle, « Trèfles » pour un bourdon, « Fleurs » pour l'azuré, « Sève » pour la rosalie).
+  if (q.champ === "proies") return !ORDRES_ALIMENT_SUR.includes(espece.ordre) || !modeItems(espece, "proies") || mondeDuGroupe(q, espece, piegesAliment(espece)).length < 3;
+  return autresValeurs(q, valeurDe(espece, q), espece).length < 2;
+}
 function autresValeursBrutes(q, bonne, espece) {
   // Étape 227 : un aliment ou un prédateur seul → ses propres mauvaises réponses
   if ((q.champ === "proies" || q.champ === "predateurs") && espece && estItem(espece, q, bonne))
@@ -1475,7 +1512,8 @@ function piegesVraiFaux(q, bonne, espece) {
   let l = memoPiegesVF.get(cle);
   if (!l) {
     // VF2 : pas de vrai ou faux si la phrase vraie ne peut pas s'écrire pour cette espèce (refuge sans indice dans la fiche)
-    l = espece && q.affirmation && !affirmationVraieDe(q, bonne, espece) ? []
+    // R297 (note 7) : ni vrai ou faux sur le régime ou l'aliment d'un insecte quand la question se devine dans son groupe
+    l = espece && (questionDuGroupeTropFacile(q, espece) || (q.affirmation && !affirmationVraieDe(q, bonne, espece))) ? []
       : autresValeurs(q, bonne, espece).filter(v => dansSonMonde(q, espece, v) && !fauxInterdit(q, espece, v)
           && (!espece || !q.affirmation || affirmationVraieDe(q, v, espece)));   // VF2 : la fausse aussi doit pouvoir s'écrire pour elle
     memoPiegesVF.set(cle, l);

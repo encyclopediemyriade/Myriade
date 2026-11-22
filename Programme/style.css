@@ -4646,6 +4646,9 @@ button.pastille-carnet:hover { background: #fff; }
 .reperes .rp-forme { font: inherit; font-size: .82rem; padding: 3px 12px; border-radius: 14px; border: 1px solid rgba(0,0,0,.18); background: transparent; color: inherit; cursor: pointer; min-height: 30px; }
 .reperes .rp-forme.actif { background: #a8741f; border-color: #a8741f; color: #fff; }
 .reperes .rp-liste.cache { display: none; }
+/* Étape R297 (note 2 du 22/11 au soir) : après un changement d'onglet (Adulte / Mâle / Femelle / Jeune), la liste apparaît
+   tout de suite : plus d'entrée « un à un » rejouée avec son retard de 1,3 s (ni fondu : la liste est là d'emblée) */
+.reperes.rp-deja .rp-ligne.trait-arrive { animation: none; }
 .pe main > .reperes { margin: 0 0 12px; padding: 10px 12px; border: 1px solid rgba(0,0,0,.08); border-radius: 10px; background: rgba(255,255,255,.6); }
 
 /* ===== Étape R191 : Coup d'œil (« une photo, 4 noms »), maquette A choisie par Aubin ===== */
@@ -4823,6 +4826,13 @@ button.pastille-carnet:hover { background: #fff; }
 .en-montrees.nombreuses figure { width: 78px; }
 .en-montrees.nombreuses img { width: 64px; height: 64px; }
 .en-montrees figcaption { font-size: 12.5px; font-weight: 600; text-align: center; line-height: 1.25; }
+/* Étape R298 : « Les voisins » (le voisin en haut, et où il vit) ; « Sa place » avec l'élément en photo */
+.en-voisin { margin: 2px 0 6px; }
+.en-voisin .en-montrees { margin-bottom: 2px; }
+.en-voisin-ou { margin: 0; text-align: center; font-size: 13px; line-height: 1.35; color: var(--texte-doux); }
+.en-element { margin: 4px auto 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; max-width: 320px; }
+.en-element img { width: 100%; max-height: 150px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; }
+.en-element figcaption { font-size: 14px; font-weight: 600; text-align: center; }
 .en-consigne { margin: -4px 0 10px; font-size: 13px; color: var(--texte-doux); }
 .en-rep { display: flex; align-items: center; gap: 12px; font: inherit; color: inherit; cursor: pointer; }
 .en-rep img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex: none; }
@@ -5984,6 +5994,18 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
   #forme-ecran .en-carte.en-annonce .fp-pied > .en-non-merci { min-height: 44px; font-size: 15px; font-weight: 400; flex: none; }
   body:has(#vue-rencontre:not(.cache) #forme-ecran .en-annonce) { padding-bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
 }
+/* R297 (note 6a) · L'écran d'entrée de « Leurs liens » : les deux cercles dans le bleu de l'étape, le titre, une ligne, le nombre de questions */
+.en-entree-corps { padding: 34px 8px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; }
+.en-entree-picto { width: 76px; height: 76px; border-radius: 50%; background: var(--etape-2-fond, #DEE9EF); color: var(--etape-2, #2E5E78);
+  display: inline-flex; align-items: center; justify-content: center; margin-bottom: 8px; animation: trait-arrive .4s ease-out both; }
+.en-entree-picto svg { width: 46px; height: 46px; }
+.en-entree-etiq { font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; color: var(--texte-doux, #5d5a52); }
+.en-entree-titre { margin: 0; font-size: 1.7rem; line-height: 1.2; color: var(--etape-2, #2E5E78); }
+.en-entree-texte { margin: 2px 0 0; font-size: 1.05rem; color: var(--texte, #1F3A2E); }
+.en-entree-nombre { margin: 10px 0 0; padding: 4px 14px; border-radius: 14px; background: var(--etape-2-fond, #DEE9EF); color: var(--etape-2, #2E5E78);
+  font-size: .92rem; font-weight: 600; }
+.en-entree .en-annonce-pied { margin-top: 10px; }
+@media (prefers-reduced-motion: reduce) { .en-entree-picto { animation: none; } }
 /* R266 · La photo bonus de Me tester (Approfondir) */
 .apf-bonus-etiq { margin: 4px 0 8px; font-size: 13px; color: var(--texte-doux, #5d5a52); }
 .apf-bonus-etiq span { display: inline-block; margin-right: 6px; padding: 2px 9px; border-radius: 999px; background: var(--ocre-pale, #F6E8D6);

@@ -1745,7 +1745,7 @@ function finRencontreExpedition(s) {
     principal.onclick = () => { session = null; ouvrirExpedition(x); };
     document.getElementById("exp-fin-ecran-r").classList.add("cache");
   } else {
-  principal.textContent = etapeFinie(x, 2) ? (typeof questionFinaleExp === "function" && questionFinaleExp(x) ? "Une dernière question ▶" : "Voir l'expédition ▶") : etapeFinie(x, 1) ? `${titreEtape(2)} ▶` : suite && suite !== e ? (especeFaite(suite, 1) ? "Revoir les espèces déjà rencontrées ▶" : estIdentifiee(suite) ? `Espèce suivante : ${suite.nom_courant} ▶` : "Espèce suivante ▶")
+  principal.textContent = etapeFinie(x, 2) ? (typeof questionFinaleExp === "function" && questionFinaleExp(x) ? texteQuestionFinale(x) : "Voir l'expédition ▶") : etapeFinie(x, 1) ? `${titreEtape(2)} ▶` : suite && suite !== e ? (especeFaite(suite, 1) ? "Revoir les espèces déjà rencontrées ▶" : estIdentifiee(suite) ? `Espèce suivante : ${suite.nom_courant} ▶` : "Espèce suivante ▶")
     : aRattraper(x).length ? `Revoir ${texteARevoir(x)} ▶` : `Reprendre ${e.nom_courant} ▶`;   // étape R132
   principal.onclick = () => { if (etapeFinie(x, 2)) { if (typeof questionFinaleExp === "function" && questionFinaleExp(x)) ouvrirEnsembleExp(x); else ouvrirExpedition(x); } else if (!etapeFinie(x, 1) && intermedePret(x)) ouvrirIntermede(x, principal.textContent); else lancerExpedition(x, etapeFinie(x, 1) ? 2 : 1); };   // E2-3 : « Voir l'expédition »   // étape ET1
   }
@@ -2328,13 +2328,16 @@ function dessinerEcranExpedition() {
     const finie = etapeFinie(x, k), ouverte = k === 1 || etapeFinie(x, k - 1) || toutDebloque(), av = avanceeEtape(x, k), active = k === cours;
     if (k === 1 && !finie && typeof portesEtape1 === "function") return portesEtape1(x);   // étape E2-9 : les deux portes
     const sansRencontre = k === 1 && finie && typeof especesSansRencontre === "function" ? especesSansRencontre(x).length : 0;   // étape E2-9
+    // R297 (note 6c du 22/11 au soir) : « 7 espèces · toutes reconnues » puis « Faire la Rencontre des 4 espèces reconnues au test »
+    //   semblait se contredire. C'est normal (validées par Me tester, leur Rencontre reste possible, sans empreintes en double) :
+    //   le bouton dit maintenant « Rencontrer aussi les 4 espèces validées par le test » (un plus, rien ne manque).
     return `<div class="exp-etape${finie ? " finie" : ""}${active ? " active" : ""}${ouverte ? "" : " fermee"}">
         <span class="exp-num etape-${k}${finie ? " fait" : ""}">${pictoEtape(k)}</span>
         <span class="exp-etape-texte"><b>${nomEtape(k)}</b><small>${ETAPES[k].texte}</small>
           ${active && k === 2 && ens ? `<small>${questionsEnsembleExp(x).length} question${questionsEnsembleExp(x).length > 1 ? "s" : ""}, environ ${Math.max(1, Math.round(questionsEnsembleExp(x).length * 0.6))} min</small>`
             : active ? `<i class="jauge-jeu"><b style="width:${Math.round(100 * av.faites / av.total)}%"></b></i><small>${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total}${k === 1 && especeAConnaitre(x) ? ` · ${especeFaite(especeAConnaitre(x), 1) ? `à revoir : ${especesARevoirIci(x).length} espèce${especesARevoirIci(x).length > 1 ? "s" : ""} déjà rencontrée${especesARevoirIci(x).length > 1 ? "s" : ""} ailleurs (une photo chacune)` : `prochaine rencontre : ${estIdentifiee(especeAConnaitre(x)) ? especeAConnaitre(x).nom_courant : "une espèce inconnue"}`}` : ""}</small>` : ""}</span>
         <span class="exp-etape-gain ${finie ? "pris" : ""}" title="Empreintes de cette étape">+${gainEtape(x, k)}${k === 1 ? `<small>(1 par espèce)</small>` : ""}<span>${PAS_SVG}</span></span>
-        ${sansRencontre ? `<button class="duo-autres" data-rencontrer="1" title="Reconnues par le défi : leur Rencontre reste à faire (sans empreintes en double)">${sansRencontre > 1 ? `Faire la Rencontre des ${sansRencontre} espèces reconnues au test` : "Faire la Rencontre de l'espèce reconnue au test"}</button>` : ""}
+        ${sansRencontre ? `<button class="duo-autres" data-rencontrer="1" title="Facultatif : validées par le test, elles peuvent aussi être rencontrées (sans empreintes en double)">${sansRencontre > 1 ? `Rencontrer aussi les ${sansRencontre} espèces validées par le test` : "Rencontrer aussi l'espèce validée par le test"}</button>` : ""}
         ${ouverte ? `<button class="${active ? "couv-go petit" : "duo-autres"}" data-k="${k}">${active ? "Jouer ▶" : finie ? "Rejouer" : "Jouer"}</button>`
                   : `<small class="exp-verrou">🔒 ${apresEtape(k - 1)}</small>`}
       </div>`;

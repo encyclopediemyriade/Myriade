@@ -165,6 +165,10 @@ function brancherOngletsReperes() {
 }
 function choisirFormeReperes(bloc, forme) {
   if (!bloc || !forme || !bloc.querySelector(`.rp-liste[data-forme="${forme}"]`)) return;
+  // Étape R297 (note 2 du 22/11 au soir) : les listes de toutes les formes sont construites une fois (gardées, cachées) ;
+  //   en réaffichant une liste, le navigateur rejouait son entrée « un à un » avec tout son retard. Désormais, dès le
+  //   premier changement d'onglet, les lignes apparaissent tout de suite (sans animation, CSS « rp-deja »).
+  bloc.classList.add("rp-deja");
   bloc.querySelectorAll(".rp-liste[data-forme]").forEach(u => u.classList.toggle("cache", u.dataset.forme !== forme));
   bloc.querySelectorAll(".rp-forme").forEach(o => { const on = o.dataset.forme === forme; o.classList.toggle("actif", on); o.setAttribute("aria-selected", on); });
 }

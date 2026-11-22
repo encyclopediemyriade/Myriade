@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V104.xlsx, especes_bassin_aquitain_V47.xlsx, especes_bassin_parisien_V52.xlsx, especes_corse_V58.xlsx, especes_grand_est_V45.xlsx, especes_jura_V49.xlsx, especes_massif_armoricain_V59.xlsx, especes_massif_central_V51.xlsx, especes_mediterranee_V60.xlsx, especes_pyrenees_V55.xlsx, especes_vosges_V41.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V105.xlsx, especes_bassin_aquitain_V47.xlsx, especes_bassin_parisien_V53.xlsx, especes_corse_V59.xlsx, especes_grand_est_V45.xlsx, especes_jura_V49.xlsx, especes_massif_armoricain_V59.xlsx, especes_massif_central_V52.xlsx, especes_mediterranee_V61.xlsx, especes_pyrenees_V56.xlsx, especes_vosges_V41.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -22932,7 +22932,7 @@ const ESPECES = [
     saison_observation: "Du printemps à l'automne",
     activite: "Surtout le jour",
     revetement: "Plumes",
-    emplacement_nid: "Bâtiment",
+    emplacement_nid: null,
     naissance: "NA",
     cornes_ou_bois: "NA",
     pelage_hiver: "NA",
@@ -28719,7 +28719,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     tendance_france: "NA",
-    a_confirmer: []
+    a_confirmer: ["emplacement_nid"]
   },
   {
     onglet: "Oiseaux",
@@ -55628,7 +55628,7 @@ const ESPECES = [
     saison_observation: "Toute l'année",
     activite: "Surtout le jour",
     revetement: null,
-    emplacement_nid: "Bâtiment",
+    emplacement_nid: null,
     naissance: "NA",
     cornes_ou_bois: "NA",
     pelage_hiver: "NA",
@@ -61826,7 +61826,7 @@ const ESPECES = [
     saison_observation: "Du printemps à l'automne",
     activite: "Surtout le jour",
     revetement: "Plumes",
-    emplacement_nid: "Bâtiment",
+    emplacement_nid: null,
     naissance: "NA",
     cornes_ou_bois: "NA",
     pelage_hiver: "NA",
@@ -70035,7 +70035,7 @@ const ESPECES = [
     saison_observation: "Toute l'année",
     activite: "Surtout le jour",
     revetement: "Plumes",
-    emplacement_nid: "Bâtiment",
+    emplacement_nid: null,
     naissance: "NA",
     cornes_ou_bois: "NA",
     pelage_hiver: "NA",
@@ -77040,6 +77040,11 @@ const PIEGES_INTERDITS = [
     "nom_courant": "Lérot",
     "colonne": "queue_forme",
     "reponse_interdite": "Touffue"
+  },
+  {
+    "nom_courant": "Niverolle alpine",
+    "colonne": "emplacement_nid",
+    "reponse_interdite": "Bâtiment"
   },
   {
     "nom_courant": "Bruant ortolan",

@@ -6,5 +6,5 @@
 //   1.x.x : la V1 (les animaux) ; 2.x.x sera la V2 (les plantes).
 //   x.1.x : un chantier livré (une nouvelle fonction, un nouvel écran…).
 //   x.x.1 : une petite correction ou un réglage.
-const VERSION_JEU = "1.33.0";
+const VERSION_JEU = "1.35.0";
 const DATE_VERSION = "22/11/2026";
