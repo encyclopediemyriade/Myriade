@@ -84,6 +84,7 @@ function continuerEtape(k) { return k === 1 ? "Continuer les Rencontres" : k ===
 //   3A : « Étonnant » reste à chaque Rencontre.
 //   false = la Rencontre complète d'avant (R281).
 const RENCONTRE_TROIS_TEMPS = true;
+const VIE_APRES_ETONNANT = true;       // étape R295 (51.01, 1A) : la question sur sa vie après « Étonnant », carte cachée, dite autrement
 const VIE_QUESTIONS = RENCONTRE_TROIS_TEMPS ? 1 : 2;   // étape E2-7 (note 12) : des 3 faits montrés sur l'écran « Sa vie », 2 étaient demandés en vrai ou faux ; R282 (2B) : 1
 const VIE_PAR_RENCONTRE = 3;           // étape RF1 : les choses de sa vie posées dans la Rencontre (RF2 : 3 cartes « vrai ou faux » ; 2 restent exigées)
 const NB_TRAITS_ALLURE = RENCONTRE_COMPLETE ? 1 : 2;   // étape 1 : les traits d'allure les plus parlants (ET1 : 2 au lieu de 4 ; RF1 : 1)
@@ -1069,7 +1070,11 @@ function majBandeExpedition(x, fil, k) {
   const enCours1 = session && session.focus ? session.focus : null;
   const trouvees = x.liste.filter(e => faiteDans(x, e, 1)).length, reste = x.liste.length - trouvees;
   b.innerHTML = `<span class="be-lib">L'expédition</span><span class="be-ronds">${x.liste.map(e => {
-      const st = faiteDans(x, e, 1) ? "trouve" : e === enCours1 ? "ici" : "reste";
+      // Étape R295 (51.04, choix 3A d'Aubin du 22/11) : tant que l'espèce en cours n'est pas reconnue (ni présentée), son rond
+      //   n'est pas mis en avant : il ressemble aux autres « à découvrir » (avant, le rond surligné désignait la silhouette
+      //   à retrouver, par exemple pendant « Par les indices »). Il s'allume une fois la réponse donnée.
+      const enAttente = e === enCours1 && RENCONTRE_COMPLETE && !estIdentifiee(e) && !(session && session.presentee);
+      const st = faiteDans(x, e, 1) ? "trouve" : e === enCours1 && !enAttente ? "ici" : "reste";
       const titre = st === "trouve" ? e.nom_courant : st === "ici" ? "En cours" : "À découvrir";
       // Étape RF4 : l'espèce en cours, tant qu'elle n'est pas reconnue, garde sa silhouette (sa photo donnerait la réponse
       //   aux jumelles, au sosie et aux indices)

@@ -486,6 +486,10 @@ function phraseEtonnante(duel) {
 function chiffreDuel(q, espece, v) {
   if (q.champ !== "nb_petits_max") return q.affichage(v);
   const mot = espece.onglet === "Oiseaux" ? "œuf" : "petit";
+  // R296 (« le chevalier guignette pond 5 œufs », alors qu'il en pond en général 4) : la fourchette de la fiche (« 3 à 5 œufs »),
+  //   pas le seul maximum, qui laissait croire à un nombre habituel. Le duel compare toujours les maximums.
+  const min = Number(espece.nb_petits_min);
+  if (min > 0 && min < v) return `${nombre(min)} à ${nombre(v)} ${mot}s`;
   return `${nombre(v)} ${mot}${v > 1 ? "s" : ""}`;
 }
 

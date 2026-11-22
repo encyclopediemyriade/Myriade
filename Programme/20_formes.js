@@ -262,8 +262,16 @@ function piegesIndices(e, x) {
   const terr = ESPECES.filter(o => String(o.territoire || "").split(" ; ").includes(x.territoire));
   // D'abord la même famille (expédition, puis lieu, puis territoire) ; une autre famille seulement si elle est dans l'expédition
   const choix = [];
+  // Étape R295 (51.03) : dans chaque groupe (expédition, lieu, territoire), d'abord les espèces de son « monde » : taille
+  //   voisine (3 fois plus grande ou plus petite au plus) et même grand milieu (terre, eau douce, mer). Avant : n'importe
+  //   laquelle qui se voyait différente (le cerf élaphe pour le ragondin). Elles restent toujours distinctes à l'œil (ok).
+  const te = tailleNombre(e);
+  const tailleVoisine = o => { const to = tailleNombre(o); return te && to ? Math.max(te, to) / Math.min(te, to) <= 3 : true; };
+  const voisine = o => tailleVoisine(o) && grandMilieu(o) === grandMilieu(e);
+  const parMonde = l => [...l.filter(voisine), ...l.filter(o => !voisine(o) && tailleVoisine(o)), ...l.filter(o => !tailleVoisine(o))];
   const memeFamille = [x.liste, lieu, terr].map(g => melanger([...new Set(g)].filter(o => ok(o) && o.onglet === e.onglet)));
-  for (const o of [...memeFamille.flat(), ...melanger(x.liste.filter(o => ok(o) && o.onglet !== e.onglet))]) {
+  const mondeDabord = parMonde(memeFamille.flat());
+  for (const o of [...mondeDabord, ...parMonde(melanger(x.liste.filter(o => ok(o) && o.onglet !== e.onglet)))]) {
     if (choix.length >= 3) break;
     if (!choix.includes(o)) choix.push(o);
   }
@@ -411,7 +419,7 @@ function poserJumelles(espece) {
 // Elle ou son sosie : « Laquelle est la mésange nonnette ? » entre elle et son sosie, puis le repère qui les sépare
 function poserSosieEntree(espece, autre) {
   const nom = nomAvecArticle(espece);
-  const zone = carteForme(espece, "Elle ou son sosie", `Laquelle est ${nom} ?`, "forme-choix");
+  const zone = carteForme(espece, "Elle ou son sosie", `${pe(espece).la === "le" ? "Lequel" : "Laquelle"} est ${nom} ?`, "forme-choix");   // R295 : « Lequel est le pigeon ramier ? »
   session.sosieFait = true;                          // l'encart « À ne pas confondre » ne revient pas plus tard
   const especes = melanger([espece, autre]);
   zone.innerHTML = `<div class="fe-photos">${especes.map((e, i) => `<button type="button" class="fe-photo" data-i="${i}" aria-label="Photo ${i + 1}">${celluleImage(e, true)}</button>`).join("")}</div>`;

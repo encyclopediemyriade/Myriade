@@ -111,7 +111,20 @@ function presenterTirage(tirage) {
   if (session && session.focus && !defi) {
     // Étape E2-7 (note 12) : avant la première question sur sa vie, l'écran « Sa vie » montre les faits (découvrir avant d'être interrogé)
     if (!tirage.rejeu && !session.vieMontree && (session.vieFaits || []).length && (session.vie || []).includes(tirage.champ)
-        && typeof montrerSaVie === "function") { session.vieMontree = true; montrerSaVie(tirage); return; }
+        && typeof montrerSaVie === "function") {
+      session.vieMontree = true;
+      // Étape R295 (Notion 51.01, choix 1A d'Aubin du 22/11) : la question sur sa vie ne suit plus la carte « Sa vie » :
+      //   après « Continuer », d'abord « Étonnant » ; la question vient ensuite, carte cachée (on se souvient, on ne relit pas).
+      if (VIE_APRES_ETONNANT && session.etonnant && session.bonusPrevu && !session.bonusFait) {
+        session.bonusFait = true; session.etonnantAvant = true;
+        session.posees = session.posees.filter(c => c !== tirage.champ);   // la question sur sa vie reste à poser (après « Étonnant »)
+        session.insoliteEnCours = { espece: session.focus, type: "deux", item: session.etonnant, bonus: true, etonnant: true };
+        const t = { espece: session.focus, champ: INSOLITE, estRevision: false, rejeu: true, bonus: true };
+        session.tirageEnCours = t;
+        montrerSaVie(t); return;
+      }
+      montrerSaVie(tirage); return;
+    }
     if (tirage.bonus && !session.bonusAnnonce) { session.bonusAnnonce = true; annoncerBonus(tirage); return; }
     if (tirage.rejeu && !tirage.bonus && !session.reprisesAnnoncees) { session.reprisesAnnoncees = true; annoncerReprises(tirage); return; }
   }
@@ -244,7 +257,10 @@ function texteCompteur(champ) {
   //   Pendant la Rencontre, c'est « Question 2 / 5 » : toutes les questions de la Rencontre, la dernière (« Étonnant » ou
   //   bonus) comprise. Le panneau « Ce que vous savez » ne répète plus de chiffres, « Sa vie · vrai ou faux » non plus.
   const bonusAVenir = session.focus && session.bonusPrevu && !session.bonusFait && !session.enBonus && !(typeof bonusSansCandidat === "function" && bonusSansCandidat()) ? 1 : 0;
-  if (session.focus && session.enBonus) return `Question ${session.normalesFaites + 1} / ${session.normalesFaites + 1} · ${session.etonnant ? "Étonnant" : "Bonus"}`;
+  // R295 (51.01) : « Étonnant » posé avant la question sur sa vie compte comme une question de plus, au milieu
+  const restentApres = () => champsFocusRestants().length + (!estIdentifiee(session.focus) && session.presentee ? 1 : 0);
+  if (session.focus && session.enBonus) return `Question ${session.normalesFaites + 1} / ${session.normalesFaites + 1 + (session.etonnantAvant ? restentApres() : 0)} · ${session.etonnant ? "Étonnant" : "Bonus"}`;
+  const avance = session.focus && session.etonnantAvant ? 1 : 0;
   if (session.focus && session.enRejeu) return `À revoir · ${session.faites - session.normalesFaites + 1} / ${session.dejaRejouees.length}`;
   if (session.focus) {
     // Le total annoncé : les questions prévues, ou moins s'il ne reste plus assez de choses à demander
@@ -254,7 +270,7 @@ function texteCompteur(champ) {
     // la photo de fin (espèce présentée) est toujours la dernière question prévue
     const photoDeFin = session.presentee && champ === IDENTIFICATION;
     const annonce = photoDeFin ? session.normalesFaites + 1 : Math.max(session.normalesFaites + 1, Math.min(session.prevues, possible));
-    return `Question ${session.normalesFaites + 1} / ${annonce + bonusAVenir}`;
+    return `Question ${session.normalesFaites + 1 + avance} / ${annonce + bonusAVenir + avance}`;
   }
   return `Question ${session.faites + 1} / ${session.total}`;
 }
@@ -364,7 +380,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   // la mise en page ne bouge pas, et on ne peut pas lire la réponse dessus. Elle redevient nette après la réponse.
   if (bonus) { const ph = document.getElementById("photo-rencontre"); ph.classList.remove("cache"); ph.classList.add("floutee"); }
   // La photo à reconnaître après la présentation (étape 76) : une autre façon de poser la question
-  if (champ === IDENTIFICATION && session && session.focus && session.presentee) {
+  if (champ === IDENTIFICATION && session && session.focus && session.presentee && !session.photoFinAutre && !session.photoFinSosies) {
     document.getElementById("nom").textContent = "La reconnaîtriez-vous maintenant ?";
   }
   // "Je ne sais pas" : dans la Rencontre (pas dans les jeux chronométrés ni pour la photo, où il y a "Pas encore")
@@ -462,7 +478,20 @@ function poserIdentification(espece) {
   // Étape R192 (n° 12.6, note d'Aubin du 13/11) : dans une Rencontre, c'est une première rencontre, pas une interrogation :
   //   « À votre avis, quelle est cette espèce ? » ; ailleurs (petits jeux, défis), la question reste courte.
   const enRencontre = !defi && session && session.focus;
-  enTete(espece, true, false, enRencontre ? "À votre avis, quelle est cette espèce ?" : "Quelle est cette espèce ?");
+  // Étape R295 (51.02, choix 2A d'Aubin du 22/11) : la photo de la fin d'une espèce présentée (« Pas encore ») n'est plus la
+  //   photo qu'on vient de voir avec son nom : une autre photo d'elle, qui lui ressemble (remarque d'Aubin : « attention si
+  //   c'est une autre photo très différente (femelle ou jeune), ça peut être frustrant ») ; sans une telle photo, la choisir
+  //   parmi ses sosies, en photos.
+  if (PHOTO_FIN_AUTRE && enRencontre && session.presentee && session.focus === espece) {
+    const autre = autrePhotoSemblable(espece);
+    if (!autre && poserPhotoFinSosies(espece)) return;
+    if (autre) {
+      session.photoFinAutre = true;
+      enTete(espece, true, false, "Et sur cette photo, la reconnaîtriez-vous ?");
+      document.getElementById("photo-rencontre").innerHTML = imagePhoto(autre, "");
+    }
+  }
+  if (!(enRencontre && session.photoFinAutre && session.presentee)) enTete(espece, true, false, enRencontre ? "À votre avis, quelle est cette espèce ?" : "Quelle est cette espèce ?");
   apparitionSauvage();                                          // 1re question d'une Rencontre : l'effet (étape 89)
   document.getElementById("question").textContent = "";       // le titre pose déjà la question : pas de seconde phrase
   // 3 pièges de la même classe (oiseau avec oiseaux, reptile avec reptiles…)
@@ -482,6 +511,53 @@ function poserIdentification(espece) {
   // R282 : dans la Rencontre en trois temps, « À ne pas confondre » est sur la carte qui suit (et sur la carte de fin) : pas redit ici
   const confusionSurCarte = !!(session && session.physique && typeof RENCONTRE_TROIS_TEMPS !== "undefined" && RENCONTRE_TROIS_TEMPS);
   enCours.explication = `C'est : ${espece.nom_courant} (${espece.nom_affichage_groupe.toLowerCase()}).` + (defi || confusionSurCarte ? "" : phraseConfusion(espece));
+}
+
+// ---- Étape R295 (51.02, 2A) : la photo de la fin d'une espèce présentée ----
+//   Une autre photo d'elle, seulement si elle lui ressemble : « autre vue », ou le mâle, la femelle, un plumage dont la fiche
+//   dit qu'il n'est pas nettement différent (photo_N_differente = non). Jamais un jeune, une larve, une chenille, ni une
+//   forme nettement différente. Toujours la même photo pour une espèce (pas de tirage : une reprise montre la même).
+const PHOTO_FIN_AUTRE = true;
+const SUJETS_PHOTO_FIN = ["mâle", "femelle", "plumage d'été", "plumage d'hiver"];
+function autrePhotoSemblable(e) {
+  for (const n of [2, 3]) {
+    const src = e["photo_" + n];
+    if (!estRenseigne(src) || src === e.photo) continue;
+    const sujet = String(e[`photo_${n}_sujet`] || "").trim(), diff = String(e[`photo_${n}_differente`] || "").trim();
+    if (sujet === "autre vue" || (diff === "non" && SUJETS_PHOTO_FIN.includes(sujet))) return src;
+  }
+  return null;
+}
+// Sans autre photo semblable : « Laquelle est … ? » entre elle et ses sosies (ceux qui ont une photo), complétés par des
+//   espèces de son monde (même classe, même milieu d'abord, comme poserIdentification). Au moins 2 photos en tout, 4 au plus.
+function piegesPhotoFin(espece) {
+  const sosies = sosiesDe(espece).filter(o => estRenseigne(o.photo));
+  const terr = e => String(e.territoire || "").split(" ; "), lesTerr = terr(espece);
+  const proximite = e => (e.milieu_principal === espece.milieu_principal ? 4 : grandMilieu(e) === grandMilieu(espece) ? 2 : 0)
+                       + (terr(e).some(t => lesTerr.includes(t)) ? 1 : 0);
+  const autres = ESPECES.filter(e => e !== espece && e.onglet === espece.onglet && estRenseigne(e.photo) && !sosies.includes(e))
+    .sort((a, b) => proximite(b) - proximite(a) || (a.nom_courant < b.nom_courant ? -1 : 1));
+  return [...melanger(sosies), ...autres.slice(0, 6)].slice(0, 3);
+}
+function poserPhotoFinSosies(espece) {
+  const pieges = piegesPhotoFin(espece);
+  if (!pieges.length || !sosiesDe(espece).some(o => estRenseigne(o.photo))) return false;   // sans sosie, la question habituelle
+  session.photoFinSosies = true;
+  enTete(espece, false, false, `${pe(espece).la === "le" ? "Lequel" : "Laquelle"} est ${nomAvecArticle(espece)} ?`);
+  document.getElementById("question").textContent = "";
+  const zone = document.getElementById("reponses");
+  zone.className = "grille-photos";
+  for (const e of melanger([espece, ...pieges])) {
+    const bouton = document.createElement("button");
+    bouton.className = "reponse choix-photo";
+    bouton.innerHTML = `<div class="photo">${celluleImage(e, true)}</div>`;   // sans nom au survol : il donnerait la réponse
+    if (e === espece) bouton.dataset.juste = "oui";
+    bouton.onclick = () => repondre(bouton, e === espece);
+    zone.appendChild(bouton);
+  }
+  const autresNoms = pieges.map(o => o.nom_courant).join(", ");
+  enCours.explication = `C'est : ${espece.nom_courant} (${espece.nom_affichage_groupe.toLowerCase()}). Les autres photos : ${autresNoms}.`;
+  return true;
 }
 
 // ---- 6b. QCM : 4 réponses écrites --------------------------------
@@ -723,6 +799,10 @@ function poserVraiFaux(espece, q, bonne) {
   const valeur = estVraie ? bonne : choisirFausseVF(q, bonne, espece);   // VF1 : la fausse reste dans le « monde » de l'espèce ; R279 : variée
   const affirmation = document.getElementById("affirmation");
   affirmation.textContent = q.affirmation(valeur, espece);   // étape R184 : l'espèce (« s'accouple » chez les mammifères) ; E2-7 (note 11) : sans guillemets
+  // Étape R295 (51.01, 1A) : dans la Rencontre, la phrase n'est plus celle de la carte « Sa vie » mot pour mot :
+  //   elle commence par le nom (« Le merle noir mange surtout… » au lieu de « Il mange surtout… »)
+  if (typeof VIE_APRES_ETONNANT !== "undefined" && VIE_APRES_ETONNANT && session && session.focus && !defi && (session.vie || []).includes(q.champ))
+    affirmation.textContent = affirmation.textContent.replace(/^(Il|Elle) /, () => majuscule(nomAvecArticle(espece)) + " ");
   affirmationVraie = q.affirmation(bonne, espece);       // étape E2-4 : la phrase vraie, donnée après une erreur dans la rafale
   affirmation.classList.remove("cache");
   ajouterBouton("Vrai", estVraie);
@@ -1133,7 +1213,15 @@ function poserSonDuo(espece, fichier) {
   const exp = (defi && defi.expedition) || (session && session.expedition);
   const terr = exp && expeditionParId(exp.id) ? [expeditionParId(exp.id).territoire] : String(espece.territoire || "").split(" ; ");
   const voisine = e => String(e.territoire || "").split(" ; ").some(t => terr.includes(t));
-  const autre = autres.find(e => e.onglet === espece.onglet && voisine(e)) || autres.find(voisine) || autres.find(e => e.onglet === espece.onglet) || autres[0];
+  // Étape R295 (51.03) : l'autre cri vient du « monde » de l'espèce (avant : le premier oiseau du territoire, ex. le fulmar
+  //   boréal pour le merle) : une espèce de l'expédition, puis du même milieu, puis du même ordre, toujours du même territoire.
+  const xCri = exp ? expeditionParId(exp.id) : null;
+  const memeOnglet = e => e.onglet === espece.onglet;
+  const autre = (xCri ? autres.find(e => memeOnglet(e) && xCri.liste.includes(e)) : null)
+    || autres.find(e => memeOnglet(e) && voisine(e) && e.milieu_principal === espece.milieu_principal)
+    || autres.find(e => memeOnglet(e) && voisine(e) && espece.ordre && e.ordre === espece.ordre)
+    || autres.find(e => memeOnglet(e) && voisine(e) && grandMilieu(e) === grandMilieu(espece))
+    || autres.find(e => memeOnglet(e) && voisine(e)) || autres.find(voisine) || autres.find(memeOnglet) || autres[0];
   const lesDeux = melanger([espece, autre]);              // l'ordre A / B est tiré au hasard
   arreterCri();
   crisDuo = lesDeux.map(e => new Audio(fichierSon(e)));

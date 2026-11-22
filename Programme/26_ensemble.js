@@ -177,10 +177,24 @@ function candidatChasseur(x, sansChat) {
   // « chasseurs du même milieu » : même régime que le vrai chasseur (un carnivore → des carnivores), le même ordre d'abord
   // (un rapace → des rapaces), puis le même milieu
   const milieu = h.hors_jeu ? null : h.milieu_principal, regime = h.hors_jeu ? "carnivore" : String(h.regime_alimentaire_type || "");
-  const pieges = ESPECES.filter(p => p !== h && !x.liste.includes(p) && dansTerritoire(p, x.territoire) && p.classe === h.classe
+  const base = ESPECES.filter(p => p !== h && !x.liste.includes(p) && dansTerritoire(p, x.territoire) && p.classe === h.classe
       && RE_CHASSEUR.test(String(p.regime_alimentaire_type || "")) && (!/carniv|piscivo/.test(regime) || /carniv|piscivo/.test(String(p.regime_alimentaire_type || "")))
-      && !proies.some(e => citeOuGroupe(e, "predateurs", p) || citeOuGroupe(p, "proies", e)))
-    .map(p => [p, (!h.hors_jeu && p.ordre === h.ordre ? 2 : 0) + (p.milieu_principal === milieu ? 1 : 0) + Math.random() * 0.5])
+      && !proies.some(e => citeOuGroupe(e, "predateurs", p) || citeOuGroupe(p, "proies", e)));
+  // Étape R295 (51.03) : avant, le même ordre comptait plus que le milieu (aigle royal, vautour moine, balbuzard pour l'épervier,
+  //   chasseur des oiseaux du jardin). Maintenant : jamais un mangeur de charognes ni un pêcheur quand les proies ne vivent pas
+  //   dans l'eau ; d'abord le même milieu (celui du chasseur ou de ses proies), puis le même ordre, puis une taille voisine.
+  const proiesAquatiques = proies.some(e => grandMilieu(e) !== "terre");
+  const texteProies = p => [p.type_proie_detaille, p.proies].map(v => Array.isArray(v) ? v.join(", ") : String(v || "").trim()).filter(Boolean).join(" ; ");
+  const charognard = p => /^(charogn|os de|poissons morts|cadavres)/i.test(texteProies(p));
+  const milieuxProies = new Set(proies.map(e => e.milieu_principal));
+  const grandsMilieuxProies = new Set(proies.map(grandMilieu));   // le chat du jardin : jamais un dauphin (avant : dauphins, cachalot)
+  const th = h.hors_jeu ? null : tailleNombre(h);
+  const proche = p => { const tp = tailleNombre(p); return th && tp ? Math.max(th, tp) / Math.min(th, tp) <= 2 : false; };
+  const dansSonMonde = base.filter(p => !charognard(p) && grandsMilieuxProies.has(grandMilieu(p))
+    && (proiesAquatiques || !/piscivo/i.test(String(p.regime_alimentaire_type || ""))));
+  const pieges = (dansSonMonde.length >= 2 ? dansSonMonde : base)
+    .map(p => [p, (p.milieu_principal === milieu || milieuxProies.has(p.milieu_principal) ? 3 : 0)
+                  + (!h.hors_jeu && p.ordre === h.ordre ? 2 : 0) + (proche(p) ? 1 : 0) + Math.random() * 0.5])
     .sort((a, b) => b[1] - a[1]).map(a => a[0]);
   if (pieges.length < 2) return null;
   return { chasseur: h, proies, pieges: pieges.slice(0, 3) };

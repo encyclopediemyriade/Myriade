@@ -651,12 +651,16 @@ const TAILLES_CONNUES = {
 };
 function mesureDefi(o) { return mesureTaille(o).fiche; }
 function tailleMilieu(o) { const f = fourchetteTailleDefi(o, false); return f ? Math.sqrt(Math.max(f[0], 0.01) * f[1]) : null; }
-function tailleComparee(o) {
+// R296 (« Un peu plus petit qu'un pigeon » quand le pigeon ramier est une des 4 photos : ambigu) : `exclus` = les espèces
+//   de la question ; l'animal de comparaison n'est jamais l'une d'elles (ni le pigeon pour le pigeon ramier, ni le merle pour le merle noir)
+function tailleComparee(o, exclus) {
   const m = tailleMilieu(o), mes = mesureDefi(o);
   const refs = TAILLES_CONNUES[mes + "|" + o.onglet] || TAILLES_CONNUES[mes];
   if (!m || !refs) return "";
-  const nomSimple = simplifier(o.nom_courant);   // jamais « un peu plus petit qu'un rat » pour le rat noir
-  const [nom, v] = refs.filter(r => !nomSimple.includes(simplifier(r[0].replace(/^(un|une) /, "").split(/[ (]/)[0]))).sort((a, b) => Math.abs(Math.log(m / a[1])) - Math.abs(Math.log(m / b[1])))[0];
+  const noms = [o, ...(exclus || [])].map(z => simplifier(z.nom_courant));   // jamais « un peu plus petit qu'un rat » pour le rat noir
+  const meilleur = refs.filter(r => { const mot = simplifier(r[0].replace(/^(un|une) /, "").split(/[ (]/)[0]); return !noms.some(n => n.includes(mot)); }).sort((a, b) => Math.abs(Math.log(m / a[1])) - Math.abs(Math.log(m / b[1])))[0];
+  if (!meilleur) return "";
+  const [nom, v] = meilleur;
   const k = m / v, de = nom.replace(/^(un|une) /, "$1 ");
   if (k > 1.6) return `Plus grand que ${de}`.replace("que un", "qu'un").replace("que une", "qu'une");
   if (k < 0.62) return `Plus petit que ${de}`.replace("que un", "qu'un").replace("que une", "qu'une");
@@ -665,8 +669,8 @@ function tailleComparee(o) {
   return `De la taille d'${de}`;
 }
 // Les indices de Me tester (Où, indice de présence sans les cris, taille comparée, activité)
-function candidatsIndicesDefi(e) {
-  const l = [], milieu = lireCase(e, "milieu_principal"), trace = traceDefi(e), t = tailleComparee(e), act = lireCase(e, "activite");
+function candidatsIndicesDefi(e, exclus) {
+  const l = [], milieu = lireCase(e, "milieu_principal"), trace = traceDefi(e), t = tailleComparee(e, exclus), act = lireCase(e, "activite");
   if (milieu) l.push({ etiq: "Où", texte: majuscule(milieu) });
   if (trace) l.push({ etiq: "Indice de présence", texte: trace });
   if (t) l.push({ etiq: "Taille", texte: t, taille: true });
@@ -674,9 +678,9 @@ function candidatsIndicesDefi(e) {
   return l.filter(i => INDICES_DEFI.includes(i.etiq) && !texteDitNom(i.texte, e));
 }
 // 3A : un indice sépare-t-il la bonne espèce de cette fausse photo ? (R285 : seulement si l'indice la contredit vraiment)
-function separeParIndice(e, i, o) {
-  if (i.taille || i.etiq === "Taille") return mesureDefi(e) === mesureDefi(o) && taillesDisjointes(e, o) && !!tailleComparee(e)
-    && Math.abs(Math.log(tailleMilieu(e) / tailleMilieu(o))) >= Math.log(1.5) && tailleComparee(o) !== tailleComparee(e);
+function separeParIndice(e, i, o, exclus) {
+  if (i.taille || i.etiq === "Taille") return mesureDefi(e) === mesureDefi(o) && taillesDisjointes(e, o) && !!tailleComparee(e, exclus)
+    && Math.abs(Math.log(tailleMilieu(e) / tailleMilieu(o))) >= Math.log(1.5) && tailleComparee(o, exclus) !== tailleComparee(e, exclus);
   if (i.etiq === "Indice de présence") {
     if (!traceDefi(e)) return false;
     const mien = simplifier(traceDefi(o));
@@ -702,13 +706,15 @@ function questionIndicesDefi(e, x) {
   trios.sort((a, b) => meme(b) - meme(a));
   for (const pieges of trios) {
     const memeMesure = pieges.every(o => mesureDefi(o) === mesureDefi(e));
-    const cands = tous.filter(i => !i.taille || memeMesure);
+    const exclus = [e, ...pieges];   // R296 : la taille comparée à un animal qui n'est pas parmi les 4 photos
+    const cands = candidatsIndicesDefi(e, exclus).filter(i => !i.taille || memeMesure);
+    const separe = (i, o) => separeParIndice(e, i, o, exclus);
     const choisis = [];
     let reste = pieges.slice();
     while (reste.length && choisis.length < 3) {   // l'indice qui écarte le plus de fausses photos qui restent
-      const m = cands.filter(i => !choisis.includes(i)).map(i => ({ i, n: reste.filter(o => separeParIndice(e, i, o)).length })).sort((a, b) => b.n - a.n)[0];
+      const m = cands.filter(i => !choisis.includes(i)).map(i => ({ i, n: reste.filter(o => separe(i, o)).length })).sort((a, b) => b.n - a.n)[0];
       if (!m || !m.n) break;
-      choisis.push(m.i); reste = reste.filter(o => !separeParIndice(e, m.i, o));
+      choisis.push(m.i); reste = reste.filter(o => !separe(m.i, o));
     }
     if (reste.length) continue;   // réunis, les indices ne désigneraient pas une seule des 4
     return { indices: cands.filter(i => choisis.includes(i)).map(i => ({ etiq: i.etiq, texte: i.texte, taille: !!i.taille })), pieges };
@@ -939,16 +945,17 @@ function corpsIndicesDefi(q) {
     <div class="ore-photos dfx-photos">${q.noms.map((e, k) => boutonPhotoDefi(e, k, q)).join("")}</div>`;
 }
 // R285 : après une erreur, la taille est dite en comparaison ET en centimètres (pour apprendre)
-function texteIndicePour(o, etiq) {
-  if (etiq === "Taille") { const c = tailleComparee(o), t = tailleRencontre(o); return c ? `${c}${t ? ` (${t.texte})` : ""}` : (t ? majuscule(t.texte) : ""); }
+function texteIndicePour(o, etiq, exclus) {
+  if (etiq === "Taille") { const c = tailleComparee(o, exclus), t = tailleRencontre(o); return c ? `${c}${t ? ` (${t.texte})` : ""}` : (t ? majuscule(t.texte) : ""); }
   if (etiq === "Où" && especeDansLEauDefi(o)) { const m = lireCase(o, "milieu_principal"); return m ? `Dans l'eau : ${minusculeTexte(m)}` : ""; }
   const c = candidatsIndicesDefi(o).find(z => z.etiq === etiq);
   return c ? c.texte : etiq === "Indice de présence" ? "Ne laisse pas cet indice" : "";
 }
 // Après une erreur sur les indices : le premier indice qui les sépare VRAIMENT (R285), pour les deux espèces
 function blocIndicesErreur(q, choisie) {
-  const sep = q.indices.find(i => separeParIndice(q.espece, i, choisie)) || q.indices.find(i => simplifier(texteIndicePour(choisie, i.etiq)) !== simplifier(i.texte));
-  const l = sep ? { i: sep.etiq === "Taille" ? { ...sep, texte: texteIndicePour(q.espece, "Taille") } : sep, autre: texteIndicePour(choisie, sep.etiq) } : null;
+  const ex = q.noms;   // R296 : la même comparaison que dans la question (jamais un animal parmi les 4 photos)
+  const sep = q.indices.find(i => separeParIndice(q.espece, i, choisie, ex)) || q.indices.find(i => simplifier(texteIndicePour(choisie, i.etiq, ex)) !== simplifier(i.texte));
+  const l = sep ? { i: sep.etiq === "Taille" ? { ...sep, texte: texteIndicePour(q.espece, "Taille", ex) } : sep, autre: texteIndicePour(choisie, sep.etiq, ex) } : null;
   if (!l || !l.autre) return null;
   const ligne = (e, t, cls) => `<li><i class="${cls}"></i><span><b>${echapper(majuscule(nomCourt(e)))} :</b> ${echapper(minusculeTexte(t))}</span></li>`;
   return `<div class="dfx-separe"><small>Ce qui les sépare · ${echapper(minusculeTexte(l.i.etiq))}</small><ul>${ligne(q.espece, l.i.texte, "ok")}${ligne(choisie, l.autre, "ko")}</ul></div>`;
@@ -1733,13 +1740,13 @@ function repondreVieDefi(q, k, bouton) {
         <p class="dfx-vie-note">Cette question ne compte pas dans les erreurs : elle vous attend dans « À retenir ».</p></div>`;
   conclureReponseDefi(q, juste, html, { noter: false, vie: true });
 }
-// « À retenir » : les questions sur la vie manquées, à part des questions ratées (décision à relire)
+// « À retenir » : les questions sur la vie manquées, à part des questions ratées (décision à relire) ; R295 (51.05, 5A) : ouvert d'office
 function aRetenirDefi(d) {
   return d.questions.filter(q => estVieQ(q) && q.choix && q.vieJuste === false)
     .map(q => ({ nom: q.espece.nom_courant, detail: q.vie.sorte === "etonnant" ? q.vie.fait : q.vie.vraie }));
 }
 function blocARetenir(l) {
   if (!l || !l.length) return "";
-  return `<details class="dft-ratees dft-retenir"><summary>À retenir${l.length > 1 ? ` · ${l.length}` : ""}</summary>
+  return `<details class="dft-ratees dft-retenir" open><summary>À retenir${l.length > 1 ? ` · ${l.length}` : ""}</summary>
       <ul>${l.map(r => `<li><b>${echapper(r.nom)}</b><small>${echapper(r.detail)}</small></li>`).join("")}</ul></details>`;
 }
