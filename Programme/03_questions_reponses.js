@@ -88,6 +88,10 @@ function choisirChamp(espece) {
 // Étape R142 : leur affichage est retiré ; le compteur « xp » reste (sauvegarde, et signal « le carnet a bougé » de possibiliteJeu).
 let enCours = null;      // la question affichée : { espece, champ, explication, q, bonne }
 let questionEstRevision = false;   // vrai si la question affichée est une « Déjà croisée… » (étape 41)
+// Étape R294 (Notion 50.05, test de la 1.32.1 : « Déjà croisée… » pour le merle, le ragondin) : l'étiquette s'accorde au genre
+//   du nom de l'espèce (colonne genre_nom, comme les pronoms depuis R148) ; sans genre connu, « l'espèce » : au féminin.
+function estNomMasculin(e) { return !!e && e.genre_nom === "masculin"; }
+function texteDejaCroisee(e) { return estNomMasculin(e) ? "Déjà croisé…" : "Déjà croisée…"; }
 
 function nouvelleRencontre() {
   arreterCri();                                          // on coupe le cri de la question précédente
@@ -276,7 +280,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
 
   // Remise à zéro de la carte
   document.getElementById("compteur-rencontre").textContent = texteCompteur(champ);   // étape 156
-  document.getElementById("revision").textContent = bonus ? "Question bonus : de mémoire !" : estRevision ? "Déjà croisée…" : "";
+  document.getElementById("revision").textContent = bonus ? "Question bonus : de mémoire !" : estRevision ? texteDejaCroisee(espece) : "";   // R294 (50.05) : accordé
   // Étape 196 : dans « Jouer », une petite étiquette dit pourquoi la question arrive, et la pastille prend sa couleur
   if (defi && defi.jouer) {
     const e = etiquetteJouer(espece, champ, estRevision);
@@ -873,7 +877,9 @@ function legendeTaille(espece, pxParCm) {
     const cm = [1, 2, 5, 10, 20, 50, 100, 200].find(c => c * pxParCm >= 60) || 200;
     return `<span class="emp-taille emp-piste"><i style="width:${Math.round(cm * pxParCm)}px"></i><b>${texteCm(cm)}</b></span>`;
   }
-  return `<span class="emp-taille"><b>environ ${texteCm(m.cm)}</b><small>taille réelle</small></span>`;
+  // R294 (Notion 52.03) : « taille réelle : environ 13 cm » (avant « environ 13 cm · taille réelle » : sur téléphone, on pouvait croire
+  //   que le dessin était à taille réelle)
+  return `<span class="emp-taille"><small>taille réelle :</small><b>environ ${texteCm(m.cm)}</b></span>`;
 }
 // Une ou deux empreintes à montrer : leurs dessins, à la même échelle si leurs tailles sont proches
 function dessinsEmpreintes(especes, l, h) {

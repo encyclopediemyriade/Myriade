@@ -81,6 +81,7 @@ function montrer(vue) {
     requestAnimationFrame(() => setTimeout(() => { if (!v || !v.classList.contains("cache")) afficherPageProgression(); }, 0));
   }
   if (typeof noterArriveePage === "function") noterArriveePage(vue);   // R241 (note 2)
+  if (typeof planifierStats === "function") planifierStats();          // R294 (50.01) : le compteur du haut à jour sur chaque écran (l'accueil du téléphone l'oubliait)
 }
 
 // Le bouton Quitter (étape 73) : on arrête la partie en cours et on revient à l'accueil.
@@ -1827,9 +1828,11 @@ function demarrerDefi(d, options = {}) {
 // Étape 196 : l'étiquette d'une question de « Jouer », et sa couleur de pastille
 function etiquetteJouer(espece, champ, estRevision) {
   if (champ === IDENTIFICATION && !estIdentifiee(espece)) return { texte: "Nouvelle espèce", type: "nouv" };
-  if (defi && defi.expedition && defi.expedition.revue && defi.questionReprise) return { texte: "Vous arrivez à la reconnaître maintenant ?", type: "rev" };   // étape R184
-  if (defi && defi.expedition && defi.expedition.revue) return { texte: "Déjà rencontrée ailleurs · reconnaissez-la pour qu'elle compte ici", type: "rev" };   // étape 317 (R184 : dit pourquoi)
-  if (estRevision) return { texte: "Déjà croisée…", type: "rev" };
+  // R294 (50.05) : accordé au genre du nom (« Déjà croisé… » pour le merle), comme le reste du jeu (R148)
+  const m = estNomMasculin(espece);
+  if (defi && defi.expedition && defi.expedition.revue && defi.questionReprise) return { texte: `Vous arrivez à ${m ? "le" : "la"} reconnaître maintenant ?`, type: "rev" };   // étape R184
+  if (defi && defi.expedition && defi.expedition.revue) return { texte: m ? "Déjà rencontré ailleurs · reconnaissez-le pour qu'il compte ici" : "Déjà rencontrée ailleurs · reconnaissez-la pour qu'elle compte ici", type: "rev" };   // étape 317 (R184 : dit pourquoi)
+  if (estRevision) return { texte: texteDejaCroisee(espece), type: "rev" };
   if (nbBonnes(espece, champ) === 0) return { texte: "À découvrir", type: "trait" };
   return { texte: "Révision", type: "rev" };
 }

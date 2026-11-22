@@ -78,6 +78,22 @@ function sauvegarder() {
   try {
     localStorage.setItem(CLE_SAUVEGARDE, JSON.stringify(donnees));
   } catch (e) { /* tiroir indisponible (navigation privée…) : le jeu continue sans sauver */ }
+  planifierStats();
+}
+// Étape R294 (Notion 50.01, test de la 1.32.1 : « 2 espèces · 2 empreintes » au lieu de 7 et 9) : le compteur du haut
+//   (espèces · empreintes) suit TOUT ce qui se sauvegarde — une espèce ou une empreinte gagnée l'est toujours. Avant, chaque
+//   écran devait penser à appeler afficherStats() : Me tester, Leurs liens, la fin d'une Rencontre et l'accueil du téléphone
+//   l'oubliaient. Une seule mise à jour pour plusieurs sauvegardes de suite (juste après), jamais pendant que son détail est ouvert.
+let statsPlanifiees = false;
+function planifierStats() {
+  if (statsPlanifiees) return;
+  statsPlanifiees = true;
+  setTimeout(() => {
+    statsPlanifiees = false;
+    const d = document.getElementById("detail-carnet");
+    if (d && !d.hidden) return;
+    try { if (typeof afficherStats === "function" && typeof ESPECES !== "undefined") afficherStats(); } catch (e) { /* rien */ }
+  }, 0);
 }
 
 // Étape R188e : les espèces renommées (ancien nom → nouveau) ; leur carnet est repris sous le nouveau nom au chargement

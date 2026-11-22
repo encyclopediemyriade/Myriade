@@ -337,13 +337,29 @@ function noterDepartExp(x) {
   suivi.departExp = suivi.departExp || {};
   if (suivi.departExp[x.id] !== undefined) return;
   if (typeof empreintesExp === "function" && empreintesExp(x) >= NB_ETAPES) return;   // expédition déjà terminée : rien à noter
-  suivi.departExp[x.id] = x.liste.map((e, i) => estIdentifiee(e) ? i : -1).filter(i => i >= 0).join(",");
+  suivi.departExp[x.id] = x.liste.map((e, i) => auCarnetR294(e) ? i : -1).filter(i => i >= 0).join(",");
+  sauvegarder();
+}
+// Étape R294 (Notion 50.03, test de la 1.32.1 : « 7 espèces de plus dans votre carnet » alors que 2 y étaient déjà ; choix d'Aubin
+//   du 22/11 au soir, « 5 de plus ») : la planche ne compte que les espèces qui n'ont pas encore été fêtées. Une espèce dont la
+//   Rencontre s'est finie dans cette expédition a eu sa fin de Rencontre : elle est notée comme les espèces du départ
+//   (noterFeteeExp, appelée par finRencontreExpedition, 17). Restent celles entrées par Me tester (ou par la Rencontre qui finit
+//   l'expédition, fêtée sur ce même écran). Une expédition jouée tout en Rencontres finit donc sans planche.
+//   « Au carnet » suit la règle du carnet (R287 : une Rencontre finie compte, même sans la photo), plus seulement la photo reconnue.
+function auCarnetR294(e) { return typeof estReconnue === "function" ? estReconnue(e) : estIdentifiee(e); }
+function noterFeteeExp(x, e) {
+  if (!x || !e || typeof suivi !== "object" || !suivi || !suivi.departExp || suivi.departExp[x.id] === undefined) return;
+  const i = x.liste.indexOf(e);
+  if (i < 0) return;
+  const deja = String(suivi.departExp[x.id]).split(",").filter(Boolean);
+  if (deja.includes(String(i))) return;
+  suivi.departExp[x.id] = [...deja, String(i)].join(",");
   sauvegarder();
 }
 function especesEntreesExp(x) {
   if (!x || typeof suivi !== "object" || !suivi || !suivi.departExp || suivi.departExp[x.id] === undefined) return [];
   const deja = new Set(String(suivi.departExp[x.id]).split(",").filter(Boolean).map(Number));
-  return x.liste.filter((e, i) => !deja.has(i) && estIdentifiee(e));
+  return x.liste.filter((e, i) => !deja.has(i) && auCarnetR294(e));
 }
 function htmlPlancheFete(especes) {
   const n = especes.length;

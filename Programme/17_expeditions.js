@@ -1725,6 +1725,7 @@ function finRencontreExpedition(s) {
   zone.classList.remove("cache");
   // Étape RF1 : la Rencontre complète peut finir toute l'expédition (sa vie était dans la Rencontre)
   if (RENCONTRE_COMPLETE && etapeFinie(x, 2) && info.avant < NB_ETAPES) { finExpeditionParRencontre(x, s, gagnees, zone); return; }
+  if (typeof noterFeteeExp === "function") noterFeteeExp(x, e);   // R294 (50.03) : fêtée ici, elle ne revient pas dans la planche de fin d'expédition
   const quiEnsuite = RENCONTRE_COMPLETE && !etapeFinie(x, 1) && faite ? blocQuiEnsuite(x) : "";
   zone.innerHTML = `<div class="exp-fin">
       <div class="exp-fin-pas">${dessinGain(x)}</div>

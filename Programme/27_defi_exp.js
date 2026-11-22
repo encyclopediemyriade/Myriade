@@ -132,7 +132,33 @@ function ajusterPassagesVarie(x, nb) {
   const ordre = x.liste.filter(e => nb.get(e) > 2).sort((a, b) => a.nom_courant.localeCompare(b.nom_courant));   // toujours les mêmes (le compte de la porte reste juste)
   for (const e of ordre) { if (total <= capacite) break; nb.set(e, nb.get(e) - 1); total--; }
 }
+// Étape R294 (Notion 50.04, test de la 1.32.1 : la porte annonçait « 20 questions, 3 erreurs permises », le défi en avait 19
+//   avec 2 permises) : la porte comptait les questions prévues, mais en composant le défi le jeu en perd parfois une (R284 : pas
+//   assez de façons variées ; 10 cas sur 4 584 essais). Désormais le défi est composé dès que la porte s'affiche, et c'est
+//   exactement ce défi-là qui est lancé : les chiffres annoncés sont ceux du défi joué. Il est recomposé si quelque chose a
+//   changé entre-temps (une photo reconnue, un fait trouvé), et après chaque lancement (un nouveau défi est un nouveau tirage).
+let defiPrepare = null;
+function cleDefiPrepare(x, deja) {
+  return x.id + "|" + JSON.stringify(x.liste.map(e => [deja.has(e.nom_courant) ? 1 : 0,
+    DEFI_VIE ? sujetsVieNeufs(e).map(o => o.c).join(",") : "", DEFI_VIE ? etonnantsNeufs(e).map(f => f.id).join(",") : ""]));
+}
+function defiComposeExp(x) {
+  const deja = new Set(x.liste.filter(e => typeof estPhotoReconnue === "function" && estPhotoReconnue(e)).map(e => e.nom_courant));
+  const cle = cleDefiPrepare(x, deja);
+  if (defiPrepare && defiPrepare.cle === cle) return defiPrepare;
+  const nb = questionsParEspece(x, deja);
+  const vie = DEFI_VIE ? choisirVieDefi(x, nb, deja) : [];   // R291 : nb est ajusté
+  const questions = questionsDefiVarie(x, nb, poolDefi(x), vie);
+  defiPrepare = { cle, deja, nb, questions };
+  return defiPrepare;
+}
+// Les chiffres de la porte : ceux du défi composé (les questions sur la vie ne comptent pas dans les erreurs permises)
+function permisesDefiAnnonce(x) {
+  if (!DEFI_VARIE) return erreursPermisesDefi(nbQuestionsDefi(x) - nbVieDefi(x));
+  return erreursPermisesDefi(defiComposeExp(x).questions.filter(q => !estVieQ(q)).length);
+}
 function nbQuestionsDefi(x) {
+  if (typeof DEFI_VARIE !== "undefined" && DEFI_VARIE) return defiComposeExp(x).questions.length;   // R294
   const deja = new Set(x.liste.filter(e => typeof estPhotoReconnue === "function" && estPhotoReconnue(e)).map(e => e.nom_courant));   // R287 : la photo, pas le carnet
   const sepa = typeof DEFI_VARIE !== "undefined" && DEFI_VARIE && paireSepareDefi(x) ? 1 : 0;   // R283 : « Ce qui les sépare » = une question pour deux espèces
   const nb = questionsParEspece(x, deja);
@@ -320,9 +346,12 @@ function lancerDefiExp(x) {
   const dejaReconnues = new Set(x.liste.filter(estPhotoReconnue).map(e => e.nom_courant));   // R287 : la photo déjà reconnue (pas seulement au carnet)
   const nb = questionsParEspece(x, dejaReconnues);
   if (DEFI_VARIE) {   // R283 : reconnaître autrement (repère, indices, Qui est qui ?, Ce qui les sépare)
-    const vie = DEFI_VIE ? choisirVieDefi(x, nb, dejaReconnues) : [];   // R291 : 2 à 4 questions sur la vie, à la place de questions pour reconnaître (nb est ajusté)
-    defiExp = { x, questions: questionsDefiVarie(x, nb, pool, vie), i: 0, aides: aidesDefi(), silhouettesVisibles: false, prevues: nb,
-                avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues };
+    // R291 : 2 à 4 questions sur la vie, à la place de questions pour reconnaître (nb est ajusté)
+    // R294 (50.04) : le défi composé pour la porte (mêmes chiffres que ceux annoncés), puis oublié : le prochain sera un autre tirage
+    const p = defiComposeExp(x);
+    defiPrepare = null;
+    defiExp = { x, questions: p.questions, i: 0, aides: aidesDefi(), silhouettesVisibles: false, prevues: p.nb,
+                avantGain: gainExp(x), avantEtapes: empreintesExp(x), dejaReconnues: p.deja };
     montrer("defiexp");
     afficherQuestionDefiExp();
     return;
@@ -1138,8 +1167,8 @@ function repondreDefiExp(choisie, bouton) {
   }
   // R265 (40.12, 6A) : une bonne réponse a sa ligne « Oui » et un repère de terrain (le nom n'est pas redit, R239)
   //   R283 : après le repère (posé sans photo), la photo arrive avec le repère, pour expliquer
-  const oui = typeof verdictHtml === "function" ? `<p class="apf-verdict">${verdictHtml({ juste: true, complement: q.type === "repere" ? "" : complementReconnaissance(q.espece, q.photo && q.photo.sujet) })}</p>` : "";
-  const bloc = q.type === "repere" ? blocRepereErreur(q, choisie) : q.type === "indices" ? blocIndicesErreur(q, choisie) : null;
+  const oui = typeof verdictHtml === "function" ? `<p class="apf-verdict">${verdictHtml({ juste: true, complement: q.type === "repere" ? "" : q.type === "cri" ? texteCriDefi(q.espece) : complementReconnaissance(q.espece, q.photo && q.photo.sujet) })}</p>` : "";
+  const bloc = q.type === "repere" ? blocRepereErreur(q, choisie) : q.type === "indices" ? blocIndicesErreur(q, choisie) : q.type === "cri" ? blocCriErreur(q.espece, choisie) : null;   // R294 (50.06) : le cri
   const html = juste ? `${oui}${q.type === "repere" ? photoRepereDefi(q) : ""}`
     : `${erreurCoteACote(q.espece, choisie, q.photo && q.photo.sujet, bloc)}${q.type === "cri" && typeof aUnCri === "function" && aUnCri(choisie)
       ? `<div class="dfx-ecouter"><small>Écoutez les deux :</small><button class="cdo-second" data-ecoute="${echapper(q.espece.nom_courant)}">${PLAY_SVG}${echapper(q.espece.nom_courant)}</button><button class="cdo-second" data-ecoute="${echapper(choisie.nom_courant)}">${PLAY_SVG}${echapper(choisie.nom_courant)}</button></div>` : ""}`;
@@ -1193,8 +1222,18 @@ function blocSepare(bonne, choisie, sujet) {
   return s ? `<div class="dfx-separe"><small>${s.titre}</small>${s.critere ? `<p>${echapper(majuscule(s.critere))}</p>`
       : `<ul>${ligne(bonne, s.bonne, "ok")}${s.choisie ? ligne(choisie, s.choisie, "ko") : ""}</ul>`}</div>` : "";
 }
-function erreurCoteACote(bonne, choisie, sujet, autreBloc) {   // R283 : autreBloc = l'explication propre à la façon (repère, indices)
-  const bloc = autreBloc || blocSepare(bonne, choisie, sujet);
+// Étape R294 (Notion 50.06, test de la 1.32.1 : après une question de cri, « Le repère : liseré gris autour de l'orange ») :
+//   une question de cri s'explique par le cri — la description du cri de la fiche (colonne cri_son), jamais l'allure.
+//   Bonne réponse : « Oui » et son cri ; erreur : « Leurs cris » (chaque espèce, si sa fiche le décrit), puis « Écoutez les deux ».
+function texteCriDefi(e) { return e && estRenseigne(e.cri_son) ? `Son cri : ${minusculeTexte(String(e.cri_son)).replace(/\.$/, "")}.` : ""; }
+function blocCriErreur(bonne, choisie) {
+  const l = [[bonne, "ok"], [choisie, "ko"]].filter(([e]) => e && estRenseigne(e.cri_son));
+  if (!l.length) return "";
+  return `<div class="dfx-separe"><small>${l.length > 1 ? "Leurs cris" : "Son cri"}</small><ul>${l.map(([e, cls]) =>
+    `<li><i class="${cls}"></i><span><b>${echapper(majuscule(nomCourt(e)))} :</b> ${echapper(minusculeTexte(String(e.cri_son)))}</span></li>`).join("")}</ul></div>`;
+}
+function erreurCoteACote(bonne, choisie, sujet, autreBloc) {   // R283 : autreBloc = l'explication propre à la façon (repère, indices) ; R294 : "" = aucune
+  const bloc = autreBloc !== null && autreBloc !== undefined ? autreBloc : blocSepare(bonne, choisie, sujet);
   return `<div class="dfx-erreur"><small class="dfx-pas">Pas cette fois</small><b class="dfx-cetait">C'était ${echapper(nomAvecArticle(bonne))}</b>
       <div class="dfx-duo agrandir-groupe"><figure class="ko agr" data-legende="Votre choix · ${echapper(choisie.nom_courant)}"><figcaption>Votre choix</figcaption><span class="agr-cadre">${celluleImage(choisie, true)}${LOUPE_SVG}</span><span>${echapper(choisie.nom_courant)}</span></figure>`
     + `<figure class="ok agr" data-legende="La bonne réponse · ${echapper(bonne.nom_courant)}"><figcaption>La bonne réponse</figcaption><span class="agr-cadre">${q2Image(bonne, sujet)}${LOUPE_SVG}</span><span>${echapper(bonne.nom_courant)}</span></figure></div>${bloc}</div>`;   // R239 (16b) : toucher pour agrandir
@@ -1497,12 +1536,12 @@ function portesEtape1(x) {
           ${prochaine ? `<div class="dfx-prochaine">${vign}<span>${prochaine}</span></div>` : ""}
           <button class="cdo-suivant" data-porte="decouvrir">Continuer les Rencontres</button></div>
         <button class="dfx-plutot" data-porte="tester">${PICTO_TESTER}Me tester plutôt</button>
-        <small class="dfx-note">Le défi porte sur les ${n} espèces.${av.faites ? ` ${av.faites > 1 ? `Les ${av.faites} déjà reconnues le restent` : "Celle déjà reconnue le reste"}, quoi qu'il arrive.` : ""}</small>${gain}</div>`;
+        <small class="dfx-note">Le défi porte sur les ${n} espèces : ${nbQuestionsDefi(x)} questions, ${permisesDefiAnnonce(x)} erreurs permises.${av.faites ? ` ${av.faites > 1 ? `Les ${av.faites} déjà reconnues le restent` : "Celle déjà reconnue le reste"}, quoi qu'il arrive.` : ""}</small>${gain}</div>`;
   }
   return `<div class="dfx-portes"><div class="etiq-jeu">${nomEtape(1)}</div>
       <p class="dfx-phrase">Deux façons de reconnaître ces ${n} espèces : les découvrir une à une, ou vous tester tout de suite. Vous pourrez changer en route.</p>
       <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues))}
-        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${erreursPermisesDefi(nbQuestionsDefi(x) - nbVieDefi(x))} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`)}</div>${gain}</div>`;
+        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${permisesDefiAnnonce(x)} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`)}</div>${gain}</div>`;
 }
 function brancherPortes(zone, x) {
   zone.querySelectorAll("[data-porte]").forEach(b => b.onclick = () => b.dataset.porte === "tester" ? lancerDefiExp(x) : b.dataset.porte === "reprendre" ? reprendreDefiExp(x) : lancerExpedition(x, 1));
@@ -1585,7 +1624,13 @@ function etonnantsDefi(e) {
   }
   return memoEtonnantsDefi.get(e.nom_courant).filter(faitDisponible);
 }
-function aUneQuestionVie(e) { return sujetsVieDefi(e).length > 0 || etonnantsDefi(e).length > 0; }
+// Étape R294 (Notion 50.02, test de la 1.32.1 : le rougegorge, « Il mange surtout des insectes », reposé dans Me tester
+//   10 min après la Rencontre) : Me tester ne pose que ce qui n'a pas encore été trouvé — un sujet de « Sa vie » dont la case
+//   de la fiche n'a aucune bonne réponse, un « Étonnant » pas encore trouvé (R291 bloquait déjà le sens inverse). Avant, faute
+//   de sujet neuf, le jeu reprenait un sujet déjà réussi. Une espèce dont tout est trouvé n'a plus de question sur la vie.
+function sujetsVieNeufs(e) { return sujetsVieDefi(e).filter(o => nbBonnes(e, o.c) === 0); }
+function etonnantsNeufs(e) { return etonnantsDefi(e).filter(f => !insoliteTrouve(f.id)); }
+function aUneQuestionVie(e) { return sujetsVieNeufs(e).length > 0 || etonnantsNeufs(e).length > 0; }
 function hashTexte(t) { let h = 0; for (const c of String(t)) h = (h * 31 + c.charCodeAt(0)) | 0; return Math.abs(h); }
 // Combien : 3 ou 4 pour un défi de 16 questions ou plus, 2 ou 3 de 10 à 15, 2 en dessous (le même nombre pour une même expédition) ;
 //   une espèce sur deux au plus ; chacune prend la place d'une question pour reconnaître d'une espèce qui en a 3 (jamais moins de 2)
@@ -1615,13 +1660,13 @@ function choisirVieDefi(x, nb, deja) {
   const choisies = melanger(elig.slice()).slice(0, n), l = [];
   let sorte = Math.random() < 0.5 ? "etonnant" : "savie";
   for (const e of choisies) {
-    const sv = sujetsVieDefi(e), et = etonnantsDefi(e);
+    const sv = sujetsVieNeufs(e), et = etonnantsNeufs(e);   // R294 (50.02) : seulement ce qui n'est pas encore trouvé
     const s = sorte === "etonnant" ? (et.length ? "etonnant" : "savie") : (sv.length ? "savie" : "etonnant");
-    if (s === "etonnant") {   // un fait pas encore trouvé d'abord
-      const neufs = et.filter(f => !insoliteTrouve(f.id)), f = auHasard(neufs.length ? neufs : et);
+    if (s === "etonnant") {   // un fait pas encore trouvé
+      const f = auHasard(et);
       l.push({ e, sorte: s, id: f.id, fait: f.fait, faux: f.faux, explication: f.explication || "", pv: Math.random() < 0.5 });
-    } else {                  // un sujet pas encore trouvé d'abord ; une fois sur deux, la phrase est vraie
-      const neufs = sv.filter(o => nbBonnes(e, o.c) === 0), o = auHasard(neufs.length ? neufs : sv);
+    } else {                  // un sujet pas encore trouvé ; une fois sur deux, la phrase est vraie
+      const o = auHasard(sv);
       const vrai = Math.random() < 0.5, valeur = vrai ? o.bonne : o.fausses[0];
       l.push({ e, sorte: s, champ: o.c, valeur, vrai, texte: affirmationVraieDe(o.q, valeur, e), vraie: o.vraie });
     }
