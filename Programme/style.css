@@ -6260,6 +6260,7 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 .mp-texte small { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #E9C9A0; }
 .mp-texte b { font-family: Literata, Georgia, serif; font-size: 23px; line-height: 1.2; }
 .mp-texte em { font-style: normal; font-size: 14px; color: #DCD5C4; }
+.mp-accroche { font-family: Literata, Georgia, serif; font-style: italic; font-size: 15px; line-height: 1.4; color: #F1EBDD; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }   /* R300 */
 .mp-go { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; border-radius: 10px; background: #E9C9A0; color: #1F3A2E; font-size: 17px; font-weight: 600; }
 .mp-carte:active .mp-go { filter: brightness(.93); }
 /* 13A · « Quitter le Duel ? » : une feuille en bas de l'écran (au milieu sur ordinateur) */

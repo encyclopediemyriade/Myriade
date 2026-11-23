@@ -51,7 +51,7 @@
        l'écran d'attente reste et le dit, avec un bouton pour recharger (avant : une page vide ou tous les écrans empilés). -->
   <script>window.FICHIER_MANQUANT = false; window.addEventListener("error", function (ev) { var t = ev.target;
     if (t && t.tagName === "SCRIPT" && t.src) window.FICHIER_MANQUANT = true; }, true);</script>
-  <link rel="stylesheet" href="Programme/style.css?v=1.35.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
+  <link rel="stylesheet" href="Programme/style.css?v=1.37.0">   <!-- étape M6 : « ?v=… » oblige le téléphone à recharger la nouvelle version (étape ML7 : le numéro de version, changé partout par Outils\changer_version.py) -->
 </head>
 
 <body>
@@ -644,58 +644,61 @@
 
   <!-- ===================== JS ===================== -->
   <!-- Étape ML7 : le numéro de version (à changer à chaque livraison : Outils\changer_version.py) -->
-  <script src="version.js?v=1.35.0"></script>
-  <script src="especes.js?v=1.35.0"></script>
-  <script src="verif_photos.js?v=1.35.0"></script>   <!-- étape R185 : les questions d'allure vérifiées sur la photo (Données\verif_photos.xlsx → Outils\gen_verif_photos.py) -->
-  <script src="reperes.js?v=1.35.0"></script>   <!-- étape R190 : repères de terrain (Données\reperes_terrain.xlsx → Outils\reperes\gen_reperes.py) -->
-  <script src="cadrage.js?v=1.35.0"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
-  <script src="territoires.js?v=1.35.0"></script>
-  <script src="credits.js?v=1.35.0"></script>
-  <script src="credits_silhouettes.js?v=1.35.0"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
-  <script src="identite.js?v=1.35.0"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
-  <script src="lieux_identite.js?v=1.35.0"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
-  <script src="lieux_carte.js?v=1.35.0"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
-  <script src="expeditions.js?v=1.35.0"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
-  <script src="rarete.js?v=1.35.0"></script>   <!-- étape R288 : les trésors des lieux et « Pourquoi il est rare » (Données\rarete_contenu.xlsx → Outils\gen_rarete.py) -->
-  <script src="familles.js?v=1.35.0"></script>   <!-- étape 127 : cartes d'identité des familles -->
-  <script src="faits_questions.js?v=1.35.0"></script>
-  <script src="moments.js?v=1.35.0"></script>   <!-- étape R248c : les moments forts des espèces (Données\moments_saison.xlsx → Outils\gen_moments.py) -->
-  <script src="empreintes_tailles.js?v=1.35.0"></script>   <!-- étape R246 : cadre et taille réelle de chaque dessin d'empreinte (Outils\gen_tailles_empreintes.py) -->   <!-- étape QI2 : les questions insolites (Données\faits_questions.xlsx → Outils\gen_faits_questions.py) -->
-  <script src="photos_moyennes.js?v=1.35.0"></script>   <!-- étape R264 : les photos qui ont leur version téléphone (Images/moy, Outils\gen_photos_moyennes.py) -->
+  <script src="version.js?v=1.37.0"></script>
+  <script src="especes.js?v=1.37.0"></script>
+  <script src="verif_photos.js?v=1.37.0"></script>   <!-- étape R185 : les questions d'allure vérifiées sur la photo (Données\verif_photos.xlsx → Outils\gen_verif_photos.py) -->
+  <script src="reperes.js?v=1.37.0"></script>   <!-- étape R190 : repères de terrain (Données\reperes_terrain.xlsx → Outils\reperes\gen_reperes.py) -->
+  <script src="cadrage.js?v=1.37.0"></script>   <!-- étape R159 : où est la tête sur chaque photo (Données\cadrage_photos.xlsx → Outils\gen_cadrage.py) -->
+  <script src="territoires.js?v=1.37.0"></script>
+  <script src="credits.js?v=1.37.0"></script>
+  <script src="credits_silhouettes.js?v=1.37.0"></script>   <!-- étape ML6 : crédits des silhouettes (Outils\gen_credits_silhouettes.py) -->
+  <script src="identite.js?v=1.37.0"></script>   <!-- étape 252 : cartes d'identité des territoires (généré depuis Données\identite_territoires.xlsx) -->
+  <script src="lieux_identite.js?v=1.37.0"></script>   <!-- étape R92 : couleur et espèces « Ici plus qu'ailleurs » de chaque lieu (Outils\gen_lieux_identite.py) -->
+  <script src="lieux_carte.js?v=1.37.0"></script>   <!-- étape 335 : la carte des lieux (Outils\gen_lieux_carte.py) -->
+  <script src="expeditions.js?v=1.37.0"></script>   <!-- étape 282 : les expéditions (Données\expeditions.xlsx → gen_expeditions.py) -->
+  <script src="rarete.js?v=1.37.0"></script>   <!-- étape R288 : les trésors des lieux et « Pourquoi il est rare » (Données\rarete_contenu.xlsx → Outils\gen_rarete.py) -->
+  <script src="liens_especes.js?v=1.37.0"></script>   <!-- étape R299 : les liens typiques entre espèces (Données\liens_especes.xlsx → Outils\gen_liens_especes.py) -->
+  <script src="liens_elements.js?v=1.37.0"></script>   <!-- étape R302 : les liens d'élément de « Leurs liens » (Données\liens_elements.xlsx → Outils\gen_liens_elements.py) -->
+  <script src="comparees_verifiees.js?v=1.37.0"></script>   <!-- étape R301 : questions comparées, données relues (Données\comparees_verifiees.xlsx → Outils\gen_comparees_verifiees.py) -->
+  <script src="familles.js?v=1.37.0"></script>   <!-- étape 127 : cartes d'identité des familles -->
+  <script src="faits_questions.js?v=1.37.0"></script>
+  <script src="moments.js?v=1.37.0"></script>   <!-- étape R248c : les moments forts des espèces (Données\moments_saison.xlsx → Outils\gen_moments.py) -->
+  <script src="empreintes_tailles.js?v=1.37.0"></script>   <!-- étape R246 : cadre et taille réelle de chaque dessin d'empreinte (Outils\gen_tailles_empreintes.py) -->   <!-- étape QI2 : les questions insolites (Données\faits_questions.xlsx → Outils\gen_faits_questions.py) -->
+  <script src="photos_moyennes.js?v=1.37.0"></script>   <!-- étape R264 : les photos qui ont leur version téléphone (Images/moy, Outils\gen_photos_moyennes.py) -->
   <!-- Le programme du jeu, en plusieurs fichiers (dossier « programme »), chargés dans l'ordre -->
-  <script src="Programme/01_questions.js?v=1.35.0"></script>
-  <script src="Programme/02_progression.js?v=1.35.0"></script>
-  <script src="Programme/03_questions_reponses.js?v=1.35.0"></script>
-  <script src="Programme/04_fetes.js?v=1.35.0"></script>
-  <script src="Programme/05_accueil.js?v=1.35.0"></script>
-  <script src="Programme/06_encyclopedie.js?v=1.35.0"></script>
-  <script src="Programme/07_parties.js?v=1.35.0"></script>
-  <script src="Programme/08_petits_jeux.js?v=1.35.0"></script>
-  <script src="Programme/09_rencontre.js?v=1.35.0"></script>
-  <script src="Programme/10_premiere_visite.js?v=1.35.0"></script>
-  <script src="Programme/11_commandes_test.js?v=1.35.0"></script>
-  <script src="Programme/12_profil_badges.js?v=1.35.0"></script>
-  <script src="Programme/15_territoire.js?v=1.35.0"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
-  <script src="Programme/16_arcade.js?v=1.35.0"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
-  <script src="Programme/17_expeditions.js?v=1.35.0"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
-  <script src="Programme/20_formes.js?v=1.35.0"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
-  <script src="Programme/21_insolites.js?v=1.35.0"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
-  <script src="Programme/26_ensemble.js?v=1.35.0"></script>   <!-- étape E2-2 : l'étape 2 « Ensemble, dans ce lieu » (les questions) -->
-  <script src="relief_carte.js?v=1.35.0"></script>   <!-- étape K2 : l'ombrage du relief des territoires (généré par gen_relief.py) -->
-  <script src="Programme/25_carte.js?v=1.35.0"></script>   <!-- étape K2 : l'espace Carte du téléphone -->
-  <script src="Programme/19_application.js?v=1.35.0"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
-  <script src="Programme/32_rarete.js?v=1.35.0"></script>   <!-- étape R288 : jouer avec la rareté (marques, comptes, piste du trésor, fêtes « revue ») ; chargé avant le démarrage -->
-  <script src="Programme/13_demarrage.js?v=1.35.0"></script>
-  <script src="Programme/14_clavier_menus.js?v=1.35.0"></script>   <!-- étape 229 : le clavier en fin de partie -->
-  <script src="Programme/18_cadrage.js?v=1.35.0"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
-  <script src="Programme/23_reperes.js?v=1.35.0"></script>   <!-- étape R190 : la carte d'identité (repères de terrain) -->
-  <script src="Programme/24_coup_doeil.js?v=1.35.0"></script>   <!-- étape R191 : Coup d'œil, « une photo, 4 noms » -->
-  <script src="Programme/27_defi_exp.js?v=1.35.0"></script>   <!-- étape E2-8 : le défi d'une expédition, « Me tester » -->
-  <script src="Programme/28_oreille.js?v=1.35.0"></script>   <!-- étape E2-11 : À l'oreille, « un cri, 4 photos » -->
-  <script src="Programme/29_approfondir.js?v=1.35.0"></script>   <!-- étape R250 : Approfondir à deux portes, « Découvrir » / « Me tester » -->
-  <script src="Programme/30_signaler.js?v=1.35.0"></script>   <!-- étape CT1 : « Signaler une erreur » (formulaire Tally, panneau, merci) -->
-  <script src="Programme/31_sous_le_pouce.js?v=1.35.0"></script>   <!-- étape R265 : réponses sous le pouce, ligne « Oui » + complément après la réponse -->
-  <script src="Programme/22_typographie.js?v=1.35.0"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
+  <script src="Programme/01_questions.js?v=1.37.0"></script>
+  <script src="Programme/02_progression.js?v=1.37.0"></script>
+  <script src="Programme/03_questions_reponses.js?v=1.37.0"></script>
+  <script src="Programme/04_fetes.js?v=1.37.0"></script>
+  <script src="Programme/05_accueil.js?v=1.37.0"></script>
+  <script src="Programme/06_encyclopedie.js?v=1.37.0"></script>
+  <script src="Programme/07_parties.js?v=1.37.0"></script>
+  <script src="Programme/08_petits_jeux.js?v=1.37.0"></script>
+  <script src="Programme/09_rencontre.js?v=1.37.0"></script>
+  <script src="Programme/10_premiere_visite.js?v=1.37.0"></script>
+  <script src="Programme/11_commandes_test.js?v=1.37.0"></script>
+  <script src="Programme/12_profil_badges.js?v=1.37.0"></script>
+  <script src="Programme/15_territoire.js?v=1.37.0"></script>   <!-- étape 252 : un territoire à la fois, la couverture du territoire (étape 253 : chargé avant le démarrage) -->
+  <script src="Programme/16_arcade.js?v=1.37.0"></script>   <!-- étape 262 : l'Arcade (onglet « Plus de jeux ») -->
+  <script src="Programme/17_expeditions.js?v=1.37.0"></script>   <!-- étape 282 : les expéditions (chargé avant le démarrage) -->
+  <script src="Programme/20_formes.js?v=1.37.0"></script>   <!-- étapes R169-R172 : les formes d'expédition (Par le cri, Par les indices, La planche, Un lien du lieu) -->
+  <script src="Programme/21_insolites.js?v=1.37.0"></script>   <!-- étape QI3 : les questions insolites (Fait insolite, Vrai ou faux, L'intrus) -->
+  <script src="Programme/26_ensemble.js?v=1.37.0"></script>   <!-- étape E2-2 : l'étape 2 « Ensemble, dans ce lieu » (les questions) -->
+  <script src="relief_carte.js?v=1.37.0"></script>   <!-- étape K2 : l'ombrage du relief des territoires (généré par gen_relief.py) -->
+  <script src="Programme/25_carte.js?v=1.37.0"></script>   <!-- étape K2 : l'espace Carte du téléphone -->
+  <script src="Programme/19_application.js?v=1.37.0"></script>   <!-- étape ML7 (chargé avant le démarrage) : application installable, sauvegarde dans un fichier, version -->
+  <script src="Programme/32_rarete.js?v=1.37.0"></script>   <!-- étape R288 : jouer avec la rareté (marques, comptes, piste du trésor, fêtes « revue ») ; chargé avant le démarrage -->
+  <script src="Programme/13_demarrage.js?v=1.37.0"></script>
+  <script src="Programme/14_clavier_menus.js?v=1.37.0"></script>   <!-- étape 229 : le clavier en fin de partie -->
+  <script src="Programme/18_cadrage.js?v=1.37.0"></script>   <!-- étape R159 : chaque photo se cale sur la tête de l'animal -->
+  <script src="Programme/23_reperes.js?v=1.37.0"></script>   <!-- étape R190 : la carte d'identité (repères de terrain) -->
+  <script src="Programme/24_coup_doeil.js?v=1.37.0"></script>   <!-- étape R191 : Coup d'œil, « une photo, 4 noms » -->
+  <script src="Programme/27_defi_exp.js?v=1.37.0"></script>   <!-- étape E2-8 : le défi d'une expédition, « Me tester » -->
+  <script src="Programme/28_oreille.js?v=1.37.0"></script>   <!-- étape E2-11 : À l'oreille, « un cri, 4 photos » -->
+  <script src="Programme/29_approfondir.js?v=1.37.0"></script>   <!-- étape R250 : Approfondir à deux portes, « Découvrir » / « Me tester » -->
+  <script src="Programme/30_signaler.js?v=1.37.0"></script>   <!-- étape CT1 : « Signaler une erreur » (formulaire Tally, panneau, merci) -->
+  <script src="Programme/31_sous_le_pouce.js?v=1.37.0"></script>   <!-- étape R265 : réponses sous le pouce, ligne « Oui » + complément après la réponse -->
+  <script src="Programme/22_typographie.js?v=1.37.0"></script>   <!-- étape R187 : espace insécable devant ? ! : ; (ce qui s'affiche) -->
   <script>(function () { var e = document.getElementById("ecran-chargement"); if (!e) return;
     // R293 : il manque un fichier, ou l'essentiel (espèces, questions, sauvegarde) : l'écran reste et propose de recharger
     var manque = window.FICHIER_MANQUANT || typeof ESPECES === "undefined" || typeof QUESTIONS === "undefined" || typeof sauvegarder !== "function" || typeof montrer !== "function";

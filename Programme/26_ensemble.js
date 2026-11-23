@@ -20,7 +20,7 @@ const ENSEMBLE_R298 = true;
 let R298 = ENSEMBLE_R298;              // (mis à false un instant pour compter les questions d'avant : etape2AvantR298)
 // Les questions comparées (« Lesquelles de ces espèces mangent des graines ou des fruits ? », « … comptent d'abord sur le
 //   camouflage ? ») passent en ligne seulement après la relecture des données (Notion 48.21). test_jeu.py les essaie à true.
-let COMPAREES_EN_LIGNE = false;
+let COMPAREES_EN_LIGNE = true;
 const ENSEMBLE_VISE = 6;               // R298 : 6 questions visées (on retire d'abord les doublons d'un même type)…
 const ENSEMBLE_MAX = ENSEMBLE_R298 ? 8 : 6;   // … 8 au plus (R297 : 6 au plus)
 const ENSEMBLE_MIN_ETAPE = ENSEMBLE_R298 ? 3 : 2;   // une étape à partir de 3 questions (R297 : 2)
@@ -43,7 +43,10 @@ function LeNom(e) { return majuscule(nomAvecArticle(e)); }
 function deNom(e) { return typeof deLEspece === "function" ? deLEspece(e) : "de " + leNom(e); }
 function listeEt(t) { return t.length <= 1 ? (t[0] || "") : t.slice(0, -1).join(", ") + " et " + t[t.length - 1]; }
 function confirme(e, col) { return !(e.a_confirmer || []).includes(col) && estRenseigne(e[col]) && String(e[col]).trim() !== ""; }
-function dansTerritoire(e, t) { return String(e.territoire || "").split(";").map(s => s.trim()).includes(t); }
+// R299 : renommée (avant : dansTerritoire, un nom déjà pris par 12 et 25, chargés après ; c'est leur version qui servait :
+//   un texte « dans le Jura », toujours vrai. « Le même chasseur » prenait donc ses pièges dans toute la France : fulmar boréal
+//   et goéland marin pour les petits mammifères du sous-bois du Jura)
+function especeDuTerritoire(e, t) { return String(e.territoire || "").split(";").map(s => s.trim()).includes(t); }
 function itemsDe(e, col) { return confirme(e, col + "_items") ? itemsListe(e, col) : []; }
 function choixEspece(e, bonne) { return { texte: e.nom_courant, espece: e.nom_courant, bonne: !!bonne }; }
 
@@ -105,6 +108,7 @@ function citeOuGroupe(e, col, o) {
 // Deux espèces ont-elles un lien quelconque (lien de finale, proie ou prédateur, par nom ou par groupe, dans un sens ou l'autre) ?
 function ontUnLien(a, b) {
   if (tousLesLiens().some(l => l.nature_b === "espece" && ((l.a === a.nom_courant && l.b === b.nom_courant) || (l.a === b.nom_courant && l.b === a.nom_courant)))) return true;
+  if (lienBloque(a, b, null)) return true;   // R299 : un lien typique ou rare de liens_especes.js
   return citeOuGroupe(a, "proies", b) || citeOuGroupe(a, "predateurs", b) || citeOuGroupe(b, "proies", a) || citeOuGroupe(b, "predateurs", a);
 }
 
@@ -169,6 +173,9 @@ function groupeVraisemblable(mangeur, proie) {
   return !tm || !tp || tp <= tm * 1.5;
 }
 function itemQuiCite(e, col, o, x) {
+  // R299 : un lien typique (liens_especes.js) compte comme une citation par nom, avec sa phrase
+  const le = col === "proies" ? lienTypique(e, o, "mange", x) : col === "predateurs" ? lienTypique(o, e, "mange", x) : null;
+  if (le) return { item: null, groupe: null, lien: le };
   for (const it of itemsDe(e, col)) if (especeNommee(it) === o) return { item: it, groupe: null };
   if (!R298 || !x) return null;
   for (const it of itemsDe(e, col)) {
@@ -181,6 +188,8 @@ function itemQuiCite(e, col, o, x) {
 function citeLarge(e, col, o, x) {
   if (citeOuGroupe(e, col, o)) return true;
   if (!R298) return false;
+  // R299 : un lien typique ou rare (e mange o ; o mange e pour la colonne des prédateurs)
+  if (leOn() && (col === "proies" ? liensEspecesDe(e, o) : col === "predateurs" ? liensEspecesDe(o, e) : []).some(l => l.role === "mange")) return true;
   return itemsDe(e, col).some(it => { const t = tetesDuGroupe(it); return t.length && t.includes(premierMot(o)); })
       || (x ? !!itemQuiCite(e, col, o, x) : false);
 }
@@ -209,11 +218,21 @@ const VERTEBRES = ["Oiseau", "Mammifère", "Poisson", "Amphibien", "Reptile"];
 // « m » pourrait-il manger « o » ? (prudent : dans le doute, oui)
 function pourraitManger(m, o, x) {
   if (citeLarge(m, "proies", o, x) || citeLarge(o, "predateurs", m, x)) return true;
+  if (leOn() && rapacePeutPrendre(m, o)) return true;   // R299
   if (tousLesLiens().some(l => l.role === "Garde-manger" && l.nature_b === "espece" && [l.a, l.b].includes(m.nom_courant) && [l.a, l.b].includes(o.nom_courant))) return true;
   const g = listeGroupes(m.proies_groupes);
   if (!g.length || (m.a_confirmer || []).includes("proies_groupes")) return true;
   if (g.includes("Charognes et os") && VERTEBRES.includes(o.classe)) return true;
   return typesAnimal(o).some(v => g.includes(v));
+}
+// R299 : un rapace peut prendre un oiseau ou une chauve-souris pas plus grand que lui, même si sa fiche ne le dit pas
+//   (bilan du lot 1 : ces proies « rares » de grands groupes, petits oiseaux et chauves-souris, ne sont pas écrites espèce par
+//   espèce ; ces rapaces ne doivent pas servir de piège pour elles : la buse pour « Laquelle mange parfois le merle noir ? »)
+function rapacePeutPrendre(m, o) {
+  if (!m || !o || m.hors_jeu || !/Accipitri|Falconi|Strigi/.test(m.ordre || "")) return false;
+  if (o.classe !== "Oiseau" && !/Chiropt/.test(o.ordre || "")) return false;
+  const tm = tailleNombre(m), to = tailleNombre(o);
+  return !tm || !to || to <= tm * 1.2;
 }
 // R298 : s'il mange une bonne réponse, il peut manger un autre animal du même type (un autre oiseau, un autre poisson) :
 //   un tel piège serait à moitié vrai. Sauf un animal bien plus grand que toutes les bonnes réponses (le sanglier quand
@@ -265,6 +284,89 @@ function memeRolePossible(r, o) {
   }
   if (r.role === "Passager") return r.sorte === "nid" ? (o.classe !== "Oiseau" || /Passéri/.test(o.ordre || "")) : o.classe === b.classe;
   if (r.role === "Compagnons") return o.classe !== s.classe || [s.ordre, b.ordre].includes(o.ordre) || (/Passéri/.test(s.ordre || "") && /Pici/.test(o.ordre || ""));
+  if (r.role === "Nid") return !piegeNidSur(r.sorte, [b], s, o);   // R299 : vieux nid, loge de pic, grand nid, terrier, colonies
+  return false;
+}
+
+// ---- R299 · Les liens typiques entre espèces (23/11, Notion 48.23 ; Données\liens_especes.xlsx → liens_especes.js) ----
+//   Typiques : ils comptent exactement comme une citation par nom dans une fiche (« Les liens entre elles », « Les voisins »,
+//   « Le même chasseur »), mêmes pièges, mêmes plafonds, avec leur phrase en explication ; jamais avec le trésor du lieu ;
+//   jamais pour la finale (elle ne lit que LIENS). Rares : jamais posés, mais ils BLOQUENT : une espèce liée (en rare ou en
+//   typique) au sujet, dans la même famille de rôles, n'est jamais proposée comme mauvaise réponse (l'effraie mange parfois
+//   une belette : la belette n'est pas un piège de « Laquelle nourrit l'effraie ? »).
+//   Rôles de nid : « Dans le nid de laquelle… pond-il ? » (coucous, règles de R298), « Dans le vieux nid de laquelle… »,
+//   « Dans la vieille loge de laquelle… » (loges de pics), « Dans le grand nid de laquelle… », « Dans le terrier de laquelle… »,
+//   « Au milieu des colonies de laquelle… ». Toujours dans ce sens (décision 4 de R298) : jamais « qui s'installe chez… ? ».
+//   LIENS_ESPECES = false → l'étape de R298.
+const LIENS_ESPECES = true;
+let LE_ACTIFS = LIENS_ESPECES;         // (mis à false un instant par test_jeu.py pour comparer avec R298)
+function leOn() { return LE_ACTIFS && R298; }
+const ROLES_NID = ["pond_dans_le_nid_de", "niche_dans_le_vieux_nid_de", "loge_chez", "autre"];
+const memoLE = { src: null, paires: null, versB: null };
+function indexLiensEspeces() {
+  const src = leOn() && typeof LIENS_ESPECES_DONNEES !== "undefined" ? LIENS_ESPECES_DONNEES : [];
+  if (memoLE.src !== src) {
+    const p = new Map(), v = new Map();
+    for (const l of src) { const k = l.a + "|" + l.b; if (!p.has(k)) p.set(k, []); p.get(k).push(l); if (!v.has(l.b)) v.set(l.b, []); v.get(l.b).push(l); }
+    memoLE.src = src; memoLE.paires = p; memoLE.versB = v;
+  }
+  return memoLE;
+}
+function liensEspecesDe(a, b) { return (a && b && indexLiensEspeces().paires.get(a.nom_courant + "|" + b.nom_courant)) || []; }
+function familleRole(role) { return role === "mange" ? "mange" : "nid"; }
+function tresorDe(x) { return x && x.chapitre && typeof tresorDuLieu === "function" ? tresorDuLieu(x.territoire, x.chapitre) : null; }
+// Un lien typique posable a → b dans ce rôle (jamais avec le trésor du lieu)
+function lienTypique(a, b, role, x) {
+  if (!leOn()) return null;
+  const l = liensEspecesDe(a, b).find(z => z.typique && z.role === role && (z.statut === "en_jeu" || z.statut === "doublon_classeur"));
+  if (!l) return null;
+  const T = tresorDe(x);
+  return T && (T.nom === a.nom_courant || T.nom === b.nom_courant) ? null : l;
+}
+// Pour écarter un piège : un lien quelconque (typique ou rare), dans un sens ou dans l'autre ; famille « mange », « nid », ou les deux (null)
+function lienBloque(s, o, famille) {
+  if (!leOn()) return false;
+  return [...liensEspecesDe(s, o), ...liensEspecesDe(o, s)].some(l => !famille || familleRole(l.role) === famille);
+}
+// La forme d'un lien de nid : qui pond, niche ou loge chez qui (a = l'occupant, hote = b)
+function formeNid(l, hote, occupant) {
+  if (l.role === "pond_dans_le_nid_de") return /Cuculi/.test(occupant.ordre || "") ? { role: "Passager", sorte: "nid", forme: "Passager-nid" } : null;   // seul un coucou pond chez un autre
+  if (l.role === "niche_dans_le_vieux_nid_de") return hote.classe !== "Oiseau" ? null : /Pici/.test(hote.ordre || "") ? { role: "Nid", sorte: "loge", forme: "Loge" } : { role: "Nid", sorte: "vieux_nid", forme: "VieuxNid" };
+  if (l.role === "loge_chez") return hote.classe === "Oiseau" ? { role: "Nid", sorte: "grand_nid", forme: "GrandNid" } : hote.classe === "Mammifère" ? { role: "Nid", sorte: "terrier", forme: "Terrier" } : null;
+  if (l.role === "autre") return hote.classe === "Oiseau" && occupant.classe === "Oiseau" && /colonie|parmi|milieu/.test(sansAccent(l.phrase || "")) ? { role: "Nid", sorte: "colonies", forme: "Colonies" } : null;
+  return null;
+}
+// Les pièges d'une question de nid : des espèces qui ne font pas un nid (ou un terrier) de ce genre que le sujet pourrait reprendre
+const ORDRES_GRANDS_NIDS = /Accipitri|Falconi|Strigi|Ciconi|Pélécani/;
+const CORVIDES = /^(corneille|corbeau|grand corbeau|pie bavarde|geai|choucas|crave|chocard|cassenoix)\b/;
+function estCorvide(e) { return CORVIDES.test(normal(e.nom_courant)); }
+function piegeNidSur(sorte, hotes, sujet, o) {
+  if (!o || o === sujet || hotes.includes(o) || o.hors_jeu) return false;
+  if (lienBloque(sujet, o, "nid")) return false;
+  if (tousLesLiens().some(l => l.nature_b === "espece" && ["Locataire", "Passager", "Voisins", "Compagnons"].includes(l.role)
+      && [l.a, l.b].includes(sujet.nom_courant) && [l.a, l.b].includes(o.nom_courant))) return false;
+  const t = tailleNombre(o), th = Math.min(...hotes.map(h => tailleNombre(h) || 999));
+  const nid = confirme(o, "emplacement_nid") ? String(o.emplacement_nid).trim() : "";
+  const ordre = o.ordre || "";
+  switch (sorte) {
+    // un vieux nid de branches : un oiseau qui niche d'abord dans un arbre ou un buisson (jamais au sol, en trou, dans un bâtiment),
+    //   mais dont le nid est trop petit pour le sujet ; jamais un rapace, un héron, une cigogne, un corvidé (grands nids repris)
+    case "vieux_nid": return o.classe === "Oiseau" && nid === "Arbre ou buisson" && !ORDRES_GRANDS_NIDS.test(ordre) && !/Pici|Cuculi/.test(ordre)
+      && !estCorvide(o) && !!t && t < th * 0.6;
+    // une loge de pic : jamais un autre pic ; ni un oiseau qui niche en trou (il s'installe lui aussi dans les vieilles loges)
+    case "loge": return o.classe === "Oiseau" && !!nid && !/Pici|Cuculi/.test(ordre) && !nidsPossibles(o).includes("Cavité d'arbre");
+    // un grand nid : un oiseau sans grand nid (petit, ni rapace, ni héron, ni cigogne, ni corvidé)
+    case "grand_nid": return o.classe === "Oiseau" && !!nid && !ORDRES_GRANDS_NIDS.test(ordre) && !estCorvide(o) && !/Cuculi/.test(ordre) && !!t && t < 40 && t < th * 0.5;
+    // un terrier : un grand mammifère sans terrier (cerf, chevreuil, sanglier…) ; jamais un carnivore, un rongeur, un lapin,
+    //   une musaraigne ou une chauve-souris (beaucoup creusent ou reprennent un trou)
+    case "terrier": return o.classe === "Mammifère" && !/Carniv|Rongeur|Lagomorph|Eulipot|Insectivor|Chiropt/.test(ordre)
+      && !(estRenseigne(o.type_terrier) && o.type_terrier !== "NA") && !nidsPossibles(o).includes("Terrier") && !/terrier|galerie|souterr|trou/i.test(String(o.nom_logis || ""))
+      && !!t && t > 40;
+    // des colonies sur l'eau : un oiseau qui ne niche pas en colonie sur l'eau (ni limicole, mouette ou sterne, ni grèbe, héron,
+    //   flamant, cigogne, canard, cormoran, foulque ; ni un nid sur l'eau ou dans les roseaux)
+    case "colonies": return o.classe === "Oiseau" && !!nid && !/Charadri|Podicip|Pélécani|Phoenicopt|Ciconi|Ansérif|Suliform|Procellari|Gruiform/.test(ordre)
+      && !nidsPossibles(o).some(v => ["Sur l'eau (nid flottant)", "Roselière ou végétation dense"].includes(v));
+  }
   return false;
 }
 
@@ -279,6 +381,12 @@ const FORMES_LIENS = {
   "Compagnons": (sujet) => accordGenre(`Avec laquelle de ces espèces ${leNom(sujet)} se regroupe-t-il souvent ?`, sujet),
   // R298 : le coucou ne « se fixe » pas sur l'accenteur : il pond dans son nid
   "Passager-nid": (sujet) => accordGenre(`Dans le nid de laquelle de ces espèces ${leNom(sujet)} pond-il ?`, sujet),
+  // R299 : les liens de nid de liens_especes.js (toujours « chez qui ? », jamais « qui s'installe chez… ? »)
+  "VieuxNid": (sujet) => accordGenre(`Dans le vieux nid de laquelle de ces espèces ${leNom(sujet)} pond-il souvent ?`, sujet),
+  "Loge": (sujet) => accordGenre(`Dans la vieille loge de laquelle de ces espèces ${leNom(sujet)} niche-t-il souvent ?`, sujet),
+  "GrandNid": (sujet) => accordGenre(`Dans le grand nid de laquelle de ces espèces ${leNom(sujet)} niche-t-il souvent ?`, sujet),
+  "Terrier": (sujet) => accordGenre(`Dans le terrier de laquelle de ces espèces ${leNom(sujet)} s'installe-t-il souvent ?`, sujet),
+  "Colonies": (sujet) => accordGenre(`Au milieu des colonies de laquelle de ces espèces ${leNom(sujet)} niche-t-il souvent ?`, sujet),
 };
 // « Les gardons nourrissent le brochet » : le mangeur est celui qui est nommé APRÈS « nourri » (le sens des liens varie).
 function motsDuNom(e) { return sansAccent(e.nom_courant).split(/[\s'-]+/).filter(w => w.length >= 4 && !["commun", "commune", "europe", "grand", "petit"].includes(w)); }
@@ -337,7 +445,17 @@ function candidatsLiensEnsemble(x) {
     vus.add(cle(A, B));
     res.push({ role, sorte, sujet, reponse, explication: k.phrase, forme: sorte === "nid" ? "Passager-nid" : role });
   }
+  // R299 : les liens de nid typiques de liens_especes.js (a pond, niche ou loge chez b), après ceux du classeur
+  if (leOn()) for (const a of x.liste) for (const b of x.liste) {
+    if (a === b || vus.has(cle(a, b))) continue;
+    const l = ROLES_NID.map(r => lienTypique(a, b, r, x)).find(Boolean);
+    const f = l && formeNid(l, b, a);
+    if (!f) continue;
+    vus.add(cle(a, b));
+    res.push({ role: f.role, sorte: f.sorte, sujet: a, reponse: b, explication: l.phrase, forme: f.forme, lienEspece: l.id });
+  }
   // les fiches : A cite B parmi ses proies, ou B cite A parmi ses prédateurs (par son nom, pas par un groupe)
+  // R299 : ou un lien typique « mange » de liens_especes.js (itemQuiCite), avec sa phrase
   for (const a of x.liste) for (const b of x.liste) {
     if (a === b || vus.has(cle(a, b))) continue;
     // R298 : aussi par un nom de groupe qui ne désigne qu'une ou deux espèces du lieu (« Mésanges » → la mésange bleue)
@@ -348,9 +466,10 @@ function candidatsLiensEnsemble(x) {
     if (!mange || inverse) continue;
     vus.add(cle(a, b));
     const parNom = (parProie && !parProie.groupe) || (parPred && !parPred.groupe);
-    const explication = parNom ? `${LeNom(a)} se nourrit notamment ${deNom(b)}.`
+    const lienE = (parProie && parProie.lien) || (parPred && parPred.lien);
+    const explication = lienE ? lienE.phrase : parNom ? `${LeNom(a)} se nourrit notamment ${deNom(b)}.`
       : parProie ? phraseGroupe(a, parProie, "proies") : phraseGroupe(b, parPred, "predateurs");
-    res.push({ role: "Garde-manger", sujet: a, reponse: b, explication, groupe: !parNom });
+    res.push({ role: "Garde-manger", sujet: a, reponse: b, explication, groupe: !parNom, lienEspece: lienE ? lienE.id : null });
   }
   // les pièges : espèces de l'expédition sans aucun lien avec le sujet
   // Étape R271 (test du 19/11, n° 7 : le moineau domestique compté faux pour « en concurrence avec la mésange charbonnière »,
@@ -360,12 +479,14 @@ function candidatsLiensEnsemble(x) {
   //   (le coucou « mange des œufs d'oiseaux » ne bloque plus « dans quel nid pond-il ? ») ; « Concurrents » comme avant.
   for (const r of res) r.pieges = x.liste.filter(o => o !== r.sujet && o !== r.reponse && (!R298 || r.role === "Concurrents"
       ? !ontUnLien(r.sujet, o) && !(r.role === "Concurrents" && concurrentPossible(r, o))
-      : r.role === "Garde-manger" ? !pourraitManger(r.sujet, o, x) && !memeTypeQuUneBonne(o, [r.reponse]) : !memeRolePossible(r, o)));
+      : r.role === "Garde-manger" ? !pourraitManger(r.sujet, o, x) && !memeTypeQuUneBonne(o, [r.reponse]) : !memeRolePossible(r, o))
+      // R299 : jamais une espèce liée au sujet (en rare ou en typique) dans la même famille de rôles
+      && !lienBloque(r.sujet, o, r.role === "Garde-manger" ? "mange" : r.role === "Concurrents" || r.role === "Compagnons" ? null : "nid"));
   return res.filter(r => r.pieges.length >= 2);
 }
 function questionLien(r) {
   const choix = melanger([choixEspece(r.reponse, true), ...melanger(r.pieges.slice()).slice(0, 2).map(o => choixEspece(o))]);
-  return { type: "liens", role: r.role, question: FORMES_LIENS[r.forme || r.role](r.sujet), montrees: [r.sujet.nom_courant], choix, plusieurs: false,
+  return { type: "liens", role: r.role, sorte: r.sorte || null, lienEspece: r.lienEspece || null, question: FORMES_LIENS[r.forme || r.role](r.sujet), montrees: [r.sujet.nom_courant], choix, plusieurs: false,
            explication: String(r.explication).trim().replace(/([^.!?])$/, "$1."), especes: [r.sujet.nom_courant, r.reponse.nom_courant] };
 }
 
@@ -401,6 +522,12 @@ const FORMES_VOISINS = {
   pond_chez_V: (V, n, l) => `Laquelle de ces espèces${l} pond dans le nid ${deLe(V)} ?`,
   V_se_fixe_sur: (V, n, l, e) => accordGenre(n > 1 ? `Sur lesquelles de ces espèces${l} ${V} se fixe-t-il ?` : `Sur laquelle de ces espèces${l} ${V} se fixe-t-il ?`, e),
   se_fixe_sur_V: (V, n, l) => `Laquelle de ces espèces${l} se fixe sur ${V} ?`,
+  // R299 : les liens de nid de liens_especes.js ; le voisin est toujours celui qui pond, niche ou loge (décision 4 de R298)
+  V_vieux_nid: (V, n, l, e) => accordGenre(n > 1 ? `Dans le vieux nid de quelles espèces${l} ${V} pond-il souvent ?` : `Dans le vieux nid de laquelle de ces espèces${l} ${V} pond-il souvent ?`, e),
+  V_loge: (V, n, l, e) => accordGenre(n > 1 ? `Dans la vieille loge de quelles espèces${l} ${V} niche-t-il souvent ?` : `Dans la vieille loge de laquelle de ces espèces${l} ${V} niche-t-il souvent ?`, e),
+  V_grand_nid: (V, n, l, e) => accordGenre(n > 1 ? `Dans le grand nid de quelles espèces${l} ${V} niche-t-il souvent ?` : `Dans le grand nid de laquelle de ces espèces${l} ${V} niche-t-il souvent ?`, e),
+  V_terrier: (V, n, l, e) => accordGenre(n > 1 ? `Dans le terrier de quelles espèces${l} ${V} s'installe-t-il souvent ?` : `Dans le terrier de laquelle de ces espèces${l} ${V} s'installe-t-il souvent ?`, e),
+  V_colonies: (V, n, l, e) => accordGenre(n > 1 ? `Au milieu des colonies de quelles espèces${l} ${V} niche-t-il souvent ?` : `Au milieu des colonies de laquelle de ces espèces${l} ${V} niche-t-il souvent ?`, e),
 };
 // Toutes les relations voisin ↔ espèce de l'expédition : { membres: [V…], groupe, sens, S, explication, classeur }
 function relationsVoisins(x) {
@@ -427,6 +554,14 @@ function relationsVoisins(x) {
     }
     if (sens) rel.push({ membres: [V], groupe: null, sens, S, explication: String(k.phrase).trim().replace(/([^.!?])$/, "$1."), classeur: true });
   }
+  // R299 : les liens de nid typiques de liens_especes.js. Le voisin pond, niche ou loge chez une espèce de l'expédition ;
+  //   pour le coucou seulement, aussi l'autre sens (« Laquelle de ces espèces pond dans le nid de la bergeronnette ? »), comme en R298.
+  if (leOn()) for (const V of voisins) for (const S of x.liste) {
+    const l = ROLES_NID.map(r => lienTypique(V, S, r, x)).find(Boolean), f = l && formeNid(l, S, V);
+    if (f) rel.push({ membres: [V], groupe: null, sens: f.sorte === "nid" ? "V_pond_chez" : "V_" + f.sorte, S, explication: l.phrase, classeur: false, lienEspece: l.id });
+    const l2 = lienTypique(S, V, "pond_dans_le_nid_de", x), f2 = l2 && formeNid(l2, V, S);
+    if (f2) rel.push({ membres: [V], groupe: null, sens: "pond_chez_V", S, explication: l2.phrase, classeur: false, lienEspece: l2.id });
+  }
   for (const V of voisins) for (const S of x.liste) {
     // S mange V (fiche de S : proies ; fiche de V : prédateurs) ; ou V mange S
     // S mange V : la fiche de S (proies) ou celle de V (prédateurs) ; V mange S : la fiche de V (proies) ou celle de S (prédateurs)
@@ -442,10 +577,11 @@ function relationsVoisins(x) {
     if (!membres.includes(V)) continue;
     // l'explication dit d'où vient le lien : « Le hérisson se nourrit notamment de l'escargot. » (fiche du mangeur) ;
     //   « La fiche de l'épervier cite la chouette hulotte parmi ses prédateurs. » (fiche de la proie, avec sa précision : « (œufs) »)
-    const explication = r.groupe ? phraseGroupe(parProies ? mangeur : proie, r, parProies ? "proies" : "predateurs")
+    // R299 : un lien typique de liens_especes.js donne sa phrase
+    const explication = r.lien ? r.lien.phrase : r.groupe ? phraseGroupe(parProies ? mangeur : proie, r, parProies ? "proies" : "predateurs")
       : parProies ? `${LeNom(mangeur)} se nourrit notamment ${deNom(proie)}.`
       : `La fiche ${deNom(proie)} cite ${leNom(mangeur)} parmi ses prédateurs${precisionPredateur(proie, r.item)}.`;
-    rel.push({ membres, groupe: r.groupe ? r.item : null, sens, S, explication, classeur: false });
+    rel.push({ membres, groupe: r.groupe ? r.item : null, sens, S, explication, classeur: false, lienEspece: r.lien ? r.lien.id : null });
   }
   return rel;
 }
@@ -463,7 +599,10 @@ function piegesVoisin(u, x) {
     if (bonnes.includes(o)) return false;
     // aucun lien du classeur entre le voisin et le piège (hors « Cousins »)
     if (M.some(V => tousLesLiens().some(l => l.nature_b === "espece" && l.role !== "Cousins" && [l.a, l.b].includes(V.nom_courant) && [l.a, l.b].includes(o.nom_courant)))) return false;
+    // R299 : ni un lien typique ou rare de liens_especes.js entre le voisin et le piège, dans la même famille de rôles
+    if (M.some(V => lienBloque(V, o, /mange/.test(u.sens) ? "mange" : /^(Concurrents|Compagnons)$/.test(u.sens) ? null : "nid"))) return false;
     switch (u.sens) {
+      case "V_vieux_nid": case "V_loge": case "V_grand_nid": case "V_terrier": case "V_colonies": return piegeNidSur(u.sens.slice(2), bonnes, M[0], o);
       case "V_mange": { // le voisin mange l'espèce : un piège est d'un type d'animal absent de ce qu'il mange
         if (M.some(V => pourraitManger(V, o, x)) || M.some(V => citeLarge(o, "proies", V, x))) return false;
         // et jamais du même type qu'une bonne réponse (s'il mange un oiseau, un autre oiseau pourrait le nourrir aussi),
@@ -528,6 +667,8 @@ function questionsVoisins(x) {
   for (const passe of [0, 1]) for (const u of melanger(possibles.slice()).sort((a, b) => b.classeur - a.classeur)) {
     if (pris.length >= VOISINS_MAX || pris.includes(u) || u.membres.some(e => vus.has(e))) continue;
     if (passe === 0 && sensPris.includes(u.sens)) continue;
+    // R299 : jamais deux voisins dont la seule bonne réponse est la même espèce (la seconde serait retirée plus loin)
+    if (leOn() && u.bonnes.length === 1 && pris.some(p => p.bonnes.length === 1 && p.bonnes[0] === u.bonnes[0])) continue;
     pris.push(u); u.membres.forEach(e => vus.add(e)); sensPris.push(u.sens);
   }
   return pris.map((u, i) => {
@@ -538,6 +679,7 @@ function questionsVoisins(x) {
     return { type: "voisins", cle: "voisins" + (i + 1), sens: u.sens, question: FORMES_VOISINS[u.sens](V, n, lieuDuTitre(x), u.membres[0]), montrees: [],
              voisin: { noms: u.membres.map(e => e.nom_courant), lieu: x.chapitre, titres: u.membres.map(e => titreExpDe(e, x)) },
              choix, plusieurs: n > 1, explication: u.explications.join(" "),
+             liensEspeces: [...new Set([...u.parS.values()].map(z => z.lienEspece).filter(Boolean))],   // R299 (pour les comptes du test)
              especes: [...u.membres, ...u.bonnes].map(e => e.nom_courant) };
   });
 }
@@ -549,6 +691,12 @@ function chasseursDe(e, x) {
   for (const it of itemsDe(e, "predateurs")) {
     const n = especeNommee(it); if (n) { s.add(n); continue; }
     if (R298 && x) { const m = membresDuGroupe(it, x); if (m.length === 1 && groupeVraisemblable(m[0], e)) { s.add(m[0]); (chasseursDe.groupes = chasseursDe.groupes || new Map()).set(e.nom_courant + "|" + m[0].nom_courant, it); } }
+  }
+  // R299 : un mangeur typique de liens_especes.js, s'il vit dans ce lieu (jamais le trésor)
+  if (leOn() && x) for (const l of indexLiensEspeces().versB.get(e.nom_courant) || []) {
+    const h = especeParNom(l.a);
+    if (!h || s.has(h) || !especesDuLieu(x).includes(h) || !lienTypique(h, e, "mange", x)) continue;
+    s.add(h); (chasseursDe.liens = chasseursDe.liens || new Map()).set(e.nom_courant + "|" + h.nom_courant, l);
   }
   return s;
 }
@@ -566,7 +714,9 @@ function candidatChasseur(x, sansChat) {
   // « chasseurs du même milieu » : même régime que le vrai chasseur (un carnivore → des carnivores), le même ordre d'abord
   // (un rapace → des rapaces), puis le même milieu
   const milieu = h.hors_jeu ? null : h.milieu_principal, regime = h.hors_jeu ? "carnivore" : String(h.regime_alimentaire_type || "");
-  const base = ESPECES.filter(p => p !== h && !x.liste.includes(p) && dansTerritoire(p, x.territoire) && p.classe === h.classe
+  const base = ESPECES.filter(p => p !== h && !x.liste.includes(p) && especeDuTerritoire(p, x.territoire) && p.classe === h.classe
+      && !proies.some(e => lienBloque(e, p, "mange"))   // R299 : jamais un mangeur (typique ou rare) d'une espèce montrée…
+      && !(leOn() && proies.some(e => pourraitManger(p, e, x)))   // … ni un chasseur qui pourrait en prendre une (la cigogne et les oisillons)
       && RE_CHASSEUR.test(String(p.regime_alimentaire_type || "")) && (!/carniv|piscivo/.test(regime) || /carniv|piscivo/.test(String(p.regime_alimentaire_type || "")))
       && !proies.some(e => citeOuGroupe(e, "predateurs", p) || citeOuGroupe(p, "proies", e) || (R298 && (citeLarge(e, "predateurs", p, x) || citeLarge(p, "proies", e, x)))));
   // Étape R295 (51.03) : avant, le même ordre comptait plus que le milieu (aigle royal, vautour moine, balbuzard pour l'épervier,
@@ -607,9 +757,13 @@ function questionChasseur(x) {
   for (const [g, l] of parGroupe) lignes.push(l.length > 1
     ? `Les fiches ${listeEt(l.map(deNom))} citent les ${g} parmi leurs prédateurs : ici, ${leNom(h)}.`
     : `La fiche ${deNom(l[0])} cite les ${g} parmi ses prédateurs : ici, ${leNom(h)}.`);
+  // R299 : les phrases des liens typiques (deux au plus)
+  const liensE = c.proies.map(e => chasseursDe.liens && chasseursDe.liens.get(e.nom_courant + "|" + h.nom_courant)).filter(Boolean)
+    .filter(l => !itemsDe(l.b && especeParNom(l.b), "predateurs").some(i => especeNommee(i) === h));
+  for (const ph of [...new Set(liensE.map(l => l.phrase))].slice(0, 2)) lignes.push(ph);
   for (const p of c.pieges) { const m = itemsDe(p, "proies"); if (m.length) lignes.push(`Ce que mange ${leNom(p)} : ${m.join(", ").toLowerCase()}.`); }
   return { type: "chasseur", question: `Ces ${NOMBRES_MOTS[n] || n} espèces ont un même chasseur. Lequel ?`, montrees: c.proies.map(e => e.nom_courant),
-           choix, plusieurs: false, explication: lignes.join(" "), especes: c.proies.map(e => e.nom_courant) };
+           choix, plusieurs: false, explication: lignes.join(" "), especes: c.proies.map(e => e.nom_courant), liensEspeces: [...new Set(liensE.map(l => l.id))] };
 }
 function LeNomOuChat(h) { return h === CHAT ? "Le chat domestique" : LeNom(h); }
 
@@ -699,11 +853,20 @@ const ELEMENTS_GENERAUX = {
   "Les ornières": "Dans une ornière", "Les oseilles": "Sur les oseilles", "Les chardons": "Sur les chardons", "Les ormes": "Sur les ormes",
   "Le chèvrefeuille": "Sur le chèvrefeuille", "Les violettes": "Sur les violettes", "Les patiences": "Sur les patiences", "Les orpins": "Sur les orpins",
 };
-function elementsDe(nom) { return new Set(tousLesLiens().filter(l => l.nature_b === "element" && l.a === nom).map(l => l.b)); }
+// R302 (Notion 48.22) : les liens d'élément neufs (Données\liens_elements.xlsx → liens_elements.js) s'ajoutent à ceux du lieu pour
+//   « Sa place » (les deux formes), pour écarter les pièges et pour « Et si… ? » ; jamais pour la finale du lieu.
+//   LIENS_ELEMENTS = false → l'étape de R301.
+const LIENS_ELEMENTS = true;
+let LEL_ACTIFS = LIENS_ELEMENTS;      // (mis à false un instant par test_jeu.py pour mesurer)
+function liensElementsEnPlus() { return LEL_ACTIFS && typeof LIENS_ELEMENTS_DONNEES !== "undefined" ? LIENS_ELEMENTS_DONNEES : []; }
+function liensElementsDuLieu(t, nom) {
+  return [...liensDuLieu(t, nom).filter(k => k.nature_b === "element"), ...liensElementsEnPlus().filter(k => k.territoire === t && k.lieu === nom && especeParNom(k.a))];
+}
+function elementsDe(nom) { return new Set([...tousLesLiens(), ...liensElementsEnPlus()].filter(l => l.nature_b === "element" && l.a === nom).map(l => l.b)); }
 function candidatsPlace(x) {
   const noms = new Set(x.liste.map(e => e.nom_courant));
   const c = x.chapitre && chapitreParNom(x.territoire, x.chapitre);
-  return (c ? liensDuLieu(x.territoire, c.nom) : []).filter(k => k.nature_b === "element" && noms.has(k.a) && ELEMENTS_GENERAUX[k.b]
+  return (c ? liensElementsDuLieu(x.territoire, c.nom) : []).filter(k => noms.has(k.a) && ELEMENTS_GENERAUX[k.b]
     && (k.pieges || []).filter(p => ELEMENTS_GENERAUX[p] && !elementsDe(k.a).has(p)).length >= 2);
 }
 function questionPlace(x, eviter) {
@@ -736,7 +899,7 @@ const PHRASE_DE_NID = /nich|\bnid|pond|couv|eleve ses petits|creuse son terrier/
 function candidatsPlaceEnPhoto(x) {
   const c = x.chapitre && chapitreParNom(x.territoire, x.chapitre);
   if (!c) return [];
-  const liens = tousLesLiens().filter(k => k.territoire === x.territoire && k.lieu === c.nom && k.nature_b === "element");
+  const liens = [...tousLesLiens(), ...liensElementsEnPlus()].filter(k => k.territoire === x.territoire && k.lieu === c.nom && k.nature_b === "element");
   const res = [];
   for (const el of Object.keys(ELEMENTS_EN_PHOTO)) {
     if (!photoElement(el)) continue;
@@ -880,10 +1043,21 @@ function formeComparee(oui, non, dit) {
   if (non.length === 1) return { question: dit.uneNon, bonnes: non, oui };
   return { question: dit.plusieurs, bonnes: oui, oui };
 }
+// R301 (Notion 48.21) : le garde-fou des données relues. Une espèce n'est montrée dans une comparée que si son sujet a été
+//   relu (Données\comparees_verifiees.xlsx, onglet verifiees → comparees_verifiees.js), et jamais si elle est exclue pour ce
+//   groupe ou cette défense (onglet exclusions : un groupe seulement « occasionnel », une case rose). COMPAREES_GARDE = false
+//   seulement dans test_jeu.py, pour compter toutes les questions possibles.
+let COMPAREES_GARDE = true;
+function compareeAdmise(e, sorte, sujet) {
+  if (!COMPAREES_GARDE) return true;
+  const v = typeof COMPAREES_VERIFIEES === "undefined" ? null : COMPAREES_VERIFIEES;
+  if (!v || !(v[sorte] || []).includes(e.nom_courant)) return false;
+  return !(v.exclusions || []).some(x => x.espece === e.nom_courant && x.sujet === sorte && (!x.groupe || x.groupe === sujet));
+}
 function candidatsComparees(x) {
   const res = [];
   for (const [g, mots] of Object.entries(GROUPES_PARLANTS)) {
-    const l = x.liste.filter(groupesComparables);
+    const l = x.liste.filter(groupesComparables).filter(e => compareeAdmise(e, "mange", g));
     const oui = l.filter(e => groupesComparables(e).includes(g)), non = l.filter(e => !groupesComparables(e).includes(g));
     if (l.length < 3 || !oui.length || !non.length) continue;
     const f = formeComparee(oui, non, { une: `Une seule de ces espèces mange ${mots}. Laquelle ?`, uneNon: `Une seule de ces espèces ne mange pas ${GROUPES_NEGATIFS[g]}. Laquelle ?`,
@@ -892,7 +1066,7 @@ function candidatsComparees(x) {
     res.push({ sorte: "mange", sujet: g, l, ...f, explication, noter: "proies", ecart: Math.min(oui.length, non.length) });
   }
   for (const [d, mots] of Object.entries(DEFENSES_DITES)) {
-    const avec = x.liste.filter(defensesDe);
+    const avec = x.liste.filter(defensesDe).filter(e => compareeAdmise(e, "defense", d));
     const oui = avec.filter(e => defensesDe(e).principale === d);
     let non = avec.filter(e => !defensesDe(e).toutes.includes(d));
     if (DEFENSES_DU_CORPS.includes(d)) non = non.filter(e => !oui.some(o => o.classe === e.classe) && !(d.startsWith("Morsure") && ORDRES_QUI_MORDENT.test(e.ordre || "")));
@@ -979,7 +1153,7 @@ function questionEtSi(x) {
   // une espèce dont le lieu dit déjà où elle niche (lien « Sa maison » : le balbuzard sur la falaise de Scandola) n'est pas montrée :
   // sa fiche (« arbre ou buisson ») pourrait contredire ce lieu
   const c = x.chapitre && chapitreParNom(x.territoire, x.chapitre);
-  const logees = new Set((c ? liensDuLieu(x.territoire, c.nom) : []).filter(k => k.nature_b === "element" && k.role === "Sa maison").map(k => k.a));
+  const logees = new Set((c ? liensElementsDuLieu(x.territoire, c.nom) : []).filter(k => k.role === "Sa maison").map(k => k.a));
   let mieux = null;
   for (const [cas, r] of Object.entries(ET_SI)) {
     // Étape R237 : une espèce montrée comme « non » ne niche nulle part près de ce cas, même en second (colonne
@@ -1035,8 +1209,11 @@ function questionsEnsemble(x) {
   while (q.length > (R298 ? ENSEMBLE_MAX : 6)) q.splice(q.length - 2, 1);
   // deux questions de suite à une seule réponse sur la même espèce : on retire la seconde (sauf « Et si… ? »)
   const uneBonne = z => !z.plusieurs ? (z.choix.find(c => c.bonne) || {}).espece : null;
-  for (let i = 1; i < q.length; i++) if (uneBonne(q[i]) && uneBonne(q[i]) === uneBonne(q[i - 1])) { q.splice(q[i].cle === "etsi" ? i - 1 : i, 1); i--; }
-  return varierEnsemble(q);
+  const sansDoublonDeSuite = l => { for (let i = 1; i < l.length; i++) if (uneBonne(l[i]) && uneBonne(l[i]) === uneBonne(l[i - 1])) { l.splice(l[i].cle === "etsi" ? i - 1 : i, 1); i--; } return l; };
+  // R299 : d'abord remettre dans l'ordre (varierEnsemble sépare déjà deux questions sur la même espèce), ensuite seulement
+  //   retirer ce qui reste collé (avant, on retirait dans l'ordre des types : des questions perdues pour rien)
+  if (leOn()) return sansDoublonDeSuite(varierEnsemble(q));
+  return varierEnsemble(sansDoublonDeSuite(q));
 }
 // Étape R264 (40.15, choix 8B : « même règle aux étapes 1 et 2 ») : jamais deux questions du même genre à la suite. Les deux
 //   questions de liens (« Laquelle est mangée par… ? ») et celle du chasseur commun parlent toutes de « qui mange qui » :

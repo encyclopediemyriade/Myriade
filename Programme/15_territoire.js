@@ -835,28 +835,36 @@ function aucuneExpeditionTerminee() {
   if (finie) { suivi.uneExpTerminee = true; return false; }
   return true;
 }
+// Étape R300 (23/11, demande d'Aubin) : « Votre première expédition » renvoyait droit à l'expédition ; elle renvoie maintenant
+//   au LIEU (page du lieu, comme le bandeau « Reprendre »), avec une phrase d'accroche : la première phrase de « Pourquoi ici ? »
+//   du lieu (sinon sa phrase de présentation). Même règle d'affichage qu'avant : tant qu'aucune expédition n'est terminée.
+function accrocheDuLieu(lieu) {
+  const d = (lieu && lieu.identite) || {};
+  const texte = (d.pourquoi_ici || (lieu && lieu.phrase) || "").trim();
+  const m = texte.match(/^.*?[.!?](?=\s|$)/);
+  return m ? m[0] : texte;
+}
 function blocPremiereExpedition(t) {
   if (!aucuneExpeditionTerminee()) return "";
-  const x = typeof expeditionAReprendre === "function" ? expeditionAReprendre(t) : null;
-  if (!x) return "";
-  const lieu = x.chapitre ? chapitreParNom(t, x.chapitre) : null;
-  const photo = lieu && estRenseigne(lieu.photo) ? lieu.photo : "", couleurT = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
-  const commencee = expeditionCommencee(x), n = (x.especes || []).length;
+  const lieu = lieuAReprendre(t);
+  if (!lieu) return "";
+  const photo = estRenseigne(lieu.photo) ? lieu.photo : "", couleurT = (TERRITOIRES[t] || {}).couleur || "#1F3A2E";
+  const liste = expeditionsDuChapitre(t, lieu.nom), n = liste.length;
+  const commence = liste.some(y => expeditionCommencee(y));
+  const accroche = accrocheDuLieu(lieu);
   return `<section class="mai-premiere" style="--couleur-territoire:${couleurT}">
       <button type="button" class="mp-carte" id="mai-premiere">
         ${photo ? `<img src="${photoMini(photo)}" alt="" onerror="this.onerror=null;this.src='${photo}'">` : ""}
-        <span class="mp-texte"><small>Votre première expédition</small><b>${echapper(x.titre)}</b>
-          <em>${lieu ? echapper(lieu.nom) + " · " : ""}${n} espèce${n > 1 ? "s" : ""} à rencontrer</em></span>
-        <span class="mp-go">${commencee ? "Reprendre" : "Commencer"} <span aria-hidden="true">▶</span></span>
+        <span class="mp-texte"><small>${commence ? "Votre aventure continue ici" : "Votre aventure commence ici"}</small><b>${echapper(lieu.nom)}</b>
+          ${accroche ? `<span class="mp-accroche">${echapper(accroche)}</span>` : ""}
+          <em>${n} expédition${n > 1 ? "s" : ""} à vivre</em></span>
+        <span class="mp-go">${commence ? "Reprendre" : "Entrer dans le lieu"} <span aria-hidden="true">▶</span></span>
       </button></section>`;
 }
 function brancherPremiereExpedition(t) {
-  const b = document.getElementById("mai-premiere"), x = expeditionAReprendre(t);
-  if (!b || !x) return;
-  b.onclick = () => {   // même règle que le bandeau « Reprendre » : « Commencer » ouvre la page de l'expédition, « Reprendre » reprend
-    const s = expeditionCommencee(x) && typeof suiteExpedition === "function" ? suiteExpedition(x) : null;
-    if (s && !s.choisir && typeof s.action === "function") s.action(); else ouvrirExpedition(x);
-  };
+  const b = document.getElementById("mai-premiere"), lieu = lieuAReprendre(t);
+  if (!b || !lieu) return;
+  b.onclick = () => ouvrirLieu(t, lieu.nom);   // R300 : la page du lieu (c'est elle qui propose l'expédition à suivre)
 }
 // « Reprendre » (cas 5A) : le bandeau ouvre la page du lieu ; le bouton ▶ reprend ce qui est à suivre (même règle 8A, suiteDuLieu)
 function lieuAReprendre(t) {
