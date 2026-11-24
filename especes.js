@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V106.xlsx, especes_bassin_aquitain_V48.xlsx, especes_bassin_parisien_V54.xlsx, especes_corse_V61.xlsx, especes_grand_est_V47.xlsx, especes_jura_V51.xlsx, especes_massif_armoricain_V61.xlsx, especes_massif_central_V55.xlsx, especes_mediterranee_V62.xlsx, especes_pyrenees_V57.xlsx, especes_vosges_V42.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V108.xlsx, especes_bassin_aquitain_V48.xlsx, especes_bassin_parisien_V54.xlsx, especes_corse_V63.xlsx, especes_grand_est_V47.xlsx, especes_jura_V52.xlsx, especes_massif_armoricain_V62.xlsx, especes_massif_central_V56.xlsx, especes_mediterranee_V64.xlsx, especes_pyrenees_V59.xlsx, especes_vosges_V42.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -289,7 +289,7 @@ const ESPECES = [
     pelage_saisonnier: "NA (pas de mue saisonnière marquée)",
     adaptations_physiques: "des griffes pour creuser ; des réserves de graisse pour l'hiver",
     defense_principale: "Refuge (terrier, eau, falaise)",
-    defenses_secondaires: "Défense en groupe",
+    defenses_secondaires: "Défense en groupe ; Fuite ; Intimidation (se gonfle, siffle)",
     chasse_principale: "NA",
     chasses_secondaires: "NA",
     indice_presence: null,
@@ -4268,7 +4268,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     tendance_france: "NA",
-    a_confirmer: ["queue_vol"]
+    a_confirmer: ["defense_principale", "queue_vol"]
   },
   {
     onglet: "Oiseaux",
@@ -7986,7 +7986,7 @@ const ESPECES = [
     saut_hauteur_max_m: null,
     saut_longueur_max_m: null,
     motif_robe_secondaire: null,
-    proies_groupes: "Insectes ; Amphibiens et reptiles",
+    proies_groupes: "Insectes ; Amphibiens et reptiles ; Petits mammifères",
     predateurs_groupes: "Rapaces",
     origine: "Indigène",
     introduction_date: "NA",
@@ -8006,7 +8006,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     motif_robe_autres: null,
-    a_confirmer: ["museau_forme", "tete_ecailles"]
+    a_confirmer: ["defense_principale", "museau_forme", "tete_ecailles"]
   },
   {
     onglet: "Poissons",
@@ -8883,7 +8883,7 @@ const ESPECES = [
     saut_hauteur_max_m: null,
     saut_longueur_max_m: null,
     motif_robe_secondaire: "NA",
-    proies_groupes: "Algues et plancton ; Insectes ; Araignées et petites bêtes ; Vers et mollusques",
+    proies_groupes: "Algues et plancton ; Insectes ; Araignées et petites bêtes ; Vers et mollusques ; Poissons",
     predateurs_groupes: "Autres oiseaux ; Poissons",
     origine: "Indigène",
     introduction_date: "NA",
@@ -8901,7 +8901,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["defense_principale"]
   },
   {
     onglet: "Poissons",
@@ -9411,7 +9411,7 @@ const ESPECES = [
     photo_3_differente: "non",
     photo_3_change: "NA",
     motif_robe_autres: null,
-    defense_stade: null,
+    defense_stade: "adulte",
     a_confirmer: []
   },
   {
@@ -26338,7 +26338,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: ["gestation_jours", "deplacement_saisonnier", "queue_forme", "saison_reproduction"]
+    a_confirmer: ["gestation_jours", "deplacement_saisonnier", "queue_forme", "saison_reproduction", "proies_groupes"]
   },
   {
     onglet: "Oiseaux",
@@ -29302,7 +29302,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: ["proies", "nom_logis", "nom_petit"]
+    a_confirmer: ["proies", "nom_logis", "nom_petit", "proies_groupes"]
   },
   {
     onglet: "Amphibiens",
@@ -29702,7 +29702,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["proies_groupes"]
   },
   {
     onglet: "Reptiles",
@@ -29882,7 +29882,7 @@ const ESPECES = [
     saut_hauteur_max_m: null,
     saut_longueur_max_m: null,
     motif_robe_secondaire: null,
-    proies_groupes: "Insectes ; Araignées et petites bêtes ; Vers et mollusques ; Fruits et graines",
+    proies_groupes: "Insectes ; Araignées et petites bêtes ; Vers et mollusques ; Fruits et graines ; Herbes et feuilles",
     predateurs_groupes: "Serpents et lézards ; Autres oiseaux ; Mammifères carnivores ; Autres mammifères ; Insectes et araignées",
     origine: "Indigène",
     introduction_date: "NA",
@@ -30441,7 +30441,7 @@ const ESPECES = [
     type_revetement: null,
     adaptations_physiques: "une grande tache noire bordée de blanc sur la queue",
     defense_principale: "Défense en groupe",
-    defenses_secondaires: "Défense en groupe",
+    defenses_secondaires: null,
     chasse_principale: "Prédateur en pleine eau, opportuniste",
     chasses_secondaires: "Mange pain et déchets de pêche près des côtes",
     indice_presence: "NA",
@@ -30476,7 +30476,7 @@ const ESPECES = [
     saut_hauteur_max_m: null,
     saut_longueur_max_m: null,
     motif_robe_secondaire: null,
-    proies_groupes: "Poissons ; Crustacés ; Vers et mollusques",
+    proies_groupes: "Poissons ; Crustacés ; Vers et mollusques ; Algues et plancton",
     predateurs_groupes: "Poissons",
     origine: "Indigène",
     introduction_date: "NA",
@@ -30738,7 +30738,7 @@ const ESPECES = [
     type_revetement: null,
     adaptations_physiques: "de très grands yeux ; une grande bouche oblique ; un mâle qui couve les œufs en bouche",
     defense_principale: "Refuge (terrier, eau, falaise)",
-    defenses_secondaires: "Refuge (terrier, eau, falaise)",
+    defenses_secondaires: null,
     chasse_principale: "NA",
     chasses_secondaires: "NA",
     indice_presence: null,
@@ -30936,7 +30936,7 @@ const ESPECES = [
     type_revetement: null,
     adaptations_physiques: "un hermaphrodisme simultané ; une très grande bouche",
     defense_principale: "Refuge (terrier, eau, falaise)",
-    defenses_secondaires: "Camouflage ; Refuge (terrier, eau, falaise)",
+    defenses_secondaires: "Camouflage",
     chasse_principale: "NA",
     chasses_secondaires: "NA",
     indice_presence: "NA",
@@ -30971,7 +30971,7 @@ const ESPECES = [
     saut_hauteur_max_m: null,
     saut_longueur_max_m: null,
     motif_robe_secondaire: null,
-    proies_groupes: "Crustacés ; Poissons ; Vers et mollusques",
+    proies_groupes: "Crustacés ; Poissons ; Vers et mollusques ; Charognes et os",
     predateurs_groupes: null,
     origine: "Indigène",
     introduction_date: "NA",
@@ -37656,7 +37656,7 @@ const ESPECES = [
     vitesse_max_kmh: null,
     distance_par_jour_km: null,
     motif_robe_secondaire: "Barres",
-    proies_groupes: "Insectes ; Nectar, pollen et sève",
+    proies_groupes: "Insectes ; Nectar, pollen et sève ; Fruits et graines",
     predateurs_groupes: null,
     origine: "Indigène",
     introduction_date: "NA",
@@ -37888,7 +37888,7 @@ const ESPECES = [
     vitesse_max_kmh: null,
     distance_par_jour_km: null,
     motif_robe_secondaire: "Rayures",
-    proies_groupes: "Fruits et graines ; Insectes",
+    proies_groupes: "Fruits et graines ; Insectes ; Herbes et feuilles",
     predateurs_groupes: null,
     origine: "Indigène",
     introduction_date: "NA",
@@ -50844,7 +50844,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: ["defenses_secondaires"]
+    a_confirmer: ["defense_principale", "defenses_secondaires"]
   },
   {
     onglet: "Poissons",
@@ -53886,7 +53886,7 @@ const ESPECES = [
     vitesse_max_kmh: null,
     distance_par_jour_km: null,
     motif_robe_secondaire: "NA",
-    proies_groupes: "Charognes et os ; Grands mammifères",
+    proies_groupes: "Charognes et os ; Grands mammifères ; Petits mammifères ; Oiseaux et œufs ; Amphibiens et reptiles",
     predateurs_groupes: "NA",
     origine: "Indigène",
     introduction_date: "NA",
@@ -58999,8 +58999,8 @@ const ESPECES = [
     photo_2_change: "Corps brun-jaune, flancs tachés de jaune",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    defense_stade: null,
-    a_confirmer: []
+    defense_stade: "adulte",
+    a_confirmer: ["defense_principale"]
   },
   {
     onglet: "Insectes",
@@ -59509,7 +59509,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    defense_stade: null,
+    defense_stade: "adulte",
     a_confirmer: ["territoire"]
   },
   {
@@ -61026,7 +61026,7 @@ const ESPECES = [
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "NA",
     hibernation_detail: "NA",
-    proies_groupes: "Vers et mollusques ; Poissons",
+    proies_groupes: "Vers et mollusques ; Poissons ; Crustacés",
     predateurs_groupes: "Aucun ou presque",
     origine: "Indigène",
     introduction_date: "NA",
@@ -61046,7 +61046,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["defense_principale"]
   },
   {
     onglet: "Mammiferes",
@@ -61141,7 +61141,7 @@ const ESPECES = [
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "NA",
     hibernation_detail: "NA",
-    proies_groupes: "Vers et mollusques ; Poissons",
+    proies_groupes: "Vers et mollusques ; Poissons ; Crustacés",
     predateurs_groupes: "Aucun ou presque ; Humain",
     origine: "Indigène",
     introduction_date: "NA",
@@ -61161,7 +61161,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["defense_principale"]
   },
   {
     onglet: "Mammiferes",
@@ -61256,7 +61256,7 @@ const ESPECES = [
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "NA",
     hibernation_detail: "NA",
-    proies_groupes: "Crustacés ; Poissons ; Vers et mollusques",
+    proies_groupes: "Crustacés ; Poissons ; Vers et mollusques ; Algues et plancton",
     predateurs_groupes: "Mammifères carnivores ; Humain",
     origine: "Indigène",
     introduction_date: "NA",
@@ -63428,7 +63428,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["proies_groupes"]
   },
   {
     onglet: "Reptiles",
@@ -63610,7 +63610,7 @@ const ESPECES = [
     saut_hauteur_max_m: "NA",
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "NA",
-    proies_groupes: "Algues et plancton ; Crustacés ; Vers et mollusques",
+    proies_groupes: "Algues et plancton ; Crustacés ; Vers et mollusques ; Poissons",
     predateurs_groupes: "Poissons ; Crustacés ; Mammifères carnivores ; Humain ; Autres oiseaux",
     origine: "Indigène",
     introduction_date: "NA",
@@ -63811,7 +63811,7 @@ const ESPECES = [
     saut_hauteur_max_m: "NA",
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "NA",
-    proies_groupes: "Insectes ; Araignées et petites bêtes",
+    proies_groupes: "Insectes ; Araignées et petites bêtes ; Vers et mollusques",
     predateurs_groupes: "Rapaces ; Serpents et lézards",
     origine: "Indigène",
     introduction_date: "NA",
@@ -64576,7 +64576,7 @@ const ESPECES = [
     type_revetement: "Petites écailles",
     adaptations_physiques: "une très large bouche ; une queue arrondie bordée de blanc ; un changement de sexe, femelle puis mâle",
     defense_principale: "Refuge (terrier, eau, falaise)",
-    defenses_secondaires: "Fuite",
+    defenses_secondaires: "Fuite ; Camouflage",
     chasse_principale: "NA",
     chasses_secondaires: "NA",
     indice_presence: "NA",
@@ -64774,7 +64774,7 @@ const ESPECES = [
     type_revetement: "Écailles",
     adaptations_physiques: "des lignes jaune doré sur les flancs ; une tache noire près des nageoires",
     defense_principale: "Défense en groupe",
-    defenses_secondaires: "Fuite",
+    defenses_secondaires: "Fuite ; Venin, poison ou acide",
     chasse_principale: "NA",
     chasses_secondaires: "NA",
     indice_presence: "NA",
@@ -65106,7 +65106,7 @@ const ESPECES = [
     saut_hauteur_max_m: "NA",
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "Points",
-    proies_groupes: "Poissons ; Crustacés ; Vers et mollusques ; Charognes et os",
+    proies_groupes: "Poissons ; Crustacés ; Vers et mollusques ; Charognes et os ; Algues et plancton",
     predateurs_groupes: "Humain",
     origine: "Indigène",
     introduction_date: "NA",
@@ -65205,7 +65205,7 @@ const ESPECES = [
     saut_hauteur_max_m: "NA",
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "Taches",
-    proies_groupes: "Vers et mollusques ; Crustacés ; Poissons",
+    proies_groupes: "Vers et mollusques ; Crustacés ; Poissons ; Charognes et os",
     predateurs_groupes: "Humain",
     origine: "Indigène",
     introduction_date: "NA",
@@ -65304,7 +65304,7 @@ const ESPECES = [
     saut_hauteur_max_m: "NA",
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "Taches",
-    proies_groupes: "Algues et plancton ; Vers et mollusques ; Crustacés",
+    proies_groupes: "Algues et plancton ; Vers et mollusques ; Crustacés ; Poissons",
     predateurs_groupes: "Humain",
     origine: "Indigène",
     introduction_date: "NA",
@@ -66026,7 +66026,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "non",
     photo_3_change: "NA",
-    defense_stade: null,
+    defense_stade: "adulte",
     a_confirmer: []
   },
   {
@@ -66921,7 +66921,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["proies_groupes"]
   },
   {
     onglet: "Araignees_mille_pattes",
@@ -69381,7 +69381,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    a_confirmer: []
+    a_confirmer: ["defense_principale"]
   },
   {
     onglet: "Mammiferes",
@@ -71307,7 +71307,7 @@ const ESPECES = [
     saut_hauteur_max_m: "NA",
     saut_longueur_max_m: "NA",
     motif_robe_secondaire: "NA",
-    proies_groupes: "Insectes ; Amphibiens et reptiles ; Vers et mollusques ; Crustacés",
+    proies_groupes: "Insectes ; Amphibiens et reptiles ; Vers et mollusques ; Crustacés ; Araignées et petites bêtes",
     predateurs_groupes: "Poissons",
     origine: "Indigène",
     introduction_date: "NA",
@@ -72632,7 +72632,7 @@ const ESPECES = [
     photo_2_change: "NA",
     photo_3_differente: "NA",
     photo_3_change: "NA",
-    defense_stade: null,
+    defense_stade: "adulte",
     a_confirmer: []
   },
   {
@@ -72837,7 +72837,7 @@ const ESPECES = [
     photo_3_differente: "NA",
     photo_3_change: "NA",
     defense_stade: null,
-    a_confirmer: ["territoire"]
+    a_confirmer: ["territoire", "defense_principale"]
   },
   {
     onglet: "Insectes",

@@ -500,6 +500,80 @@ const COMPAREES_VERIFIEES = {
   "Verdier d'Europe",
   "Vespère de Savi",
   "Étoile de mer rouge",
+  "Apogon",
+  "Apron du Rhône",
+  "Calotriton des Pyrénées",
+  "Campagnol des neiges",
+  "Campagnol provençal",
+  "Castagnole",
+  "Corb",
+  "Corégone",
+  "Crossope de Miller",
+  "Crénilabre paon",
+  "Dauphin commun",
+  "Discoglosse corse",
+  "Esturgeon européen",
+  "Grand hamster",
+  "Lièvre de Corse",
+  "Marmotte des Alpes",
+  "Musaraigne alpine",
+  "Mygale à chaussette",
+  "Mérou brun",
+  "Oblade",
+  "Perdrix bartavelle",
+  "Pic tridactyle",
+  "Pipistrelle de Nathusius",
+  "Psammodrome d'Edwards",
+  "Rascasse brune",
+  "Rouget de roche",
+  "Saint-Pierre",
+  "Sar commun",
+  "Sar à tête noire",
+  "Saupe",
+  "Scorpion languedocien",
+  "Serran chevrette",
+  "Serran écriture",
+  "Sizerin cabaret",
+  "Sérotine de Nilsson",
+  "Traquet oreillard",
+  "Vautour moine",
+  "Algyroïde de Fitzinger",
+  "Arénicole",
+  "Bouquetin des Alpes",
+  "Bouquetin ibérique",
+  "Cachalot",
+  "Cigale de mer",
+  "Corail rouge",
+  "Couleuvre à échelons",
+  "Crapaud vert des Baléares",
+  "Crevette grise",
+  "Dauphin de Risso",
+  "Discoglosse peint",
+  "Globicéphale noir",
+  "Gobemouche à collier",
+  "Grand tétras",
+  "Isard",
+  "Langouste rouge",
+  "Lièvre variable",
+  "Lycose de Narbonne",
+  "Lézard sicilien",
+  "Lézard tyrrhénien",
+  "Magicienne dentelée",
+  "Maigre",
+  "Moineau cisalpin",
+  "Murin à oreilles échancrées",
+  "Murène",
+  "Physalie",
+  "Puffin des Anglais",
+  "Rainette sarde",
+  "Rorqual commun",
+  "Salamandre noire",
+  "Scolopendre ceinturée",
+  "Sittelle corse",
+  "Sérotine bicolore",
+  "Tortue caouanne",
+  "Vieille commune",
+  "Vipère d'Orsini",
   "Fauvette de Moltoni",
   "Fauvette sarde",
   "Molosse de Cestoni",
@@ -868,6 +942,51 @@ const COMPAREES_VERIFIEES = {
   "Timarque",
   "Truxale",
   "Vespère de Savi",
+  "Apogon",
+  "Apron du Rhône",
+  "Bourdon des pierres",
+  "Calotriton des Pyrénées",
+  "Campagnol des neiges",
+  "Corb",
+  "Corégone",
+  "Crénilabre paon",
+  "Grand hamster",
+  "Libellule déprimée",
+  "Marmotte des Alpes",
+  "Mygale à chaussette",
+  "Mérou brun",
+  "Oblade",
+  "Oreillard roux",
+  "Perdrix bartavelle",
+  "Psammodrome d'Edwards",
+  "Rascasse brune",
+  "Saint-Pierre",
+  "Sar commun",
+  "Saupe",
+  "Scorpion languedocien",
+  "Serran chevrette",
+  "Serran écriture",
+  "Arénicole",
+  "Bouquetin des Alpes",
+  "Bourdon des Alpes",
+  "Bourdon des Pyrénées",
+  "Cachalot",
+  "Cigale de mer",
+  "Cordulégastre bidenté",
+  "Couleuvre à échelons",
+  "Crevette grise",
+  "Dauphin de Risso",
+  "Globicéphale noir",
+  "Langouste rouge",
+  "Lièvre variable",
+  "Magicienne dentelée",
+  "Murène",
+  "Physalie",
+  "Puffin des Anglais",
+  "Rorqual commun",
+  "Salamandre noire",
+  "Scolopendre ceinturée",
+  "Vipère d'Orsini",
   "Aeschne bleue",
   "Agrion de Mercure",
   "Agrion hasté",
@@ -7167,6 +7286,582 @@ const COMPAREES_VERIFIEES = {
    "sujet": "mange",
    "groupe": "Fruits et graines",
    "raison": "préférence pour les éricacées (Vaccinium, WP FR + EN) : baies non écartées"
+  },
+  {
+   "espece": "Saint-Pierre",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : camouflage non décrit (WP FR, WP EN, DORIS) ; défense exclue en entier"
+  },
+  {
+   "espece": "Sizerin cabaret",
+   "sujet": "mange",
+   "groupe": "Herbes et feuilles",
+   "raison": "occasionnel : bourgeons (WP FR seule), WP EN ne les cite pas"
+  },
+  {
+   "espece": "Marmotte des Alpes",
+   "sujet": "defense",
+   "groupe": "Intimidation (se gonfle, siffle)",
+   "raison": "une seule source (WP EN)"
+  },
+  {
+   "espece": "Esturgeon européen",
+   "sujet": "mange",
+   "groupe": "Insectes",
+   "raison": "oui non confirmé : WP EN ne cite que vers et crustacés ; WP FR introuvable ; 2e source à trouver"
+  },
+  {
+   "espece": "Mérou brun",
+   "sujet": "defense",
+   "groupe": "Camouflage",
+   "raison": "occasionnel : juvéniles cryptiques (DORIS), non écarté"
+  },
+  {
+   "espece": "Rouget de roche",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "oui non confirmé : DORIS = vers, crustacés, mollusques ; WP FR et EN sans régime"
+  },
+  {
+   "espece": "Calotriton des Pyrénées",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "occasionnel : larves de salamandre (étude catalane, WP FR)"
+  },
+  {
+   "espece": "Calotriton des Pyrénées",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "oui non confirmé : ni WP FR ni WP EN ; 2e source à trouver"
+  },
+  {
+   "espece": "Campagnol des neiges",
+   "sujet": "mange",
+   "groupe": "Insectes",
+   "raison": "une seule source (WP FR : végétal seulement) ; WP EN = page d'homonymie ; 2e source à trouver"
+  },
+  {
+   "espece": "Campagnol des neiges",
+   "sujet": "defense",
+   "groupe": "Camouflage",
+   "raison": "non confirmé : WP FR muette, WP EN inutilisable"
+  },
+  {
+   "espece": "Discoglosse corse",
+   "sujet": "mange",
+   "groupe": "Insectes",
+   "raison": "« petits invertébrés terrestres et aquatiques » (WP FR, EN) sans détail : non écarté ; 2e source à trouver"
+  },
+  {
+   "espece": "Discoglosse corse",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "« petits invertébrés terrestres et aquatiques » (WP FR, EN) sans détail : non écarté ; 2e source à trouver"
+  },
+  {
+   "espece": "Discoglosse corse",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "« petits invertébrés terrestres et aquatiques » (WP FR, EN) sans détail : non écarté ; 2e source à trouver"
+  },
+  {
+   "espece": "Libellule déprimée",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : Fuite non décrite comme défense (WP FR, WP EN) ; défense exclue en entier"
+  },
+  {
+   "espece": "Mygale à chaussette",
+   "sujet": "defense",
+   "groupe": "Venin, poison ou acide",
+   "raison": "plausible (araignée) : non écarté par WP FR et WP EN"
+  },
+  {
+   "espece": "Oreillard roux",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : Fuite non décrite (WP FR) ; vol lent (WP EN) ; défense exclue en entier"
+  },
+  {
+   "espece": "Rascasse brune",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "ancienne affirmation d'algues rapportée par WP EN, non confirmée : non écarté"
+  },
+  {
+   "espece": "Sar à tête noire",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "une seule source (WP FR : vers, crustacés, bivalves) ; 2e source à trouver"
+  },
+  {
+   "espece": "Sar à tête noire",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "une seule source (WP FR : vers, crustacés, bivalves) ; 2e source à trouver"
+  },
+  {
+   "espece": "Saupe",
+   "sujet": "defense",
+   "groupe": "Défense en groupe",
+   "raison": "principale non décrite comme défense (WP FR : vit en groupes ; WP EN : rien)"
+  },
+  {
+   "espece": "Saupe",
+   "sujet": "defense",
+   "groupe": "Venin, poison ou acide",
+   "raison": "chair toxique selon la saison : passive, occasionnelle"
+  },
+  {
+   "espece": "Saupe",
+   "sujet": "defense",
+   "groupe": "Odeur ou goût repoussant",
+   "raison": "WP FR : goût fort qui peut rebuter : non écarté"
+  },
+  {
+   "espece": "Vautour moine",
+   "sujet": "mange",
+   "groupe": "Petits mammifères",
+   "raison": "occasionnel : charogne ou proie vivante rare (WP FR, WP EN)"
+  },
+  {
+   "espece": "Vautour moine",
+   "sujet": "mange",
+   "groupe": "Oiseaux et œufs",
+   "raison": "occasionnel : charogne ou proie vivante rare (WP FR, WP EN)"
+  },
+  {
+   "espece": "Vautour moine",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "occasionnel : charogne ou proie vivante rare (WP FR, WP EN)"
+  },
+  {
+   "espece": "Vautour moine",
+   "sujet": "mange",
+   "groupe": "Fruits et graines",
+   "raison": "cônes de pin dans les pelotes (WP EN) : non écarté"
+  },
+  {
+   "espece": "Corégone",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "occasionnel : alevins (WP EN seule)"
+  },
+  {
+   "espece": "Corégone",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "zooplancton non précisé (WP EN) ; WP FR sans régime ; 2e source à trouver"
+  },
+  {
+   "espece": "Corégone",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : Défense en groupe non sourcée (WP EN, WP FR) ; défense exclue en entier"
+  },
+  {
+   "espece": "Oblade",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "DORIS ne cite que des œufs de poissons ; WP FR et EN : « omnivore »"
+  },
+  {
+   "espece": "Perdrix bartavelle",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : Camouflage non décrit (WP FR, WP EN) ; défense exclue en entier"
+  },
+  {
+   "espece": "Sar commun",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "occasionnel : petits poissons (WP FR)"
+  },
+  {
+   "espece": "Sar commun",
+   "sujet": "mange",
+   "groupe": "Herbes et feuilles",
+   "raison": "Pline seulement (WP FR) ; algues seules selon WP EN"
+  },
+  {
+   "espece": "Apogon",
+   "sujet": "defense",
+   "groupe": "Camouflage",
+   "raison": "une seule source lue (WP EN) ; non écarté"
+  },
+  {
+   "espece": "Corb",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "WP EN seule les cite ; DORIS : crustacés, vers, poissons ; non confirmé"
+  },
+  {
+   "espece": "Pic tridactyle",
+   "sujet": "mange",
+   "groupe": "Fruits et graines",
+   "raison": "occasionnel (WP EN : « may also ») ; WP FR : résine"
+  },
+  {
+   "espece": "Pic tridactyle",
+   "sujet": "mange",
+   "groupe": "Nectar, pollen et sève",
+   "raison": "occasionnel (WP EN : « may also ») ; WP FR : résine"
+  },
+  {
+   "espece": "Castagnole",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "DORIS : œufs de poissons seulement ; WP FR sans régime"
+  },
+  {
+   "espece": "Lièvre de Corse",
+   "sujet": "mange",
+   "groupe": null,
+   "raison": "rose : aucune source lue (WP EN sans régime, WP FR introuvable)"
+  },
+  {
+   "espece": "Traquet oreillard",
+   "sujet": "mange",
+   "groupe": "Fruits et graines",
+   "raison": "une seule source (WP FR : insectes) ; WP EN = homonymie"
+  },
+  {
+   "espece": "Traquet oreillard",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "une seule source (WP FR : insectes) ; WP EN = homonymie"
+  },
+  {
+   "espece": "Campagnol provençal",
+   "sujet": "mange",
+   "groupe": "Fruits et graines",
+   "raison": "Fruits : « oui » non confirmé (WP EN : herbes, trèfle, racines) ; WP FR sans régime"
+  },
+  {
+   "espece": "Campagnol provençal",
+   "sujet": "mange",
+   "groupe": "Insectes",
+   "raison": "Fruits : « oui » non confirmé (WP EN : herbes, trèfle, racines) ; WP FR sans régime"
+  },
+  {
+   "espece": "Dauphin commun",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "une seule source (WP EN : poissons et calmars) ; WP FR = homonymie"
+  },
+  {
+   "espece": "Scorpion languedocien",
+   "sujet": "mange",
+   "groupe": "Insectes",
+   "raison": "WP FR : araignées surtout ; WP EN sans régime : non confirmé"
+  },
+  {
+   "espece": "Scorpion languedocien",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "WP FR : araignées surtout ; WP EN sans régime : non confirmé"
+  },
+  {
+   "espece": "Serran chevrette",
+   "sujet": "mange",
+   "groupe": "Charognes et os",
+   "raison": "occasionnel : charognage (WP EN)"
+  },
+  {
+   "espece": "Serran écriture",
+   "sujet": "mange",
+   "groupe": "Charognes et os",
+   "raison": "occasionnel : restes de repas du poulpe (WP EN)"
+  },
+  {
+   "espece": "Apron du Rhône",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "WP FR sans régime ; WP EN : insectes, « vertébrés aquatiques »"
+  },
+  {
+   "espece": "Apron du Rhône",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "WP FR sans régime ; WP EN : insectes, « vertébrés aquatiques »"
+  },
+  {
+   "espece": "Grand hamster",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "occasionnel : grenouilles, campagnols (WP FR), cannibalisme (WP EN) ; animal = 10 à 13 %"
+  },
+  {
+   "espece": "Grand hamster",
+   "sujet": "mange",
+   "groupe": "Petits mammifères",
+   "raison": "occasionnel : grenouilles, campagnols (WP FR), cannibalisme (WP EN) ; animal = 10 à 13 %"
+  },
+  {
+   "espece": "Musaraigne alpine",
+   "sujet": "mange",
+   "groupe": "Oiseaux et œufs",
+   "raison": "WP FR : « petits vertébrés » non précisés"
+  },
+  {
+   "espece": "Crossope de Miller",
+   "sujet": "mange",
+   "groupe": "Insectes",
+   "raison": "Insectes occasionnel (WP EN) ; Crustacés : WP EN muette, WP FR introuvable"
+  },
+  {
+   "espece": "Crossope de Miller",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "Insectes occasionnel (WP EN) ; Crustacés : WP EN muette, WP FR introuvable"
+  },
+  {
+   "espece": "Moineau cisalpin",
+   "sujet": "mange",
+   "groupe": "Herbes et feuilles",
+   "raison": "prudence : une seule source (WP EN : graines et insectes) ; les moineaux grignotent aussi bourgeons et pousses"
+  },
+  {
+   "espece": "Murène",
+   "sujet": "mange",
+   "groupe": "Charognes et os",
+   "raison": "occasionnel : WP FR « parfois de charognes » ; WP EN « also feeds on dead animals »"
+  },
+  {
+   "espece": "Murène",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "occasionnel : WP FR « parfois ... d'algues » (WP FR seule)"
+  },
+  {
+   "espece": "Arénicole",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "prudence : mange du sédiment avec sa microfaune (MarLIN : meiofauna), dont de petits crustacés possibles"
+  },
+  {
+   "espece": "Dauphin de Risso",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "secondaire : WP FR et EN « essentiellement/almost exclusively squid » ; poissons seulement cités à côté (WP EN, UCSD)"
+  },
+  {
+   "espece": "Dauphin de Risso",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "occasionnel : Duke et UCSD citent des crustacés, WP FR et EN non"
+  },
+  {
+   "espece": "Dauphin de Risso",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : défense non décrite par les sources lues"
+  },
+  {
+   "espece": "Globicéphale noir",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "occasionnel : WP EN seule (lecture résumée), WP FR non"
+  },
+  {
+   "espece": "Globicéphale noir",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : défense non décrite par les sources lues"
+  },
+  {
+   "espece": "Cordulégastre bidenté",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : défense de l'adulte non décrite par les sources lues"
+  },
+  {
+   "espece": "Puffin des Anglais",
+   "sujet": "mange",
+   "groupe": "Charognes et os",
+   "raison": "ambiguïté : « débris alimentaires / surface offal » ramassés en surface (WP FR et EN) ressemblent à des charognes"
+  },
+  {
+   "espece": "Puffin des Anglais",
+   "sujet": "defense",
+   "groupe": "Régurgitation",
+   "raison": "non citée par WP FR ni WP EN, mais plausible chez un procellariiforme : exclue par prudence"
+  },
+  {
+   "espece": "Rainette sarde",
+   "sujet": "mange",
+   "groupe": null,
+   "raison": "rose : régime non décrit par les sources lues"
+  },
+  {
+   "espece": "Scolopendre ceinturée",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "occasionnel : WP FR « parfois de petits vertébrés comme de jeunes lézards » ; WP EN « almost any animal... insects and small lizards »"
+  },
+  {
+   "espece": "Cigale de mer",
+   "sujet": "mange",
+   "groupe": "Charognes et os",
+   "raison": "occasionnel : WP FR « occasionnellement nécrophage » ; WP EN ne la cite pas"
+  },
+  {
+   "espece": "Cigale de mer",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "WP FR : entre dans les nasses « pour dévorer les appâts et les poissons capturés » ; non écarté"
+  },
+  {
+   "espece": "Langouste rouge",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "occasionnel : WP FR « rarement » des poissons"
+  },
+  {
+   "espece": "Langouste rouge",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "une seule source (WP FR) ; WP EN : vers, crabes, animaux morts, pas d'algues"
+  },
+  {
+   "espece": "Magicienne dentelée",
+   "sujet": "mange",
+   "groupe": "Amphibiens et reptiles",
+   "raison": "occasionnel : WP EN « rarely small lizards » ; WP FR « tout ce qu'elle peut maîtriser »"
+  },
+  {
+   "espece": "Magicienne dentelée",
+   "sujet": "mange",
+   "groupe": "Nectar, pollen et sève",
+   "raison": "un cas de nymphe sur du nectar (WP EN), sinon strictement carnivore : exclu par prudence"
+  },
+  {
+   "espece": "Tortue caouanne",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "occasionnel : un élément d'une longue liste (WP FR et EN), régime surtout fait d'invertébrés du fond"
+  },
+  {
+   "espece": "Tortue caouanne",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "occasionnel : algues citées en fin de liste seulement (WP FR et EN)"
+  },
+  {
+   "espece": "Vipère d'Orsini",
+   "sujet": "mange",
+   "groupe": "Petits mammifères",
+   "raison": "occasionnel : WP FR « parfois de lézards et de rongeurs »"
+  },
+  {
+   "espece": "Vipère d'Orsini",
+   "sujet": "defense",
+   "groupe": null,
+   "raison": "rose : défense non décrite par les sources lues"
+  },
+  {
+   "espece": "Isard",
+   "sujet": "mange",
+   "groupe": "Fruits et graines",
+   "raison": "prudence : régime peu détaillé (WP EN seule lue) ; bourgeons et pousses cités, graines et baies non écartées"
+  },
+  {
+   "espece": "Lycose de Narbonne",
+   "sujet": "mange",
+   "groupe": null,
+   "raison": "rose : régime non décrit (pages sur Lycosa tarantula)"
+  },
+  {
+   "espece": "Salamandre noire",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "prudence : une seule source (WP EN : coléoptères, escargots, mille-pattes, araignées) ; les cloportes ne sont pas écartés"
+  },
+  {
+   "espece": "Vieille commune",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "occasionnel : WP FR « peut également se nourrir ... de poissons » ; WP EN ne les cite pas"
+  },
+  {
+   "espece": "Crapaud vert des Baléares",
+   "sujet": "mange",
+   "groupe": null,
+   "raison": "rose : régime non décrit par les sources lues"
+  },
+  {
+   "espece": "Crevette grise",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "occasionnel : WP FR « les gros spécimens se nourrissent aussi de jeunes alevins ou de leurs cadavres »"
+  },
+  {
+   "espece": "Crevette grise",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "non retrouvé dans l'extrait lu de WP FR (omnivore, carnivore, charognarde) ; WP EN muette"
+  },
+  {
+   "espece": "Discoglosse peint",
+   "sujet": "mange",
+   "groupe": null,
+   "raison": "rose : régime non décrit par les sources lues"
+  },
+  {
+   "espece": "Grand tétras",
+   "sujet": "mange",
+   "groupe": "Insectes",
+   "raison": "poussins seulement : WP FR « poussins essentiellement insectivores » ; adultes : herbivores (WP EN)"
+  },
+  {
+   "espece": "Rorqual commun",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "occasionnel en Méditerranée : WP FR « presque exclusivement Meganyctiphanes norvegica » (krill) ; WP EN : 96 % de krill seul en Atlantique nord"
+  },
+  {
+   "espece": "Rorqual commun",
+   "sujet": "mange",
+   "groupe": "Algues et plancton",
+   "raison": "ambiguïté : krill et copépodes sont du zooplancton, mais sont aussi des crustacés"
+  },
+  {
+   "espece": "Rorqual commun",
+   "sujet": "defense",
+   "groupe": "Défense en groupe",
+   "raison": "non citée, mais le rorqual vit parfois en petits groupes : exclue par prudence"
+  },
+  {
+   "espece": "Bouquetin ibérique",
+   "sujet": "mange",
+   "groupe": "Fruits et graines",
+   "raison": "non retrouvé : WP EN « mixed feeder between a browser and a grazer » sans détail, WP FR muette"
+  },
+  {
+   "espece": "Corail rouge",
+   "sujet": "mange",
+   "groupe": "Poissons",
+   "raison": "prudence : WP FR cite « œufs, larves » du plancton sans dire de quelles espèces"
+  },
+  {
+   "espece": "Lézard sicilien",
+   "sujet": "mange",
+   "groupe": "Herbes et feuilles",
+   "raison": "occasionnel : la part végétale est « much greater » que chez les autres lézards mais non détaillée"
+  },
+  {
+   "espece": "Lézard sicilien",
+   "sujet": "mange",
+   "groupe": "Fruits et graines",
+   "raison": "non détaillé : « plant matter » seulement (WP EN) ; l'îlot Podmrčaru est un cas particulier"
+  },
+  {
+   "espece": "Lézard sicilien",
+   "sujet": "mange",
+   "groupe": "Crustacés",
+   "raison": "prudence : « invertébrés, surtout arthropodes » (WP EN) : cloportes non écartés"
   },
   {
    "espece": "Salamandre de Corse",
