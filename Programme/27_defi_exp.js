@@ -166,6 +166,43 @@ function nbQuestionsDefi(x) {
   return [...nb.values()].reduce((a, b) => a + b, 0) - sepa + rendues;
 }
 let defiExp = null;                 // le défi en cours
+// ---- Étape R306 (24/11, retour d'Aubin : « Le son est-il disponible ? » n'était jamais posée dans Me tester) ----
+// La Rencontre et « Jouer » posent la question une fois par jour (R150), juste avant le premier cri ; Me tester ne la posait jamais :
+// il tirait des cris selon la dernière réponse gardée (donc des cris sans le son, ou jamais de cri après un « Non » d'hier).
+// Maintenant : tant que la question n'a pas été posée aujourd'hui, les cris sont prévus dans le défi (comme si le son était là),
+// et la question arrive juste avant le premier cri. « Oui » : le cri suit. « Non » : les cris qui restent deviennent
+// « Laquelle est … ? » (mêmes quatre photos, même espèce).
+function sonDemandeAujourdhui() { return !!(suivi && suivi.sonDemandeLe === aujourdhui()); }
+function sonPossibleDefi() { return typeof sonActif !== "undefined" && (sonActif || !sonDemandeAujourdhui()); }
+function demanderSonDefi() {
+  const zone = document.getElementById("vue-defiexp");
+  arreterSonDefi();
+  zone.innerHTML = `<div class="cdo dfx">${enteteDefiExp()}
+      <p class="cdo-q dfx-q-nom">Le son est-il disponible ?</p>
+      <p class="dfx-son-texte">La prochaine question fait écouter le cri d'un animal. Sans le son, elle est remplacée par une autre.</p>
+      <div class="cdo-noms"><button class="cdo-nom" id="dfx-son-oui">Oui</button><button class="cdo-nom" id="dfx-son-non">Non</button></div>
+    </div>`;
+  document.getElementById("dfx-quitter").onclick = mettreDefiDeCote;
+  document.getElementById("dfx-son-oui").onclick = () => repondreSonDefi(true);
+  document.getElementById("dfx-son-non").onclick = () => repondreSonDefi(false);
+  window.scrollTo(0, 0);
+  if (typeof calerJeuSousPouce === "function") calerJeuSousPouce(zone);
+}
+function repondreSonDefi(aLeSon) {
+  const d = defiExp;
+  sonDemande = true;                                   // (comme dans la Rencontre : plus redemandé de la journée, voir suivi.sonDemandeLe)
+  if (suivi) suivi.sonDemandeLe = aujourdhui();
+  sonActif = aLeSon;
+  if (!aLeSon) {
+    aRevoir = aRevoir.filter(r => r.champ !== "cri_son");
+    defiPrepare = null;                                // le prochain défi sera composé sans cri
+    if (d) for (const z of [...d.questions, ...(d.rep ? d.rep.questions : [])]) if (z.type === "cri" && !z.choix) z.type = "laquelle";
+  }
+  sauvegarder();
+  if (typeof afficherStats === "function") afficherStats();
+  if (d) sauverDefiExp();
+  afficherQuestionDefiExp();
+}
 // R249 : la question à l'écran — celle du défi, ou celle du repêchage (d.rep = { questions, i, lance })
 function qCouranteDefi(d) { return d.rep && d.rep.lance ? d.rep.questions[d.rep.i] : d.questions[d.i]; }
 function erreursDefi(d) {
@@ -180,7 +217,7 @@ function questionAutreCheminDefi(e, d) {
   const types = new Set(posees.map(q => q.type || "photo")), vues = posees.filter(q => q.photo).map(q => q.photo.src);
   const ph = photosDefi(e), pieges = piegesDefi(e, x, poolDefi(x));
   const avecPhotos = [e, ...pieges].every(o => estRenseigne(o.photo)) && pieges.length >= 3;
-  const cri = typeof aUnCri === "function" && aUnCri(e) && typeof sonActif !== "undefined" && sonActif && avecPhotos;
+  const cri = typeof aUnCri === "function" && aUnCri(e) && sonPossibleDefi() && avecPhotos;
   const neuve = ph.find(p => !vues.includes(p.src));
   let type = "photo", photo = null;
   if (cri && !types.has("cri")) type = "cri";
@@ -376,7 +413,7 @@ function lancerDefiExp(x) {
     if (k === 2 && avecPhotos) type = "laquelle";
     if (k >= 3) {
       const forme = ph.find(p => !deja.includes(p.src) && etiquetteForme(p.sujet));
-      type = typeof aUnCri === "function" && aUnCri(e) && typeof sonActif !== "undefined" && sonActif && avecPhotos ? "cri"
+      type = typeof aUnCri === "function" && aUnCri(e) && sonPossibleDefi() && avecPhotos ? "cri"
         : forme ? "photo" : avecPhotos ? "laquelle" : "photo";
     }
     let photo = null;
@@ -739,7 +776,7 @@ function paireSepareDefi(x) {
 function faconsEspece(e, x, pool) {
   const pieges = piegesDefi(e, x, pool);
   const avecPhotos = [e, ...pieges].every(o => estRenseigne(o.photo)) && pieges.length >= 3;
-  const cri = typeof aUnCri === "function" && aUnCri(e) && typeof sonActif !== "undefined" && sonActif && avecPhotos;
+  const cri = typeof aUnCri === "function" && aUnCri(e) && sonPossibleDefi() && avecPhotos;
   const reps = reperesInterrogeables(e).map(rp => ({ rp, pieges: piegesRepere(e, x, rp, pool) })).filter(o => o.pieges.length >= 3).slice(0, 2);
   const ind = questionIndicesDefi(e, x);
   const sansPhoto = !estRenseigne(e.photo);
@@ -1089,6 +1126,11 @@ function boutonPhotoDefi(e, k, q) {
 }
 function afficherQuestionDefiExp() {
   const d = defiExp, q = qCouranteDefi(d), enRep = !!(d.rep && d.rep.lance);   // R249 : aussi les questions du repêchage
+  // R306 : le son — d'abord la question (une fois par jour) ; sans le son, un cri devient « Laquelle est … ? »
+  if (q.type === "cri" && !q.choix) {
+    if (!sonDemandeAujourdhui()) { demanderSonDefi(); return; }
+    if (!sonActif) q.type = "laquelle";
+  }
   arreterSonDefi();
   // R264 (39) : les photos des 2 questions suivantes se chargent pendant qu'on répond à celle-ci
   if (!enRep) for (const s of d.questions.slice(d.i + 1, d.i + 3)) {
@@ -1342,6 +1384,7 @@ function finDefiExp() {
   suivi.defisExp = suivi.defisExp || {};
   const st = suivi.defisExp[x.id] = suivi.defisExp[x.id] || { joues: 0, reussi: false, meilleur: 0 };
   st.joues++; st.reussi = st.reussi || reussi; st.meilleur = Math.max(st.meilleur || 0, bons); st.dernier = { bons, total };
+  st.finis = (st.finis || 0) + 1; st.quand = Date.now();   // R312 : test joué jusqu'au bout (défi du moment « Refaire le test »)
   sauvegarder();
   const empreintes = Math.max(0, gainExp(x) - d.avantGain), etapeGagnee = empreintesExp(x) > d.avantEtapes;
   if (typeof majBandeExpedition === "function") try { majBandeExpedition(x); } catch (e) { /* la bande n'est pas affichée */ }
@@ -1502,11 +1545,13 @@ function minutesDefi(nq) { return Math.max(3, Math.round(nq * 0.3)); }   // R242
 // R274 (test du 19/11, n° 8 ; choix 6A, qui ajuste « deux portes égales » du 16/11) : critère « un nouveau joueur comprend par
 //   où commencer ». Tant que l'expédition n'a jamais été jouée, « Découvrir » est la porte pleine (vert foncé) et « Me tester »
 //   la porte claire ; ensuite les deux portes ont le même style (claires). Avant : « Me tester » toujours pleine.
-function porteDecouvrir(titre, texte, bas, pleine) {
-  return `<button class="dfx-p decouvrir${pleine ? " pleine" : ""}" data-porte="decouvrir">${PICTO_DECOUVRIR}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
+//   R307 (24/11, choix d'Aubin « A tout court ») : un petit rôle au-dessus du titre, « Pour apprendre » / « Pour vérifier »
+//   (paramètre facultatif : les autres écrans n'en ont pas).
+function porteDecouvrir(titre, texte, bas, pleine, role) {
+  return `<button class="dfx-p decouvrir${pleine ? " pleine" : ""}" data-porte="decouvrir">${PICTO_DECOUVRIR}${role ? `<i class="dfx-role">${role}</i>` : ""}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
 }
-function porteTester(titre, texte, bas) {
-  return `<button class="dfx-p tester" data-porte="tester">${PICTO_TESTER}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
+function porteTester(titre, texte, bas, role) {
+  return `<button class="dfx-p tester" data-porte="tester">${PICTO_TESTER}${role ? `<i class="dfx-role">${role}</i>` : ""}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
 }
 function portesEtape1(x) {
   const n = x.liste.length, av = avanceeEtape(x, 1), st = etatDefiExp(x);
@@ -1546,9 +1591,9 @@ function portesEtape1(x) {
         <small class="dfx-note">Le défi porte sur les ${n} espèces : ${nbQuestionsDefi(x)} questions, ${permisesDefiAnnonce(x)} erreurs permises.${av.faites ? ` ${av.faites > 1 ? `Les ${av.faites} déjà reconnues le restent` : "Celle déjà reconnue le reste"}, quoi qu'il arrive.` : ""}</small>${gain}</div>`;
   }
   return `<div class="dfx-portes"><div class="etiq-jeu">${nomEtape(1)}</div>
-      <p class="dfx-phrase">Deux façons de reconnaître ces ${n} espèces : les découvrir une à une, ou vous tester tout de suite. Vous pourrez changer en route.</p>
-      <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues))}
-        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${permisesDefiAnnonce(x)} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`)}</div>${gain}</div>`;
+      <p class="dfx-phrase">Faire connaissance avec ces ${n} espèces : en les rencontrant une à une, ou en voyant d'abord ce que vous savez déjà. Vous pourrez changer en route.</p>
+      <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues), "Pour apprendre")}
+        ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${permisesDefiAnnonce(x)} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`, "Pour vérifier")}</div>${gain}</div>`;
 }
 function brancherPortes(zone, x) {
   zone.querySelectorAll("[data-porte]").forEach(b => b.onclick = () => b.dataset.porte === "tester" ? lancerDefiExp(x) : b.dataset.porte === "reprendre" ? reprendreDefiExp(x) : lancerExpedition(x, 1));

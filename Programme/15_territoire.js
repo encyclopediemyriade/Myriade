@@ -428,6 +428,36 @@ function recompensePrincipale(t) { return recompenseRang(t) || recompenseTerrito
 
 // ---- Les défis du jour (par territoire) ----
 const POINTS_DEFI = 2;   // étape PR1 : 2 empreintes par défi réussi (1 avant)
+// Étape R308 (24/11, choix d'Aubin : « Défis du moment ») : les défis du jour se renouvellent plusieurs fois par jour, pour donner
+//   envie de revenir. Quand les défis du lot sont tous réussis, un nouveau lot arrive 2 h plus tard (le délai part du dernier défi
+//   réussi, pas d'une horloge). Rien n'expire : un défi pas fait reste là. +2 empreintes à chaque défi, sans limite (choix d'Aubin).
+//   Le lot est noté dans suivi.defis[t] = { jour, lot, liste, fini } ; « fini » = l'heure du dernier défi réussi du lot.
+//   Le nouveau jour (6 h) repart toujours d'un lot neuf. DEFIS_DU_MOMENT = false remet les défis du jour d'avant.
+const DEFIS_DU_MOMENT = true;
+const DELAI_DEFIS_MS = 2 * 3600 * 1000;
+function resteAvantDefis(t) {   // millisecondes avant le prochain lot (0 = rien à attendre)
+  const d = suivi && suivi.defis && suivi.defis[t];
+  if (!DEFIS_DU_MOMENT || !d || !d.fini) return 0;
+  return Math.max(0, d.fini + DELAI_DEFIS_MS - Date.now());
+}
+function texteAttenteDefis(ms) {
+  const m = Math.max(1, Math.ceil(ms / 60000));
+  if (m < 60) return `De nouveaux défis dans ${m} min`;
+  const h = Math.floor(m / 60), r = m % 60;
+  return `De nouveaux défis dans ${h} h${r ? " " + String(r).padStart(2, "0") : ""}`;
+}
+let minuteurDefis = null;
+function planifierDefis(t, redessiner) {   // redessine à l'heure où le nouveau lot arrive (sans compte à rebours affiché)
+  clearTimeout(minuteurDefis);
+  const reste = resteAvantDefis(t);
+  if (reste > 0) minuteurDefis = setTimeout(redessiner, Math.min(reste + 800, 2147483000));
+}
+document.addEventListener("visibilitychange", () => {   // retour dans l'appli après une longue pause : le nouveau lot est là
+  if (document.visibilityState !== "visible" || !DEFIS_DU_MOMENT || typeof territoireActif !== "function") return;
+  const t = territoireActif();
+  if (t && document.getElementById("mai-defis") && typeof dessinerDefisMaison === "function") dessinerDefisMaison(t);
+  if (t && document.getElementById("ac-defis") && typeof dessinerDefis === "function") dessinerDefis(t);
+});
 function expAuHasard(t, filtre) { const l = expeditionsDe(t).filter(filtre); return l.length ? l[Math.floor(Math.random() * l.length)] : null; }
 const SORTES_DEFI = {
   etape:     { texte: d => `Finir ${d.etape === 1 ? "les Rencontres" : typeof titreEtape === "function" ? titreEtape(d.etape) : "l'étape " + d.etape} de « ${(expeditionParId(d.exp) || {}).titre || "?"} »`,   // R284 (45.06) : sans numéro
@@ -469,6 +499,27 @@ function lancerDefiFiche(d) { const e = especeParNom(d.espece); if (e) lancerFic
 function casesTrouveesTerritoire(t) {   // étape R129 : les cases trouvées sur les espèces du territoire
   return especesDe(t).filter(estIdentifiee).reduce((s, e) => s + questionsPossibles(e).filter(q => nbBonnes(e, q.champ) >= 1).length, 0);
 }
+// Étape R312 (24/11, choix d'Aubin) : quand il ne reste plus assez de nouveautés, le lot ne s'épuise plus.
+//   « Refaire le test de « … » » : le Me tester d'une expédition dont les Rencontres sont finies, celle testée il y a le plus
+//   longtemps (jamais testée d'abord). Seulement pour compléter le lot à 3 ; réussi dès que la partie est jouée jusqu'au bout,
+//   quel que soit le score (suivi.defisExp[id].finis, compté dans finDefiExp, 27_defi_exp.js). +2 comme les autres défis.
+//   DEFIS_REVISION = false remet l'ancien comportement (lot de 1 ou 2 défis, voire aucun).
+const DEFIS_REVISION = true;
+function finisDefiExp(x) { const st = suivi && suivi.defisExp && suivi.defisExp[x.id]; return (st && st.finis) || 0; }
+SORTES_DEFI.rejouer = {
+  texte: d => `Refaire le test de « ${(expeditionParId(d.exp) || {}).titre || "?"} »`,
+  creer: (t, deja) => {
+    if (typeof lancerDefiExp !== "function") return null;
+    const pris = new Set(deja || []);
+    const l = expeditionsDe(t).filter(x => !pris.has(x.id) && estOuverte(x) && etapeFinie(x, 1)
+      && x.liste.filter(e => typeof jouableEnJeu !== "function" || jouableEnJeu(e)).length >= 3);
+    if (!l.length) return null;
+    const quand = x => { const st = suivi.defisExp && suivi.defisExp[x.id]; return (st && st.quand) || 0; };
+    const min = Math.min(...l.map(quand)), x = auHasard(l.filter(y => quand(y) === min));
+    return { exp: x.id, but: 1, depart: finisDefiExp(x) };
+  },
+  mesure: (t, d) => { const x = expeditionParId(d.exp); return x ? finisDefiExp(x) - d.depart : 0; },
+};
 function nouveauxDefis(t) {
   const liste = [];
   // R259 : la fiche à compléter deux fois sur trois avant « Découvrir 3 espèces nouvelles » ; « choses nouvelles » en dernier recours
@@ -478,7 +529,17 @@ function nouveauxDefis(t) {
     const d = SORTES_DEFI[sorte].creer(t);
     if (d) liste.push({ sorte, ...d, reussi: false });
   }
+  while (DEFIS_REVISION && liste.length < 3) {   // R312 : compléter avec des tests à refaire (jamais deux fois la même expédition)
+    const d = SORTES_DEFI.rejouer.creer(t, liste.filter(x => x.sorte === "rejouer").map(x => x.exp));
+    if (!d) break;
+    liste.push({ sorte: "rejouer", ...d, reussi: false });
+  }
   return liste;
+}
+// R312 : toucher un défi « Refaire le test » lance directement le Me tester de l'expédition
+function lancerDefiDuMoment(d) {
+  const x = expeditionParId(d.exp); if (!x) return;
+  if (d.sorte === "rejouer" && typeof lancerDefiExp === "function") lancerDefiExp(x); else ouvrirExpedition(x);
 }
 function avanceeDefi(t, d) { const s = SORTES_DEFI[d.sorte]; return s ? Math.max(0, Math.min(d.but, s.mesure(t, d))) : 0; }
 // Met à jour les défis du territoire : nouveaux chaque jour ; marque ceux qui viennent d'être réussis (rendus)
@@ -527,20 +588,23 @@ function verifierDefis(t) {
   if (!suivi || !t) return [];
   suivi.defis = suivi.defis || {};
   let d = suivi.defis[t];
-  if (!d || d.jour !== jourDefis() || d.liste.some(x => !SORTES_DEFI[x.sorte])) { d = suivi.defis[t] = { jour: jourDefis(), liste: nouveauxDefis(t) }; sauvegarder(); }
+  const nouveauJour = !d || d.jour !== jourDefis() || d.liste.some(x => !SORTES_DEFI[x.sorte]);
+  const suite = DEFIS_DU_MOMENT && !nouveauJour && d.fini && Date.now() - d.fini >= DELAI_DEFIS_MS;   // R308 : le lot suivant
+  if (nouveauJour || suite) { d = suivi.defis[t] = { jour: jourDefis(), lot: nouveauJour ? 1 : (d.lot || 1) + 1, liste: nouveauxDefis(t) }; sauvegarder(); }
   const reussis = d.liste.filter(x => !x.reussi && avanceeDefi(t, x) >= x.but);
   if (reussis.length) {
     reussis.forEach(x => x.reussi = true);
     noterJourDeDefi();   // étape R218 : la série des jours (R248, cas 4A : elle compte à la réussite, pas au toucher)
     suivi.defisReussis = (suivi.defisReussis || 0) + reussis.length;
     // Étape R248 (36.24, choix 24C) : les empreintes du défi attendent qu'on les récupère (un toucher, jamais perdues)
-    reussis.forEach(x => { x.recompense = ajouterRecompense(t, POINTS_DEFI, texteDefi(x), `defi|${t}|${d.jour}|${d.liste.indexOf(x)}`); });
+    reussis.forEach(x => { x.recompense = ajouterRecompense(t, POINTS_DEFI, texteDefi(x), `defi|${t}|${d.jour}${d.lot > 1 ? "#" + d.lot : ""}|${d.liste.indexOf(x)}`); });
   }
+  if (DEFIS_DU_MOMENT && !d.fini && d.liste.length && d.liste.every(x => x.reussi)) { d.fini = Date.now(); sauvegarder(); }   // R308 : le délai de 2 h part d'ici (R312 : jamais pour un lot vide)
   return reussis;
 }
 // Étape R188 : la règle des empreintes, écrite une seule fois (À propos, 06_encyclopedie.js)
 function texteReglesEmpreintes() {
-  return `1 empreinte par espèce découverte en expédition, +${GAIN_FIN_EXPEDITION} à la fin de l'expédition, +${EMPREINTES_FINALE} par finale, +${POINTS_DEFI} par défi du jour (et +${typeof GAIN_ESPECE_DU_JOUR === "number" ? GAIN_ESPECE_DU_JOUR : 2} pour l'espèce du jour). Elles remplissent la médaille du lieu : l'argent ouvre le lieu suivant. Un nouveau territoire s'ouvre dès le premier lieu terminé, puis tous les ${LIEUX_PAR_TERRITOIRE} lieux.`;
+  return `1 empreinte par espèce découverte en expédition, +${GAIN_FIN_EXPEDITION} à la fin de l'expédition, +${EMPREINTES_FINALE} par finale, +${POINTS_DEFI} par défi du moment (et +${typeof GAIN_ESPECE_DU_JOUR === "number" ? GAIN_ESPECE_DU_JOUR : 2} pour l'espèce du jour). Elles remplissent la médaille du lieu : l'argent ouvre le lieu suivant. Un nouveau territoire s'ouvre dès le premier lieu terminé, puis tous les ${LIEUX_PAR_TERRITOIRE} lieux.`;
 }
 function texteDefi(d) { return SORTES_DEFI[d.sorte].texte(d); }
 function dessinerDefis(t) {
@@ -553,10 +617,11 @@ function dessinerDefis(t) {
   const anciennes = recompensesEnAttente().filter(r => !idsListe.has(r.id) && !r.id.startsWith(`jour|${aujourdhui()}`));
   const enAttente = recompensesEnAttente();
   const redessiner = () => { dessinerDefis(t); dessinerJourTerritoire(); };
+  const attente = resteAvantDefis(t);   // R308
   zone.classList.remove("cache");
   zone.innerHTML = `
     <div class="jeu-encart">
-      <div class="etiq-jeu">Défis du jour</div><p class="jeu-sous">Chaque défi réussi = ${POINTS_DEFI} empreintes · nouveaux défis demain, aucun malus</p>
+      <div class="etiq-jeu">${DEFIS_DU_MOMENT ? "Défis du moment" : "Défis du jour"}</div><p class="jeu-sous">Chaque défi réussi = ${POINTS_DEFI} empreintes · ${DEFIS_DU_MOMENT ? "de nouveaux défis 2 h après les avoir tous réussis, aucun malus" : "nouveaux défis demain, aucun malus"}</p>
       ${anciennes.length ? `<div class="defis">${anciennes.map(r => `<div class="defi ok"><span class="defi-case" aria-hidden="true">✓</span>
           <span class="defi-texte">${echapper(r.quoi)}<small>${r.jour === hierDefis() ? "D'hier" : "En attente"}</small></span>${boutonRecup(r)}</div>`).join("")}</div>` : ""}
       ${liste.length ? `<div class="defis">${liste.map((d, i) => {
@@ -565,16 +630,18 @@ function dessinerDefis(t) {
           <span class="defi-texte">${texteDefi(d)}${d.but > 1 && !ok ? `<small>${fait} sur ${d.but}</small>` : ""}</span>
           ${recompenseEnAttente(d.recompense) ? boutonRecup(recompenseEnAttente(d.recompense)) : `<span class="defi-gain">${ok ? "réussi" : "+" + POINTS_DEFI} ${PAS_SVG}</span>`}</div>`;
       }).join("")}</div>` : `<p class="jeu-sous">Tout est déjà découvert ici : bravo !</p>`}
+      ${attente ? `<p class="jeu-sous defis-attente">${texteAttenteDefis(attente)}</p>` : ""}
       ${enAttente.length >= 2 ? `<button type="button" class="recup-tout" id="recup-tout-terr">Tout récupérer · +${enAttente.reduce((n, r) => n + r.n, 0)} ${PAS_SVG}</button>` : ""}
     </div>`;   // étape R188 (11/11, note n° 18 d'Aubin) : « Comment gagner des empreintes ? » n'alourdit plus la page ; il est dans À propos (texteReglesEmpreintes)
   brancherRecup(zone, redessiner);   // R248
+  planifierDefis(t, redessiner);     // R308
   const tout = document.getElementById("recup-tout-terr");
   if (tout) tout.onclick = () => recupererTout(tout, redessiner);
   zone.querySelectorAll(".defi.cliquable").forEach(b => b.onclick = () => {
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167 (avant, R129 : la Rencontre d'une seule espèce)
     if (d.sorte === "fiche") { lancerDefiFiche(d); return; }       // étape R259
-    const x = expeditionParId(d.exp); if (x) ouvrirExpedition(x); });
+    lancerDefiDuMoment(d); });   // R312
 }
 // Étape R273 (9A) : sur ordinateur, l'espèce du jour est sur l'Accueil (la page du territoire), à côté des défis du jour.
 //   Sur téléphone, elle est déjà en tête de l'Accueil (dessinerMaison) : rien ici.
@@ -590,15 +657,16 @@ function blocDefisFin() {
   const t = territoireActif();
   if (!suivi || !t) return "";
   const reussis = verifierDefis(t);
-  if (reussis.length) setTimeout(() => afficherBulle(`✓ Défi du jour réussi${reussis.length > 1 ? ` (${reussis.length})` : ""} · +${POINTS_DEFI * reussis.length} à récupérer ${ouRecuperer()}`), 900);   // R248
+  if (reussis.length) setTimeout(() => afficherBulle(`✓ Défi du ${DEFIS_DU_MOMENT ? "moment" : "jour"} réussi${reussis.length > 1 ? ` (${reussis.length})` : ""} · +${POINTS_DEFI * reussis.length} à récupérer ${ouRecuperer()}`), 900);   // R248
   const liste = suivi.defis && suivi.defis[t] ? suivi.defis[t].liste : [];
   if (!liste.length) return "";
   const lignes = liste.map(d => {
     const fait = avanceeDefi(t, d), ok = d.reussi;
     return `<span class="obj-fin${ok ? " atteint" : ""}">${ok ? "✓ " : ""}${texteDefi(d)}${ok ? "" : ` · ${fait} / ${d.but}`}</span>`;
   });
-  return `<div class="objectifs-fin"><div class="quoi">Défis du jour</div><div class="liste-objectifs-fin">${lignes.join("")}</div>`
-    + (reussis.length ? `<small>+${POINTS_DEFI * reussis.length} empreinte${POINTS_DEFI * reussis.length > 1 ? "s" : ""} à récupérer ${ouRecuperer()}.</small>` : "") + `</div>`;   // R271 (n° 21)
+  return `<div class="objectifs-fin"><div class="quoi">${DEFIS_DU_MOMENT ? "Défis du moment" : "Défis du jour"}</div><div class="liste-objectifs-fin">${lignes.join("")}</div>`
+    + (reussis.length ? `<small>+${POINTS_DEFI * reussis.length} empreinte${POINTS_DEFI * reussis.length > 1 ? "s" : ""} à récupérer ${ouRecuperer()}.</small>` : "")
+    + (resteAvantDefis(t) ? `<small>${texteAttenteDefis(resteAvantDefis(t))}.</small>` : "") + `</div>`;   // R271 (n° 21) ; R308
 }
 
 // =====================================================================================================
@@ -966,14 +1034,16 @@ function dessinerDefisMaison(t) {
                               : `<small>+${POINTS_DEFI} ${PAS_SVG} chacun</small>`;
   const tousOk = liste.length && liste.every(d => d.reussi || avanceeDefi(t, d) >= d.but);
   const enAttente = recompensesEnAttente();
+  const attente = tousOk ? resteAvantDefis(t) : 0;   // R308
+  planifierDefis(t, () => { dessinerDefisMaison(t); dessinerTuileJour(); });
   if (tousOk && !enAttente.length && !defisDeplies) {
     zone.innerHTML = `<button type="button" class="mai-defis-plie" id="mai-defis-plie"><span class="mai-d-case" aria-hidden="true">✓</span>
-        <span class="mai-d-texte">${liste.length} défi${liste.length > 1 ? "s" : ""} réussi${liste.length > 1 ? "s" : ""} aujourd'hui</span>${JOURS_SUR_LE_TERRAIN ? htmlJoursTerrain() : serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée</small>` : ""}<span class="mai-d-fleche" aria-hidden="true">⌄</span></button>`;
+        <span class="mai-d-texte">${liste.length} défi${liste.length > 1 ? "s" : ""} réussi${liste.length > 1 ? "s" : ""}${attente ? " · " + texteAttenteDefis(attente).replace("De nouveaux défis dans", "nouveaux dans") : " aujourd'hui"}</span>${JOURS_SUR_LE_TERRAIN ? htmlJoursTerrain() : serie.n >= 2 ? `<small class="mai-serie">${serie.n} jours d'affilée</small>` : ""}<span class="mai-d-fleche" aria-hidden="true">⌄</span></button>`;
     document.getElementById("mai-defis-plie").onclick = () => { defisDeplies = true; dessinerDefisMaison(t); };
     return;
   }
   const enCours = liste.findIndex(d => !(d.reussi || avanceeDefi(t, d) >= d.but));
-  zone.innerHTML = `<div class="mai-d-haut"><span>Défis du jour</span>${droite}</div>`
+  zone.innerHTML = `<div class="mai-d-haut"><span>${DEFIS_DU_MOMENT ? "Défis du moment" : "Défis du jour"}</span>${droite}</div>`
     + anciennes.map(r => `<div class="mai-defi ok ancienne"><span class="mai-d-case" aria-hidden="true">✓</span>
         <span class="mai-d-texte"><small class="mai-d-hier">${r.jour === hierDefis() ? "D'hier" : "En attente"}</small>${echapper(r.quoi)}</span>${boutonRecup(r)}</div>`).join("")
     + liste.map((d, i) => {
@@ -982,6 +1052,7 @@ function dessinerDefisMaison(t) {
       return `<${clic ? "button type=\"button\"" : "div"} class="mai-defi${ok ? " ok" : ""}" data-i="${i}"><span class="mai-d-case" aria-hidden="true">${ok ? "✓" : ""}</span>
         <span class="mai-d-texte">${texteDefi(d)}</span>${r ? boutonRecup(r) : i === enCours && d.but > 1 ? `<small>${fait}/${d.but}</small>` : ""}</${clic ? "button" : "div"}>`;
     }).join("")
+    + (attente ? `<small class="mai-d-attente">${texteAttenteDefis(attente)}</small>` : "")
     + (enAttente.length >= 2 ? `<button type="button" class="recup-tout" id="recup-tout">Tout récupérer · +${enAttente.reduce((n, r) => n + r.n, 0)} ${PAS_SVG}</button>` : "")
     + (tousOk && !enAttente.length ? `<button type="button" class="mai-d-replier" id="mai-d-replier">Replier</button>` : "");
   zone.querySelectorAll("button.mai-defi").forEach(b => b.onclick = ev => {
@@ -989,7 +1060,7 @@ function dessinerDefisMaison(t) {
     const d = liste[Number(b.dataset.i)];
     if (d.sorte === "inedites") { lancerCarnet(false); return; }   // étape R167
     if (d.sorte === "fiche") { lancerDefiFiche(d); return; }       // étape R259
-    const x = expeditionParId(d.exp); if (x) ouvrirExpedition(x);
+    lancerDefiDuMoment(d);   // R312
   });
   const rep = document.getElementById("mai-d-replier");
   if (rep) rep.onclick = () => { defisDeplies = false; dessinerDefisMaison(t); };

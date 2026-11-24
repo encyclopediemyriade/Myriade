@@ -281,7 +281,7 @@ const BADGES_TOUT_LE_JEU = [
     mesure: () => { const j = new Set((suivi && suivi.joursDuJour) || []);
       if (suivi && suivi.duJour && suivi.duJour.date === aujourdhui() && suivi.duJour.faites.length) j.add(aujourdhui());   // aujourd'hui, déjà fait avant R269
       return j.size; } },
-  { cle: "defis-jour", cat: "R", nom: "Défis du jour", cond: "Réussir des défis du jour", motif: "defisjour", paliers: [10, 50, 150],
+  { cle: "defis-jour", cat: "R", nom: "Défis du moment", cond: "Réussir des défis du moment", motif: "defisjour", paliers: [10, 50, 150],
     mesure: () => (suivi && suivi.defisReussis) || 0 },
 ];
 const GROUPES_BADGES = [["E", "En chemin"], ["C", "Le carnet"], ["S", "L'œil et l'oreille"], ["R", "Les rendez-vous"]];

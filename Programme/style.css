@@ -5226,6 +5226,7 @@ button.at-suivant > span:nth-child(2) { flex: 1; }
 .dfx-haut .dfx-sortir { font-size: 18px; line-height: 1; padding: 5px 12px; }
 /* Étape R242 (36.10 + 36.13) : les questions du défi par d'autres chemins — « Laquelle est … ? » et le cri, en 4 photos */
 .dfx-q-nom { margin: 6px 0 10px; }
+.dfx-son-texte { margin: 0 0 14px; line-height: 1.4; color: var(--texte); opacity: .8; }   /* R306 : « Le son est-il disponible ? » dans Me tester */
 .dfx-ecoute { margin: 2px 0 10px; }
 .dfx-ecoute .ore-play { width: 76px; height: 76px; }
 .dfx-photos .ore-photo.retire { opacity: .25; }
@@ -6277,6 +6278,13 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 .dfx-p.tester svg { color: var(--bon); }
 .dfx-p.decouvrir.pleine { background: var(--territoire, #1f3a2e); border: 0; color: #fbf8f1; }
 .dfx-p.decouvrir.pleine svg { color: #f3d9b0; }
+/* Étape R307 : le rôle de chaque porte, « Pour apprendre » / « Pour vérifier » */
+.dfx-p .dfx-role { font-style: normal; font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; font-weight: 600; opacity: .85; }
+/* Étape R309 : sur téléphone, le rôle tient sur une ligne (390 et 360 px) ; la porte pleine garde une bordure, de sa couleur, pour que les deux titres soient à la même hauteur */
+@media (max-width: 760px) {
+  .dfx-p .dfx-role { white-space: nowrap; font-size: .64rem; letter-spacing: .03em; }
+  .dfx-p.decouvrir.pleine { border: 1.5px solid var(--territoire, #1f3a2e); }
+}
 /* 5A · Me tester : le compte discret des erreurs, sous la barre */
 .dfx-erreurs { margin: 6px 0 0; font-size: 12.5px; line-height: 1.3; color: var(--texte-doux, #6b655b); text-align: right; }
 .dfx-erreurs.trop { color: var(--texte, #2b2a26); }
@@ -6322,6 +6330,17 @@ button.at-suivant { width: 100%; align-items: center; gap: 12px; padding: 10px; 
 .dfx-deux-portes::after { content: "ou"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1; width: 30px; height: 30px;
   box-sizing: border-box; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--papier, #F3EEE2);
   border: 1.5px solid var(--trait, #CFC5AE); font-size: 13px; font-weight: 600; line-height: 1; color: var(--texte, #1F3A2E); pointer-events: none; }
+/* Étape R311 : sur les petits téléphones, l'onglet « Encyclopédie », au milieu, est un peu plus large que les autres (le mot était rogné par son voisin) */
+@media (max-width: 380px) {
+  nav.barre .onglet { width: 19%; } nav.barre #onglet-encyclopedie { left: 38%; width: 24%; }
+  nav.barre #onglet-carte { left: 19%; } nav.barre #onglet-jouer { left: 62%; } nav.barre #onglet-progression { left: 81%; }
+}
+/* Étape R310 (choix d'Aubin) : sur les petits téléphones, les deux portes ont la même largeur et leur titre tient sur une ligne */
+@media (max-width: 380px) {
+  .dfx-deux-portes { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .dfx-deux-portes > .dfx-p:first-child { padding-left: 9px; padding-right: 15px; } .dfx-deux-portes > .dfx-p:last-child { padding-left: 15px; padding-right: 9px; }
+  .dfx-deux-portes > .dfx-p b { font-size: 1.1rem; }
+}
 @media (max-width: 760px) {
   /* 42.03 (2A) · « Vos familles » : une famille sans espèce rencontrée = une grande silhouette sur la couleur de la famille */
   .som-famille.couv-famille.vide { height: 96px; background: var(--couleur-classe); }
@@ -6790,3 +6809,7 @@ html.piste-ouverte, html.piste-ouverte body { overflow: hidden; }
 /* R291 : « Ensemble, dans ce lieu » et « Une dernière question » se touchaient à 390 px : le compte passe à la ligne s'il manque de place */
 .en-carte .fp-tete { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 12px; }
 .en-carte .fp-tete .fp-compte { position: static; }
+
+/* Étape R308 : « Défis du moment » — la phrase qui dit quand les prochains défis arrivent (pas de compte à rebours) */
+.mai-d-attente { display: block; padding: 6px 2px 0; font-size: 12.5px; opacity: .72; }
+.defis-attente { margin-top: 6px; opacity: .75; }

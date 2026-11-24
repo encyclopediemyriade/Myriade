@@ -1360,7 +1360,7 @@ function finRencontreOrdinateur(s) {
   const fam = (typeof especesDe === "function" && t ? especesDe(t) : []).filter(x => x.onglet === e.onglet);
   if (fam.length && CLASSES[e.onglet]) bouts.push(`${CLASSES[e.onglet].nom} ${fam.filter(estReconnue).length} / ${fam.length}`);   // comme le carnet
   const defis = suivi && suivi.defis && t && suivi.defis[t] ? suivi.defis[t].liste : [];
-  if (defis.length) bouts.push(`Défis du jour ${defis.filter(d => d.reussi).length} / ${defis.length}`);
+  if (defis.length) bouts.push(`Défis du ${typeof DEFIS_DU_MOMENT !== "undefined" && DEFIS_DU_MOMENT ? "moment" : "jour"} ${defis.filter(d => d.reussi).length} / ${defis.length}`);
   const nb = trois ? trois.querySelectorAll(".badge-fin").length : 0;
   bouts.push(nb ? `${nb} nouveau${nb > 1 ? "x" : ""} badge${nb > 1 ? "s" : ""}` : "Badges");   // étape R166 : « badges », plus « souvenirs »
   const pli = document.createElement("details");

@@ -186,7 +186,7 @@ function portesApprofondir(x, num) {
   if (testApprofEnPause(x)) {
     const s = suivi.approfTestsEnCours[x.id], total = s.questions.length, rep = s.questions.filter(q => q.c !== null).length;
     tester = porteTester("Me tester · en cours", `Reprendre où vous en étiez : ${rep} sur ${total}.`, "Reprendre le test").replace('data-porte="tester"', 'data-apf="reprendre"');
-  } else tester = porteTester("Me tester", `${nq} questions, ${perm} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nq)} min · 2 aides`).replace('data-porte="tester"', 'data-apf="tester"');
+  } else tester = porteTester("Me tester", `${nq} questions, ${perm} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nq)} min · 2 aides`, toutes ? "" : "Pour vérifier").replace('data-porte="tester"', 'data-apf="tester"');
   // Étape R267 (Notion 40.17, choix 10A) : toutes connues par cœur → l'étape est cochée comme les autres (✓, empreintes prises),
   //   en une ligne ; on peut toujours revoir ou se tester, sans empreintes en double. L'expédition est alors « complète ».
   if (toutes && EXPEDITION_COMPLETE) {
@@ -200,7 +200,7 @@ function portesApprofondir(x, num) {
       </div>`;
   }
   const decouvrir = porteDecouvrir(toutes ? "Revoir de plus près" : "Découvrir", "Chaque espèce de plus près : trois lignes à lire, puis deux ou trois questions.",
-    toutes ? "Sans empreintes en double" : `Environ ${minutesDecouvrirApprof(x)} min`).replace('data-porte="decouvrir"', 'data-apf="decouvrir"');
+    toutes ? "Sans empreintes en double" : `Environ ${minutesDecouvrirApprof(x)} min`, false, toutes ? "" : "Pour apprendre").replace('data-porte="decouvrir"', 'data-apf="decouvrir"');
   const bandeau = toutes ? `<p class="dfx-bandeau">Les ${n} espèces sont connues par cœur.</p>`
     : st && st.dernier && !st.reussi ? `<p class="dfx-bandeau">Dernier test : <b>${st.dernier.bons} sur ${st.dernier.total}</b>.${faites ? ` ${faites} espèce${faites > 1 ? "s" : ""} déjà connue${faites > 1 ? "s" : ""} par cœur.` : ""} Continuez comme vous préférez.</p>`
     : faites ? `<p class="dfx-bandeau">${faites} espèce${faites > 1 ? "s" : ""} sur ${n} connue${faites > 1 ? "s" : ""} par cœur. Continuez comme vous préférez.</p>`
