@@ -6813,3 +6813,124 @@ html.piste-ouverte, html.piste-ouverte body { overflow: hidden; }
 /* Étape R308 : « Défis du moment » — la phrase qui dit quand les prochains défis arrivent (pas de compte à rebours) */
 .mai-d-attente { display: block; padding: 6px 2px 0; font-size: 12.5px; opacity: .72; }
 .defis-attente { margin-top: 6px; opacity: .75; }
+
+/* ==================================================================
+   Étapes CL1 à CL3 (25/11/2026) · Les clés (33_cles.js) : compteur, clé gagnée, lieux et territoires ouverts avec des clés, premier choix
+   ================================================================== */
+.picto-cle { width: 18px; height: 18px; flex: none; }
+#stats { align-items: stretch; }
+#stats button.pastille-cles { font: inherit; color: #FBF8F1; background: #1F3A2E; border: 1px solid #1F3A2E; border-radius: 6px; padding: 6px 12px; align-items: center; gap: 6px; cursor: pointer; }
+#stats button.pastille-cles:hover { background: #2a4d3d; }
+#stats .pastille-cles svg { width: 18px; height: 18px; flex: none; }
+#stats .pastille-cles strong { color: #FBF8F1; }
+#stats .pastille-cles.recu { animation: cle-recue .7s ease-out; }
+@keyframes cle-recue { 0% { box-shadow: 0 0 0 0 #E9C9A0; transform: scale(1); } 35% { box-shadow: 0 0 0 4px #E9C9A0; transform: scale(1.12); } 100% { box-shadow: 0 0 0 0 rgba(233,201,160,0); transform: scale(1); } }
+.envol-cle { position: fixed; z-index: 9999; width: 56px; height: 56px; transform: translate(-50%, -50%); pointer-events: none; transition: transform .7s cubic-bezier(.5,0,.6,1); }
+.envol-cle svg, .ej-cles svg { display: block; width: 100%; height: 100%; }
+#cadre-cle { position: fixed; left: 50%; top: 42%; z-index: 904; width: 250px; max-width: calc(100% - 48px); box-sizing: border-box; padding: 20px 16px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  background: #1F3A2E; color: #FBF8F1; border-radius: 10px; box-shadow: 0 10px 30px rgba(31,58,46,.3); text-align: center; pointer-events: none;
+  opacity: 0; visibility: hidden; transform: translate(-50%, -50%) scale(.94); transition: opacity .25s, transform .25s, visibility .25s; }
+#cadre-cle.on { opacity: 1; visibility: visible; transform: translate(-50%, -50%); }
+#cadre-cle svg { width: 56px; height: 56px; }
+#cadre-cle b { font-family: Literata, Georgia, serif; font-size: 21px; font-weight: 600; }
+.fete-visuel.fete-cle { display: flex; gap: 10px; justify-content: center; width: auto; }
+.fete-visuel.fete-cle svg { width: 56px; height: 56px; }
+/* « Pour l'ouvrir » */
+.cle-bloc { background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; text-align: left; font-size: 14px; color: var(--texte); }
+.cle-bloc p { margin: 0; }
+.cle-bloc .cle-titre { font-family: Literata, Georgia, serif; font-size: 17px; font-weight: 600; }
+.cle-bloc small, .cle-terr small { font-size: 12.5px; color: var(--texte-doux); text-align: center; }
+.cle-jauge { display: block; height: 6px; border-radius: 3px; background: #E9E1CF; overflow: hidden; }
+.cle-jauge b { display: block; height: 100%; background: #3E7B55; }
+.cle-ou { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--texte-doux); }
+.cle-ou::before, .cle-ou::after { content: ""; flex: 1; height: 1px; background: var(--trait); }
+.cle-bouton { width: 100%; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 12px; border: 0; border-radius: 8px; background: #1F3A2E; color: #FBF8F1; font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; }
+.cle-bouton .picto-cle { color: #E9C9A0; }
+.cle-bouton:hover:not(:disabled) { background: #2a4d3d; }
+.cle-bouton:disabled { background: #DAD3C2; color: #5a6a60; cursor: default; }
+.cle-bouton:disabled .picto-cle { color: #8a8578; }
+.cle-terr { display: flex; flex-direction: column; gap: 6px; }
+.at-case-cles { color: var(--ocre-texte); font-size: 11.5px; font-weight: 600; }
+.at-depli .cle-bloc { margin-bottom: 4px; }
+.tm-lieu.sel .cle-bloc { border: 0; border-radius: 0; }
+.pc .cle-terr { margin-top: 8px; }
+.pc.suivant { width: 190px; }
+.pc.ferme, .pc.suivant { cursor: pointer; }
+.pc .cle-bouton { min-height: 40px; font-size: 12.5px; padding: 6px 8px; }
+.pc .cle-terr small { text-align: center; padding: 0; }
+.volet-lieu { position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(31,58,46,.45); }
+.vl-carte { width: min(440px, 100%); max-height: calc(100vh - 32px); overflow: auto; border-radius: 14px; background: var(--papier); box-shadow: 0 18px 50px rgba(20,34,27,.35); }
+.vl-photo { position: relative; height: 180px; background: #2A4A3B; }
+.vl-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vl-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 35%, rgba(20,34,27,.8)); }
+.vl-photo > div { position: absolute; z-index: 1; left: 16px; right: 16px; bottom: 12px; display: flex; flex-direction: column; color: #fff; }
+.vl-photo > div b { font-family: Literata, Georgia, serif; font-size: 22px; font-weight: 600; line-height: 1.15; }
+.vl-fermer { position: absolute; z-index: 2; top: 10px; right: 10px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(251,248,241,.94); color: var(--texte); font-size: 16px; cursor: pointer; }
+.vl-corps { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.pgv-cle { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; }
+.pgv-cle .picto-cle { width: 16px; height: 16px; }
+/* CL3 · la première visite */
+nav.barre.visite .onglet, nav.barre.visite #onglet-carte, nav.barre.visite .lien-apropos { display: none !important; }
+.ej-medaille { background: #eceff0; } .ej-medaille svg { stroke: none; width: 26px; height: 26px; }
+.ej-cle { background: #1F3A2E; color: #E9C9A0; } .ej-cle svg { width: 24px; height: 24px; }
+.ej-cles { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0 0 22px; }
+.ej-cles b { font-family: Literata, Georgia, serif; font-size: 19px; font-weight: 600; color: var(--texte); }
+.ej-cles-dessin { display: flex; gap: 14px; }
+.ej-cles-dessin svg { width: 52px; height: 52px; transition: opacity .3s; }
+.ej-cles.posees .ej-cles-dessin svg { opacity: .35; }
+.at-premier { margin: 0; padding: 12px 14px; border-radius: 10px; background: #F3E7D8; color: var(--texte); font-size: 15px; line-height: 1.45; }
+.at-premier-ouvrir { position: sticky; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 5; background: var(--papier); box-shadow: 0 -6px 18px rgba(31,58,46,.12); }
+@media (prefers-reduced-motion: reduce) { #stats .pastille-cles.recu { animation: none; } #cadre-cle { transition: opacity .2s; transform: translate(-50%, -50%); } }
+/* CL1 · téléphone : les deux compteurs tiennent à côté du logo (la patte dit « empreintes ») */
+@media (max-width: 760px) {
+  nav.barre .stats { gap: 5px; flex: none; }
+  #stats button.pastille-cles, #stats button.pastille-carnet { padding: 5px 7px; }
+  #stats .pastille-carnet { gap: 5px; }
+  #stats button.pastille-cles { gap: 5px; }
+  #stats .ph-mot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .ph-pas { position: relative; }
+}
+@media (max-width: 380px) { nav.barre .marque span { display: none; } }
+/* CL1 · ordinateur, fenêtre étroite : la place des clés */
+@media (min-width: 761px) and (max-width: 1240px) { nav.barre .stats .ph-carnet, nav.barre .stats .ph-rares { display: none; } }
+/* CL4 · « Les règles du jeu » */
+.lien-regles { font: inherit; font-weight: 600; color: var(--texte); background: none; border: 0; padding: 4px 0; min-height: 32px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.pgv > .lien-regles { display: flex; align-items: center; justify-content: space-between; min-height: 46px; padding: 10px 14px; border: 1px solid var(--trait); border-radius: 10px; background: var(--carte); text-decoration: none; text-align: left; }
+.regles { max-width: 720px; margin: 0 auto 60px; }
+.rg-tete { display: flex; align-items: center; gap: 12px; margin: 10px 0 18px; }
+.rg-tete h1 { margin: 0; font-size: 28px; font-weight: 600; }
+.rg-liste { display: flex; flex-direction: column; gap: 12px; }
+.rg-partie { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border: 1px solid var(--trait); border-radius: 12px; background: var(--carte); }
+.rg-partie > div { flex: 1; min-width: 0; }
+.rg-partie h2 { margin: 0 0 4px; font-size: 19px; font-weight: 600; color: var(--texte); }
+.rg-partie p { margin: 0 0 4px; font-size: 15.5px; line-height: 1.5; color: var(--texte); }
+.rg-partie p:last-child { margin-bottom: 0; }
+
+/* ==================================================================
+   Étape R313 (25/11/2026, choix d'Aubin « 1B · 2B ») : sur téléphone, les deux portes (Rencontres, Approfondir) sont
+   l'une sous l'autre, en lignes pleine largeur : picto à gauche, texte au milieu, petite flèche à droite ; « ou » sur un filet
+   entre les deux. Le texte tient sur une ou deux lignes au lieu de s'étaler dans une colonne étroite. Ordinateur : inchangé.
+   ================================================================== */
+@media (max-width: 760px) {
+  .dfx-deux-portes { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .dfx-deux-portes > .dfx-p:first-child { order: 1; } .dfx-deux-portes > .dfx-p:last-child { order: 3; }
+  .dfx-deux-portes > .dfx-p, .dfx-deux-portes > .dfx-p:first-child, .dfx-deux-portes > .dfx-p:last-child, .apf-portes .dfx-deux-portes > .dfx-p {
+    display: grid; grid-template-columns: 26px minmax(0, 1fr) 8px; column-gap: 10px; row-gap: 0; align-items: center;
+    min-height: 0; padding: 10px 12px 10px 13px; border-radius: 12px; }
+  .dfx-deux-portes > .dfx-p > svg { width: 26px; height: 26px; grid-column: 1; grid-row: 1 / span 4; align-self: center; }
+  .dfx-deux-portes > .dfx-p > i, .dfx-deux-portes > .dfx-p > b, .dfx-deux-portes > .dfx-p > span, .dfx-deux-portes > .dfx-p > small { grid-column: 2; }
+  .dfx-deux-portes > .dfx-p::after { content: ""; grid-column: 3; grid-row: 1 / span 4; width: 8px; height: 8px; margin-left: -4px;
+    border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); opacity: .6; }
+  .dfx-deux-portes > .dfx-p b, .dfx-deux-portes > .dfx-p:first-child b, .dfx-deux-portes > .dfx-p:last-child b { font-size: 1.15rem; line-height: 1.15; margin: 1px 0 2px; }
+  .dfx-deux-portes > .dfx-p span { font-size: .86rem; line-height: 1.33; }
+  .dfx-deux-portes > .dfx-p small { margin-top: 2px; font-size: .78rem; line-height: 1.3; }
+  /* R313, suite (choix d'Aubin) : la ligne du bas (« 20 à 30 min, en une ou plusieurs fois ») tient sur une seule ligne */
+  .dfx-deux-portes > .dfx-p small { grid-column: 2 / 4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dfx-deux-portes > .dfx-p .dfx-role { font-size: .66rem; letter-spacing: .05em; }
+  .dfx-deux-portes::after { order: 2; position: static; transform: none; width: auto; height: auto; border: 0; border-radius: 0;
+    background: linear-gradient(var(--trait, #CFC5AE), var(--trait, #CFC5AE)) left center / calc(50% - 20px) 1px no-repeat,
+                linear-gradient(var(--trait, #CFC5AE), var(--trait, #CFC5AE)) right center / calc(50% - 20px) 1px no-repeat;
+    font-size: 12.5px; color: var(--texte-doux, #5a6a60); padding: 0; line-height: 1.2; }
+}
+@media (max-width: 380px) { .dfx-deux-portes > .dfx-p small { font-size: .7rem; } }
+@media (max-width: 350px) { .dfx-deux-portes > .dfx-p, .dfx-deux-portes > .dfx-p:first-child, .dfx-deux-portes > .dfx-p:last-child, .apf-portes .dfx-deux-portes > .dfx-p { column-gap: 8px; padding-left: 10px; padding-right: 10px; grid-template-columns: 22px minmax(0, 1fr) 8px; } .dfx-deux-portes > .dfx-p > svg { width: 22px; height: 22px; } .dfx-deux-portes > .dfx-p small { font-size: .68rem; } }

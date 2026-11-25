@@ -46,6 +46,7 @@ function empreintesBarre() {
     try { const v = localStorage.getItem(CLE_EMPREINTES_BARRE); if (v !== null && /^\d+$/.test(v)) return Number(v); } catch (e) { /* rien */ }
   }
   const n = empreintesTotal();
+  if (calculsPrets && typeof suivreCles === "function") suivreCles(n);   // CL1 : toutes les empreintes remplissent la barre « prochaine clé »
   try { localStorage.setItem(CLE_EMPREINTES_BARRE, String(n)); } catch (e) { /* rien */ }
   return n;
 }
@@ -73,9 +74,10 @@ function afficherStats() {
   // Étape M2 (01/11) : « Carnet : » dans un <span> pour pouvoir le masquer sur téléphone (rien ne change sur ordinateur)
   stats.innerHTML = `<button class="stat pastille-carnet" type="button" aria-haspopup="true" title="Votre carnet en détail"><span class="ph-carnet">Carnet : </span><strong>${nombre(trouvees.length)}</strong> espèce${trouvees.length > 1 ? "s" : ""}`
     + `<span class="ph-rares">${ETOILE_RARE}${nombre(rares)} rare${rares > 1 ? "s" : ""}</span>`
-    + `<span class="ph-sep" aria-hidden="true"></span><span class="ph-pas">${typeof PAS_SVG !== "undefined" ? PAS_SVG : ""}${nombre(pas)} empreinte${pas > 1 ? "s" : ""}</span></button>`
+    + `<span class="ph-sep" aria-hidden="true"></span><span class="ph-pas">${typeof PAS_SVG !== "undefined" ? PAS_SVG : ""}${nombre(pas)}<span class="ph-mot"> empreinte${pas > 1 ? "s" : ""}</span></span></button>`
+    + (typeof htmlCompteurCles === "function" ? htmlCompteurCles() : "")   // CL1 : les clés, à côté (un toucher : la carte)
     + `<div class="detail-carnet" id="detail-carnet" hidden></div>`;
-  stats.onclick = ev => { if (!ev.target.closest(".detail-carnet")) basculerDetailCarnet(); };
+  stats.onclick = ev => { if (ev.target.closest(".pastille-cles")) { ouvrirCarteCles(); return; } if (!ev.target.closest(".detail-carnet")) basculerDetailCarnet(); };
   const sousEncyclo = document.getElementById("sous-encyclopedie");
   if (sousEncyclo) sousEncyclo.textContent = `${nombre(p.identifiees)} / ${nombre(p.total)} espèces dans votre carnet`;
   const pj = document.getElementById("picto-jouer-accueil"), pe = document.getElementById("picto-encyclopedie-accueil");
@@ -177,6 +179,7 @@ function afficherCarte() {
       forme.style.fill = pale; forme.style.stroke = pale;
       const m = avantProchainTerritoire();
       titre.textContent = `${t.nom} : ${p.total} espèces — ${m === null ? "bientôt ouvert" : `s'ouvre dans ${texteManque(m)}`}`;
+      if (carte.id === "carte-territoires") { forme.style.cursor = "pointer"; forme.onclick = () => ouvrirAtlas(t.nom); }   // CL2 : sur ordinateur aussi, un territoire fermé se regarde en aperçu
     } else if (p.total > 0) {
       const couleur = TERRITOIRES[t.nom] ? TERRITOIRES[t.nom].couleur : "#7a736a";
       forme.setAttribute("class", "jouable");

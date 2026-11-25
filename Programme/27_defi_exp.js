@@ -1547,6 +1547,8 @@ function minutesDefi(nq) { return Math.max(3, Math.round(nq * 0.3)); }   // R242
 //   la porte claire ; ensuite les deux portes ont le même style (claires). Avant : « Me tester » toujours pleine.
 //   R307 (24/11, choix d'Aubin « A tout court ») : un petit rôle au-dessus du titre, « Pour apprendre » / « Pour vérifier »
 //   (paramètre facultatif : les autres écrans n'en ont pas).
+//   R313 (25/11, choix d'Aubin « 1B · 2B ») : sur téléphone, les deux portes sont l'une sous l'autre, en lignes pleine largeur
+//   (style.css, bloc « Étape R313 ») ; la phrase au-dessus est raccourcie.
 function porteDecouvrir(titre, texte, bas, pleine, role) {
   return `<button class="dfx-p decouvrir${pleine ? " pleine" : ""}" data-porte="decouvrir">${PICTO_DECOUVRIR}${role ? `<i class="dfx-role">${role}</i>` : ""}<b>${titre}</b><span>${texte}</span><small>${bas}</small></button>`;
 }
@@ -1591,7 +1593,7 @@ function portesEtape1(x) {
         <small class="dfx-note">Le défi porte sur les ${n} espèces : ${nbQuestionsDefi(x)} questions, ${permisesDefiAnnonce(x)} erreurs permises.${av.faites ? ` ${av.faites > 1 ? `Les ${av.faites} déjà reconnues le restent` : "Celle déjà reconnue le reste"}, quoi qu'il arrive.` : ""}</small>${gain}</div>`;
   }
   return `<div class="dfx-portes"><div class="etiq-jeu">${nomEtape(1)}</div>
-      <p class="dfx-phrase">Faire connaissance avec ces ${n} espèces : en les rencontrant une à une, ou en voyant d'abord ce que vous savez déjà. Vous pourrez changer en route.</p>
+      <p class="dfx-phrase">Deux façons de faire connaissance. Vous pourrez changer en route.</p>
       <div class="dfx-deux-portes">${porteDecouvrir("Découvrir", "Chaque espèce, une à une : sa carte, sa vie.", `${minutesRencontres(n)} min, en une ou plusieurs fois`, !(st && st.joues), "Pour apprendre")}
         ${porteTester("Me tester", `${nbQuestionsDefi(x)} questions, ${permisesDefiAnnonce(x)} erreurs permises. Chaque erreur est expliquée.`, `Environ ${minutesDefi(nbQuestionsDefi(x))} min · 3 aides`, "Pour vérifier")}</div>${gain}</div>`;
 }

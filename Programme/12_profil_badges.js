@@ -912,9 +912,11 @@ function profilVitrine(rc) {
       <div class="pgv-qui">
         ${prenomEnEdition ? blocPrenom("pg-cn-prenom") : `<span class="pgv-nom">${p ? echapper(p) : "Naturaliste"}</span>`}
         <span class="pgv-rang">${rc.nom}${rangT ? ` · ${rangT.nom} ${deTerritoire(t)}` : ""}</span>
+        ${suivi.cles && !toutDebloque() ? (m => `<span class="pgv-cle">${PICTO_CLE}Prochaine clé : encore ${m} empreinte${m > 1 ? "s" : ""}</span>`)(empreintesAvantCle()) : ""}
         ${fav ? `<span class="pgv-sous">Espèce favorite : ${echapper(minuscule(fav.nom_courant))}</span>` : derniere ? `<span class="pgv-sous">Dernière rencontre : ${echapper(minuscule(derniere.nom_courant))}</span>` : ""}
       </div>
     </section>
+    ${lienRegles()}
     <section class="pgv-vitrine">
       <div class="pgv-ligne"><h2>Vos badges</h2><button type="button" class="pgv-lien" data-onglet-profil="badges">${obtenus.length ? `${obtenus.length} sur ${badges.length}` : `Les ${badges.length} badges`} →</button></div>
       ${obtenus.length ? `<div class="pgv-grille">${obtenus.slice(0, 6).map(b => `<button type="button" class="pgv-badge" data-badge-vitrine="${b.cle}">${medaillonBadge(b)}<span>${nomBadge(b)}</span></button>`).join("")}</div>`

@@ -88,8 +88,9 @@ function photoDuTerritoire(t) {
   try { const p = photoTerritoire(t, typeof IDENTITE !== "undefined" ? IDENTITE[t] : null); return p && p.fichier ? p.fichier : ""; } catch (e) { return ""; }
 }
 function dessinerAtlasFrance(zone) {
-  const ouverts = territoiresOuverts(), fermes = territoiresFermes(), ici = territoireActif();
-  const suivant = fermes.length ? prochainTerritoire() : null;
+  const premier = premierChoixEnCours;   // CL3 : première visite, tout est fermé, un seul choix à faire
+  const ouverts = territoiresOuverts(), fermes = territoiresFermes(), ici = premier ? null : territoireActif();
+  const suivant = fermes.length && !premier ? prochainTerritoire() : null;
   const couleur = t => (TERRITOIRES[t] || {}).couleur || "#7a736a";
   const pale = c => melangerCouleurs(c, "#f4efe6", 0.50);
   const [vx, vy, vw, vh] = CARTE_CADRE.split(" ").map(Number);
@@ -156,16 +157,21 @@ function dessinerAtlasFrance(zone) {
   const manque = suivant ? (m => m === null ? "" : m ? "Encore " + texteManque(m) : "Il s'ouvre maintenant")(avantProchainTerritoire()) : "";
   const phS = suivant ? photoDuTerritoire(suivant) : "";
   zone.innerHTML = `
-    <header class="at-tete"><h1>Carte</h1><small>${ouverts.length} territoire${ouverts.length > 1 ? "s" : ""} ouvert${ouverts.length > 1 ? "s" : ""} sur ${tousLesTerritoires().length}</small></header>
+    <header class="at-tete"><h1>${premier ? "Votre premier territoire" : "Carte"}</h1>${premier ? "</header>" : `<small>${ouverts.length} territoire${ouverts.length > 1 ? "s" : ""} ouvert${ouverts.length > 1 ? "s" : ""} sur ${tousLesTerritoires().length}</small></header>`}
+    ${premier ? `<p class="at-premier">Choisissez votre premier territoire : celui où vous vivez, ou celui qui vous fait envie.</p>` : ""}
     <div class="at-carte-france"><svg viewBox="${CARTE_CADRE}" role="img" aria-label="Carte de France des territoires">${fond}${formes}${contourIci}${reliefs}${prochain}${noms}${epingle}</svg></div>
-    <h2 class="at-titre">Vos territoires</h2>
-    <ul class="at-liste">${[ici].filter(t => ouverts.includes(t)).concat(ouverts.filter(t => t !== ici)).map(postale).join("")}</ul>
+    ${premier ? "" : `<h2 class="at-titre">Vos territoires</h2>
+    <ul class="at-liste">${[ici].filter(t => ouverts.includes(t)).concat(ouverts.filter(t => t !== ici)).map(postale).join("")}</ul>`}
     ${suivant ? `<button class="at-suivant at-ligne-ferme" type="button" data-t="${echapper(suivant)}">
         <span class="at-suivant-ph">${phS ? imgMini(phS, "") : ""}</span>
         <span class="at-suivant-corps"><small class="at-suivant-etiq">Prochain territoire</small><b>${echapper(suivant)}</b><small>${manque ? manque + " · " : ""}voir l'aperçu</small></span>
-        ${formeTerritoire(suivant, 30, pale(couleur(suivant)), couleur(suivant))}</button>` : ""}
-    ${autres.length ? `<h2 class="at-titre">Plus tard · ${autres.length} territoire${autres.length > 1 ? "s" : ""}</h2>
-      <div class="at-grille">${autres.map(t => `<button class="at-ligne-ferme at-case" type="button" data-t="${echapper(t)}">${formeTerritoire(t, 54, melangerCouleurs(couleur(t), "#f4efe6", 0.42))}<span>${echapper(nomCourt(t))}</span></button>`).join("")}</div>` : ""}`;
+        ${formeTerritoire(suivant, 30, pale(couleur(suivant)), couleur(suivant))}</button>${blocOuvrirTerritoire(suivant)}` : ""}
+    ${autres.length ? `<h2 class="at-titre">${premier ? "Les territoires" : `Plus tard · ou au choix, avec ${clesTexte(PRIX_TERRITOIRE)}`}</h2>
+      <div class="at-grille">${autres.map(t => `<button class="at-ligne-ferme at-case" type="button" data-t="${echapper(t)}">${formeTerritoire(t, 54, melangerCouleurs(couleur(t), "#f4efe6", 0.42))}<span>${echapper(nomCourt(t))}</span>${premier ? "" : `<small class="at-case-cles">${clesTexte(PRIX_TERRITOIRE)}</small>`}</button>`).join("")}</div>` : ""}
+    ${premier ? `<button type="button" class="at-page-terr at-vers-comment"><span aria-hidden="true">←</span> Comment jouer</button>` : ""}`;
+  const versComment = zone.querySelector(".at-vers-comment");
+  if (versComment) versComment.onclick = () => quitterPremierChoix(true);
+  brancherOuvrirTerritoire(zone, t => { atlasTerritoire = t; atlasLieu = null; afficherAtlas(); });
   const aller = t => {   // étape K3 : ouvert ou fermé, on y va (un territoire fermé se montre en aperçu)
     if (!t) return;
     atlasTerritoire = t; atlasLieu = null; afficherAtlas();
@@ -242,7 +248,7 @@ function dessinerAtlasTerritoire(zone, t) {
   };
   const vedette = c => { const v = c.type === "remarquable" ? null : vedetteLieu(t, c); return v ? `<small class="at-lieu-ici">Ici : ${echapper(v.nom_courant)}</small>` : ""; };
   const ouvertIci = c => !apercu && chapitreOuvert(t, c);
-  const ouverture = phraseOuverture(t), phrase = phraseTerritoire(t);
+  const ouverture = premierChoixEnCours ? "" : phraseOuverture(t), phrase = phraseTerritoire(t);
   zone.innerHTML = `
     <header class="at-tete terr">
       <button class="at-retour" type="button" aria-label="Retour à la France"><span aria-hidden="true">←</span></button>
@@ -250,16 +256,21 @@ function dessinerAtlasTerritoire(zone, t) {
       ${apercu ? `<span class="at-badge-apercu" style="--couleur-t:${couleur}">${LOCK_SVG}Aperçu</span>` : `<span class="at-emp">${PAS_SVG}<b>${r.empreintes}</b></span>`}
     </header>
     ${phrase ? `<p class="at-deux-lignes">${echapper(phrase)}</p>` : ""}
-    ${apercu ? `<p class="at-bandeau-apercu" style="--couleur-t:${couleur}">${echapper(ouverture)} Vous pouvez déjà tout regarder.</p>` : ""}
+    ${apercu && !premierChoixEnCours ? `<p class="at-bandeau-apercu" style="--couleur-t:${couleur}">${echapper(ouverture)} Vous pouvez déjà tout regarder.</p>` : ""}
     <div class="at-carte-terr" style="--couleur-t:${couleur}">${carte}${typeof miniFrance === "function" ? miniFrance(t) : ""}</div>
     <h2 class="at-titre">Les lieux</h2>
     <ul class="at-lieux">${tous.map(c => `<li class="at-li" data-lieu="${echapper(c.nom)}"><button class="at-lieu-ligne${ouvertIci(c) ? " ouvre" : " deplie"}" type="button" data-lieu="${echapper(c.nom)}"${ouvertIci(c) ? "" : ` aria-expanded="false"`}>
         ${numero(c)}<span><b>${echapper(c.nom)}</b><small>${etiq(c)}</small>${vedette(c)}</span>
         <span class="at-fleche" aria-hidden="true">${ouvertIci(c) ? "›" : "⌄"}</span></button><div class="at-depli" hidden></div></li>`).join("")}</ul>
-    ${apercu ? `${emblemesApercu(t)}<section class="at-pour-y-aller" style="--couleur-t:${couleur}"><p><b>Pour y aller :</b> ${echapper(ouverture)}</p>
-        <button class="at-continuer" type="button">Continuer ${echapper(dansTerritoire(territoireActif()))} <span aria-hidden="true">→</span></button></section>`
+    ${apercu ? `${emblemesApercu(t)}${premierChoixEnCours ? `<section class="at-pour-y-aller at-premier-ouvrir" style="--couleur-t:${couleur}">${blocOuvrirTerritoire(t, `Ouvrir ce territoire · ${clesTexte(PRIX_TERRITOIRE)}`)}</section>`
+      : `<section class="at-pour-y-aller" style="--couleur-t:${couleur}"><p><b>Pour y aller :</b> ${echapper(ouverture)}</p>
+        ${blocOuvrirTerritoire(t)}<button class="at-continuer" type="button">Continuer ${echapper(dansTerritoire(territoireActif()))} <span aria-hidden="true">→</span></button></section>`}`
       : `<button class="at-page-terr" type="button">La page ${deTerritoire(t)} <span aria-hidden="true">→</span></button>`}`;
-  zone.querySelector(".at-retour").onclick = () => { atlasTerritoire = null; afficherAtlas(); };
+  zone.querySelector(".at-retour").onclick = () => { atlasTerritoire = null;
+    if (!premierChoixEnCours && vueAccueil() !== "maison") { montrer("carte"); window.scrollTo(0, 0); return; }   // CL2 : sur ordinateur, l'aperçu revient à « Territoires »
+    afficherAtlas(); };
+  if (premierChoixEnCours) prechargerAccueilDepart(t);   // R297 : les premières photos se chargent pendant qu'on regarde
+  brancherOuvrirTerritoire(zone, () => { atlasLieu = null; afficherAtlas(); });   // CL2
   const pageT = zone.querySelector(".at-page-terr");
   if (pageT) pageT.onclick = () => { changerTerritoire(t); montrer("accueil"); window.scrollTo(0, 0); };
   const cont = zone.querySelector(".at-continuer");
@@ -282,7 +293,7 @@ function dessinerAtlasTerritoire(zone, t) {
   };
   const deplier = (li, oui) => {
     const b = li.querySelector(".at-lieu-ligne"), d = li.querySelector(".at-depli"), c = chapitreParNom(t, li.dataset.lieu);
-    if (oui && !d.innerHTML) d.innerHTML = texteLieuFerme(t, c);
+    if (oui && !d.innerHTML) { d.innerHTML = texteLieuFerme(t, c); brancherOuvrirLieu(d, t, nom => { atlasLieu = nom; dessinerAtlasTerritoire(zone, t); }); }   // CL2
     d.hidden = !oui; b.setAttribute("aria-expanded", oui ? "true" : "false");
   };
   zone.querySelectorAll(".carte-lieux [data-lieu]").forEach(g => {
@@ -302,9 +313,7 @@ function texteLieuFerme(t, c) {
   const apercu = territoireEnApercu(t);
   if (c.type === "remarquable") return `<p class="at-lieu-phrase">${echapper(c.phrase || "Le site remarquable du territoire.")}</p>`
     + `<p class="at-ouvre">${apercu ? "Il s'ouvre à la fin du territoire." : "Il s'ouvre quand tous les lieux du territoire sont terminés."}</p>`;
-  const ouvre = apercu ? "" : lieuPrecedent(t, c) && chapitreOuvert(t, lieuPrecedent(t, c))
-    ? `S'ouvre à l'argent ${echapper(deLieu(lieuPrecedent(t, c).nom))} : ${texteManqueLieu(t, c, true).toLowerCase()}.` : "S'ouvrira plus tard.";
-  return (ouvre ? `<p class="at-ouvre">${ouvre}</p>` : "") + avantGoutLieu(t, c);
+  return (apercu ? "" : blocOuvrirLieu(t, c)) + avantGoutLieu(t, c);   // CL2 : « Pour l'ouvrir », puis « ou tout de suite »
 }
 // Étape K3 : un lieu pas encore ouvert (ou d'un territoire en aperçu) montre ce qui l'attend : sa phrase, ses expéditions, son espèce
 function avantGoutLieu(t, c) {

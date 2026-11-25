@@ -134,6 +134,7 @@ function medailleLieu(t, c) {   // 0 = aucune, 1 = bronze, 2 = argent, 3 = or
 function lieuPrecedent(t, c) { const l = lieuxDe(t), i = l.indexOf(c); return i > 0 ? l[i - 1] : null; }
 function lieuSuivant(t, c) { const l = lieuxDe(t), i = l.indexOf(c); return i >= 0 && i < l.length - 1 ? l[i + 1] : null; }
 function lieuCommence(t, c) { return expeditionsDuChapitre(t, c.nom).some(x => expLancee(x) || empreintesExp(x) > 0); }
+function lieuDejaOuvert(t, c) { return lieuGardeOuvert(t, c) || lieuCommence(t, c); }   // CL2 : ouvert avec une clé (ou déjà commencé) : la médaille d'argent d'avant n'a plus à l'ouvrir
 function lieuGardeOuvert(t, c) { return !!(suivi && suivi.lieuxOuverts && (suivi.lieuxOuverts[t] || []).includes(c.nom)); }
 function ouvertureLieu(t, c) {
   const l = lieuxDe(t);
@@ -187,7 +188,7 @@ function medailleAvant(t, c, avant) { const p = paliersLieu(t, c); return avant 
 // Étape R153 (08/11, maquette A choisie par Aubin) : une seule phrase — ce qui manque, puis ce que ça apporte
 //   (avant : « 23 empreintes sur 74 · encore 14 pour l'argent : X s'ouvre », le compte étant déjà en tête de la jauge)
 function phraseMedaille(t, c) {
-  const pm = prochaineMedailleLieu(t, c), s = lieuSuivant(t, c);
+  const pm = prochaineMedailleLieu(t, c), s0 = lieuSuivant(t, c), s = s0 && !lieuDejaOuvert(t, s0) ? s0 : null;
   const enc = n => `Encore <b>${n} empreinte${n > 1 ? "s" : ""}</b>`;
   if (!pm) return `<b>Médaille d'or</b> : le lieu est terminé.`;
   if (pm.niveau === 1) return `${enc(pm.manque)} : médaille de bronze.`;
@@ -213,7 +214,7 @@ function verifierMedaillesLieux(t) {
     const k = t + "|" + c.nom, m = medailleLieu(t, c), avant = suivi.medaillesLieux[k] || 0;
     if (m <= avant) continue;
     suivi.medaillesLieux[k] = m; sauvegarder();
-    const s = lieuSuivant(t, c);
+    const s0 = lieuSuivant(t, c), s = s0 && !lieuDejaOuvert(t, s0) ? s0 : null;   // CL2
     // Étape R277 (37.02) : la médaille d'or est une grande fête, plein écran sur la photo du lieu (bronze et argent : la carte au centre)
     const enOr = m === 3 && typeof TROIS_TAILLES !== "undefined" && TROIS_TAILLES && estRenseigne(c.photo);
     setTimeout(() => feter({ etiquette: enOr ? MEDAILLES_LIEU[m].titre : c.nom, titre: enOr ? c.nom : MEDAILLES_LIEU[m].titre, son: "badge",
@@ -1753,7 +1754,7 @@ function finRencontreExpedition(s) {
   if (etapeGagnee) {                                   // étape PR1 : la fête pour l'étape ; une simple bulle pour chaque espèce
     const finieAussi = etapeFinie(x, 2);   // étape E2-3 : une expédition sans question d'ensemble se termine avec les Rencontres
     feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : etapeReussie(1),
-            detail: finieAussi ? `+${GAIN_FIN_EXPEDITION} empreintes pour l'expédition.` : `Prochaine étape : ${typeof ETAPE2_ENSEMBLE !== "undefined" && ETAPE2_ENSEMBLE ? "comment elles vivent ensemble ici" : RENCONTRE_COMPLETE ? "leurs liens" : "leur vie"} (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
+            detail: finieAussi ? `+${GAIN_FIN_EXPEDITION} empreintes pour l'expédition.` : `Prochaine étape : ${typeof ETAPE2_ENSEMBLE !== "undefined" && ETAPE2_ENSEMBLE ? "comment elles vivent ensemble ici" : RENCONTRE_COMPLETE ? "leurs liens" : "leur vie"} (+${GAIN_FIN_EXPEDITION} empreintes à gagner).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (gagnees) setTimeout(() => afficherBulle(`+${gagnees} empreinte${gagnees > 1 ? "s" : ""} · ${e.nom_courant}`), 600);
   if (gagnees) verifierOuverture();
@@ -2461,7 +2462,7 @@ function dessinerAlbum(t, zone) {
   zone.classList.remove("chemin"); zone.classList.add("album");
   const lieux = lieuxDe(t), ouverts = lieux.filter(c => chapitreOuvert(t, c)).length, r = siteRemarquable(t);
   zone.innerHTML = `
-    <div class="exp-tete"><div><h2>Vos lieux</h2><p class="jeu-sous">Partez où vous voulez parmi les lieux ouverts. Vos empreintes remplissent la médaille du lieu : l'argent ouvre le lieu suivant.</p></div>
+    <div class="exp-tete"><div><h2>Vos lieux</h2><p class="jeu-sous">Partez où vous voulez parmi les lieux ouverts. ${lienRegles()}</p></div>
       <small><b>${ouverts}</b> lieu${ouverts > 1 ? "x" : ""} ouvert${ouverts > 1 ? "s" : ""} sur ${lieux.length}</small></div>
     <div class="lieu-carrousel">
       <button class="lieu-fleche prec" type="button" aria-label="Lieux précédents">‹</button>
@@ -2470,7 +2471,7 @@ function dessinerAlbum(t, zone) {
   activerCarrousel(zone.querySelector(".lieu-carrousel"), lieuDernierJoue(t));   // étape 300
   zone.querySelectorAll(".lieu-carte[data-lieu]").forEach(b => b.onclick = () => {
     const c = chapitreParNom(t, b.dataset.lieu);
-    if (!chapitreOuvert(t, c)) { afficherBulle(bulleLieuFerme(t, c, "Ce lieu")); return; }
+    if (!chapitreOuvert(t, c)) { ouvrirVoletLieu(t, c, () => afficherAccueil()); return; }   // CL2 : l'encadré « Pour l'ouvrir »
     ouvrirLieu(t, c.nom);
   });
   const rb = document.getElementById("lieu-remarquable");
@@ -2494,7 +2495,7 @@ function brancherCarteLieux(racine, t) {
       const c = chapitresDe(t).find(k => k.nom === g.dataset.lieu);
       if (!c) return;
       if (c.type === "remarquable") { if (chapitreOuvert(t, c)) ouvrirSite(t); else afficherBulle("Le site remarquable s'ouvre quand tous les lieux du territoire sont terminés"); return; }
-      if (!chapitreOuvert(t, c)) { afficherBulle(bulleLieuFerme(t, c, c.nom)); return; }
+      if (!chapitreOuvert(t, c)) { ouvrirVoletLieu(t, c, () => afficherAccueil()); return; }   // CL2
       ouvrirLieu(t, c.nom);
     };
     g.addEventListener("click", ouvrir);

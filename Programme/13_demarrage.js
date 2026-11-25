@@ -152,6 +152,7 @@ function telephoneCouche() { return !!ECRAN_COUCHE.matches; }
     enAttente = false;
     if (telephoneCouche()) { enAttente = true; return; }     // le message couvre l'écran : on ne touche à rien
     const tel = vueAccueil() === "maison";
+    if (premierChoixEnCours) { afficherAtlas(); return; }   // CL3
     if (visible("vue-bienvenue")) { if (typeof afficherBienvenue === "function") afficherBienvenue(); return; }
     if (typeof profil === "undefined" || !profil) return;
     if (derniere.tel === tel) return;                         // la page a déjà été dessinée pour cet écran
@@ -162,7 +163,7 @@ function telephoneCouche() { return !!ECRAN_COUCHE.matches; }
       else redessiner(v);
     } else {
       if (v === "maison") montrer("accueil");
-      else if (v === "atlas") montrer("carte");
+      else if (v === "atlas" && !atlasTerritoire) montrer("carte");   // CL2 : l'aperçu d'un territoire se regarde aussi sur ordinateur
       else redessiner(v);
     }
   }

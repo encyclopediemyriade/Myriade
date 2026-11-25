@@ -56,6 +56,8 @@ function montrer(vue) {
   document.getElementById("vue-rencontre").classList.toggle("cache", !jeu);
   document.getElementById("vue-encyclopedie").classList.toggle("cache", vue !== "encyclopedie");
   document.getElementById("vue-apropos").classList.toggle("cache", vue !== "apropos");   // étape 102
+  const vueRegles = document.getElementById("vue-regles");                              // étape CL4 : « Les règles du jeu »
+  if (vueRegles) vueRegles.classList.toggle("cache", vue !== "regles");
   document.getElementById("vue-espece").classList.toggle("cache", vue !== "espece");     // étape 103
   document.getElementById("vue-progression").classList.toggle("cache", vue !== "progression");   // étape 106
   document.getElementById("onglet-progression").classList.toggle("actif", vue === "progression");
@@ -71,6 +73,7 @@ function montrer(vue) {
   if (vue === "arcade") { afficherArcade(); window.scrollTo(0, 0); }   // étape 262
   if (jeu) entrerRencontre();
   if (vue === "encyclopedie") afficherEncyclopedie();
+  if (vue === "regles") { afficherRegles(); window.scrollTo(0, 0); }   // étape CL4
   if (vue === "apropos") { afficherAPropos(); window.scrollTo(0, 0); }
   if (vue === "espece") { afficherPageEspece(); window.scrollTo(0, 0); }
   if (vue === "progression") {                                                    // étape 106
@@ -968,6 +971,7 @@ function tousLesTerritoires() { return (memoTousTerritoires || (memoTousTerritoi
 // ==================================================================
 var territoiresOuvertsListe = null;
 function territoiresOuverts() {
+  if (typeof premierChoixEnCours !== "undefined" && premierChoixEnCours) return [];   // CL3 : première visite, aucun territoire n'est encore ouvert
   const tous = tousLesTerritoires();
   if (!territoiresOuvertsListe) return tous;
   const o = tous.filter(t => territoiresOuvertsListe.includes(t));
@@ -1065,6 +1069,10 @@ function verifierOuverture() {
   if (!t) return;
   territoiresOuvertsListe = territoiresOuverts().concat(t);
   sauvegarder();                                         // étape 252 : il ne rejoint plus le terrain (un territoire à la fois) ; on peut partir l'explorer
+  feterNouveauTerritoire(t);
+  setTimeout(verifierOuverture, 500);                    // (au cas où un second palier serait déjà atteint)
+}
+function feterNouveauTerritoire(t) {                     // CL2 : la même fête, ouvert en jouant ou avec 2 clés
   const nb = especesDe(t).filter(e => !estIdentifiee(e)).length, couleur = TERRITOIRES[t] ? TERRITOIRES[t].couleur : "#7a736a";
   const forme = typeof CARTE_TERRITOIRES !== "undefined" ? CARTE_TERRITOIRES.find(x => x.nom === t) : null;
   const visuel = forme ? `<div class="fete-visuel rang" style="color:${couleur}"><svg viewBox="${cadreTerritoire(t)}" style="width:64px;height:64px">`
@@ -1072,7 +1080,6 @@ function verifierOuverture() {
   feter({ etiquette: "Nouveau territoire", titre: t, detail: `${nb} espèces nouvelles à découvrir. Vous pouvez partir l'explorer depuis l'accueil.`,
           taille: "grande", photo: typeof photoFeteTerritoire === "function" ? photoFeteTerritoire(t) : "",   // R277 (37.02) : plein écran sur la photo du territoire
           son: "badge", visuel, pop: { couleur, image: "", etiquette: "Nouveau territoire", titre: t, detail: `${nb} espèces nouvelles à découvrir` } });
-  setTimeout(verifierOuverture, 500);                    // (au cas où un second palier serait déjà atteint)
 }
 function famillesDe(territoires) {
   return Object.keys(CLASSES).filter(cle => ESPECES.some(e => e.onglet === cle && estDans(e, territoires)));
@@ -1250,7 +1257,7 @@ function dessinerCarteChoix() {
     // Étape 209 : jamais bloquant — on peut tout ouvrir d'un clic
     const manque = avantProchainTerritoire();
     if (manque !== null) {
-      resume.insertAdjacentHTML("beforeend", `<br><small class="ouverture">${PHRASE_OUVERTURE}<br>Prochain territoire : encore ${texteManque(manque)}</small>`);   // étape PR4 ; R285c (41.12) : plus de « tout débloquer »
+      resume.insertAdjacentHTML("beforeend", `<br><small class="ouverture">Prochain territoire : encore ${texteManque(manque)}. ${lienRegles()}</small>`);   // étape PR4 ; R285c (41.12) : plus de « tout débloquer »
     }
   }
   // Un clic sur un territoire jouable : on l'ajoute ou on le retire du choix, puis on redessine l'écran

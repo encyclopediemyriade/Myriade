@@ -915,7 +915,7 @@ function finirRevueGroupee() {
     if (confondues.length) { session = null; lancerRevueExpedition(x, confondues); return; }   // étape R184
     if (etapeFinie(x, 1)) { session = null; ouvrirExpedition(x); } else lancerExpedition(x, 1); };
   if (etapeFinie(x, 1) && !rv.avantFinie) {
-    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: etapeReussie(1), detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à la clé).`,
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: etapeReussie(1), detail: `Prochaine étape : leur vie (+${GAIN_FIN_EXPEDITION} empreintes à gagner).`,
             son: "badge", visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   }
   if (gagnees) verifierOuverture();

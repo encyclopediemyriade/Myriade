@@ -81,7 +81,7 @@ let pageCourante = null, retourEnCours = false;
 function etatPage(vue) {
   const y = 0;   // étape R262 (lenteurs) : la position est lue en quittant la page (noterDepartPage) ; la lire ici forçait un calcul de mise en page
   switch (vue) {
-    case "maison": case "accueil": case "progression": case "apropos": case "carte": case "arcade":
+    case "maison": case "accueil": case "progression": case "apropos": case "regles": case "carte": case "arcade":
       return { vue, cle: vue, y, aller: () => montrer(vue) };
     case "encyclopedie": { const c = typeof filtreClasse !== "undefined" ? filtreClasse : null;
       return { vue, cle: "ency|" + c, y, aller: () => { if (c !== null) filtreClasse = c; montrer("encyclopedie"); } }; }
@@ -126,6 +126,7 @@ function retourTelephone() {
   if (typeof signalementOuvert === "function" && signalementOuvert()) { fermerSignalement(); return true; }   // étape CT1 : le panneau « Signaler » se ferme d'abord
   if (typeof feteOuverte !== "undefined" && feteOuverte && typeof fermerFete === "function") { fermerFete(); return true; }
   if (typeof tiroirOuvert === "function" && tiroirOuvert()) { fermerTiroir(); return true; }   // étape R194 : d'abord le tiroir de la fiche
+  if (document.getElementById("volet-lieu")) { fermerVoletLieu(); return true; }   // CL2
   const grande = document.getElementById("photo-agrandie");   // R239 : la grande photo (et la galerie) se ferme d'abord
   if (grande && grande.classList.contains("ouvert")) { grande.classList.remove("ouvert"); return true; }
   if (typeof saviezVousOuvert === "function" && saviezVousOuvert()) { fermerSaviezVous(); return true; }   // étape R246
@@ -135,6 +136,7 @@ function retourTelephone() {
     const b = [...document.querySelectorAll(sel)].find(visibleALEcran);
     if (b) { b.click(); return true; }
   }
+  if (typeof premierChoixEnCours !== "undefined" && premierChoixEnCours) { quitterPremierChoix(true); return true; }   // CL3 : la carte du premier choix → « Comment jouer »
   const bienvenue = document.getElementById("vue-bienvenue");
   if (bienvenue && !bienvenue.classList.contains("cache")) return false;
   // L'accueil : un second appui quitte le jeu (2aA)

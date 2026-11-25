@@ -342,10 +342,10 @@ function dessinerTerritoiresAccueil() {
   const fait = manque === null ? 0 : Math.max(0, Math.min(palier, palier - manque));
   const couleur = t => (TERRITOIRES[t] || {}).couleur || "#7a736a";
   const photo = t => photoTerritoire(t, typeof IDENTITE !== "undefined" ? IDENTITE[t] : null).fichier;
-  const carte = (t, classe, ligne, barre, titre) => `<${classe.includes("ouvert") ? "button" : "div"} class="pc ${classe}" data-t="${echapper(t)}"`
+  const carte = (t, classe, ligne, barre, titre) => `<${classe.includes("ouvert") ? "button" : "div"} class="pc ${classe}"${classe === "ferme" ? ` role="button" tabindex="0"` : ""} data-t="${echapper(t)}"`
     + ` style="--c:${couleur(t)}"${titre ? ` title="${echapper(titre)}"` : ""}>
       <span class="pc-ph"><img src="${photo(t)}" alt="" onerror="this.remove()">${classe.includes("ouvert") ? "" : `<span class="pc-cad" aria-hidden="true">🔒</span>`}</span>
-      <span class="pc-bas"><b>${t}</b><span class="pc-reste">${aDecouvrir(t)}</span><small>${ligne}</small><i><em style="width:${barre}%"></em></i></span></${classe.includes("ouvert") ? "button" : "div"}>`;
+      <span class="pc-bas"><b>${t}</b><span class="pc-reste">${aDecouvrir(t)}</span><small>${ligne}</small><i><em style="width:${barre}%"></em></i>${classe === "suivant" ? blocOuvrirTerritoire(t) : ""}</span></${classe.includes("ouvert") ? "button" : "div"}>`;
   // Étape 270 : la carte du territoire où l'on est remplace l'encadré « Reprendre votre exploration » : plus large, en tête,
   // avec l'étiquette, les espèces à découvrir, la nature connue et le bouton « Accéder au territoire »
   const carnetIci = carnetDe(especesDe(ici)), pctIci = carnetIci.pct;
@@ -359,7 +359,7 @@ function dessinerTerritoiresAccueil() {
     return carte(t, "ouvert", `${c.pctTexte} %`, c.pct); }).join("");
   if (suivant) h += carte(suivant, "suivant", manque ? `Encore ${texteManque(manque)}` : "S'ouvre !",
     Math.round(100 * fait / palier), PHRASE_OUVERTURE);   // étape R91 : des lieux terminés, plus des « points » (règle de l'étape PR4)
-  h += reste.map(t => carte(t, "ferme", "Plus tard", 0)).join("");
+  h += reste.map(t => carte(t, "ferme", toutDebloque() ? "Plus tard" : `Plus tard, ou avec ${clesTexte(PRIX_TERRITOIRE)}`, 0)).join("");
   const nbTous = tousLesTerritoires().length;
   tete.innerHTML = `<h2>Vos territoires</h2><span>${ouverts.length} ouvert${ouverts.length > 1 ? "s" : ""} sur ${nbTous} · ${carnetDe(ESPECES).pctTexte} % de la nature de France connue</span>`
     ;   // étape R91 : plus de lien « ouvrir tous les territoires » ici (Tout débloquer est dans À propos)
@@ -367,6 +367,12 @@ function dessinerTerritoiresAccueil() {
     <button class="terr-fl gauche" id="terr-gauche" aria-label="Revenir">‹</button>
     <button class="terr-fl droite" id="terr-droite" aria-label="Voir les territoires suivants">›</button>`;
   zone.querySelectorAll(".pc.ouvert").forEach(b => b.onclick = () => { changerTerritoire(b.dataset.t); montrer("accueil"); window.scrollTo(0, 0); });
+  // CL2 : un territoire fermé se regarde en aperçu ; le prochain s'ouvre aussi d'ici avec 2 clés
+  zone.querySelectorAll(".pc.ferme, .pc.suivant").forEach(b => {
+    b.onclick = ev => { if (!ev.target.closest(".cle-terr")) { ouvrirAtlas(b.dataset.t); window.scrollTo(0, 0); } };
+    b.onkeydown = ev => { if (ev.target === b && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); ouvrirAtlas(b.dataset.t); } };
+  });
+  brancherOuvrirTerritoire(zone, () => afficherPageCarte());
   // le prochain territoire, cerné sur la carte
   document.querySelectorAll("#carte-territoires path.prochain").forEach(p => p.classList.remove("prochain"));
   if (suivant) document.querySelectorAll("#carte-territoires path[data-nom]").forEach(p => { if (p.dataset.nom === suivant) p.classList.add("prochain"); });
@@ -602,10 +608,6 @@ function verifierDefis(t) {
   if (DEFIS_DU_MOMENT && !d.fini && d.liste.length && d.liste.every(x => x.reussi)) { d.fini = Date.now(); sauvegarder(); }   // R308 : le délai de 2 h part d'ici (R312 : jamais pour un lot vide)
   return reussis;
 }
-// Étape R188 : la règle des empreintes, écrite une seule fois (À propos, 06_encyclopedie.js)
-function texteReglesEmpreintes() {
-  return `1 empreinte par espèce découverte en expédition, +${GAIN_FIN_EXPEDITION} à la fin de l'expédition, +${EMPREINTES_FINALE} par finale, +${POINTS_DEFI} par défi du moment (et +${typeof GAIN_ESPECE_DU_JOUR === "number" ? GAIN_ESPECE_DU_JOUR : 2} pour l'espèce du jour). Elles remplissent la médaille du lieu : l'argent ouvre le lieu suivant. Un nouveau territoire s'ouvre dès le premier lieu terminé, puis tous les ${LIEUX_PAR_TERRITOIRE} lieux.`;
-}
 function texteDefi(d) { return SORTES_DEFI[d.sorte].texte(d); }
 function dessinerDefis(t) {
   const zone = document.getElementById("ac-defis");
@@ -632,7 +634,7 @@ function dessinerDefis(t) {
       }).join("")}</div>` : `<p class="jeu-sous">Tout est déjà découvert ici : bravo !</p>`}
       ${attente ? `<p class="jeu-sous defis-attente">${texteAttenteDefis(attente)}</p>` : ""}
       ${enAttente.length >= 2 ? `<button type="button" class="recup-tout" id="recup-tout-terr">Tout récupérer · +${enAttente.reduce((n, r) => n + r.n, 0)} ${PAS_SVG}</button>` : ""}
-    </div>`;   // étape R188 (11/11, note n° 18 d'Aubin) : « Comment gagner des empreintes ? » n'alourdit plus la page ; il est dans À propos (texteReglesEmpreintes)
+    </div>`;   // étape R188 (11/11, note n° 18 d'Aubin) : « Comment gagner des empreintes ? » n'alourdit plus la page ; CL4 : il est dans « Les règles du jeu » (34_regles.js)
   brancherRecup(zone, redessiner);   // R248
   planifierDefis(t, redessiner);     // R308
   const tout = document.getElementById("recup-tout-terr");
@@ -750,7 +752,7 @@ function dessinerTerrMobile(t) {
       <div class="tm-gauche">
         <div class="tm-plein"><div class="tm-etiq">${typeof miniFrance === "function" ? miniFrance(t) : ""}<span>Territoire</span></div>
           <h2>${echapper(t)}</h2><small>${lieux.length} lieux · ${nombre(especesDe(t).length)} espèces</small>
-          <div class="tm-rang"><span class="tm-rang-etiq">Rang dans ce territoire : </span><b>${echapper(r.nom)}</b>${r.suivant ? ` · ${echapper(r.suivant.nom)} à ${nombre(r.suivant.seuil)}` : ""}</div>
+          <div class="tm-rang"><span class="tm-rang-etiq">Rang dans ce territoire : </span><b>${echapper(r.nom)}</b>${r.suivant ? ` · ${echapper(r.suivant.nom)} ${r.suivant.seuil === null ? "à la fin du territoire" : `à ${nombre(r.suivant.seuil)}`}` : ""}</div>
           <i class="tm-jauge"><b style="width:${Math.round(100 * (r.suivant ? r.suivant.part : 1))}%"></b></i>${typeof ligneRaretesTerritoire === "function" ? ligneRaretesTerritoire(t, "tm-raretes") : ""}</div>
         <div class="tm-reduit"><div class="tm-etiq"><span>Sur la carte</span></div><h2 class="tm-sel-nom"></h2><small>${echapper(t)}</small></div>
       </div>
@@ -800,7 +802,8 @@ function majTerrMobile(t) {
     const sl = ouvert ? suiteDuLieu(t, c) : null;
     const pied = ouvert
       ? `<button type="button" class="tm-aller">${sl ? sl.texte : "Entrer dans le lieu"} ▶</button>`
-      : `<div class="tm-ferme"><span class="tm-cadenas" aria-hidden="true"></span>${estSite ? "S'ouvre quand tous les lieux sont terminés" : pro ? `S'ouvre : ${minuscule(texteManqueLieu(t, c))}` : bulleLieuFerme(t, c, "Ce lieu")}</div>`;
+      : estSite ? `<div class="tm-ferme"><span class="tm-cadenas" aria-hidden="true"></span>S'ouvre quand tous les lieux sont terminés</div>`
+      : blocOuvrirLieu(t, c);   // CL2 : « Pour l'ouvrir », puis « ou tout de suite »
     return `<div class="tm-lieu sel ${etat}${pro ? " prochain" : ""}${estSite ? " site" : ""}" data-lieu="${echapper(c.nom)}">
         <div class="tm-photo${ouvert ? " touchable" : ""}"${ouvert ? ` role="button" tabindex="0" aria-label="Ouvrir la page : ${echapper(c.nom)}"` : ""}>${imgMini(c.photo, "")}<span class="tm-tag">${tag}</span>${ouvert ? `<span class="tm-ouvrir" aria-hidden="true">›</span>` : ""}
           <div class="tm-photo-txt"><b>${echapper(c.nom)}</b><small>${echapper(c.pays || "")}${n ? `${c.pays ? " · " : ""}${n} espèces · ${liste.length} expéditions` : ""}</small>${suite}</div></div>
@@ -811,6 +814,7 @@ function majTerrMobile(t) {
   // la carte : le lieu sélectionné en ocre
   zone.querySelectorAll(".tm-carte .cl-lieu").forEach(g => g.classList.toggle("sel", g.dataset.lieu === sel));
   zone.querySelectorAll(".tm-liste button.tm-lieu").forEach(b => b.onclick = () => selectionnerLieuTerr(t, b.dataset.lieu, false));
+  brancherOuvrirLieu(zone, t, () => dessinerTerrMobile(t));   // CL2
   const aller = zone.querySelector(".tm-aller");
   const cSel = site && sel === site.nom ? site : chapitreParNom(t, sel);
   if (aller) aller.onclick = () => {   // R247 (36.14) : reprend

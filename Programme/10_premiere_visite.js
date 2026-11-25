@@ -18,7 +18,8 @@ const NB_TERRITOIRES_PROFIL = 1;        // combien de territoires le joueur déb
 const ESPECES_OFFERTES = true;           // étape E2-12 (seconde partie, 16/11) : 8 espèces offertes au départ, « à reconnaître » (avant : false depuis R92)
 const NB_OFFERTES = 8;                  // étape E2-12 : combien d'espèces offertes
 const RARETE_DEPART = "Commun";         // leur rareté (colonne rarete_observation du tableur)
-const DERNIER_ECRAN = 3;
+const ECRAN_COMMENT = 3;                 // CL3 : « Comment jouer » ; ensuite, la carte en « premier choix » (33_cles.js)
+const DERNIER_ECRAN = ECRAN_COMMENT;
 // Étape PR4 (01/11, choix de l'utilisateur) : « au fil du jeu » pour tout le monde ; l'écran 2 (la question) n'est plus montré.
 //   Tout débloquer et Recommencer sont dans À propos.
 // Étape M13 (07/11, choix de l'utilisateur) : l'écran du niveau est retiré (l'expédition, le jeu principal, ne s'en servait pas).
@@ -27,7 +28,8 @@ const DERNIER_ECRAN = 3;
 const NIVEAU_DEPART = 1;
 // Étape M27 (07/11/2026, choix d'Aubin, téléphone ET ordinateur) : le nom a sa propre page, en premier ; puis le territoire ; puis l'explication.
 const ECRAN_NOM = 4;
-const ECRANS_BIENVENUE = [ECRAN_NOM, 1, 3];       // 0 = niveau (retiré, M13), 1 = territoire, 2 = découverte des territoires, 3 = explication, 4 = nom (M27)
+const ECRANS_BIENVENUE = [ECRAN_NOM, ECRAN_COMMENT];   // CL3 : le territoire se choisit après, sur la carte
+//       // 0 = niveau (retiré, M13), 1 = territoire, 2 = découverte des territoires, 3 = explication, 4 = nom (M27)
 // Étape 275 (« Revoir 5 ») : découvrir les territoires au fil du jeu (ils s'ouvrent avec les points) ou tout d'un coup
 const DECOUVERTES_PROFIL = [
   { valeur: "fil",  nom: "Au fil du jeu",  texte: "" },     // texte écrit avec le territoire choisi (afficherBienvenue)
@@ -48,20 +50,31 @@ function montrerBienvenue() {
                      : { niveau: NIVEAU_DEPART, territoires: [], decouverte: "fil" };   // « au fil du jeu » proposé par défaut
   brouillon.prenom = suivi && typeof suivi.prenom === "string" ? suivi.prenom : "";   // étape M6
   etapeBienvenue = ECRANS_BIENVENUE[0];            // étape M13
+  if (nouveauJoueur && suivi.premiereVisite) etapeBienvenue = ECRAN_COMMENT;   // CL3 : page rechargée, on reprend où on en était
   for (const vue of ["vue-accueil", "vue-rencontre", "vue-encyclopedie", "vue-apropos", "vue-espece", "barre"]) {
     document.getElementById(vue).classList.add("cache");
   }
+  if (nouveauJoueur && suivi.premiereVisite === "choix") { poserBarreVisite(); montrerPremierChoix(); return; }
   document.getElementById("vue-bienvenue").classList.remove("cache");
   afficherBienvenue();
 }
 
+// CL3 : pendant la première visite, la barre du haut ne montre que les compteurs, sans rien à toucher
+function poserBarreVisite() {
+  const voir = nouveauJoueur && !!suivi.cles, barre = document.getElementById("barre");
+  barre.classList.toggle("visite", voir); barre.inert = voir;
+  barre.classList.toggle("cache", !voir);
+}
+function finirBarreVisite() { const barre = document.getElementById("barre"); barre.classList.remove("visite"); barre.inert = false; }
 // Affiche l'écran en cours
 function afficherBienvenue() {
   const corps = document.getElementById("corps-bienvenue");
   corps.innerHTML = "";
-  document.getElementById("etape-bienvenue").textContent = `Bienvenue · ${ECRANS_BIENVENUE.indexOf(etapeBienvenue) + 1} / ${ECRANS_BIENVENUE.length}`;
+  document.getElementById("etape-bienvenue").textContent = `Bienvenue · ${ECRANS_BIENVENUE.indexOf(etapeBienvenue) + 1} / ${ECRANS_BIENVENUE.length + (nouveauJoueur ? 1 : 0)}`;   // CL3 : + la carte
+  if (nouveauJoueur && etapeBienvenue === ECRAN_COMMENT && offrirCles(0)) clesEnVol = CLES_OFFERTES;   // les 2 clés, une seule fois : elles s'envolent vers le compteur
+  poserBarreVisite(); afficherStats();
   document.getElementById("retour-bienvenue").classList.toggle("cache", etapeBienvenue === ECRANS_BIENVENUE[0]);   // étape M13
-  document.getElementById("suite-bienvenue").textContent = etapeBienvenue === DERNIER_ECRAN ? "Commencer" : "Continuer";
+  document.getElementById("suite-bienvenue").textContent = etapeBienvenue === DERNIER_ECRAN && nouveauJoueur ? "Choisir mon territoire" : "Continuer";
 
   if (etapeBienvenue === 0) {
     document.getElementById("titre-bienvenue").textContent = "Quel niveau pour commencer ?";
@@ -283,58 +296,31 @@ const MARGE_DOIGT_BIENVENUE = { "Vosges": 56, "Jura": 56, "Corse": 80 };
 
 // L'écran d'explication (étape 60) : deux encarts, puis ce qui attend déjà le joueur
 function poserExplication() {
+  // Étape CL3 (25/11/2026, texte d'Aubin) : quatre phrases, les 2 premières clés ; le territoire se choisit ensuite.
+  //   (Avant, M28 : trois lignes et les 8 espèces offertes, qui dépendent du territoire : elles sont tirées quand il est choisi.)
   const corps = document.getElementById("corps-bienvenue");
-  // Étape M28 (07/11/2026, choix d'Aubin : « il y a trop de texte ») : trois lignes courtes avec un picto,
-  // puis une phrase qui rassure. Tient sur un écran, se lit en 10 secondes, ne dit que ce qui sert pour démarrer.
-  // (Les Rencontres et les autres jeux se découvrent en jouant, par les onglets et la page d'une espèce.)
-  const PICTOS = {
-    boussole: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M15.2 8.8 L13.2 13.2 L8.8 15.2 L10.8 10.8 Z"/></svg>',
-    loupe:    '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15 L20.5 20.5"/></svg>',
-    pas:      PAS_SVG,
-  };
+  const trait = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
   const LIGNES = [
-    ["boussole", "Partez en expédition", `dans de vrais lieux ${deTerritoire(territoireDeDepart(brouillon.territoires))}.`],   // « des Vosges »
-    ["loupe",    "Découvrez les espèces en expédition,", "ou testez-vous tout de suite."],   // étape E2-12 (seconde partie)
-    ["pas",      "Gagnez des empreintes :", "elles ouvrent de nouveaux lieux, puis de nouveaux territoires."],
+    ["boussole", trait('<circle cx="12" cy="12" r="8.5"/><path d="M15.2 8.8 L13.2 13.2 L8.8 15.2 L10.8 10.8 Z"/>'), "Partez en expédition dans de vrais lieux de nature, et apprenez à reconnaître les animaux qui y vivent."],
+    ["pas", PAS_SVG, "Chaque espèce rencontrée rejoint votre carnet et vous rapporte des empreintes."],
+    ["medaille", medailleSvg(2), "Vos empreintes remplissent la médaille du lieu, qui ouvre le lieu suivant, et vous donnent des clés."],
+    ["cle", PICTO_CLE, "Une clé ouvre un lieu en avance, deux clés un nouveau territoire. Tout se rejoue, à votre rythme."],
   ];
   const zone = document.createElement("ol");
   zone.className = "etapes-jeu";
-  zone.innerHTML = LIGNES.map(([picto, fort, suite]) =>
-    `<li><span class="ej-picto ej-${picto}">${PICTOS[picto]}</span><span class="ej-texte"><strong>${fort}</strong> ${suite}</span></li>`).join("");
+  zone.innerHTML = LIGNES.map(([nom, picto, texte]) => `<li><span class="ej-picto ej-${nom}">${picto}</span><span class="ej-texte">${texte}</span></li>`).join("");
   corps.appendChild(zone);
-  const rassure = document.createElement("p");
-  rassure.className = "ej-rassure";
-  // R274 (test du 19/11, n° 14 ; choix 4A) : la promesse est vraie dans tout le jeu — elle parle des expéditions (le Duel garde ses 3 vies)
-  rassure.textContent = "Dans les expéditions, pas de chrono, pas de punition : une erreur est toujours expliquée.";
-  corps.appendChild(rassure);
-  // Les espèces de départ : seulement pour un nouveau joueur
-  if (nouveauJoueur && ESPECES_OFFERTES) {
-    const lieu = territoireDeDepart(brouillon.territoires);
-    // Le tirage se fait ici, une seule fois : revenir en arrière puis revenir sur cet écran
-    // montre les mêmes espèces. Seul un changement de territoire refait le tirage.
-    if (!brouillon.depart || brouillon.lieuDepart !== lieu) {
-      brouillon.depart = tirerEspecesDeDepart(lieu);
-      brouillon.lieuDepart = lieu;
-    }
-    const note = document.createElement("p");
-    note.id = "note-depart";
-    // "des Alpes" se dit naturellement ; pour un autre territoire, on garde une tournure qui marche avec tous les noms
-    const ou = deTerritoire(lieu);   // étape 190 : « des Alpes », « du Massif armoricain », « du Bassin parisien et Val de Loire »
-    note.innerHTML = `Pour bien démarrer, <strong>${brouillon.depart.length} espèces communes</strong> ${ou} vous sont déjà présentées : leur photo et leur carte sont là, et vous pouvez jouer avec tout de suite. Elles entreront dans votre carnet dès votre première rencontre avec elles.`;   // R270 (n° 32) : avant « sont dans votre carnet », alors que le compteur disait « Carnet : 0 espèce »   // étape E2-12
-    corps.appendChild(note);
-    // Une vignette par espèce : sa miniature dans un cadre à la couleur de sa famille, puis son nom
-    const grille = document.createElement("div");
-    grille.className = "vignettes-depart";
-    for (const espece of brouillon.depart) {
-      grille.innerHTML += `
-        <figure class="vignette-depart" style="--couleur-classe:${classeDe(espece).couleur}">
-          <div class="photo">${celluleImage(espece, true)}</div>
-          <figcaption>${espece.nom_courant}</figcaption>
-        </figure>`;
-    }
-    corps.appendChild(grille);
-    prechargerAccueilDepart(lieu);
-  }
+  if (!nouveauJoueur) return;
+  const cles = document.createElement("div");
+  cles.className = "ej-cles" + (clesEnVol ? "" : " posees");
+  cles.innerHTML = `<b>Voici vos ${CLES_OFFERTES} premières clés</b><span class="ej-cles-dessin">${ROND_CLE}${ROND_CLE}</span>`;
+  corps.appendChild(cles);
+  if (clesEnVol) setTimeout(() => {
+    const d = cles.querySelector(".ej-cles-dessin");
+    if (!clesEnVol) return;
+    if (!d.isConnected) { clesEnVol = 0; afficherStats(); return; }      // l'écran a déjà changé : le compteur est juste
+    envolCles(d, CLES_OFFERTES, () => cles.classList.add("posees"));
+  }, 1300);
 }
 // Étape R297 (note 1b du 22/11 au soir : sur l'Accueil d'une partie neuve, la photo de « Votre première expédition » et celle
 //   de l'espèce du jour arrivaient avec un temps de retard). Elles n'étaient demandées qu'à l'ouverture de l'Accueil. Elles le
@@ -348,9 +334,7 @@ function prechargerAccueilDepart(lieu) {
     const c = x && x.chapitre && typeof chapitreParNom === "function" ? chapitreParNom(lieu, x.chapitre) : null;
     if (c && estRenseigne(c.photo) && typeof photoMini === "function") l.push(photoMini(c.photo));
     // les territoires qui seront ouverts (même règle que suiteBienvenue) ; l'Accueil montre la photo principale telle quelle
-    const tout = brouillon && (brouillon.decouverte === "tout" || brouillon.decouverte === "toutjeu");
-    const ouverts = tout ? tousLesTerritoires() : (brouillon ? brouillon.territoires : []).filter(t => especesDe(t).length).slice(0, 1);
-    const j = typeof especeDuJour === "function" ? especeDuJour(ouverts.length ? ouverts : tousLesTerritoires()) : null;
+    const j = typeof especeDuJour === "function" ? especeDuJour([lieu]) : null;
     if (j && estRenseigne(j.photo)) l.push(j.photo);
     prechargerFichiers(l, true);
   } catch (err) { /* un chargement d'avance ne doit jamais gêner le jeu */ }
@@ -417,23 +401,34 @@ function estARevoirRencontre(espece) { return !!(suivi && suivi.aReconnaitre && 
 //   (Avant : « À reconnaître » réunissait les offertes et les espèces rencontrées sans la photo, qui sont au carnet depuis R287.)
 function estOfferte(espece) { return estOfferteDepart(espece); }
 
-// "Continuer" : écran suivant ; au dernier, les réponses deviennent le profil et le jeu s'ouvre
+// "Continuer" : écran suivant ; après « Comment jouer », la carte en « premier choix » (CL3, 33_cles.js)
 function suiteBienvenue() {
-  if (etapeBienvenue !== DERNIER_ECRAN) { etapeBienvenue = ECRANS_BIENVENUE[ECRANS_BIENVENUE.indexOf(etapeBienvenue) + 1]; afficherBienvenue(); window.scrollTo(0, 0); return; }   // étape PR4 ; R270 (n° 9) : chaque écran s'ouvre en haut
-  profil = { niveau: brouillon.niveau, territoires: brouillon.territoires.slice() };
-  // Nouveau joueur : ses espèces de départ. (Pas avec changerProfil : la partie existe déjà.)
-  // Ce sont celles montrées sur le dernier écran (brouillon.depart, tirées dans poserExplication).
-  if (nouveauJoueur && ESPECES_OFFERTES && brouillon.depart) brouillon.depart.forEach(offrirEspece);   // étape E2-12 : de nouveau, « à reconnaître »
-  if (nouveauJoueur) territoiresOuvertsListe = profil.territoires.filter(t => especesDe(t).length).slice(0, 1);   // étape 209
-  if (brouillon.decouverte === "tout" || brouillon.decouverte === "toutjeu") territoiresOuvertsListe = null;   // étape 275 : tout d'un coup (null = tout est ouvert)
-  if (typeof reglerToutDebloque === "function" && suivi) suivi.toutDebloque = brouillon.decouverte === "toutjeu";   // étape 332
-  if (suivi && typeof brouillon.prenom === "string") suivi.prenom = brouillon.prenom.trim().slice(0, 24);   // étape M6
-  // (« au fil du jeu » choisi en revoyant la première visite ne referme rien : les territoires ouverts le restent)
-  nouveauJoueur = false;
+  if (etapeBienvenue !== DERNIER_ECRAN) {                       // étape PR4 ; R270 (n° 9) : chaque écran s'ouvre en haut
+    etapeBienvenue = ECRANS_BIENVENUE[ECRANS_BIENVENUE.indexOf(etapeBienvenue) + 1];
+    if (nouveauJoueur) noterPremiereVisite("jouer");
+    afficherBienvenue(); window.scrollTo(0, 0); return;
+  }
+  if (nouveauJoueur) { clesEnVol = 0; afficherStats(); montrerPremierChoix(); return; }
+  // changerProfil (console) : la partie existe déjà, rien n'est rouvert ni refermé
+  suivi.prenom = String(brouillon.prenom || "").trim().slice(0, 24);
   brouillon = null;
   sauvegarder();
+  montrer(vueAccueil());
+}
+// Le premier territoire est choisi : le profil est créé, le territoire ouvert, ses 8 espèces « Pour bien démarrer » tirées (E2-12).
+//   Rend le nombre d'espèces offertes.
+function terminerPremiereVisite(t) {
+  profil = { niveau: brouillon.niveau, territoires: [t] };
+  territoiresOuvertsListe = [t];                                // étape 209
+  const depart = ESPECES_OFFERTES ? tirerEspecesDeDepart(t) : [];
+  depart.forEach(offrirEspece);                                 // étape E2-12 : « à reconnaître »
+  delete suivi.premiereVisite;
+  nouveauJoueur = false;
+  brouillon = null;
+  finirBarreVisite();
+  changerTerritoire(t);                                         // (sauvegarde comprise)
   afficherStats();
-  montrer(window.matchMedia && window.matchMedia("(max-width: 760px)").matches ? "maison" : "accueil");   // étape M9 : sur téléphone, la page d'accueil (« Bonjour … »)
+  return depart.length;
 }
 
 // Commande de test : revoir la première visite sans rien effacer de la partie
