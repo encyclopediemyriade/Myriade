@@ -253,13 +253,14 @@ function afficherEncyclopedie() {
                <div class="grille-famille">${visibles.map(e => carteEncyclopedie(e, details)).join("")}</div>
              </section>`;
   }
-  if (html && !cherche && filtreClasse === "Toutes") html = htmlPistesASuivre() + html;   // étape R258 (5B) : aussi sur ordinateur
+  if (html && !cherche && filtreClasse === "Toutes") html = htmlPistesASuivre() + (typeof htmlMesTresors === "function" ? htmlMesTresors() : "") + html;   // étape R258 (5B) : aussi sur ordinateur ; R328 : « Mes trésors »
   grille.innerHTML = html || (cherche ? `<p class="grille-vide">Aucune espèce découverte ne correspond à « ${echapper(rechercheEncyclo)} ».</p>`
                                      : `<p class="grille-vide">Aucune espèce découverte ici pour l'instant.</p>`);
   // Étape 127 : le bandeau de la famille garde sa position (ouvert / fermé) tant que la page n'est pas rechargée
   const bandeau = grille.querySelector(".bandeau-famille");
   if (bandeau) bandeau.ontoggle = () => { bandeauFamilleOuvert = bandeau.open; };
   brancherPistesASuivre(grille);   // étape R258
+  if (typeof brancherMesTresors === "function") brancherMesTresors(grille);   // étape R328
 
   // On branche le survol : entrer sur une carte ouvre la fenêtre, en sortir la ferme.
   // (focus / blur = la même chose au clic, pour les écrans sans souris)
@@ -960,8 +961,9 @@ function ouvrirPiste(e, tous) {
   p.querySelector(".ep-fermer").focus();
 }
 function afficherCollectionTelephone(grille) {
-  grille.innerHTML = filtreClasse === "Toutes" ? htmlPistesASuivre() + couverturesFamilles() : albumFamille(filtreClasse);   // étape R258 (5B) ; R260 (2A) : les couvertures
+  grille.innerHTML = filtreClasse === "Toutes" ? htmlPistesASuivre() + (typeof htmlMesTresors === "function" ? htmlMesTresors() : "") + couverturesFamilles() : albumFamille(filtreClasse);   // étape R258 (5B) ; R260 (2A) : les couvertures ; R328 : « Mes trésors »
   brancherPistesASuivre(grille);
+  if (typeof brancherMesTresors === "function") brancherMesTresors(grille);   // étape R328
   for (const b of grille.querySelectorAll(".som-famille")) b.onclick = () => { filtreClasse = b.dataset.cle; afficherEncyclopedie(); window.scrollTo(0, 0); };
   const retour = grille.querySelector(".alb-retour");
   if (retour) retour.onclick = () => { filtreClasse = "Toutes"; afficherEncyclopedie(); window.scrollTo(0, 0); };
@@ -1185,6 +1187,7 @@ function suivrePiste(u, phrase) {
     return;
   }
   suivi.piste = { nom: u.nom_courant, exp: cible.x.id, phrase: phrase || "" };
+  if (cible.t !== territoireActif()) suivi.piste.territoire = cible.t;   // R332 : le bandeau dira « Vous voici en … »
   sauvegarder();
   fermerPiste();
   if (cible.t !== territoireActif()) changerTerritoire(cible.t);
@@ -1206,8 +1209,10 @@ function verifierPiste() {
 function bandeauPiste(x) {
   const u = pisteEnCours();
   if (!u || !suivi.piste || suivi.piste.exp !== x.id || estVueFiche(u) || !x.liste.includes(u)) return "";
+  // R332 (accord d'Aubin du 26/11) : si la piste a fait changer de territoire, le bandeau le dit
+  const t = suivi.piste.territoire && suivi.piste.territoire === territoireActif() && typeof dansLeTerritoire === "function" ? suivi.piste.territoire : null;
   return `<div class="exp-piste"><span class="exp-piste-sil">${caseSilhouette(u, "ps-sil")}</span>
-      <span><b>Vous suivez une piste</b>${suivi.piste.phrase ? ` ${echapper(suivi.piste.phrase)}` : ""} Elle est parmi les espèces de cette expédition : son rond est en pointillé.</span>
+      <span><b>Vous suivez une piste</b>${t ? ` Vous voici ${echapper(dansLeTerritoire(t))}.` : ""}${suivi.piste.phrase ? ` ${echapper(suivi.piste.phrase)}` : ""} Elle est parmi les espèces de cette expédition : son rond est en pointillé.</span>
       <button type="button" class="exp-piste-stop" id="exp-piste-stop">Ne plus suivre</button></div>`;
 }
 function brancherBandeauPiste() {
@@ -1259,23 +1264,27 @@ function pistesASuivre(n = 1) {
 }
 const PHRASES_PISTE = { sosie: c => `Elle ressemble à ${votreEspece(c.k)}.`, par: c => `Elle mange ${votreEspece(c.k)}.`,
                         mange: c => `${majuscule(votreEspece(c.k))} la mange.`, voisin: c => `Elle vit dans les mêmes lieux que ${votreEspece(c.k)}.` };
+// Étape R330 (55.02, choix d'Aubin du 26/11, 22 h 40 : « A sans la piste ») — « Pour continuer votre carnet ».
+//   Critère : en ouvrant l'Encyclopédie, on comprend en une seconde ce qui est proposé et où le toucher vous emmène ;
+//   ça ne passe pas avant vos propres animaux ; rien ne vous fait quitter l'Encyclopédie ni changer de territoire sans l'avoir dit.
+//   Plus de piste dans ce bloc (pistesASuivre et suivrePiste restent pour « Ses liens » et les cases vides de l'album).
+//   La phrase compte des « choses » (resteCarnet = cases de la fiche pas encore trouvées), pas des questions :
+//   lancerFicheEspece pose au plus QUESTIONS_REVISION questions, et une réponse fausse ne remplit pas la case.
+//   Pas de jauge : à 390 px, la phrase prend déjà deux lignes à côté du bouton (elle dit la même chose, en clair).
+function phraseResteFiche(k) { return `Encore ${k} chose${k > 1 ? "s" : ""} à découvrir sur sa fiche`; }
 function htmlPistesASuivre() {
   const fiches = fichesPresqueCompletes(2);
-  const p = pistesASuivre()[0];
-  if (!fiches.length && !p) return "";
+  if (!fiches.length) return "";
   const lignesF = fiches.map(f => {
-    const pct = Math.round(100 * f.part);
-    return `<button type="button" class="ps-ligne ps-fiche" data-fiche="${echapper(f.e.nom_courant)}">${imgMini(f.e.photo, f.e.nom_courant, "ps-photo")}`
-      + `<span><b>${echapper(f.e.nom_courant)}</b><i class="ps-jauge"><b style="width:${pct}%"></b></i></span>`
-      + `<em>encore ${f.k} <span aria-hidden="true">▶</span></em></button>`;
+    const nom = echapper(f.e.nom_courant);
+    return `<div class="ps-ligne ps-fiche" data-fiche="${nom}">${imgMini(f.e.photo, "", "ps-photo")}`
+      + `<span><b>${nom}</b><small>${phraseResteFiche(f.k)}</small></span>`
+      + `<button type="button" class="ps-completer" aria-label="Compléter la fiche : ${nom}" title="Quelques questions sur cette espèce">Compléter</button></div>`;
   }).join("");
-  const lieu = p ? expeditionPourPiste(p.u) : null;
-  const ligneP = p ? `<button type="button" class="ps-ligne ps-piste" data-piste="${echapper(p.u.nom_courant)}" data-phrase="${echapper(PHRASES_PISTE[p.sorte](p))}" style="--couleur-classe:${classeDe(p.u).couleur}">${caseSilhouette(p.u, "ps-sil")}`
-      + `<span><b>Une espèce à découvrir</b><small>${echapper(PHRASES_PISTE[p.sorte](p))}</small></span>`   // R275 (43.02) : deux lignes, comme ses voisines
-      + `<em><span aria-hidden="true">▶</span></em></button>` : "";
-  return `<section class="pistes-suivre"><h2>À suivre</h2>${lignesF}${ligneP}</section>`;
+  return `<section class="pistes-suivre ps-carnet"><h2>Pour continuer votre carnet</h2><p class="ps-intertitre">Presque complètes</p>${lignesF}</section>`;
 }
 function brancherPistesASuivre(zone) {
+  // Toute la ligne reste touchable ; le bouton « Compléter » dit ce qui va se passer
   zone.querySelectorAll(".ps-fiche[data-fiche]").forEach(b => b.onclick = () => lancerFicheEspece(especeParNom(b.dataset.fiche)));
   zone.querySelectorAll(".ps-piste[data-piste]").forEach(b => b.onclick = () => suivrePiste(especeParNom(b.dataset.piste), b.dataset.phrase));
 }

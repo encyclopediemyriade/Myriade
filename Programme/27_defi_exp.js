@@ -1465,7 +1465,7 @@ function finDefiExp() {
   window.scrollTo(0, 0);
   if (etapeGagnee) {
     const finieAussi = etapeFinie(x, 2);   // une expédition sans étape 2 se termine avec l'étape 1
-    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Rencontres validées par le test",   // R287 (3A) : pas « Rencontres terminées » sans Rencontre
+    feter({ exp: x, etiquette: `Expédition · ${x.titre}`, titre: finieAussi ? "Expédition terminée !" : "Rencontres réussies avec Me tester",   // R287 (3A) : pas « Rencontres terminées » sans Rencontre ; R331b : plus de « validées par le test »
             detail: empreintes ? `+${empreintes} empreinte${empreintes > 1 ? "s" : ""}` : "", son: "badge",
             visuel: `<div class="fete-visuel rang exp-fete">${PAS_SVG}</div>` });
   } else if (empreintes) setTimeout(() => afficherBulle(`+${empreintes} empreinte${empreintes > 1 ? "s" : ""}`), 600);
@@ -1772,7 +1772,7 @@ function corpsVieDefi(q) {
     <p class="dfx-vie-nom"><b>${echapper(e.nom_courant)}</b></p>
     <p class="cdo-q">${et ? "À votre avis, lequel est vrai ?" : "Vrai ou faux ?"}</p>
     ${et ? "" : `<div class="dfx-vie-affirmation">${echapper(v.texte)}</div>`}
-    <div class="cdo-noms dfx-noms-col dfx-vie-reponses${et ? " phrases" : " vf"}">${reponses.map((t, k) => `<button type="button" class="cdo-nom dfx-vie-rep" data-k="${k}"><span>${echapper(t)}</span></button>`).join("")}</div>
+    <div class="cdo-noms dfx-noms-col dfx-vie-reponses${et ? " phrases" : " vf"}">${reponses.map((t, k) => `<button type="button" class="cdo-nom dfx-vie-rep" data-k="${k}">${et ? `<span>${echapper(t)}</span>` : htmlVraiFaux(t)}</button>`).join("")}</div>
     <p class="dfx-consigne dfx-vie-consigne">Sur sa vie : cette question ne compte pas dans les erreurs.</p>`;
 }
 function repondreVieDefi(q, k, bouton) {

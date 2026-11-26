@@ -225,10 +225,13 @@ function dessinerPiste() {
   } else if (quoi === "indices") {
     corps = `<div class="pt-rep"><small>${rangRep}</small><dl class="pt-indices">${lignesIndices(P.T, P.e).map(([a, b]) => `<div><dt>${a}</dt><dd>${echapper(b)}</dd></div>`).join("")}</dl></div>`;
   } else {
-    corps = `<div class="pt-rep pt-coin-texte"><small>Le coin du trésor</small><p class="pt-coin-lieu">${echapper(P.c.nom)}</p><p>Il est là, tout près. Approchez sans bruit.</p></div>`;
+    const ind = texteTresor(P.e).indice;   // R328 : l'indice est redit au coin
+    corps = `<div class="pt-rep pt-coin-texte"><small>Le coin du trésor</small><p class="pt-coin-lieu">${echapper(P.c.nom)}</p>`
+      + (ind && k > 0 ? `<p class="pt-rappel">${echapper(ind)}</p>` : "") + `<p>Approchez sans bruit.</p></div>`;
   }
+  if (k === 0) corps = annoncePiste(P) + corps;   // R328 (9A) : la piste annonce une espèce rare, avec un indice
   const suivant = P.etapes[k + 1];
-  const bouton = coin ? "Faire sa Rencontre" : suivant === "coin" ? "Aller au coin du trésor" : "Repère suivant";
+  const bouton = coin ? (REVELATION_R328 ? "Découvrir le trésor" : "Faire sa Rencontre") : suivant === "coin" ? "Aller au coin du trésor" : "Repère suivant";
   z.classList.toggle("au-coin", coin);
   z.innerHTML = `<div class="pt-haut"><img class="pt-photo" src="${srcEcran(P.c.photo)}" alt="" onerror="if (this.src.includes('/moy/')) this.src='${P.c.photo}';">
       <div class="pt-voile" aria-hidden="true"></div>
@@ -251,7 +254,7 @@ function dessinerPiste() {
   z.querySelector("#pt-retour").onclick = fermerPisteTresor;
   z.querySelector("#pt-suite").onclick = () => {
     if (!piste) return;
-    if (coin) { lancerRencontreTresor(piste.T); return; }
+    if (coin) { const T = piste.T; if (REVELATION_R328) { fermerPisteTresor(); ouvrirRevelationTresor(T, "arrivee"); } else lancerRencontreTresor(T); return; }   // R328 : la révélation d'abord
     if (piste.son) try { piste.son.pause(); } catch (err) { /* rien */ }
     piste.i++; dessinerPiste();
   };
@@ -295,6 +298,7 @@ function finRencontreTresor(s) {
   feterTresor(T);
 }
 function feterTresor(T) {
+  if (REVELATION_R328) { ouvrirRevelationTresor(T, false); return; }   // R328 (9A) : l'écran de révélation remplace la « couverture »
   const e = especeDuTresor(T), c = chapitreParNom(T.territoire, T.lieu);
   if (!e || !c) return;
   const v = confirmeR288(e, "statut_conservation_france") && !/mineure|non évalué|insuffisantes|non applicable/i.test(e.statut_conservation_france)
@@ -307,6 +311,80 @@ function feterTresor(T) {
           detail: (v ? `<div class="rv-statut">${echapper(v)}</div>` : "") + (lignes.length ? `<div class="rv-lignes">${lignes.map(l => `<p>${l}</p>`).join("")}</div>` : ""),
           visuel: `<div class="fete-visuel rv-visuel"><span class="photo-fete">${imgMini(photoEsp(e), e.nom_courant)}</span></div>` });
 }
+// ==================================================================
+// Étape R328 (26/11/2026, retours du 26/11 midi, note 9, choix d'Aubin 9A « Annonce + révélation + carnet »).
+//   Critère : « avant de jouer, on sait qu'on cherche une espèce rare ; après, on se souvient d'elle ».
+//   • La piste annonce, dès son premier écran, « Une espèce rare se cache ici. » avec un INDICE (une phrase qui ne la nomme
+//     pas : Données\rarete_contenu.xlsx, onglet pourquoi_rare, colonne indice_tresor) ; l'indice est redit au coin du trésor.
+//   • Au bout de la piste, AVANT sa Rencontre (choix 9A), un écran à part, la RÉVÉLATION : grande photo, « Trésor trouvé », son nom, « Pourquoi il est
+//     rare », « Ce qui l'aide » (colonne ce_qui_aide), et « Ajouté à Mes trésors, dans l'Encyclopédie ».
+//   • « Mes trésors » dans l'Encyclopédie : les trésors trouvés ; un toucher rouvre leur révélation.
+//   Une case rose (incertaine) du classeur n'arrive jamais ici : la ligne manque, simplement.
+// ==================================================================
+const REVELATION_R328 = true;
+function texteTresor(e) { return (e && typeof TEXTES_TRESOR !== "undefined" && TEXTES_TRESOR[e.nom_courant]) || {}; }
+function annoncePiste(P) {
+  const ind = texteTresor(P.e).indice;
+  return `<div class="pt-annonce"><div class="pta-kick"><small>Le trésor du lieu</small><span class="pta-rare">Espèce rare</span></div>
+    <b class="pta-titre">Une espèce rare se cache ici.</b>${ind ? `<div class="pta-indice"><small>Indice</small><p>${echapper(ind)}</p></div>` : ""}</div>`;
+}
+//   mode « arrivee » (au bout de la piste, choix 9A : AVANT la Rencontre) : le trésor est noté trouvé ici, puis « Faire sa Rencontre ▶ » ;
+//   mode « relire » (true, depuis « Mes trésors ») : Fermer / Voir sa fiche. (false = ancien appel de fin de Rencontre, gardé.)
+function ouvrirRevelationTresor(T, mode) {
+  const e = especeDuTresor(T), c = T && chapitreParNom(T.territoire, T.lieu);
+  if (!e || !c) return;
+  const arrivee = mode === "arrivee", relire = mode === true || mode === "relire";
+  let nouveau = !relire && !arrivee;
+  if (arrivee && suivi) { suivi.tresors = suivi.tresors || {}; if (!suivi.tresors[cleTresor(T)]) { suivi.tresors[cleTresor(T)] = Date.now(); sauvegarder(); nouveau = true; } }
+  const tx = texteTresor(e), p = phrasePourquoi(e), f = e.genre_nom === "féminin";
+  const statut = confirmeR288(e, "statut_conservation_france") && !/mineure|non évalué|insuffisantes|non applicable/i.test(e.statut_conservation_france)
+    ? `${typeof motStatut === "function" ? motStatut(e.statut_conservation_france) : e.statut_conservation_france} en France` : "";
+  const aide = tx.aide || T.marche || "";
+  const photo = estRenseigne(e.photo) ? `<img src="${srcEcran(e.photo)}" alt="${echapper(e.nom_courant)}" onerror="if (this.src.includes('/moy/')) this.src='${e.photo}';">`
+                                       : `<img class="rt-sil" src="${fichierSilhouette(e)}" alt="">`;
+  let z = document.getElementById("revelation-tresor");
+  if (!z) { z = document.createElement("div"); z.id = "revelation-tresor"; z.setAttribute("role", "dialog"); z.setAttribute("aria-modal", "true"); document.body.appendChild(z); }
+  z.setAttribute("aria-label", "Trésor trouvé : " + e.nom_courant);
+  z.innerHTML = `<div class="rt-page"><div class="rt-photo">${photo}<span class="rt-badge">${SPIRALE_R288}Trésor trouvé</span></div>
+    <div class="rt-corps"><small class="rt-kick">Le trésor ${typeof deLieu === "function" ? echapper(deLieu(c.nom)) : "de " + echapper(c.nom)}</small>
+      <h1>${echapper(e.nom_courant)}</h1><i class="rt-sci">${echapper(e.nom_scientifique || "")}</i>${statut ? `<span class="rt-statut">${echapper(statut)}</span>` : ""}
+      ${p || T.ici ? `<div class="rt-boite rt-pourquoi"><small>Pourquoi ${pe(e).elle} est rare</small>${p ? `<p>${echapper(p)}</p>` : ""}${T.ici ? `<p class="rt-ici"><b>Ici.</b> ${echapper(T.ici)}</p>` : ""}</div>` : ""}
+      ${aide ? `<div class="rt-boite rt-aide"><small>Ce qui l'aide</small><p>${echapper(aide)}</p></div>` : ""}
+      ${!nouveau ? "" : `<div class="rt-carnet">${SPIRALE_R288}<span>${f ? "Ajoutée" : "Ajouté"} à <b>Mes trésors</b>, dans l'Encyclopédie.</span></div>`}
+      <div class="rt-boutons">${arrivee ? `<button type="button" class="rt-go" id="rt-rencontre">Faire sa Rencontre <span aria-hidden="true">▶</span></button>
+        <button type="button" class="rt-fiche" id="rt-fermer">Retour au lieu</button>`
+        : `<button type="button" class="rt-go" id="rt-fermer">${relire ? "Fermer" : "Continuer"}</button>
+        <button type="button" class="rt-fiche" id="rt-fiche">Voir sa fiche</button>`}</div></div></div>`;
+  z.classList.add("on"); document.documentElement.classList.add("revelation-ouverte"); z.scrollTop = 0;
+  const fermer = () => { z.classList.remove("on"); z.innerHTML = ""; document.documentElement.classList.remove("revelation-ouverte"); document.removeEventListener("keydown", echap); };
+  const echap = ev => { if (ev.key === "Escape") fermer(); };
+  document.addEventListener("keydown", echap);
+  z.querySelector("#rt-fermer").onclick = arrivee ? () => { fermer(); ouvrirLieu(T.territoire, T.lieu); window.scrollTo(0, 0); } : fermer;
+  const fi = z.querySelector("#rt-fiche"); if (fi) fi.onclick = () => { fermer(); if (typeof ouvrirPageEspece === "function") ouvrirPageEspece(e); };
+  const re = z.querySelector("#rt-rencontre"); if (re) re.onclick = () => { fermer(); lancerRencontreTresor(T); };
+  const b = z.querySelector(arrivee ? "#rt-rencontre" : "#rt-fermer"); if (b && !("ontouchstart" in window)) b.focus({ preventScroll: true });
+}
+function fermerRevelationTresor() {   // ferme sans rien lancer (aussi en mode « arrivee »)
+  const z = document.querySelector("#revelation-tresor.on"); if (!z) return;
+  z.classList.remove("on"); z.innerHTML = ""; document.documentElement.classList.remove("revelation-ouverte");
+}
+// « Mes trésors » dans l'Encyclopédie (06) : les trésors trouvés, le plus récent d'abord
+function tresorsTrouves() {
+  return tousLesTresors().filter(tresorTrouve).sort((a, b) => (suivi.tresors[cleTresor(b)] || 0) - (suivi.tresors[cleTresor(a)] || 0));
+}
+function htmlMesTresors() {
+  if (!RARETE_R288 || !REVELATION_R328 || !suivi) return "";
+  const l = tresorsTrouves().filter(T => especeDuTresor(T));
+  if (!l.length) return "";
+  const cartes = l.map(T => { const e = especeDuTresor(T);
+    return `<button type="button" class="mt-carte" data-tresor="${echapper(cleTresor(T))}"><span class="mt-photo">${imgMini(photoEsp(e), e.nom_courant)}</span>`
+      + `<b>${echapper(e.nom_courant)}</b><small>${echapper(T.lieu)}</small></button>`; }).join("");
+  return `<section class="mes-tresors"><h2>${SPIRALE_R288}Mes trésors <small>${nombre(l.length)} sur ${nombre(tousLesTresors().length)}</small></h2><div class="mt-liste">${cartes}</div></section>`;
+}
+function brancherMesTresors(zone) {
+  zone.querySelectorAll(".mt-carte[data-tresor]").forEach(b => b.onclick = () => { const T = tresorParCle(b.dataset.tresor); if (T) ouvrirRevelationTresor(T, true); });
+}
+
 // ---- 5D · La carte « article » d'une rare qui entre au carnet ----
 function feterArticleRare(e) {
   if (!e) return;

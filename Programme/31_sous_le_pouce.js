@@ -34,6 +34,7 @@ function calerSousPouce(premier, dernier, reserve, reponses) {
   const rep = reponses || dernier;
   if (premier._pouce && premier._pouce.dessous && premier.nextElementSibling !== rep) rep.before(premier);   // nouvelle question : la ligne remonte
   rep.style.marginTop = "";
+  rendrePhotoPouce(premier);                              // R325 : la photo reprend sa hauteur avant la nouvelle question
   premier._pouce = { dernier, reserve, reponses: rep, dessous: false, margeVide: null };
   calagesPouce.add(premier);
   if (observateurPouce) { observateurPouce.observe(premier); observateurPouce.observe(dernier); }
@@ -43,6 +44,7 @@ function decalerPouce(premier) {   // le bloc n'est plus à caler (écran de lec
   if (!premier) return;
   if (premier._pouce && premier._pouce.reponses) premier._pouce.reponses.style.marginTop = "";
   if (premier._pouce && premier._pouce.dessous && premier.isConnected) { premier._pouce.reponses.before(premier); premier.classList.remove("pouce-dessous"); }
+  rendrePhotoPouce(premier);                              // R325
   premier._pouce = null;
   calagesPouce.delete(premier);
   premier.style.marginTop = "";
@@ -59,7 +61,7 @@ function boutonsPeuDeReponses(rep) {
   const b = visibles.filter(x => x.matches("button.reponse, button.cdo-nom"));
   const ok = surTelephone() && (b.length === 2 || b.length === 3) && b.length === visibles.length
     && !rep.querySelector("audio, canvas, .choix-photo:not(.choix-picto), .anneau-ecoute") && !b.some(x => x.querySelector("img, svg") && !x.classList.contains("choix-picto"))
-    && !/duo-cris|empreintes-duo|cases-a-cocher|forme-|annonce-etape|paysages|deux-photos|duo-exp/.test(rep.className)
+    && !/duo-cris|empreintes-duo|cases-a-cocher|forme-|annonce-etape|paysages|deux-photos|duo-exp|vrai-faux|vf/.test(rep.className)   // R325 (4A) : Vrai / Faux côte à côte
     && (!/grille-photos/.test(rep.className) || b.every(x => x.classList.contains("choix-picto")));   // les réponses à pictogramme (une couleur, un bec…) comptent ; pas les photos, les cris, les empreintes
   rep.classList.toggle("peu-de-reponses", ok);
   if (!ok) rep.style.removeProperty("--h-rep");
@@ -80,8 +82,9 @@ function recalerUn(premier) {
     c.reponses.style.setProperty("--h-rep", h + "px");
     c.hRep = h;
   }
-  const mesurer = () => Math.floor(window.innerHeight - c.reserve - (c.dernier.getBoundingClientRect().bottom + window.scrollY));
+  const mesurer = () => Math.floor(window.innerHeight - c.reserve - (c.reserveEnPlus || 0) - (c.dernier.getBoundingClientRect().bottom + window.scrollY));
   let ecart = mesurer();
+  if (vide && GRAND_VIDE_R325) ecart = combler(premier, c, ecart, mesurer);   // R325 : plus de grand vide sous la question
   // la ligne qui suit la réponse ne tient pas dans la place gardée : les cases hautes lui en rendent (leur bas ne bouge pas)
   if (peu && !vide && ecart < 0 && c.hRep > PEU_DE_REPONSES.min) {
     const avant = c.hRep, ecartAvant = ecart;
@@ -100,6 +103,42 @@ function recalerUn(premier) {
   apres.after(premier);
   premier.classList.add("pouce-dessous");
   descendreVersVerdict(premier, window.innerHeight - c.reserve + 8);   // R280 (44.01) : un seul mouvement, doux
+}
+// ==================================================================
+// Étape R325 (26/11/2026, retours du 26/11 midi, notes 4 et 5 : « un grand blanc entre la question et les réponses ») :
+//   avant la réponse, la place libre entre la question et les réponses calées en bas ne dépasse plus PLACE_RETOUR_R325
+//   (de quoi écrire « Oui. » ou « Pas cette fois » sans rien bouger). Le surplus va d'abord à la PHOTO, qui grandit jusqu'au
+//   format 4:3 (jamais plus haute : l'animal reste entier) ; s'il en reste, les réponses remontent sous la question et le
+//   vide passe sous elles, hors de la vue (c.reserveEnPlus). Rien ne change sur ordinateur ni une fois la réponse donnée.
+// ==================================================================
+const GRAND_VIDE_R325 = true;          // false = comme avant R325 (réponses toujours calées tout en bas)
+const PLACE_RETOUR_R325 = 40;          // px gardés au-dessus des réponses pour la ligne qui suit la réponse
+function photoDuPouce(premier) {
+  const carte = premier.closest && premier.closest("#carte-rencontre");
+  const ph = carte && carte.querySelector("#photo-rencontre");
+  return ph && ph.getClientRects().length && !/sticky|fixed/.test(getComputedStyle(ph).position) ? ph : null;
+}
+function rendrePhotoPouce(premier) {
+  const ph = premier && premier._pouce && premier._pouce.photo;
+  if (ph && ph.style.height) { ph.style.transition = "none"; ph.style.height = ""; void ph.offsetHeight; ph.style.transition = ""; }
+}
+function combler(premier, c, ecart, mesurer) {
+  rendrePhotoPouce(premier);
+  c.reserveEnPlus = 0;
+  ecart = mesurer();
+  if (ecart <= PLACE_RETOUR_R325) return ecart;
+  const ph = photoDuPouce(premier);
+  if (ph) {
+    const r = ph.getBoundingClientRect(), maxi = Math.floor(r.width * 3 / 4);   // jamais plus haute que le format 4:3
+    const plus = Math.max(0, Math.min(ecart - PLACE_RETOUR_R325, maxi - Math.ceil(r.height)));
+    if (plus > 0) {
+      ph.style.transition = "none"; ph.style.height = (r.height + plus) + "px"; void ph.offsetHeight; ph.style.transition = "";
+      c.photo = ph;
+      ecart = mesurer();
+    }
+  }
+  if (ecart > PLACE_RETOUR_R325) { c.reserveEnPlus = ecart - PLACE_RETOUR_R325; ecart = PLACE_RETOUR_R325; }
+  return ecart;
 }
 // ==================================================================
 // Étape R280 (21/11/2026, 44.01, note 1 du 20/11 au soir : « ça descend vers la caractéristique… par à-coup, pas très élégant »).

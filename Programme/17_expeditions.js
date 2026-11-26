@@ -811,10 +811,15 @@ function chapitresDe(t) {
 function aDesChapitres(t) { return chapitresDe(t).length > 0 && expeditionsDe(t).some(x => x.chapitre); }
 function chapitreParNom(t, nom) { return chapitresDe(t).find(c => c.nom === nom) || null; }
 const memoExpChap = new Map();   // R239b (lenteurs)
-function expeditionsDuChapitre(t, nom) {
+function expeditionsDuChapitreClasseur(t, nom) {   // R329 : l'ordre du classeur (rang, puis ordre)
   const k = t + "|" + nom;
   if (!memoExpChap.has(k)) memoExpChap.set(k, expeditionsDe(t).filter(x => x.chapitre === nom));
   return memoExpChap.get(k).slice();
+}
+// Étape R329 (1B) : dans l'ordre du joueur (35_revision_lieu.js : le plus d'espèces nouvelles, puis la plus propre au lieu)
+function expeditionsDuChapitre(t, nom) {
+  const l = expeditionsDuChapitreClasseur(t, nom);
+  return typeof rangerLieu === "function" ? rangerLieu(t, nom, l) : l;
 }
 function finiesChapitre(t, nom) { return expeditionsDuChapitre(t, nom).filter(x => empreintesExp(x) >= NB_ETAPES).length; }
 function carrefourOuvert(t, k) {
@@ -918,7 +923,8 @@ function vedetteLieu(t, c) {
 }
 function pastilleMilieu(m) { return `<span class="lieu-milieu">${typeof dessinReponse === "function" ? dessinReponse("milieu_principal", m) : ""}${echapper(m)}</span>`; }
 function expeditionDuLieu(t, c) {          // l'expédition à reprendre dans ce lieu (sinon la première ouverte)
-  const ouvertes = expeditionsOuvertes(t), liste = expeditionsDuChapitre(t, c.nom).filter(x => ouvertes.has(x.id) && empreintesExp(x) < NB_ETAPES);
+  const ouvertes = expeditionsOuvertes(t), liste = expeditionsDuChapitre(t, c.nom).filter(x => ouvertes.has(x.id) && empreintesExp(x) < NB_ETAPES
+    && !(typeof enRevisionLieu === "function" && enRevisionLieu(x)));   // R329 (2C) : celles de la Révision du lieu se jouent ensemble
   const derniere = suivi && suivi.derniereExpedition && suivi.derniereExpedition[t];
   return liste.find(x => x.id === derniere) || liste.find(x => expeditionCommencee(x)) || liste[0] || null;
 }
@@ -937,10 +943,13 @@ function expeditionsOuvertes(t) {
     for (const c of chapitresDe(t)) {
       if (!chapitreOuvert(t, c)) continue;
       let nouvelles = 0;
+      const revision = [];   // R329 (2C) : la Révision du lieu compte pour une seule place, en fin de lieu
       for (const x of expeditionsDuChapitre(t, c.nom)) {
         if (empreintesExp(x) >= NB_ETAPES || expLancee(x)) { ouvertes.add(x.id); continue; }
+        if (typeof enRevisionLieu === "function" && enRevisionLieu(x)) { revision.push(x); continue; }
         if (nouvelles < OUVERTES_PAR_CHAPITRE) { ouvertes.add(x.id); nouvelles++; }
       }
+      if (revision.length && nouvelles < OUVERTES_PAR_CHAPITRE) for (const x of revision) ouvertes.add(x.id);
     }
     return ouvertes;
   }
@@ -997,7 +1006,15 @@ function rangEmpreintes(t) {
 
 // ---- L'expédition à reprendre (le gros bouton de la couverture) ----
 function expeditionAReprendre(t) {
-  const ouvertes = expeditionsOuvertes(t), liste = expeditionsDe(t).filter(x => ouvertes.has(x.id) && empreintesExp(x) < NB_ETAPES);
+  const ouvertes = expeditionsOuvertes(t);
+  let liste = expeditionsDe(t).filter(x => ouvertes.has(x.id) && empreintesExp(x) < NB_ETAPES);
+  if (typeof rangerLieu === "function" && aDesChapitres(t)) {   // R329 (1B) : dans chaque lieu, l'ordre du joueur ; la Révision du lieu en dernier
+    const premier = new Map(), rang = new Map();
+    expeditionsDe(t).forEach((x, i) => { if (!premier.has(x.chapitre)) premier.set(x.chapitre, i); });
+    for (const c of chapitresDe(t)) expeditionsDuChapitre(t, c.nom).forEach((x, i) => rang.set(x.id, i));
+    const rev = x => typeof enRevisionLieu === "function" && enRevisionLieu(x) ? 1 : 0;
+    liste = liste.sort((a, b) => rev(a) - rev(b) || (premier.get(a.chapitre) || 0) - (premier.get(b.chapitre) || 0) || (rang.get(a.id) || 0) - (rang.get(b.id) || 0));
+  }
   const derniere = suivi && suivi.derniereExpedition && suivi.derniereExpedition[t];
   const d = liste.find(x => x.id === derniere);
   // étape 287 : dans le chapitre choisi d'abord (sans le recalculer : chapitreCourant appelle cette fonction)
@@ -1665,6 +1682,7 @@ function lancerRencontreExpedition(x) {
 // revient dans les prochaines parties (« Déjà croisée… ») : la même question ne tourne plus en boucle à chaque ouverture.
 // reprise : les espèces confondues dans la révision groupée, reposées tout de suite (toutes leurs questions sont des reprises).
 function lancerRevueExpedition(x, reprise) {
+  if (typeof revisionVarieeExp === "function" && revisionVarieeExp(x, reprise)) return;   // R329 (2C) : la révision sous un autre angle (ou la Révision du lieu)
   if (!reprise && typeof revueGroupeePossible === "function" && revueGroupeePossible(x)) { ouvrirRevueGroupee(x); return; }   // étape R173 : la révision groupée
   const liste = reprise ? reprise.filter(e => especesARevoirIci(x).includes(e)) : especesARevoirIci(x);
   if (!liste.length) { lancerExpedition(x, etapeEnCours(x) || 2); return; }
@@ -2319,6 +2337,14 @@ function ouvrirExpedition(x) { expeditionAffichee = x; montrer("expedition"); de
     if (typeof prechargerRencontre === "function") prechargerRencontre(x.liste, x);
   }, 300);
 }
+// Étape R331 (55.03, phrase d'Aubin du 26/11, 22 h 48) : sous l'étape « Rencontres » finie par le défi, plus de « validées par le test ».
+//   Le bouton lance toujours la Rencontre de la première espèce sans Rencontre (rencontrerEspeceExp, 27_defi_exp.js).
+function phraseReprendre(x, n) {
+  const avecPhoto = x.liste.filter(e => estRenseigne(e.photo)).length;
+  if (n >= avecPhoto) return "Si vous le souhaitez, vous pouvez reprendre cette étape en mode Découvrir.";
+  return n > 1 ? `Si vous le souhaitez, vous pouvez reprendre ces ${n} espèces en mode Découvrir.`
+               : "Si vous le souhaitez, vous pouvez reprendre cette espèce en mode Découvrir.";
+}
 function dessinerEcranExpedition() {
   const zone = document.getElementById("vue-expedition"), x = expeditionAffichee;
   if (!zone || !x) return;
@@ -2332,13 +2358,14 @@ function dessinerEcranExpedition() {
     // R297 (note 6c du 22/11 au soir) : « 7 espèces · toutes reconnues » puis « Faire la Rencontre des 4 espèces reconnues au test »
     //   semblait se contredire. C'est normal (validées par Me tester, leur Rencontre reste possible, sans empreintes en double) :
     //   le bouton dit maintenant « Rencontrer aussi les 4 espèces validées par le test » (un plus, rien ne manque).
-    return `<div class="exp-etape${finie ? " finie" : ""}${active ? " active" : ""}${ouverte ? "" : " fermee"}">
+    //   R331 (55.03) : phrase d'Aubin, « Si vous le souhaitez, vous pouvez reprendre … en mode Découvrir. » (phraseReprendre)
+    return `<div class="exp-etape${finie ? " finie" : ""}${active ? " active" : ""}${ouverte ? "" : " fermee"}${sansRencontre ? " avec-reprendre" : ""}">
         <span class="exp-num etape-${k}${finie ? " fait" : ""}">${pictoEtape(k)}</span>
         <span class="exp-etape-texte"><b>${nomEtape(k)}</b><small>${ETAPES[k].texte}</small>
           ${active && k === 2 && ens ? `<small>${questionsEnsembleExp(x).length} question${questionsEnsembleExp(x).length > 1 ? "s" : ""}, environ ${Math.max(1, Math.round(questionsEnsembleExp(x).length * 0.6))} min</small>`
             : active ? `<i class="jauge-jeu"><b style="width:${Math.round(100 * av.faites / av.total)}%"></b></i><small>${av.faites} espèce${av.faites > 1 ? "s" : ""} sur ${av.total}${k === 1 && especeAConnaitre(x) ? ` · ${especeFaite(especeAConnaitre(x), 1) ? `à revoir : ${especesARevoirIci(x).length} espèce${especesARevoirIci(x).length > 1 ? "s" : ""} déjà rencontrée${especesARevoirIci(x).length > 1 ? "s" : ""} ailleurs (une photo chacune)` : `prochaine rencontre : ${estIdentifiee(especeAConnaitre(x)) ? especeAConnaitre(x).nom_courant : "une espèce inconnue"}`}` : ""}</small>` : ""}</span>
         <span class="exp-etape-gain ${finie ? "pris" : ""}" title="Empreintes de cette étape">+${gainEtape(x, k)}${k === 1 ? `<small>(1 par espèce)</small>` : ""}<span>${PAS_SVG}</span></span>
-        ${sansRencontre ? `<button class="duo-autres" data-rencontrer="1" title="Facultatif : validées par le test, elles peuvent aussi être rencontrées (sans empreintes en double)">${sansRencontre > 1 ? `Rencontrer aussi les ${sansRencontre} espèces validées par le test` : "Rencontrer aussi l'espèce validée par le test"}</button>` : ""}
+        ${sansRencontre ? `<button class="duo-autres exp-reprendre" data-rencontrer="1" title="Facultatif : leur carte et leur vie, sans empreintes en plus.">${phraseReprendre(x, sansRencontre)}</button>` : ""}
         ${ouverte ? `<button class="${active ? "couv-go petit" : "duo-autres"}" data-k="${k}">${active ? "Jouer ▶" : finie ? "Rejouer" : "Jouer"}</button>`
                   : `<small class="exp-verrou">🔒 ${apresEtape(k - 1)}</small>`}
       </div>`;
@@ -2616,7 +2643,11 @@ function activerCarrousel(bloc, cible) {
 const ETATS_CHEMIN = { finie: "Terminée", encours: "En cours", nouvelle: "Ouverte", fermee: "Plus tard" };
 function cheminDuLieu(t, c, liste, ouvertes, x0) {
   const finies = liste.filter(x => empreintesExp(x) >= NB_ETAPES).length;
-  const arrets = liste.map((x, i) => {
+  // R329 (2C) : les expéditions de la Révision du lieu sont réunies dans un seul arrêt, en fin de chemin
+  const revision = typeof enRevisionLieu === "function" ? liste.filter(enRevisionLieu) : [];
+  const hors = liste.filter(x => !revision.includes(x));
+  const arretRev = revision.length ? arretRevisionLieu(t, c, revision, ouvertes, hors.length + 1, !x0) : "";
+  const arrets = hors.map((x, i) => {
     const etat = etatExpedition(x, ouvertes), v = vedetteDe(x), prochaine = x0 && x.id === x0.id && etat !== "finie";
     const lib = etat === "encours" ? `En cours · ${titreEtape(etapeEnCours(x) || 1)}` : etat === "finie" ? libelleTerminee(x) : ETATS_CHEMIN[etat];   // R131
     const complete = etat === "finie" && expeditionComplete(x);   // R267 (40.17) : la petite étoile
@@ -2626,7 +2657,7 @@ function cheminDuLieu(t, c, liste, ouvertes, x0) {
         <span class="chemin-info"><b>${echapper(x.titre)}</b>
           <small>${pastilleMilieu(x.milieu)}<span>${x.liste.length} espèces</span></small>${typeof libelleForme === "function" ? `<small class="chemin-formes">${libelleForme(x)}</small>` : ""}</span>
         <span class="chemin-droite">${dessinGain(x)}<span class="exp-tag ${prochaine ? "cours" : ({ finie: "fin", encours: "cours", nouvelle: "nouv", fermee: "ferm" })[etat]}${complete ? " complete" : ""}">${prochaine && etat === "nouvelle" ? "À suivre" : lib}</span></span></button>`;   // étape R92 (choix C2) : le bouton reste seulement sur la photo
-  }).join("");
+  }).join("") + arretRev;
   const fini = chapitreFini(t, c), dispo = finaleDisponible(t, c), ouverte = finaleOuverte(t, c), faite = finaleFaite(t, c.nom);
   const n = liensDuLieu(t, c.nom).length, esp = especesDesLiens(t, c.nom, 6);
   const etatF = faite ? "Terminée · revoir la planche" : ouverte ? "Toutes les expéditions sont terminées" : (fini && !dispo) ? "Bientôt disponible" : `S'ouvre à la fin du lieu · ${finies} expédition${finies > 1 ? "s" : ""} sur ${liste.length}`;
@@ -2684,7 +2715,7 @@ function pictoIdentite(k) {
 function blocIdentiteLieu(c) {
   const d = (c && c.identite) || {};
   const cases = [
-    ["milieu", "Milieu", d.milieu_principal, ""],
+    ["milieu", "Milieu", d.milieu_principal, d.milieu_detail || ""],   // R322 : la petite ligne du milieu (sites remarquables)
     ["protection", "Protection", d.protection, d.protection_detail],
     ["taille", "Taille", d.taille_valeur, d.taille_legende],
     ["chiffre", "Le chiffre", d.chiffre_valeur, d.chiffre_legende]
@@ -2700,6 +2731,7 @@ function blocIdentiteLieu(c) {
 let lieuAffiche = null;
 function ouvrirLieu(t, nom) {
   lieuAffiche = { t, nom };
+  if (typeof recalculerOrdreLieu === "function") recalculerOrdreLieu(t, nom);   // R329 (1B) : l'ordre du joueur, recalculé à l'ouverture du lieu
   choisirChapitre(t, nom);
   montrer("lieu"); dessinerPageLieu(); window.scrollTo(0, 0);
 }
@@ -2845,7 +2877,9 @@ function dessinerPageLieu() {
   if (!c) return;
   const liste = expeditionsDuChapitre(t, c.nom), ouvertes = expeditionsOuvertes(t);
   const finies = liste.filter(x => empreintesExp(x) >= NB_ETAPES).length, x0 = expeditionDuLieu(t, c);
-  const finaleIci = !x0 && finaleOuverte(t, c) && !finaleFaite(t, c.nom);   // étape R149 : le bouton de la photo lance la finale
+  const revIci = !x0 && typeof revisionLieuAJouer === "function" && !!revisionLieuAJouer(t, c);   // R329 (2C) : ensuite, la Révision du lieu
+  const finaleIci = !x0 && !revIci && finaleOuverte(t, c) && !finaleFaite(t, c.nom);   // étape R149 : le bouton de la photo lance la finale
+  const allerSuite = () => { if (x0) allerX0(); else if (revIci) ouvrirRevisionLieu(t, c.nom); else lancerFinale(t, c.nom); };   // R329
   const suiteX0 = x0 ? suiteExpedition(x0) : null;   // R239 (36.15, 8A) : la même règle que le bandeau de l'expédition
   const texteGo = !x0 ? "" : !suiteX0 || suiteX0.choisir ? (expeditionCommencee(x0) ? "Voir l'expédition" : "Prochaine expédition") : suiteX0.texte;
   const allerX0 = () => { if (!suiteX0 || suiteX0.choisir) ouvrirExpedition(x0); else suiteX0.action(); };
@@ -2864,15 +2898,17 @@ function dessinerPageLieu() {
         <div class="lieu-milieux sombre">${milieux.map(pastilleMilieu).join("")}</div></div>
       <div class="lieu-hero-jouer"><small>${finies} expédition${finies > 1 ? "s" : ""} terminée${finies > 1 ? "s" : ""} sur ${liste.length}${finaleIci ? " · la finale vous attend" : ""}</small>
         ${x0 ? `${!suiteX0 || suiteX0.choisir ? `<small class="lieu-go-titre">${echapper(x0.titre)}</small>` : ""}<button class="couv-go" id="lieu-go" type="button">${texteGo}${suiteX0 && !suiteX0.choisir ? ` · ${echapper(x0.titre)}` : ""} <span aria-hidden="true">▶</span></button>`
+          : revIci ? `<button class="couv-go" id="lieu-go" type="button">Révision du lieu <span aria-hidden="true">▶</span></button>`
           : finaleIci ? `<button class="couv-go" id="lieu-go" type="button">Jouer la finale <span aria-hidden="true">▶</span></button>` : ""}</div>
     </div>
     <div class="lieu-sombre">${typeof blocRareteLieu === "function" ? blocRareteLieu(t, c) : ""}${blocMedailleLieu(t, c)}${groupes}</div></div>`;   // R288 : « Des espèces rares vivent ici. », puis le trésor à la fin du lieu   // étape R153 (avant : la carte d'identité en tête)   // étape R133 : la médaille du lieu   // étape R104 : la carte d'identité du lieu en tête
   document.getElementById("lieu-sortir").onclick = () => montrer("accueil");
   const sortirM = document.getElementById("lieu-sortir-m"); if (sortirM) sortirM.onclick = () => { montrer("accueil"); window.scrollTo(0, 0); };   // étape M8
-  const go = document.getElementById("lieu-go"); if (go) go.onclick = () => { if (x0) allerX0(); else lancerFinale(t, c.nom); };
+  const go = document.getElementById("lieu-go"); if (go) go.onclick = allerSuite;
   bandeauCollant(zone, zone.querySelector(".lieu-hero"), { sombre: true, photo: c.photo, sur: echapper(c.pays || t), titre: c.nom,
     infos: `${finies} sur ${liste.length} expéditions`, retourTexte: `Sortir ${vers}`, retour: () => montrer("accueil"),
-    bouton: x0 ? texteGo : finaleIci ? "La finale" : "", action: () => { if (x0) allerX0(); else lancerFinale(t, c.nom); } });   // étape 333 ; R149
+    bouton: x0 ? texteGo : revIci ? "Révision du lieu" : finaleIci ? "La finale" : "", action: allerSuite });   // étape 333 ; R149 ; R329
+  if (typeof brancherRevisionLieu === "function") brancherRevisionLieu(zone, t, c);   // R329 (2C)
   zone.querySelectorAll(".exp-carte[data-id], .chemin-arret[data-id]").forEach(b => b.onclick = () => {
     const x = expeditionParId(b.dataset.id);
     if (b.classList.contains("fermee")) afficherBulle("Elle s'ouvrira quand vous aurez commencé une des expéditions proposées");
@@ -2905,6 +2941,11 @@ function dessinerPageLieu() {
 // ==================================================================
 const ESPECES_PAR_HALTE = 8;
 const QUESTIONS_HALTE = 10;
+const QUESTIONS_PAR_ESPECE_MAX = 2;   // étape R326 (5A) : au plus 2 questions par espèce dans une halte ou la sortie du jour
+function questionsDuSite(especes) {   // le vrai nombre de questions : 10 au plus, 2 au plus par espèce (selon ce qu'elle peut donner)
+  const n = especes.reduce((s, e) => s + Math.min(QUESTIONS_PAR_ESPECE_MAX, casesDuDefi([e], "revision", true).length), 0);
+  return Math.max(1, Math.min(QUESTIONS_HALTE, n));
+}
 const ESPECES_SORTIE = 10;
 const INTERVALLES_RAPPEL = [1, 2, 5, 12, 30];     // jours avant de revoir une espèce, selon son palier (0 = après une erreur)
 
@@ -3007,7 +3048,9 @@ function lancerSite(t, quoi) {               // quoi : un numéro de halte, ou "
   depuisArcade = false; modeLibre = false;
   document.getElementById("bouton-territoire-defi").textContent = "Retour au territoire";
   territoiresDefi = [t]; territoiresChoisis = [t];
-  jeuChoisi = "revision"; revisionsSeules = true; photosSeules = false; questionsClassique = QUESTIONS_HALTE;
+  // Étape R326 (retours du 26/11, note 5, choix d'Aubin 5A) : au plus 2 questions par espèce ; une halte qui a peu d'espèces
+  //   est plus courte (3 espèces → 6 questions) au lieu de reposer les mêmes. Le compteur montre le vrai total.
+  jeuChoisi = "revision"; revisionsSeules = true; photosSeules = false; questionsClassique = questionsDuSite(especes);
   const d = { cle: "site|" + t + "|" + quoi, nom: titre, especes, ouvert: true };
   lancementDirect = true;
   montrer("jouer");
@@ -3284,18 +3327,29 @@ function dessinerFinale() {
   const s = document.getElementById("finale-suite"); if (s) { s.onclick = suiteFinale; s.focus(); }
 }
 function dessinerPlancheFinale(zone) {
+  // Étape R327 (retours du 26/11, note 2, choix d'Aubin 2A « liste compacte ») : critère « sans défiler, on voit le bilan et on
+  //   lit les premiers liens d'un coup d'œil ». Le nom du lieu en titre, le bilan en deux cases, puis UNE colonne : par lien,
+  //   deux petites photos rondes, le type de lien, la phrase en entier, les deux noms en petit. (Avant : une grille de cartes.)
   const { t, nom } = finale;
-  const cases = finale.liens.map(k => {
+  const rond = (e, cote) => e ? `<span class="pl-rond ${cote}${estRenseigne(e.photo) ? "" : " silh"}"><img src="${photoMini(photoEsp(e))}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${photoEsp(e)}'"></span>` : "";
+  const rondElement = (n, cote) => { const p = photoElement(n); return `<span class="pl-rond ${cote}${p ? "" : " vide"}">${p ? `<img src="${p}" alt="" loading="lazy">` : ""}</span>`; };
+  const lignes = finale.liens.map(k => {
     const a = especeParNom(k.a), b = k.nature_b === "element" ? null : especeParNom(k.b);
-    const droite = b ? `<span class="finale-img${estRenseigne(b.photo) ? "" : " silh"}"><img src="${photoMini(photoEsp(b))}" alt="${echapper(b.nom_courant)}" onerror="this.src='${photoEsp(b)}'"></span>` : tuileElement(k.b);
-    return `<figure class="planche-case"><div class="planche-photos"><span class="finale-img${estRenseigne(a.photo) ? "" : " silh"}"><img src="${photoMini(photoEsp(a))}" alt="${echapper(a.nom_courant)}" onerror="this.src='${photoEsp(a)}'"></span>${droite}</div>
-      <figcaption><small>${echapper(k.role)}</small><span class="planche-noms">${echapper(k.a)} · ${echapper(k.b)}</span>${echapper(k.phrase)}</figcaption></figure>`;
+    // les photos et les noms dans l'ordre où la phrase les cite (« Le merle mange les vers de terre » : le merle d'abord)
+    const ou = n => { const m = sansAccentMin(n).split(/[ ']/)[0].slice(0, 5), ph = sansAccentMin(k.phrase); return m.length < 3 ? -1 : ph.indexOf(m); };
+    const ia = ou(k.a), ib = ou(k.b), inverse = !!b && ib >= 0 && (ia < 0 || ib < ia);
+    const [p1, p2, n1, n2] = inverse ? [b, a, k.b, k.a] : [a, b, k.a, k.b];
+    return `<li class="pl-lien"><span class="pl-photos">${rond(p1, "g")}${p2 ? rond(p2, "d") : rondElement(k.b, "d")}</span>
+      <span class="pl-texte"><small>${echapper(k.role)}</small><span class="pl-phrase">${echapper(k.phrase)}</span><span class="pl-noms">${echapper(n1)} · ${echapper(n2)}</span></span></li>`;
   }).join("");
-  const pied = finale.revoir ? "La planche de ce lieu" : finale.essai ? "Essai : rien n'a été enregistré" : finale.gagne ? `${EMPREINTES_FINALE} empreintes gagnées` : "Déjà gagnée : pas de nouvelle empreinte";
-  zone.innerHTML = `<div class="finale-page"><div class="finale-planche planche-fin">
-    <div class="planche-tete"><div><small class="finale-kicker">La finale du lieu</small><h1>${echapper(nom)}, ${({ 6: "six", 7: "sept", 8: "huit", 9: "neuf", 10: "dix" })[finale.liens.length] || finale.liens.length} liens</h1></div>
-      <small>${pied}</small></div>
-    <div class="planche-grille">${cases}</div>
+  const n = finale.liens.length;
+  const second = finale.revoir ? "" : finale.essai ? `<div class="pl-case pl-ocre"><b>Essai</b><span>rien n'est enregistré</span></div>`
+    : finale.gagne ? `<div class="pl-case pl-ocre"><b>+${EMPREINTES_FINALE}</b><span>empreintes gagnées</span></div>`
+    : `<div class="pl-case pl-ocre"><b>Déjà gagnée</b><span>pas de nouvelle empreinte</span></div>`;
+  zone.innerHTML = `<div class="finale-page"><div class="finale-planche planche-fin planche-liste">
+    <div class="pl-tete"><small class="finale-kicker">${finale.revoir ? "La planche du lieu" : "La finale du lieu · terminée"}</small><h1>${echapper(nom)}</h1>
+      <div class="pl-bilan"><div class="pl-case pl-vert"><b>${n}</b><span>${finale.revoir ? "liens dans ce lieu" : `lien${n > 1 ? "s" : ""} découvert${n > 1 ? "s" : ""}`}</span></div>${second}</div></div>
+    <ul class="pl-liens">${lignes}</ul>
     <div class="planche-boutons"><button class="couv-go" id="planche-retour" type="button">${finale.depuis === "encyclopedie" ? "Retour à l'encyclopédie" : "Retour au lieu"}</button>
       <button class="duo-autres" id="planche-rejouer" type="button">Rejouer la finale</button></div>
   </div></div>`;

@@ -13,7 +13,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent surtout l'effraie.",
+  "phrase": "L'effraie mange surtout les campagnols.",
   "statut": "doublon_classeur",
   "sources": [
    "Wikipédia FR (Effraie des clochers)",
@@ -27,7 +27,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent surtout l'effraie.",
+  "phrase": "L'effraie mange surtout les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Effraie des clochers)",
@@ -41,7 +41,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent surtout l'effraie.",
+  "phrase": "L'effraie mange surtout les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Effraie des clochers)",
@@ -356,7 +356,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Là où il abonde, le lapin nourrit souvent la buse.",
+  "phrase": "Là où il abonde, la buse mange souvent le lapin.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Buse variable)",
@@ -576,7 +576,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les petits campagnols nourrissent surtout le moyen-duc.",
+  "phrase": "Le moyen-duc mange surtout les petits campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Hibou moyen-duc)",
@@ -590,7 +590,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les petits campagnols nourrissent surtout le moyen-duc.",
+  "phrase": "Le moyen-duc mange surtout les petits campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Hibou moyen-duc)",
@@ -727,7 +727,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "mulots",
-  "phrase": "Les mulots nourrissent beaucoup la hulotte.",
+  "phrase": "La hulotte mange beaucoup de mulots.",
   "statut": "doublon_classeur",
   "sources": [
    "oiseaux.net (Chouette hulotte)",
@@ -741,7 +741,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "mulots",
-  "phrase": "Les mulots nourrissent beaucoup la hulotte.",
+  "phrase": "La hulotte mange beaucoup de mulots.",
   "statut": "en_jeu",
   "sources": [
    "oiseaux.net (Chouette hulotte)",
@@ -993,7 +993,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "En hiver, les campagnols nourrissent beaucoup le milan royal.",
+  "phrase": "En hiver, le milan royal mange beaucoup de campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Milan royal)",
@@ -1007,7 +1007,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "En hiver, les campagnols nourrissent beaucoup le milan royal.",
+  "phrase": "En hiver, le milan royal mange beaucoup de campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Milan royal)",
@@ -1021,7 +1021,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "En hiver, les campagnols nourrissent beaucoup le milan royal.",
+  "phrase": "En hiver, le milan royal mange beaucoup de campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Milan royal)",
@@ -1187,7 +1187,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Les jeunes foulques nourrissent souvent le busard des roseaux.",
+  "phrase": "Le busard des roseaux mange souvent les jeunes foulques.",
   "statut": "en_jeu",
   "sources": [
    "oiseaux.net (Busard des roseaux)",
@@ -1499,7 +1499,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "petits campagnols",
-  "phrase": "Les petits campagnols nourrissent surtout la chouette de Tengmalm.",
+  "phrase": "La chouette de Tengmalm mange surtout les petits campagnols.",
   "statut": "doublon_classeur",
   "sources": [
    "Wikipédia FR (Chouette de Tengmalm)",
@@ -1513,7 +1513,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "petits campagnols",
-  "phrase": "Les petits campagnols nourrissent surtout la chouette de Tengmalm.",
+  "phrase": "La chouette de Tengmalm mange surtout les petits campagnols.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Chouette de Tengmalm)",
@@ -1706,7 +1706,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le choucas nourrit souvent l'aigle de Bonelli.",
+  "phrase": "L'aigle de Bonelli mange souvent le choucas.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Aigle de Bonelli)",
@@ -1720,7 +1720,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "En Provence, la pie nourrit souvent l'aigle de Bonelli.",
+  "phrase": "En Provence, l'aigle de Bonelli mange souvent la pie.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia EN (Bonelli's eagle)",
@@ -1734,7 +1734,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le lézard ocellé nourrit souvent l'aigle de Bonelli.",
+  "phrase": "L'aigle de Bonelli mange souvent le lézard ocellé.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Aigle de Bonelli)",
@@ -1776,7 +1776,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Les jeunes brèmes nourrissent aussi le grèbe huppé.",
+  "phrase": "Le grèbe huppé mange aussi les jeunes brèmes.",
   "statut": "en_jeu",
   "sources": [
    "oiseaux.net (Grèbe huppé)",
@@ -3177,7 +3177,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le crapaud commun nourrit souvent la couleuvre helvétique.",
+  "phrase": "La couleuvre helvétique mange souvent le crapaud commun.",
   "statut": "doublon_classeur",
   "sources": [
    "https://en.wikipedia.org/wiki/Natrix_helvetica",
@@ -3191,7 +3191,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "La grenouille rousse nourrit souvent la couleuvre helvétique.",
+  "phrase": "La couleuvre helvétique mange souvent la grenouille rousse.",
   "statut": "en_jeu",
   "sources": [
    "https://en.wikipedia.org/wiki/Natrix_helvetica",
@@ -3205,7 +3205,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Les campagnols nourrissent surtout la belette.",
+  "phrase": "La belette mange surtout les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Mustela_nivalis",
@@ -3219,7 +3219,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "lézards",
-  "phrase": "Les lézards nourrissent surtout la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange surtout les lézards.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Hierophis_viridiflavus",
@@ -3233,7 +3233,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "lézards",
-  "phrase": "Les lézards nourrissent surtout la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange surtout les lézards.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Hierophis_viridiflavus",
@@ -3247,7 +3247,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le mulot sylvestre nourrit aussi la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange aussi le mulot sylvestre.",
   "statut": "en_jeu",
   "sources": [
    "https://en.wikipedia.org/wiki/Green_whip_snake",
@@ -3275,7 +3275,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent souvent le renard.",
+  "phrase": "Le renard mange souvent les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vulpes_vulpes",
@@ -3289,7 +3289,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent souvent le renard.",
+  "phrase": "Le renard mange souvent les campagnols.",
   "statut": "doublon_classeur",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vulpes_vulpes",
@@ -3303,7 +3303,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le lapin de garenne nourrit souvent le renard.",
+  "phrase": "Le renard mange souvent le lapin de garenne.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vulpes_vulpes",
@@ -3317,7 +3317,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "perdrix",
-  "phrase": "Au printemps, les perdrix au nid nourrissent souvent le renard.",
+  "phrase": "Au printemps, le renard mange souvent les perdrix au nid.",
   "statut": "doublon_classeur",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vulpes_vulpes",
@@ -3331,7 +3331,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "perdrix",
-  "phrase": "Au printemps, les perdrix au nid nourrissent souvent le renard.",
+  "phrase": "Au printemps, le renard mange souvent les perdrix au nid.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vulpes_vulpes",
@@ -3345,7 +3345,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": false,
   "groupe": "canes",
-  "phrase": "Au printemps, les canes au nid nourrissent souvent le renard.",
+  "phrase": "Au printemps, le renard mange souvent les canes au nid.",
   "statut": "rare",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vulpes_vulpes",
@@ -3373,7 +3373,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "grenouilles",
-  "phrase": "Les grenouilles nourrissent surtout le putois.",
+  "phrase": "Le putois mange surtout les grenouilles.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Mustela_putorius",
@@ -3387,7 +3387,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le campagnol amphibie nourrit souvent le putois.",
+  "phrase": "Le putois mange souvent le campagnol amphibie.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Mustela_putorius",
@@ -3401,7 +3401,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le lapin de garenne nourrit souvent le putois en été.",
+  "phrase": "Le putois mange souvent le lapin de garenne en été.",
   "statut": "doublon_classeur",
   "sources": [
    "https://fr.wikipedia.org/wiki/Mustela_putorius",
@@ -3415,7 +3415,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "rats",
-  "phrase": "Les rats nourrissent souvent la fouine.",
+  "phrase": "La fouine mange souvent les rats.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Martes_foina",
@@ -3429,7 +3429,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "rats",
-  "phrase": "Les rats nourrissent souvent la fouine.",
+  "phrase": "La fouine mange souvent les rats.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Martes_foina",
@@ -3443,7 +3443,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "souris",
-  "phrase": "La souris grise nourrit souvent la fouine.",
+  "phrase": "La fouine mange souvent la souris grise.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Martes_foina",
@@ -3457,7 +3457,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Les jeunes lapins nourrissent souvent le blaireau.",
+  "phrase": "Le blaireau mange souvent les jeunes lapins.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Meles_meles",
@@ -3471,7 +3471,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent aussi le blaireau.",
+  "phrase": "Le blaireau mange aussi les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Meles_meles",
@@ -3499,7 +3499,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "grenouilles",
-  "phrase": "Les grenouilles nourrissent aussi la crossope aquatique.",
+  "phrase": "La crossope aquatique mange aussi les grenouilles.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Neomys_fodiens",
@@ -3513,7 +3513,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le mulot sylvestre nourrit souvent la vipère aspic.",
+  "phrase": "La vipère aspic mange souvent le mulot sylvestre.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vipera_aspis",
@@ -3527,7 +3527,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le mulot sylvestre nourrit souvent la couleuvre d'Esculape.",
+  "phrase": "La couleuvre d'Esculape mange souvent le mulot sylvestre.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Zamenis_longissimus",
@@ -3541,7 +3541,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "grenouilles vertes",
-  "phrase": "Les grenouilles vertes nourrissent souvent la couleuvre vipérine.",
+  "phrase": "La couleuvre vipérine mange souvent les grenouilles vertes.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Natrix_maura",
@@ -3555,7 +3555,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "grenouilles vertes",
-  "phrase": "Les grenouilles vertes nourrissent souvent la couleuvre vipérine.",
+  "phrase": "La couleuvre vipérine mange souvent les grenouilles vertes.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Natrix_maura",
@@ -3569,7 +3569,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le lézard des murailles nourrit surtout la coronelle lisse.",
+  "phrase": "La coronelle lisse mange surtout le lézard des murailles.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Coronella_austriaca",
@@ -3583,7 +3583,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent surtout l'hermine.",
+  "phrase": "L'hermine mange surtout les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Mustela_erminea",
@@ -3597,7 +3597,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le lapin de garenne nourrit souvent l'hermine.",
+  "phrase": "L'hermine mange souvent le lapin de garenne.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Mustela_erminea",
@@ -3611,7 +3611,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "L'anguille nourrit souvent la loutre.",
+  "phrase": "La loutre mange souvent l'anguille.",
   "statut": "doublon_classeur",
   "sources": [
    "https://fr.wikipedia.org/wiki/Lutra_lutra",
@@ -3625,7 +3625,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "La truite nourrit souvent la loutre.",
+  "phrase": "La loutre mange souvent la truite.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Lutra_lutra",
@@ -3639,7 +3639,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "L'épinoche nourrit souvent la loutre.",
+  "phrase": "La loutre mange souvent l'épinoche.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Lutra_lutra",
@@ -3681,7 +3681,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le campagnol agreste nourrit souvent la martre.",
+  "phrase": "La martre mange souvent le campagnol agreste.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Martes_martes",
@@ -3695,7 +3695,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le mulot sylvestre nourrit surtout la genette.",
+  "phrase": "La genette mange surtout le mulot sylvestre.",
   "statut": "doublon_classeur",
   "sources": [
    "https://fr.wikipedia.org/wiki/Genetta_genetta",
@@ -3709,7 +3709,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "mulots",
-  "phrase": "Les mulots nourrissent souvent le chat forestier.",
+  "phrase": "Le chat forestier mange souvent les mulots.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Chat_forestier",
@@ -3723,7 +3723,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "mulots",
-  "phrase": "Les mulots nourrissent souvent le chat forestier.",
+  "phrase": "Le chat forestier mange souvent les mulots.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Chat_forestier",
@@ -3737,7 +3737,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent souvent le chat forestier.",
+  "phrase": "Le chat forestier mange souvent les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Chat_forestier",
@@ -3751,7 +3751,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le lapin de garenne nourrit souvent le chat forestier.",
+  "phrase": "Le chat forestier mange souvent le lapin de garenne.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Chat_forestier",
@@ -3765,7 +3765,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le maquereau nourrit souvent le grand dauphin.",
+  "phrase": "Le grand dauphin mange souvent le maquereau.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Tursiops_truncatus",
@@ -3779,7 +3779,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "campagnols",
-  "phrase": "Les campagnols nourrissent souvent la vipère péliade.",
+  "phrase": "La vipère péliade mange souvent les campagnols.",
   "statut": "en_jeu",
   "sources": [
    "https://fr.wikipedia.org/wiki/Vipera_berus",
@@ -3821,7 +3821,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Le chamois nourrit souvent le lynx.",
+  "phrase": "Le lynx mange souvent le chamois.",
   "statut": "doublon_classeur",
   "sources": [
    "https://fr.wikipedia.org/wiki/Lynx_bor%C3%A9al",
@@ -3835,7 +3835,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Les gardons nourrissent souvent la perche.",
+  "phrase": "La perche mange souvent les gardons.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Perche commune)",
@@ -3849,7 +3849,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Les vairons nourrissent souvent la truite.",
+  "phrase": "La truite mange souvent les vairons.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Truite fario)",
@@ -3905,7 +3905,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": null,
-  "phrase": "Les jeunes gardons nourrissent souvent le sandre.",
+  "phrase": "Le sandre mange souvent les jeunes gardons.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Sandre)",
@@ -3919,7 +3919,7 @@ const LIENS_ESPECES_DONNEES = [
   "role": "mange",
   "typique": true,
   "groupe": "mulets",
-  "phrase": "Les mulets nourrissent souvent le maigre.",
+  "phrase": "Le maigre mange souvent les mulets.",
   "statut": "en_jeu",
   "sources": [
    "Wikipédia FR (Argyrosomus regius)",

@@ -59,7 +59,7 @@ function interditsApprof(e, champ) {
 }
 // Les pièges des chiffres sont tirés au hasard : on réessaie quelques fois avant de renoncer (altitude : seulement au-dessus)
 function questionApprofSure(e, champ, dur) {
-  for (let essai = 0; essai < 20; essai++) { const q = questionApprof(e, champ, dur); if (q) return q; }
+  for (let essai = 0; essai < 80; essai++) { const q = questionApprof(e, champ, dur); if (q) return q; }   // R328b : 80 essais (à 20, l’altitude du rougequeue noir ratait 1 fois sur 150)
   return null;
 }
 function questionApprof(e, champ, dur) {
@@ -289,7 +289,7 @@ function afficherQuestionApprof() {
       ${APPROF_BANDEAU ? bandeauApprof(e, test ? (enRep ? "Repêchage" : "Me tester") : `Question ${a.j + 1} sur ${a.aPoser.length}`)
         : `<div class="apf-espece petite"><span class="apf-ph">${celluleImage(e, true)}</span><span><small>${test ? (enRep ? "Repêchage" : "Me tester") : `Question ${a.j + 1} sur ${a.aPoser.length}`}</small><b>${echapper(e.nom_courant)}</b></span></div>`}
       <p class="cdo-q apf-q">${echapper(q.texte)}</p>${q.affirmation ? `<p class="apf-affirmation">${echapper(q.affirmation)}</p>` : ""}
-      <div class="cdo-noms apf-choix${classeNombreChoix(q.choix.length)}">${q.choix.map((t, k) => `<button class="cdo-nom${(q.retires || []).includes(t) ? " retire" : ""}" data-k="${k}"${(q.retires || []).includes(t) ? " disabled" : ""}><span>${echapper(t)}</span></button>`).join("")}</div>
+      <div class="cdo-noms apf-choix${classeNombreChoix(q.choix.length)}${q.forme === "vf" ? " vf" : ""}">${q.choix.map((t, k) => `<button class="cdo-nom${(q.retires || []).includes(t) ? " retire" : ""}" data-k="${k}"${(q.retires || []).includes(t) ? " disabled" : ""}>${q.forme === "vf" ? htmlVraiFaux(t) : `<span>${echapper(t)}</span>`}</button>`).join("")}</div>
       <div class="cdo-retour" id="dfx-retour"></div>
       ${test && !enRep ? `<div class="dfx-aides" id="dfx-aides"><small>Votre aide</small><button class="cdo-second" id="dfx-retirer"${aideApprof(a) > 0 && q.choix.length > 2 && !(q.retires || []).length ? "" : " disabled"}>${texteAideDefi("Retirer deux réponses", aideApprof(a), AIDES_DEFI.retirer)}</button></div>` : ""}
     </div>`;

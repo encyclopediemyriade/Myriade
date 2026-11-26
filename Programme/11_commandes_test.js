@@ -219,8 +219,15 @@ function montrerBandeauEssai() {
   let b = document.getElementById("essai-bandeau");
   if (!b) {
     b = document.createElement("div"); b.id = "essai-bandeau"; b.setAttribute("role", "status");
-    b.innerHTML = `<span>Essai</span><button type="button">Terminer<br>l'essai</button>`;   // au bord droit, à mi-hauteur : rien de l'écran testé n'est caché
-    b.querySelector("button").onclick = terminerEssaiEcran;
+    // Étape R324 (retour du 26/11 : le badge cachait la fin des réponses et une photo) : une languette fine dans la marge droite
+    //   (16 px, la marge des pages) ; un toucher l'ouvre et montre « Terminer l'essai », elle se replie seule après 5 secondes.
+    b.innerHTML = `<button type="button" class="essai-languette" aria-expanded="false" aria-label="Essai : ouvrir">Essai</button>`
+      + `<button type="button" class="essai-fin">Terminer<br>l'essai</button>`;
+    let repli = null;
+    const ouvrir = oui => { b.classList.toggle("ouvert", oui); b.querySelector(".essai-languette").setAttribute("aria-expanded", oui ? "true" : "false");
+      clearTimeout(repli); if (oui) repli = setTimeout(() => ouvrir(false), 5000); };
+    b.querySelector(".essai-languette").onclick = () => ouvrir(!b.classList.contains("ouvert"));
+    b.querySelector(".essai-fin").onclick = terminerEssaiEcran;
     document.body.appendChild(b);
   }
 }

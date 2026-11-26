@@ -97,8 +97,7 @@ function poserInsolite(espece) {
     const affirmation = document.getElementById("affirmation");
     affirmation.textContent = vraie ? it.fait : it.faux;   // R234 (note 11) : sans guillemets, l'encadré suffit
     affirmation.classList.remove("cache");
-    ajouterBouton("Vrai", vraie);
-    ajouterBouton("Faux", !vraie);
+    ajouterBoutonsVraiFaux(vraie);   // étape R325 (4A)
     enCours = { espece, champ: INSOLITE, insolite: c, q: null, bonne: null,
                 explication: (vraie ? it.fait : "C'est faux : " + minusculeDebut(it.fait)) + (it.explication ? " " + it.explication : ""),
                 // R239 (36.39) : la phrase vraie est déjà affichée → l'explication ne la répète pas

@@ -3002,7 +3002,7 @@ const EXPEDITIONS = [
   "ordre": 6,
   "titre": "Au fond de l'eau",
   "milieu": "Rivières et torrents",
-  "photo": "Images/ecrevisse_a_pattes_blanches.jpg",
+  "photo": "Images/ecrevisse_signal.jpg",
   "especes": [
    "Écrevisse signal",
    "Gammare",
@@ -15175,6 +15175,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Lacs d'altitude",
+   "milieu_detail": "lacs et forêts de pins à crochets",
    "protection": "Réserve naturelle",
    "protection_detail": "du Néouvielle, depuis 1968 (protégée dès 1935)",
    "taille_valeur": "2 313 ha",
@@ -15464,6 +15465,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Vallée glaciaire",
+   "milieu_detail": "hêtraie, prairies et crêtes volcaniques",
    "protection": "Réserve naturelle",
    "protection_detail": "de la vallée de Chaudefour, depuis 1991",
    "taille_valeur": "820 ha",
@@ -15752,6 +15754,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Lacs et crêtes",
+   "milieu_detail": "alpages, éboulis et lacs face au Mont-Blanc",
    "protection": "Réserve naturelle",
    "protection_detail": "des Aiguilles Rouges, depuis 1974",
    "taille_valeur": "3 276 ha",
@@ -16036,8 +16039,9 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Falaises et landes",
+   "milieu_detail": "falaises de grès rose, landes de bruyère, ajoncs",
    "protection": "Natura 2000",
-   "protection_detail": "« Cap d'Erquy–Cap Fréhel » ; Grand Site de France (2019, renouvellement en cours)",
+   "protection_detail": "« Cap d'Erquy–Cap Fréhel » ; Grand Site de France",
    "chiffre_valeur": "70 m",
    "chiffre_legende": "de hauteur de falaises",
    "pourquoi_ici": "Ses falaises de grès rose offrent des corniches aux oiseaux marins. Le cap accueille la plus grande colonie de guillemots de France, avec pingouins torda, fulmars et mouettes tridactyles.",
@@ -16321,8 +16325,9 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Dunes et marais",
+   "milieu_detail": "pinède et lagunes en bord de baie de Somme",
    "protection": "Réserve naturelle",
-   "protection_detail": "nationale de la baie de Somme, depuis 1994 ; parc naturel régional Baie de Somme Picardie maritime (2020)",
+   "protection_detail": "nationale de la baie de Somme, depuis 1994",
    "taille_valeur": "200 ha",
    "taille_legende": "de dunes, marais et pinède",
    "chiffre_valeur": "Plus de 300",
@@ -16610,8 +16615,9 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Montagne calcaire",
+   "milieu_detail": "grande falaise au sud, garrigue et pinèdes",
    "protection": "Natura 2000",
-   "protection_detail": "Montagne Sainte-Victoire, pour les oiseaux ; Grand Site de France (2004) ; réserve naturelle sur une petite partie",
+   "protection_detail": "pour les oiseaux ; Grand Site de France (2004)",
    "taille_valeur": "18 km",
    "taille_legende": "de long",
    "chiffre_valeur": "1 011 m",
@@ -16895,6 +16901,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Marais littoral",
+   "milieu_detail": "lagunes et roselières du delta de la Leyre",
    "protection": "Parc naturel régional",
    "protection_detail": "des Landes de Gascogne ; delta de la Leyre, site Ramsar (2011)",
    "taille_valeur": "110 ha",
@@ -17182,6 +17189,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Falaises de granite",
+   "milieu_detail": "granite rouge sculpté par l'érosion, dominant la mer",
    "protection": "Patrimoine mondial",
    "protection_detail": "de l'UNESCO, golfe de Porto, depuis 1983",
    "chiffre_valeur": "300 m",
@@ -17470,6 +17478,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Gorges et cascades",
+   "milieu_detail": "rivière en escalier sous les hêtres et sapins",
    "protection": "Aucune",
    "protection_detail": "site classé pour ses paysages depuis 2002",
    "taille_valeur": "3,7 km",
@@ -17754,6 +17763,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Cirque glaciaire",
+   "milieu_detail": "hautes chaumes, pentes rocheuses et tourbières",
    "protection": "Réserve naturelle",
    "protection_detail": "du Frankenthal-Missheimle, depuis 1995",
    "taille_valeur": "746 ha",
@@ -18032,6 +18042,7 @@ const CHAPITRES = [
   ],
   "identite": {
    "milieu_principal": "Étangs",
+   "milieu_detail": "plus de mille étangs entre bois et prairies",
    "protection": "Natura 2000",
    "protection_detail": "« La Dombes » ; site Ramsar depuis 2023",
    "taille_valeur": "476 km²",
@@ -18111,7 +18122,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gardons nourrissent le brochet du lac.",
+  "phrase": "Le brochet du lac mange les gardons.",
   "pieges": [
    "Le gardon débarrasse le brochet de ses parasites.",
    "Le brochet garde les œufs du gardon."
@@ -18125,7 +18136,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Nouveau venu",
   "question": "Quel est leur lien ?",
-  "phrase": "Les têtards de grenouilles nourrissent l'écrevisse venue d'Amérique.",
+  "phrase": "L'écrevisse venue d'Amérique mange les têtards de grenouilles.",
   "pieges": [
    "La grenouille verte transporte les jeunes écrevisses sur son dos.",
    "La grenouille verte pond ses œufs sur la carapace de l'écrevisse."
@@ -18139,7 +18150,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les anodontes nourrissent le rat musqué, venu d'Amérique.",
+  "phrase": "Le rat musqué, venu d'Amérique, mange les anodontes.",
   "pieges": [
    "Le rat musqué transporte les anodontes d'un étang à l'autre.",
    "Les anodontes nettoient la fourrure du rat musqué."
@@ -18209,7 +18220,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'alouette des champs nourrit le faucon hobereau.",
+  "phrase": "Le faucon hobereau mange l'alouette des champs.",
   "pieges": [
    "Le faucon hobereau protège le nid de l'alouette.",
    "L'alouette des champs niche sous le nid du hobereau."
@@ -18293,7 +18304,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les campagnols terrestres nourrissent souvent l'hermine.",
+  "phrase": "L'hermine mange souvent les campagnols terrestres.",
   "pieges": [
    "L'hermine protège les petits du campagnol terrestre.",
    "Ils se disputent les mêmes racines en hiver."
@@ -18394,7 +18405,7 @@ const LIENS = [
   "phrase": "Le loir gris loge dans l'ancien trou du pic noir.",
   "pieges": [
    "Le pic noir dort dans le terrier du loir gris.",
-   "Le loir gris nourrit le pic noir en hiver."
+   "Le pic noir mange le loir gris en hiver."
   ]
  },
  {
@@ -18447,7 +18458,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lombric commun nourrit la taupe d'Europe.",
+  "phrase": "La taupe d'Europe mange le lombric commun.",
   "pieges": [
    "La taupe d'Europe transporte les œufs du lombric.",
    "Le lombric commun creuse les galeries de la taupe."
@@ -18461,7 +18472,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'abeille mellifère nourrit souvent le guêpier d'Europe.",
+  "phrase": "Le guêpier d'Europe mange souvent l'abeille mellifère.",
   "pieges": [
    "Le guêpier d'Europe niche dans les ruches des abeilles.",
    "L'abeille mellifère bâtit ses rayons dans le nid du guêpier."
@@ -18503,7 +18514,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'anguille européenne nourrit parfois le grand cormoran.",
+  "phrase": "Le grand cormoran mange parfois l'anguille européenne.",
   "pieges": [
    "Le grand cormoran transporte les jeunes anguilles en mer.",
    "L'anguille européenne pond dans le nid du cormoran."
@@ -18657,7 +18668,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs de la chouette peuvent nourrir la martre.",
+  "phrase": "La martre peut manger les œufs de la chouette.",
   "pieges": [
    "La martre creuse le nid où pond la chouette.",
    "La chouette dort l'hiver dans le nid de la martre."
@@ -18671,7 +18682,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le gammare nourrit la crossope sous l'eau.",
+  "phrase": "La crossope mange le gammare sous l'eau.",
   "pieges": [
    "Le gammare vit accroché au pelage de la crossope.",
    "La crossope garde les œufs du gammare."
@@ -18685,7 +18696,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'écrevisse à pattes blanches nourrit la loutre.",
+  "phrase": "La loutre mange l'écrevisse à pattes blanches.",
   "pieges": [
    "L'écrevisse vit cachée dans le terrier de la loutre.",
    "L'écrevisse débarrasse la loutre de ses parasites."
@@ -18783,7 +18794,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre d'Esculape nourrit le circaète.",
+  "phrase": "Le circaète mange la couleuvre d'Esculape.",
   "pieges": [
    "La couleuvre d'Esculape protège le nid du circaète.",
    "La couleuvre d'Esculape hiberne sous le nid du circaète."
@@ -18797,7 +18808,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La vipère aspic nourrit le circaète Jean-le-Blanc.",
+  "phrase": "Le circaète Jean-le-Blanc mange la vipère aspic.",
   "pieges": [
    "La vipère aspic hiberne sous le nid du circaète.",
    "Le circaète protège la vipère aspic de ses ennemis."
@@ -18811,7 +18822,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La vipère aspic nourrit la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange la vipère aspic.",
   "pieges": [
    "La vipère aspic et la couleuvre verte et jaune s'hybrident.",
    "La couleuvre verte et jaune couve les œufs de la vipère."
@@ -18867,7 +18878,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les chenilles processionnaires nourrissent le coucou gris.",
+  "phrase": "Le coucou gris mange les chenilles processionnaires.",
   "pieges": [
    "Les chenilles processionnaires rendent malade le coucou gris.",
    "Le coucou gris pond dans les nids des processionnaires."
@@ -18881,7 +18892,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les chenilles processionnaires nourrissent la huppe fasciée.",
+  "phrase": "La huppe fasciée mange les chenilles processionnaires.",
   "pieges": [
    "La huppe tapisse son nid avec la soie des processionnaires.",
    "Les processionnaires passent l'hiver dans le nid de la huppe."
@@ -18895,7 +18906,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les campagnols des champs nourrissent la belette.",
+  "phrase": "La belette mange les campagnols des champs.",
   "pieges": [
    "La belette et le campagnol partagent le même nid.",
    "Le campagnol des champs mange les restes de la belette."
@@ -19007,7 +19018,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les lézards des murailles nourrissent le monticole bleu.",
+  "phrase": "Le monticole bleu mange les lézards des murailles.",
   "pieges": [
    "Le monticole bleu niche dans le terrier du lézard.",
    "Le lézard des murailles mange les petits du monticole."
@@ -19035,10 +19046,10 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs de la chevêche nourrissent parfois la fouine.",
+  "phrase": "La fouine mange parfois les œufs de la chevêche.",
   "pieges": [
    "La chevêche élève ses petits dans l'ancien gîte de la fouine.",
-   "Les petits de la fouine nourrissent souvent la chevêche."
+   "La chevêche mange souvent les petits de la fouine."
   ]
  },
  {
@@ -19133,7 +19144,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gardons nourrissent le brochet de l'étang.",
+  "phrase": "Le brochet de l'étang mange les gardons.",
   "pieges": [
    "Le gardon débarrasse le brochet de ses parasites.",
    "Le brochet garde les œufs du gardon."
@@ -19203,7 +19214,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes faons nourrissent parfois le renard.",
+  "phrase": "Le renard mange parfois les jeunes faons.",
   "pieges": [
    "Le renard guide les chevreuils vers les points d’eau.",
    "Ils dorment ensemble dans le même terrier."
@@ -19231,7 +19242,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le loir gris nourrit parfois la chouette hulotte",
+  "phrase": "La chouette hulotte mange parfois le loir gris",
   "pieges": [
    "La hulotte et le loir gris se disputent les noisettes",
    "La chouette hulotte protège le loir gris des martres"
@@ -19245,7 +19256,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le mulot à collier nourrit la chouette hulotte des bois",
+  "phrase": "La chouette hulotte des bois mange le mulot à collier",
   "pieges": [
    "Le mulot à collier creuse le nid de la hulotte",
    "La hulotte et le mulot partagent les mêmes graines"
@@ -19259,7 +19270,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Malgré sa peau toxique, le crapaud nourrit la couleuvre helvétique",
+  "phrase": "Malgré sa peau toxique, la couleuvre helvétique mange le crapaud",
   "pieges": [
    "La couleuvre helvétique fuit le crapaud, trop toxique pour elle",
    "Le crapaud épineux imite la couleuvre pour se protéger"
@@ -19357,7 +19368,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les anguilles nourrissent la loutre de la Loire",
+  "phrase": "La loutre de la Loire mange les anguilles",
   "pieges": [
    "L'anguille passe l'hiver cachée dans le terrier de la loutre",
    "La loutre creuse des passages que l'anguille emprunte pour migrer"
@@ -19371,7 +19382,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le crapaud commun nourrit la loutre, qui évite sa peau",
+  "phrase": "La loutre mange le crapaud commun, dont elle évite la peau",
   "pieges": [
    "Le crapaud pond dans le terrier de la loutre",
    "La loutre transporte les têtards d'une mare à l'autre"
@@ -19427,7 +19438,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre verte et jaune nourrit souvent le circaète",
+  "phrase": "Le circaète mange souvent la couleuvre verte et jaune",
   "pieges": [
    "Le circaète couve parfois les œufs de la couleuvre",
    "La couleuvre s'abrite dans l'ancien nid du circaète"
@@ -19441,7 +19452,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La vipère aspic nourrit parfois la couleuvre verte et jaune",
+  "phrase": "La couleuvre verte et jaune mange parfois la vipère aspic",
   "pieges": [
    "La vipère protège les petits de la couleuvre",
    "Elles s'hybrident et donnent des couleuvres venimeuses"
@@ -19455,7 +19466,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles butineuses nourrissent la thomise cachée dans les fleurs",
+  "phrase": "Cachée dans les fleurs, la thomise mange les abeilles butineuses",
   "pieges": [
    "La thomise garde la ruche contre les frelons",
    "L'abeille transporte la thomise de fleur en fleur"
@@ -19553,7 +19564,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les lapins de garenne nourrissent souvent l'hermine",
+  "phrase": "L'hermine mange souvent les lapins de garenne",
   "pieges": [
    "Lapin et hermine broutent les mêmes jeunes pousses",
    "L'hermine protège les lapereaux contre les rapaces"
@@ -19581,7 +19592,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les mulots nourrissent le chat forestier",
+  "phrase": "Le chat forestier mange les mulots",
   "pieges": [
    "Chat forestier et mulot se disputent les mêmes glands",
    "Le mulot s'abrite dans le gîte du chat forestier"
@@ -19693,7 +19704,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'alouette nourrit parfois le busard cendré des plaines",
+  "phrase": "Le busard cendré des plaines mange parfois l'alouette",
   "pieges": [
    "Le busard cendré protège le nid de l'alouette des renards",
    "L'alouette pond ses œufs dans le vieux nid du busard"
@@ -19763,7 +19774,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les marsouins nourrissent parfois le phoque gris",
+  "phrase": "Le phoque gris mange parfois les marsouins",
   "pieges": [
    "Le marsouin et le phoque gris pêchent en équipe",
    "Le marsouin éloigne les requins des petits du phoque gris"
@@ -19791,7 +19802,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les pipits farlouses nourrissent le busard Saint-Martin",
+  "phrase": "Le busard Saint-Martin mange les pipits farlouses",
   "pieges": [
    "Le pipit farlouse pond dans un ancien nid du busard",
    "Le busard protège le nid du pipit contre les renards"
@@ -19847,7 +19858,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les lançons nourrissent la mouette tridactyle en été",
+  "phrase": "La mouette tridactyle mange les lançons en été",
   "pieges": [
    "Les lançons profitent des restes de repas de la mouette",
    "La mouette tridactyle bâtit son nid avec des lançons séchés"
@@ -19875,7 +19886,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les poussins du goéland argenté nourrissent parfois le goéland marin",
+  "phrase": "Le goéland marin mange parfois les poussins du goéland argenté",
   "pieges": [
    "Le goéland marin est l'adulte du goéland argenté",
    "Le goéland argenté garde le nid du goéland marin"
@@ -19889,7 +19900,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les poussins de mouette tridactyle nourrissent parfois le goéland argenté",
+  "phrase": "Le goéland argenté mange parfois les poussins de mouette tridactyle",
   "pieges": [
    "La mouette tridactyle pond dans les nids du goéland argenté",
    "Le goéland argenté apporte des lançons aux poussins de mouette"
@@ -19931,7 +19942,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les criquets comme l'œdipode nourrissent l'argiope frelon",
+  "phrase": "L'argiope frelon mange les criquets comme l'œdipode",
   "pieges": [
    "L'œdipode turquoise se cache dans la toile de l'argiope",
    "L'argiope frelon pond ses œufs sur l'œdipode turquoise"
@@ -19945,7 +19956,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La grande sauterelle verte peut nourrir la mante religieuse",
+  "phrase": "La mante religieuse peut manger la grande sauterelle verte",
   "pieges": [
    "La mante religieuse pond ses œufs dans la sauterelle",
    "La mante et la sauterelle sont de proches cousines"
@@ -19959,7 +19970,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le grand paon de nuit peut nourrir l'engoulevent",
+  "phrase": "L'engoulevent peut manger le grand paon de nuit",
   "pieges": [
    "Le grand paon de nuit pond sur les œufs d'engoulevent",
    "L'engoulevent imite les ocelles du grand paon de nuit"
@@ -20029,7 +20040,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les vers de terre nourrissent le merle des pelouses",
+  "phrase": "Sur les pelouses, le merle mange les vers de terre",
   "pieges": [
    "Le merle sème les graines dont vit le ver",
    "Le ver de terre loge dans le nid du merle"
@@ -20043,7 +20054,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs du merle nourrissent parfois la pie",
+  "phrase": "La pie mange parfois les œufs du merle",
   "pieges": [
    "La pie couve parfois les œufs du merle",
    "Le merle suit la pie pour trouver des fruits"
@@ -20057,7 +20068,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les araignées des maisons nourrissent la scutigère",
+  "phrase": "La scutigère mange les araignées des maisons",
   "pieges": [
    "La tégénaire tisse une toile pour abriter la scutigère",
    "La scutigère pond ses œufs dans la toile"
@@ -20113,7 +20124,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les moules nourrissent l'huîtrier pie.",
+  "phrase": "L'huîtrier pie mange les moules.",
   "pieges": [
    "Les moules abritent les œufs de l'huîtrier pie.",
    "L'huîtrier pie nettoie la coquille des moules."
@@ -20141,7 +20152,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles nourrissent la thomise cachée sur les fleurs.",
+  "phrase": "Cachée sur les fleurs, la thomise mange les abeilles.",
   "pieges": [
    "La thomise garde l'entrée de la ruche des abeilles.",
    "Les abeilles transportent les petits de la thomise."
@@ -20267,7 +20278,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les rats musqués nourrissent le vison d'Amérique.",
+  "phrase": "Le vison d'Amérique mange les rats musqués.",
   "pieges": [
    "Le vison porte des poissons au rat musqué.",
    "Le vison et le rat musqué broutent les mêmes plantes."
@@ -20421,7 +20432,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les petits vairons nourrissent souvent la truite fario.",
+  "phrase": "La truite fario mange souvent les petits vairons.",
   "pieges": [
    "Les vairons creusent les nids de la truite fario.",
    "La truite fario guide les vairons vers la mer."
@@ -20477,7 +20488,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les canetons du colvert nourrissent parfois le brochet.",
+  "phrase": "Le brochet mange parfois les canetons du colvert.",
   "pieges": [
    "Le brochet débarrasse le colvert de ses parasites.",
    "Le colvert protège les petits brochets des hérons."
@@ -20491,7 +20502,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les perches nourrissent souvent le grèbe huppé.",
+  "phrase": "Le grèbe huppé mange souvent les perches.",
   "pieges": [
    "Les perches pondent dans le nid du grèbe huppé.",
    "Les perches nettoient les plumes du grèbe huppé."
@@ -20561,7 +20572,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lombric commun nourrit la taupe.",
+  "phrase": "La taupe mange le lombric commun.",
   "pieges": [
    "Ils passent l'hiver ensemble dans un terrier.",
    "Le lombric débarrasse la taupe de ses parasites."
@@ -20589,7 +20600,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le mulot sylvestre nourrit souvent la genette.",
+  "phrase": "La genette mange souvent le mulot sylvestre.",
   "pieges": [
    "Le mulot dort dans le gîte de la genette.",
    "La genette loge dans le terrier du mulot."
@@ -20659,7 +20670,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les fourmis rousses nourrissent le pic vert.",
+  "phrase": "Le pic vert mange les fourmis rousses.",
   "pieges": [
    "Le pic vert creuse sa loge dans leur dôme.",
    "Les fourmis rousses gardent les œufs du pic vert."
@@ -20701,7 +20712,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les cloportes nourrissent la musaraigne pygmée.",
+  "phrase": "La musaraigne pygmée mange les cloportes.",
   "pieges": [
    "La musaraigne pygmée creuse l'abri des cloportes.",
    "Les cloportes nettoient le nid de la musaraigne."
@@ -20785,7 +20796,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Nouveau venu",
   "question": "Quel est leur lien ?",
-  "phrase": "La lamproie nourrit le silure, poisson introduit.",
+  "phrase": "Le silure, poisson introduit, mange la lamproie.",
   "pieges": [
    "Le silure protège les œufs de la lamproie.",
    "La lamproie pond dans le terrier du silure."
@@ -20813,7 +20824,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les petites ablettes nourrissent le sandre.",
+  "phrase": "Le sandre mange les petites ablettes.",
   "pieges": [
    "L'ablette nettoie les nageoires du sandre.",
    "Le sandre garde les œufs de l'ablette."
@@ -20925,7 +20936,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lapin de garenne nourrit souvent le putois.",
+  "phrase": "Le putois mange souvent le lapin de garenne.",
   "pieges": [
    "Le putois sème les herbes que mange le lapin.",
    "Le putois prévient le lapin quand un danger approche."
@@ -21009,7 +21020,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les lançons nourrissent la sterne caugek.",
+  "phrase": "La sterne caugek mange les lançons.",
   "pieges": [
    "Le lançon nettoie les plumes de la sterne.",
    "La sterne caugek protège les œufs du lançon."
@@ -21023,7 +21034,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les lançons nourrissent le lieu jaune.",
+  "phrase": "Le lieu jaune mange les lançons.",
   "pieges": [
    "Le lançon s'abrite sous les nageoires du lieu.",
    "Le lieu jaune garde les œufs du lançon."
@@ -21037,7 +21048,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les talitres nourrissent le bécasseau sanderling.",
+  "phrase": "Le bécasseau sanderling mange les talitres.",
   "pieges": [
    "Le sanderling creuse le terrier du talitre.",
    "Le talitre vit caché dans les plumes du sanderling."
@@ -21107,7 +21118,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les océanites nourrissent parfois le goéland marin.",
+  "phrase": "Le goéland marin mange parfois les océanites.",
   "pieges": [
    "Les océanites nichent dans les nids du goéland.",
    "Les océanites nettoient les plumes du goéland."
@@ -21135,7 +21146,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs de mouette nourrissent parfois le grand corbeau.",
+  "phrase": "Le grand corbeau mange parfois les œufs de mouette.",
   "pieges": [
    "Le grand corbeau construit le nid de la mouette.",
    "La mouette élève parfois les petits du corbeau."
@@ -21149,7 +21160,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les sauterelles prises dans sa toile nourrissent l'argiope.",
+  "phrase": "L'argiope mange les sauterelles prises dans sa toile.",
   "pieges": [
    "La sauterelle pond ses œufs dans la toile de l'argiope.",
    "La sauterelle et l'argiope mangent les mêmes feuilles."
@@ -21177,7 +21188,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La moule zébrée nourrit la foulque sous l'eau.",
+  "phrase": "La foulque mange la moule zébrée sous l'eau.",
   "pieges": [
    "La foulque protège la moule zébrée des poissons.",
    "La moule zébrée nettoie les plumes de la foulque."
@@ -21205,7 +21216,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lombric nourrit la taupe, qui en fait des réserves.",
+  "phrase": "La taupe mange le lombric et en fait des réserves.",
   "pieges": [
    "Le lombric creuse les galeries où la taupe dort l'hiver.",
    "La taupe transporte les œufs du lombric dans ses galeries."
@@ -21317,7 +21328,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol roussâtre nourrit souvent la chevêchette.",
+  "phrase": "La chevêchette mange souvent le campagnol roussâtre.",
   "pieges": [
    "Le campagnol roussâtre hiverne dans le nid de la chevêchette.",
    "La chevêchette tapisse son nid avec les poils du campagnol."
@@ -21331,7 +21342,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'hélice des bois nourrit la grive, qui brise sa coquille.",
+  "phrase": "La grive mange l'hélice des bois, dont elle brise la coquille.",
   "pieges": [
    "L'hélice des bois pond ses œufs dans le nid de la grive.",
    "La grive tapisse son nid avec des coquilles d'hélice vides."
@@ -21471,7 +21482,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol terrestre nourrit souvent l'hermine.",
+  "phrase": "L'hermine mange souvent le campagnol terrestre.",
   "pieges": [
    "Ils mangent ensemble les racines des prairies.",
    "Le campagnol avertit l'hermine quand le renard approche."
@@ -21485,7 +21496,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol des champs nourrit surtout la belette.",
+  "phrase": "La belette mange surtout le campagnol des champs.",
   "pieges": [
    "La belette et le campagnol mangent les mêmes graines.",
    "La belette garde les petits du campagnol des champs."
@@ -21499,7 +21510,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol des champs nourrit beaucoup le moyen-duc.",
+  "phrase": "Le moyen-duc mange beaucoup de campagnols des champs.",
   "pieges": [
    "Le moyen-duc dort le jour dans le terrier du campagnol.",
    "Le campagnol installe son nid sous celui du moyen-duc."
@@ -21569,7 +21580,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les vairons nourrissent le martin-pêcheur.",
+  "phrase": "Le martin-pêcheur mange les vairons.",
   "pieges": [
    "Les vairons nettoient les plumes du martin-pêcheur.",
    "Le martin-pêcheur garde les œufs des vairons."
@@ -21583,7 +21594,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'ombre commun nourrit le grand cormoran.",
+  "phrase": "Le grand cormoran mange l'ombre commun.",
   "pieges": [
    "L'ombre commun nettoie les plumes du cormoran.",
    "Le grand cormoran transporte les œufs de l'ombre."
@@ -21611,7 +21622,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les chabots nourrissent la loutre.",
+  "phrase": "La loutre mange les chabots.",
   "pieges": [
    "Les chabots nettoient le pelage de la loutre.",
    "La loutre garde les œufs des chabots."
@@ -21695,7 +21706,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles mellifères nourrissent souvent le guêpier.",
+  "phrase": "Le guêpier mange souvent les abeilles mellifères.",
   "pieges": [
    "Les abeilles mellifères nichent dans son terrier.",
    "Le guêpier garde les ruches contre les frelons."
@@ -21723,7 +21734,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles nourrissent la thomise cachée sur les fleurs.",
+  "phrase": "Cachée sur les fleurs, la thomise mange les abeilles.",
   "pieges": [
    "La thomise pond ses œufs au fond de la ruche.",
    "L'abeille transporte la thomise de fleur en fleur."
@@ -21779,7 +21790,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre verte et jaune nourrit le circaète.",
+  "phrase": "Le circaète mange la couleuvre verte et jaune.",
   "pieges": [
    "Ils passent l'hiver sous les mêmes pierres.",
    "Le circaète protège la couleuvre des vipères."
@@ -21793,7 +21804,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La vipère aspic nourrit parfois la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange parfois la vipère aspic.",
   "pieges": [
    "La vipère aspic pond dans le nid de la couleuvre.",
    "La couleuvre verte et jaune et la vipère s'hybrident souvent."
@@ -21975,7 +21986,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les lézards des murailles nourrissent la coronelle.",
+  "phrase": "La coronelle mange les lézards des murailles.",
   "pieges": [
    "Les lézards des murailles creusent l'abri de la coronelle.",
    "La coronelle nourrit les jeunes lézards des murailles."
@@ -21989,7 +22000,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les faucheux nourrissent le murin de Natterer.",
+  "phrase": "Le murin de Natterer mange les faucheux.",
   "pieges": [
    "Le murin de Natterer transporte les jeunes faucheux.",
    "Les faucheux nettoient le gîte du murin."
@@ -22003,7 +22014,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les cloportes nourrissent le crapaud épineux.",
+  "phrase": "Le crapaud épineux mange les cloportes.",
   "pieges": [
    "Le crapaud épineux abrite les cloportes l'hiver.",
    "Les cloportes nettoient la peau du crapaud."
@@ -22087,7 +22098,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le faucon pèlerin nourrit parfois le grand-duc d'Europe.",
+  "phrase": "Le grand-duc d'Europe mange parfois le faucon pèlerin.",
   "pieges": [
    "Le grand-duc garde le nid du faucon la nuit.",
    "Le faucon guide le grand-duc vers les pigeons."
@@ -22101,7 +22112,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs du faucon pèlerin nourrissent parfois le grand corbeau.",
+  "phrase": "Le grand corbeau mange parfois les œufs du faucon pèlerin.",
   "pieges": [
    "Le grand corbeau couve parfois les œufs du faucon pèlerin.",
    "Le faucon pèlerin laisse ses restes de repas au grand corbeau."
@@ -22129,7 +22140,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lagopède alpin nourrit parfois le renard roux.",
+  "phrase": "Le renard roux mange parfois le lagopède alpin.",
   "pieges": [
    "Le renard roux creuse l'abri d'hiver du lagopède.",
    "Le lagopède suit le renard pour trouver des graines."
@@ -22185,7 +22196,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les chamois nourrissent le loup en montagne.",
+  "phrase": "Le loup mange les chamois en montagne.",
   "pieges": [
    "Les chamois suivent le loup vers les alpages.",
    "Le loup utilise les abris des chamois."
@@ -22339,7 +22350,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les hirondelles nourrissent le faucon hobereau.",
+  "phrase": "Le faucon hobereau mange les hirondelles.",
   "pieges": [
    "Les hirondelles nichent dans le nid du hobereau.",
    "Le hobereau protège le nid des hirondelles."
@@ -22423,7 +22434,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les frelons asiatiques nourrissent le guêpier d'Europe.",
+  "phrase": "Le guêpier d'Europe mange les frelons asiatiques.",
   "pieges": [
    "Les frelons asiatiques pondent dans le nid du guêpier.",
    "Le guêpier d'Europe construit le nid des frelons asiatiques."
@@ -22437,9 +22448,9 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes rats musqués nourrissent le vison d'Amérique.",
+  "phrase": "Le vison d'Amérique mange les jeunes rats musqués.",
   "pieges": [
-   "Les jeunes visons d'Amérique nourrissent le rat musqué.",
+   "Le rat musqué mange les jeunes visons d'Amérique.",
    "Le vison d'Amérique et le rat musqué s'hybrident parfois."
   ]
  },
@@ -22451,7 +22462,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les écrevisses signal nourrissent le raton laveur.",
+  "phrase": "Le raton laveur mange les écrevisses signal.",
   "pieges": [
    "Les écrevisses signal nettoient le pelage du raton laveur.",
    "Le raton laveur transporte les œufs de l'écrevisse signal."
@@ -22549,7 +22560,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les poussins de gallinule nourrissent parfois le brochet.",
+  "phrase": "Le brochet mange parfois les poussins de gallinule.",
   "pieges": [
    "Le brochet garde le nid flottant de la gallinule.",
    "La gallinule nettoie les dents du grand brochet."
@@ -22619,7 +22630,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol des champs nourrit l'effraie.",
+  "phrase": "L'effraie mange le campagnol des champs.",
   "pieges": [
    "L'effraie dort dans le terrier du campagnol.",
    "Ils mangent les mêmes graines dans les champs."
@@ -22633,7 +22644,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'abeille mellifère nourrit la thomise cachée dans une fleur.",
+  "phrase": "Cachée dans une fleur, la thomise mange l'abeille mellifère.",
   "pieges": [
    "La thomise pond ses œufs dans la ruche de l'abeille.",
    "L'abeille transporte la thomise d'une fleur à l'autre."
@@ -22647,7 +22658,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lombric nourrit la taupe, qui en fait des réserves.",
+  "phrase": "La taupe mange le lombric et en fait des réserves.",
   "pieges": [
    "Le lombric creuse les galeries où vit la taupe.",
    "La taupe et le lombric mangent les mêmes racines."
@@ -22661,7 +22672,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lapin de garenne nourrit l'hermine.",
+  "phrase": "L'hermine mange le lapin de garenne.",
   "pieges": [
    "L'hermine garde le lapin contre le renard.",
    "L'hermine et le lapin broutent la même herbe."
@@ -22759,7 +22770,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les écrevisses à pattes blanches nourrissent la loutre.",
+  "phrase": "La loutre mange les écrevisses à pattes blanches.",
   "pieges": [
    "La loutre creuse des abris pour les écrevisses.",
    "L'écrevisse nettoie le pelage de la loutre au repos."
@@ -22773,7 +22784,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les grenouilles rousses nourrissent la couleuvre helvétique.",
+  "phrase": "La couleuvre helvétique mange les grenouilles rousses.",
   "pieges": [
    "La couleuvre helvétique garde les œufs de la grenouille.",
    "La grenouille rousse nettoie la peau de la couleuvre."
@@ -22787,7 +22798,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les aselles nourrissent l'argyronète sous l'eau.",
+  "phrase": "L'argyronète mange les aselles sous l'eau.",
   "pieges": [
    "L'aselle construit la cloche d'air de l'argyronète.",
    "L'aselle nettoie les longues pattes de l'argyronète."
@@ -22801,7 +22812,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les aselles nourrissent la crossope aquatique.",
+  "phrase": "La crossope aquatique mange les aselles.",
   "pieges": [
    "La crossope creuse des abris pour les aselles.",
    "Les aselles nettoient le pelage de la crossope."
@@ -22899,7 +22910,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs du courlis nourrissent parfois la corneille.",
+  "phrase": "La corneille mange parfois les œufs du courlis.",
   "pieges": [
    "La corneille couve parfois les œufs du courlis.",
    "Le courlis pond dans les vieux nids de corneille."
@@ -22913,7 +22924,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lézard vivipare nourrit souvent la vipère péliade.",
+  "phrase": "La vipère péliade mange souvent le lézard vivipare.",
   "pieges": [
    "Le lézard vivipare creuse l'abri d'hiver de la vipère.",
    "Le lézard vivipare mange souvent les jeunes vipères."
@@ -23025,7 +23036,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs de la chouette nourrissent parfois la martre.",
+  "phrase": "La martre mange parfois les œufs de la chouette.",
   "pieges": [
    "La martre et la chouette partagent le même terrier.",
    "La chouette élève ses petits dans le gîte de la martre."
@@ -23081,7 +23092,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le loir gris nourrit parfois la chouette hulotte.",
+  "phrase": "La chouette hulotte mange parfois le loir gris.",
   "pieges": [
    "Le loir garde les œufs de la chouette la nuit.",
    "La chouette dort l'hiver dans le terrier du loir."
@@ -23151,7 +23162,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le faucon pèlerin peut nourrir le grand-duc.",
+  "phrase": "Le grand-duc peut manger le faucon pèlerin.",
   "pieges": [
    "Le grand-duc couve les œufs du pèlerin.",
    "Le pèlerin protège le nid du grand-duc."
@@ -23221,7 +23232,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre verte et jaune nourrit souvent le circaète.",
+  "phrase": "Le circaète mange souvent la couleuvre verte et jaune.",
   "pieges": [
    "La couleuvre verte et jaune dort dans le nid du circaète.",
    "La couleuvre verte et jaune garde le nid du circaète."
@@ -23235,7 +23246,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre d'Esculape nourrit souvent le circaète.",
+  "phrase": "Le circaète mange souvent la couleuvre d'Esculape.",
   "pieges": [
    "La couleuvre d'Esculape dort sous le nid du circaète.",
    "La couleuvre d'Esculape garde les œufs du circaète."
@@ -23249,7 +23260,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La vipère aspic nourrit la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange la vipère aspic.",
   "pieges": [
    "La vipère aspic s'accouple avec la couleuvre verte et jaune.",
    "La vipère aspic loge dans le terrier de la couleuvre."
@@ -23347,7 +23358,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol terrestre nourrit souvent le renard.",
+  "phrase": "Le renard mange souvent le campagnol terrestre.",
   "pieges": [
    "Le campagnol terrestre creuse le terrier du renard.",
    "Le renard protège le campagnol terrestre des rapaces."
@@ -23403,7 +23414,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les hirondelles de fenêtre nourrissent le faucon hobereau.",
+  "phrase": "Le faucon hobereau mange les hirondelles de fenêtre.",
   "pieges": [
    "Le faucon hobereau protège les nids des hirondelles.",
    "Ils partagent le même nid sous les toits."
@@ -23501,7 +23512,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les moules nourrissent la daurade royale.",
+  "phrase": "La daurade royale mange les moules.",
   "pieges": [
    "La daurade royale pond ses œufs sur les moules.",
    "La daurade royale transporte les jeunes moules."
@@ -23515,7 +23526,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les moules nourrissent le crabe marbré.",
+  "phrase": "Le crabe marbré mange les moules.",
   "pieges": [
    "Le crabe marbré vit à l'intérieur des moules.",
    "Les moules s'accrochent sur le dos du crabe."
@@ -23543,7 +23554,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les tout jeunes oursins violets nourrissent la girelle.",
+  "phrase": "La girelle mange les tout jeunes oursins violets.",
   "pieges": [
    "La girelle se cache entre les piquants de l'oursin.",
    "L'oursin violet nettoie les parasites de la girelle."
@@ -23613,7 +23624,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes perches nourrissent le brochet.",
+  "phrase": "Le brochet mange les jeunes perches.",
   "pieges": [
    "La perche nettoie la peau du brochet.",
    "Le brochet protège les œufs de la perche."
@@ -23627,7 +23638,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gardons nourrissent le sandre.",
+  "phrase": "Le sandre mange les gardons.",
   "pieges": [
    "Le gardon garde les œufs du sandre.",
    "Le sandre pond dans le nid du gardon."
@@ -23641,7 +23652,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les ablettes nourrissent le martin-pêcheur.",
+  "phrase": "Le martin-pêcheur mange les ablettes.",
   "pieges": [
    "L'ablette pond dans le terrier du martin-pêcheur.",
    "Le martin-pêcheur protège les bancs d'ablettes."
@@ -23655,7 +23666,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Nouveau venu",
   "question": "Quel est leur lien ?",
-  "phrase": "Les tanches nourrissent le silure, venu d'ailleurs.",
+  "phrase": "Le silure, venu d'ailleurs, mange les tanches.",
   "pieges": [
    "La tanche partage le nid du silure, venu d'ailleurs.",
    "Le silure, venu d'ailleurs, garde les œufs de tanche."
@@ -23739,7 +23750,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'abeille mellifère nourrit la thomise cachée dans les fleurs.",
+  "phrase": "Cachée dans les fleurs, la thomise mange l'abeille mellifère.",
   "pieges": [
    "La thomise garde l'entrée de la ruche des abeilles.",
    "L'abeille transporte la thomise d'une fleur à l'autre."
@@ -23753,7 +23764,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les nichées de chevêche nourrissent parfois la fouine.",
+  "phrase": "La fouine mange parfois les nichées de chevêche.",
   "pieges": [
    "La fouine creuse le terrier où niche la chevêche.",
    "La chevêche niche dans l'ancien gîte de la fouine."
@@ -23879,7 +23890,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol provençal nourrit la belette.",
+  "phrase": "La belette mange le campagnol provençal.",
   "pieges": [
    "La belette et le campagnol partagent leurs réserves.",
    "Le campagnol provençal nettoie le pelage de la belette."
@@ -23963,7 +23974,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les vairons nourrissent la truite fario.",
+  "phrase": "La truite fario mange les vairons.",
   "pieges": [
    "Les vairons nettoient les branchies de la truite.",
    "La truite fario garde les œufs des vairons."
@@ -23977,7 +23988,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gammares nourrissent la loche franche.",
+  "phrase": "La loche franche mange les gammares.",
   "pieges": [
    "La loche franche creuse l'abri des gammares.",
    "Les gammares pondent sous les nageoires de la loche."
@@ -24047,7 +24058,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La vipère aspic nourrit parfois la couleuvre de Montpellier.",
+  "phrase": "La couleuvre de Montpellier mange parfois la vipère aspic.",
   "pieges": [
    "La vipère aspic suit parfois la couleuvre de Montpellier.",
    "La vipère aspic couve parfois les œufs de la couleuvre."
@@ -24131,7 +24142,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre verte et jaune nourrit souvent le circaète.",
+  "phrase": "Le circaète mange souvent la couleuvre verte et jaune.",
   "pieges": [
    "Ils passent l'hiver ensemble dans les mêmes rochers.",
    "La couleuvre verte et jaune pond dans le nid du circaète."
@@ -24145,7 +24156,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lézard ocellé nourrit souvent le circaète en Méditerranée.",
+  "phrase": "Le circaète mange souvent le lézard ocellé en Méditerranée.",
   "pieges": [
    "Le lézard ocellé passe l'hiver dans le nid du circaète.",
    "Le lézard ocellé suit le circaète pour trouver des insectes."
@@ -24159,7 +24170,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le hibou moyen-duc nourrit parfois le grand-duc.",
+  "phrase": "Le grand-duc mange parfois le hibou moyen-duc.",
   "pieges": [
    "Le moyen-duc niche dans l'ancien nid du grand-duc.",
    "Ils partagent le même nid pendant tout l'hiver."
@@ -24173,7 +24184,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le loir gris nourrit parfois la chouette hulotte.",
+  "phrase": "La chouette hulotte mange parfois le loir gris.",
   "pieges": [
    "La chouette hulotte protège le nid du loir gris.",
    "Ils hibernent ensemble dans le même tronc creux."
@@ -24299,7 +24310,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les chenilles processionnaires nourrissent souvent la huppe fasciée.",
+  "phrase": "La huppe fasciée mange souvent les chenilles processionnaires.",
   "pieges": [
    "Les chenilles processionnaires tapissent le nid de la huppe.",
    "La huppe pond ses œufs dans les nids de chenilles."
@@ -24313,7 +24324,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs de la tortue nourrissent parfois le sanglier.",
+  "phrase": "Le sanglier mange parfois les œufs de la tortue.",
   "pieges": [
    "La tortue pond ses œufs dans les bauges du sanglier.",
    "La tortue suit le sanglier pour trouver des glands."
@@ -24369,7 +24380,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le poulpe commun nourrit souvent la murène.",
+  "phrase": "La murène mange souvent le poulpe commun.",
   "pieges": [
    "Le poulpe commun nettoie souvent la murène.",
    "Le poulpe commun abrite souvent la murène."
@@ -24383,7 +24394,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La cigale de mer nourrit parfois le mérou brun.",
+  "phrase": "Le mérou brun mange parfois la cigale de mer.",
   "pieges": [
    "La cigale de mer nettoie parfois le mérou brun.",
    "La cigale de mer garde parfois le mérou brun."
@@ -24397,7 +24408,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le maquereau nourrit souvent le fou de Bassan.",
+  "phrase": "Le fou de Bassan mange souvent le maquereau.",
   "pieges": [
    "Le maquereau nettoie souvent le fou de Bassan.",
    "Le maquereau suit souvent le fou de Bassan."
@@ -24467,7 +24478,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs du merle nourrissent parfois la pie.",
+  "phrase": "La pie mange parfois les œufs du merle.",
   "pieges": [
    "Le merle construit son nid dans celui de la pie.",
    "La pie élève parfois les petits du merle."
@@ -24537,7 +24548,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les choucas nourrissent le faucon pèlerin.",
+  "phrase": "Le faucon pèlerin mange les choucas.",
   "pieges": [
    "Les choucas apportent des brindilles au faucon pèlerin.",
    "Le faucon pèlerin couve parfois les œufs des choucas."
@@ -24579,7 +24590,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les vipères aspic nourrissent parfois la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange parfois les vipères aspic.",
   "pieges": [
    "La couleuvre verte et jaune couve les œufs de la vipère.",
    "La couleuvre verte et jaune dort dans le terrier de la vipère."
@@ -24649,7 +24660,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les moules zébrées nourrissent la foulque en hiver.",
+  "phrase": "La foulque mange les moules zébrées en hiver.",
   "pieges": [
    "La foulque cache ses œufs parmi les moules zébrées.",
    "Les moules zébrées nettoient les plumes de la foulque."
@@ -24733,7 +24744,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le chabot nourrit la truite fario.",
+  "phrase": "La truite fario mange le chabot.",
   "pieges": [
    "Le chabot nettoie la peau de la truite.",
    "Le chabot creuse le nid de la truite."
@@ -24747,7 +24758,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le vairon nourrit la truite fario.",
+  "phrase": "La truite fario mange le vairon.",
   "pieges": [
    "Le vairon pond dans le nid de la truite.",
    "Le vairon guide les jeunes truites."
@@ -24761,7 +24772,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gammares nourrissent la loche franche.",
+  "phrase": "La loche franche mange les gammares.",
   "pieges": [
    "Les gammares nettoient les nageoires de la loche.",
    "Les gammares gardent les œufs de la loche."
@@ -24831,7 +24842,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le crapaud commun nourrit souvent le putois.",
+  "phrase": "Le putois mange souvent le crapaud commun.",
   "pieges": [
    "Le putois protège les pontes du crapaud commun.",
    "Le crapaud commun hiverne dans le terrier du putois."
@@ -24845,7 +24856,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le crapaud commun nourrit souvent la couleuvre helvétique.",
+  "phrase": "La couleuvre helvétique mange souvent le crapaud commun.",
   "pieges": [
    "La couleuvre helvétique couve les œufs du crapaud commun.",
    "Le crapaud commun pond dans le terrier de la couleuvre."
@@ -25027,7 +25038,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'écureuil roux nourrit parfois la martre des pins.",
+  "phrase": "La martre des pins mange parfois l'écureuil roux.",
   "pieges": [
    "La martre garde les noisettes cachées par l'écureuil.",
    "L'écureuil prévient la martre quand un rapace arrive."
@@ -25041,7 +25052,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Passager",
   "question": "Quel est leur lien ?",
-  "phrase": "Le chevreuil porte et nourrit de nombreuses tiques.",
+  "phrase": "De nombreuses tiques vivent sur le chevreuil et boivent son sang.",
   "pieges": [
    "La tique aide le chevreuil à digérer l'herbe.",
    "La tique protège le chevreuil des mouches piqueuses."
@@ -25055,7 +25066,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Nouveau venu",
   "question": "Quel est leur lien ?",
-  "phrase": "La brème nourrit le silure, venu du Danube.",
+  "phrase": "Le silure, venu du Danube, mange la brème.",
   "pieges": [
    "La brème débarrasse le silure de ses parasites.",
    "Le silure garde les œufs de la brème."
@@ -25069,7 +25080,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes renards nourrissent parfois le grand-duc.",
+  "phrase": "Le grand-duc mange parfois les jeunes renards.",
   "pieges": [
    "Le grand-duc avertit le renard quand l'homme approche.",
    "Le grand-duc dort l'hiver dans le terrier du renard."
@@ -25139,7 +25150,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol terrestre nourrit beaucoup le milan royal.",
+  "phrase": "Le milan royal mange beaucoup de campagnols terrestres.",
   "pieges": [
    "Le milan royal laisse ses restes de repas au campagnol.",
    "Le campagnol terrestre s'abrite sous le nid du milan."
@@ -25181,7 +25192,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol des champs nourrit surtout la belette.",
+  "phrase": "La belette mange surtout le campagnol des champs.",
   "pieges": [
    "La belette et le campagnol mangent les mêmes graines.",
    "La belette garde les petits du campagnol des champs."
@@ -25195,7 +25206,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lézard vivipare nourrit souvent la vipère péliade.",
+  "phrase": "La vipère péliade mange souvent le lézard vivipare.",
   "pieges": [
    "Le lézard vivipare creuse l'abri d'hiver de la vipère.",
    "Le lézard vivipare mange souvent les jeunes vipères."
@@ -25265,7 +25276,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol roussâtre nourrit la chouette de Tengmalm.",
+  "phrase": "La chouette de Tengmalm mange le campagnol roussâtre.",
   "pieges": [
    "Le campagnol roussâtre creuse le nid de la chouette.",
    "Le campagnol roussâtre mange les restes de la chouette."
@@ -25279,7 +25290,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le cerf élaphe nourrit les loups du Risoux.",
+  "phrase": "Les loups du Risoux mangent le cerf élaphe.",
   "pieges": [
    "Le cerf élaphe guide les loups vers les sources.",
    "Les loups protègent les faons du cerf élaphe."
@@ -25307,7 +25318,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lièvre d'Europe nourrit parfois le lynx boréal.",
+  "phrase": "Le lynx boréal mange parfois le lièvre d'Europe.",
   "pieges": [
    "Le lièvre d'Europe dort l'hiver dans la tanière du lynx.",
    "Le lynx boréal éloigne les renards du lièvre d'Europe."
@@ -25363,7 +25374,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Nouveau venu",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles domestiques nourrissent beaucoup ce frelon venu d'Asie.",
+  "phrase": "Ce frelon venu d'Asie mange beaucoup d'abeilles domestiques.",
   "pieges": [
    "Les abeilles domestiques ont été apportées d'Asie avec ce frelon.",
    "Les abeilles domestiques élèvent les petits de ce frelon venu d'Asie."
@@ -25391,7 +25402,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles nourrissent parfois le frelon européen.",
+  "phrase": "Le frelon européen mange parfois les abeilles.",
   "pieges": [
    "Les abeilles s'abritent l'hiver dans le nid du frelon.",
    "Les abeilles réutilisent le vieux nid de papier du frelon."
@@ -25405,7 +25416,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes chamois nourrissent parfois l'aigle royal.",
+  "phrase": "L'aigle royal mange parfois les jeunes chamois.",
   "pieges": [
    "Le chamois réutilise l'ancien nid de l'aigle royal.",
    "L'aigle royal débarrasse le chamois de ses tiques."
@@ -25489,7 +25500,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les campagnols des champs nourrissent surtout l'effraie.",
+  "phrase": "L'effraie mange surtout les campagnols des champs.",
   "pieges": [
    "L'effraie et le campagnol partagent le même terrier.",
    "Le campagnol se nourrit des restes laissés par l'effraie."
@@ -25573,7 +25584,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les loirs nourrissent parfois la chouette hulotte.",
+  "phrase": "La chouette hulotte mange parfois les loirs.",
   "pieges": [
    "Le loir et la chouette hibernent ensemble.",
    "Le loir sème les graines dont vit la chouette."
@@ -25657,7 +25668,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gardons nourrissent le brochet.",
+  "phrase": "Le brochet mange les gardons.",
   "pieges": [
    "Les gardons nettoient les ouïes du brochet.",
    "Les gardons gardent les œufs du brochet."
@@ -25671,7 +25682,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les grenouilles vertes nourrissent la couleuvre helvétique.",
+  "phrase": "La couleuvre helvétique mange les grenouilles vertes.",
   "pieges": [
    "La couleuvre protège les têtards de la grenouille verte.",
    "La grenouille verte se cache dans le terrier de la couleuvre."
@@ -25699,7 +25710,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes foulques nourrissent le busard des roseaux.",
+  "phrase": "Le busard des roseaux mange les jeunes foulques.",
   "pieges": [
    "Les foulques couvent les œufs du busard des roseaux.",
    "Le busard des roseaux élève les jeunes foulques."
@@ -25755,7 +25766,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le pigeon biset nourrit souvent le faucon pèlerin.",
+  "phrase": "Le faucon pèlerin mange souvent le pigeon biset.",
   "pieges": [
    "Le faucon pèlerin protège le nid du pigeon.",
    "Ils partagent les graines tombées sur la falaise."
@@ -25867,7 +25878,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Au printemps, les crapauds épineux nourrissent la loutre.",
+  "phrase": "Au printemps, la loutre mange les crapauds épineux.",
   "pieges": [
    "Le crapaud se nourrit des restes de repas de la loutre.",
    "La loutre et le crapaud se disputent les mêmes poissons."
@@ -25979,7 +25990,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs de la fauvette nourrissent parfois le geai.",
+  "phrase": "Le geai mange parfois les œufs de la fauvette.",
   "pieges": [
    "La fauvette niche dans l'ancien nid du geai.",
    "La fauvette suit le geai pour trouver des baies."
@@ -26035,7 +26046,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Nouveau venu",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles mellifères nourrissent le frelon asiatique.",
+  "phrase": "Le frelon asiatique mange les abeilles mellifères.",
   "pieges": [
    "Le frelon asiatique protège les ruches des abeilles.",
    "Les abeilles réchauffent le nid du frelon asiatique."
@@ -26049,7 +26060,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles mellifères nourrissent la thomise cachée sur les fleurs.",
+  "phrase": "Cachée sur les fleurs, la thomise mange les abeilles mellifères.",
   "pieges": [
    "La thomise tisse une toile autour des ruches d'abeilles.",
    "Les abeilles transportent la thomise de fleur en fleur."
@@ -26063,7 +26074,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes rats musqués nourrissent le vison d'Amérique.",
+  "phrase": "Le vison d'Amérique mange les jeunes rats musqués.",
   "pieges": [
    "Le vison d'Amérique nettoie le pelage des rats musqués.",
    "Les rats musqués protègent les petits du vison d'Amérique."
@@ -26147,7 +26158,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les moules nourrissent le crabe vert.",
+  "phrase": "Le crabe vert mange les moules.",
   "pieges": [
    "Les moules abritent les œufs du crabe vert.",
    "Le crabe vert transporte les jeunes moules."
@@ -26175,7 +26186,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les crevettes grises nourrissent les jeunes bars de l'estuaire.",
+  "phrase": "Les jeunes bars de l'estuaire mangent les crevettes grises.",
   "pieges": [
    "Les crevettes grises nettoient les écailles des jeunes bars.",
    "Les jeunes bars protègent les œufs des crevettes grises."
@@ -26259,7 +26270,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les larves du hanneton nourrissent le sanglier.",
+  "phrase": "Le sanglier mange les larves du hanneton.",
   "pieges": [
    "Le hanneton pond ses œufs dans les poils du sanglier.",
    "Le sanglier transporte le hanneton d'un bois à l'autre."
@@ -26273,7 +26284,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le vairon nourrit la truite fario.",
+  "phrase": "La truite fario mange le vairon.",
   "pieges": [
    "La truite fario garde les œufs du vairon.",
    "Le vairon nettoie les nageoires de la truite."
@@ -26357,7 +26368,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre verte et jaune nourrit le circaète.",
+  "phrase": "Le circaète mange la couleuvre verte et jaune.",
   "pieges": [
    "La couleuvre pond ses œufs dans le nid du circaète.",
    "Le circaète protège la couleuvre des autres rapaces."
@@ -26371,7 +26382,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le tourteau nourrit souvent le poulpe commun.",
+  "phrase": "Le poulpe commun mange souvent le tourteau.",
   "pieges": [
    "Le poulpe commun nettoie la carapace du tourteau.",
    "Le tourteau garde les œufs du poulpe commun."
@@ -26385,7 +26396,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le poulpe commun nourrit parfois le congre.",
+  "phrase": "Le congre mange parfois le poulpe commun.",
   "pieges": [
    "Le congre protège les œufs du poulpe commun.",
    "Le poulpe commun nettoie la peau du congre."
@@ -26441,7 +26452,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles nourrissent le guêpier tout l'été.",
+  "phrase": "Le guêpier mange les abeilles tout l'été.",
   "pieges": [
    "Les abeilles nichent dans le terrier du guêpier.",
    "Le guêpier transporte le pollen pour les abeilles."
@@ -26455,7 +26466,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les petits oursins noirs nourrissent le sar.",
+  "phrase": "Le sar mange les petits oursins noirs.",
   "pieges": [
    "Le sar nettoie les piquants de l'oursin noir.",
    "L'oursin noir protège les œufs du sar."
@@ -26469,7 +26480,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes gardons nourrissent la perche.",
+  "phrase": "La perche mange les jeunes gardons.",
   "pieges": [
    "La perche garde les nids du gardon.",
    "Le gardon nettoie les écailles de la perche."
@@ -26525,7 +26536,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les mulets nourrissent le cormoran tout l'hiver.",
+  "phrase": "Le cormoran mange les mulets tout l'hiver.",
   "pieges": [
    "Les mulets suivent le cormoran jusqu'à la mer.",
    "Le cormoran garde les petits des mulets."
@@ -26539,7 +26550,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les poussins de foulque nourrissent parfois le busard.",
+  "phrase": "Le busard mange parfois les poussins de foulque.",
   "pieges": [
    "La foulque couve dans l'ancien nid du busard.",
    "Le busard défend le nid de la foulque."
@@ -26623,7 +26634,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les vairons nourrissent la truite fario.",
+  "phrase": "La truite fario mange les vairons.",
   "pieges": [
    "Les vairons nettoient la peau de la truite.",
    "La truite garde les œufs des vairons."
@@ -26650,7 +26661,7 @@ const LIENS = [
   "b": "Le gui",
   "nature_b": "element",
   "role": "Garde-manger",
-  "question": "Quelle plante nourrit la grive draine en hiver ?",
+  "question": "De quelle plante la grive draine se nourrit-elle en hiver ?",
   "phrase": "Elle avale les baies blanches du gui en hiver.",
   "pieges": [
    "Les orties",
@@ -26693,7 +26704,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les lapins nourrissent le renard.",
+  "phrase": "Le renard mange les lapins.",
   "pieges": [
    "Le lapin mange les restes du renard.",
    "Ils dorment côte à côte le jour."
@@ -26763,7 +26774,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les chenilles processionnaires nourrissent la mésange charbonnière.",
+  "phrase": "La mésange charbonnière mange les chenilles processionnaires.",
   "pieges": [
    "La mésange charbonnière dort l'hiver dans leurs nids soyeux.",
    "La mésange charbonnière garnit son nid de leurs longs poils."
@@ -26847,7 +26858,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les escargots petits-gris nourrissent le hérisson.",
+  "phrase": "Le hérisson mange les escargots petits-gris.",
   "pieges": [
    "Le petit-gris passe l'hiver dans le nid du hérisson.",
    "Le hérisson transporte le petit-gris entre ses piquants."
@@ -26931,7 +26942,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La Belle-Dame peut nourrir la thomise cachée sur les fleurs.",
+  "phrase": "Cachée sur les fleurs, la thomise peut manger la Belle-Dame.",
   "pieges": [
    "La thomise protège les œufs de la Belle-Dame des fourmis.",
    "La Belle-Dame transporte les petits de la thomise au loin."
@@ -27029,7 +27040,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs du martinet pâle nourrissent le rat noir.",
+  "phrase": "Le rat noir mange les œufs du martinet pâle.",
   "pieges": [
    "Le martinet pâle niche dans les terriers du rat noir.",
    "Le martinet pâle débarrasse le rat noir de ses puces."
@@ -27113,7 +27124,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes mouflons nourrissent parfois l'aigle royal.",
+  "phrase": "L'aigle royal mange parfois les jeunes mouflons.",
   "pieges": [
    "L'aigle royal niche dans les abris des mouflons.",
    "Le mouflon signale l'aigle aux autres oiseaux."
@@ -27169,7 +27180,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'oursin violet nourrit le sar commun.",
+  "phrase": "Le sar commun mange l'oursin violet.",
   "pieges": [
    "Le sar pond entre les piquants de l'oursin.",
    "L'oursin nettoie les écailles du sar."
@@ -27183,7 +27194,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le poulpe nourrit les grands mérous.",
+  "phrase": "Les grands mérous mangent le poulpe.",
   "pieges": [
    "Le poulpe nettoie la peau du mérou.",
    "Le mérou protège les œufs du poulpe."
@@ -27365,7 +27376,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lézard des murailles nourrit la coronelle lisse.",
+  "phrase": "La coronelle lisse mange le lézard des murailles.",
   "pieges": [
    "La coronelle lisse protège les œufs du lézard.",
    "Le lézard des murailles nettoie la peau de la coronelle."
@@ -27421,7 +27432,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'ablette nourrit le grand cormoran sur la Moselle.",
+  "phrase": "Sur la Moselle, le grand cormoran mange l'ablette.",
   "pieges": [
    "L'ablette pond ses œufs sous le nid du cormoran.",
    "Le cormoran débarrasse l'ablette de ses parasites."
@@ -27533,7 +27544,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le faucon pèlerin nourrit parfois le grand-duc.",
+  "phrase": "Le grand-duc mange parfois le faucon pèlerin.",
   "pieges": [
    "Le faucon pèlerin couve parfois les œufs du grand-duc.",
    "Le grand-duc garde parfois le nid du faucon."
@@ -27547,7 +27558,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'escargot des haies nourrit la grive musicienne.",
+  "phrase": "La grive musicienne mange l'escargot des haies.",
   "pieges": [
    "L'escargot des haies tapisse le nid de la grive.",
    "La grive musicienne transporte les œufs de l'escargot."
@@ -27617,7 +27628,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol des champs nourrit l'effraie.",
+  "phrase": "L'effraie mange le campagnol des champs.",
   "pieges": [
    "L'effraie protège le terrier du campagnol.",
    "Le campagnol dort l'hiver dans le nid d'effraie."
@@ -27631,7 +27642,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le campagnol des champs nourrit la belette.",
+  "phrase": "La belette mange le campagnol des champs.",
   "pieges": [
    "La belette garde les petits du campagnol.",
    "La belette et le campagnol hibernent ensemble."
@@ -27715,7 +27726,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs de grenouille rousse nourrissent le triton alpestre.",
+  "phrase": "Le triton alpestre mange les œufs de grenouille rousse.",
   "pieges": [
    "Le triton alpestre couve les œufs de la grenouille rousse.",
    "La grenouille rousse transporte les larves du triton alpestre."
@@ -27799,7 +27810,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les œufs et petits de la truite nourrissent le chabot.",
+  "phrase": "Le chabot mange les œufs et les petits de la truite.",
   "pieges": [
    "Le chabot nettoie les parasites sur la peau de la truite.",
    "Le chabot pond ses œufs dans les nids de la truite."
@@ -27841,7 +27852,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les nids du frelon asiatique nourrissent la bondrée.",
+  "phrase": "La bondrée pille les nids du frelon asiatique.",
   "pieges": [
    "Le frelon asiatique pond dans le nid de la bondrée.",
    "Le frelon asiatique nettoie les plumes de la bondrée."
@@ -27869,7 +27880,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gardons nourrissent le brochet.",
+  "phrase": "Le brochet mange les gardons.",
   "pieges": [
    "Le gardon nettoie les dents du brochet.",
    "Le brochet protège les œufs du gardon."
@@ -27939,7 +27950,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le mulot nourrit la chouette hulotte.",
+  "phrase": "La chouette hulotte mange le mulot.",
   "pieges": [
    "Le mulot dort dans le nid de la chouette.",
    "La chouette nettoie le terrier du mulot."
@@ -28107,7 +28118,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les abeilles mellifères nourrissent les larves du frelon asiatique.",
+  "phrase": "Le frelon asiatique mange les abeilles mellifères et en nourrit ses larves.",
   "pieges": [
    "Le frelon asiatique pond ses œufs dans les ruches.",
    "Les deux insectes partagent le même nid de cire."
@@ -28233,7 +28244,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les perdrix grises nourrissent parfois le renard.",
+  "phrase": "Le renard mange parfois les perdrix grises.",
   "pieges": [
    "La perdrix niche dans l'ancien terrier du renard.",
    "Le renard protège les nids de la perdrix."
@@ -28289,7 +28300,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les faucheux nourrissent souvent le murin de Natterer.",
+  "phrase": "Le murin de Natterer mange souvent les faucheux.",
   "pieges": [
    "Le faucheux s'abrite dans le pelage du murin.",
    "Le murin de Natterer disperse les œufs du faucheux."
@@ -28401,7 +28412,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les brèmes nourrissent le silure adulte.",
+  "phrase": "Le silure adulte mange les brèmes.",
   "pieges": [
    "Les brèmes nettoient la peau du silure.",
    "Le silure garde les œufs des brèmes."
@@ -28415,7 +28426,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les petits vairons nourrissent le martin-pêcheur.",
+  "phrase": "Le martin-pêcheur mange les petits vairons.",
   "pieges": [
    "Les vairons nettoient le terrier du martin-pêcheur.",
    "Le martin-pêcheur garde les œufs des vairons."
@@ -28471,7 +28482,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les courtilières nourrissent la huppe et ses petits.",
+  "phrase": "La huppe et ses petits mangent les courtilières.",
   "pieges": [
    "La huppe pond ses œufs dans les terriers des courtilières.",
    "Les courtilières creusent les galeries où dort la huppe."
@@ -28499,7 +28510,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les campagnols des champs nourrissent surtout la chouette effraie.",
+  "phrase": "La chouette effraie mange surtout les campagnols des champs.",
   "pieges": [
    "L'effraie installe son nid dans les galeries des campagnols.",
    "Les campagnols des champs dorment l'hiver dans le nid d'effraie."
@@ -28611,7 +28622,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les poules d'eau nourrissent parfois le grand brochet de l'étang.",
+  "phrase": "Le grand brochet de l'étang mange parfois les poules d'eau.",
   "pieges": [
    "Le brochet protège parfois les poussins de la poule d'eau.",
    "La poule d'eau débarrasse parfois le brochet de ses parasites."
@@ -28667,7 +28678,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les larves du hanneton nourrissent le sanglier.",
+  "phrase": "Le sanglier mange les larves du hanneton.",
   "pieges": [
    "Le hanneton pond ses œufs sur le sanglier.",
    "Le sanglier abrite le hanneton dans sa bauge."
@@ -28681,7 +28692,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Nouveau venu",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes écrevisses signal nourrissent l'anguille.",
+  "phrase": "L'anguille mange les jeunes écrevisses signal.",
   "pieges": [
    "L'anguille pond ses œufs sous l'écrevisse signal.",
    "L'écrevisse signal transporte les jeunes anguilles."
@@ -28849,7 +28860,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lézard des murailles nourrit la coronelle lisse.",
+  "phrase": "La coronelle lisse mange le lézard des murailles.",
   "pieges": [
    "Le lézard des murailles nettoie les tiques de la coronelle.",
    "Le lézard des murailles mange les œufs de la coronelle."
@@ -28863,7 +28874,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La vipère aspic nourrit la couleuvre verte et jaune.",
+  "phrase": "La couleuvre verte et jaune mange la vipère aspic.",
   "pieges": [
    "La vipère aspic s'hybride avec la couleuvre verte et jaune.",
    "La vipère aspic défend la couleuvre verte et jaune."
@@ -28876,8 +28887,8 @@ const LIENS = [
   "b": "Les saules",
   "nature_b": "element",
   "role": "Garde-manger",
-  "question": "Quels arbres nourrissent surtout le castor en hiver ?",
-  "phrase": "L'écorce des saules nourrit le castor en hiver.",
+  "question": "De quels arbres le castor se nourrit-il surtout en hiver ?",
+  "phrase": "Le castor mange l'écorce des saules en hiver.",
   "pieges": [
    "Les pins",
    "Le gui"
@@ -28933,7 +28944,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les mésanges charbonnières nourrissent souvent l'épervier.",
+  "phrase": "L'épervier mange souvent les mésanges charbonnières.",
   "pieges": [
    "L'épervier dépose ses œufs chez les mésanges.",
    "Les mésanges charbonnières nettoient les plumes de l'épervier."
@@ -28947,7 +28958,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les geais des chênes nourrissent souvent l'autour.",
+  "phrase": "L'autour mange souvent les geais des chênes.",
   "pieges": [
    "L'autour niche dans un ancien nid de geai.",
    "Le geai stocke ses glands chez l'autour."
@@ -29059,7 +29070,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les grillons nourrissent la huppe.",
+  "phrase": "La huppe mange les grillons.",
   "pieges": [
    "La huppe niche dans le terrier du grillon.",
    "Les grillons nettoient le plumage de la huppe."
@@ -29087,7 +29098,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le geai des chênes nourrit souvent l'autour des palombes.",
+  "phrase": "L'autour des palombes mange souvent le geai des chênes.",
   "pieges": [
    "Le geai des chênes niche dans l'ancien nid de l'autour.",
    "Ils cherchent leur nourriture ensemble en hiver."
@@ -29101,7 +29112,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La grive musicienne nourrit souvent l'épervier d'Europe.",
+  "phrase": "L'épervier d'Europe mange souvent la grive musicienne.",
   "pieges": [
    "La grive musicienne niche dans l'ancien nid de l'épervier.",
    "Ils migrent ensemble vers l'Afrique chaque automne."
@@ -29157,7 +29168,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La grande nacre nourrit le poulpe.",
+  "phrase": "Le poulpe mange la grande nacre.",
   "pieges": [
    "Le poulpe nettoie la coquille de la grande nacre.",
    "Le poulpe transporte les larves de la grande nacre."
@@ -29171,7 +29182,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les perches nourrissent le héron cendré.",
+  "phrase": "Le héron cendré mange les perches.",
   "pieges": [
    "Les perches pondent dans le nid du héron.",
    "Le héron protège les jeunes perches."
@@ -29185,7 +29196,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les canetons du colvert nourrissent parfois le héron.",
+  "phrase": "Le héron mange parfois les canetons du colvert.",
   "pieges": [
    "Le colvert pond ses œufs dans le nid du héron.",
    "Le colvert nettoie les plumes du héron cendré."
@@ -29199,7 +29210,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le rat des moissons nourrit parfois le moyen-duc.",
+  "phrase": "Le moyen-duc mange parfois le rat des moissons.",
   "pieges": [
    "Le rat des moissons s'installe dans l'ancien nid du moyen-duc.",
    "Le moyen-duc avertit le rat des moissons d'un danger."
@@ -29213,7 +29224,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les vairons nourrissent souvent le martin-pêcheur.",
+  "phrase": "Le martin-pêcheur mange souvent les vairons.",
   "pieges": [
    "Le vairon pond dans le terrier du martin-pêcheur.",
    "Le martin-pêcheur débarrasse le vairon de ses parasites."
@@ -29227,7 +29238,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les vairons nourrissent le chevesne.",
+  "phrase": "Le chevesne mange les vairons.",
   "pieges": [
    "Le chevesne nettoie la peau du vairon.",
    "Le vairon et le chevesne forment des hybrides."
@@ -29255,7 +29266,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lièvre, surtout ses petits, nourrit le renard roux.",
+  "phrase": "Le renard roux mange le lièvre, surtout ses petits.",
   "pieges": [
    "Le lièvre passe l'hiver dans le terrier du renard roux.",
    "Le lièvre creuse le terrier où naissent les renardeaux."
@@ -29325,7 +29336,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les geais nourrissent l'autour des palombes.",
+  "phrase": "L'autour des palombes mange les geais.",
   "pieges": [
    "Ils se disputent les glands en automne.",
    "Ils partagent les mêmes trous d'arbres."
@@ -29395,7 +29406,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le chamois nourrit le lynx.",
+  "phrase": "Le lynx mange le chamois.",
   "pieges": [
    "Le lynx loge dans l'abri du chamois.",
    "Le chamois mange les restes du lynx."
@@ -29451,7 +29462,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes sandres nourrissent parfois le grand cormoran.",
+  "phrase": "Le grand cormoran mange parfois les jeunes sandres.",
   "pieges": [
    "Le sandre pond sous les nids du cormoran.",
    "Le grand cormoran protège les frayères du sandre."
@@ -29507,7 +29518,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les écrevisses américaines nourrissent le silure.",
+  "phrase": "Le silure mange les écrevisses américaines.",
   "pieges": [
    "Le silure creuse le terrier des écrevisses américaines.",
    "Les écrevisses américaines nettoient la peau du silure."
@@ -29577,7 +29588,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le rat musqué nourrit parfois le putois.",
+  "phrase": "Le putois mange parfois le rat musqué.",
   "pieges": [
    "Le putois construit la hutte du rat musqué.",
    "Le rat musqué garde les petits du putois."
@@ -29619,7 +29630,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'écureuil roux nourrit parfois la martre des pins.",
+  "phrase": "La martre des pins mange parfois l'écureuil roux.",
   "pieges": [
    "L'écureuil roux nettoie le pelage de la martre.",
    "La martre des pins cache les noisettes de l'écureuil."
@@ -29633,7 +29644,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le pigeon biset nourrit le grand-duc d'Europe.",
+  "phrase": "Le grand-duc d'Europe mange le pigeon biset.",
   "pieges": [
    "Le pigeon biset niche dans le nid du grand-duc.",
    "Le grand-duc d'Europe couve les œufs du pigeon."
@@ -29731,7 +29742,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les orvets nourrissent la coronelle lisse.",
+  "phrase": "La coronelle lisse mange les orvets.",
   "pieges": [
    "Les orvets protègent les petits de la coronelle lisse.",
    "Les orvets et la coronelle lisse pondent ensemble."
@@ -29745,7 +29756,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "En hiver, les moules zébrées nourrissent le fuligule milouin.",
+  "phrase": "En hiver, le fuligule milouin mange les moules zébrées.",
   "pieges": [
    "Les moules zébrées voyagent accrochées aux plumes du fuligule.",
    "Le fuligule milouin cache sa couvée parmi les moules zébrées."
@@ -29773,7 +29784,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les gammares nourrissent le cincle plongeur.",
+  "phrase": "Le cincle plongeur mange les gammares.",
   "pieges": [
    "Les gammares vivent dans le nid du cincle plongeur.",
    "Les gammares nettoient les plumes du cincle plongeur."
@@ -29843,7 +29854,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'épervier nourrit parfois l'autour des palombes.",
+  "phrase": "L'autour des palombes mange parfois l'épervier.",
   "pieges": [
    "L'épervier élève ses petits dans l'ancien nid de l'autour.",
    "L'épervier débarrasse l'autour des tiques de son plumage."
@@ -29927,7 +29938,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les écrevisses de Louisiane nourrissent parfois le silure.",
+  "phrase": "Le silure mange parfois les écrevisses de Louisiane.",
   "pieges": [
    "L'écrevisse de Louisiane nettoie la peau du silure.",
    "Le silure pond ses œufs dans les terriers d'écrevisse."
@@ -29955,7 +29966,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La tégénaire nourrit parfois le pholque.",
+  "phrase": "Le pholque mange parfois la tégénaire.",
   "pieges": [
    "La tégénaire transporte les petits du pholque.",
    "Le pholque pond dans la toile de la tégénaire."
@@ -30097,7 +30108,7 @@ const LIENS = [
   "question": "Quel est leur lien ?",
   "phrase": "L'huître creuse introduite s'installe sur les bancs de moules.",
   "pieges": [
-   "Les moules nourrissent l'huître creuse introduite.",
+   "L'huître creuse introduite mange les moules.",
    "L'huître creuse introduite débarrasse les moules de leurs parasites."
   ]
  },
@@ -30109,7 +30120,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les jeunes coques nourrissent le crabe vert.",
+  "phrase": "Le crabe vert mange les jeunes coques.",
   "pieges": [
    "Les coques nettoient la carapace du crabe vert.",
    "Le crabe vert creuse le terrier où vivent les coques."
@@ -30123,7 +30134,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les rats musqués nourrissent le putois.",
+  "phrase": "Le putois mange les rats musqués.",
   "pieges": [
    "Ils sont cousins et peuvent se croiser.",
    "Le putois nettoie le pelage du rat musqué."
@@ -30235,7 +30246,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "L'écureuil roux nourrit l'autour des palombes.",
+  "phrase": "L'autour des palombes mange l'écureuil roux.",
   "pieges": [
    "L'autour des palombes niche dans le nid de l'écureuil.",
    "L'écureuil roux et l'autour se disputent les pommes de pin."
@@ -30263,7 +30274,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le lézard ocellé nourrit parfois la couleuvre de Montpellier.",
+  "phrase": "La couleuvre de Montpellier mange parfois le lézard ocellé.",
   "pieges": [
    "Le lézard ocellé débarrasse la couleuvre de ses tiques.",
    "Ce sont deux formes d'une seule et même espèce."
@@ -30291,7 +30302,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les poussins de la nonnette nourrissent souvent le pic épeiche.",
+  "phrase": "Le pic épeiche mange souvent les poussins de la nonnette.",
   "pieges": [
    "Le pic épeiche élève les poussins de la nonnette.",
    "La nonnette nettoie les plumes du pic épeiche."
@@ -30361,7 +30372,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les campagnols terrestres nourrissent le grand-duc.",
+  "phrase": "Le grand-duc mange les campagnols terrestres.",
   "pieges": [
    "Le grand-duc niche dans les galeries du campagnol.",
    "Ils passent l'hiver ensemble au fond des terriers."
@@ -30585,7 +30596,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Les écrevisses de Louisiane nourrissent le butor étoilé.",
+  "phrase": "Le butor étoilé mange les écrevisses de Louisiane.",
   "pieges": [
    "Le butor étoilé abrite ses œufs dans leurs terriers.",
    "Les écrevisses nettoient les plumes du butor étoilé."
@@ -30669,7 +30680,7 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "Le crapaud commun nourrit la couleuvre helvétique.",
+  "phrase": "La couleuvre helvétique mange le crapaud commun.",
   "pieges": [
    "Le crapaud commun pond dans le terrier de la couleuvre.",
    "La couleuvre helvétique couve les œufs du crapaud."
@@ -30697,9 +30708,9 @@ const LIENS = [
   "nature_b": "espece",
   "role": "Garde-manger",
   "question": "Quel est leur lien ?",
-  "phrase": "La couleuvre de Montpellier nourrit le circaète.",
+  "phrase": "Le circaète mange la couleuvre de Montpellier.",
   "pieges": [
-   "Le circaète nourrit la couleuvre de Montpellier.",
+   "La couleuvre de Montpellier mange le circaète.",
    "Ils hivernent ensemble dans les mêmes trous de rocher."
   ]
  },

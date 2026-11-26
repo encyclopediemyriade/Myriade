@@ -276,15 +276,14 @@ const TRESORS = [
  {
   "territoire": "Bassin parisien et Val de Loire",
   "lieu": "Paris, ses bois et ses parcs",
-  "nom": "Écrevisse à pattes blanches",
-  "ajoute": false,
+  "nom": "Blongios nain",
+  "ajoute": true,
   "piste": {
    "empreinte": false,
    "cri": false,
-   "trace": "",
-   "milieu": "Rivières et torrents",
-   "activite": "Surtout la nuit",
-   "hiver": "s'endort ou ralentit"
+   "trace": "Nid en pyramide inversée dans les roseaux",
+   "milieu": "Marais",
+   "activite": "À l'aube et au crépuscule"
   }
  },
  {
@@ -1628,7 +1627,7 @@ const POURQUOI_RARE = {
  "Ours brun": "Chassé et détruit par l'homme, il a presque disparu.",
  "Bouquetin ibérique": "Disparu des Pyrénées, il y a été réintroduit.",
  "Desman des Pyrénées": "Les aménagements des torrents et le vison d'Amérique le menacent.",
- "Campagnol des Pyrénées": "Il ne vit que dans les montagnes du Sud-Ouest.",
+ "Campagnol des Pyrénées": "Il ne vit que dans le Sud-Ouest de la France et en Espagne.",
  "Grand tétras": "Les loisirs le dérangent et ses forêts se morcellent.",
  "Pic à dos blanc": "Il lui faut de vieilles hêtraies pleines de bois mort.",
  "Grenouille des Pyrénées": "Elle ne vit que dans quelques torrents de l'ouest pyrénéen.",
@@ -1642,4 +1641,180 @@ const POURQUOI_RARE = {
  "Hélice des bois": "Elle se cache dans les forêts fraîches et humides.",
  "Moiré de la canche": "Il ne vit que dans les prairies humides de montagne.",
  "Sittelle corse": "Elle ne vit qu'en Corse, dans les vieilles forêts de pins laricio."
+};
+
+// Étape R328 (9A) : l'indice de la piste et « Ce qui l'aide » (révélation du trésor)
+const TEXTES_TRESOR = {
+ "Lynx boréal": {
+  "indice": "Un grand félin tacheté, aux oreilles pointues et à la queue courte.",
+  "aide": "Un plan national d'actions et des panneaux sur les routes du Jura."
+ },
+ "Loup gris": {
+  "indice": "Allure de grand chien, masque blanc au museau, traces bien alignées.",
+  "aide": "Des troupeaux gardés par des bergers et des chiens de protection."
+ },
+ "Martre des pins": {
+  "indice": "Petit carnivore brun à bavette crème ou jaune, qui grimpe aux arbres.",
+  "aide": "Des forêts continues où l'on garde vieux arbres creux et lierre."
+ },
+ "Oreillard montagnard": {
+  "indice": "Une chauve-souris qui chasse les papillons de nuit au-dessus des prés.",
+  "aide": "Des combles et des clochers laissés ouverts, sans éclairage la nuit."
+ },
+ "Gypaète barbu": {
+  "indice": "Immense rapace qui lâche des os sur les rochers pour les briser.",
+  "aide": "Des réintroductions, des câbles balisés et des munitions sans plomb."
+ },
+ "Sonneur à ventre jaune": {
+  "indice": "Un petit crapaud terne aux pupilles en cœur, dans les ornières forestières.",
+  "aide": "Des ornières de chemins forestiers préservées et de petites mares créées."
+ },
+ "Vipère péliade": {
+  "indice": "Un serpent trapu au zigzag noir, au soleil près des tourbières.",
+  "aide": "Des landes et tourbières entretenues, et des haies et lisières gardées."
+ },
+ "Lote": {
+  "indice": "Un poisson brun marbré, un seul barbillon au menton, actif la nuit.",
+  "aide": "Des bras morts et des annexes inondées reliés au cours d'eau."
+ },
+ "Écrevisse à pattes blanches": {
+  "indice": "Un crustacé olivâtre, caché le jour sous les pierres des ruisseaux frais.",
+  "aide": "Des ruisseaux protégés et du matériel nettoyé et séché entre deux sorties."
+ },
+ "Vison d'Europe": {
+  "indice": "Un petit carnivore brun sombre aux lèvres blanches, au bord des rivières.",
+  "aide": "Des jeunes nés en élevage, relâchés en Charente depuis 2025."
+ },
+ "Bruant ortolan": {
+  "indice": "Un passereau à tête gris-vert et gorge jaune, sur les coteaux ensoleillés.",
+  "aide": "Une protection totale depuis 1999, qui interdit de le capturer."
+ },
+ "Ibis falcinelle": {
+  "indice": "Oiseau sombre à reflets verts et long bec arqué, dans les marais.",
+  "aide": "Des marais d'eau douce préservés et des colonies laissées tranquilles."
+ },
+ "Gravelot à collier interrompu": {
+  "indice": "Petit oiseau couleur sable aux pattes noires, sur le haut des plages.",
+  "aide": "Des nids protégés par des enclos et une laisse de mer préservée."
+ },
+ "Pie-grièche à tête rousse": {
+  "indice": "Plumage noir et blanc, épaules blanches, à l'affût dans les vieux vergers.",
+  "aide": "Des vieux vergers pâturés et moins de vermifuges pour le bétail."
+ },
+ "Grande mulette": {
+  "indice": "Coquillage d'eau douce grand comme une main, enfoui au fond des rivières.",
+  "aide": "Un plan national d'actions et des jeunes élevés puis relâchés en rivière."
+ },
+ "Chat forestier": {
+  "indice": "Un félin gris légèrement rayé, à grosse queue annelée terminée de noir.",
+  "aide": "Une protection totale et de grandes forêts de feuillus, avec leurs lisières."
+ },
+ "Balbuzard pêcheur": {
+  "indice": "Un rapace au ventre blanc qui plonge pattes en avant dans l'eau.",
+  "aide": "Une protection totale et des plateformes de nid installées pour lui."
+ },
+ "Lézard des souches": {
+  "indice": "Reptile trapu à tête courte, le mâle aux flancs vert vif.",
+  "aide": "Des landes, des lisières et des talus ensoleillés préservés."
+ },
+ "Goéland d'Audouin": {
+  "indice": "Un oiseau de mer au bec rouge sang, pêchant surtout la nuit.",
+  "aide": "Des îlots corses classés en réserve, où le débarquement est interdit."
+ },
+ "Puffin yelkouan": {
+  "indice": "Sombre dessus, blanc dessous, il file au ras des vagues.",
+  "aide": "Le piégeage des chats et des rats sur ses îles de nidification."
+ },
+ "Blongios nain": {
+  "indice": "Un héron noir et beige qui se fige dans les roseaux.",
+  "aide": "Des roselières restaurées et bien en eau au printemps."
+ },
+ "Pic cendré": {
+  "indice": "Fine moustache noire et chant doux qui descend, dans les hêtraies.",
+  "aide": "De vieilles forêts de feuillus où l'on laisse des arbres morts."
+ },
+ "Sizerin cabaret": {
+  "indice": "Un petit oiseau rayé à calotte rouge, en bandes dans les bouleaux.",
+  "aide": "Des bois de bouleaux et de mélèzes préservés en montagne."
+ },
+ "Agrion hasté": {
+  "indice": "Une demoiselle bleu et noir des petites mares de tourbière, en montagne.",
+  "aide": "Des tourbières gardées en eau, sans drainage ni plantation de résineux."
+ },
+ "Macareux moine": {
+  "indice": "Oiseau marin noir et blanc, pattes orange, au bec triangulaire multicolore.",
+  "aide": "Une vaste réserve aux Sept-Îles, avec une zone fermée pendant les nichées."
+ },
+ "Triton crêté": {
+  "indice": "Un grand amphibien sombre, ventre orange taché de noir, dans les mares.",
+  "aide": "Un réseau de mares entretenues ou recreusées, entourées de haies."
+ },
+ "Grande alose": {
+  "indice": "Les nuits de mai, des remous bruyants à la surface des rivières.",
+  "aide": "Une pêche suspendue sur la Garonne et la Dordogne."
+ },
+ "Saint-Pierre": {
+  "indice": "Un poisson haut et mince, marqué d'une grosse tache noire au flanc.",
+  "aide": "Des pêcheurs qui relâchent les poissons de moins de 40 cm."
+ },
+ "Vautour moine": {
+  "indice": "Un immense rapace brun sombre, ailes tenues à plat, sur les Causses.",
+  "aide": "Des oiseaux relâchés dans les Causses, nourris de brebis mortes des élevages."
+ },
+ "Cigogne noire": {
+  "indice": "Un grand échassier aux reflets verts et violets, bec et pattes rouges.",
+  "aide": "Des forestiers qui suspendent leurs travaux près des nids au printemps."
+ },
+ "Pie-grièche grise": {
+  "indice": "En hiver, un guetteur à masque noir empale ses proies aux barbelés.",
+  "aide": "Des haies et des arbres isolés replantés au milieu des prés pâturés."
+ },
+ "Leucorrhine douteuse": {
+  "indice": "Petite libellule noire tachée de rouge, face blanche, près des tourbières.",
+  "aide": "Des tourbières gardées en eau et des mares sans poissons."
+ },
+ "Pachyure étrusque": {
+  "indice": "Un mammifère de deux grammes, au long museau, dans les murets chauds.",
+  "aide": "Des murets de pierres sèches gardés sans ciment, loin des pesticides."
+ },
+ "Outarde canepetière": {
+  "indice": "Le mâle bondit ailes ouvertes, au printemps, avec un « prrt ».",
+  "aide": "Des prairies non fauchées pendant les nichées, sous contrat avec les agriculteurs."
+ },
+ "Pélobate cultripède": {
+  "indice": "Un crapaud aux gros yeux dorés, qui s'enfouit dans le sable.",
+  "aide": "Des mares temporaires restaurées et des passages sous les routes."
+ },
+ "Tortue d'Hermann": {
+  "indice": "Une carapace bombée jaune et noire, au pied des buissons du maquis.",
+  "aide": "Un plan national d'actions et des réserves où elle est protégée."
+ },
+ "Ours brun": {
+  "indice": "Fourmilières éventrées, pierres retournées et griffures sur les troncs trahissent son passage.",
+  "aide": "Des ours lâchés venus de Slovénie et des troupeaux mieux gardés."
+ },
+ "Campagnol des Pyrénées": {
+  "indice": "Un rongeur aux yeux minuscules qui creuse sous les prairies.",
+  "aide": "Des prairies et des pâturages naturels riches en fleurs sauvages."
+ },
+ "Grand tétras": {
+  "indice": "Au printemps, un oiseau sombre à sourcil rouge fait la roue.",
+  "aide": "Des forêts claires laissées au calme et exploitées avec douceur."
+ },
+ "Pic à dos blanc": {
+  "indice": "Ailes barrées, calotte rouge chez le mâle, il fouille le bois mort.",
+  "aide": "De vieilles hêtraies où les arbres morts restent sur pied."
+ },
+ "Lézard de Bonnal": {
+  "indice": "Petit reptile gris-brun, actif le matin sur les rochers de haute montagne.",
+  "aide": "Des sites protégés en Parc national et un suivi régulier des populations."
+ },
+ "Vipère de Seoane": {
+  "indice": "Un petit serpent aux couleurs très variables, des landes et bocages basques.",
+  "aide": "Une protection stricte et un plan national pour les vipères, depuis 2025."
+ },
+ "Sittelle corse": {
+  "indice": "Sourcil blanc, calotte noire, un « pu » sifflé dans les pins.",
+  "aide": "De vieux pins et des arbres morts laissés debout dans les forêts."
+ }
 };

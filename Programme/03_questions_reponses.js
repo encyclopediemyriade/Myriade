@@ -362,7 +362,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   if (format === "qcm")            poserQcm(espece, q, bonne);
   if (format === "vraifaux")       poserVraiFaux(espece, q, bonne);
   if (session && session.vie && session.vie.includes(champ))   // étape RF1 ; RF2 : la rafale, « 2 / 3 »
-    document.getElementById("revision").textContent = session.enRejeu ? "Sa vie · à revoir" : "Sa vie · vrai ou faux";   // R273 (11A) : plus de « 1 / 2 » ici, le compte est « Question n / N »   // E2-7 : 2 questions après l'écran « Sa vie »
+    document.getElementById("revision").textContent = session.enRejeu ? "Sa vie · à revoir" : format === "vraifaux" ? "Sa vie" : "Sa vie · vrai ou faux";   // R325 : « Vrai ou faux ? » est déjà l'étiquette   // R273 (11A) : plus de « 1 / 2 » ici, le compte est « Question n / N »   // E2-7 : 2 questions après l'écran « Sa vie »
   if (format === "photos")         poserPhotos(espece, q, bonne);
   if (format === "estimation")     poserEstimation(espece, q);
   if (format === "empreinte-nom")   poserEmpreinteNom(espece, bonne);
@@ -834,8 +834,23 @@ function poserVraiFaux(espece, q, bonne) {
     affirmation.textContent = affirmation.textContent.replace(/^(Il|Elle) /, () => majuscule(nomAvecArticle(espece)) + " ");
   affirmationVraie = q.affirmation(bonne, espece);       // étape E2-4 : la phrase vraie, donnée après une erreur dans la rafale
   affirmation.classList.remove("cache");
-  ajouterBouton("Vrai", estVraie);
-  ajouterBouton("Faux", !estVraie);
+  ajouterBoutonsVraiFaux(estVraie);   // étape R325 (4A)
+}
+// Étape R325 (retours du 26/11, note 4, choix d'Aubin 4A) : l'affirmation est posée en gros texte, sans encadré (style.css),
+//   et « Vrai ✓ » / « Faux ✗ » sont côte à côte, juste dessous. Critère : « on voit d'un coup d'œil que c'est une affirmation
+//   à juger, et les deux réponses tiennent sous le pouce ». Le texte des boutons reste « Vrai » / « Faux ».
+const ICONE_VRAI = '<svg class="ic-vf" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
+const ICONE_FAUX = '<svg class="ic-vf" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+function htmlVraiFaux(t) { return (t === "Vrai" ? ICONE_VRAI : t === "Faux" ? ICONE_FAUX : "") + `<span>${t}</span>`; }
+function ajouterBoutonsVraiFaux(vraie) {
+  const zone = document.getElementById("reponses");
+  zone.classList.add("vrai-faux");
+  for (const [t, juste] of [["Vrai", vraie], ["Faux", !vraie]]) {
+    ajouterBouton(t, juste);
+    const b = zone.lastElementChild;
+    b.classList.add(t === "Vrai" ? "rep-vrai" : "rep-faux");
+    b.innerHTML = htmlVraiFaux(t);
+  }
 }
 
 // ---- 6d. Choisir parmi 4 photos -----------------------------------

@@ -372,9 +372,10 @@ function piegeNidSur(sorte, hotes, sujet, o) {
 
 // ---- Type 1 · Les liens entre elles ----
 // Le sens de chaque rôle : qui est le sujet de la question (nommé), qui est la bonne réponse (une espèce de l'expédition).
-// Pas de verbe violent : la prédation est tournée côté ressource (« nourrit »).
+// Pas de verbe violent. Étape R320 (retour du 26/11, n° 1, règle d'Aubin : « Une espèce se nourrit d'une autre ») :
+//   le mangeur est le sujet (« De laquelle de ces espèces le merle se nourrit-il ? »), jamais la proie (« … nourrit le merle »).
 const FORMES_LIENS = {
-  "Garde-manger": (sujet) => `Laquelle de ces espèces nourrit ${leNom(sujet)} ?`,
+  "Garde-manger": (sujet) => accordGenre(`De laquelle de ces espèces ${leNom(sujet)} se nourrit-il ?`, sujet),
   "Concurrents": (sujet) => `Laquelle de ces espèces est en concurrence avec ${leNom(sujet)} ?`,
   "Locataire": (sujet) => `Laquelle de ces espèces fournit un logis ${aNomAvecArticle(sujet)} ?`,
   "Passager": (sujet) => accordGenre(`Sur laquelle de ces espèces ${leNom(sujet)} se fixe-t-il ?`, sujet),
@@ -388,13 +389,24 @@ const FORMES_LIENS = {
   "Terrier": (sujet) => accordGenre(`Dans le terrier de laquelle de ces espèces ${leNom(sujet)} s'installe-t-il souvent ?`, sujet),
   "Colonies": (sujet) => accordGenre(`Au milieu des colonies de laquelle de ces espèces ${leNom(sujet)} niche-t-il souvent ?`, sujet),
 };
-// « Les gardons nourrissent le brochet » : le mangeur est celui qui est nommé APRÈS « nourri » (le sens des liens varie).
+// « Le brochet mange les gardons » (R320) : le mangeur est nommé AVANT le verbe ; dans l'ancienne tournure
+// « Les gardons nourrissent le brochet » (vrais nourrissages, données anciennes), il est nommé APRÈS « nourri ».
 function motsDuNom(e) { return sansAccent(e.nom_courant).split(/[\s'-]+/).filter(w => w.length >= 4 && !["commun", "commune", "europe", "grand", "petit"].includes(w)); }
 function nommeDans(phrase, e) { const p = sansAccent(phrase); return motsDuNom(e).some(w => new RegExp("\\b" + w).test(p)) ? p.search(new RegExp("\\b" + motsDuNom(e).find(w => new RegExp("\\b" + w).test(p)))) : -1; }
 function sensGardeManger(k, A, B) {
-  const p = sansAccent(k.phrase), j = p.search(/\bnourri/);
+  const p = sansAccent(k.phrase), ia = nommeDans(k.phrase, A), ib = nommeDans(k.phrase, B);
+  // R320 : « X mange Y », « X se nourrit de Y », « X pille Y » : le mangeur est nommé AVANT le verbe
+  const jm = p.search(/\b(mangent|mange|se nourri\w*|pille\w*)\b/), jn = p.search(/\bnourri/);
+  if (jm >= 0 && (jn < 0 || jm <= jn)) {
+    const avA = ia >= 0 && ia < jm, avB = ib >= 0 && ib < jm, apA = ia > jm, apB = ib > jm;
+    if (avA && !avB) return { mangeur: A, ressource: B };
+    if (avB && !avA) return { mangeur: B, ressource: A };
+    if (apA && !apB && ib < 0) return { mangeur: B, ressource: A };
+    if (apB && !apA && ia < 0) return { mangeur: A, ressource: B };
+    return null;
+  }
+  const j = jn;
   if (j < 0) return null;
-  const ia = nommeDans(k.phrase, A), ib = nommeDans(k.phrase, B);
   if (ia > j && !(ib > j)) return { mangeur: A, ressource: B };
   if (ib > j && !(ia > j)) return { mangeur: B, ressource: A };
   if (ia >= 0 && ia < j && ib < 0) return { mangeur: B, ressource: A };
@@ -513,7 +525,9 @@ function aLe(V) { return V.replace(/^le /, "au ").replace(/^les /, "aux ").repla
 function deLe(V) { return V.replace(/^le /, "du ").replace(/^les /, "des ").replace(/^la /, "de la ").replace(/^l'/, "de l'"); }
 // Les formes : n = nombre de bonnes réponses ; V = le nom du voisin (« le faucon crécerelle », « les faucons ») ; l = « du village »
 const FORMES_VOISINS = {
-  V_mange:  (V, n, l) => n > 1 ? `Lesquelles de ces espèces${l} nourrissent ${V} ?` : `Laquelle de ces espèces${l} nourrit ${V} ?`,
+  // R320 : le mangeur est le sujet (« De quelles espèces du village le faucon crécerelle se nourrit-il ? »)
+  V_mange:  (V, n, l, e) => /^les /.test(V) ? `${n > 1 ? "Desquelles" : "De laquelle"} de ces espèces${l} ${V} se nourrissent-ils ?`
+    : accordGenre(`${n > 1 ? "Desquelles" : "De laquelle"} de ces espèces${l} ${V} se nourrit-il ?`, e),
   mange_V:  (V, n, l) => n > 1 ? `Lesquelles de ces espèces${l} mangent parfois ${V} ?` : `Laquelle de ces espèces${l} mange parfois ${V} ?`,
   Concurrents: (V, n, l) => n > 1 ? `Lesquelles de ces espèces${l} sont en concurrence avec ${V} ?` : `Laquelle de ces espèces${l} est en concurrence avec ${V} ?`,
   Compagnons: (V, n, l, e) => accordGenre(n > 1 ? `Avec lesquelles de ces espèces${l} ${V} se regroupe-t-il souvent ?` : `Avec laquelle de ces espèces${l} ${V} se regroupe-t-il souvent ?`, e),
@@ -542,7 +556,7 @@ function relationsVoisins(x) {
     if (!V) continue;
     const S = V === A ? B : A, p = sansAccent(k.phrase || "");
     let sens = null, role = k.role;
-    if (role === "Nouveau venu") role = /nourri/.test(p) ? "Garde-manger" : /disput|concurren|place|recul|remplac/.test(p) ? "Concurrents" : null;
+    if (role === "Nouveau venu") role = /nourri|\bmangen?t?\b|\bpille/.test(p) ? "Garde-manger" : /disput|concurren|place|recul|remplac/.test(p) ? "Concurrents" : null;
     const coucou = /Cuculi/.test(A.ordre || "") && /couv|eleve.*petit|\bnid\b|pond/.test(p);
     if (role === "Garde-manger") { const g = sensGardeManger(k, A, B); if (g) sens = g.mangeur === V ? "V_mange" : "mange_V"; }
     else if (role === "Concurrents" || role === "Compagnons") sens = role;

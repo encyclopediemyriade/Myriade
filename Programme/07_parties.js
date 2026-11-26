@@ -1509,7 +1509,8 @@ function afficherChoixDefi() {
 //     pour TOUTES les espèces, identifiées ou non (étape 56). La photo n'est demandée que pour
 //     une espèce déjà identifiée : ici, la reconnaître ne la débloque pas.
 //     Réponses courtes seulement, pour que le Cash reste possible.
-function casesDuDefi(especes, jeu) {
+// Étape R321 : tout = vrai ajoute les caractéristiques pas encore trouvées (secours quand les cases trouvées sont toutes posées).
+function casesDuDefi(especes, jeu, tout = false) {
   const cases = [];
   for (const espece of especes) {
     const identifiee = estIdentifiee(espece);
@@ -1522,7 +1523,7 @@ function casesDuDefi(especes, jeu) {
       if (q.format && q.format !== "picto" && !(q.champ === "cri_son" && jeu === "revision" && defi && defi.cris)) continue;
       // Les chiffres sont trop longs à lire avec le chronomètre ; sans lui (Révision, étape 79), on les garde
       if (q.type === "nombre" && !(jeu === "revision" && defi)) continue;
-      if (nbBonnes(espece, q.champ) >= 1 || attend(q.champ)) cases.push({ espece, champ: q.champ });
+      if (tout || nbBonnes(espece, q.champ) >= 1 || attend(q.champ)) cases.push({ espece, champ: q.champ });
     }
   }
   return cases;
@@ -1550,20 +1551,43 @@ function choisirQuestionDefi() {
     const q = choisirQuestionClassique();
     if (q) return q;                                      // (sinon, rien à apprendre : on révise)
   }
-  let cases = casesDuDefi(defi.especes, defi.jeu);
+  defi.posees = defi.posees || [];
+  // Étape R321 (retour du 26/11, n° 5 : la bouvière 4 fois sur 10, dont la même question deux fois, au site remarquable) :
+  //   1. jamais deux fois la même question dans une partie : quand les cases déjà trouvées sont toutes posées, on ne revient
+  //      plus en arrière : on prend une caractéristique de ces espèces pas encore trouvée (casesDuDefi « tout ») ; on ne
+  //      répète qu'en tout dernier recours (aucune autre question possible) ;
+  //   2. au site, « Quelle est cette espèce ? » d'abord : tant qu'une espèce n'a pas été montrée dans la partie, seule sa
+  //      photo peut être posée (une question qui donne son nom ne passe plus avant) ;
+  //   3. jamais deux questions de suite sur la même espèce quand c'est possible (plus bas, inchangé).
+  const pasEncore = c => !defi.posees.includes(c.espece.nom_courant + "|" + c.champ)
+    && !alimentApresRegime(c.espece, c.champ, x => defi.posees.includes(c.espece.nom_courant + "|" + x));   // étape 262
+  const permis = c => defi.cris || c.champ !== "cri_son";   // pas de cri si la partie ne les permet pas (étapes 86, 94)
+  let cases = casesDuDefi(defi.especes, defi.jeu).filter(permis);
+  if (!cases.some(pasEncore)) {
+    const larges = casesDuDefi(defi.especes, defi.jeu, true).filter(c => permis(c) && pasEncore(c));
+    if (larges.length) cases = larges;
+  }
   if (defi.site) {                                        // étape 292 : au site remarquable, chaque espèce de la halte passe au moins une fois
-    const vues = new Set((defi.posees || []).map(p => p.split("|")[0]));
-    const reste = cases.filter(c => !vues.has(c.espece.nom_courant) && (c.champ !== "cri_son" || defi.cris));
+    // Étape R326 (5A) : jamais plus de 2 questions sur la même espèce dans la partie (QUESTIONS_PAR_ESPECE_MAX)
+    const fois = n => defi.posees.filter(p => p.split("|")[0] === n).length;
+    const sousPlafond = cases.filter(c => fois(c.espece.nom_courant) < QUESTIONS_PAR_ESPECE_MAX);
+    if (sousPlafond.length) cases = sousPlafond;
+    else {                                                // plus rien sous le plafond parmi les cases trouvées : les autres cases de ces espèces
+      const larges = casesDuDefi(defi.especes, defi.jeu, true).filter(c => permis(c) && pasEncore(c) && fois(c.espece.nom_courant) < QUESTIONS_PAR_ESPECE_MAX);
+      if (larges.length) cases = larges;
+    }
+    const vues = new Set(defi.posees.map(p => p.split("|")[0]));
+    const reste = cases.filter(c => !vues.has(c.espece.nom_courant) && pasEncore(c));
     if (reste.length) cases = reste;
+    const aSaPhoto = e => cases.some(c => c.espece === e && c.champ === IDENTIFICATION);
+    const dAbord = cases.filter(c => c.champ === IDENTIFICATION || vues.has(c.espece.nom_courant) || !aSaPhoto(c.espece));   // R321 (2)
+    if (dAbord.length) cases = dAbord;
   }
   let choix;
   {
     // Révision (étape 79), comme l'ancienne Rapidité : d'abord les questions ratées qui attendent,
     // sinon le plus souvent une case encore fragile (trouvée une seule fois). Jamais deux fois la même dans une partie.
-    defi.posees = defi.posees || [];
-    if (!defi.cris) cases = cases.filter(c => c.champ !== "cri_son");   // pas de cri si la partie ne les permet pas (étapes 86, 94)
-    const neuves = cases.filter(c => !defi.posees.includes(c.espece.nom_courant + "|" + c.champ)
-      && !alimentApresRegime(c.espece, c.champ, x => defi.posees.includes(c.espece.nom_courant + "|" + x)));   // étape 262
+    const neuves = cases.filter(pasEncore);
     if (neuves.length) cases = neuves;
     cases = sansRepos(cases);                             // étape 150 : pas ce qui vient d'être trouvé
     const enAttente = cases.filter(c => aRevoir.some(r => r.nom === c.espece.nom_courant && r.champ === c.champ));

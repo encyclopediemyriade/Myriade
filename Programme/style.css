@@ -6960,8 +6960,178 @@ nav.barre.visite .onglet, nav.barre.visite #onglet-carte, nav.barre.visite .lien
 .apt-boutons .bouton-apropos { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 44px; text-align: left; white-space: normal; }
 .apt-boutons .bouton-apropos small { font-weight: 400; font-size: 12px; opacity: .8; }
 .apt-boutons .bouton-apropos:disabled { opacity: .5; cursor: default; }
-#essai-bandeau { position: fixed; right: 0; top: 42%; z-index: 2147483000; display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 6px 6px 7px 8px; border-radius: 12px 0 0 12px; background: #A8652A; color: #fff; font-size: 11.5px; font-weight: 600;
-  letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
-#essai-bandeau button { min-height: 36px; padding: 0 10px; border: 0; border-radius: 8px; background: #fff; color: #7a4518; font: inherit;
-  font-size: 12.5px; letter-spacing: 0; text-transform: none; line-height: 1.15; cursor: pointer; }
+/* Étape R324 : languette fine dans la marge droite (16 px) ; ouverte, elle montre « Terminer l'essai » */
+#essai-bandeau { position: fixed; right: 0; top: 30%; z-index: 2147483000; display: flex; align-items: center; gap: 6px;
+  border-radius: 10px 0 0 10px; background: #A8652A; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.22); }
+#essai-bandeau .essai-languette { width: 16px; min-height: 64px; padding: 0; border: 0; background: transparent; color: #fff; cursor: pointer;
+  font-family: inherit; font-size: 10px; font-weight: 600; line-height: 1; letter-spacing: .08em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
+#essai-bandeau .essai-fin { display: none; min-height: 40px; margin: 6px 8px 6px 0; padding: 0 10px; border: 0; border-radius: 8px; background: #fff;
+  color: #7a4518; font: inherit; font-size: 12.5px; font-weight: 600; line-height: 1.15; cursor: pointer; }
+#essai-bandeau.ouvert { padding-left: 4px; }
+#essai-bandeau.ouvert .essai-fin { display: block; }
+
+/* ==================================================================
+   Étape R325 (26/11/2026, retours du 26/11 midi, note 4, choix d'Aubin 4A) : le « Vrai ou faux ».
+   Critère : « on voit d'un coup d'œil que c'est une affirmation à juger, et les deux réponses tiennent sous le pouce ».
+   L'affirmation est posée en gros texte, sans encadré ni italique ; « Vrai ou faux ? » devient une petite étiquette ;
+   « Vrai ✓ » et « Faux ✗ » sont côte à côte, juste dessous (Rencontre, Révision, insolites, Me tester, Approfondir).
+   ================================================================== */
+.affirmation, .dfx-vie-affirmation, .apf-affirmation {
+  background: none; border: none; border-radius: 0; padding: 0; box-shadow: none;
+  font-family: 'Literata', Georgia, serif; font-style: normal; font-weight: 600; font-size: 23px; line-height: 1.3;
+  color: var(--texte); margin: 2px 0 14px;
+}
+.contenu:has(#reponses.vrai-faux) .question, .cdo-q:has(+ .dfx-vie-affirmation), .apf-q:has(+ .apf-affirmation) {
+  font-size: 12.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ocre-texte); margin: 6px 0 6px;
+}
+#reponses.vrai-faux, .carte-rencontre #reponses.vrai-faux:not(.grille-photos):not(.annonce-etape) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.cdo-noms.vf, .cdo-noms.dfx-noms-col.vf { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+#reponses.vrai-faux .reponse, .carte-rencontre #reponses.vrai-faux .reponse:not(.choix-photo), .cdo-noms.vf .cdo-nom {
+  margin: 0; min-height: 60px; padding: 10px 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+  text-align: center; font-size: 18px; font-weight: 600; border-width: 2px; border-style: solid; border-radius: 14px;
+}
+#reponses.vrai-faux .reponse:not(.juste):not(.fausse):not(.presque), .cdo-noms.vf .cdo-nom:not(.bon):not(.faux) { background: #fff; }
+#reponses.vrai-faux .rep-vrai:not(.juste):not(.fausse), .cdo-noms.vf .cdo-nom:first-child:not(.bon):not(.faux) { border-color: var(--texte); color: var(--texte); }
+#reponses.vrai-faux .rep-faux:not(.juste):not(.fausse), .cdo-noms.vf .cdo-nom:last-child:not(.bon):not(.faux) { border-color: var(--ocre); color: var(--ocre-texte); }
+.ic-vf { flex: none; }
+/* la photo agrandie pour combler le vide (31_sous_le_pouce.js) ne gêne pas la photo collée après « Bravo » */
+#carte-rencontre.bravo-photo #photo-rencontre[style*="height"] { height: clamp(150px, 28svh, 230px) !important; }
+
+/* ==================================================================
+   Étape R327 (26/11/2026, retours du 26/11 midi, note 2, choix d'Aubin 2A) : l'écran de fin de la finale du lieu en liste compacte.
+   Critère : « sans défiler, on voit le bilan et on lit les premiers liens d'un coup d'œil ».
+   ================================================================== */
+.planche-liste { gap: 0; padding: 0; background: #F6F2E9; }
+.planche-liste .pl-tete { padding: 22px 20px 16px; border-bottom: 1px solid var(--trait, #DDD3C2); display: flex; flex-direction: column; gap: 6px; }
+.planche-liste .pl-tete h1 { margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 26px; line-height: 1.2; color: var(--texte); }
+.planche-liste .pl-bilan { display: flex; gap: 10px; margin-top: 8px; }
+.planche-liste .pl-case { flex: 1; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.planche-liste .pl-case b { font-family: 'Literata', Georgia, serif; font-size: 22px; font-weight: 700; line-height: 1.15; }
+.planche-liste .pl-case span { font-size: 13px; }
+.planche-liste .pl-vert { background: #1F3A2E; color: #F6F2E9; }
+.planche-liste .pl-ocre { background: #F1E3CF; color: #6E3F17; }
+.planche-liste .pl-liens { list-style: none; margin: 0; padding: 4px 20px 8px; display: grid; grid-template-columns: minmax(0, 1fr); column-gap: 32px; }
+.planche-liste .pl-lien { display: flex; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid #E6DECF; min-width: 0; }
+.planche-liste .pl-photos { flex: none; width: 74px; height: 48px; position: relative; }
+.planche-liste .pl-rond { position: absolute; top: 0; width: 46px; height: 46px; border-radius: 50%; overflow: hidden; border: 2px solid #F6F2E9; background: #E6DFCF; box-sizing: content-box; }
+.planche-liste .pl-rond.g { left: 0; z-index: 1; }
+.planche-liste .pl-rond.d { left: 26px; }
+.planche-liste .pl-rond img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.planche-liste .pl-rond.silh img { object-fit: contain; padding: 6px; box-sizing: border-box; }
+.planche-liste .pl-texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.planche-liste .pl-texte small { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--ocre-texte, #8A4F1C); }
+.planche-liste .pl-phrase { font-size: 15px; line-height: 1.35; font-weight: 500; color: var(--texte); }
+.planche-liste .pl-noms { font-size: 12px; color: #6B6457; }
+.planche-liste .planche-boutons { padding: 16px 20px 24px; }
+@media (min-width: 761px) {
+  .planche-liste { max-width: 960px; margin: 0 auto; border-radius: 14px; }
+  .planche-liste .pl-tete { padding: 32px 36px 18px; }
+  .planche-liste .pl-tete h1 { font-size: 32px; }
+  .planche-liste .pl-bilan { max-width: 460px; }
+  .planche-liste .pl-liens { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 4px 36px 8px; }
+  .planche-liste .planche-boutons { padding: 20px 36px 32px; }
+}
+
+/* ==================================================================
+   Étape R328 (26/11/2026, retours du 26/11 midi, note 9, choix d'Aubin 9A) : le trésor annoncé, révélé, gardé.
+   Critère : « avant de jouer, on sait qu'on cherche une espèce rare ; après, on se souvient d'elle ».
+   ================================================================== */
+#piste-tresor .pt-annonce { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #3D5E4E; display: flex; flex-direction: column; gap: 8px; }
+#piste-tresor .pta-kick { display: flex; align-items: center; gap: 8px; }
+#piste-tresor .pta-kick small { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #E9C9A0; }
+#piste-tresor .pta-rare { font-size: 12px; font-weight: 600; color: #1A2E25; background: #E9C9A0; border-radius: 10px; padding: 2px 9px; }
+#piste-tresor .pta-titre { font-family: "Literata", Georgia, serif; font-size: 22px; font-weight: 600; line-height: 1.2; }
+#piste-tresor .pta-indice { background: #24372F; border-radius: 12px; padding: 10px 12px; }
+#piste-tresor .pta-indice small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #B8C4BC; margin-bottom: 2px; }
+#piste-tresor .pta-indice p { margin: 0; font-size: 15px; line-height: 1.45; }
+#piste-tresor .pt-rep .pt-rappel { font-style: italic; color: #DCD5C4; margin-bottom: 4px; }
+#piste-tresor .pt-bas { max-height: 62vh; overflow-y: auto; }
+
+#revelation-tresor { display: none; position: fixed; inset: 0; z-index: 1200; background: #F6F2E9; color: var(--texte); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+#revelation-tresor.on { display: block; }
+html.revelation-ouverte, html.revelation-ouverte body { overflow: hidden; }
+#revelation-tresor .rt-page { max-width: 560px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; background: #F6F2E9; }
+#revelation-tresor .rt-photo { position: relative; aspect-ratio: 4 / 3; max-height: 46svh; background: #4F5E55; overflow: hidden; flex: none; }
+#revelation-tresor .rt-photo img { width: 100%; height: 100%; object-fit: cover; display: block; animation: rt-apparait 1.1s ease-out both; }
+#revelation-tresor .rt-photo img.rt-sil { object-fit: contain; padding: 30px; box-sizing: border-box; filter: brightness(0) invert(.92); }
+#revelation-tresor .rt-badge { position: absolute; left: 16px; top: calc(16px + env(safe-area-inset-top, 0px)); display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #1A2E25; background: #E8C79E; border-radius: 12px; padding: 5px 11px; }
+#revelation-tresor .rt-badge .mq-spirale { width: 14px; height: 14px; }
+#revelation-tresor .rt-corps { padding: 20px 20px calc(22px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 6px; flex: 1; }
+#revelation-tresor .rt-kick { font-size: 12px; letter-spacing: .14em; font-weight: 600; text-transform: uppercase; color: var(--ocre-texte, #8A4F1C); }
+#revelation-tresor h1 { margin: 0; font-family: "Literata", Georgia, serif; font-size: 30px; line-height: 1.15; font-weight: 600; }
+#revelation-tresor .rt-sci { font-size: 13px; color: #6B6457; }
+#revelation-tresor .rt-statut { align-self: flex-start; font-size: 12.5px; font-weight: 600; color: #6E3F17; background: #F1E3CF; border-radius: 10px; padding: 3px 10px; margin-top: 4px; }
+#revelation-tresor .rt-boite { border-radius: 14px; padding: 13px 16px; margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+#revelation-tresor .rt-boite small { font-size: 12px; letter-spacing: .12em; font-weight: 600; text-transform: uppercase; }
+#revelation-tresor .rt-boite p { margin: 0; font-size: 15px; line-height: 1.45; }
+#revelation-tresor .rt-pourquoi { background: #FBF8F2; border: 1px solid #DDD3C2; }
+#revelation-tresor .rt-pourquoi small { color: var(--ocre-texte, #8A4F1C); }
+#revelation-tresor .rt-ici { font-size: 14px !important; color: #5A554B; }
+#revelation-tresor .rt-aide { background: #E6EEE7; }
+#revelation-tresor .rt-aide small { color: #1F3A2E; }
+#revelation-tresor .rt-carnet { display: flex; align-items: center; gap: 10px; margin-top: 12px; background: #F1E3CF; color: #6E3F17; border-radius: 14px; padding: 11px 14px; font-size: 14px; line-height: 1.4; }
+#revelation-tresor .rt-carnet .mq-spirale { width: 22px; height: 22px; flex: none; }
+#revelation-tresor .rt-boutons { margin-top: auto; padding-top: 18px; display: flex; flex-direction: column; gap: 6px; }
+#revelation-tresor .rt-go { font: inherit; min-height: 52px; border: 0; border-radius: 14px; background: #1F3A2E; color: #F6F2E9; font-size: 16px; font-weight: 600; cursor: pointer; }
+#revelation-tresor .rt-fiche { font: inherit; min-height: 44px; border: 0; background: none; color: var(--texte); font-size: 15px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+@keyframes rt-apparait { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { #revelation-tresor .rt-photo img { animation: none; } }
+
+.mes-tresors { margin: 0 0 18px; }
+.mes-tresors h2 { display: flex; align-items: center; gap: 8px; font-family: "Literata", Georgia, serif; font-size: 18px; font-weight: 600; margin: 4px 0 10px; color: var(--texte); }
+.mes-tresors h2 .mq-spirale { width: 18px; height: 18px; color: var(--ocre); }
+.mes-tresors h2 small { font-family: "Work Sans", sans-serif; font-size: 13px; font-weight: 400; color: var(--texte-doux); }
+.mes-tresors .mt-liste { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+.mes-tresors .mt-carte { flex: none; width: 128px; scroll-snap-align: start; font: inherit; text-align: left; background: #FBF8F2; border: 1px solid #E2C9A6; border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 3px; cursor: pointer; color: var(--texte); }
+.mes-tresors .mt-photo { display: block; width: 100%; height: 84px; border-radius: 8px; overflow: hidden; background: #E6DFCF; margin-bottom: 4px; }
+.mes-tresors .mt-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mes-tresors .mt-carte b { font-size: 14px; font-weight: 600; line-height: 1.25; }
+.mes-tresors .mt-carte small { font-size: 12px; color: var(--texte-doux); line-height: 1.3; }
+
+/* ==================================================================
+   Étape R329 (2C) : la Révision du lieu (arrêt du chemin) et la révision sous un autre angle (35_revision_lieu.js)
+   ================================================================== */
+.rl-arret { display: flex; flex-direction: column; gap: 4px; }
+.rl-arret .chemin-rond { border-style: dashed; }
+.rl-arret-ligne { color: #DCD5C4 !important; font-style: normal; }
+.rl-membres { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 100px; }
+.rl-membre { font: inherit; font-size: 12.5px; color: #C9D3CB; background: transparent; border: 1px solid #4F6B5D; border-radius: 14px; padding: 3px 10px; cursor: pointer; }
+.rl-membre:hover { border-color: #E9C9A0; color: #FBF8F1; }
+.rl-arret.fermee .rl-membre { opacity: .6; }
+#intermede-exp .rl-intro { color: var(--texte); margin: 4px 0 6px; }
+#intermede-exp .rl-stim { display: flex; justify-content: center; margin: 0 0 14px; }
+#intermede-exp .rl-stim img { width: 100%; max-width: 520px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; display: block; }
+#intermede-exp .rl-stim.rl-emp .emp-carte { width: 100%; max-width: 460px; }
+#intermede-exp .rl-noms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 520px; margin: 0 auto; }
+#intermede-exp .rl-noms .im-nom { width: 100%; }
+#intermede-exp .im-nom.rl-juste { background: var(--bon); border-color: var(--bon); color: #fff; opacity: 1; }
+#intermede-exp .im-nom.rl-fausse { border-color: var(--mauvais); color: var(--mauvais); opacity: 1; }
+#intermede-exp .im-nom:disabled { cursor: default; }
+#intermede-exp .rl-pied { flex-direction: column; align-items: center; gap: 10px; }
+@media (max-width: 760px) {
+  .rl-membres { padding-left: 86px; }
+  #intermede-exp .rl-stim img { aspect-ratio: 16 / 10; }
+}
+#intermede-exp .rl-photos .im-etiquette:empty { display: none; }   /* R329 : le nom n'apparaît qu'après la réponse */
+
+/* ==================================================================
+   Étape R330 (26/11/2026, session 55.02, choix « A sans la piste ») — « Pour continuer votre carnet » en haut de l'Encyclopédie.
+   Chaque ligne : photo ronde, nom, ce qu'il reste, et un vrai bouton « Compléter » (44 px). Plus de jauge ni de piste ici.
+   ================================================================== */
+.pistes-suivre.ps-carnet { gap: 4px; }
+.pistes-suivre.ps-carnet h2 { margin: 0; }
+.pistes-suivre .ps-intertitre { margin: 0 0 2px; font-size: 11.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--texte-doux); }
+.pistes-suivre .ps-ligne.ps-fiche { box-sizing: border-box; padding: 6px 8px; }
+.pistes-suivre .ps-fiche small { color: var(--texte-doux); margin-top: 1px; }
+.pistes-suivre .ps-completer { min-height: 44px; min-width: 44px; padding: 0 14px; border: 0; border-radius: 22px; background: #1F3A2E; color: #FBF8F1;
+  font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.pistes-suivre .ps-completer:hover { background: #2c5241; }
+.pistes-suivre .ps-completer:focus-visible { outline: 2px solid var(--ocre); outline-offset: 2px; }
+
+/* Étape R331 (session 55.03) : « Si vous le souhaitez, vous pouvez reprendre … en mode Découvrir. » sur sa propre ligne,
+   sous le texte de l'étape (aligné sur lui), après « Rejouer », pour ne pas se confondre avec lui */
+.exp-etape.avec-reprendre { flex-wrap: wrap; }
+.exp-etape.avec-reprendre > .exp-reprendre { order: 10; flex: 1 1 100%; margin: 0 0 0 56px; min-height: 32px; text-align: left; line-height: 1.35; }
+@media (max-width: 760px) {
+  .exp-etape.avec-reprendre > .exp-reprendre { margin-left: 52px; min-height: 44px; }
+}
