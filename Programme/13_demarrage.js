@@ -75,6 +75,7 @@ if (typeof migrerR288 === "function") migrerR288();                   // étape 
 afficherStats();
 // Première visite (pas encore de profil) : ses trois écrans ; sinon, l'Accueil (étape 52)
 if (profil) montrer(vueAccueil()); else montrerBienvenue();   // étape 255 : on arrive sur la page carte
+if (profil && typeof reprendreApresEssai === "function") reprendreApresEssai();   // étape R319 : après « Terminer l'essai », retour aux Réglages
 // Étape R193 (n° 11.8, note d'Aubin du 14/11 : « un léger temps de latence pour tous les écrans ») : la première fois qu'un écran
 //   a besoin de toutes les espèces (Carte, Jeux, une expédition, la première Rencontre), le jeu calculait d'un coup, pour des
 //   centaines d'espèces, les questions possibles et les traits d'allure (jusqu'à 1,5 s sur téléphone). Ces calculs sont

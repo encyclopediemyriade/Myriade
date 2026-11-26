@@ -806,14 +806,27 @@ function planDefiVarie(x, nb, pool, vie) {
   const noteSuite = suite => {   // la vraie mesure : mêmes espèces ou même façon à la suite, façons au-delà de 5 ; une manche pas en tête
     const compte = {};
     let n = suite.length && suite[0].bloc ? 5 : 0;
-    suite.forEach((o, k) => { compte[o.facon] = (compte[o.facon] || 0) + o.taille; if (k) n += penalite(suite[k - 1], o, {}); });
+    suite.forEach((o, k) => { compte[o.facon] = (compte[o.facon] || 0) + o.taille; if (k) n += penalite(suite[k - 1], o, {}) + ecart(suite.slice(0, k), o); });   // R314 : + l'écart
     for (const c of Object.values(compte)) n += Math.max(0, c - FACON_MAX) * 50;
     // R291 : une question sur la vie montre l'animal et son nom : jamais avant une question qui le fait reconnaître
     suite.forEach((o, k) => { if (o.vie && suite.slice(k + 1).some(z => z.especes.includes(o.especes[0]))) n += 100000; });   // (jamais échangé contre autre chose)
     return n;
   };
   const penalite = (prec, o, compte) => (prec && o.especes.some(e => prec.especes.includes(e)) ? 1000 : 0) + (prec && prec.facon === o.facon ? 100 : 0)
+    + (prec && prec.vie && o.vie ? 900 : 0)   // R314 : deux questions sur la vie de suite restent la chose la plus évitée (R291, 5A)
     + Math.max(0, (compte[o.facon] || 0) + o.taille - FACON_MAX) * 50;
+  // Étape R314 (Notion 53.01, note 1 du 25/11 au soir : « Laquelle est le pinson des arbres ? » deux fois en quatre questions) :
+  //   la même espèce avec la même façon ne revient pas avant 8 questions ; la même espèce, pas à une question d'écart.
+  const ecart = (suite, o) => {
+    let p = 0;
+    for (let d = 1; d <= 8 && d <= suite.length; d++) {
+      const z = suite[suite.length - d];
+      if (o.vie || z.vie || !o.especes.some(e => z.especes.includes(e))) continue;   // (les questions sur la vie gardent leur règle, R291)
+      if (z.facon === o.facon) p += 400;
+      if (d === 2) p += 40;
+    }
+    return p;
+  };
   let meilleure = null, scoreMin = Infinity;
   for (let essai = 0; essai < 60 && scoreMin > 0; essai++) {
     const r = new Map(reste), vus = new Map(x.liste.map(e => [e, []])), compte = {}, suite = [], aPlacer = blocs.slice();
@@ -828,7 +841,7 @@ function planDefiVarie(x, nb, pool, vie) {
       for (const e of x.liste) if (r.get(e) > 0) for (const fa of options(e)) possibles.push({ especes: [e], facon: fa, taille: 1 });
       let choix = null, pMin = Infinity;
       for (const o of melanger(possibles)) {
-        let p = penalite(prec, o, compte) + (compte[o.facon] || 0) * 0.8 + Math.random() * 0.5;
+        let p = penalite(prec, o, compte) + ecart(suite, o) + (compte[o.facon] || 0) * 0.8 + Math.random() * 0.5;   // R314 : + l'écart
         if (o.vie) p -= 1;                                 // R291 : dès que possible (sinon elles s'entassent à la fin)
         else if (o.bloc) p += n < 2 ? 6 : -0.5;            // pas de manche tout au début
         else { const e = o.especes[0]; p += usage(e, o.facon) * 3 - r.get(e) * (0.5 + 3 / options(e).length) - (aVie.has(e) ? 1.2 : 0); }   // R291 : reconnue tôt, sa question sur la vie peut venir tôt   // peu de façons possibles = à placer tôt, entre les autres
@@ -842,7 +855,7 @@ function planDefiVarie(x, nb, pool, vie) {
     }
     if (fin) {   // la coriace, en dernier, avec la façon qui va le mieux après la précédente
       const prec = suite[suite.length - 1];
-      const fa = options(fin).map(z => ({ z, p: penalite(prec, { especes: [fin], facon: z, taille: 1 }, compte) + usage(fin, z) * 3 + Math.random() })).sort((a, b) => a.p - b.p)[0];
+      const fa = options(fin).map(z => ({ z, p: penalite(prec, { especes: [fin], facon: z, taille: 1 }, compte) + ecart(suite, { especes: [fin], facon: z }) + usage(fin, z) * 3 + Math.random() })).sort((a, b) => a.p - b.p)[0];   // R314
       const o = { especes: [fin], facon: fa ? fa.z : estRenseigne(fin.photo) ? "photo" : "silhouette", taille: 1 };
       suite.push(o); compte[o.facon] = (compte[o.facon] || 0) + 1;
     }
@@ -954,9 +967,12 @@ function groupeDitDefi(e) {
   return g || "";
 }
 function groupeDefi(e) { return e.onglet === "Mammiferes" && e.ordre === "Chiroptères" ? "chauve-souris" : e.onglet === "Araignees_mille_pattes" ? e.ordre : e.onglet; }
+// Étape R314 (Notion 53.11, note 11 du 25/11 au soir : « Ce poisson : … » face à un rat musqué, un frelon et un ragondin) :
+//   le groupe n'est dit que si une autre réponse est du même groupe ; seule de son groupe, il donnait la réponse.
 function texteRepereDefi(q) {
   const memes = q.noms.every(o => groupeDefi(o) === groupeDefi(q.espece)), g = groupeDitDefi(q.espece);
-  return memes || !g ? majuscule(q.rp.texte) : `${g} : ${minusculeTexte(q.rp.texte)}`;
+  const seule = q.noms.filter(o => groupeDefi(o) === groupeDefi(q.espece)).length < 2;
+  return memes || !g || seule ? majuscule(q.rp.texte) : `${g} : ${minusculeTexte(q.rp.texte)}`;
 }
 // Après la réponse juste : la photo, avec le repère
 function photoRepereDefi(q) {
@@ -1777,13 +1793,18 @@ function repondreVieDefi(q, k, bouton) {
   if (et && typeof noterEtonnantVu === "function") noterEtonnantVu(v.id);   // CQ7 : un « Étonnant » lu peut revenir dans « Reliez »
   const consigne = document.querySelector("#vue-defiexp .dfx-vie-consigne"); if (consigne) consigne.remove();   // redit dessous, après la réponse
   const ligne = et ? v.explication : (v.vrai ? "" : v.vraie);
+  // Étape R314 (Notion 53.03, note 3 du 25/11 au soir : « Sur sa fiche : Il mange de tout, plantes comme animaux. », mot pour
+  //   mot la question) : un complément tiré d'une autre case de sa fiche (ce qu'il mange, où il niche…) ; la phrase vraie
+  //   n'est redite que si l'affirmation était fausse.
+  const plus = !et && typeof complementFiche === "function" ? complementFiche(e, v.champ) : "";
+  const rappel = et ? v.explication : [v.vrai ? "" : v.vraie, plus].filter(Boolean).join(" ");
   // Étonnant : les deux phrases sont déjà à l'écran, votre choix en orange, la bonne en vert (le côte à côte est là) ;
   //   Sa vie : « Vrai » / « Faux » côte à côte, puis la ligne de la fiche
   const html = juste
-    ? `<p class="apf-verdict">${verdictHtml({ juste: true, phrase: et ? "" : ligne, complement: et ? ligne : "" })}</p><p class="dfx-vie-note">Noté sur sa fiche.</p>`
+    ? `<p class="apf-verdict">${verdictHtml({ juste: true, phrase: et ? "" : ligne, complement: et ? ligne : plus })}</p><p class="dfx-vie-note">Noté sur sa fiche.</p>`
     : `<div class="dfx-erreur dfx-vie-erreur"><small class="dfx-pas">${et ? "Pas cette fois · c'était l'autre" : "Pas cette fois"}</small>
         ${et ? "" : `<div class="dfx-vie-duo"><div class="ko"><small>Votre choix</small><span>${echapper(reponses[k])}</span></div><div class="ok"><small>La bonne réponse</small><span>${echapper(reponses[bonneK])}</span></div></div>`}
-        ${(et ? v.explication : v.vraie) ? `<div class="dfx-separe"><small>${et ? "Le fait" : "Sur sa fiche"}</small><p>${echapper(et ? v.explication : v.vraie)}</p></div>` : ""}
+        ${rappel ? `<div class="dfx-separe"><small>${et ? "Le fait" : "Sur sa fiche"}</small><p>${echapper(rappel)}</p></div>` : ""}
         <p class="dfx-vie-note">Cette question ne compte pas dans les erreurs : elle vous attend dans « À retenir ».</p></div>`;
   conclureReponseDefi(q, juste, html, { noter: false, vie: true });
 }

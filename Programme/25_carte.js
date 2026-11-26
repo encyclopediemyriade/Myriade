@@ -12,7 +12,9 @@
 //     territoire ouvert (rien ne change de place le jour où il s'ouvre) : bandeau « Aperçu » et une ligne sur ce qui l'ouvre,
 //     la carte des lieux (tous « plus tard »), le portrait (photo, phrase, chiffres), les 8 espèces emblématiques en photo
 //     avec leur nom (IDENTITE), les lieux avec leur espèce vedette ; un lieu touché montre sa fiche (photo, phrase,
-//     titres de ses expéditions, son espèce) ; en bas, ce qui l'ouvre et « Continuer dans … ». Pas d'« enjeu » dans l'aperçu.
+//     titres de ses expéditions, son espèce) ; en bas, ce qui l'ouvre (R317, choix 5B : en haut une seule ligne « Aperçu : … », en bas la brique « Pour y aller »,
+//     sans « Prochain territoire : … » ni « Continuer dans … »). Pas d'« enjeu » dans l'aperçu.
+//   • Étape R317 (choix 6A) : la grille des territoires fermés n'écrit plus « 2 clés » sous chaque case ; un petit cadenas en haut à droite.
 
 // La place des noms sur la carte de France (unités de territoires.js) : x, y, taille, lignes (et l'ancrage, « end » = le nom finit à x)
 const ATLAS_NOMS = {
@@ -167,7 +169,7 @@ function dessinerAtlasFrance(zone) {
         <span class="at-suivant-corps"><small class="at-suivant-etiq">Prochain territoire</small><b>${echapper(suivant)}</b><small>${manque ? manque + " · " : ""}voir l'aperçu</small></span>
         ${formeTerritoire(suivant, 30, pale(couleur(suivant)), couleur(suivant))}</button>${blocOuvrirTerritoire(suivant)}` : ""}
     ${autres.length ? `<h2 class="at-titre">${premier ? "Les territoires" : `Plus tard · ou au choix, avec ${clesTexte(PRIX_TERRITOIRE)}`}</h2>
-      <div class="at-grille">${autres.map(t => `<button class="at-ligne-ferme at-case" type="button" data-t="${echapper(t)}">${formeTerritoire(t, 54, melangerCouleurs(couleur(t), "#f4efe6", 0.42))}<span>${echapper(nomCourt(t))}</span>${premier ? "" : `<small class="at-case-cles">${clesTexte(PRIX_TERRITOIRE)}</small>`}</button>`).join("")}</div>` : ""}
+      <div class="at-grille">${autres.map(t => `<button class="at-ligne-ferme at-case" type="button" data-t="${echapper(t)}">${formeTerritoire(t, 54, melangerCouleurs(couleur(t), "#f4efe6", 0.42))}<span>${echapper(nomCourt(t))}</span>${premier ? "" : `<i class="at-case-cad" aria-label="Fermé">${LOCK_SVG}</i>`}</button>`).join("")}</div>` : ""}
     ${premier ? `<button type="button" class="at-page-terr at-vers-comment"><span aria-hidden="true">←</span> Comment jouer</button>` : ""}`;
   const versComment = zone.querySelector(".at-vers-comment");
   if (versComment) versComment.onclick = () => quitterPremierChoix(true);
@@ -194,11 +196,13 @@ const LOCK_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11"
 function territoireEnApercu(t) { return !territoiresOuverts().includes(t) && !toutDebloque(); }
 // « dans le Jura », « en Corse », « dans les Alpes »
 function dansTerritoire(t) { const a = articleTerritoire(t); return a === "en" ? `en ${t}` : `dans ${a} ${t}`; }
-// Ce qui ouvre un territoire fermé, en une phrase
+// Ce qui ouvre un territoire fermé, en une phrase (dite après « Pour y aller : »)
+// Étape R317 (Notion 53.05, choix 5B) : plus de « Prochain territoire : … » sur la page d'un autre territoire ;
+// seul le prochain territoire garde sa phrase à lui.
 function phraseOuverture(t) {
   const suivant = prochainTerritoire(), m = avantProchainTerritoire();
-  if (t === suivant) return m === null ? "C'est le prochain territoire." : m ? `C'est le prochain territoire, le plus différent des vôtres : encore ${texteManque(m)}, n'importe ${m > 1 ? "lesquels" : "lequel"}.` : "C'est le prochain territoire : il s'ouvre maintenant.";
-  return `Ce territoire s'ouvrira plus tard.${suivant ? ` Prochain territoire : ${suivant}.` : ""}`;
+  if (t === suivant) return m === null ? "c'est le prochain territoire." : m ? `c'est le prochain territoire, le plus différent des vôtres : encore ${texteManque(m)}, n'importe ${m > 1 ? "lesquels" : "lequel"}.` : "c'est le prochain territoire, il s'ouvre maintenant.";
+  return "il s'ouvrira au fil de vos lieux terminés.";
 }
 // Les espèces emblématiques du territoire (carte d'identité, IDENTITE) : photo et nom (choix « 2A »), 8 au plus (« 3C »)
 function emblemesTerritoire(t) {
@@ -256,7 +260,7 @@ function dessinerAtlasTerritoire(zone, t) {
       ${apercu ? `<span class="at-badge-apercu" style="--couleur-t:${couleur}">${LOCK_SVG}Aperçu</span>` : `<span class="at-emp">${PAS_SVG}<b>${r.empreintes}</b></span>`}
     </header>
     ${phrase ? `<p class="at-deux-lignes">${echapper(phrase)}</p>` : ""}
-    ${apercu && !premierChoixEnCours ? `<p class="at-bandeau-apercu" style="--couleur-t:${couleur}">${echapper(ouverture)} Vous pouvez déjà tout regarder.</p>` : ""}
+    ${apercu && !premierChoixEnCours ? `<p class="at-bandeau-apercu" style="--couleur-t:${couleur}"><b>Aperçu :</b> vous pouvez déjà tout regarder.</p>` : ""}
     <div class="at-carte-terr" style="--couleur-t:${couleur}">${carte}${typeof miniFrance === "function" ? miniFrance(t) : ""}</div>
     <h2 class="at-titre">Les lieux</h2>
     <ul class="at-lieux">${tous.map(c => `<li class="at-li" data-lieu="${echapper(c.nom)}"><button class="at-lieu-ligne${ouvertIci(c) ? " ouvre" : " deplie"}" type="button" data-lieu="${echapper(c.nom)}"${ouvertIci(c) ? "" : ` aria-expanded="false"`}>
@@ -264,7 +268,7 @@ function dessinerAtlasTerritoire(zone, t) {
         <span class="at-fleche" aria-hidden="true">${ouvertIci(c) ? "›" : "⌄"}</span></button><div class="at-depli" hidden></div></li>`).join("")}</ul>
     ${apercu ? `${emblemesApercu(t)}${premierChoixEnCours ? `<section class="at-pour-y-aller at-premier-ouvrir" style="--couleur-t:${couleur}">${blocOuvrirTerritoire(t, `Ouvrir ce territoire · ${clesTexte(PRIX_TERRITOIRE)}`)}</section>`
       : `<section class="at-pour-y-aller" style="--couleur-t:${couleur}"><p><b>Pour y aller :</b> ${echapper(ouverture)}</p>
-        ${blocOuvrirTerritoire(t)}<button class="at-continuer" type="button">Continuer ${echapper(dansTerritoire(territoireActif()))} <span aria-hidden="true">→</span></button></section>`}`
+        ${blocOuvrirTerritoire(t)}</section>`}`
       : `<button class="at-page-terr" type="button">La page ${deTerritoire(t)} <span aria-hidden="true">→</span></button>`}`;
   zone.querySelector(".at-retour").onclick = () => { atlasTerritoire = null;
     if (!premierChoixEnCours && vueAccueil() !== "maison") { montrer("carte"); window.scrollTo(0, 0); return; }   // CL2 : sur ordinateur, l'aperçu revient à « Territoires »

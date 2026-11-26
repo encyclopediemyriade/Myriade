@@ -510,8 +510,7 @@ function especeDuJour(ouvertsDonnes) {   // R297 : ouvertsDonnes = les territoir
 const GAIN_ESPECE_DU_JOUR = 2;   // étape R183c : 2 empreintes la première fois qu'on la rencontre dans la journée (comme un défi)
 function especeDuJourFaite(e) { return !!(e && suivi.duJour && suivi.duJour.date === aujourdhui() && suivi.duJour.faites.includes(e.nom_courant)); }
 // Étape R269 (Notion 40.07, choix 4A du 19/11) : UN seul bouton pour l'espèce du jour, qui choisit la bonne partie :
-//   pas encore rencontrée → sa Rencontre ; déjà rencontrée → « Compléter sa fiche » (ce qu'on ne sait pas encore d'elle) ;
-//   fiche déjà complète → sa fiche. Les +2 empreintes viennent dans les trois cas, une fois par jour (validerEspeceDuJour,
+//   pas encore rencontrée → sa Rencontre ; déjà rencontrée → « Voir sa fiche » (R318 ; avant : « Compléter sa fiche · encore N »). Les +2 empreintes viennent dans les trois cas, une fois par jour (validerEspeceDuJour,
 //   appelé par la fin de la Rencontre, par lancerFicheEspece et par ouvrirPageEspece). Plus de nouvelle Rencontre d'une
 //   espèce déjà connue depuis l'accueil (elle se refait depuis sa fiche, si l'on veut).
 //   ESPECE_DU_JOUR_UN_BOUTON = false remet les anciens boutons.
@@ -519,9 +518,9 @@ const ESPECE_DU_JOUR_UN_BOUTON = true;
 function choixEspeceDuJour(e) {
   const connue = estReconnue(e);
   if (!connue) return { texte: "La rencontrer", reste: 0, action: () => { lancerRencontreAvec(e); rencontreDuJour = e.nom_courant; } };
-  const reste = typeof resteCarnet === "function" && typeof lancerFicheEspece === "function" ? resteCarnet([e]) : 0;
-  if (reste) return { texte: "Compléter sa fiche", reste, action: () => lancerFicheEspece(e) };
-  return { texte: "Sa fiche", reste: 0, action: () => ouvrirPageEspece(e) };
+  // Étape R318 (Notion 53.09, choix 9A) : une fois rencontrée, « Voir sa fiche », sans compteur ; « Compléter sa fiche »
+  //   reste en haut de sa fiche, pour qui veut. Les +2 de l'espèce du jour viennent en ouvrant la fiche (06, ouvrirPageEspece).
+  return { texte: "Voir sa fiche", reste: 0, action: () => ouvrirPageEspece(e) };
 }
 function dessinerEspeceDuJour(idZone = "ac-jour") {   // étape M4 : aussi dans l'accueil du téléphone (ac-jour-mobile)
   const zone = document.getElementById(idZone), e = especeDuJour();

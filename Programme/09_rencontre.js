@@ -40,7 +40,7 @@ function preparerTroisTemps(espece, options) {
   const { c } = choisirEtAppliquerTemps(espece, x);
   session.etonnant = typeof insoliteEtonnant === "function" ? insoliteEtonnant(espece) : null;   // 3A : à chaque Rencontre
   session.sosieFait = true;                                // « À ne pas confondre » : dans la carte, plus un écran à part
-  const aDemander = 1 + (c && nbBonnes(espece, c) === 0 ? 1 : 0) + session.vie.length + (session.autreFormeQ ? 1 : 0);
+  const aDemander = 1 + (c && nbBonnes(espece, c) === 0 ? 1 : 0) + session.vie.length + (session.autreFormeQ ? 1 : 0) + (session.lien ? 1 : 0);   // R316 : + un lien
   session.total = Math.max(1, Math.min(QUESTIONS_FOCUS, aDemander));
   session.prevues = session.total;
   if (session.etonnant) { session.bonusPrevu = true; session.total = session.total + 1; }
@@ -53,6 +53,7 @@ function choisirEtAppliquerTemps(espece, x, sansCri) {
   // les faits de sa vie, sans toucher à la mémoire des sujets si ce n'est pas son temps
   const memoireAvant = sujetsVusExp[x.id];
   const nouveauxVie = vieRencontre(x, espece);
+  const memoireApres = sujetsVusExp[x.id];   // R316 : si un fait de sa vie vient compléter les 3 questions
   const t = choisirTemps(x, tempsPossibles(x, espece, nouveauxVie, session.entree).filter(k => !(sansCri && k === "cri")));
   session.temps = t;
   session.vie = []; session.vieFaits = []; session.vieConnus = []; session.vieNouveaux = []; session.vieBonnes = {}; session.vieMontree = false;
@@ -66,7 +67,43 @@ function choisirEtAppliquerTemps(espece, x, sansCri) {
   if (t === "forme") { const f = formeAPoser(espece, x); if (f) { f.remplace = null; session.autreFormeQ = f; } }
   const c = champTemps(espece, t);
   session.champs1 = [IDENTIFICATION, ...(c ? [c] : [])];   // ce que l'étape 1 demande dans cette Rencontre
+  session.lien = null;
+  if (RENCONTRE_TROIS_QUESTIONS) completerTroisQuestions(espece, x, t, c, nouveauxVie, memoireApres);
   return { t, c };
+}
+// ---- Étape R316 (26/11, retours du 25/11 au soir, Notion 53.07, choix 7B ; Aubin : « Deux questions c'est un peu juste ») ----
+//   Critère : une Rencontre laisse le temps de faire connaissance, sans devenir longue (moins de 2 minutes).
+//   Toujours 3 questions quand sa fiche le permet : la photo, son temps, puis une 3e :
+//   • son temps est « Sa vie » : un 2e fait de sa vie (déjà sur l'écran « Sa vie ») ; sinon un de ses liens ;
+//   • un autre temps : un de ses liens — ce qu'elle mange, ou qui la chasse, en alternance dans l'expédition (question
+//     « Lequel de ces aliments… ? » / « Lequel de ces animaux… ? », 4 réponses courtes) ; sinon un fait de sa vie, avec
+//     l'écran « Sa vie » avant. (Décision à relire : le lien d'abord, pour ne pas ajouter un écran à lire à chaque Rencontre.)
+//   « Étonnant » reste en plus s'il y en a un. Rien de tout cela de possible : 2 questions, comme avant.
+const RENCONTRE_TROIS_QUESTIONS = true;
+const liensVusExp = {};   // l'expédition → le dernier lien demandé (proies / predateurs), pour alterner
+function lienPourRencontre(e, x) {
+  const vieF = session.vieFaits || [];
+  const ok = ["proies", "predateurs"].filter(k => nbBonnes(e, k) === 0 && !vieF.includes(k)
+    && !(k === "proies" && vieF.some(v => memeSujetVie(v, "proies")))            // R270 : jamais le régime et les proies ensemble
+    && modeItems(e, k) && questionsPossibles(e).some(q => q.champ === k));
+  if (!ok.length) return null;
+  const k = ok.find(z => z !== liensVusExp[x.id]) || ok[0];
+  liensVusExp[x.id] = k;
+  return k;
+}
+function completerTroisQuestions(espece, x, t, c, nouveauxVie, memoireApres) {
+  const nb = () => 1 + (c && nbBonnes(espece, c) === 0 ? 1 : 0) + session.vie.length + (session.autreFormeQ ? 1 : 0) + (session.lien ? 1 : 0);
+  const ajouterVie = () => {
+    if (t === "vie") { const v = nouveauxVie.find(z => !session.vie.includes(z)); if (v) session.vie = [...session.vie, v]; return; }
+    if (!nouveauxVie.length || session.vie.length) return;
+    const sv = faitsSaVie(x, espece, nouveauxVie);
+    session.vieFaits = sv.faits; session.vieConnus = sv.connus; session.vieNouveaux = nouveauxVie;
+    session.vie = nouveauxVie.slice(0, 1);
+    for (const k of session.vieFaits) { const q = QUESTIONS.find(y => y.champ === k); session.vieBonnes[k] = q.tirer && nouveauxVie.includes(k) ? q.tirer(espece) : valeurDe(espece, q); }
+    sujetsVusExp[x.id] = memoireApres;   // ce fait est montré : il compte dans la mémoire des sujets (R264)
+  };
+  const ajouterLien = () => { const l = lienPourRencontre(espece, x); if (l) { session.lien = l; session.champs1 = [...session.champs1, l]; } };
+  for (const f of t === "vie" ? [ajouterVie, ajouterLien] : [ajouterLien, ajouterVie]) { if (nb() >= 3) break; f(); }
 }
 // Étape R282 : « Pas de son » pendant une Rencontre dont le temps est son cri → un autre temps, puis la suite de la Rencontre
 function tempsSansSon() {
@@ -1216,6 +1253,11 @@ function annoncerNouvelleEspece(espece, detail) {
   if (estRare(espece) && RENCONTRE_RARE && typeof session !== "undefined" && session && session.focus === espece && session.dejaAuCarnet === false) return;
   // Étape R278 (37.01) : de même pour toute espèce, l'entrée au carnet se voit à la fin de la Rencontre (l'encart de la famille)
   if (CARNET_FIN_RENCONTRE && typeof session !== "undefined" && session && session.focus === espece && session.dejaAuCarnet === false) return;
+  // Étape R314 (Notion 53.08, note 8 du 25/11 au soir) : une espèce déjà au carnet par sa Rencontre (R287, 1B : photo pas
+  //   encore reconnue) dont on reconnaît ensuite la photo (« Essayer à nouveau cette question », Me tester, Coup d'œil) n'est
+  //   pas une nouvelle espèce : pas de seconde fête d'entrée au carnet, une simple bulle.
+  const dejaAuCarnet = typeof rencontreesSansPhoto === "function" && rencontreesSansPhoto() && rencontreesSansPhoto().has(espece.nom_courant);
+  if (dejaAuCarnet) { afficherBulle(`✦ ${espece.nom_courant} : photo reconnue`); return; }
   if (!estRare(espece)) {                              // étape 212 (Revoir 2) : la même fenêtre au centre que les badges
     feter({ etiquette: "Nouvelle espèce", titre: espece.nom_courant, detail: majuscule(detail), son: null, pop,
             visuel: visuelEspece(espece, classeDe(espece).couleur) });

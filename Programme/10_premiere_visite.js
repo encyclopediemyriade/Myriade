@@ -305,6 +305,8 @@ function poserExplication() {
     ["pas", PAS_SVG, "Chaque espèce rencontrée rejoint votre carnet et vous rapporte des empreintes."],
     ["medaille", medailleSvg(2), "Vos empreintes remplissent la médaille du lieu, qui ouvre le lieu suivant, et vous donnent des clés."],
     ["cle", PICTO_CLE, "Une clé ouvre un lieu en avance, deux clés un nouveau territoire. Tout se rejoue, à votre rythme."],
+    // Étape R318 (Notion 53.02, choix 2A) : une 5e ligne, à part ; les quatre phrases d'Aubin restent telles quelles
+    ["jour", trait('<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'), "Chaque jour, une espèce du jour et des défis renouvelés toutes les 2 h vous font gagner des empreintes en plus."],
   ];
   const zone = document.createElement("ol");
   zone.className = "etapes-jeu";

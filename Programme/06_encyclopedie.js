@@ -637,7 +637,8 @@ function dessinerActionsAPropos(attente) {
       ${attente === x.cle
         ? `<span class="apropos-boutons"><button class="bouton-apropos confirmer" type="button" data-oui="${x.cle}">Oui, ${x.titre.charAt(0).toLowerCase() + x.titre.slice(1)}</button><button class="bouton-apropos annuler" type="button" data-non="1">Annuler</button></span>`
         : `<button class="bouton-apropos" type="button" data-action="${x.cle}">${x.titre}</button>`}
-    </div>`).join("");
+    </div>`).join("")
+    + (typeof htmlPourTester === "function" ? htmlPourTester() : "");   // étape R319 : « Pour tester », en mode testeur seulement (11)
   bloc.querySelectorAll("[data-action]").forEach(bt => bt.onclick = () => dessinerActionsAPropos(bt.dataset.action));
   bloc.querySelectorAll("[data-petits-sons]").forEach(bt => bt.onclick = () => {
     suivi.petitsSons = bt.dataset.petitsSons === "oui"; sauvegarder(); dessinerActionsAPropos();
@@ -652,6 +653,7 @@ function dessinerActionsAPropos(attente) {
   }
   bloc.querySelectorAll("[data-oui]").forEach(bt => bt.onclick = () => actions.find(x => x.cle === bt.dataset.oui).faire());
   if (typeof brancherReglagesApplication === "function") brancherReglagesApplication();   // étape ML7
+  if (typeof brancherPourTester === "function") brancherPourTester();   // étape R319
 }
 // Étape R238 (note 5 du 15/11, choix 9A) : les 4 pastilles en haut de la page ; un toucher descend à la rubrique,
 //   la pastille de la rubrique lue est allumée (une seule mise en place)
@@ -768,9 +770,13 @@ function afficherAPropos() {
       <ul class="participer-liste">${sansPhoto.map(e => `<li><span>${echapper(e.nom_courant)}<small>${echapper(lieuxAttente(e))}</small></span>
         <a href="${lien(e)}">Proposer</a></li>`).join("")}</ul>`;
   }
-  document.getElementById("pied-apropos").textContent =
-    `Un projet personnel, sans but commercial · ${ESPECES.length} espèces · ${tousLesTerritoires().length} territoires`
-    + (typeof texteVersion === "function" && texteVersion() ? ` · ${texteVersion()}` : "");   // étape ML7 : le numéro de version   // étape PR5 (« Alpes » datait du début)
+  const pied = document.getElementById("pied-apropos");
+  pied.textContent = `Un projet personnel, sans but commercial · ${ESPECES.length} espèces · ${tousLesTerritoires().length} territoires`;
+  if (typeof texteVersion === "function" && texteVersion()) {   // étape R319 : 5 touches sur le numéro de version → mode testeur (11)
+    const v = document.createElement("span"); v.id = "ap-version"; v.textContent = texteVersion();
+    if (typeof toucherVersion === "function") v.onclick = toucherVersion;
+    pied.append(" · ", v);
+  }   // étape ML7 : le numéro de version   // étape PR5 (« Alpes » datait du début)
 }
 
 // Affiche la petite fenêtre : son coin en haut à gauche part du centre de la photo.

@@ -769,8 +769,19 @@ function LeNomOuChat(h) { return h === CHAT ? "Le chat domestique" : LeNom(h); }
 
 // ---- Type 3 · Le jour et la nuit ----
 function activiteNette(e) { if (!confirme(e, "activite")) return null; const v = String(e.activite).trim(); return v === "Surtout le jour" ? "jour" : v === "Surtout la nuit" ? "nuit" : null; }
+// Étape R314 (Notion 53.12, note 12 du 25/11 au soir : 7 cartes, la dernière ligne sous le bouton « Valider », et 5 « oui »
+//   sur 7) : 6 choix au plus, et un meilleur équilibre (à peu près autant de « oui » que de « non » ; une réponse seule reste seule).
+const CHOIX_MAX_ENSEMBLE = 6;
+function choixEquilibres(oui, non, max = CHOIX_MAX_ENSEMBLE) {
+  if (oui.length + non.length <= max) return [oui, non];
+  const nOui = Math.min(oui.length, Math.max(max - non.length, Math.ceil(max / 2)));
+  const a = melanger(oui.slice()).slice(0, nOui), b = melanger(non.slice()).slice(0, max - nOui);
+  return [oui.filter(e => a.includes(e)), non.filter(e => b.includes(e))];   // (dans l'ordre d'origine)
+}
 function questionJourNuit(x) {
-  const l = x.liste.filter(activiteNette), nuit = l.filter(e => activiteNette(e) === "nuit"), jour = l.filter(e => activiteNette(e) === "jour");
+  const tous = x.liste.filter(activiteNette);
+  const [nuit, jour] = choixEquilibres(tous.filter(e => activiteNette(e) === "nuit"), tous.filter(e => activiteNette(e) === "jour"));   // R314
+  const l = tous.filter(e => nuit.includes(e) || jour.includes(e));
   if (l.length < 3 || !nuit.length || !jour.length) return null;
   let question, bonnes;
   if (nuit.length === 1) { question = "Une seule de ces espèces est active surtout la nuit. Laquelle ?"; bonnes = nuit; }
@@ -1057,19 +1068,31 @@ function compareeAdmise(e, sorte, sujet) {
 function candidatsComparees(x) {
   const res = [];
   for (const [g, mots] of Object.entries(GROUPES_PARLANTS)) {
-    const l = x.liste.filter(groupesComparables).filter(e => compareeAdmise(e, "mange", g));
-    const oui = l.filter(e => groupesComparables(e).includes(g)), non = l.filter(e => !groupesComparables(e).includes(g));
+    // R315 : une espèce dont la liste d'aliments cite un aliment du groupe sans que le groupe soit noté (la coronelle girondine
+    //   et ses « oisillons ») n'est jamais montrée comme « n'en mange pas » : elle n'est pas montrée du tout
+    const tous = x.liste.filter(groupesComparables).filter(e => compareeAdmise(e, "mange", g))
+      .filter(e => !R315 || groupesComparables(e).includes(g) || !(confirme(e, "proies_items") && listeGroupes(e.proies_items).some(i => groupeAliment(i) === g)));
+    const [oui, non] = choixEquilibres(tous.filter(e => groupesComparables(e).includes(g)), tous.filter(e => !groupesComparables(e).includes(g)));   // R314
+    const l = tous.filter(e => oui.includes(e) || non.includes(e));
     if (l.length < 3 || !oui.length || !non.length) continue;
     const f = formeComparee(oui, non, { une: `Une seule de ces espèces mange ${mots}. Laquelle ?`, uneNon: `Une seule de ces espèces ne mange pas ${GROUPES_NEGATIFS[g]}. Laquelle ?`,
                                         plusieurs: `Lesquelles de ces espèces mangent ${mots} ?` });
-    const explication = `${oui.length > 1 ? "Mangent" : "Mange"} ${mots} : ${listeEt(oui.map(leNom))}. ${non.length > 1 ? "N'en mangent pas" : "N'en mange pas"} : ${listeEt(non.map(leNom))}.`;
-    res.push({ sorte: "mange", sujet: g, l, ...f, explication, noter: "proies", ecart: Math.min(oui.length, non.length) });
+    // R315 (Notion 53.04, choix 4B + complément) : « Seul le … mange … » + ce qu'il mange ; « Seul le … ne mange pas … » + ce
+    //   qu'il mange à la place ; plusieurs réponses : les deux lignes d'avant, l'une sous l'autre.
+    let explication, complement;
+    if (R315 && f.bonnes.length === 1 && f.bonnes === oui) { explication = `${accordE(oui[0], "Seul")} ${leNom(oui[0])} mange ${mots}.`; complement = complementAliments(oui[0], g, false, mots); }
+    else if (R315 && f.bonnes.length === 1) { explication = `${accordE(non[0], "Seul")} ${leNom(non[0])} ne mange pas ${GROUPES_NEGATIFS[g]}.`; complement = complementAliments(non[0], g, true); }
+    else if (R315) { explication = `${oui.length > 1 ? "Mangent" : "Mange"} ${mots} : ${listeEt(oui.map(leNom))}.`; complement = `${non.length > 1 ? "N'en mangent pas" : "N'en mange pas"} : ${listeEt(non.map(leNom))}.`; }
+    else explication = `${oui.length > 1 ? "Mangent" : "Mange"} ${mots} : ${listeEt(oui.map(leNom))}. ${non.length > 1 ? "N'en mangent pas" : "N'en mange pas"} : ${listeEt(non.map(leNom))}.`;
+    res.push({ sorte: "mange", sujet: g, l, ...f, explication, complement: complement || "", noter: "proies", ecart: Math.min(oui.length, non.length) });
   }
   for (const [d, mots] of Object.entries(DEFENSES_DITES)) {
     const avec = x.liste.filter(defensesDe).filter(e => compareeAdmise(e, "defense", d));
-    const oui = avec.filter(e => defensesDe(e).principale === d);
+    let oui = avec.filter(e => defensesDe(e).principale === d);
     let non = avec.filter(e => !defensesDe(e).toutes.includes(d));
     if (DEFENSES_DU_CORPS.includes(d)) non = non.filter(e => !oui.some(o => o.classe === e.classe) && !(d.startsWith("Morsure") && ORDRES_QUI_MORDENT.test(e.ordre || "")));
+    const [oui2, non2] = choixEquilibres(oui, non);   // R314
+    oui = oui2; non = non2;
     const l = [...oui, ...non];
     if (l.length < 3 || !oui.length || !non.length) continue;
     const f = formeComparee(oui, non, { une: `Une seule de ces espèces compte d'abord sur ${mots} pour se défendre. Laquelle ?`,
@@ -1090,7 +1113,83 @@ function questionsComparees(x) {
   }
   return pris.map((k, i) => ({ type: "comparee", cle: "comparee" + (i + 1), sorte: k.sorte, sujet: k.sujet, negative: k.bonnes !== k.oui, question: k.question, montrees: [],
     choix: melanger(k.l.map(e => choixEspece(e, k.bonnes.includes(e)))), plusieurs: !/^Une seule/.test(k.question),
-    explication: k.explication, especes: k.l.map(e => e.nom_courant), noter: k.noter }));
+    explication: k.explication, complement: k.complement || "", especes: k.l.map(e => e.nom_courant), noter: k.noter }));
+}
+// ==================================================================
+// Étape R315 (26/11, retours du 25/11 au soir, Notion 53.04, choix 4B + complément, forme validée à 21 h 56 sur l'exemple du
+//   pigeon ramier) : le complément d'une question « Ce qu'elles mangent » est tiré de la case proies_items de la fiche (jamais
+//   une case rose), les aliments rangés par groupe : d'abord ceux du groupe demandé, puis les autres (« mais aussi »).
+//   Question inverse : ce qu'elle mange à la place. Pas de liste sûre : pas de complément. Aucune fiche n'est touchée : la
+//   table ALIMENTS (especes.js) donne le groupe de 89 aliments ; ALIMENTS_EN_PLUS, ci-dessous, ceux qu'elle n'a pas.
+//   « Surtout » (forme validée) n'est pas écrit : l'ordre de la liste ne dit pas l'importance (règle de R298). Décision à relire.
+// ==================================================================
+const R315 = true;
+const LIENS_CHOIX_SUIVENT = true;   // R315 (4bB) : false = les choix calés en bas sur téléphone, comme R265
+// Sur téléphone, après la réponse : la page descend juste assez pour montrer la ligne de retour au-dessus des boutons fixés
+function montrerRetourTelephone(el) {
+  if (!LIENS_CHOIX_SUIVENT || !el || typeof surTelephone !== "function" || !surTelephone()) return;
+  requestAnimationFrame(() => {
+    const pied = document.querySelector("#forme-ecran .en-carte .fp-pied"), r = el.getBoundingClientRect();
+    const bas = pied ? pied.getBoundingClientRect().top - 12 : window.innerHeight - 12;
+    if (r.bottom > bas) window.scrollBy({ top: Math.min(r.bottom - bas, r.top - 70), behavior: typeof animationsReduites === "function" && animationsReduites() ? "auto" : "smooth" });
+  });
+}
+const ALIMENTS_EN_PLUS = {
+  "Éphémères": "Insectes", "Phryganes": "Insectes", "Moucherons aquatiques": "Insectes", "Petits diptères": "Insectes", "Névroptères": "Insectes",
+  "Papillons de nuit": "Insectes", "Criquets": "Insectes", "Sauterelles": "Insectes", "Grillons": "Insectes", "Œufs et chenilles de papillons": "Insectes",
+  "Insectes aquatiques": "Insectes", "Grands insectes": "Insectes", "Criquets et sauterelles": "Insectes", "Larves": "Insectes", "Demoiselles": "Insectes",
+  "Cochenilles": "Insectes", "Larves de fourmis": "Insectes", "Scorpions": "Araignées et petites bêtes", "Myriapodes": "Araignées et petites bêtes",
+  "Miellat": "Nectar, pollen et sève", "Fruits": "Fruits et graines", "Olives": "Fruits et graines", "Baies": "Fruits et graines",
+  "Pignons de pin": "Fruits et graines", "Fruits mûrs": "Fruits et graines", "Tubercules": "Herbes et feuilles", "Végétaux": "Herbes et feuilles",
+  "Plantes": "Herbes et feuilles", "Brachypode de Phénicie": "Herbes et feuilles", "Fétuque ovine": "Herbes et feuilles", "Graminées": "Herbes et feuilles",
+  "Luzerne": "Herbes et feuilles", "Oseilles sauvages": "Herbes et feuilles", "Chiendent rampant": "Herbes et feuilles", "Férule commune": "Herbes et feuilles",
+  "Nerprun alaterne": "Herbes et feuilles", "Violettes": "Herbes et feuilles", "Chèvrefeuille": "Herbes et feuilles", "Feuilles de buis": "Herbes et feuilles",
+  "Fleurs de gentiane": "Herbes et feuilles", "Restes alimentaires": "Débris et matière morte", "Petits poissons": "Poissons",
+  "Céphalopodes": "Vers et mollusques", "Petits crustacés": "Crustacés", "Petits lézards": "Amphibiens et reptiles",
+  "Passereaux migrateurs": "Oiseaux et œufs", "Corneilles et corbeaux": "Oiseaux et œufs", "Grives": "Oiseaux et œufs", "Mésanges": "Oiseaux et œufs",
+  "Pinsons": "Oiseaux et œufs", "Moineaux": "Oiseaux et œufs", "Hirondelles": "Oiseaux et œufs", "Martinets": "Oiseaux et œufs",
+  "Chauves-souris": "Petits mammifères", "Campagnols": "Petits mammifères", "Écureuils": "Petits mammifères" };
+// (« Méduses », « Invertébrés », « Arthropodes », « Petits vertébrés » : sans groupe, cités à la fin)
+function groupeAliment(i) { return (typeof ALIMENTS !== "undefined" && ALIMENTS[i]) || ALIMENTS_EN_PLUS[i] || null; }
+// Un aliment avec son article : « des feuilles », « de jeunes pousses », « de l'écorce », « du nectar »
+const ALIMENTS_SINGULIERS = { "écorce": "de l'écorce", "plancton": "du plancton", "nectar": "du nectar", "sève": "de la sève", "pollen": "du pollen",
+  "sang": "du sang", "bois mort": "du bois mort", "brachypode de Phénicie": "du brachypode de Phénicie", "fétuque ovine": "de la fétuque ovine",
+  "luzerne": "de la luzerne", "chiendent rampant": "du chiendent rampant", "férule commune": "de la férule commune", "nerprun alaterne": "du nerprun alaterne",
+  "chèvrefeuille": "du chèvrefeuille", "miellat": "du miellat" };
+function alimentDit(t) {
+  t = minuscule(String(t).trim());
+  if (ALIMENTS_SINGULIERS[t]) return ALIMENTS_SINGULIERS[t];
+  return (/^(petit|grand|jeune|gros)e?s\s/.test(t) ? "de " : "des ") + t;
+}
+// « Fruits et baies » → « des fruits », « des baies » (chaque mot son article)
+function morceauxAliment(i) {
+  if (ALIMENTS_SINGULIERS[minuscule(i)]) return [alimentDit(i)];
+  return String(i).split(/\s+et\s+/).map(alimentDit);
+}
+function complementAliments(e, g, inverse, dejaDit) {
+  if (!e || !confirme(e, "proies_items") || String(e.proies_items).trim() === "NA") return "";
+  const items = listeGroupes(e.proies_items).filter(i => i && i !== "NA");
+  if (!items.length) return "";
+  const ordre = [];   // les groupes, dans l'ordre où la fiche les cite
+  for (const i of items) { const gr = groupeAliment(i) || "~"; if (!ordre.includes(gr)) ordre.push(gr); }
+  const ranges = ordre.sort((a, b) => (a === "~") - (b === "~")).flatMap(gr => items.filter(i => (groupeAliment(i) || "~") === gr));
+  const MAXI = 5;
+  const dire = l => { const m = l.flatMap(morceauxAliment), coupe = m.length > MAXI; return listeEt(m.slice(0, MAXI)) + (coupe ? ", entre autres" : ""); };
+  const il = IlElle(e);
+  if (inverse) {
+    const autres = ranges.filter(i => groupeAliment(i) !== g);
+    return autres.length ? `À la place, ${ilElle(e)} mange ${dire(autres)}.` : "";
+  }
+  // ce que la première phrase dit déjà (« de petits mammifères », « du plancton ») n'est pas redit
+  const redit = i => !!dejaDit && morceauxAliment(i).every(m => dejaDit.includes(m));
+  //   (seulement quand la fiche n'ajoute rien de plus pour ce groupe : « des feuilles et des bourgeons » reste entier)
+  let siens = ranges.filter(i => groupeAliment(i) === g);
+  const autres = ranges.filter(i => groupeAliment(i) !== g);
+  if (siens.every(redit)) siens = [];
+  if (siens.length && autres.length) return `${il} mange ${dire(siens)}, mais aussi ${dire(autres)}.`;
+  if (siens.length) return `${il} mange ${dire(siens)}.`;
+  if (!autres.length) return "";
+  return `${il} mange aussi ${dire(autres)}.`;
 }
 // Une comparée réussie : le sujet d'Approfondir est noté « trouvé » pour chaque espèce montrée (s'il existe pour elle)
 function noterComparee(q) {
@@ -1470,8 +1569,8 @@ function dessinerEnsemble() {
     const debut = partiel ? `Validé : ${trouvees} sur ${bonnes.length}. ` : juste ? "Bravo ! " : "";
     // Étape R265 (40.12, 6A) : « Oui » / « C'était l'autre » / « Pas cette fois » (« Validé · 2 sur 3 »), puis l'explication
     const ligneEns = typeof verdictHtml === "function"
-      ? verdictHtml({ juste, deux: q.choix.length === 2, mot: partiel ? `Validé · ${trouvees} sur ${bonnes.length}` : "", phrase: q.explication || "" })
-      : `${debut}${echapper(q.explication || "")}`;
+      ? verdictHtml({ juste, deux: q.choix.length === 2, mot: partiel ? `Validé · ${trouvees} sur ${bonnes.length}` : "", phrase: q.explication || "", complement: q.complement || "" })   // R315 : la 2e ligne
+      : `${debut}${echapper([q.explication, q.complement].filter(Boolean).join(" "))}`;
     document.getElementById("en-retour").innerHTML = `${ligneEns}${partiel ? `<br><small>${bonnes.length - trouvees > 1 ? "Les autres sont encadrées" : "L'autre est encadrée"} en vert.</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
     const caseI = z.querySelectorAll(".en-cases i")[reprise ? E.file[E.i].de : E.i];   // R246 : la case prend sa couleur tout de suite
     if (caseI && !reprise) caseI.classList.add(juste ? "ok" : "rate");
@@ -1479,6 +1578,7 @@ function dessinerEnsemble() {
     s.textContent = E.i + 1 < E.file.length ? "Question suivante" : "Continuer";
     s.classList.remove("cache"); s.focus({ preventScroll: true });
     garderEnVueOrdinateur(document.getElementById("en-retour"), s);   // R279 : le verdict et la suite à l'écran
+    montrerRetourTelephone(document.getElementById("en-retour"));     // R315 (4bB)
     s.onclick = () => {
       if (E.i + 1 >= E.file.length) { finirEnsemble(); return; }
       // Étape R265 (40.05, choix 3A) : avant les questions à revoir, une page courte, avec « Non merci » pour ne pas les imposer
@@ -1497,7 +1597,9 @@ function dessinerEnsemble() {
   } else boutons.forEach(b => b.onclick = () => corriger([Number(b.dataset.i)]));
   window.scrollTo(0, 0);
   // Étape R265 (40.03, 2A) : sur téléphone, la ligne de retour au-dessus des réponses, les réponses calées en bas, le bouton fixé
-  if (typeof calerSousPouce === "function" && SOUS_LE_POUCE && surTelephone()) {
+  // Étape R315 (Notion 53.04, choix 4bB) : les choix suivent la question (plus de grand blanc), comme les réponses en photos
+  //   depuis R284 ; la ligne de retour s'écrit sous les choix et la page y descend après la réponse ; les boutons restent fixés en bas.
+  if (!LIENS_CHOIX_SUIVENT && typeof calerSousPouce === "function" && SOUS_LE_POUCE && surTelephone()) {
     const choixZ = z.querySelector(".en-choix"), ret = document.getElementById("en-retour");
     if (choixZ && ret) { choixZ.before(ret); calerSousPouce(ret, choixZ, RESERVE_POUCE.rencontre); }
   }

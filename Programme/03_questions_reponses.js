@@ -484,10 +484,11 @@ function poserIdentification(espece) {
   //   parmi ses sosies, en photos.
   if (PHOTO_FIN_AUTRE && enRencontre && session.presentee && session.focus === espece) {
     const autre = autrePhotoSemblable(espece);
+    if (PHOTO_FIN_QUATRE && poserPhotoFinQuatre(espece, autre)) return;   // R316 (53.10, 10A)
     if (!autre && poserPhotoFinSosies(espece)) return;
     if (autre) {
       session.photoFinAutre = true;
-      enTete(espece, true, false, "Et sur cette photo, la reconnaîtriez-vous ?");
+      enTete(espece, true, false, `Et sur cette photo, ${pe(espece).la} reconnaîtriez-vous ?`);   // R314 (53.10) : accordé au nom (« le » pour le ragondin)
       document.getElementById("photo-rencontre").innerHTML = imagePhoto(autre, "");
     }
   }
@@ -557,6 +558,34 @@ function poserPhotoFinSosies(espece) {
   }
   const autresNoms = pieges.map(o => o.nom_courant).join(", ");
   enCours.explication = `C'est : ${espece.nom_courant} (${espece.nom_affichage_groupe.toLowerCase()}). Les autres photos : ${autresNoms}.`;
+  return true;
+}
+
+// ---- Étape R316 (26/11, retours du 25/11 au soir, Notion 53.10, choix 10A) : la photo de la fin, toujours en 4 photos ----
+//   Après « Pas encore », la dernière question demande de reconnaître l'animal, plus de se souvenir du nom (dans la Rencontre
+//   du ragondin, « ragondin » parmi 4 noms était la réponse évidente) : « Lequel est le ragondin ? », 4 photos. La sienne est
+//   une autre photo de lui qui lui ressemble (R295), sinon sa photo ; les 3 autres sont des espèces de son monde, ses sosies
+//   d'abord (piegesPhotoFin). Moins de 3 autres espèces avec photo, ou pas de photo à lui : la question d'avant.
+const PHOTO_FIN_QUATRE = true;
+function poserPhotoFinQuatre(espece, autre) {
+  if (!estRenseigne(espece.photo)) return false;
+  const pieges = piegesPhotoFin(espece);
+  if (pieges.length < 3) return false;
+  session.photoFinSosies = true;
+  enTete(espece, false, false, `${pe(espece).la === "le" ? "Lequel" : "Laquelle"} est ${nomAvecArticle(espece)} ?`);
+  document.getElementById("question").textContent = "";
+  const zone = document.getElementById("reponses");
+  zone.className = "grille-photos";
+  for (const e of melanger([espece, ...pieges])) {
+    const bouton = document.createElement("button");
+    bouton.className = "reponse choix-photo";
+    // sans nom au survol ni dans le texte de remplacement : il donnerait la réponse
+    bouton.innerHTML = `<div class="photo">${e === espece && autre ? imagePhoto(autre, "", true) : celluleImage(e, true).replace(/ alt="[^"]*"/, ' alt=""')}</div>`;
+    if (e === espece) bouton.dataset.juste = "oui";
+    bouton.onclick = () => repondre(bouton, e === espece);
+    zone.appendChild(bouton);
+  }
+  enCours.explication = `C'est : ${espece.nom_courant} (${espece.nom_affichage_groupe.toLowerCase()}). Les autres photos : ${pieges.map(o => o.nom_courant).join(", ")}.`;
   return true;
 }
 

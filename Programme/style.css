@@ -6934,3 +6934,34 @@ nav.barre.visite .onglet, nav.barre.visite #onglet-carte, nav.barre.visite .lien
 }
 @media (max-width: 380px) { .dfx-deux-portes > .dfx-p small { font-size: .7rem; } }
 @media (max-width: 350px) { .dfx-deux-portes > .dfx-p, .dfx-deux-portes > .dfx-p:first-child, .dfx-deux-portes > .dfx-p:last-child, .apf-portes .dfx-deux-portes > .dfx-p { column-gap: 8px; padding-left: 10px; padding-right: 10px; grid-template-columns: 22px minmax(0, 1fr) 8px; } .dfx-deux-portes > .dfx-p > svg { width: 22px; height: 22px; } .dfx-deux-portes > .dfx-p small { font-size: .68rem; } }
+
+/* ---- Étape R317 (Notion 53.05, 53.06 ; choix 5B et 6A du 25/11 au soir) ----
+   Grille des territoires fermés : plus de « 2 clés » sous chaque case, un petit cadenas en haut à droite. */
+.at-ligne-ferme.at-case { position: relative; }
+.at-case-cad { position: absolute; top: 5px; right: 5px; display: block; width: 13px; height: 13px; color: #8a826e; line-height: 0; }
+.at-case-cad svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+
+/* ---- Étape R318 (Notion 53.02, choix 2A) : la 5e ligne de « Comment jouer » (espèce du jour et défis du moment) ---- */
+.ej-jour { background: #f6ecd2; color: #A8652A; }
+/* avec 5 lignes, la liste se resserre un peu sur téléphone : « Voici vos 2 premières clés » reste visible au-dessus des boutons (390 × 844) */
+@media (max-width: 760px) {
+  .etapes-jeu { margin: 6px 0 14px; gap: 8px; }
+  .etapes-jeu li { padding: 9px 12px; line-height: 1.38; }
+  .ej-picto { width: 38px; height: 38px; }
+  .ej-picto svg { width: 22px; height: 22px; }
+}
+
+/* ---- Étape R319 (Notion 53.13, choix 13A) : « Pour tester » (mode testeur) et le bandeau de l'essai ---- */
+#ap-version { cursor: default; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+.apropos-pour-tester { margin-top: 14px; padding: 12px 14px; border: 1.5px dashed var(--trait, #CFC5AE); border-radius: 12px; }
+.apropos-pour-tester h3 { margin: 0 0 4px; font-size: 15px; }
+.apropos-pour-tester p { margin: 0 0 10px; line-height: 1.4; }
+.apt-boutons { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.apt-boutons .bouton-apropos { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 44px; text-align: left; white-space: normal; }
+.apt-boutons .bouton-apropos small { font-weight: 400; font-size: 12px; opacity: .8; }
+.apt-boutons .bouton-apropos:disabled { opacity: .5; cursor: default; }
+#essai-bandeau { position: fixed; right: 0; top: 42%; z-index: 2147483000; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 6px 6px 7px 8px; border-radius: 12px 0 0 12px; background: #A8652A; color: #fff; font-size: 11.5px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+#essai-bandeau button { min-height: 36px; padding: 0 10px; border: 0; border-radius: 8px; background: #fff; color: #7a4518; font: inherit;
+  font-size: 12.5px; letter-spacing: 0; text-transform: none; line-height: 1.15; cursor: pointer; }
