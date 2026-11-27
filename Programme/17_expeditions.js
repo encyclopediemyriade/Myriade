@@ -1336,9 +1336,12 @@ const VIE_TROP_EVIDENT = {
   indice_presence: e => /^Taupe/.test(e.nom_courant) ? [e.indice_presence] : [],   // « La taupe… ses taupinières »
   // Étape R280 (44.02) : les sujets qui n'ont qu'une phrase à lire (A_LIRE, plus bas) suivent la même règle « pas trop évident »
   activite: e => [...(["Oiseaux", "Reptiles", "Insectes"].includes(e.onglet) ? ["Surtout le jour"] : []),          // la plupart des oiseaux, des lézards, des papillons
-                  ...(["Chiroptères", "Strigiformes"].includes(e.ordre) ? ["Surtout la nuit"] : [])],               // chauves-souris, chouettes et hiboux
+                  ...(["Chiroptères", "Strigiformes"].includes(e.ordre) || /\bnuit\b/i.test(e.nom_courant) ? ["Surtout la nuit"] : []),   // chauves-souris, chouettes et hiboux ; PQ1 : le grand paon de nuit
+                  ...(/\bjour\b/i.test(e.nom_courant) ? ["Surtout le jour"] : [])],
   deplacement_saisonnier: e => e.onglet === "Oiseaux" ? [] : ["Reste sur place toute l'année"],                     // dit seulement pour un oiseau (qui pourrait migrer)
-  naissance: e => ["Pond des œufs", ...(e.onglet === "Mammiferes" ? ["Donne naissance à des petits déjà formés"] : [])],
+  // PQ1 : chez les lézards et serpents (Squamates) et les tritons et salamandres (Urodèles), certaines pondent, d'autres
+  //   mettent au monde des petits : « pond des œufs » ne se devine pas (la couleuvre pond, la vipère non). Ailleurs, si.
+  naissance: e => [...(["Squamates", "Urodèles"].includes(e.ordre) ? [] : ["Pond des œufs"]), ...(e.onglet === "Mammiferes" ? ["Donne naissance à des petits déjà formés"] : [])],
   hibernation: () => ["n'hiberne pas"],
   pelage_hiver: () => ["Garde la même couleur"],
   metamorphose: e => e.ordre === "Lépidoptères" ? [METAMORPHOSES[0]] : [],                                          // la chenille et sa chrysalide
@@ -1357,12 +1360,12 @@ function vieTropEvidente(e, c, v) {
   const f = VIE_TROP_EVIDENT[c];
   if (f && f(e).includes(v)) return true;
   const q = QUESTIONS.find(x => x.champ === c);
-  let phrase = ""; try { phrase = q && q.affirmation ? q.affirmation(v, e) : (A_LIRE[c] ? A_LIRE[c](v, e, q) : ""); } catch (err) { phrase = ""; }
+  let phrase = ""; try { phrase = (q && q.affirmation && q.affirmation(v, e)) || (A_LIRE[c] ? A_LIRE[c](v, e, q) : ""); } catch (err) { phrase = ""; }   // PQ1 : la phrase à lire quand le vrai ou faux n'est pas sûr
   return nomDonneLaPhrase(e, phrase.replace(/^(Il|Elle)\s/, "").replace(/\([^)]*\)/g, ""));   // sans les précisions entre parenthèses
 }
 function vieEnVraiFaux(e, c) {
   const q = QUESTIONS.find(x => x.champ === c);
-  if (!q || !q.affirmation || q.type === "nombre" || q.format || (q.formats && !q.formats.includes("vraifaux"))) return false;
+  if (!q || !q.affirmation || q.type === "nombre" || q.format || (q.formats && !q.formats.includes("vraifaux") && !q.vraiFauxSaVie)) return false;   // PQ1 : vraiFauxSaVie (01)
   const v = q.tirer ? q.tirer(e) : valeurDe(e, q);
   if (vieTropEvidente(e, c, v)) return false;   // R243
   return estRenseigne(v) && piegesVraiFaux(q, v, e).length >= 1;   // VF1 : une valeur fausse de son « monde »
@@ -1370,7 +1373,12 @@ function vieEnVraiFaux(e, c) {
 // Étape R270 (test du 19/11, n° 25 : « Il mange surtout des insectes. » et « Il se nourrit d'insectes, de larves… » sur la même
 //   carte « Sa vie ») : le régime et les proies disent la même chose ; un seul des deux par Rencontre.
 const SUJETS_VIE_DOUBLES = [["regime_alimentaire_type", "proies", "type_proie_detaille"]];
-function memeSujetVie(a, b) { return a !== b && SUJETS_VIE_DOUBLES.some(g => g.includes(a) && g.includes(b)); }
+// Étape PQ1 : un sujet qui en dit un autre (« La femelle peut pondre jusqu'à 20 œufs » dit qu'elle pond ; « On peut le croiser
+//   au printemps et en été » dit presque qu'il migre). Jamais ensemble sur la carte ; les autres de la liste restent possibles entre eux.
+const SUJETS_VIE_SOUFFLES = { naissance: ["nb_oeufs_ordre", "nb_petits_max", "incubation_jours", "gestation_jours"],
+  deplacement_saisonnier: ["saison_observation"] };
+function memeSujetVie(a, b) { return a !== b && (SUJETS_VIE_DOUBLES.some(g => g.includes(a) && g.includes(b))
+  || (SUJETS_VIE_SOUFFLES[a] || []).includes(b) || (SUJETS_VIE_SOUFFLES[b] || []).includes(a)); }
 function sansDoublesVie(liste) { const garde = []; for (const c of liste) if (!garde.some(d => memeSujetVie(c, d))) garde.push(c); return garde; }
 function vieRencontre(x, e) {
   if (!RENCONTRE_COMPLETE || !x || especeFaite(e, 2)) return [];
@@ -1439,7 +1447,7 @@ function vieALire(e, c) {
   if (!q) return false;
   let v; try { v = valeurDe(e, q); } catch (err) { return false; }
   if (!estRenseigne(v) || v === "NA" || String(v).startsWith("NA") || vieTropEvidente(e, c, v)) return false;
-  if (!q.affirmation && A_LIRE[c]) return !!phraseALire(e, c, v);   // R280 : un sujet qui n'a qu'une phrase à lire
+  if (A_LIRE[c] && (!q.affirmation || (q.vraiFauxSaVie && !affirmationVraieDe(q, v, e)))) return !!phraseALire(e, c, v);   // R280 : un sujet qui n'a qu'une phrase à lire ; PQ1 : ou pas de vrai ou faux sûr
   if (!q.affirmation || q.type === "nombre" || q.format) return false;
   let p = ""; try { p = q.affirmation(v, e); } catch (err) { return false; }
   return !!p && !/undefined|null/.test(p);
@@ -1506,7 +1514,7 @@ function valeurFaitVie(espece, champ) {
 function phraseFaitVie(espece, champ) {
   const q = QUESTIONS.find(x => x.champ === champ);
   if (!q) return "";
-  if (!q.affirmation) return phraseALire(espece, champ, valeurFaitVie(espece, champ));   // R280 (44.02) : un fait seulement à lire
+  if (!q.affirmation || (q.vraiFauxSaVie && !affirmationVraieDe(q, valeurFaitVie(espece, champ), espece))) return phraseALire(espece, champ, valeurFaitVie(espece, champ));   // R280 (44.02) : un fait seulement à lire ; PQ1
   // R280 : la ligne des prédateurs, quand elle est seulement à lire, cite 3 animaux au plus (le rougegorge en avait 7)
   if (champ === "predateurs" && typeof affPredateurs === "function" && session && !(session.vieNouveaux || []).includes(champ))
     return affPredateurs(valeurFaitVie(espece, champ), espece, 3);
@@ -2980,14 +2988,35 @@ function haltesDuSite(r) { return (r && r.haltes && r.haltes.length) ? r.haltes 
 function tourDuSite(t, creer = true) {
   suivi.tourSite = suivi.tourSite || {};
   if (!suivi.tourSite[t] && creer) creerTour(t);
-  return suivi.tourSite[t] || null;
+  return nettoyerTour(suivi.tourSite[t] || null, t);
+}
+// Étape R333 (tâche 54.09, choix A d'Aubin du 27/11) : n'entrent au tour et à la sortie du jour que les espèces vraiment
+//   rencontrées (au carnet : estReconnue, et plus estIdentifiee, qui comptait d'office les espèces sans photo jamais vues,
+//   comme la musaraigne couronnée ou le lançon), et qui ont au moins une question possible (sinon elles resteraient
+//   en tête de la sortie pour toujours). Les tours et sorties déjà enregistrés sont nettoyés à l'ouverture (nettoyerTour).
+function aUneQuestionAuSite(e) {
+  if (typeof questionsSitePossibles === "function" && questionsSitePossibles(e)) return true;   // R334 : silhouette, cri, empreinte
+  return casesDuDefi([e], "revision", true).length > 0;
+}
+function entreAuSite(e) { return !!e && estReconnue(e) && estIdentifiee(e) && aUneQuestionAuSite(e); }   // (photo reconnue, comme avant, pour une espèce qui en a une)
+function nettoyerTour(tour, t) {
+  if (!tour || tour.nettoyeR333) return tour;
+  const esp = n => ESPECES.find(e => e.nom_courant === n);
+  const haltes = [], faites = [];
+  tour.haltes.forEach((h, i) => { const g = h.filter(n => entreAuSite(esp(n))); if (g.length) { haltes.push(g); faites.push(!!tour.faites[i]); } });
+  tour.haltes = haltes; tour.faites = faites; tour.nettoyeR333 = true;
+  if (haltes.length && faites.every(Boolean) && !tour.fini) {          // rien ne recule : un tour dont il ne reste que des haltes faites est fini
+    tour.fini = true; suivi.gardien = suivi.gardien || {}; suivi.gardien[t] = true;
+  }
+  sauvegarder();
+  return tour;
 }
 function creerTour(t) {
   const r = siteRemarquable(t), n = haltesDuSite(r).length;
-  const liste = especesDuSite(t).filter(estIdentifiee).map(e => ({ e, f: faiblesse(e) })).sort((a, b) => b.f - a.f).map(o => o.e.nom_courant);
+  const liste = especesDuSite(t).filter(entreAuSite).map(e => ({ e, f: faiblesse(e) })).sort((a, b) => b.f - a.f).map(o => o.e.nom_courant);
   const haltes = Array.from({ length: n }, (_, i) => liste.slice(i * ESPECES_PAR_HALTE, (i + 1) * ESPECES_PAR_HALTE)).filter(h => h.length);
   suivi.tourSite = suivi.tourSite || {};
-  suivi.tourSite[t] = { haltes, faites: haltes.map(() => false), fini: false };
+  suivi.tourSite[t] = { haltes, faites: haltes.map(() => false), fini: false, nettoyeR333: true };
   sauvegarder();
 }
 function estGardien(t) { return !!(suivi && suivi.gardien && suivi.gardien[t]); }
@@ -3003,33 +3032,41 @@ function bienSues(t) { return especesDuSite(t).filter(bienSue).length; }
 function sortieDuJour(t) {
   suivi.sortieDuJour = suivi.sortieDuJour || {};
   const deja = suivi.sortieDuJour[t];
-  if (deja && deja.jour === aujourdhui()) return deja;
+  if (deja && deja.jour === aujourdhui()) {                // R333 : une sortie enregistrée avant ne garde que les espèces permises
+    const garde = deja.noms.filter(n => entreAuSite(ESPECES.find(e => e.nom_courant === n)));
+    if (garde.length === deja.noms.length || deja.faite) { if (garde.length !== deja.noms.length) { deja.noms = garde; sauvegarder(); } return deja; }
+  }
   const rap = suivi.rappels || {}, auj = aujourdhui();
-  const toutes = especesDuSite(t).filter(estIdentifiee);
+  const toutes = especesDuSite(t).filter(entreAuSite);
   const dues = toutes.filter(e => rap[e.nom_courant] && rap[e.nom_courant].jour <= auj).sort((a, b) => rap[a.nom_courant].jour.localeCompare(rap[b.nom_courant].jour));
   const jamais = toutes.filter(e => !rap[e.nom_courant]).map(e => ({ e, f: faiblesse(e) })).sort((a, b) => b.f - a.f).map(o => o.e);
   let choix = [...dues, ...jamais].slice(0, ESPECES_SORTIE);
   if (choix.length < ESPECES_SORTIE) {                // tout est à jour : les plus anciennes révisions
-    const autres = toutes.filter(e => !choix.includes(e)).sort((a, b) => (rap[a.nom_courant] || {}).jour.localeCompare((rap[b.nom_courant] || {}).jour));
+    const autres = toutes.filter(e => !choix.includes(e)).sort((a, b) => ((rap[a.nom_courant] || {}).jour || "").localeCompare((rap[b.nom_courant] || {}).jour || ""));
     choix = choix.concat(autres.slice(0, ESPECES_SORTIE - choix.length));
   }
   suivi.sortieDuJour[t] = { jour: auj, noms: choix.map(e => e.nom_courant), faite: false };
   sauvegarder();
   return suivi.sortieDuJour[t];
 }
-function raisonSortie(e) {
+// Étape R333 (54.09 A) : l'étiquette dit quoi faire. « À retravailler » = une erreur la dernière fois ;
+//   « Revue aujourd'hui ✓ » ; sinon « À revoir » (jamais revue, ou son rappel est arrivé). Plus de « ici » (c'est compté pour tout le jeu).
+function etatSortie(e) {
   const rap = suivi.rappels && suivi.rappels[e.nom_courant];
-  if (aRevoir.some(r => r.nom === e.nom_courant)) return "une réponse à revoir";
-  if (rap && rap.palier === 0) return "à reprendre";
-  if (rap && rap.vu) { const n = joursDepuis(rap.vu); return n <= 0 ? "revue aujourd'hui" : `revue il y a ${n} jour${n > 1 ? "s" : ""}`; }
-  return "pas encore revue ici";
+  if (rap && rap.palier === 0) return "retravailler";
+  if (rap && rap.vu && joursDepuis(rap.vu) <= 0) return "revue";
+  if (aRevoir.some(r => r.nom === e.nom_courant)) return "retravailler";
+  return "revoir";
 }
+const TEXTES_SORTIE = { revoir: "À revoir", retravailler: "À retravailler", revue: "Revue aujourd'hui ✓" };
+function raisonSortie(e) { return TEXTES_SORTIE[etatSortie(e)]; }
 // Après une partie : chaque espèce interrogée avance d'un palier, ou revient demain après une erreur
 function noterRappels(d) {
   suivi.rappels = suivi.rappels || {};
   const posees = new Set((d.posees || []).map(p => p.split("|")[0]));
   const ratees = new Set((d.rates || []).map(r => r.nom));
   for (const nom of posees) {
+    if (!ESPECES.some(e => e.nom_courant === nom)) continue;   // R334 : une question du site n'est pas une espèce
     const r = suivi.rappels[nom] || { palier: 0 };
     const palier = ratees.has(nom) ? 0 : Math.min(INTERVALLES_RAPPEL.length - 1, (suivi.rappels[nom] ? r.palier : 0) + 1);
     suivi.rappels[nom] = { palier, vu: aujourdhui(), jour: jourPlus(INTERVALLES_RAPPEL[palier]) };
@@ -3043,19 +3080,22 @@ function lancerSite(t, quoi) {               // quoi : un numéro de halte, ou "
   let noms, titre;
   if (quoi === "sortie") { noms = sortieDuJour(t).noms; titre = `${r.nom} · la sortie du jour`; }
   else { const tour = tourDuSite(t); noms = tour.haltes[quoi]; titre = `${r.nom} · ${haltesDuSite(r)[quoi]}`; }
-  const especes = noms.map(n => ESPECES.find(e => e.nom_courant === n)).filter(Boolean);
+  const especes = noms.map(n => ESPECES.find(e => e.nom_courant === n)).filter(entreAuSite);   // R333
   if (!especes.length) { afficherBulle("Rien à revoir pour l'instant"); return; }
   depuisArcade = false; modeLibre = false;
   document.getElementById("bouton-territoire-defi").textContent = "Retour au territoire";
   territoiresDefi = [t]; territoiresChoisis = [t];
   // Étape R326 (retours du 26/11, note 5, choix d'Aubin 5A) : au plus 2 questions par espèce ; une halte qui a peu d'espèces
   //   est plus courte (3 espèces → 6 questions) au lieu de reposer les mêmes. Le compteur montre le vrai total.
-  jeuChoisi = "revision"; revisionsSeules = true; photosSeules = false; questionsClassique = questionsDuSite(especes);
+  // Étape R334 (54.10 A) : la halte mêle des questions nouvelles (site, lien d'un lieu à l'autre, silhouette, cri ou
+  //   empreinte, chiffres) aux révisions ; son vrai total en tient compte (36_site_halte.js)
+  const plan = typeof preparerHalteSite === "function" ? preparerHalteSite(t, especes) : null;
+  jeuChoisi = "revision"; revisionsSeules = true; photosSeules = false; questionsClassique = plan ? plan.total : questionsDuSite(especes);
   const d = { cle: "site|" + t + "|" + quoi, nom: titre, especes, ouvert: true };
   lancementDirect = true;
   montrer("jouer");
   lancementDirect = false;
-  demarrerDefi(d, { site: { t, halte: quoi === "sortie" ? null : quoi } });
+  demarrerDefi(d, { site: { t, halte: quoi === "sortie" ? null : quoi, plan } });
 }
 
 // ---- La fin d'une halte ou de la sortie (appelé à la fin de terminerDefi) ----
@@ -3133,27 +3173,38 @@ function dessinerPageSite() {
       <small>${h.length} espèces ${etat === "fait" ? "revues" : "à revoir"} · de ${lieux.length} lieu${lieux.length > 1 ? "x" : ""}</small>
       <small class="site-lieux">${echapper(court)}</small>${bouton}</div>`;
   }).join("");
-  const blocTour = `<div class="site-bloc"><div class="site-bloc-tete"><h2>Le tour du site</h2>
-      <small>${tour.fini ? `Terminé · ${tour.haltes.length} haltes sur ${tour.haltes.length}` : `${tour.haltes.length} haltes · on commence par ce que vous connaissez le moins bien`}</small></div>
+  // Étape R333 (54.09 A ; critère : « sans rien lire d'autre, on comprend en une phrase ce qu'on va faire, et pourquoi
+  //   ces espèces ») : deux blocs nets, chacun avec sa phrase, en haut de la page (avant la fiche du lieu), le tour d'abord,
+  //   la sortie du jour juste dessous, avant comme après Gardien.
+  const nH = tour.haltes.length, pl = (n, m, p) => `${n} ${n > 1 ? p : m}`;
+  const etatTour = tour.fini ? `Terminé · vous êtes Gardien ${echapper(deT)}`
+    : `Halte ${Math.min(cours === null ? nH : cours + 1, nH)} sur ${nH} · on commence par ce que vous connaissez le moins bien`;
+  const blocTour = `<div class="site-bloc site-tour"><div class="site-bloc-tete">
+      <p class="site-phrase"><b>Le tour :</b> ${pl(nH, "halte", "haltes")} pour revoir ce que vous avez appris dans ce territoire. Au bout : Gardien du territoire.</p>
+      <small>${etatTour}</small></div>
       <div class="site-sentier">${sentier}</div><div class="site-haltes">${cartes}</div>
       ${tour.fini ? `<button class="duo-autres" id="site-refaire" type="button">Refaire le tour</button>` : ""}</div>`;
   // la sortie du jour
   let blocSortie;
   if (gardien) {
     const s = sortieDuJour(t), date = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
-    const liste = s.noms.map(esp).filter(Boolean).map(e => `<span class="site-sortie-esp">${medaillon(e)}<span><b>${echapper(e.nom_courant)}</b><small>${raisonSortie(e)}</small></span></span>`).join("");
+    const liste = s.noms.map(esp).filter(Boolean).map(e => `<span class="site-sortie-esp ${etatSortie(e)}">${medaillon(e)}<span><b>${echapper(e.nom_courant)}</b><small>${raisonSortie(e)}</small></span></span>`).join("");
+    const nS = s.noms.length;
     blocSortie = `<div class="site-bloc sortie"><div class="site-date">${date.charAt(0).toUpperCase() + date.slice(1)}</div>
-      <div class="site-bloc-tete"><h2>La sortie du jour</h2>
-        <small>${s.faite ? "Faite aujourd'hui. Vous pouvez la refaire, ou revenir demain pour une nouvelle sortie." : `${s.noms.length} espèces à entretenir aujourd'hui, choisies parmi celles que vous risquez d'oublier.`}</small></div>
+      <div class="site-bloc-tete"><p class="site-phrase"><b>La sortie du jour :</b> ${pl(nS, "espèce", "espèces")} à revoir aujourd'hui, avant de les oublier.</p>
+        ${s.faite ? `<small>Faite aujourd'hui. Vous pouvez la refaire, ou revenir demain pour une nouvelle sortie.</small>` : ""}</div>
       <div class="site-sortie">${liste}</div>
       <button class="couv-go" id="site-sortie" type="button">${s.faite ? "Refaire la sortie" : "Partir"} <span aria-hidden="true">▶</span></button>
       <div class="site-infos"><div><b>Comment c'est choisi</b><small>Une espèce bien sue revient de moins en moins souvent : après 2 jours, puis 5, puis 12… Une erreur la fait revenir plus tôt, sans rien vous retirer.</small></div>
         <div><b>Pas de série à tenir</b><small>Sauter un jour ne fait rien perdre. La sortie attend simplement votre retour.</small></div></div></div>`;
   } else {
-    blocSortie = `<div class="site-bloc ensuite"><b>☀ Ensuite : la sortie du jour</b><small>Une fois le tour terminé, revenez quand vous voulez : ${ESPECES_SORTIE} espèces à entretenir, choisies pour vous chaque jour.</small></div>`;
+    blocSortie = `<div class="site-bloc sortie ferme"><div class="site-bloc-tete">
+      <p class="site-phrase"><b>La sortie du jour :</b> ${ESPECES_SORTIE} espèces à revoir aujourd'hui, avant de les oublier.</p>
+      <small>Elle s'ouvre au bout du tour, puis revient chaque jour.</small></div></div>`;
   }
-  const jouer = gardien
-    ? `<small><b>${bienSues(t)}</b> sur ${total} espèces bien sues</small>`
+  const jouer = gardien                                    // R333 : après Gardien, la sortie du jour se lance aussi d'ici
+    ? `<small><b>${bienSues(t)}</b> sur ${total} espèces bien sues</small>
+       <button class="couv-go" id="site-go-sortie" type="button">${(suivi.sortieDuJour && suivi.sortieDuJour[t] && suivi.sortieDuJour[t].faite) ? "Refaire la sortie du jour" : "La sortie du jour"} <span aria-hidden="true">▶</span></button>`
     : `<small>Halte ${Math.min((cours === null ? tour.haltes.length : cours + 1), tour.haltes.length)} sur ${tour.haltes.length}</small>
        ${cours !== null ? `<button class="couv-go" id="site-go" type="button">${tour.faites.some(Boolean) ? "Continuer le tour" : "Commencer le tour"} <span aria-hidden="true">▶</span></button>` : ""}`;
   zone.innerHTML = `<div class="lieu-page site-page">
@@ -3165,11 +3216,14 @@ function dessinerPageSite() {
           : `Vous avez parcouru les ${lieuxDe(t).length} lieux du territoire. Le site remarquable vous attend pour revoir ce que vous avez appris.`}</p></div>
       <div class="lieu-hero-jouer">${jouer}</div>
     </div>
-    <div class="lieu-sombre">${blocIdentiteLieu(r)}${gardien ? blocSortie + blocTour : blocTour + blocSortie}</div></div>`;   // étape R104
+    <div class="lieu-sombre">${blocTour}${blocSortie}${blocIdentiteLieu(r)}</div></div>`;   // étape R104 ; R333 : le tour, la sortie, puis la fiche du lieu
   document.getElementById("lieu-sortir").onclick = () => montrer("accueil");
   const sortirM = document.getElementById("lieu-sortir-m"); if (sortirM) sortirM.onclick = () => { montrer("accueil"); window.scrollTo(0, 0); };   // étape M8
   const go = document.getElementById("site-go"); if (go) go.onclick = () => lancerSite(t, cours);
   const so = document.getElementById("site-sortie"); if (so) so.onclick = () => lancerSite(t, "sortie");
+  const so2 = document.getElementById("site-go-sortie"); if (so2) so2.onclick = () => lancerSite(t, "sortie");   // R333
+  { const cur = zone.querySelector(".site-halte.cours"), rang = cur && cur.parentNode;   // R333 : au téléphone, la rangée montre la halte en cours
+    if (rang && rang.scrollWidth > rang.clientWidth) rang.scrollLeft = cur.offsetLeft - rang.offsetLeft; }
   const re = document.getElementById("site-refaire"); if (re) re.onclick = () => { creerTour(t); dessinerPageSite(); };
   zone.querySelectorAll("[data-halte]").forEach(b => b.onclick = () => lancerSite(t, Number(b.dataset.halte)));
 }

@@ -1551,6 +1551,8 @@ function choisirQuestionDefi() {
     const q = choisirQuestionClassique();
     if (q) return q;                                      // (sinon, rien à apprendre : on révise)
   }
+  // Étape R334 (54.10 A) : au site remarquable, les questions nouvelles de la halte à leur place (36_site_halte.js)
+  if (defi.site && typeof questionSpecialeHalte === "function") { const sq = questionSpecialeHalte(); if (sq) return sq; }
   defi.posees = defi.posees || [];
   // Étape R321 (retour du 26/11, n° 5 : la bouvière 4 fois sur 10, dont la même question deux fois, au site remarquable) :
   //   1. jamais deux fois la même question dans une partie : quand les cases déjà trouvées sont toutes posées, on ne revient
@@ -1567,13 +1569,23 @@ function choisirQuestionDefi() {
     const larges = casesDuDefi(defi.especes, defi.jeu, true).filter(c => permis(c) && pasEncore(c));
     if (larges.length) cases = larges;
   }
+  // R334 : au site, plus de « Quelle est cette espèce ? » sur la photo entière (la silhouette, le cri ou l'empreinte à la place)
+  if (defi.site && defi.site.plan) {
+    let sansPhoto = cases.filter(c => c.champ !== IDENTIFICATION);
+    if (!sansPhoto.some(pasEncore)) {                     // plus rien de trouvé à revoir : une autre case de ces espèces, jamais la photo entière
+      const larges = casesDuDefi(defi.especes, defi.jeu, true).filter(c => permis(c) && pasEncore(c) && c.champ !== IDENTIFICATION);
+      if (larges.length) sansPhoto = larges;
+    }
+    if (sansPhoto.length) cases = sansPhoto;
+  }
   if (defi.site) {                                        // étape 292 : au site remarquable, chaque espèce de la halte passe au moins une fois
     // Étape R326 (5A) : jamais plus de 2 questions sur la même espèce dans la partie (QUESTIONS_PAR_ESPECE_MAX)
-    const fois = n => defi.posees.filter(p => p.split("|")[0] === n).length;
+    const fois = n => defi.posees.filter(p => p.split("|")[0] === n).length + (typeof prevusHalte === "function" ? prevusHalte(n) : 0);   // R334 : + ses questions nouvelles encore à venir
     const sousPlafond = cases.filter(c => fois(c.espece.nom_courant) < QUESTIONS_PAR_ESPECE_MAX);
     if (sousPlafond.length) cases = sousPlafond;
     else {                                                // plus rien sous le plafond parmi les cases trouvées : les autres cases de ces espèces
-      const larges = casesDuDefi(defi.especes, defi.jeu, true).filter(c => permis(c) && pasEncore(c) && fois(c.espece.nom_courant) < QUESTIONS_PAR_ESPECE_MAX);
+      const larges = casesDuDefi(defi.especes, defi.jeu, true).filter(c => permis(c) && pasEncore(c) && fois(c.espece.nom_courant) < QUESTIONS_PAR_ESPECE_MAX
+        && !(defi.site.plan && c.champ === IDENTIFICATION));   // R334
       if (larges.length) cases = larges;
     }
     const vues = new Set(defi.posees.map(p => p.split("|")[0]));

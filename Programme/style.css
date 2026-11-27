@@ -2690,6 +2690,22 @@ h1, h2, h3, .gros-bouton b, .apropos h1, .pe-cote h1, .carte-rencontre h1 {
 .site-page .duo-autres { background: transparent; color: #E9C9A0; border: 1px solid rgba(233,201,160,.55); border-radius: 6px; padding: 6px 12px; text-decoration: none; font-weight: 600; }
 .site-page .duo-autres:hover { background: rgba(233,201,160,.12); }
 @media (max-width: 860px) { .lieu-credit { top: 64px; right: 16px; } }   /* étape 292 : le crédit ne passe plus sous « Sortir » */
+/* Étape R333 (54.09 A) : le tour et la sortie du jour, deux blocs nets, chacun sa phrase ; la sortie fermée avant Gardien */
+.site-tour, .site-bloc.sortie { background: #1F3529; border: 1px solid #3D5E4E; border-radius: 12px; padding: 18px 20px; }
+.site-phrase { margin: 0 0 6px; font-family: Literata, Georgia, serif; font-size: 19px; line-height: 1.35; color: #F3EEE3; }
+.site-phrase b { color: #E9C9A0; font-weight: 600; }
+.site-bloc.sortie.ferme { border-style: dashed; background: transparent; }
+.site-sortie-esp.retravailler small { color: #F0B98A; font-weight: 600; }
+.site-sortie-esp.revue small { color: #A9D6B2; }
+.site-sortie-esp.revoir small { color: #E9C9A0; }
+.lieu-hero-jouer #site-go-sortie { margin-top: 6px; }
+@media (max-width: 760px) {
+  .site-tour, .site-bloc.sortie { padding: 14px 14px; }
+  .site-phrase { font-size: 17px; }
+  /* les haltes en une rangée qui défile de côté : la sortie du jour reste juste sous le tour */
+  .site-tour .site-haltes { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 66%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+  .site-tour .site-halte { scroll-snap-align: start; }
+}
 
 /* étape 293 : une espèce sans photo libre — sa silhouette, avec « photo à venir » */
 .a-venir { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #EDE6D6; }
@@ -7135,3 +7151,21 @@ html.revelation-ouverte, html.revelation-ouverte body { overflow: hidden; }
 @media (max-width: 760px) {
   .exp-etape.avec-reprendre > .exp-reprendre { margin-left: 52px; min-height: 44px; }
 }
+
+/* Étape PQ4 (27/11) · Classer dans Leurs liens : le numéro de rang sur chaque espèce, puis le bon ordre en barres */
+.en-consigne-texte { font-size: 14px; color: var(--texte-doux); }
+.en-rep .en-rang { margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  border: 1.5px dashed var(--trait, #CFC5AE); font-weight: 700; font-size: 15px; color: #fff; }
+.en-rep.coche .en-rang { border: none; background: #1F3A2E; }
+.en-rep:disabled .en-rang { display: none; }
+.fl-choix.deux-par-ligne .en-rep .en-rang { position: absolute; top: 6px; right: 6px; margin: 0; }
+.en-echelle { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; align-items: center; gap: 6px 10px; margin: 10px 0 6px; font-size: 13.5px; }
+.en-barre { display: contents; }
+.en-barre-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.en-barre-trait { display: block; height: 9px; width: var(--w); border-radius: 5px; background: #3E7B55; }
+.en-barre b { font-weight: 600; white-space: nowrap; justify-self: end; }
+.en-echelle-texte { display: block; color: var(--texte-doux); }
+
+/* Étape R334 (54.10 A) : la silhouette d'une halte du site remarquable */
+.site-silhouette { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 180px; background: #F3EEE3; }
+.site-silhouette img { width: 70%; max-height: 220px; object-fit: contain; }

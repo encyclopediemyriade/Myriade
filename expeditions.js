@@ -1466,7 +1466,8 @@ const EXPEDITIONS = [
    "Belette",
    "Campagnol des champs",
    "Rat des moissons",
-   "Campagnol agreste"
+   "Campagnol agreste",
+   "Campagnol des Pyrénées"
   ],
   "rang": 2,
   "chapitre": "Moissac, entre Tarn et Garonne",
@@ -3008,8 +3009,7 @@ const EXPEDITIONS = [
    "Gammare",
    "Patelline des fleuves",
    "Moule zébrée",
-   "Méduse d'eau douce",
-   "Sangsue médicinale"
+   "Méduse d'eau douce"
   ],
   "chapitre": "Paris, ses bois et ses parcs",
   "carrefour": 0,
@@ -3021,9 +3021,8 @@ const EXPEDITIONS = [
   "ordre": 7,
   "titre": "Les mangeurs de graines",
   "milieu": "Campagne, haies et jardins",
-  "photo": "Images/bruant_ortolan.jpg",
+  "photo": "Images/chardonneret_elegant.jpg",
   "especes": [
-   "Bruant ortolan",
    "Linotte mélodieuse",
    "Bruant zizi",
    "Bruant jaune",
@@ -3033,7 +3032,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Paris, ses bois et ses parcs",
   "carrefour": 0,
-  "vedette": "Bruant ortolan"
+  "vedette": "Chardonneret élégant"
  },
  {
   "id": "Bassin parisien et Val de Loire|8",
@@ -3867,8 +3866,7 @@ const EXPEDITIONS = [
    "Tarier des prés",
    "Pipit farlouse",
    "Corneille noire",
-   "Héron garde-bœufs",
-   "Râle des genêts"
+   "Héron garde-bœufs"
   ],
   "chapitre": "Estuaire de la Seine",
   "carrefour": 8,
@@ -7989,9 +7987,8 @@ const EXPEDITIONS = [
   "ordre": 63,
   "titre": "Dans les roselières de Brière",
   "milieu": "Marais",
-  "photo": "Images/butor_etoile.jpg",
+  "photo": "Images/guifette_moustac.jpg",
   "especes": [
-   "Butor étoilé",
    "Guifette moustac",
    "Bruant des roseaux",
    "Cygne tuberculé",
@@ -8000,7 +7997,7 @@ const EXPEDITIONS = [
   ],
   "chapitre": "Marais de Brière",
   "carrefour": 1,
-  "vedette": "Butor étoilé"
+  "vedette": "Guifette moustac"
  },
  {
   "id": "Massif armoricain|64",
@@ -30586,20 +30583,6 @@ const LIENS = [
   "pieges": [
    "Le bernard-l'ermite porte les œufs du bigorneau sous son ventre.",
    "Le bigorneau débarrasse le bernard-l'ermite de ses petits parasites."
-  ]
- },
- {
-  "territoire": "Massif armoricain",
-  "lieu": "Marais de Brière",
-  "a": "Écrevisse de Louisiane",
-  "b": "Butor étoilé",
-  "nature_b": "espece",
-  "role": "Garde-manger",
-  "question": "Quel est leur lien ?",
-  "phrase": "Le butor étoilé mange les écrevisses de Louisiane.",
-  "pieges": [
-   "Le butor étoilé abrite ses œufs dans leurs terriers.",
-   "Les écrevisses nettoient les plumes du butor étoilé."
   ]
  },
  {

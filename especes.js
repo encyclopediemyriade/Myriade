@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V108.xlsx, especes_bassin_aquitain_V48.xlsx, especes_bassin_parisien_V54.xlsx, especes_corse_V63.xlsx, especes_grand_est_V47.xlsx, especes_jura_V52.xlsx, especes_massif_armoricain_V62.xlsx, especes_massif_central_V56.xlsx, especes_mediterranee_V64.xlsx, especes_pyrenees_V59.xlsx, especes_vosges_V42.xlsx
+// DONNÉES DU JEU — généré automatiquement depuis especes_alpes_V109.xlsx, especes_bassin_aquitain_V49.xlsx, especes_bassin_parisien_V54.xlsx, especes_corse_V63.xlsx, especes_grand_est_V47.xlsx, especes_jura_V52.xlsx, especes_massif_armoricain_V62.xlsx, especes_massif_central_V57.xlsx, especes_mediterranee_V64.xlsx, especes_pyrenees_V59.xlsx, especes_vosges_V42.xlsx
 // Territoires actifs : Alpes, Massif armoricain, Bassin parisien et Val de Loire, Méditerranée, Pyrénées, Bassin aquitain, Massif central, Corse, Jura, Vosges, Plaines de l'Est et val de Saône
 // Ne pas modifier à la main : on modifie l'Excel, puis on régénère ce fichier (Code\Outils\gen_especes.py).
 // Format : une liste [ ... ] d'espèces ; chaque espèce est un bloc { ... }
@@ -13140,7 +13140,7 @@ const ESPECES = [
     statut_conservation: "Quasi menacée",
     rarete_observation: "Rare",
     repartition_geographique: "Europe jusqu'au Kazakhstan, rare en France",
-    territoire: "Alpes ; Massif armoricain ; Bassin parisien et Val de Loire",
+    territoire: "Alpes ; Massif armoricain",
     nb_petits_min: 10,
     nb_petits_max: 15,
     mode_deplacement: "Nage",
@@ -14465,7 +14465,7 @@ const ESPECES = [
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Rare",
     repartition_geographique: "Europe et Asie de l'Ouest, hiverne au Sahel",
-    territoire: "Bassin aquitain ; Alpes ; Massif armoricain ; Bassin parisien et Val de Loire ; Méditerranée ; Pyrénées ; Massif central ; Corse ; Jura",
+    territoire: "Bassin aquitain ; Alpes ; Massif armoricain ; Méditerranée ; Pyrénées ; Massif central ; Corse ; Jura",
     incubation_jours: 12,
     nb_petits_min: 4,
     nb_petits_max: 6,
@@ -53942,7 +53942,7 @@ const ESPECES = [
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Rare",
     repartition_geographique: "Eurasie ; hiverne en Afrique et en Inde",
-    territoire: "Massif central ; Alpes ; Massif armoricain ; Bassin parisien et Val de Loire ; Méditerranée ; Pyrénées ; Bassin aquitain ; Jura ; Vosges ; Plaines de l'Est et val de Saône",
+    territoire: "Massif central ; Alpes ; Bassin parisien et Val de Loire ; Méditerranée ; Pyrénées ; Bassin aquitain ; Jura ; Vosges ; Plaines de l'Est et val de Saône",
     incubation_jours: 35,
     nb_petits_min: 3,
     nb_petits_max: 5,
@@ -54749,7 +54749,7 @@ const ESPECES = [
     statut_conservation: "Préoccupation mineure",
     rarete_observation: "Rare",
     repartition_geographique: "Nord de l'Europe et d'Asie, en France Limousin, Auvergne, Jura",
-    territoire: "Massif central ; Alpes ; Massif armoricain ; Bassin parisien et Val de Loire ; Méditerranée ; Bassin aquitain ; Jura ; Vosges ; Plaines de l'Est et val de Saône",
+    territoire: "Massif central ; Alpes ; Massif armoricain ; Méditerranée ; Bassin aquitain ; Jura ; Vosges",
     incubation_jours: 16,
     nb_petits_min: 3,
     nb_petits_max: 9,

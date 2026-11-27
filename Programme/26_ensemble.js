@@ -1288,6 +1288,313 @@ function questionEtSi(x) {
            plusieurs: bonnes.length > 1, explication, especes: l.map(e => e.nom_courant) };   // R271 (n° 18 b)
 }
 
+// ==================================================================
+// Étape PQ2 (27/11/2026, chantier « Plus de questions et plus variées », choix d'Aubin 1B)
+//   Critère : « Après ses Rencontres, chaque expédition pose au moins 5 questions, sous 3 formes différentes au moins.
+//   Chacune apprend une chose vraie sur ces espèces, et aucune ne se devine. »
+//   Quand Leurs liens a moins de 5 questions, on ajoute des questions qui comparent ses espèces sur un chiffre de leur fiche
+//   (ceux qu'Approfondir demande) : « Laquelle de ces espèces peut vivre le plus longtemps ? », 3 ou 4 espèces en photo,
+//   une seule bonne réponse. Règles :
+//   • ce qu'il manque pour arriver à 5, et 2 au plus ; jamais deux sur le même chiffre, ni deux sur la taille du corps
+//     (longueur, poids, envergure disent presque la même chose) ; rien pour une expédition qui a déjà 5 questions ;
+//   • les espèces montrées sont du même grand groupe (oiseaux, mammifères…) : entre un insecte et un oiseau, la réponse se
+//     devine ; la taille seulement pour la même mesure (mesureTaille, comme le Duel : comparables) ; les petits ou les œufs
+//     seulement chez les oiseaux et les mammifères (ailleurs, le chiffre compte des milliers d'œufs : pas comparable) ;
+//   • la bonne réponse l'emporte nettement sur CHACUNE des autres (ECART_NET_CHIFFRES, plus que l'écart minimal du Duel) ;
+//   • seulement des espèces qui ont le chiffre (jamais une case rose), une photo et la question dans leur fiche ;
+//   • d'abord les chiffres qui ne se devinent pas à la taille de l'animal (longévité, couvaison, gestation, petits…),
+//     et ceux où la plus grande espèce montrée n'est pas la bonne réponse ; la taille, le poids et l'envergure en dernier ;
+//   • seulement « le plus » (jamais « le moins ») ;
+//   • l'explication donne le chiffre de chaque espèce montrée, et dit le lieu quand l'espèce gagnante y est observée plus
+//     qu'ailleurs dans le territoire (« Ici plus qu'ailleurs », lieux_identite.js) ;
+//   • rangées après les autres types, avant « Et si… ? » (toujours la dernière) ; varierEnsemble sépare deux questions de
+//     chiffres (type « chiffres ») ; tirage fixe par expédition (même graine que le reste) ;
+//   • une bonne réponse ne remplit aucune case d'Approfondir (Approfondir ne change pas) ;
+//   • rien ne recule : etape2AvantPQ2 (plus bas) note, une fois, les expéditions dont l'étape était finie faute de questions.
+// ==================================================================
+const PQ2_EN_LIGNE = true;               // false = Leurs liens d'avant PQ2
+let PQ2 = PQ2_EN_LIGNE;                  // (mis à false un instant pour compter les questions d'avant : etape2AvantPQ2)
+const CHIFFRES_VISE = 5, CHIFFRES_MAX = 2, ECART_NET_CHIFFRES = 1.5;
+// Dans l'ordre de préférence : d'abord ce qui ne se devine pas à la taille de l'animal
+const CHIFFRES_PQ2 = ["longevite_max_annees", "incubation_jours", "gestation_jours", "nb_petits_max", "vitesse_max_kmh", "altitude_max_m",
+  "poids_max_kg", "envergure_max_cm", "taille_max_cm"];
+const CHIFFRES_CORPS_PQ2 = ["poids_max_kg", "envergure_max_cm", "taille_max_cm"];
+const QUESTIONS_TAILLE_PQ2 = { oiseau: "Laquelle de ces espèces est la plus longue, du bec à la queue ?", corps: "Laquelle de ces espèces a le corps le plus long, sans la queue ?",
+  totale: "Laquelle de ces espèces est la plus longue ?", insecte: "Laquelle de ces espèces a le corps le plus long ?",
+  coquille: "Laquelle de ces espèces a la plus grande coquille ?", garrot: "Laquelle de ces espèces est la plus haute au garrot ?" };
+const QUESTIONS_CHIFFRES_PQ2 = {
+  longevite_max_annees: "Laquelle de ces espèces peut vivre le plus longtemps ?",
+  incubation_jours: "Chez laquelle de ces espèces les œufs mettent-ils le plus de temps à éclore ?",
+  gestation_jours: "Chez laquelle de ces espèces la gestation est-elle la plus longue ?",
+  vitesse_max_kmh: "Laquelle de ces espèces peut aller le plus vite ?",
+  altitude_max_m: "Laquelle de ces espèces monte le plus haut en montagne ?",
+  poids_max_kg: "Laquelle de ces espèces est la plus lourde ?",
+  envergure_max_cm: "Laquelle de ces espèces a la plus grande envergure ?" };
+const MOTS_CHIFFRES_PQ2 = { longevite_max_annees: "Longévité", incubation_jours: "Couvaison des œufs", gestation_jours: "Gestation",
+  vitesse_max_kmh: "Vitesse", altitude_max_m: "Altitude", poids_max_kg: "Poids", envergure_max_cm: "Envergure", taille_max_cm: "Taille" };
+function valeurChiffrePQ2(e, champ) {
+  if (!jouableEnJeu(e) || !confirme(e, champ)) return null;
+  const q = QUESTIONS.find(z => z.champ === champ);
+  if (!q || !questionsPossibles(e).includes(q)) return null;
+  const v = Number(valeurDe(e, q));
+  return v > 0 && isFinite(v) ? v : null;
+}
+// Le groupe dans lequel deux espèces se comparent (null : ce chiffre ne se compare pas pour elle)
+function groupeChiffrePQ2(champ, e) {
+  if (champ === "nb_petits_max" && !["Oiseaux", "Mammiferes"].includes(e.onglet)) return null;
+  if (champ === "gestation_jours" && e.onglet !== "Mammiferes") return null;
+  return e.onglet + (champ === "taille_max_cm" ? "|" + (MESURE_PAR_ESPECE[e.nom_courant] || MESURE_PAR_FAMILLE[e.onglet] || "totale") : "");
+}
+function questionChiffrePQ2(champ, e) {
+  if (champ === "taille_max_cm") return QUESTIONS_TAILLE_PQ2[MESURE_PAR_ESPECE[e.nom_courant] || MESURE_PAR_FAMILLE[e.onglet] || "totale"];
+  if (champ === "nb_petits_max") return e.onglet === "Oiseaux" ? "Laquelle de ces espèces peut pondre le plus d'œufs par couvée ?" : "Laquelle de ces espèces peut avoir le plus de petits par portée ?";
+  return QUESTIONS_CHIFFRES_PQ2[champ];
+}
+// Le chiffre écrit comme dans la fiche ; moins d'un an : en mois
+function chiffreDitPQ2(champ, e, v) {
+  const q = QUESTIONS.find(z => z.champ === champ);
+  if (champ === "longevite_max_annees" && v < 1) return `${Math.max(1, Math.round(v * 12))} mois`;
+  // PQ4 : une longévité qui n'est pas un nombre rond d'années (« 9,33 ans ») se dit « environ 9 ans » (moins de 2 ans : en mois)
+  if (champ === "longevite_max_annees" && Math.abs(v - Math.round(v)) > 0.01) return v < 2 ? `environ ${Math.round(v * 12)} mois` : `environ ${nombre(Math.round(v))} ans`;
+  if (champ === "nb_petits_max") return chiffreDuel(q, e, v);
+  if (champ === "incubation_jours" || champ === "gestation_jours") return `environ ${nombre(Math.round(v))} jours`;
+  return q.affichage(v);
+}
+function explicationChiffresPQ2(x, champ, l, vals) {
+  const mot = champ === "nb_petits_max" ? (l[0].onglet === "Oiseaux" ? "Œufs par couvée" : "Petits par portée") : MOTS_CHIFFRES_PQ2[champ];
+  let t = `${mot} : ${l.map(e => `${leNom(e)}, ${chiffreDitPQ2(champ, e, vals.get(e))}`).join(" ; ")}.`;
+  // le lieu : seulement quand l'espèce gagnante y est vraiment observée plus qu'ailleurs (GBIF, « Ici plus qu'ailleurs »)
+  const id = typeof LIEUX_IDENTITE !== "undefined" ? LIEUX_IDENTITE[`${x.territoire}|${x.chapitre}`] : null;
+  if (id && (id.signature || []).some(s => s.nom === l[0].nom_courant))
+    t += ` ${majuscule(leNom(l[0]))} est observé${feminin(l[0]) ? "e" : ""} ici plus qu'autour des autres lieux du territoire.`;
+  return t;
+}
+// Ce qui se devinerait sans rien savoir de ces espèces :
+//   • la bonne réponse est de loin la plus grosse (2 fois les autres au moins, au poids, sinon à la taille) et l'on demande
+//     qui vit le plus longtemps, couve le plus longtemps… (le rorqual parmi les dauphins, le geai parmi les pouillots) ;
+//   • pour la taille, le poids ou l'envergure : une espèce 3 fois plus grande que toutes les autres (le héron parmi les mésanges) ;
+//   • pour les petits ou les œufs : moins de 2 d'écart (« 1 à 2 petits » contre « 1 petit » n'apprend rien).
+const ECART_CORPS_EVIDENT = 3, CARRURE_EVIDENTE = 2;
+function carrurePQ2(e) { return Number(e.poids_max_kg) > 0 ? Number(e.poids_max_kg) : (Number(e.taille_max_cm) || 0) / 1000; }
+function chiffresNePasDeviner(champ, l, vals) {
+  const w = l[0], autres = l.slice(1);
+  if (CHIFFRES_CORPS_PQ2.includes(champ)) return autres.some(e => vals.get(w) < ECART_CORPS_EVIDENT * vals.get(e));
+  if (champ === "nb_petits_max" && autres.some(e => vals.get(w) - vals.get(e) < 2)) return false;
+  const cw = carrurePQ2(w);
+  if (cw > 0 && autres.every(e => carrurePQ2(e) > 0 && cw >= CARRURE_EVIDENTE * carrurePQ2(e))) return false;
+  return true;
+}
+// Toutes les comparaisons possibles d'une expédition, des plus sûres aux moins sûres
+function candidatsChiffresPQ2(x) {
+  const c = [];
+  for (const champ of CHIFFRES_PQ2) {
+    const vals = new Map(), groupes = new Map();
+    for (const e of x.liste) {
+      const v = valeurChiffrePQ2(e, champ), g = v === null ? null : groupeChiffrePQ2(champ, e);
+      if (g === null) continue;
+      vals.set(e, v);
+      if (!groupes.has(g)) groupes.set(g, []);
+      groupes.get(g).push(e);
+    }
+    for (const g of groupes.values()) {
+      if (g.length < 3) continue;
+      const tries = g.slice().sort((a, b) => vals.get(b) - vals.get(a));
+      for (let i = 0; i < Math.min(2, tries.length); i++) {          // la plus forte, ou la deuxième (la première écartée)
+        const w = tries[i], loin = tries.slice(i + 1).filter(e => vals.get(w) >= ECART_NET_CHIFFRES * vals.get(e));
+        if (loin.length < 2) continue;
+        const autres = melanger(loin.slice()).slice(0, 3), l = [w, ...autres.sort((a, b) => vals.get(b) - vals.get(a))];
+        if (!chiffresNePasDeviner(champ, l, vals)) continue;
+        // la plus grande des espèces montrées (au poids, sinon à la taille) n'est pas la bonne réponse : ça ne se devine pas à la carrure
+        const surprise = !CHIFFRES_CORPS_PQ2.includes(champ) && l.some(e => e !== w && carrurePQ2(e) > carrurePQ2(w));
+        c.push({ champ, l, vals, rang: CHIFFRES_PQ2.indexOf(champ) - (surprise ? 20 : 0) + (i ? 0.5 : 0) });
+      }
+    }
+  }
+  return c.sort((a, b) => a.rang - b.rang);
+}
+function questionsChiffres(x, combien, deja) {
+  if (!R298 || !PQ2 || combien <= 0) return [];
+  const pris = [], gagnantes = new Set((deja || []).filter(z => !z.plusieurs).map(z => (z.choix.find(c => c.bonne) || {}).espece));
+  const classes = (deja || []).filter(z => z.type === "classer").map(z => z.champ);   // PQ4 : jamais le chiffre d'un Classer de l'étape
+  for (const k of candidatsChiffresPQ2(x)) {
+    if (pris.length >= combien) break;
+    if (classes.some(c => c === k.champ || (CHIFFRES_CORPS_PQ2.includes(c) && CHIFFRES_CORPS_PQ2.includes(k.champ)))) continue;
+    if (pris.some(p => p.champ === k.champ || (CHIFFRES_CORPS_PQ2.includes(p.champ) && CHIFFRES_CORPS_PQ2.includes(k.champ)))) continue;
+    if (pris.some(p => p.l[0] === k.l[0]) || gagnantes.has(k.l[0].nom_courant)) continue;   // jamais deux fois la même bonne réponse (ni celle d'une autre question)
+    pris.push(k);
+  }
+  return pris.map((k, i) => ({ type: "chiffres", cle: "chiffres" + (i + 1), champ: k.champ, question: questionChiffrePQ2(k.champ, k.l[0]), montrees: [],
+    choix: melanger(k.l.map(e => choixEspece(e, e === k.l[0]))), plusieurs: false, explication: explicationChiffresPQ2(x, k.champ, k.l, k.vals),
+    especes: k.l.map(e => e.nom_courant), chiffres: k.l.map(e => k.vals.get(e)) }));
+}
+
+// ==================================================================
+// Étape PQ4 (27/11/2026, chantier « Plus de questions et plus variées », choix 3 d'Aubin : ses préférences,
+//   Classer A · A · A et Associer A · B · A, page de maquettes PQ3) : deux formes nouvelles dans Leurs liens.
+//   • Classer : 3 ou 4 espèces de l'expédition à ranger sur un chiffre de leur fiche (longévité, taille même mesure, poids),
+//     en les touchant dans l'ordre. Même grand groupe ; chaque espèce l'emporte au moins 1,5 fois sur la suivante
+//     (ECART_CLASSER) ; jamais une case rose ; rien de devinable (taille, poids : jamais 3 fois la suivante ; longévité :
+//     pas l'ordre des carrures quand il saute aux yeux). Une seule inversion entre deux voisines = « Presque » : réussie.
+//     Après la réponse : le bon ordre, avec une barre et le chiffre de chacune.
+//   • Associer : 3 espèces à relier à 3 réponses (où elle fait son nid ; ce qu'elle mange), en touchant une espèce puis
+//     sa réponse ; on valide les trois paires ensemble ; réussie = les trois justes. Chaque réponse n'est vraie que pour
+//     une des trois : nid net (comme « Et si… ? ») et jamais un nid trop proche, ni un nid « aussi » noté pour une autre ;
+//     nourriture = le groupe de l'aliment cité en premier dans la fiche, qu'aucune des deux autres ne mange (groupes et
+//     liste d'aliments, données relues : compareeAdmise) ; rien ne se lit dans le nom. Jamais « son petit ».
+//   • Où : sous 5 questions, Classer passe avant les comparaisons de chiffres de PQ2 (2 ajouts au plus en tout, jamais
+//     sur le même chiffre) ; Associer « ce qu'elle mange » prend la place d'une question comparée sur la nourriture quand
+//     l'étape en a une ; Associer « nid » n'est posé que si l'étape n'a pas déjà une question de nid (« Et si… ? » garde
+//     sa phrase de protection) et seulement sous 5 questions.
+//   • Une réussite ne remplit aucune case d'Approfondir (comme PQ2). Rien ne recule : sous le même interrupteur que PQ2
+//     (etape2AvantPQ2 compte les questions d'avant PQ2 et PQ4).
+// ==================================================================
+const PQ4_EN_LIGNE = true;                   // false = Leurs liens sans Classer ni Associer
+let PQ4 = PQ4_EN_LIGNE;
+// Associer : écrit mais pas encore posé (avec des règles sûres, il ne trouve que 6 à 11 expéditions par sujet ; à trancher par Aubin)
+const ASSOCIER_EN_LIGNE = false;
+const ECART_CLASSER = 1.5;
+const CHAMPS_CLASSER = ["longevite_max_annees", "taille_max_cm", "poids_max_kg"];
+// [la question, le début de la consigne]
+const QUESTIONS_CLASSER = {
+  longevite_max_annees: ["Rangez ces espèces de celle qui peut vivre le plus longtemps à celle qui vit le moins longtemps.", "celle qui vit le plus longtemps"],
+  poids_max_kg: ["Rangez ces espèces de la plus lourde à la plus légère.", "la plus lourde"],
+  oiseau: ["Rangez ces espèces de la plus longue à la plus courte, du bec à la queue.", "la plus longue"],
+  corps: ["Rangez ces espèces du corps le plus long au plus court, sans la queue.", "celle au corps le plus long"],
+  totale: ["Rangez ces espèces de la plus longue à la plus courte.", "la plus longue"],
+  insecte: ["Rangez ces espèces du corps le plus long au plus court.", "celle au corps le plus long"],
+  coquille: ["Rangez ces espèces de la plus grande coquille à la plus petite.", "celle à la plus grande coquille"],
+  garrot: ["Rangez ces espèces de la plus haute au garrot à la plus basse.", "la plus haute"] };
+function texteClasser(champ, e) {
+  return QUESTIONS_CLASSER[champ === "taille_max_cm" ? (MESURE_PAR_ESPECE[e.nom_courant] || MESURE_PAR_FAMILLE[e.onglet] || "totale") : champ];
+}
+// La meilleure suite d'un groupe : 4 espèces si possible (sinon 3), chacune au moins ECART_CLASSER fois la suivante
+function suiteClasser(champ, tries, vals) {
+  const corps = CHIFFRES_CORPS_PQ2.includes(champ);
+  let mieux = null;
+  for (let i = 0; i < tries.length; i++) {
+    const s = [tries[i]];
+    for (const e of tries.slice(i + 1)) {
+      if (s.length >= 4) break;
+      const r = vals.get(s[s.length - 1]) / vals.get(e);
+      if (r >= ECART_CLASSER && (!corps || r < ECART_CORPS_EVIDENT)) s.push(e);
+      else if (corps && r >= ECART_CORPS_EVIDENT) break;     // trop loin : la suite se devinerait
+    }
+    if (s.length >= 3 && (!mieux || s.length > mieux.length)) mieux = s;
+  }
+  return mieux;
+}
+function candidatsClasser(x) {
+  const c = [];
+  for (const champ of CHAMPS_CLASSER) {
+    const vals = new Map(), groupes = new Map();
+    for (const e of x.liste) {
+      const v = valeurChiffrePQ2(e, champ), g = v === null ? null : groupeChiffrePQ2(champ, e);
+      if (g === null) continue;
+      vals.set(e, v);
+      if (!groupes.has(g)) groupes.set(g, []);
+      groupes.get(g).push(e);
+    }
+    for (const g of groupes.values()) {
+      if (g.length < 3) continue;
+      const l = suiteClasser(champ, g.slice().sort((a, b) => vals.get(b) - vals.get(a)), vals);
+      if (!l) continue;
+      // longévité : l'ordre des carrures, quand chaque espèce fait au moins 2 fois la suivante, dirait la réponse
+      const carrures = l.map(carrurePQ2);
+      const memeOrdre = carrures.every((v, i) => i === 0 || (v > 0 && carrures[i - 1] >= CARRURE_EVIDENTE * v));
+      if (!CHIFFRES_CORPS_PQ2.includes(champ) && memeOrdre) continue;
+      const surprise = !CHIFFRES_CORPS_PQ2.includes(champ) && carrures.some((v, i) => i > 0 && v > carrures[i - 1]);
+      c.push({ champ, l, vals, rang: CHAMPS_CLASSER.indexOf(champ) - (surprise ? 10 : 0) - (l.length === 4 ? 0.5 : 0) });
+    }
+  }
+  return c.sort((a, b) => a.rang - b.rang);
+}
+function questionClasser(x, k) {
+  const [question, debut] = texteClasser(k.champ, k.l[0]);
+  return { type: "classer", cle: "classer", champ: k.champ, question, consigne: `Touchez-les dans l'ordre, en commençant par ${debut}.`, montrees: [],
+    // (choix.bonne = la première du bon ordre : seulement pour les contrôles communs ; l'écran juge l'ordre entier)
+    choix: melanger(k.l.map((e, i) => ({ ...choixEspece(e, i === 0), rang: i }))), plusieurs: true,
+    explication: explicationChiffresPQ2(x, k.champ, k.l, k.vals), especes: k.l.map(e => e.nom_courant),
+    // (à l'écran, les chiffres sont dans les barres : seule la phrase du lieu, s'il y en a une, est écrite dessous)
+    lieu: explicationChiffresPQ2(x, k.champ, k.l, k.vals).split(/(?<=\.) (?=[A-ZÀ-Ý])/).slice(1).join(" "),
+    chiffres: k.l.map(e => k.vals.get(e)), chiffresDits: k.l.map(e => chiffreDitPQ2(k.champ, e, k.vals.get(e))) };
+}
+
+// ---- Associer ----
+// Deux lieux de nid trop proches pour être donnés comme réponses de deux espèces différentes : l'une serait à moitié vraie
+//   pour l'autre (un trou d'arbre est « dans un arbre » ; un martinet niche dans les bâtiments comme dans les falaises…)
+const NIDS_PROCHES = [["Cavité d'arbre", "Arbre ou buisson"], ["Cavité d'arbre", "Bâtiment"], ["Roselière ou végétation dense", "Au sol"],
+  ["Roselière ou végétation dense", "Sur l'eau (nid flottant)"], ["Roselière ou végétation dense", "Arbre ou buisson"], ["Falaise ou paroi rocheuse", "Bâtiment"]];
+function nidsTropProches(a, b) {
+  return a === b || NIDS_PROCHES.some(([u, v]) => (u === a && v === b) || (u === b && v === a));
+}
+// Les noms qui souffleraient la réponse (en plus de souffleParLeNom, 4 lettres en commun)
+const SOUFFLE_NID = { "Bâtiment": /fenetre|maison|chemine|clocher|eglise|grange|toit/, "Roselière ou végétation dense": /rosea|roseli|rousserol|phragmite/,
+  "Falaise ou paroi rocheuse": /roche|rocher|falaise|rupest/, "Sur l'eau (nid flottant)": /\beau\b|lac|etang/, "Terrier": /terrier/,
+  "Cavité d'arbre": /\bpic\b|picchio|sittelle/ };
+const SOUFFLE_REPAS = { "Insectes": /mouch|guep|apivor|insect|fourmi|cigal|chenil|criquet/, "Poissons": /pecheu|piscivor|poisson/,
+  "Fruits et graines": /gros-bec|grosbec|casse-noix|cassenoix|noisett|graine|bec-croise|frugivor/, "Petits mammifères": /souris|mulot|campagnol|\brat\b|lapin/,
+  "Crustacés": /crabe|crevett/, "Oiseaux et œufs": /oiseau/, "Charognes et os": /charogn/, "Nectar, pollen et sève": /butin|nectar/ };
+function souffleAssocier(e, texte, re) { return souffleParLeNom(e, texte) || (!!re && re.test(normal(e.nom_courant))); }
+const NIDS_ASSOCIER = { "Cavité d'arbre": "Dans un arbre creux", "Bâtiment": "Dans ou sur un bâtiment", "Arbre ou buisson": "Dans un arbre ou un buisson",
+  "Roselière ou végétation dense": "Dans les roseaux ou les hautes herbes", "Au sol": "Au sol", "Falaise ou paroi rocheuse": "Dans une falaise",
+  "Terrier": "Dans un terrier", "Sur l'eau (nid flottant)": "Sur l'eau, nid flottant" };
+function nidsAssocier(x) {
+  const c = x.chapitre && chapitreParNom(x.territoire, x.chapitre);
+  const logees = new Set((c ? liensElementsDuLieu(x.territoire, c.nom) : []).filter(k => k.role === "Sa maison").map(k => k.a));
+  return x.liste.filter(e => jouableEnJeu(e) && nidNet(e) && !logees.has(e.nom_courant)).map(e => {
+    const v = nidNet(e);
+    return souffleAssocier(e, NIDS_ASSOCIER[v], SOUFFLE_NID[v]) ? null : { e, v, aussi: nidsAussi(e) };
+  }).filter(Boolean);
+}
+function repasAssocier(x) {
+  return x.liste.filter(e => jouableEnJeu(e) && groupesComparables(e) && confirme(e, "proies_items")).map(e => {
+    const items = listeGroupes(e.proies_items).filter(i => i && i !== "NA"), v = items.length ? groupeAliment(items[0]) : null;
+    if (!v || !GROUPES_PARLANTS[v] || !groupesComparables(e).includes(v) || !compareeAdmise(e, "mange", v)) return null;
+    if (souffleAssocier(e, GROUPES_PARLANTS[v], SOUFFLE_REPAS[v])) return null;
+    return { e, v, mange: new Set([...groupesComparables(e), ...items.map(groupeAliment).filter(Boolean)]) };
+  }).filter(Boolean);
+}
+// La réponse de a n'est vraie que pour a, parmi les trois
+function seuleNid(a, autres) { return autres.every(b => !nidsTropProches(a.v, b.v) && !b.aussi.some(w => w === a.v || nidsTropProches(a.v, w))); }
+function seuleRepas(a, autres) { return autres.every(b => b.v !== a.v && !b.mange.has(a.v) && compareeAdmise(b.e, "mange", a.v)); }
+function trioAssocier(l, seule) {
+  const trios = [];
+  for (let i = 0; i < l.length; i++) for (let j = i + 1; j < l.length; j++) for (let k = j + 1; k < l.length; k++) {
+    const t = [l[i], l[j], l[k]];
+    if (t.every((a, n) => seule(a, t.filter((b, m) => m !== n)))) trios.push(t);
+  }
+  return trios.length ? trios[Math.floor(Math.random() * trios.length)] : null;
+}
+function questionAssocier(x, sujet) {
+  const t = sujet === "nid" ? trioAssocier(nidsAssocier(x), seuleNid) : trioAssocier(repasAssocier(x), seuleRepas);
+  if (!t) return null;
+  const reponse = a => sujet === "nid" ? NIDS_ASSOCIER[a.v] : majuscule(GROUPES_PARLANTS[a.v]);
+  const phrase = a => sujet === "nid" ? `${LeNom(a.e)} niche ${NIDS_DITS[a.v]}.` : `${LeNom(a.e)} mange ${GROUPES_PARLANTS[a.v]}.`;
+  return { type: "associer", cle: "associer", sujet,
+    question: sujet === "nid" ? "Où chacune de ces espèces fait-elle son nid ?" : "Que mange chacune de ces espèces ?",
+    consigne: sujet === "nid" ? "Touchez une espèce, puis l'endroit de son nid." : "Touchez une espèce, puis ce qu'elle mange. Chaque réponse ne convient qu'à une seule.",
+    montrees: [], plusieurs: true,
+    // (choix : les espèces, pour les contrôles communs ; les paires justes sont dans « paires »)
+    choix: t.map((a, i) => choixEspece(a.e, i === 0)),
+    paires: t.map(a => ({ espece: a.e.nom_courant, reponse: reponse(a), phrase: phrase(a) })),
+    reponses: melanger(t.map(reponse)),
+    explication: t.map(phrase).join(" ") + (sujet === "repas" ? " Aucune des trois ne mange ce que mangent les deux autres." : ""),
+    especes: t.map(a => a.e.nom_courant) };
+}
+// Les ajouts sous 5 questions : Classer d'abord, puis Associer (nid, puis nourriture), puis les comparaisons de chiffres
+function questionsEnPlusPQ4(x, combien, deja) {
+  if (!PQ4 || combien <= 0) return [];
+  const res = [];
+  const cl = candidatsClasser(x)[0];
+  if (cl) res.push(questionClasser(x, cl));
+  if (ASSOCIER_EN_LIGNE && res.length < combien && !deja.some(z => z.type === "associer")) {
+    const nid = !deja.some(z => z.type === "etsi" || (z.type === "place" && z.forme === "element")) ? questionAssocier(x, "nid") : null;
+    const repas = nid ? null : (!deja.some(z => z.type === "comparee" && z.sorte === "mange") ? questionAssocier(x, "repas") : null);
+    if (nid || repas) res.push(nid || repas);
+  }
+  return res.slice(0, combien);
+}
+
 // ---- L'assemblage ----
 // Toutes les questions possibles, dans l'ordre des types ; 6 au plus ; « Et si… ? » toujours en dernier.
 // Jamais deux questions de suite à une seule bonne réponse qui porte sur la même espèce.
@@ -1325,15 +1632,28 @@ function questionsEnsemble(x) {
   const sansDoublonDeSuite = l => { for (let i = 1; i < l.length; i++) if (uneBonne(l[i]) && uneBonne(l[i]) === uneBonne(l[i - 1])) { l.splice(l[i].cle === "etsi" ? i - 1 : i, 1); i--; } return l; };
   // R299 : d'abord remettre dans l'ordre (varierEnsemble sépare déjà deux questions sur la même espèce), ensuite seulement
   //   retirer ce qui reste collé (avant, on retirait dans l'ordre des types : des questions perdues pour rien)
-  if (leOn()) return sansDoublonDeSuite(varierEnsemble(q));
-  return varierEnsemble(sansDoublonDeSuite(q));
+  const ranger = l => leOn() ? sansDoublonDeSuite(varierEnsemble(l)) : varierEnsemble(sansDoublonDeSuite(l));
+  let fin = ranger(q);
+  // Étape PQ4 : Associer « ce qu'elle mange » prend la place d'une question comparée sur la nourriture
+  if (R298 && PQ2 && PQ4 && ASSOCIER_EN_LIGNE) {
+    const i = fin.findIndex(z => z.type === "comparee" && z.sorte === "mange"), a = i >= 0 ? questionAssocier(x, "repas") : null;
+    if (a) { fin[i] = a; fin = ranger(fin); }
+  }
+  // Étape PQ2 (1B) : sous 5 questions, des comparaisons de chiffres, avant « Et si… ? » (PQ4 : Classer, puis Associer, d'abord)
+  if (R298 && PQ2 && fin.length < CHIFFRES_VISE) {
+    const n = Math.min(CHIFFRES_MAX, CHIFFRES_VISE - fin.length), pq4 = questionsEnPlusPQ4(x, n, fin);
+    const plus = [...pq4, ...questionsChiffres(x, n - pq4.length, [...fin, ...pq4])];
+    if (plus.length) { const i = fin.length && fin[fin.length - 1].cle === "etsi" ? fin.length - 1 : fin.length; fin.splice(i, 0, ...plus); fin = ranger(fin); }
+  }
+  return fin;
 }
 // Étape R264 (40.15, choix 8B : « même règle aux étapes 1 et 2 ») : jamais deux questions du même genre à la suite. Les deux
 //   questions de liens (« Laquelle est mangée par… ? ») et celle du chasseur commun parlent toutes de « qui mange qui » :
 //   elles sont séparées par une autre question quand il y en a une (l'ordre des 8 types est gardé pour le reste ;
 //   « Et si… ? » reste la dernière).
 // R298 : une question de voisin sur « qui mange qui » est du même genre ; les autres voisins sont un genre à part
-function genreEnsemble(z) { return z.type === "liens" || z.type === "chasseur" || (z.type === "voisins" && /mange/.test(z.sens || "")) ? "manger" : z.type; }
+// PQ4 : Classer est du même genre que les comparaisons de chiffres
+function genreEnsemble(z) { return z.type === "classer" ? "chiffres" : z.type === "liens" || z.type === "chasseur" || (z.type === "voisins" && /mange/.test(z.sens || "")) ? "manger" : z.type; }
 function varierEnsemble(q) {
   const fin = q.length && q[q.length - 1].cle === "etsi" ? [q[q.length - 1]] : [];
   const reste = q.slice(0, q.length - fin.length), suite = [];
@@ -1435,10 +1755,32 @@ function etape2AvantR298() {
   sauvegarder();
 }
 document.addEventListener("DOMContentLoaded", () => { try { etape2AvantR298(); } catch (err) { /* rien */ } });
+// Étape PQ2 · rien ne recule : une fois, les expéditions dont l'étape 2 était finie faute de questions avant PQ2 (Rencontres
+//   finies, moins de 3 questions sans les comparaisons de chiffres) sont notées dans suivi.etape2Sans : elles restent finies.
+//   Les autres (Rencontres pas encore finies) auront l'étape complète, avec son écran d'entrée dès 3 questions.
+function etape2AvantPQ2() {
+  if (!suivi || suivi.etape2PQ2 || !PQ2 || !R298 || document.readyState === "loading") return;
+  etape2AvantR298();
+  if (!suivi.etape2R298) return;
+  suivi.etape2PQ2 = true;
+  try {
+    for (const y of EXPEDITIONS) {
+      const x = expeditionParId(y.id);
+      if (!x || ensembleFait(x) || etape2AvantE2().has(x.id) || etape2Sans(x) || !etapeFinie(x, 1)) continue;
+      PQ2 = false;
+      let n = 0; try { n = questionsEnsembleFixes(x).length; } catch (err) { n = 0; }
+      PQ2 = PQ2_EN_LIGNE;
+      if (n < ENSEMBLE_MIN_ETAPE) { suivi.etape2Sans = suivi.etape2Sans || {}; suivi.etape2Sans[x.id] = true; }
+    }
+  } finally { PQ2 = PQ2_EN_LIGNE; memoLieu.clear(); memoEnsemble.clear(); }
+  sauvegarder();
+}
+document.addEventListener("DOMContentLoaded", () => { try { etape2AvantPQ2(); } catch (err) { /* rien */ } });
 function minEtape2() { return R298 ? ENSEMBLE_MIN_ETAPE : 2; }
 // L'étape 2 est-elle finie ? (appelé par etapeFinie, 17_expeditions.js, une fois l'étape 1 finie)
 function etape2EnsembleFinie(x) {
   etape2AvantR298();
+  etape2AvantPQ2();   // PQ2
   if (ensembleFait(x) || etape2AvantE2().has(x.id) || etape2Sans(x)) return true;
   const sans = questionsEnsembleExp(x).length < minEtape2();
   if (sans && R298 && suivi && suivi.etape2R298) noterEtape2Sans(x.id);      // R298 : elle le reste (voir plus haut)
@@ -1553,7 +1895,7 @@ function dessinerEnsemble() {
     ${montrees.length ? `<div class="en-montrees${montrees.length > 2 ? " nombreuses" : ""}">${montrees.join("")}</div>` : ""}
     ${blocVoisin(q)}${blocElement(q)}
     <h3 class="fl-question">${echapper(q.question)}</h3>
-    ${q.plusieurs ? `<p class="en-consigne"><span class="etiq-plusieurs">Plusieurs réponses</span></p>` : ""}
+    ${q.consigne ? `<p class="en-consigne en-consigne-texte">${echapper(q.consigne)}</p>` : q.plusieurs ? `<p class="en-consigne"><span class="etiq-plusieurs">Plusieurs réponses</span></p>` : ""}
     <div class="fl-choix en-choix${typeof classeNombreChoix === "function" ? classeNombreChoix(q.choix.length) : ""}">${q.choix.map((c, i) => boutonChoixEnsemble(c, i, q.plusieurs)).join("")}</div>
     <p class="fp-retour" id="en-retour"></p>
     <div class="fp-pied">${q.plusieurs ? `<button type="button" class="bouton-accueil principal" id="en-valider" disabled>Valider</button>` : ""}
@@ -1561,6 +1903,7 @@ function dessinerEnsemble() {
   const boutons = [...z.querySelectorAll(".en-rep")];
   garderEnVueOrdinateur(z.querySelector(".fl-question"), (q.plusieurs && document.getElementById("en-valider")) || z.querySelector(".en-choix"));   // R279
   const corriger = choisis => {
+    if (q.type === "classer") { corrigerClasser(choisis); return; }
     const bonnes = q.choix.map((c, i) => c.bonne ? i : -1).filter(i => i >= 0);
     // Étape R236 (note 17, décision d'Aubin du 15/11) : à plusieurs réponses, la question est validée si le joueur trouve au moins
     //   les 2/3 des bonnes réponses (2 sur 3, 2 sur 2, 3 sur 4…) sans cocher de fausse réponse ; les oubliées restent montrées.
@@ -1572,6 +1915,32 @@ function dessinerEnsemble() {
       if (bonnes.includes(i)) b.classList.add(choisis.includes(i) || !q.plusieurs ? "juste" : "juste", ...(q.plusieurs && !choisis.includes(i) ? ["oubliee"] : []));
       else if (choisis.includes(i)) b.classList.add("fausse");
     });
+    terminer(juste, ligneEnsemble(juste, partiel, trouvees, bonnes, oubli0(choisis, bonnes, juste)));
+  };
+  const oubli0 = (choisis, bonnes, juste) => q.plusieurs && !juste && bonnes.some(i => !choisis.includes(i)) ? " Les bonnes réponses sont encadrées en vert." : "";
+  const ligneEnsemble = (juste, partiel, trouvees, bonnes, oubli) => {
+    const debut = partiel ? `Validé : ${trouvees} sur ${bonnes.length}. ` : juste ? "Bravo ! " : "";
+    // Étape R265 (40.12, 6A) : « Oui » / « C'était l'autre » / « Pas cette fois » (« Validé · 2 sur 3 »), puis l'explication
+    const ligneEns = typeof verdictHtml === "function"
+      ? verdictHtml({ juste, deux: q.choix.length === 2, mot: partiel ? `Validé · ${trouvees} sur ${bonnes.length}` : "", phrase: q.explication || "", complement: q.complement || "" })   // R315 : la 2e ligne
+      : `${debut}${echapper([q.explication, q.complement].filter(Boolean).join(" "))}`;
+    return `${ligneEns}${partiel ? `<br><small>${bonnes.length - trouvees > 1 ? "Les autres sont encadrées" : "L'autre est encadrée"} en vert.</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
+  };
+  // Étape PQ4 · Classer : une inversion entre deux voisines = « Presque » (réussie) ; le bon ordre montré avec les chiffres
+  const corrigerClasser = ordre => {
+    let inversions = 0;
+    for (let a = 0; a < ordre.length; a++) for (let b = a + 1; b < ordre.length; b++) if (q.choix[ordre[a]].rang > q.choix[ordre[b]].rang) inversions++;
+    const juste = inversions <= 1, presque = inversions === 1;
+    boutons.forEach(b => { const i = Number(b.dataset.i); b.disabled = true; b.classList.remove("coche"); b.classList.add(ordre.indexOf(i) === q.choix[i].rang ? "juste" : "fausse"); });
+    const max = Math.max(...q.chiffres);
+    const echelle = `<span class="en-echelle">${q.especes.map((n, k) => `<span class="en-barre"><span class="en-barre-nom">${echapper(n)}</span>
+      <span class="en-barre-trait" style="--w:${Math.max(4, Math.round(100 * q.chiffres[k] / max))}%"></span><b>${echapper(q.chiffresDits[k])}</b></span>`).join("")}</span>`;
+    const ligne = typeof verdictHtml === "function"
+      ? verdictHtml({ juste, deux: false, mot: presque ? "Presque · une inversion" : "", phrase: presque ? "Elle compte comme réussie. Voici le bon ordre :" : juste ? "Exactement dans l'ordre :" : "Voici le bon ordre :" })
+      : echapper(juste ? "Bravo !" : "Voici le bon ordre.");
+    terminer(juste, `${ligne}${echelle}${q.lieu ? `<small class="en-echelle-texte">${echapper(q.lieu)}</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}</small>` : ""}`);
+  };
+  const terminer = (juste, html) => {
     try { jouerSon(juste ? "bonne" : "mauvaise"); } catch (err) {}
     if (juste && !reprise) E.premierCoup++;
     if (juste) { noterComparee(q); if (q.type === "comparee") sauvegarder(); }   // R298 : le sujet d'Approfondir « Ce qu'elle mange » trouvé
@@ -1579,13 +1948,7 @@ function dessinerEnsemble() {
     if (!juste && !reprise) E.file.push({ q: { ...q, choix: melanger(q.choix.slice()) }, reprise: true, de: E.i });   // revient une fois, à la fin
     if (q.type === "liens" && typeof noterLienConnu === "function") noterLienConnu("ens|" + (q.especes || []).join("|"));   // badge « Leurs liens »
     const v = document.getElementById("en-valider"); if (v) v.classList.add("cache");
-    const oubli = q.plusieurs && !juste && bonnes.some(i => !choisis.includes(i)) ? " Les bonnes réponses sont encadrées en vert." : "";
-    const debut = partiel ? `Validé : ${trouvees} sur ${bonnes.length}. ` : juste ? "Bravo ! " : "";
-    // Étape R265 (40.12, 6A) : « Oui » / « C'était l'autre » / « Pas cette fois » (« Validé · 2 sur 3 »), puis l'explication
-    const ligneEns = typeof verdictHtml === "function"
-      ? verdictHtml({ juste, deux: q.choix.length === 2, mot: partiel ? `Validé · ${trouvees} sur ${bonnes.length}` : "", phrase: q.explication || "", complement: q.complement || "" })   // R315 : la 2e ligne
-      : `${debut}${echapper([q.explication, q.complement].filter(Boolean).join(" "))}`;
-    document.getElementById("en-retour").innerHTML = `${ligneEns}${partiel ? `<br><small>${bonnes.length - trouvees > 1 ? "Les autres sont encadrées" : "L'autre est encadrée"} en vert.</small>` : ""}${!juste ? `<br><small>${reprise ? "Elle compte quand même." : "Cette question reviendra une fois à la fin."}${oubli}</small>` : ""}`;
+    document.getElementById("en-retour").innerHTML = html;
     const caseI = z.querySelectorAll(".en-cases i")[reprise ? E.file[E.i].de : E.i];   // R246 : la case prend sa couleur tout de suite
     if (caseI && !reprise) caseI.classList.add(juste ? "ok" : "rate");
     const s = document.getElementById("en-suite");
@@ -1600,7 +1963,20 @@ function dessinerEnsemble() {
       E.i++; dessinerEnsemble(); window.scrollTo(0, 0);
     };
   };
-  if (q.plusieurs) {
+  if (q.type === "classer") {
+    // PQ4 · Classer : chaque toucher donne le rang suivant ; toucher une espèce déjà numérotée lui retire son numéro
+    const v = document.getElementById("en-valider"), ordre = [];
+    const montrer = () => {
+      boutons.forEach(b => { const k = ordre.indexOf(Number(b.dataset.i)), r = b.querySelector(".en-rang");
+        b.setAttribute("aria-pressed", k >= 0 ? "true" : "false"); b.classList.toggle("coche", k >= 0);
+        r.textContent = k >= 0 ? String(k + 1) : ""; b.setAttribute("aria-label", `${b.querySelector(".en-texte").textContent}${k >= 0 ? `, rang ${k + 1}` : ""}`); });
+      v.disabled = ordre.length < boutons.length;
+    };
+    boutons.forEach(b => { b.insertAdjacentHTML("beforeend", `<span class="en-rang" aria-hidden="true"></span>`);
+      b.onclick = () => { const i = Number(b.dataset.i), k = ordre.indexOf(i); if (k >= 0) ordre.splice(k, 1); else ordre.push(i); montrer(); }; });
+    montrer();
+    v.onclick = () => corriger(ordre.slice());
+  } else if (q.plusieurs) {
     const v = document.getElementById("en-valider");
     boutons.forEach(b => b.onclick = () => {
       const on = b.getAttribute("aria-pressed") !== "true";

@@ -314,6 +314,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
   if (champ === SOSIE) { poserSosie(espece); return; }   // étapes 243 et 245 : l'encart « À ne pas confondre » (pas une question)
   if (typeof FORME_Q !== "undefined" && champ === FORME_Q) { poserQuestionForme(espece); return; }   // étape R254 : une autre forme (09)
   if (typeof INSOLITE !== "undefined" && champ === INSOLITE) { poserInsolite(espece); return; }   // étape QI3 : une question insolite (21)
+  if (typeof SITE_Q !== "undefined" && champ === SITE_Q) { poserQuestionSite(espece); return; }   // étape R334 : une question nouvelle du site (36)
 
   // Quel format ?
   let format;
@@ -349,7 +350,7 @@ function poserQuestion({ espece, champ, estRevision, rejeu, bonus }) {
     format = auHasard(formats);
     // Étape RF1 : sa vie, dans la Rencontre complète, toujours en vrai ou faux (même si la question d'avant l'était)
     if (session && session.vie && session.vie.includes(champ) && piegesVraiFaux(q, bonne, espece).length >= 1
-        && (!q.formats || q.formats.includes("vraifaux"))) format = "vraifaux";
+        && (!q.formats || q.formats.includes("vraifaux") || q.vraiFauxSaVie)) format = "vraifaux";   // PQ1 : vraiFauxSaVie
   }
   dernierChamp = champ;
   dernierFormat = format;

@@ -706,6 +706,7 @@ const XP_REVISION = 10;
 function repondreRevision(boutonClique, estJuste, jeNeSaisPas) {
   const { espece, champ, explication } = enCours;
   if (typeof INSOLITE !== "undefined" && champ === INSOLITE) { repondreInsolite(boutonClique, estJuste); return; }   // étape QI3 (21)
+  if (typeof SITE_Q !== "undefined" && champ === SITE_Q) { repondreSite(boutonClique, estJuste); return; }   // étape R334 (36)
   for (const b of document.querySelectorAll(".reponse")) {
     b.disabled = true;
     if (b.dataset.juste === "oui") b.classList.add("juste");

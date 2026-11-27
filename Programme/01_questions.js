@@ -655,6 +655,67 @@ const PRONOMS_PROTEGES = [/son corps peut-il/g, /sa coquille peut-elle/g, /y a-t
 const ACCORDS_FEMININ = [[/Est-elle venimeux/g, "Est-elle venimeuse"], [/Est-elle dangereux/g, "Est-elle dangereuse"],
   [/est-elle le plus actif/g, "est-elle la plus active"], [/Elle est actif/g, "Elle est active"],
   [/peut-on le croiser/g, "peut-on la croiser"], [/On peut le croiser/g, "On peut la croiser"], [/On le croise/g, "On la croise"]];
+// ---- Étape PQ1 (27/11/2026, chantier « Plus de questions et plus variées », choix d'Aubin 2A) ----
+//   Critère du chantier : « Après ses Rencontres, chaque expédition pose au moins 5 questions, sous 3 formes différentes au
+//   moins. Chacune apprend une chose vraie sur ces espèces, et aucune ne se devine. »
+//   L'activité, les déplacements, la naissance et la métamorphose n'étaient que lus dans « Sa vie » (R280). Ils ont maintenant
+//   un vrai ou faux, seulement dans « Sa vie » (Rencontre) et dans les questions sur la vie de Me tester (vraiFauxSaVie : les
+//   autres jeux gardent leur QCM), et seulement quand la fausse phrase est sûre (casNetPQ1) :
+//   • activité : « surtout le jour » contre « surtout la nuit » ; rien pour « de jour comme de nuit », l'aube, le crépuscule… ;
+//   • déplacements : les oiseaux seulement, et seulement les cas nets de migrateur_resident (tous partent, ou tous restent) :
+//     jamais un migrateur partiel, erratique, hivernant, « renforcé l'hiver »… (même esprit que MIGRATEUR_DOUTEUX, 26) ;
+//   • naissance : ponte contre petits déjà formés, pour les reptiles, les amphibiens, les poissons, les araignées, scorpions et
+//     mille-pattes (pas les escargots, vers, moules : « la femelle » serait faux chez ces hermaphrodites) ; jamais le lézard
+//     vivipare (des populations pondent, dans les Pyrénées) ni la salamandre tachetée (elle met au monde des larves) ;
+//   • métamorphose : les insectes dont le groupe est sûr (ORDRES_AVEC_NYMPHE / ORDRES_SANS_NYMPHE).
+//   Pas de case rose. Les règles de « Sa vie » restent : VIE_TROP_EVIDENT, nom qui souffle, sujets doubles (17).
+const VF_SA_VIE_PQ1 = true;             // false = ces sujets redeviennent seulement à lire
+const ORDRES_AVEC_NYMPHE = ["Lépidoptères", "Coléoptères", "Hyménoptères", "Névroptères", "Diptères", "Trichoptères", "Mécoptères",
+  "Siphonaptères", "Raphidioptères", "Mégaloptères"];
+const ORDRES_SANS_NYMPHE = ["Odonates", "Orthoptères", "Hémiptères", "Mantoptères", "Éphéméroptères", "Plécoptères", "Dermaptères",
+  "Phasmoptères", "Blattoptères"];
+const NAISSANCE_ONGLETS_PQ1 = ["Reptiles", "Amphibiens", "Poissons", "Araignees_mille_pattes"];
+const NAISSANCE_DOUTEUSE_PQ1 = ["Lézard vivipare", "Salamandre tachetée"];
+const NAISSANCE_PQ1 = ["Pond des œufs", "Donne naissance à des petits déjà formés"];
+const ACTIVITE_PQ1 = ["Surtout le jour", "Surtout la nuit"];
+const MIGRE_PQ1 = "Migre selon la saison", RESTE_PQ1 = "Reste sur place toute l'année";
+// migrateur_resident : « part » (tous partent), « reste » (tous restent) ou null (une partie migre, ou ce n'est pas net)
+const MIGRATION_DOUTEUSE_PQ1 = /partiel|partie|\bou\b|irrupt|errati|quelques|hivernant|disperse|descend|invasion|selon|sauf|parfois|nomade|renfor|nordique|rejoint|surtout|plutôt|épisodique|jeunes|juvénile|altitud/i;
+function migrationNettePQ1(e) {
+  if ((e.a_confirmer || []).includes("migrateur_resident")) return null;
+  const v = String(e.migrateur_resident || "").trim(), s = v.replace(/,? ne migre pas/i, "");
+  if (!v || MIGRATION_DOUTEUSE_PQ1.test(s)) return null;
+  if (/^migrat(eur|rice)/i.test(s) && !/sédentaire|résident/i.test(s)) return "part";
+  if (/^(sédentaire|résident)/i.test(s) && !/migr/i.test(s)) return "reste";
+  return null;
+}
+function casNetPQ1(champ, e) {
+  if (!VF_SA_VIE_PQ1 || !e) return false;
+  const rose = c => (e.a_confirmer || []).includes(c);
+  if (champ === "activite") return !rose("activite") && ACTIVITE_PQ1.includes(e.activite);
+  if (champ === "deplacement_saisonnier") {
+    if (e.onglet !== "Oiseaux" || rose("deplacement_saisonnier")) return false;
+    const n = migrationNettePQ1(e);
+    return (e.deplacement_saisonnier === MIGRE_PQ1 && n === "part") || (e.deplacement_saisonnier === RESTE_PQ1 && n === "reste");
+  }
+  if (champ === "naissance") return !rose("naissance") && NAISSANCE_ONGLETS_PQ1.includes(e.onglet)
+    && !NAISSANCE_DOUTEUSE_PQ1.includes(e.nom_courant) && NAISSANCE_PQ1.includes(e.naissance);
+  if (champ === "metamorphose") return e.onglet === "Insectes" && !rose("cycle_vie") && estRenseigne(e.cycle_vie) && String(e.cycle_vie) !== "NA"
+    && (ORDRES_AVEC_NYMPHE.includes(e.ordre) || ORDRES_SANS_NYMPHE.includes(e.ordre));
+  return false;
+}
+// La phrase (vraie ou fausse) pour la valeur v ; "" quand le sujet n'est pas sûr pour cette espèce (il reste alors à lire)
+function affirmationPQ1(champ, v, e) {
+  if (!casNetPQ1(champ, e)) return "";
+  const f = e.genre_nom === "féminin";
+  if (champ === "activite") return v === "Surtout le jour" ? `${IlElle(e)} est ${f ? "active" : "actif"} surtout le jour.`
+    : v === "Surtout la nuit" ? `${IlElle(e)} est ${f ? "active" : "actif"} surtout la nuit.` : "";
+  if (champ === "deplacement_saisonnier") return v === MIGRE_PQ1 ? `${IlElle(e)} migre selon la saison.` : v === RESTE_PQ1 ? `${IlElle(e)} reste sur place toute l'année.` : "";
+  if (champ === "naissance") return v === NAISSANCE_PQ1[0] ? "La femelle pond des œufs." : v === NAISSANCE_PQ1[1] ? "La femelle donne naissance à des petits déjà formés." : "";
+  if (champ === "metamorphose") return v === METAMORPHOSES[0] ? `Entre la larve et l'adulte, ${ilElle(e)} passe par une nymphe, comme la chrysalide des papillons.`
+    : v === METAMORPHOSES[1] ? `${IlElle(e)} devient adulte sans passer par une nymphe : la larve grandit peu à peu, mue après mue.` : "";
+  return "";
+}
 function accordGenre(texte, e) {
   if (!texte || !e || (e.genre_nom !== "féminin" && e.genre_nom !== "masculin")) return texte;
   const gardes = [];
@@ -2070,6 +2131,7 @@ const QUESTIONS = [
   // La période de la journée. Deux réponses rares existent ("De jour comme de nuit", "À l'aube et
   // au crépuscule") : elles ne servent jamais de mauvaise réponse, car elles seraient à moitié vraies.
   { champ: "activite", pictos: true, niveau: 1, libelle: "Période de la journée", formats: ["qcm"],
+    vraiFauxSaVie: true, affirmation: (v, e) => affirmationPQ1("activite", v, e),   // PQ1 (2A) : vrai ou faux dans « Sa vie » seulement
     question: "À quel moment de la journée est-il le plus actif ?",
     pieges: e => ["Surtout la nuit", "Surtout le jour"].filter(v => v !== e.activite),
     explication: (e, v) => `Il est actif ${minuscule(v)}.` },
@@ -2091,6 +2153,7 @@ const QUESTIONS = [
     } },
 
   { champ: "naissance", pictos: true, niveau: 1, libelle: "Naissance", formats: ["qcm"],
+    vraiFauxSaVie: true, affirmation: (v, e) => affirmationPQ1("naissance", v, e),   // PQ1 (2A)
     question: "Que fait la femelle pour se reproduire ?",
     pieges: e => autresDeLaListe(e, "naissance"),
     explication: (e, v) => `La femelle ${minuscule(v)}.` },
@@ -2106,6 +2169,7 @@ const QUESTIONS = [
     explication: (e, v) => `En hiver, son pelage ${minuscule(v)}.` },
 
   { champ: "deplacement_saisonnier", pictos: true, niveau: 2, libelle: "Déplacements", formats: ["qcm"],
+    vraiFauxSaVie: true, affirmation: (v, e) => affirmationPQ1("deplacement_saisonnier", v, e),   // PQ1 (2A)
     question: "Que fait-il au fil des saisons ?",
     pieges: e => autresDeLaListe(e, "deplacement_saisonnier"),
     explication: (e, v) => `Il ${minuscule(v)}.` },   // étape R149 (avant : « Au fil des saisons, il migre selon la saison »)
@@ -2129,8 +2193,12 @@ const QUESTIONS = [
 
   // La métamorphose des insectes : avec une étape immobile (chrysalide, nymphe) ou non, d'après cycle_vie.
   { champ: "metamorphose", niveau: 2, libelle: "Métamorphose", formats: ["qcm"],
-    valeur: e => e.onglet === "Insectes" && estRenseigne(e.cycle_vie)
-                 ? (/chrysalide|nymphe/i.test(e.cycle_vie) ? METAMORPHOSES[0] : METAMORPHOSES[1]) : "NA",
+    // PQ1 : d'après le groupe quand il est sûr (avant, d'après les seuls mots de cycle_vie : 8 insectes avaient une réponse
+    //   fausse — « cocon » pour le grand paon de nuit, « nymphe » au sens de jeune pour la punaise arlequin, le bourdon des pierres…)
+    valeur: e => e.onglet === "Insectes" && estRenseigne(e.cycle_vie) && String(e.cycle_vie) !== "NA"
+                 ? (ORDRES_AVEC_NYMPHE.includes(e.ordre) ? METAMORPHOSES[0] : ORDRES_SANS_NYMPHE.includes(e.ordre) ? METAMORPHOSES[1]
+                    : /chrysalide|nymphe/i.test(e.cycle_vie) ? METAMORPHOSES[0] : METAMORPHOSES[1]) : "NA",
+    vraiFauxSaVie: true, affirmation: (v, e) => affirmationPQ1("metamorphose", v, e),   // PQ1 (2A)
     question: "Comment devient-il adulte ?",
     pieges: e => METAMORPHOSES.filter(v => v !== valeurDe(e, QUESTIONS.find(q => q.champ === "metamorphose"))),
     explication: (e, v) => `Il devient adulte ${minuscule(v)}.` },

@@ -141,13 +141,15 @@ const TRESORS = [
  {
   "territoire": "Bassin aquitain",
   "lieu": "Moissac, entre Tarn et Garonne",
-  "nom": "Campagnol des Pyrénées",
-  "ajoute": false,
+  "nom": "Ibis falcinelle",
+  "ajoute": true,
   "piste": {
    "empreinte": true,
-   "cri": false,
+   "cri": true,
    "trace": "",
-   "milieu": "Alpages et pelouses d'altitude"
+   "milieu": "Marais",
+   "activite": "Surtout le jour",
+   "hiver": "en partie"
   }
  },
  {
@@ -387,15 +389,15 @@ const TRESORS = [
  {
   "territoire": "Bassin parisien et Val de Loire",
   "lieu": "Estuaire de la Seine",
-  "nom": "Pie-grièche grise",
+  "nom": "Râle des genêts",
   "ajoute": false,
   "piste": {
    "empreinte": false,
    "cri": true,
-   "trace": "Restes de proies empalées",
+   "trace": "",
    "milieu": "Campagne, haies et jardins",
-   "activite": "Surtout le jour",
-   "hiver": "reste actif"
+   "activite": "Surtout la nuit",
+   "hiver": "part de la région"
   }
  },
  {
@@ -707,14 +709,14 @@ const TRESORS = [
  {
   "territoire": "Massif armoricain",
   "lieu": "Marais de Brière",
-  "nom": "Gravelot à collier interrompu",
-  "ajoute": true,
+  "nom": "Butor étoilé",
+  "ajoute": false,
   "piste": {
-   "empreinte": true,
-   "cri": true,
+   "empreinte": false,
+   "cri": false,
    "trace": "",
-   "milieu": "Dunes et plages",
-   "activite": "De jour comme de nuit",
+   "milieu": "Marais",
+   "activite": "À l'aube et au crépuscule",
    "hiver": "en partie"
   }
  },
@@ -749,15 +751,15 @@ const TRESORS = [
  {
   "territoire": "Massif armoricain",
   "lieu": "Bocage vendéen",
-  "nom": "Cigogne noire",
-  "ajoute": false,
+  "nom": "Loutre d'Europe",
+  "ajoute": true,
   "piste": {
    "empreinte": true,
    "cri": true,
    "trace": "",
-   "milieu": "Forêt",
-   "activite": "Surtout le jour",
-   "hiver": "part de la région"
+   "milieu": "Rivières et torrents",
+   "activite": "Surtout la nuit",
+   "hiver": "reste actif"
   }
  },
  {
@@ -1160,15 +1162,15 @@ const TRESORS = [
  {
   "territoire": "Plaines de l'Est et val de Saône",
   "lieu": "Louhans et le bocage bressan",
-  "nom": "Pie-grièche grise",
-  "ajoute": false,
+  "nom": "Héron pourpré",
+  "ajoute": true,
   "piste": {
-   "empreinte": false,
+   "empreinte": true,
    "cri": true,
-   "trace": "Restes de proies empalées",
-   "milieu": "Campagne, haies et jardins",
-   "activite": "Surtout le jour",
-   "hiver": "reste actif"
+   "trace": "",
+   "milieu": "Marais",
+   "activite": "À l'aube et au crépuscule",
+   "hiver": "part de la région"
   }
  },
  {
@@ -1657,6 +1659,10 @@ const TEXTES_TRESOR = {
   "indice": "Petit carnivore brun à bavette crème ou jaune, qui grimpe aux arbres.",
   "aide": "Des forêts continues où l'on garde vieux arbres creux et lierre."
  },
+ "Loutre d'Europe": {
+  "indice": "Nageuse des rivières qui marque son domaine de crottes sur les pierres.",
+  "aide": "Sa protection depuis 1981 et des rivières de meilleure qualité."
+ },
  "Oreillard montagnard": {
   "indice": "Une chauve-souris qui chasse les papillons de nuit au-dessus des prés.",
   "aide": "Des combles et des clochers laissés ouverts, sans éclairage la nuit."
@@ -1713,6 +1719,14 @@ const TEXTES_TRESOR = {
   "indice": "Un rapace au ventre blanc qui plonge pattes en avant dans l'eau.",
   "aide": "Une protection totale et des plateformes de nid installées pour lui."
  },
+ "Butor étoilé": {
+  "indice": "Oiseau brun rayé, immobile au fond des grandes roselières inondées.",
+  "aide": "De grandes roselières gardées en eau de février à juillet."
+ },
+ "Héron pourpré": {
+  "indice": "Grand échassier roux et gris, caché au fond des roselières inondées.",
+  "aide": "Des roselières maintenues en eau au printemps, quand il niche."
+ },
  "Lézard des souches": {
   "indice": "Reptile trapu à tête courte, le mâle aux flancs vert vif.",
   "aide": "Des landes, des lisières et des talus ensoleillés préservés."
@@ -1736,6 +1750,10 @@ const TEXTES_TRESOR = {
  "Sizerin cabaret": {
   "indice": "Un petit oiseau rayé à calotte rouge, en bandes dans les bouleaux.",
   "aide": "Des bois de bouleaux et de mélèzes préservés en montagne."
+ },
+ "Râle des genêts": {
+  "indice": "Oiseau des hautes herbes, qu'on entend bien plus qu'on ne le voit.",
+  "aide": "Des prés fauchés tard, en partant du centre de la parcelle."
  },
  "Agrion hasté": {
   "indice": "Une demoiselle bleu et noir des petites mares de tourbière, en montagne.",
